@@ -1,5 +1,5 @@
 module.exports = {
-    webpack: config => {
+    webpack: (config, { isServer }) => {
         config.module.rules.push({
             test: /\.(txt|jpg|png|svg)$/,
             use: [
