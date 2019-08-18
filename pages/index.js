@@ -4,8 +4,6 @@ import React from 'react'
 import u12 from '../assets/images/home/u12.png'
 import u9 from '../assets/images/home/image_home_u9.jpg'
 
-import Head from 'next/head';
-
 export default class Counter extends React.Component {
   render() {
     return (
@@ -14,11 +12,6 @@ export default class Counter extends React.Component {
       //   <img src={ESXLogo} alt="ESX LOOG" width='300' />
       // </div>
       <div>
-        <Head>
-          <link href="resources/css/axure_rp_page.css" type="text/css" rel="stylesheet" />
-          <link href="data/styles.css" type="text/css" rel="stylesheet" />
-          <link href="files/home/styles.css" type="text/css" rel="stylesheet" />
-        </Head>
         <div id="base">
           {/* background (Dynamic Panel) */}
           <div id="u8" className="ax_default" data-label="background">
