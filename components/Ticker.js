@@ -5,7 +5,7 @@ export default props => {
                 <div className="navi-data-strip">
                     <div className="navi-data-strip__ticker-viewport">
                         <div className="navi-data-strip__ticker-viewport-inner">
-                            <ul className="navi-data-strip__tickers-list-first animate-tickers-left" style={{ left: '100px' }}>
+                            <ul className="navi-data-strip__tickers-list-first animate-tickers-left" style={{ left: '0px' }}>
                                 <li className="navi-data-strip__ticker">
                                     <a href="#" className="navi-data-strip__ticker-link">
                                         <div className="navi-data-strip__ticker-label">S&amp;P 500 Futures</div>
@@ -19,9 +19,9 @@ export default props => {
                                     <a href="#" className="navi-data-strip__ticker-link">
                                         <div className="navi-data-strip__ticker-label">Dow Jones Futures</div>
                                         <div className="navi-data-strip__ticker-market-price">25907</div>
-                                        <div className="navi-data-strip__ticker-direction navi-data-strip__ticker-direction--positive" />
-                                        <div className="navi-data-strip__ticker-value navi-data-strip__ticker-value--positive">+332</div>
-                                        <div className="navi-data-strip__ticker-value navi-data-strip__ticker-value--positive">+1.30%</div>
+                                        <div className="navi-data-strip__ticker-direction navi-data-strip__ticker-direction--negative" />
+                                        <div className="navi-data-strip__ticker-value navi-data-strip__ticker-value--negative">+332</div>
+                                        <div className="navi-data-strip__ticker-value navi-data-strip__ticker-value--negative">+1.30%</div>
                                     </a>
                                 </li>
                                 <li className="navi-data-strip__ticker">
@@ -518,7 +518,7 @@ export default props => {
                 }
 
                 .navi-data-strip__ticker-value--negative {
-                    color: red
+                    color: #ff433d;
                 }
 
                 .navi-data-strip__ticker-market-price {
