@@ -476,6 +476,7 @@ export default props => {
                     position: relative;
                     width: 100%;
                     height: 32px;
+                    background: #000000d4;
                 }
 
                 .navi-data-strip__ticker-viewport {
@@ -542,12 +543,12 @@ export default props => {
 
                 .navi-data-strip__ticker,
                 .navi-data-strip__ticker-link {
-                    color: #000;
+                    color: #ffffffb5;
                     text-decoration: none
                 }
 
                 .navi-data-strip__ticker-link:visited {
-                    color: #000
+                    color: #fff
                 }
 
                 .navi-data-strip__ticker-link:active,
@@ -594,7 +595,7 @@ export default props => {
                 }
 
                 .navi-data-strip__ticker-value--positive {
-                    color: green
+                    color: #1ecd93
                 }
 
                 .navi-data-strip__ticker-value--negative {
