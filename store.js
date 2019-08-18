@@ -25,6 +25,7 @@ export class Store {
   // }
 
   // stop = () => clearInterval(this.timer)
+  // TODO refresh stock ticker data - check every second...?
 }
 
 export async function fetchInitialStoreState() {
