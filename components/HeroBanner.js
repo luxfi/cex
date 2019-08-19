@@ -6,19 +6,17 @@ export default props => {
     return (
         <div className="container">
             <header>
-                <div className="logo">
-                    <img src={ESXLogo} alt="ESX LOOG" height='80px' style={{ margin: `-16px` }} />
-                    <div className="tagline">
-                        <span>BUY AND SELL</span>
-                        <span>HOLLYWOOD MOVIES</span>
-                    </div>
+                <div className="info-container">
+                    <h2 style={{ "font-size": "38px", margin: "0px 0px 8px 0px" }}>
+                        Mad Max: Fury Road
+                    </h2>
+                    <p style={{ "font-size": "18px", margin: "0px 0px 8px 0px" }}>
+                        $12.50
+                    </p>
+                    <p style={{ "font-size": "34px", margin: "0px" }}>
+                        $1 (8.7%)
+                    </p>
                 </div>
-                <ul className="nav">
-                    <li className="navlink"><a href="#">MY PORTFOLIO</a></li>
-                    <li className="navlink"><a href="#">TRADE</a></li>
-                    <li className="navlink"><a href="#">RESEARCH</a></li>
-                    <li className="navlink"><a href="#">NEWS &amp; EVENTS</a></li>
-                </ul>
                 <ul className="nav nav-right">
                     <div className="search">
                         <FontAwesomeIcon icon={faSearch} />
@@ -38,19 +36,19 @@ export default props => {
                     position: absolute;
                     bottom: 0;
                     left: 0;
+                    justify-content: space-between;
+                    
                     
                 }
                 header {
-                    width: 942px;
-                    height: 70px;
+                    width: 888px;
+                    height: 146px;
                     display: flex;
                     align-items: center;
-                    justify-content: space-around;
+                    justify-content: space-between;
                     background: transparent;
                     color: #fff;
-                    line-height: 30px;
                     font-family: 'BWHaasGroteskTF-55Roman-Web,sans-serif', sans-serif;
-                    font-size: 12px;
                     margin: auto;
                 }
                 .tagline {
@@ -59,9 +57,10 @@ export default props => {
                     line-height: 16px;
                     justify-content: center;
                 }
-                .logo {
+                .info-container {
                     display: flex;
-                    flex-direction: row;
+                    flex-direction: column;
+                    width: 50%;
                 }
                 .nav {
                     display: flex;
