@@ -8,6 +8,9 @@ export default props => {
                     width: 1440px;
                     position: absolute;
                     z-index: 0;
+                    opacity: .75;
+                    height: 615px;;
+                    object-fit: cover;
                 }
             `}</style>
         </div>
