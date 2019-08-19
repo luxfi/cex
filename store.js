@@ -7,7 +7,7 @@ useStaticRendering(isServer)
 export class Store {
   // @observable lastUpdate = 0
   // @observable light = false
-  @observable movies = {};
+  @observable movies = []
 
   hydrate(serializedStore) {
     // this.lastUpdate =
@@ -15,6 +15,8 @@ export class Store {
     //     ? serializedStore.lastUpdate
     //     : Date.now()
     // this.light = !!serializedStore.light
+    console.log('calling hydrate with', serializedStore)
+    this.movies = serializedStore
   }
 
   // @action start = () => {

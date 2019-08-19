@@ -1,7 +1,7 @@
 import Ticker from './Ticker'
 
 export default props => {
-    console.log("props + " + props)
+    console.log("The first title: ", props.movieStore.movies && props.movieStore.movies[0].title)
 
     return (
         <div>
