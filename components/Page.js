@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { inject, observer } from 'mobx-react'
-import Ticker from './Ticker'
+import Ticker from './TickerStrip'
 // import Clock from './Clock'
 
 @inject('store')
