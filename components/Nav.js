@@ -4,7 +4,7 @@ import ESXLogo from '../assets/images/esx/u1.png'
 
 export default props => {
     return (
-        <div>
+        <div className="container">
             <header>
                 <div className="logo">
                     <img src={ESXLogo} alt="ESX LOOG" height='80px' style={{ margin: `-16px` }} />
@@ -28,17 +28,24 @@ export default props => {
                 </ul>
             </header>
             <style jsx>{`
-                header {
+                .container {
                     width: 100%;
+                    display: flex;
+                    margin: auto;
+                    background: #232323;
+                }
+                header {
+                    width: 942px;
                     height: 70px;
                     display: flex;
                     align-items: center;
                     justify-content: space-around;
-                    background: #232323;
+                    background: transparent;
                     color: #fff;
                     line-height: 30px;
                     font-family: 'BWHaasGroteskTF-55Roman-Web,sans-serif', sans-serif;
                     font-size: 12px;
+                    margin: auto;
                 }
                 .tagline {
                     display: flex;
@@ -53,12 +60,12 @@ export default props => {
                 .nav {
                     display: flex;
                     justify-content: space-around;
-                    width: 30%;
+                    width: 40%;
                 }
                 .nav-right {
                     display: flex;
                     justify-content: space-around;
-                    width: 12%;
+                    width: 16%;
                 }
                 .navlink {
                     list-style: none;

@@ -2,7 +2,7 @@ import Nav from './Nav'
 
 export default props => {
     return (
-        <div>
+        <div className="hero">
             <Nav />
             <style jsx>{`
             `}</style>

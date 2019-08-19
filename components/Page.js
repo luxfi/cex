@@ -21,7 +21,7 @@ class Page extends React.Component {
     return (
       <div style={{ width: `1440px` }}>
         <TickerStrip movieStore={this.props.store} />
-        <Hero></Hero>
+        <Hero />
         {/* <nav>
           <Link href={this.props.linkTo}>
             <a>Navigate</a>
