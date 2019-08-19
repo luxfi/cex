@@ -2,6 +2,7 @@ import Ticker from './Ticker'
 
 export default props => {
     console.log("The first title: ", props.movieStore.movies && props.movieStore.movies[0].title)
+    const { title, price, change, percentChange } = props.movieStore.movies[0];
 
     return (
         <div>
@@ -10,7 +11,7 @@ export default props => {
                     <div className="navi-data-strip__ticker-viewport">
                         <div className="navi-data-strip__ticker-viewport-inner">
                             <ul className="navi-data-strip__tickers-list-first animate-tickers-left" style={{ left: '0px' }}>
-                                <Ticker />   <Ticker />   <Ticker />   <Ticker />   <Ticker />   <Ticker />
+                                <Ticker title={title} price={price} change={change} percentChange={percentChange} />   <Ticker />   <Ticker />   <Ticker />   <Ticker />   <Ticker />
                             </ul>
                             <ul className="navi-data-strip__tickers-list-second animate-tickers-left" style={{ left: '100px' }}>
                                 <Ticker />   <Ticker />   <Ticker />   <Ticker />   <Ticker />   <Ticker />

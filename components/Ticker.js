@@ -1,13 +1,14 @@
-export default props => {
+export default ({ title = "Missing Title", symbol = "XXX", price = 11.11, change = 1, percentChange = .1111 }) => {
+    const direction = change >= 0 ? "positive" : "negative";
     return (
-
         <li className="navi-data-strip__ticker">
             <a href="#" className="navi-data-strip__ticker-link">
-                <div className="navi-data-strip__ticker-label">S&amp;P 500 Futures</div>
-                <div className="navi-data-strip__ticker-market-price">2891.50</div>
-                <div className="navi-data-strip__ticker-direction navi-data-strip__ticker-direction--positive" />
-                <div className="navi-data-strip__ticker-value navi-data-strip__ticker-value--positive">+42.900</div>
-                <div className="navi-data-strip__ticker-value navi-data-strip__ticker-value--positive">+1.51%</div>
+                <div className="navi-data-strip__ticker-label">{title}</div>
+                <div className="navi-data-strip__ticker-symbol">({symbol})</div>
+                <div className="navi-data-strip__ticker-market-price">{price}</div>
+                <div className={`navi-data-strip__ticker-direction navi-data-strip__ticker-direction--${direction}`} />
+                <div className={`navi-data-strip__ticker-value navi-data-strip__ticker-value--${direction}`}>{change}</div>
+                <div className={`navi-data-strip__ticker-value navi-data-strip__ticker-value--${direction}`}>{percentChange}</div>
             </a>
             <style jsx>{`
                 .navi-data-strip__ticker {
@@ -34,8 +35,13 @@ export default props => {
                     color: #767676
                 }
 
+                .navi-data-strip__ticker-symbol,
                 .navi-data-strip__ticker-label {
                     display: inline
+                }
+
+                .navi-data-strip__ticker-symbol {
+                    margin-left 4px !important;
                 }
 
                 .navi-data-strip__ticker-market-price {
