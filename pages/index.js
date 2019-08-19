@@ -24,6 +24,7 @@ export default class Counter extends React.Component {
                     id="u9_img"
                     className="img "
                     src={u9}
+                    style={{ width: `1440px` }}
                   />
                   {/* Unnamed () */}
                   <div
