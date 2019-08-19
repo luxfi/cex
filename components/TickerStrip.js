@@ -1,6 +1,8 @@
 import Ticker from './Ticker'
 
 export default props => {
+    console.log("props + " + props)
+
     return (
         <div>
             <div className="navi-markets-bar">

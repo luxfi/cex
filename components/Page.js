@@ -16,9 +16,10 @@ class Page extends React.Component {
   // }
 
   render() {
+    console.log('Page.js', this.props.store)
     return (
       <div>
-        <TickerStrip />
+        <TickerStrip movieStore={this.props.store} />
         {/* <nav>
           <Link href={this.props.linkTo}>
             <a>Navigate</a>
