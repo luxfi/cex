@@ -1,7 +1,7 @@
 export default props => {
     return (
         <div>
-            {/* <header>
+            <header>
                 <h1 class="logo">LOGO</h1>
                 <ul class="nav">
                     <li class="navlink"><a href="#">Home</a></li>
@@ -12,7 +12,7 @@ export default props => {
                 <div class="burger">
                     <i class="fas fa-bars"></i>
                 </div>
-            </header> */}
+            </header>
             <style jsx>{`
             `}</style>
         </div>
