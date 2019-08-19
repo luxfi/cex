@@ -3,6 +3,7 @@ import Page from '../components/Page'
 // import ESXLogo from '../assets/images/u1.png'
 import u12 from '../assets/images/home/u12.png'
 import u9 from '../assets/images/home/image_home_u9.jpg'
+import Head from 'next/head'
 
 export default class Counter extends React.Component {
   render() {
@@ -12,6 +13,9 @@ export default class Counter extends React.Component {
       //   <img src={ESXLogo} alt="ESX LOOG" width='300' />
       // </div>
       <div>
+        <Head>
+          <link href="https://fonts.googleapis.com/css?family=Hind&display=swap" rel="stylesheet" />
+        </Head>
         <Page title="Index Page" />
         <div id="base">
           {/* background (Dynamic Panel) */}
