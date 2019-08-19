@@ -29,10 +29,14 @@ export default props => {
             </header>
             <style jsx>{`
                 .container {
-                    width: 100%;
+                    // width: 100%;
                     display: flex;
                     margin: auto;
-                    background: #232323;
+                    background: #0000005e;
+                    position: absolute;
+                    z-index: 1;
+                    width: 1440px;
+                    
                 }
                 header {
                     width: 942px;

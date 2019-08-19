@@ -23,7 +23,7 @@ export default class Counter extends React.Component {
             <div id="u8_state0" className="panel_state" data-label="background_img">
               <div id="u8_state0_content" className="panel_state_content">
                 {/* image_home (Image) */}
-                <div id="u9" className="ax_default image" data-label="image_home">
+                <div id="u9" className="ax_default image" data-label="image_home" style={{ "margin-top": "112px" }}>
                   <img
                     id="u9_img"
                     className="img "
@@ -318,7 +318,7 @@ export default class Counter extends React.Component {
             </div>
           </div>
         </div>
-      </div>
+      </div >
 
     )
   }
