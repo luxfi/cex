@@ -10,6 +10,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.21",
     "@fortawesome/free-solid-svg-icons": "^5.10.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
+    "@zeit/next-css": "^1.0.1",
     "csvtojson": "^2.0.10",
     "mobx": "^2.7.0",
     "mobx-react": "^4.0.4",

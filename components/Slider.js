@@ -5,6 +5,7 @@ import slide4 from '../assets/images/home/slide4.jpg'
 import slide5 from '../assets/images/home/slide5.jpg'
 import slide6 from '../assets/images/home/slide6.jpg'
 import Carousel from 'react-multi-carousel'
+import "../style.css"
 // import 'react-multi-carousel/lib/styles.css'
 
 const responsive = {
@@ -27,67 +28,67 @@ const responsive = {
     },
 };
 
-export default props => {
-    return (
-        <div className="slider">
-            <div className="background">
-                <div className="left">left</div>
-                <div className="right">right</div>
-            </div>
-            <Carousel
-                className="content-container"
-                responsive={responsive}
-                ssr
-            >
-                <img src={slide1} alt="slide1" />
-                <img src={slide2} alt="slide2" />
-                <img src={slide3} alt="slide3" />
-                <img src={slide4} alt="slide4" />
-                <img src={slide5} alt="slide5" />
-                <img src={slide6} alt="slide6" />
-            </Carousel>
-
-            <style jsx>{`
+class Slider extends React.Component {
+    state = { isMoving: false };
+    render() {
+        return (
+            <div className="slider" >
+                <div className="background">
+                    <div className="left">left</div>
+                    <div className="right">right</div>
+                </div>
+                <div className="content-container">
+                    <Carousel
+                        responsive={responsive}
+                        ssr
+                        infinite={false}
+                        beforeChange={() => this.setState({ isMoving: true })}
+                        afterChange={() => this.setState({ isMoving: false })}
+                        containerClass="first-carousel-container container"
+                    >
+                        <img src={slide1} alt="slide1" />
+                        <img src={slide2} alt="slide2" />
+                        <img src={slide3} alt="slide3" />
+                        <img src={slide4} alt="slide4" />
+                        <img src={slide5} alt="slide5" />
+                        <img src={slide6} alt="slide6" />
+                    </Carousel>
+                </div>
+                <style jsx>{`
                 .slider {
                     margin-top: 86px;
                     height 300px;
                     width: 1440px;
                 }
                 img {
-                    width: 164px;
+                        width: 164px;
                     margin: 0px 8px;
                 }
                 .container {
-                    display: flex;
+                        display: flex;
                     height: 100%;
                 }
                 .background {
-                    display: flex;
+                        display: flex;
                     height: 100%;
                 }
 
-                .left {
-                    // background: black;
-                    width: 30%;
-                    position: relative;
-                }
+                    // .left:before {
+                    //     content: '';
+                    //     position: absolute;
+                    //     // background-image: linear-gradient(to right,#000,transparent);
+                    //     top: 0;
+                    //     bottom: 0;
+                    //     left: 100%;
+                    //     width: 275px;
+                    // }
 
-                .left:before {
-                    content: '';
-                    position: absolute;
-                    // background-image: linear-gradient(to right,#000,transparent);
-                    top: 0;
-                    bottom: 0;
-                    left: 100%;
-                    width: 275px;
-                }
+                    // .right {
+                    //     // background: green;
+                    //     width: 70%;
+                    // }
 
-                .right {
-                    // background: green;
-                    width: 70%;
-                }
-
-                .content-container {
+                    .content - container {
                     color: white;
                     position: absolute;
                     top: 0;
@@ -97,7 +98,11 @@ export default props => {
                     margin-left: 270px;
                     // padding: 30px
                 }
-            `}</style>
-        </div>
-    )
+                `}</style>
+            </div>
+        )
+    }
 }
+
+// export default Slider;
+export default () => <div className="example">Hello World!</div>
