@@ -19,22 +19,13 @@ class Page extends React.Component {
   // }
 
   render() {
-    console.log('Page.js', this.props.store)
+    // console.log('Page.js', this.props.store)
     return (
       <div style={{ width: `1440px` }}>
-        <div>
           <TickerStrip movieStore={this.props.store} />
           <Hero />
           <Slider />
-          {/* <nav>
-            <Link href={this.props.linkTo}>
-              <a>Navigate</a>
-            </Link>
-          </nav> */}
-        </div>
-        <div>
           <Footer/>
-        </div>
       </div >
     )
   }

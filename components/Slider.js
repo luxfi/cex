@@ -49,7 +49,6 @@ export default props => {
 
             <style jsx>{`
                 .slider {
-                    position: absolute;
                     margin-top: 86px;
                     height 300px;
                     width: 1440px;

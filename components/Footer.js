@@ -2,7 +2,7 @@ import ESXLogo from '../assets/images/esx/u1.png'
 
 export default props => {
     return (
-        <div className="container">
+        <div className="footer-container">
             <div className="footer-column">
                 <h2 className="title" style={{ "font-size": "12px", margin: "0px 0px 4px 0px" }}>
                     Company
@@ -66,13 +66,13 @@ export default props => {
                 </p>
             </div>
             <style jsx>{`
-                .container {
+                .footer-container {
                     display: flex;
                     margin: auto;
                     background: #333333;
-                    position: absolute;
                     z-index: 1;
-                    width: 1440px;
+                    width: 100%;
+                    height: 153px;
                 }
 
                 .footer-column {

@@ -25,7 +25,7 @@ export default class Counter extends React.Component {
                 <div id="u8_state0" className="panel_state" data-label="background_img">
                   <div id="u8_state0_content" className="panel_state_content">
                     {/* image_home (Image) */}
-                    <div id="u9" className="ax_default image" data-label="image_home" style={{ "margin-top": "-646px" }}>
+                    <div id="u9" className="ax_default image" data-label="image_home" style={{ position: 'absolute', top: '9px', left: '8px', zIndex: -1}}>
                       <img
                         id="u9_img"
                         className="img "

@@ -1,7 +1,7 @@
 import Ticker from './Ticker'
 
 export default props => {
-    console.log("The first title: ", props.movieStore.movies && props.movieStore.movies[0].title)
+    // console.log("The first title: ", props.movieStore.movies && props.movieStore.movies[0].title)
     const tickers = props.movieStore.movies.slice(0, 14).map((ticker, key) => {
         const { title, price, change, percentChange, symbol } = ticker;
         return <Ticker

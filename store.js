@@ -15,7 +15,7 @@ export class Store {
     //     ? serializedStore.lastUpdate
     //     : Date.now()
     // this.light = !!serializedStore.light
-    console.log('calling hydrate with', serializedStore)
+    // console.log('calling hydrate with', serializedStore)
     this.movies = serializedStore
   }
 
@@ -38,6 +38,5 @@ export async function fetchInitialStoreState() {
 
   // // Async / await usage
   const jsonArray = await csv().fromFile(csvFilePath)
-  console.log(`jsonArray ${jsonArray}`)
   return jsonArray
 }
