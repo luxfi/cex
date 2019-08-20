@@ -8,7 +8,11 @@ import slide6 from '../assets/images/home/slide6.jpg'
 export default props => {
     return (
         <div className="slider">
-            <div className="container">
+            <div className="background">
+                <div className="left">left</div>
+                <div className="right">right</div>
+            </div>
+            <div className="content-container">
                 <img src={slide1} alt="slide1" />
                 <img src={slide2} alt="slide2" />
                 <img src={slide3} alt="slide3" />
@@ -19,10 +23,53 @@ export default props => {
             <style jsx>{`
                 .slider {
                     position: absolute;
+                    margin-top: 86px;
+                    height 300px;
+                    width: 1440px;
                 }
                 img {
-                    width: 166px;
+                    width: 164px;
                     margin: 0px 8px;
+                }
+                .container {
+                    display: flex;
+                    height: 100%;
+                }
+                .background {
+                    display: flex;
+                    height: 100%;
+                }
+
+                .left {
+                    // background: black;
+                    width: 30%;
+                    position: relative;
+                }
+
+                .left:before {
+                    content: '';
+                    position: absolute;
+                    // background-image: linear-gradient(to right,#000,transparent);
+                    top: 0;
+                    bottom: 0;
+                    left: 100%;
+                    width: 275px;
+                }
+
+                .right {
+                    // background: green;
+                    width: 70%;
+                }
+
+                .content-container {
+                    color: white;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    margin-left: 270px;
+                    // padding: 30px
                 }
             `}</style>
         </div>
