@@ -7,13 +7,13 @@ export default props => {
         <div className="container">
             <header>
                 <div className="info-container">
-                    <h2 className="title" style={{ "font-size": "40px", margin: "0px 0px 4px 0px" }}>
+                    <h2 className="title" style={{ fontSize: "40px", margin: "0px 0px 4px 0px" }}>
                         Mad Max: Fury Road
                     </h2>
-                    <p className="price" style={{ "font-size": "18px", margin: "0px 0px 4px 0px" }}>
+                    <p className="price" style={{ fontSize: "18px", margin: "0px 0px 4px 0px" }}>
                         $12.50
                     </p>
-                    <p className="change" style={{ "font-size": "27px", margin: "0px" }}>
+                    <p className="change" style={{ fontSize: "27px", margin: "0px" }}>
                         $1 (8.7%)
                     </p>
                 </div>
