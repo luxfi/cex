@@ -66,17 +66,21 @@ export default props => {
                 </p>
             </div>
             <style jsx>{`
+
+                a {
+                    color: white;
+                    text-decoration: none;
+                }
+
                 .footer-container {
                     display: flex;
                     margin: auto;
                     background: #333333;
-<<<<<<< HEAD
+                    font-family: ‘BWHaasGroteskTF-55Roman-Web,sans-serif’, sans-serif;
+                    color: white;
                     z-index: 1;
                     width: 100%;
-                    height: 153px;
-=======
-                    width: 1440px;
->>>>>>> Removing inline styling
+                    height: 223px;
                 }
 
                 .element {
