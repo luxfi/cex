@@ -20,7 +20,9 @@ export default props => {
                 <div className="links">
                     <ul className="nav">
                         <li className="navlink"><a href="#">Trailer 1</a></li>
+                        <div className="divider"></div>
                         <li className="navlink"><a href="#">Trailer 2</a></li>
+                        <div className="divider"></div>
                         <li className="navlink"><a href="#">Official Website</a></li>
                     </ul>
                 </div>
@@ -66,9 +68,10 @@ export default props => {
                 }
                 .nav {
                     display: flex;
-                    justify-content: space-between;
+                    justify-content: center;
                     width: 100%;
                     align-items: center;
+                    padding: 0;
                 }
                 .navlink {
                     list-style: none;
@@ -78,6 +81,12 @@ export default props => {
                     color: #fff;
                     text-decoration: none;
                     font-size: 12px;
+                }
+                .divider {
+                    width: 1px;
+                    background: #fff;
+                    height: 12px;
+                    margin: 8px;
                 }
                 .search {
                     text-decoration: none;
