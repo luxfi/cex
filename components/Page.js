@@ -22,15 +22,19 @@ class Page extends React.Component {
     console.log('Page.js', this.props.store)
     return (
       <div style={{ width: `1440px` }}>
-        <TickerStrip movieStore={this.props.store} />
-        <Hero />
-        <Slider />
-        {/* <nav>
-          <Link href={this.props.linkTo}>
-            <a>Navigate</a>
-          </Link>
-        </nav> */}
-        <Footer />
+        <div>
+          <TickerStrip movieStore={this.props.store} />
+          <Hero />
+          <Slider />
+          {/* <nav>
+            <Link href={this.props.linkTo}>
+              <a>Navigate</a>
+            </Link>
+          </nav> */}
+        </div>
+        <div>
+          <Footer/>
+        </div>
       </div >
     )
   }
