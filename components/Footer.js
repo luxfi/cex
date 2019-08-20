@@ -2,8 +2,8 @@ import ESXLogo from '../assets/images/esx/u1.png'
 
 export default props => {
     return (
-        <div>
-            <div className="column-company">
+        <div className="container">
+            <div className="footer-column">
                 <h2 className="title" style={{ "font-size": "12px", margin: "0px 0px 4px 0px" }}>
                     Company
                 </h2>
@@ -17,7 +17,7 @@ export default props => {
                     <a href="#">Support</a>
                 </p>
             </div>
-            <div className="column-learn">
+            <div className="footer-column">
                 <h2 className="title" style={{ "font-size": "12px", margin: "0px 0px 4px 0px" }}>
                     Learn
                 </h2>
@@ -31,7 +31,7 @@ export default props => {
                     <a href="#">Supported Platforms</a>
                 </p>
             </div>
-            <div className="column-social">
+            <div className="footer-column">
                 <h2 className="title" style={{ "font-size": "12px", margin: "0px 0px 4px 0px" }}>
                     Social
                 </h2>
@@ -45,7 +45,7 @@ export default props => {
                     <a href="#">Facebook</a>
                 </p>
             </div>
-            <div className="column-media">
+            <div className="footer-column">
                 <h2 className="title" style={{ "font-size": "12px", margin: "0px 0px 4px 0px" }}>
                     Media
                 </h2>
@@ -59,13 +59,29 @@ export default props => {
                     <a href="#">Clients & Partners</a>
                 </p>
             </div>
-            <div className="column-logo">
+            <div className="footer-column">
                 <img src={ESXLogo} alt="ESX" height='40px' style={{ margin: `-16px` }} />
                 <p className="element" style={{ "font-size": "8px", margin: "0px 0px 4px 0px" }}>
                     2018 © ESX, Co
                 </p>
             </div>
-            <style jsx>{``}</style>
+            <style jsx>{`
+                .container {
+                    display: flex;
+                    margin: auto;
+                    background: #333333;
+                    position: absolute;
+                    z-index: 1;
+                    width: 1440px;
+                }
+
+                .footer-column {
+                    display: flex;
+                    flex-direction: column;
+                    line-height: 56px;
+                    justify-content: center;
+                }
+            `}</style>
         </div>
     )
 }
