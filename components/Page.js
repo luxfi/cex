@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { inject, observer } from 'mobx-react'
 import TickerStrip from './TickerStrip'
 import Hero from './Hero'
+import Slider from './Slider'
 // import Clock from './Clock'
 
 @inject('store')
@@ -22,6 +23,7 @@ class Page extends React.Component {
       <div style={{ width: `1440px` }}>
         <TickerStrip movieStore={this.props.store} />
         <Hero />
+        <Slider />
         {/* <nav>
           <Link href={this.props.linkTo}>
             <a>Navigate</a>
