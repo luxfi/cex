@@ -4,6 +4,7 @@ import { inject, observer } from 'mobx-react'
 import TickerStrip from './TickerStrip'
 import Hero from './Hero'
 import Slider from './Slider'
+import Footer from './Footer'
 // import Clock from './Clock'
 
 @inject('store')
@@ -29,6 +30,7 @@ class Page extends React.Component {
             <a>Navigate</a>
           </Link>
         </nav> */}
+        <Footer />
       </div >
     )
   }
