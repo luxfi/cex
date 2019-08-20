@@ -7,7 +7,7 @@ export default props => {
         <div className="container">
             <header>
                 <div className="logo">
-                    <img src={ESXLogo} alt="ESX LOOG" height='80px' style={{ margin: `-16px` }} />
+                    <img src={ESXLogo} alt="ESX LOGO" height='80px' style={{ margin: `-16px` }} />
                     <div className="tagline">
                         <span>BUY AND SELL</span>
                         <span>HOLLYWOOD MOVIES</span>
