@@ -4,64 +4,64 @@ export default props => {
     return (
         <div className="footer-container">
             <div className="footer-column">
-                <h2 className="title" style={{ "font-size": "12px", margin: "0px 0px 4px 0px" }}>
+                <h2 className="title" >
                     Company
                 </h2>
-                <p className="element" style={{ "font-size": "11px", margin: "0px 0px 4px 0px" }}>
+                <p className="element" >
                     <a href="#">About</a>
                 </p>
-                <p className="element" style={{ "font-size": "11px", margin: "0px 0px 4px 0px" }}>
+                <p className="element" >
                     <a href="#">Legal & Privacy</a>
                 </p>
-                <p className="element" style={{ "font-size": "11px", margin: "0px 0px 4px 0px" }}>
+                <p className="element" >
                     <a href="#">Support</a>
                 </p>
             </div>
             <div className="footer-column">
-                <h2 className="title" style={{ "font-size": "12px", margin: "0px 0px 4px 0px" }}>
+                <h2 className="title" >
                     Learn
                 </h2>
-                <p className="element" style={{ "font-size": "11px", margin: "0px 0px 4px 0px" }}>
+                <p className="element" >
                     <a href="#">How to trade</a>
                 </p>
-                <p className="element" style={{ "font-size": "11px", margin: "0px 0px 4px 0px" }}>
+                <p className="element" >
                     <a href="#">Technology</a>
                 </p>
-                <p className="element" style={{ "font-size": "11px", margin: "0px 0px 4px 0px" }}>
+                <p className="element" >
                     <a href="#">Supported Platforms</a>
                 </p>
             </div>
             <div className="footer-column">
-                <h2 className="title" style={{ "font-size": "12px", margin: "0px 0px 4px 0px" }}>
+                <h2 className="title" >
                     Social
                 </h2>
-                <p className="element" style={{ "font-size": "11px", margin: "0px 0px 4px 0px" }}>
+                <p className="element" >
                     <a href="#">Blog</a>
                 </p>
-                <p className="element" style={{ "font-size": "11px", margin: "0px 0px 4px 0px" }}>
+                <p className="element" >
                     <a href="#">Twitter</a>
                 </p>
-                <p className="element" style={{ "font-size": "11px", margin: "0px 0px 4px 0px" }}>
+                <p className="element" >
                     <a href="#">Facebook</a>
                 </p>
             </div>
             <div className="footer-column">
-                <h2 className="title" style={{ "font-size": "12px", margin: "0px 0px 4px 0px" }}>
+                <h2 className="title" >
                     Media
                 </h2>
-                <p className="element" style={{ "font-size": "11px", margin: "0px 0px 4px 0px" }}>
+                <p className="element" >
                     <a href="#">Brand</a>
                 </p>
-                <p className="element" style={{ "font-size": "11px", margin: "0px 0px 4px 0px" }}>
+                <p className="element" >
                     <a href="#">Press</a>
                 </p>
-                <p className="element" style={{ "font-size": "11px", margin: "0px 0px 4px 0px" }}>
+                <p className="element" >
                     <a href="#">Clients & Partners</a>
                 </p>
             </div>
             <div className="footer-column">
                 <img src={ESXLogo} alt="ESX" height='40px' style={{ margin: `-16px` }} />
-                <p className="element" style={{ "font-size": "8px", margin: "0px 0px 4px 0px" }}>
+                <p className="element" >
                     2018 © ESX, Co
                 </p>
             </div>
@@ -70,9 +70,23 @@ export default props => {
                     display: flex;
                     margin: auto;
                     background: #333333;
+<<<<<<< HEAD
                     z-index: 1;
                     width: 100%;
                     height: 153px;
+=======
+                    width: 1440px;
+>>>>>>> Removing inline styling
+                }
+
+                .element {
+                    font-size: 11px;
+                    margin: 0px 0px 1px 0px;
+                }
+
+                .title {
+                    font-size: 12px;
+                    margin: 0px 0px 3px 0px;
                 }
 
                 .footer-column {
