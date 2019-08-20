@@ -4,6 +4,28 @@ import slide3 from '../assets/images/home/slide3.jpg'
 import slide4 from '../assets/images/home/slide4.jpg'
 import slide5 from '../assets/images/home/slide5.jpg'
 import slide6 from '../assets/images/home/slide6.jpg'
+import Carousel from 'react-multi-carousel'
+// import 'react-multi-carousel/lib/styles.css'
+
+const responsive = {
+    superLargeDesktop: {
+        // the naming can be any, depends on you.
+        breakpoint: { max: 4000, min: 3000 },
+        items: 5,
+    },
+    desktop: {
+        breakpoint: { max: 3000, min: 1024 },
+        items: 3,
+    },
+    tablet: {
+        breakpoint: { max: 1024, min: 464 },
+        items: 2,
+    },
+    mobile: {
+        breakpoint: { max: 464, min: 0 },
+        items: 1,
+    },
+};
 
 export default props => {
     return (
@@ -12,14 +34,19 @@ export default props => {
                 <div className="left">left</div>
                 <div className="right">right</div>
             </div>
-            <div className="content-container">
+            <Carousel
+                className="content-container"
+                responsive={responsive}
+                ssr
+            >
                 <img src={slide1} alt="slide1" />
                 <img src={slide2} alt="slide2" />
                 <img src={slide3} alt="slide3" />
                 <img src={slide4} alt="slide4" />
                 <img src={slide5} alt="slide5" />
                 <img src={slide6} alt="slide6" />
-            </div>
+            </Carousel>
+
             <style jsx>{`
                 .slider {
                     position: absolute;
