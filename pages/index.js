@@ -6,46 +6,56 @@ import u9 from '../assets/images/home/image_home_u9.jpg'
 import Head from 'next/head'
 
 export default class Counter extends React.Component {
+  state = {
+    showTmpImage: true
+  }
+
   render() {
     return (
-      // <div>
-      //   <Page title="Index Page" linkTo="/other" />
-      //   <img src={ESXLogo} alt="ESX LOOG" width='300' />
-      // </div>
       <div>
         <Head>
           <link href="https://fonts.googleapis.com/css?family=Hind&display=swap" rel="stylesheet" />
         </Head>
         <Page title="Index Page" />
-        <div id="base">
-          {/* background (Dynamic Panel) */}
-          <div id="u8" className="ax_default" data-label="background">
-            <div id="u8_state0" className="panel_state" data-label="background_img">
-              <div id="u8_state0_content" className="panel_state_content">
-                {/* image_home (Image) */}
-                <div id="u9" className="ax_default image" data-label="image_home" style={{ "margin-top": "-646px" }}>
-                  <img
-                    id="u9_img"
-                    className="img "
-                    src={u9}
-                    style={{ width: `1440px` }}
-                  />
-                  {/* Unnamed () */}
-                  <div
-                    id="u10"
-                    className="text"
-                    style={{ display: "none", visibility: "hidden" }}
-                  >
-                    <p>
-                      <span />
-                    </p>
+        {
+          this.state.showTmpImage && (
+            <div id="base">
+              {/* background (Dynamic Panel) */}
+              <div id="u8" className="ax_default" data-label="background">
+                <div id="u8_state0" className="panel_state" data-label="background_img">
+                  <div id="u8_state0_content" className="panel_state_content">
+                    {/* image_home (Image) */}
+                    <div id="u9" className="ax_default image" data-label="image_home" style={{ "margin-top": "-646px" }}>
+                      <img
+                        id="u9_img"
+                        className="img "
+                        src={u9}
+                        style={{ width: `1440px` }}
+                      />
+                      {/* Unnamed () */}
+                      <div
+                        id="u10"
+                        className="text"
+                        style={{ display: "none", visibility: "hidden" }}
+                      >
+                        <p>
+                          <span />
+                        </p>
+                      </div>
+                    </div>
+                    
                   </div>
                 </div>
-                
               </div>
             </div>
-          </div>
-        </div>
+          )
+        }
+        <button
+          style={{position: 'fixed', right: '2em', bottom: '2em'}}
+          onClick={() => { this.setState({ showTmpImage: !this.state.showTmpImage }) }}
+        >
+          Toggle Image
+        </button>
       </div >
 
     )
