@@ -22,10 +22,10 @@ class Page extends React.Component {
     // console.log('Page.js', this.props.store)
     return (
       <div style={{ width: `1440px` }}>
-          <TickerStrip movieStore={this.props.store} />
-          <Hero />
-          <Slider />
-          <Footer/>
+        <TickerStrip movieStore={this.props.store} />
+        <Hero />
+        <Slider movieStore={this.props.store} />
+        <Footer />
       </div >
     )
   }

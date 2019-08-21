@@ -7,7 +7,7 @@ import slide6 from '../assets/images/home/slide6.jpg'
 import Carousel from 'react-multi-carousel'
 import "../assets/styles/base.css"
 import 'react-multi-carousel/lib/styles.css'
-import SlideItem from "./SlideItem"
+import SliderItem from "./SliderItem"
 
 const responsive = {
     superLargeDesktop: {
@@ -30,10 +30,19 @@ const responsive = {
 };
 
 class Slider extends React.Component {
-    debugger;
     render() {
+        const sliderItems = this.props.movieStore.movies.slice(0, 14).map((sliderItem, key) => {
+            const { title, Imdbid, verticalImg } = sliderItem;
+            return <SliderItem
+                key={Imdbid}
+                title={title}
+                imgSrc={verticalImg}
+                width="164px" />
+        })
         return (
-            <div className="slider" >
+            < div className="slider" >
+
+
                 <Carousel
                     responsive={responsive}
                     ssr
@@ -41,16 +50,14 @@ class Slider extends React.Component {
                     beforeChange={() => this.setState({ isMoving: true })}
                     afterChange={() => this.setState({ isMoving: false })}
                 >
-                    {[slide1].map(slide => {
-                        return <SlideItem imgSrc={slide} width="164px" />;
-                    })}
-                    <SlideItem imgSrc={slide1} width="164px" />
-                    <img src={slide1} alt="slide1" />
+
+                    {sliderItems}
+                    {/* <img src={slide1} alt="slide1" />
                     <img src={slide2} alt="slide2" />
                     <img src={slide3} alt="slide3" />
                     <img src={slide4} alt="slide4" />
                     <img src={slide5} alt="slide5" />
-                    <img src={slide6} alt="slide6" />
+                    <img src={slide6} alt="slide6" /> */}
                 </Carousel>
                 <style jsx>{`
                     .slider {
@@ -64,7 +71,7 @@ class Slider extends React.Component {
                         width: 164px;
                     }
                 `}</style>
-            </div>
+            </div >
         )
     }
 }

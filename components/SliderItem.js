@@ -5,6 +5,10 @@ export default props => {
         <div>
             <img src={props.imgSrc} alt="slide-item" style={{ width: props.width }} />
             <style jsx>{`
+                img {
+                    height: 92px;
+                    object-fit: cover;
+                }
             `}</style>
         </div>
     )
