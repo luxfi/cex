@@ -1,8 +1,11 @@
 import ESXLogo from '../assets/images/esx/u1.png'
+import "../assets/styles/base.css"
+import 'react-multi-carousel/lib/styles.css'
 
 export default props => {
     return (
         <div className="footer-container">
+            <div className="footer-gutter"/>
             <div className="footer-column">
                 <h2 className="title" >
                     Company
@@ -17,6 +20,7 @@ export default props => {
                     <a href="#">Support</a>
                 </p>
             </div>
+            <div className="column-pad"/>
             <div className="footer-column">
                 <h2 className="title" >
                     Learn
@@ -31,6 +35,7 @@ export default props => {
                     <a href="#">Supported Platforms</a>
                 </p>
             </div>
+            <div className="column-pad"/>
             <div className="footer-column">
                 <h2 className="title" >
                     Social
@@ -45,6 +50,7 @@ export default props => {
                     <a href="#">Facebook</a>
                 </p>
             </div>
+            <div className="column-pad"/>
             <div className="footer-column">
                 <h2 className="title" >
                     Media
@@ -59,16 +65,18 @@ export default props => {
                     <a href="#">Clients & Partners</a>
                 </p>
             </div>
+            <div className="column-pad"/>
             <div className="footer-column">
                 <img src={ESXLogo} alt="ESX" height='40px' style={{ margin: `-16px` }} />
                 <p className="element" >
                     2018 © ESX, Co
                 </p>
             </div>
+            <div className="footer-gutter"/>
             <style jsx>{`
 
                 a {
-                    color: white;
+                    color: gray;
                     text-decoration: none;
                 }
 
@@ -80,11 +88,21 @@ export default props => {
                     color: white;
                     z-index: 1;
                     width: 100%;
-                    height: 223px;
+                    height: 156px;
+                    column-gap: 40px;
+                }
+
+                .footer-gutter {
+                    width: 18%;
+                }
+
+                .column-pad {
+                    width: 8%;
                 }
 
                 .element {
                     font-size: 11px;
+                    color: gray;
                     margin: 0px 0px 1px 0px;
                 }
 
@@ -96,7 +114,7 @@ export default props => {
                 .footer-column {
                     display: flex;
                     flex-direction: column;
-                    line-height: 56px;
+                    line-height: 25px;
                     justify-content: center;
                 }
             `}</style>
