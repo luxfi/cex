@@ -41,7 +41,7 @@ class Slider extends React.Component {
         })
         return (
             < div className="slider" >
-
+                <div className="title">Trending Now</div >
 
                 <Carousel
                     responsive={responsive}
@@ -60,8 +60,13 @@ class Slider extends React.Component {
                     <img src={slide6} alt="slide6" /> */}
                 </Carousel>
                 <style jsx>{`
+                    .title {
+                        color: #2d92dd;
+                        font-size: 37px;
+                        margin: 29px 0px 15px 0px;
+                    }
                     .slider {
-                        margin-top: 86px;
+                        // margin-top: 86px;
                         height 300px;
                         width: 886px;
                         padding: 0px 278px;
