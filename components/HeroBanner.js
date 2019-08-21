@@ -1,4 +1,6 @@
 import ESXLogo from '../assets/images/esx/u1.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 
 export default props => {
     return (
@@ -12,6 +14,7 @@ export default props => {
                         $12.50
                     </p>
                     <p className="change" style={{ fontSize: "27px", margin: "0px" }}>
+                        <FontAwesomeIcon icon={faArrowUp} style={{ width: '18px', paddingRight: "8px" }} />
                         $1 (8.7%)
                     </p>
                 </div>
