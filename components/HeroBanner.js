@@ -65,7 +65,8 @@ export default props => {
                     width: 50%;
                 }
                 .change {
-                    color: #1ecd93;
+                    color: #0dc109;
+                    margin-top: 2px;
                 }
                 .links {
                     display: flex;
@@ -110,7 +111,7 @@ export default props => {
                     line-height: 48px;
                     border-radius: 7px;
                     background-color: #ff911e;
-                    box-shadow: 0 4px 14px 0 rgba(0,118,255,0.39);
+                    box-shadow: 0 4px 14px 0 rgba(255, 145, 30, 0.39);
                     color: white;
                 }
                 .btn {
