@@ -1,4 +1,4 @@
-export default ({ title = "Missing Title", symbol = "XXX", price = 11.11, change = 1, percentChange = .1111 }) => {
+export default ({ title = "Missing Title", symbol = "XXX", price = 11.11, change = 1, percentChange = .1111, id }) => {
     const direction = change >= 0 ? "positive" : "negative";
     return (
         <li className="navi-data-strip__ticker">

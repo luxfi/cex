@@ -29,7 +29,7 @@ const responsive = {
 };
 
 class Slider extends React.Component {
-    state = { isMoving: false };
+    debugger;
     render() {
         return (
             <div className="slider" >
@@ -40,12 +40,12 @@ class Slider extends React.Component {
                     beforeChange={() => this.setState({ isMoving: true })}
                     afterChange={() => this.setState({ isMoving: false })}
                 >
-                    <img isMoving={this.state.isMoving} src={slide1} alt="slide1" />
-                    <img isMoving={this.state.isMoving} src={slide2} alt="slide2" />
-                    <img isMoving={this.state.isMoving} src={slide3} alt="slide3" />
-                    <img isMoving={this.state.isMoving} src={slide4} alt="slide4" />
-                    <img isMoving={this.state.isMoving} src={slide5} alt="slide5" />
-                    <img isMoving={this.state.isMoving} src={slide6} alt="slide6" />
+                    <img src={slide1} alt="slide1" />
+                    <img src={slide2} alt="slide2" />
+                    <img src={slide3} alt="slide3" />
+                    <img src={slide4} alt="slide4" />
+                    <img src={slide5} alt="slide5" />
+                    <img src={slide6} alt="slide6" />
                 </Carousel>
                 <style jsx>{`
                     .slider {
