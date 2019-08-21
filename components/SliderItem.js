@@ -1,4 +1,7 @@
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
+
 export default props => {
     const width = props.width || "164px"
     return (
@@ -6,7 +9,10 @@ export default props => {
             <img src={props.imgSrc} alt="slider-item" style={{ width: props.width }} />
             <div className="price">$5.55</div>
             <div className="info">
-                <span className="change">$1 (8.7%)</span>
+                <span className="change">
+                    <FontAwesomeIcon icon={faArrowUp} style={{ width: '12px', paddingRight: "5px" }} />
+                    $1 (8.7%)
+                </span>
                 <a href="#" className="btn invert">trade</a>
             </div>
             <style jsx>{`
@@ -32,6 +38,10 @@ export default props => {
                 }
                 .change {
                     color: #0dc109;
+                }
+                .arrow-up {
+                    height: 14px;
+                    padding: 0px 4px;
                 }
                 .btn.invert {
                     margin: 0;
