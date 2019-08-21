@@ -7,6 +7,7 @@ import slide6 from '../assets/images/home/slide6.jpg'
 import Carousel from 'react-multi-carousel'
 import "../assets/styles/base.css"
 import 'react-multi-carousel/lib/styles.css'
+import SlideItem from "./SlideItem"
 
 const responsive = {
     superLargeDesktop: {
@@ -40,6 +41,10 @@ class Slider extends React.Component {
                     beforeChange={() => this.setState({ isMoving: true })}
                     afterChange={() => this.setState({ isMoving: false })}
                 >
+                    {[slide1].map(slide => {
+                        return <SlideItem imgSrc={slide} width="164px" />;
+                    })}
+                    <SlideItem imgSrc={slide1} width="164px" />
                     <img src={slide1} alt="slide1" />
                     <img src={slide2} alt="slide2" />
                     <img src={slide3} alt="slide3" />
