@@ -22,7 +22,7 @@ const responsive = {
 class Chart extends React.Component {
 
         render() {
-        var chartWidth = 1440 // this will need to be set by something else ultimately but for right now whatever
+        var chartWidth = 1024 // this will need to be set by something else ultimately but for right now whatever
 
         var chartHeight = 300 // probably same deal, should be dynamic
 
@@ -35,7 +35,7 @@ class Chart extends React.Component {
         var index = 0
         this.props.movieStore.movies.forEach(entry => {
             const { title, price, change, percentChange, symbol } = entry
-            entries.push({x: (barGutter + (widthDelta * index)), y: price})
+            entries.push({x: title, y: price})
             index++
         })
         
