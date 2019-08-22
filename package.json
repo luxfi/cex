@@ -17,7 +17,8 @@
     "next": "latest",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-multi-carousel": "^2.2.4"
+    "react-multi-carousel": "^2.2.4",
+    "react-vis": "1.11.7"
   },
   "license": "ISC",
   "devDependencies": {
