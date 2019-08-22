@@ -77,6 +77,11 @@ class Slider extends React.Component {
                     this.Carousel.next()
                     // this.Carousel.goToSlide(nextSlide)
                 }}>Click me</button>
+                <button onClick={() => {
+                    // const nextSlide = this.Carousel.state.currentSlide + 1;
+                    this.Carousel.previous()
+                    // this.Carousel.goToSlide(nextSlide)
+                }}>Click me</button>
                 <style jsx>{`
                     .title {
                         color: #2d92dd;
