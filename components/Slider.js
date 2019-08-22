@@ -30,13 +30,6 @@ const responsive = {
     },
 };
 
-const CustomLeftArrow = ({ onClick }) => {
-    return <FontAwesomeIcon onClick={() => onClick()} icon={faArrowLeft} style={{ position: "absolute", width: "28px", left: "0px", paddingBottom: "46px", color: "#2d92dd" }} />;
-};
-const CustomRightArrow = ({ onClick }) => {
-    return <FontAwesomeIcon onClick={() => onClick()} icon={faArrowRight} style={{ position: "absolute", width: "28px", right: "0px", paddingBottom: "46px", color: "#2d92dd" }} />
-};
-
 class Slider extends React.Component {
     setCarouselRef(el) {
         this.Carousel = el;
@@ -53,44 +46,50 @@ class Slider extends React.Component {
                     imgSrc={verticalImg}
                     width="164px" />
             })
+        const CustomLeftArrow = ({ onClick }) => {
+            return <FontAwesomeIcon onClick={() => this.Carousel.next()} icon={faArrowLeft} style={{ width: "28px", left: "0px", paddingBottom: "34px", color: "#2d92dd", paddingRight: "22px" }} />;
+        };
+        const CustomRightArrow = ({ onClick }) => {
+            return <FontAwesomeIcon onClick={() => this.Carousel.previous()} icon={faArrowRight} style={{ width: "28px", right: "0px", paddingBottom: "34px", color: "#2d92dd", paddingLeft: "22px" }} />
+        };
         return (
-            < div className="slider" >
-                <div className="title">Trending Now</div >
+            <div className="container">
+                <CustomLeftArrow />
+                < div className="slider" >
+                    <div className="title">Trending Now</div >
+                    <Carousel
+                        ref={this.setCarouselRef.bind(this)}
+                        arrows={false}
+                        responsive={responsive}
+                        ssr
+                        infinite
+                        beforeChange={() => this.setState({ isMoving: true })}
+                        afterChange={() => this.setState({ isMoving: false })}
+                        itemClass="custom-item"
+                        containerClass="carousel-container"
+                    >
 
-                <Carousel
-                    ref={this.setCarouselRef.bind(this)}
-                    arrows={false}
-                    responsive={responsive}
-                    ssr
-                    infinite
-                    beforeChange={() => this.setState({ isMoving: true })}
-                    afterChange={() => this.setState({ isMoving: false })}
-                    // customLeftArrow={<CustomLeftArrow />}
-                    // customRightArrow={<CustomRightArrow />}
-                    itemClass="custom-item"
-                >
-
-                    {sliderItems}
-                </Carousel>
-                <button onClick={() => {
-                    this.Carousel.next()
-                }}>Click me</button>
-                <button onClick={() => {
-                    this.Carousel.previous()
-                }}>Click me</button>
+                        {sliderItems}
+                    </Carousel>
+                </div>
+                <CustomRightArrow />
                 <style jsx>{`
                     .title {
                         color: #2d92dd;
                         font-size: 37px;
-                        margin: 29px 0px 15px 0px;
+                        margin: 29px 0px 14px 0px;
                     }
                     .slider {
                         height 300px;
                         width: 885px;
-                        padding: 0px 278px;
+                        // padding: 0px 278px;
                     }
                     .custom-item {
                         padding: 8px;
+                    }
+                    .container {
+                        display: flex;
+                        justify-content: center;
                     }
                 `}</style>
             </div >

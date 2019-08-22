@@ -23,7 +23,7 @@ export default props => {
                 }
                 img {
                     display: flex;
-                    height: 92px;
+                    height: 93px;
                     object-fit: cover;
                 }
                 .info {
