@@ -34,28 +34,41 @@ class Chart extends React.Component {
 
         var index = 0
         this.props.movieStore.movies.forEach(entry => {
-            const { title, price, change, percentChange, symbol } = entry
-            entries.push({x: title, y: price})
+            const { verticalImg, price, name, change, percentChange, symbol } = entry
+            entries.push({x: verticalImg, y: price})
             index++
         })
         
         return (
-            <div>
+            <div className="chart-container">
+                <div className="chart-gutter"/>
                 <div className="top-gainers-chart">
-                <XYPlot
-                    xType="ordinal"
-                    width={chartWidth}
-                    height={chartHeight}
-                    yDomain={[0,chartHeight]}>
-                    <HorizontalGridLines />
-                    <VerticalBarSeries
-                        data={entries.slice(0,14)}/>
-                    <XAxis />
-                    <YAxis />
-                </XYPlot>
+                    <XYPlot
+                        xType="ordinal"
+                        width={chartWidth}
+                        height={chartHeight}
+                        yDomain={[0,chartHeight]}>
+                        <VerticalBarSeries
+                            data={entries.slice(0,14)}/>
+                        <XAxis />
+                        <YAxis />
+                    </XYPlot>
                 </div>
+                <div className="chart-gutter"/>
 
                 <style jsx>{`
+                    .chart-container {
+                        display: flex;
+                        margin: auto;
+                        font-family: ‘BWHaasGroteskTF-55Roman-Web,sans-serif’, sans-serif;
+                        color: white;
+                        z-index: 1;
+                        width: 100%;
+                    }
+
+                    .chart-gutter {
+                        width: 18%;
+                    }
                 `}</style>
             </div>
         )
