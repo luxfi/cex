@@ -44,7 +44,7 @@ class Slider extends React.Component {
                     key={Imdbid}
                     title={title}
                     imgSrc={verticalImg}
-                    width="164px" />
+                    width="166px" />
             })
         const CustomLeftArrow = ({ onClick }) => {
             return <FontAwesomeIcon onClick={() => this.Carousel.next()} icon={faArrowLeft} style={{ width: "28px", left: "0px", paddingBottom: "34px", color: "#2d92dd", paddingRight: "22px" }} />;
@@ -67,6 +67,7 @@ class Slider extends React.Component {
                         afterChange={() => this.setState({ isMoving: false })}
                         itemClass="custom-item"
                         containerClass="carousel-container"
+                        additionalTransfrom={-1 * 5}
                     >
 
                         {sliderItems}
@@ -81,11 +82,10 @@ class Slider extends React.Component {
                     }
                     .slider {
                         height 300px;
-                        width: 885px;
+                        // width: 885px;
+                        // width: 900px
+                        width: 883px
                         // padding: 0px 278px;
-                    }
-                    .custom-item {
-                        padding: 8px;
                     }
                     .container {
                         display: flex;

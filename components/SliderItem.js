@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 
 export default props => {
-    const width = props.width || "164px"
+    const width = props.width || "166px"
     return (
         <div className="container">
             <img src={props.imgSrc} alt="slider-item" style={{ width: props.width }} />
@@ -19,7 +19,7 @@ export default props => {
                 .container {
                     display: flex;
                     flex-direction: column;
-                    width: 164px;
+                    width: 165px;
                 }
                 img {
                     display: flex;
