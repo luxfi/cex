@@ -5,6 +5,7 @@ import TickerStrip from './TickerStrip'
 import Hero from './Hero'
 import Slider from './Slider'
 import Footer from './Footer'
+import Chart from './Chart'
 // import Clock from './Clock'
 
 @inject('store')
@@ -25,6 +26,7 @@ class Page extends React.Component {
         <TickerStrip movieStore={this.props.store} />
         <Hero />
         <Slider movieStore={this.props.store} />
+        <Chart movieStore={this.props.store}/>
         <Footer />
       </div >
     )
