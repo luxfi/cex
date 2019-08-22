@@ -26,7 +26,7 @@ class Page extends React.Component {
         <TickerStrip movieStore={this.props.store} />
         <Hero />
         <Slider movieStore={this.props.store} />
-        <Chart movieStore={this.props.store}/>
+        <Chart topMovies={this.props.store.topMovies}/>
         <Footer />
       </div >
     )

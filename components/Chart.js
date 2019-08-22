@@ -22,28 +22,32 @@ const responsive = {
 class Chart extends React.Component {
 
         render() {
-        var chartWidth = 1024 // this will need to be set by something else ultimately but for right now whatever
+        const chartWidth = 1024 // this will need to be set by something else ultimately but for right now whatever
 
-        var chartHeight = 300 // probably same deal, should be dynamic
+        const chartHeight = 300 // probably same deal, should be dynamic
 
         const widthDelta = chartWidth / 16 // again, will need to set this dynamically with the count of displayed movies, but good enough for now
         const barGutter = widthDelta / 16 // same as above, dependent on number of movies displayed (full number + 1)
-       
-        var entries = []
+        const maxChange = this.props.topMovies[0].percentChange
 
-        this.props.movieStore.movies.forEach(entry => {
-            const { verticalImg, price} = entry
-            entries.push({x: verticalImg, y: price})
-        })
+        const chartItems = this.props.topMovies
+            .map((chartItem, key) => {
+                return <ChartEntry
+                    height={chartHeight}
+                    width={widthDelta}
+                    gutter={barGutter}
+                    imgSrc={chartItem.verticalImg}
+                    percentChange={chartItem.percentChange}
+                    maxChange={maxChange}/>
+            })
 
-
-        entries = entries.sort(function(a,b){return b.y - a.y})
-        
         return (
             <div className="chart-container">
                 <div className="chart-gutter"/>
                 <div className="top-gainers-chart">
-                    <XYPlot
+
+                    {chartItems}
+                    {/* <XYPlot
                         xType="ordinal"
                         width={chartWidth}
                         height={chartHeight}
@@ -52,7 +56,8 @@ class Chart extends React.Component {
                             data={entries.slice(0,14)}/>
                         <XAxis />
                         <YAxis />
-                    </XYPlot>
+                    </XYPlot> */}
+
                 </div>
                 <div className="chart-gutter"/>
 
@@ -61,8 +66,6 @@ class Chart extends React.Component {
                         display: flex;
                         margin: auto;
                         font-family: ‘BWHaasGroteskTF-55Roman-Web,sans-serif’, sans-serif;
-                        color: white;
-                        z-index: 1;
                         width: 100%;
                     }
 

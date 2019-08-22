@@ -1,5 +1,6 @@
-import { action, observable } from 'mobx'
+import { action, observable, computed } from 'mobx'
 import { useStaticRendering } from 'mobx-react'
+import _ from 'lodash'
 
 const isServer = typeof window === 'undefined'
 useStaticRendering(isServer)
@@ -18,7 +19,9 @@ export class Store {
     // console.log('calling hydrate with', serializedStore)
     this.movies = serializedStore
   }
-
+  @computed get topMovies() {
+      return this.movies.length > 0 ? _.sortBy(this.movies, r => -r.percentChange).slice(0,15) : this.movies
+  }
   // @action start = () => {
   //   this.timer = setInterval(() => {
   //     this.lastUpdate = Date.now()
