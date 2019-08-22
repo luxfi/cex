@@ -28,16 +28,16 @@ class Chart extends React.Component {
 
         const widthDelta = chartWidth / 16 // again, will need to set this dynamically with the count of displayed movies, but good enough for now
         const barGutter = widthDelta / 16 // same as above, dependent on number of movies displayed (full number + 1)
-        // console.log("The first title: ", props.movieStore.movies && props.movieStore.movies[0].title)
+       
+        var entries = []
 
-        const entries = []
-
-        var index = 0
         this.props.movieStore.movies.forEach(entry => {
-            const { verticalImg, price, name, change, percentChange, symbol } = entry
+            const { verticalImg, price} = entry
             entries.push({x: verticalImg, y: price})
-            index++
         })
+
+
+        entries = entries.sort(function(a,b){return b.y - a.y})
         
         return (
             <div className="chart-container">
