@@ -90,8 +90,8 @@ class Slider extends React.Component {
                     }
                     .slider {
                         height 300px;
-                        width: 1036px;
-                        padding: 0px 202px;
+                        width: 885px;
+                        padding: 0px 278px;
                     }
                     .custom-item {
                         padding: 8px;
