@@ -8,16 +8,17 @@ import Carousel from 'react-multi-carousel'
 import "../assets/styles/base.css"
 import 'react-multi-carousel/lib/styles.css'
 import SliderItem from "./SliderItem"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 const responsive = {
     superLargeDesktop: {
-        // the naming can be any, depends on you.
         breakpoint: { max: 4000, min: 3000 },
-        items: 6,
+        items: 5,
     },
     desktop: {
         breakpoint: { max: 3000, min: 1024 },
-        items: 3,
+        items: 5,
     },
     tablet: {
         breakpoint: { max: 1024, min: 464 },
@@ -29,36 +30,53 @@ const responsive = {
     },
 };
 
+const CustomLeftArrow = ({ onClick }) => {
+    return <FontAwesomeIcon onClick={() => onClick()} icon={faArrowLeft} style={{ position: "absolute", width: "28px", left: "0px", paddingBottom: "46px", color: "#2d92dd" }} />;
+};
+const CustomRightArrow = ({ onClick }) => {
+    return <FontAwesomeIcon onClick={() => onClick()} icon={faArrowRight} style={{ position: "absolute", width: "28px", right: "0px", paddingBottom: "46px", color: "#2d92dd" }} />
+};
+
 class Slider extends React.Component {
+    setCarouselRef(el) {
+        this.Carousel = el;
+    }
+
     render() {
-        const sliderItems = this.props.movieStore.movies.slice(0, 14).map((sliderItem, key) => {
-            const { title, Imdbid, verticalImg } = sliderItem;
-            return <SliderItem
-                key={Imdbid}
-                title={title}
-                imgSrc={verticalImg}
-                width="164px" />
-        })
+        const sliderItems = this.props.movieStore.movies.slice(0, 14)
+            .filter(item => item.verticalImg !== "N/A")
+            .map((sliderItem, key) => {
+                const { title, Imdbid, verticalImg } = sliderItem;
+                return <SliderItem
+                    key={Imdbid}
+                    title={title}
+                    imgSrc={verticalImg}
+                    width="164px" />
+            })
         return (
             < div className="slider" >
                 <div className="title">Trending Now</div >
 
                 <Carousel
+                    ref={this.setCarouselRef.bind(this)}
+                    arrows={false}
                     responsive={responsive}
                     ssr
-                    infinite={true}
+                    infinite
                     beforeChange={() => this.setState({ isMoving: true })}
                     afterChange={() => this.setState({ isMoving: false })}
+                    // customLeftArrow={<CustomLeftArrow />}
+                    // customRightArrow={<CustomRightArrow />}
+                    itemClass="custom-item"
                 >
 
                     {sliderItems}
-                    {/* <img src={slide1} alt="slide1" />
-                    <img src={slide2} alt="slide2" />
-                    <img src={slide3} alt="slide3" />
-                    <img src={slide4} alt="slide4" />
-                    <img src={slide5} alt="slide5" />
-                    <img src={slide6} alt="slide6" /> */}
                 </Carousel>
+                <button onClick={() => {
+                    // const nextSlide = this.Carousel.state.currentSlide + 1;
+                    this.Carousel.next()
+                    // this.Carousel.goToSlide(nextSlide)
+                }}>Click me</button>
                 <style jsx>{`
                     .title {
                         color: #2d92dd;
@@ -66,14 +84,12 @@ class Slider extends React.Component {
                         margin: 29px 0px 15px 0px;
                     }
                     .slider {
-                        // margin-top: 86px;
                         height 300px;
-                        width: 886px;
-                        padding: 0px 278px;
-}
+                        width: 1036px;
+                        padding: 0px 202px;
                     }
-                    img {
-                        width: 164px;
+                    .custom-item {
+                        padding: 8px;
                     }
                 `}</style>
             </div >
@@ -81,41 +97,4 @@ class Slider extends React.Component {
     }
 }
 
-// class Slider extends React.Component {
-//     state = { isMoving: false };
-//     render() {
-//         return (
-//             <Carousel
-//                 responsive={responsive}
-//                 ssr
-//                 infinite={false}
-//                 beforeChange={() => this.setState({ isMoving: true })}
-//                 afterChange={() => this.setState({ isMoving: false })}
-//                 infinite
-//                 containerClass="container"
-//             >
-//                 <img isMoving={this.state.isMoving} src={slide1} alt="slide1" />
-//                 <img isMoving={this.state.isMoving} src={slide2} alt="slide2" />
-//                 <img isMoving={this.state.isMoving} src={slide3} alt="slide3" />
-//                 <img isMoving={this.state.isMoving} src={slide4} alt="slide4" />
-//                 <img isMoving={this.state.isMoving} src={slide5} alt="slide5" />
-//                 <img isMoving={this.state.isMoving} src={slide6} alt="slide6" />
-//                 <img isMoving={this.state.isMoving} src={slide1} alt="slide1" />
-//                 <style jsx>{`
-//                     .container {
-//                         margin-top: 86px;
-//                         height 300px;
-//                         width: 886px;
-//                     }
-//                     img {
-//                         width: 164px;
-//                         margin: 0px 8px;
-//                     }
-//                 `}</style>
-//             </Carousel>
-//         )
-//     }
-// }
-
 export default Slider;
-// export default () => <div className="example">Hello World!</div>
