@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { inject, observer } from 'mobx-react'
 import TickerStrip from './TickerStrip'
 import Hero from './Hero'
+import PageRow from './PageRow'
 import Slider from './Slider'
 import Footer from './Footer'
 import Chart from './Chart'
@@ -25,8 +26,12 @@ class Page extends React.Component {
       <div style={{ width: `1440px` }}>
         <TickerStrip movieStore={this.props.store} />
         <Hero />
-        <Slider movieStore={this.props.store} />
-        <Chart topMovies={this.props.store.topMovies}/>
+        <PageRow rowTitle={"Trending Now"} hideInnerPadding>
+          <Slider movieStore={this.props.store} />
+        </PageRow>
+        <PageRow rowTitle={"Top Gainers"}>
+          <Chart topMovies={this.props.store.topMovies} />
+        </PageRow>
         <Footer />
       </div >
     )

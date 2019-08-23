@@ -47,16 +47,15 @@ class Slider extends React.Component {
                     width="166px" />
             })
         const CustomLeftArrow = ({ onClick }) => {
-            return <FontAwesomeIcon onClick={() => this.Carousel.next()} icon={faArrowLeft} style={{ width: "28px", left: "0px", paddingBottom: "34px", color: "#2d92dd", paddingRight: "22px" }} />;
+            return <FontAwesomeIcon onClick={() => this.Carousel.next()} icon={faArrowLeft} style={{ cursor: 'pointer', width: "28px", left: "0px", paddingBottom: "34px", color: "#2d92dd", paddingRight: "22px" }} />;
         };
         const CustomRightArrow = ({ onClick }) => {
-            return <FontAwesomeIcon onClick={() => this.Carousel.previous()} icon={faArrowRight} style={{ width: "28px", right: "0px", paddingBottom: "34px", color: "#2d92dd", paddingLeft: "22px" }} />
+            return <FontAwesomeIcon onClick={() => this.Carousel.previous()} icon={faArrowRight} style={{ cursor: 'pointer', width: "28px", right: "0px", paddingBottom: "34px", color: "#2d92dd", paddingLeft: "22px" }} />
         };
         return (
             <div className="container">
                 <CustomLeftArrow />
                 < div className="slider" >
-                    <div className="title">Trending Now</div >
                     <Carousel
                         ref={this.setCarouselRef.bind(this)}
                         arrows={false}
@@ -81,15 +80,12 @@ class Slider extends React.Component {
                         margin: 29px 0px 14px 0px;
                     }
                     .slider {
-                        height 300px;
-                        // width: 885px;
-                        // width: 900px
-                        width: 883px
-                        // padding: 0px 278px;
+                        width: 883px;
                     }
                     .container {
                         display: flex;
-                        justify-content: center;
+                        width: 100%;
+                        padding: 30px 0px;
                     }
                 `}</style>
             </div >
