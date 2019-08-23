@@ -4,7 +4,7 @@ class ChartEntry extends React.Component {
         const fillPercent = this.props.maxChange / this.props.percentChange
         const fillHeight = Math.round(this.props.height * fillPercent)
         return (
-            <div className="chart-entry" style={{width: (this.props.width + "px"), height: (this.props.height + "px")}}>
+            <div className="chart-entry">
                 <div className="chart-entry-bar">
                     <div className="chart-entry-bar-fill" style={{height: (fillHeight + "px")}}>
                     </div>
@@ -20,6 +20,8 @@ class ChartEntry extends React.Component {
                     .chart-entry {
                         display: flex;
                         margin: auto;
+                        flex: 1;
+                        flex-direction: column;
                         font-family: ‘BWHaasGroteskTF-55Roman-Web,sans-serif’, sans-serif;
                     }
                     .chart-entry-bar {

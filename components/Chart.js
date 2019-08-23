@@ -69,6 +69,12 @@ class Chart extends React.Component {
                         width: 100%;
                     }
 
+                    .top-gainers-chart {
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                    }
+
                     .chart-gutter {
                         width: 18%;
                     }
