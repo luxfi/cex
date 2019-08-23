@@ -25,6 +25,7 @@ class Chart extends React.Component {
         const chartWidth = 1024 // this will need to be set by something else ultimately but for right now whatever
 
         const chartHeight = 300 // probably same deal, should be dynamic
+        const barHeight = 200 // maybe same deal, maybe should be dynamic
 
         const widthDelta = chartWidth / 16 // again, will need to set this dynamically with the count of displayed movies, but good enough for now
         const barGutter = widthDelta / 16 // same as above, dependent on number of movies displayed (full number + 1)
@@ -33,12 +34,13 @@ class Chart extends React.Component {
         const chartItems = this.props.topMovies
             .map((chartItem, key) => {
                 return <ChartEntry
-                    height={chartHeight}
+                    barHeight={barHeight}
                     width={widthDelta}
                     gutter={barGutter}
                     imgSrc={chartItem.verticalImg}
                     percentChange={chartItem.percentChange}
-                    maxChange={maxChange}/>
+                    fillPercent={chartItem.percentChange/maxChange}
+                />
             })
 
         return (
