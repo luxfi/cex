@@ -7,6 +7,7 @@ import PageRow from './PageRow'
 import Slider from './Slider'
 import Footer from './Footer'
 import Chart from './Chart'
+import ImageGrid from './ImageGrid'
 // import Clock from './Clock'
 
 @inject('store')
@@ -31,6 +32,9 @@ class Page extends React.Component {
         </PageRow>
         <PageRow rowTitle={"Top Gainers"}>
           <Chart topMovies={this.props.store.topMovies} />
+        </PageRow>
+        <PageRow rowTitle={"Our Partners"}>
+          <ImageGrid/>
         </PageRow>
         <Footer />
       </div >
