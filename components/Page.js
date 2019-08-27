@@ -7,7 +7,8 @@ import PageRow from './PageRow'
 import Slider from './Slider'
 import Footer from './Footer'
 import Chart from './Chart'
-import ImageGrid from './ImageGrid'
+import PartnerGrid from './PartnerGrid'
+import SecuredByGrid from './SecuredByGrid'
 // import Clock from './Clock'
 
 @inject('store')
@@ -34,7 +35,10 @@ class Page extends React.Component {
           <Chart topMovies={this.props.store.topMovies} />
         </PageRow>
         <PageRow rowTitle={"Our Partners"}>
-          <ImageGrid/>
+          <PartnerGrid/>
+        </PageRow>
+        <PageRow rowTitle={"Secured By"}>
+          <SecuredByGrid/>
         </PageRow>
         <Footer />
       </div >
