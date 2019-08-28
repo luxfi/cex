@@ -8,42 +8,27 @@ import verisignImg from '../assets/images/secured/verisign.png'
 
 export default props => {
     return (
-        <div className="image-row">
-            <div className="left box" />
-            <div className="image-container">                
-                <img className="partner-image" src={mcafeeImg} alt="McAfee"/>  
-                <img className="partner-image" src={paypalImg} alt="PayPal"/>
-                <img className="partner-image" src={bbbImg} alt="Better Business Bureau"/>
-                <img className="partner-image" src={trusteImg} alt="TrustE"/>
-                <img className="partner-image" src={scanalertImg} alt="Scan Alert"/>
-                <img className="partner-image" src={comodoImg} alt="Comodo"/>
-                <img className="partner-image" src={verisignImg} alt="VeriSign"/>
-            </div>
-            <div className="right box" />
+        <div className="image-row">             
+            <img className="partner-image" src={mcafeeImg} alt="McAfee"/>  
+            <img className="partner-image" src={paypalImg} alt="PayPal"/>
+            <img className="partner-image" src={bbbImg} alt="Better Business Bureau"/>
+            <img className="partner-image" src={trusteImg} alt="TrustE"/>
+            <img className="partner-image" src={scanalertImg} alt="Scan Alert"/>
+            <img className="partner-image" src={comodoImg} alt="Comodo"/>
+            <img className="partner-image" src={verisignImg} alt="VeriSign"/>
             <style jsx>{`
-            .page-row {
+            .image-row {
                 display: flex;
                 flex: 1;
                 height: auto;
                 margin: 26px 0px;
-            }
-
-            .box {
-                width: 200px;
-                min-height: 100%;
-                flex-shrink: 0;
-                // background-color: rgb(243, 243, 0, .5);
-                background-color: rgb(243, 243, 243);
-            }
-
-            .inner-row {
-                display: flex;
                 flex-wrap: wrap;
+                justify-content: space-between;
             }
 
-            img {
-                padding-left: 15px;
-                padding-right: 15px;
+            .partner-image {
+                padding-top: 5px;
+                padding-bottom: 5px;
             }
             `}</style>
         </div>
