@@ -27,8 +27,7 @@ export default props => {
                 width: 200px;
                 min-height: 100%;
                 flex-shrink: 0;
-                // background-color: rgb(243, 243, 0, .5);
-                background-color: rgb(243, 243, 243);
+                background-color: rgb(243, 243, 243, ${props.whiteGutter ? '0' : '1'});
             }
 
             .inner-row {

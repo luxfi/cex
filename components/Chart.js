@@ -13,19 +13,19 @@ class Chart extends React.Component {
         const widthDelta = chartWidth / 16 // again, will need to set this dynamically with the count of displayed movies, but good enough for now
         const barGutter = widthDelta / 16 // same as above, dependent on number of movies displayed (full number + 1)
         const maxChange = this.props.topMovies[0].percentChange
+        const chartItems = []
 
-        const chartItems = this.props.topMovies.reverse()
-            .map((chartItem, k) => {
-                return <ChartEntry
-                    key={k}
-                    barHeight={barHeight}
-                    width={widthDelta}
-                    gutter={barGutter}
-                    imgSrc={chartItem.verticalImg}
-                    percentChange={chartItem.percentChange}
-                    fillPercent={chartItem.percentChange/maxChange}
-                />
-            })
+        this.props.topMovies.forEach((chartItem, k) => {
+            chartItems.unshift(<ChartEntry
+                key={k}
+                barHeight={barHeight}
+                width={widthDelta}
+                gutter={barGutter}
+                imgSrc={chartItem.verticalImg}
+                percentChange={chartItem.percentChange}
+                fillPercent={chartItem.percentChange/maxChange}
+            />)
+        })
 
         return (
             <div className="chart-container">

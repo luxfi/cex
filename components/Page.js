@@ -12,19 +12,13 @@ import SecuredByGrid from './SecuredByGrid'
 import WhatPanel from './WhatPanel'
 import HowToTradePanel from './HowToTradePanel'
 import PopularGenres from './PopularGenres'
+import StartCTA from './StartTrading'
 
 // import Clock from './Clock'
 
 @inject('store')
 @observer
 class Page extends React.Component {
-  // componentDidMount() {
-  //   this.props.store.start()
-  // }
-
-  // componentWillUnmount() {
-  //   this.props.store.stop()
-  // }
 
   render() {
     // console.log('Page.js', this.props.store)
@@ -32,25 +26,28 @@ class Page extends React.Component {
       <div style={{ width: `1440px` }}>
         <TickerStrip movieStore={this.props.store} />
         <Hero />
-        <PageRow rowTitle={"Trending Now"} hideInnerPadding>
+        <PageRow whiteGutter={this.props.whiteGutter} rowTitle={"Trending Now"} hideInnerPadding>
           <Slider movieStore={this.props.store} />
         </PageRow>
-        <PageRow rowTitle={"Top Gainers"}>
+        <PageRow whiteGutter={this.props.whiteGutter} rowTitle={"Top Gainers"}>
           <Chart topMovies={this.props.store.topMovies} />
         </PageRow>
-        <PageRow rowTitle={"Popular Genres"}>
+        <PageRow whiteGutter={this.props.whiteGutter} rowTitle={"Popular Genres"}>
           <PopularGenres/>
         </PageRow>
-        <PageRow rowTitle={"What is ESX?"}>
+        <StartCTA />
+        <PageRow whiteGutter={this.props.whiteGutter} rowTitle={"What is ESX?"}>
           <WhatPanel/>
         </PageRow>
-        <PageRow rowTitle={"How To Trade"}>
+        <StartCTA />
+        <PageRow whiteGutter={this.props.whiteGutter} rowTitle={"How To Trade"}>
           <HowToTradePanel/>
         </PageRow>
-        <PageRow rowTitle={"Our Partners"}>
+        <StartCTA />
+        <PageRow whiteGutter={this.props.whiteGutter} rowTitle={"Our Partners"}>
           <PartnerGrid/>
         </PageRow>
-        <PageRow rowTitle={"Secured By"}>
+        <PageRow whiteGutter={this.props.whiteGutter} rowTitle={"Secured By"}>
           <SecuredByGrid/>
         </PageRow>
 
@@ -59,35 +56,5 @@ class Page extends React.Component {
     )
   }
 }
-
-// @inject('store')
-// @observer
-// export default Page
-// class Page extends React.Component {
-//   componentDidMount() {
-//     this.props.store.start()
-//   }
-
-//   componentWillUnmount() {
-//     this.props.store.stop()
-//   }
-
-//   render() {
-//     return (
-//       <div>
-//         <h1>{this.props.title}</h1>
-//         <Clock
-//           lastUpdate={this.props.store.lastUpdate}
-//           light={this.props.store.light}
-//         />
-//         <nav>
-//           <Link href={this.props.linkTo}>
-//             <a>Navigate</a>
-//           </Link>
-//         </nav>
-//       </div>
-//     )
-//   }
-// }
 
 export default Page

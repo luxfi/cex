@@ -7,7 +7,8 @@ import Head from 'next/head'
 
 export default class Counter extends React.Component {
   state = {
-    showTmpImage: true
+    showTmpImage: false,
+    whiteGutter: false
   }
 
   render() {
@@ -16,7 +17,7 @@ export default class Counter extends React.Component {
         <Head>
           <link href="https://fonts.googleapis.com/css?family=Hind&display=swap" rel="stylesheet" />
         </Head>
-        <Page title="Index Page" />
+        <Page title="Index Page" whiteGutter={this.state.whiteGutter} />
         {
           this.state.showTmpImage && (
             <div id="base">
@@ -50,6 +51,12 @@ export default class Counter extends React.Component {
             </div>
           )
         }
+        <button
+          style={{position: 'fixed', right: '2em', bottom: '4em'}}
+          onClick={() => { this.setState({ whiteGutter: !this.state.whiteGutter }) }}
+        >
+          Toggle Gutters
+        </button>
         <button
           style={{position: 'fixed', right: '2em', bottom: '2em'}}
           onClick={() => { this.setState({ showTmpImage: !this.state.showTmpImage }) }}

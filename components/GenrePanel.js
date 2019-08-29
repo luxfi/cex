@@ -19,7 +19,6 @@ export default props => {
             <img className="graph-image" src={props.graphImage} />
             <style jsx>{`
             .genre-panel {
-                font-family: ‘BWHaasGroteskTF-55Roman-Web,sans-serif’, sans-serif;
                 flex: 1;
                 height: auto;
                 margin: 26px 0px;
