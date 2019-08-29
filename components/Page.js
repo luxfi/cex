@@ -10,6 +10,7 @@ import Chart from './Chart'
 import PartnerGrid from './PartnerGrid'
 import SecuredByGrid from './SecuredByGrid'
 import WhatPanel from './WhatPanel'
+import HowToTradePanel from './HowToTradePanel'
 
 // import Clock from './Clock'
 
@@ -38,6 +39,9 @@ class Page extends React.Component {
         </PageRow>
         <PageRow rowTitle={"What is ESX?"}>
           <WhatPanel/>
+        </PageRow>
+        <PageRow rowTitle={"How To Trade"}>
+          <HowToTradePanel/>
         </PageRow>
         <PageRow rowTitle={"Our Partners"}>
           <PartnerGrid/>
