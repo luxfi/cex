@@ -9,6 +9,8 @@ import Footer from './Footer'
 import Chart from './Chart'
 import PartnerGrid from './PartnerGrid'
 import SecuredByGrid from './SecuredByGrid'
+import WhatPanel from './WhatPanel'
+
 // import Clock from './Clock'
 
 @inject('store')
@@ -34,12 +36,16 @@ class Page extends React.Component {
         <PageRow rowTitle={"Top Gainers"}>
           <Chart topMovies={this.props.store.topMovies} />
         </PageRow>
+        <PageRow rowTitle={"What is ESX?"}>
+          <WhatPanel/>
+        </PageRow>
         <PageRow rowTitle={"Our Partners"}>
           <PartnerGrid/>
         </PageRow>
         <PageRow rowTitle={"Secured By"}>
           <SecuredByGrid/>
         </PageRow>
+
         <Footer />
       </div >
     )
