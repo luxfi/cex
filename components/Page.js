@@ -11,6 +11,7 @@ import PartnerGrid from './PartnerGrid'
 import SecuredByGrid from './SecuredByGrid'
 import WhatPanel from './WhatPanel'
 import HowToTradePanel from './HowToTradePanel'
+import PopularGenres from './PopularGenres'
 
 // import Clock from './Clock'
 
@@ -36,6 +37,9 @@ class Page extends React.Component {
         </PageRow>
         <PageRow rowTitle={"Top Gainers"}>
           <Chart topMovies={this.props.store.topMovies} />
+        </PageRow>
+        <PageRow rowTitle={"Popular Genres"}>
+          <PopularGenres/>
         </PageRow>
         <PageRow rowTitle={"What is ESX?"}>
           <WhatPanel/>

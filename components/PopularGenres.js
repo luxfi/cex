@@ -1,34 +1,29 @@
-import howToTradeImg from '../assets/images/howtotrade.png'
+import GenrePanel from './GenrePanel'
+import scifiImg from '../assets/images/genres/scifi.png'
+import scifiGraphImg from '../assets/images/genres/scifigraph.png'
+import actionImg from '../assets/images/genres/action.png'
+import actionGraphImg from '../assets/images/genres/actiongraph.png'
+import dramaImg from '../assets/images/genres/drama.png'
+import dramaGraphImg from '../assets/images/genres/dramagraph.png'
 
-export default () => {
+export default props => {
     return (
-        <div className="how-to-trade-panel">
-            <img className="image-panel" src={howToTradeImg} alt="How To Trade"/>
-            <span className="text-panel">
-                <h2 className="text-header">
-                    Buy and sell major entertainment entities
-                </h2>
-                <div className="text-body">
-                    You can trade stock for movies, reality shows, TV series, musicals, and more instantly with a bank account or debit card.
-                </div>
-                <h2 className="text-header">
-                    Access prices and price charts
-                </h2>
-                <div className="text-body">
-                    Wondering how your stock is doing? Check prices on the web or with our Android or iOS app.
-                </div>
-                <h2 className="text-header">
-                    Store your trades safely
-                </h2>
-                <div className="text-body">
-                    Over 98% of data is stored offline and the rest is protected by industry-leading online security.
-                </div>
+        <div className="popular-genres-panel">
+            <span className="genre-panel">
+                <GenrePanel genreTitle="Sci-Fi" genreMovieTitle="The Matrix" genreImage={scifiImg} graphImage={scifiGraphImg}/>
+            </span>
+            <span className="genre-panel">
+                <GenrePanel genreTitle="Action" genreMovieTitle="Ocean's Eleven" genreImage={actionImg} graphImage={actionGraphImg}/>
+            </span>
+            <span className="genre-panel">
+                <GenrePanel genreTitle="Drama" genreMovieTitle="San Andreas" genreImage={dramaImg} graphImage={dramaGraphImg}/>
             </span>
             <a href="#" className="btn invert">Start Trading Now</a>
             <div className="break"/>
             <a href="#" className="demo">View Demo</a>
             <style jsx>{`
-            .how-to-trade-panel { 
+            .popular-genres-panel {
+                font-family: ‘BWHaasGroteskTF-55Roman-Web,sans-serif’, sans-serif;
                 display: flex;
                 justify-content: center;
                 width: 100%;
@@ -36,20 +31,9 @@ export default () => {
                 padding: 0;
                 flex-wrap: wrap;
             }
-            .image-panel {
-                width: 33%;
-                padding-right: 20px;
-            }
-            .text-panel {
-                width: 63%;
-            }
-            
-            .text-header {
-                width: 100%;
-            }
-            .text-body {
-                width: 100%;
-                padding-bottom: 10px;
+            .genre-panel {
+                width: 31%;
+                padding-left: 15px;
             }
             .break {
                 flex-basis: 100%;
