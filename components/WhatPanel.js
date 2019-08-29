@@ -20,7 +20,6 @@ export default props => {
             <a href="#" className="demo">View Demo</a>
             <style jsx>{`
             .why-panel { 
-                font-family: ‘BWHaasGroteskTF-55Roman-Web,sans-serif’, sans-serif;
                 display: flex;
                 justify-content: center;
                 width: 100%;

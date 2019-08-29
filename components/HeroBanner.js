@@ -57,7 +57,6 @@ export default props => {
                     justify-content: space-between;
                     background: transparent;
                     color: #fff;
-                    font-family: 'BWHaasGroteskTF-55Roman-Web,sans-serif', sans-serif;
                     margin: auto;
                 }
                 .info-container {

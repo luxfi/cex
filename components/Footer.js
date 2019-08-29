@@ -84,7 +84,6 @@ export default props => {
                     display: flex;
                     margin: auto;
                     background: #333333;
-                    font-family: ‘BWHaasGroteskTF-55Roman-Web,sans-serif’, sans-serif;
                     color: white;
                     z-index: 1;
                     width: 100%;

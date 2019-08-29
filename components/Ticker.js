@@ -15,7 +15,6 @@ export default ({ title = "Missing Title", symbol = "XXX", price = 11.11, change
                     display: inline-block;
                     line-height: 30px;
                     padding: 0 10px;
-                    font-family: BWHaasGrotesk-75Bold-Web, sans-serif;
                     font-size: 12px;
                 }
 
@@ -48,7 +47,6 @@ export default ({ title = "Missing Title", symbol = "XXX", price = 11.11, change
                     margin: 0px 4px !important;
                     display: inline;
                     font-size: 12px;
-                    font-family: BWHaasGroteskTF-55Roman-Web, sans-serif
                 }
 
                 .navi-data-strip__ticker-direction {
@@ -76,7 +74,6 @@ export default ({ title = "Missing Title", symbol = "XXX", price = 11.11, change
                 .navi-data-strip__ticker-value {
                     display: inline;
                     padding: 2px 2px 1px !important;
-                    font-family: BWHaasGroteskTF-55Roman-Web, sans-serif;
                     font-size: 12px
                 }
 

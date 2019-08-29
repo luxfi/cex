@@ -47,7 +47,6 @@ export default props => {
                     background: transparent;
                     color: #fff;
                     line-height: 30px;
-                    font-family: 'BWHaasGroteskTF-55Roman-Web,sans-serif', sans-serif;
                     font-size: 12px;
                     margin: auto;
                 }
