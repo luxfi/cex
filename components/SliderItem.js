@@ -13,7 +13,7 @@ export default props => {
                     <FontAwesomeIcon icon={faArrowUp} style={{ width: '12px', paddingRight: "5px" }} />
                     $1 (8.7%)
                 </span>
-                <a href="#" className="btn invert">trade</a>
+                <a href="#" className="btn invert">Trade</a>
             </div>
             <style jsx>{`
                 .container {
