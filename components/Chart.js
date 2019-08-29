@@ -15,8 +15,9 @@ class Chart extends React.Component {
         const maxChange = this.props.topMovies[0].percentChange
 
         const chartItems = this.props.topMovies.reverse()
-            .map((chartItem, key) => {
+            .map((chartItem, k) => {
                 return <ChartEntry
+                    key={k}
                     barHeight={barHeight}
                     width={widthDelta}
                     gutter={barGutter}

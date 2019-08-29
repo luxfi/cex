@@ -1,5 +1,5 @@
 export default props => {
-    console.log('Row title', props)
+    // console.log('Row title', props)
     return (
         <div className="page-row">
             <div className="left box" />
