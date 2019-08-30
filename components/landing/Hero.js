@@ -1,4 +1,4 @@
-import Nav from './Nav'
+import Nav from '../generic/Nav'
 import HeroImg from './HeroImg'
 import HeroBanner from './HeroBanner'
 

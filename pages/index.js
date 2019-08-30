@@ -1,34 +1,72 @@
 import React from 'react'
-import Page from '../components/Page'
-// import ESXLogo from '../assets/images/u1.png'
-import u12 from '../assets/images/home/u12.png'
-import u9 from '../assets/images/home/image_home_u9.jpg'
 import Head from 'next/head'
+import { inject, observer } from 'mobx-react'
+import TickerStrip from '../components/generic/TickerStrip'
+import PageRow from '../components/generic/PageRow'
+import Slider from '../components/generic/Slider'
+import Footer from '../components/generic/Footer'
+import Hero from '../components/landing/Hero'
+import Chart from '../components/landing/Chart'
+import PartnerGrid from '../components/landing/PartnerGrid'
+import SecuredByGrid from '../components/landing/SecuredByGrid'
+import WhatPanel from '../components/landing/WhatPanel'
+import HowToTradePanel from '../components/landing/HowToTradePanel'
+import TrendingNowSliderItem from "../components/landing/TrendingNowSliderItem"
+import PopularGenres from '../components/landing/PopularGenres'
+import StartCTA from '../components/landing/StartTrading'
 
-export default class Counter extends React.Component {
+@inject('store')
+@observer
+export default class Index extends React.Component {
   state = {
     whiteGutter: true
   }
 
   render() {
+    const trendingSliderItems = this.props.store.topMovies.slice(0, 14)
+            .filter(item => item.verticalImg !== "N/A")
+            .map((sliderItem, key) => {
+                const { title, Imdbid, verticalImg } = sliderItem;
+                return <TrendingNowSliderItem
+                    key={Imdbid}
+                    title={title}
+                    imgSrc={verticalImg}
+                    width="166px" />
+            })
+
     return (
       <div>
         <Head>
           <link href="https://fonts.googleapis.com/css?family=Hind&display=swap" rel="stylesheet" />
         </Head>
-        <Page title="Index Page" whiteGutter={true} />
-        {/* <button
-          style={{position: 'fixed', right: '2em', bottom: '4em'}}
-          onClick={() => { this.setState({ whiteGutter: !this.state.whiteGutter }) }}
-        >
-          Toggle Gutters
-        </button>
-        <button
-          style={{position: 'fixed', right: '2em', bottom: '2em'}}
-          onClick={() => { this.setState({ showTmpImage: !this.state.showTmpImage }) }}
-        >
-          Toggle Image
-        </button> */}
+        <TickerStrip movieStore={this.props.store} />
+        <Hero />
+        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Trending Now"} hideInnerPadding>
+          <Slider movieStore={this.props.store} sliderItems={trendingSliderItems} />
+        </PageRow>
+        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Top Gainers"}>
+          <Chart topMovies={this.props.store.topMovies} />
+        </PageRow>
+        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Popular Genres"}>
+          <PopularGenres/>
+        </PageRow>
+        <StartCTA />
+        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"What is ESX?"}>
+          <WhatPanel/>
+        </PageRow>
+        <StartCTA />
+        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"How To Trade"}>
+          <HowToTradePanel/>
+        </PageRow>
+        <StartCTA />
+        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Our Partners"}>
+          <PartnerGrid/>
+        </PageRow>
+        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Secured By"}>
+          <SecuredByGrid/>
+        </PageRow>
+
+        <Footer />
       </div >
 
     )

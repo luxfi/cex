@@ -1,4 +1,4 @@
-import heroImg from '../assets/images/home/madmax.jpg'
+import heroImg from '../../assets/images/home/madmax.jpg'
 export default props => {
     return (
         <div>
