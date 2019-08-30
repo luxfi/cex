@@ -1,4 +1,3 @@
-import ESXLogo from '../assets/images/esx/u1.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 

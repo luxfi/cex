@@ -11,26 +11,12 @@ export class Store {
   @observable movies = []
 
   hydrate(serializedStore) {
-    // this.lastUpdate =
-    //   serializedStore.lastUpdate != null
-    //     ? serializedStore.lastUpdate
-    //     : Date.now()
-    // this.light = !!serializedStore.light
-    // console.log('calling hydrate with', serializedStore)
     this.movies = serializedStore
   }
+
   @computed get topMovies() {
       return this.movies.length > 0 ? _.sortBy(this.movies, r => -r.percentChange).slice(0,15) : this.movies
   }
-  // @action start = () => {
-  //   this.timer = setInterval(() => {
-  //     this.lastUpdate = Date.now()
-  //     this.light = true
-  //   }, 1000)
-  // }
-
-  // stop = () => clearInterval(this.timer)
-  // TODO refresh stock ticker data - check every second...?
 }
 
 export async function fetchInitialStoreState() {

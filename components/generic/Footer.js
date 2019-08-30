@@ -1,5 +1,5 @@
-import ESXLogo from '../assets/images/esx/u1.png'
-import "../assets/styles/base.css"
+import ESXLogo from '../../assets/images/esx/u1.png'
+import "../../assets/styles/base.css"
 import 'react-multi-carousel/lib/styles.css'
 
 export default props => {
