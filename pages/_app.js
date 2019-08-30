@@ -27,6 +27,8 @@ class MyMobxApp extends App {
 
   render() {
     const { Component, pageProps } = this.props
+    // console.log("hey")
+    // console.log(this.props.initialStoreState)
     return (
       <Provider store={this.state.store}>
         <Component {...pageProps} />
