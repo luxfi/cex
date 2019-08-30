@@ -41,7 +41,7 @@ export default props => {
                     margin: auto;
                     background: #0000005e;
                     z-index: 1;
-                    width: 1440px;
+                    width: 100%;
                     position: absolute;
                     bottom: 0;
                     left: 0;

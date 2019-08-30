@@ -35,7 +35,7 @@ export default props => {
                     background: #0000005e;
                     position: absolute;
                     z-index: 1;
-                    width: 1440px;
+                    width: 100%;
                     
                 }
                 header {

@@ -23,7 +23,7 @@ class Page extends React.Component {
   render() {
     // console.log('Page.js', this.props.store)
     return (
-      <div style={{ width: `1440px` }}>
+      <div>
         <TickerStrip movieStore={this.props.store} />
         <Hero />
         <PageRow whiteGutter={this.props.whiteGutter} rowTitle={"Trending Now"} hideInnerPadding>

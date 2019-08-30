@@ -5,7 +5,7 @@ export default props => {
             <img src={heroImg} alt="hero image" />
             <style jsx>{`
                 img {
-                    width: 1440px;
+                    width: 100%;
                     position: absolute;
                     z-index: 0;
                     height: 615px;;
