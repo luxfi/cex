@@ -1,10 +1,10 @@
 import GenrePanel from './GenrePanel'
-import scifiImg from '../assets/images/genres/scifi.png'
-import scifiGraphImg from '../assets/images/genres/scifigraph.png'
-import actionImg from '../assets/images/genres/action.png'
-import actionGraphImg from '../assets/images/genres/actiongraph.png'
-import dramaImg from '../assets/images/genres/drama.png'
-import dramaGraphImg from '../assets/images/genres/dramagraph.png'
+import scifiImg from '../../assets/images/genres/scifi.png'
+import scifiGraphImg from '../../assets/images/genres/scifigraph.png'
+import actionImg from '../../assets/images/genres/action.png'
+import actionGraphImg from '../../assets/images/genres/actiongraph.png'
+import dramaImg from '../../assets/images/genres/drama.png'
+import dramaGraphImg from '../../assets/images/genres/dramagraph.png'
 
 export default props => {
     return (

@@ -1,13 +1,6 @@
-import slide1 from '../assets/images/home/slide1.jpg'
-import slide2 from '../assets/images/home/slide2.jpg'
-import slide3 from '../assets/images/home/slide3.jpg'
-import slide4 from '../assets/images/home/slide4.jpg'
-import slide5 from '../assets/images/home/slide5.jpg'
-import slide6 from '../assets/images/home/slide6.jpg'
 import Carousel from 'react-multi-carousel'
-import "../assets/styles/base.css"
+import "../../assets/styles/base.css"
 import 'react-multi-carousel/lib/styles.css'
-import SliderItem from "./SliderItem"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
@@ -36,16 +29,6 @@ class Slider extends React.Component {
     }
 
     render() {
-        const sliderItems = this.props.movieStore.movies.slice(0, 14)
-            .filter(item => item.verticalImg !== "N/A")
-            .map((sliderItem, key) => {
-                const { title, Imdbid, verticalImg } = sliderItem;
-                return <SliderItem
-                    key={Imdbid}
-                    title={title}
-                    imgSrc={verticalImg}
-                    width="166px" />
-            })
         const CustomLeftArrow = ({ onClick }) => {
             return <FontAwesomeIcon onClick={() => this.Carousel.next()} icon={faArrowLeft} style={{ cursor: 'pointer', width: "28px", left: "0px", paddingBottom: "34px", color: "#2d92dd", paddingRight: "22px" }} />;
         };
@@ -69,7 +52,7 @@ class Slider extends React.Component {
                         additionalTransfrom={-1 * 5}
                     >
 
-                        {sliderItems}
+                        {this.props.sliderItems}
                     </Carousel>
                 </div>
                 <CustomRightArrow />
