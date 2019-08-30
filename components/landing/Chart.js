@@ -1,4 +1,4 @@
-import "../assets/styles/base.css"
+import "../../assets/styles/base.css"
 import 'react-multi-carousel/lib/styles.css'
 import ChartEntry from "./ChartEntry"
 

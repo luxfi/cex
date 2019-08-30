@@ -1,10 +1,10 @@
-import bbbImg from '../assets/images/secured/bbb.png'
-import comodoImg from '../assets/images/secured/comodo.png'
-import mcafeeImg from '../assets/images/secured/mcafee.png'
-import paypalImg from '../assets/images/secured/paypal.png'
-import scanalertImg from '../assets/images/secured/scanalert.png'
-import trusteImg from '../assets/images/secured/truste.png'
-import verisignImg from '../assets/images/secured/verisign.png'
+import bbbImg from '../../assets/images/secured/bbb.png'
+import comodoImg from '../../assets/images/secured/comodo.png'
+import mcafeeImg from '../../assets/images/secured/mcafee.png'
+import paypalImg from '../../assets/images/secured/paypal.png'
+import scanalertImg from '../../assets/images/secured/scanalert.png'
+import trusteImg from '../../assets/images/secured/truste.png'
+import verisignImg from '../../assets/images/secured/verisign.png'
 
 export default props => {
     return (

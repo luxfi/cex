@@ -1,4 +1,4 @@
-import howToTradeImg from '../assets/images/howtotrade.png'
+import howToTradeImg from '../../assets/images/howtotrade.png'
 
 export default () => {
     return (
