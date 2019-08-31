@@ -31,10 +31,10 @@ class MyMobxApp extends App {
   }
 
   render() {
-    const { Component, appProps } = this.props
+    const { Component, pageProps } = this.props
     return (
       <Provider {...this.mobxStore}>
-        <Component {...appProps} />
+        <Component {...pageProps} />
       </Provider>
     )
   }
