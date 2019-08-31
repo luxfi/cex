@@ -13,6 +13,7 @@ export default class MovieStore {
     // }
 
     async fetch() {
+        // const response = await this.movies || await fetchInitialStoreState()
         const response = await this.movies || await fetchInitialStoreState()
         this.setMovies(response);
     }

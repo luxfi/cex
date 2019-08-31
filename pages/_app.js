@@ -15,6 +15,7 @@ class MyMobxApp extends App {
     const mobxStore = initializeStore(isServer)
     appContext.ctx.mobxStore = mobxStore
 
+    // calls page's `getInitialProps` and fills `appProps.pageProps`
     const appProps = await App.getInitialProps(appContext)
 
     return {

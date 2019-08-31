@@ -6,7 +6,7 @@ import Link from 'next/link';
 const NavLink = ({ href = '#', title }) => (
     <div>
         <li className="navlink">
-            <Link href={href}>
+            <Link href={href} >
                 <a>{title}</a>
             </Link>
         </li>
