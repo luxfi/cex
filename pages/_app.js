@@ -5,17 +5,21 @@ import { Provider } from 'mobx-react'
 import initializeStore from '../stores/stores';
 
 class MyMobxApp extends App {
-
-  // Fetching serialized(JSON) store state
   static async getInitialProps(appContext) {
-    // console.log('_app.js getInitialProps', appContext)
-    const mobxStore = initializeStore()
-    // console.log('_app.js mobxStore', mobxStore)
+    //
+    // Use getInitialProps as a step in the lifecycle when
+    // we can initialize our store (nextJS DOCS)
+    //
+
+    const isServer = typeof window === 'undefined'
+    const mobxStore = initializeStore(isServer)
     appContext.ctx.mobxStore = mobxStore
+
     const appProps = await App.getInitialProps(appContext)
 
     return {
       ...appProps,
+      isServer,
       initialMobxState: mobxStore,
     }
   }
@@ -27,10 +31,10 @@ class MyMobxApp extends App {
   }
 
   render() {
-    const { Component, pageProps } = this.props
+    const { Component, appProps } = this.props
     return (
       <Provider {...this.mobxStore}>
-        <Component {...pageProps} />
+        <Component {...appProps} />
       </Provider>
     )
   }
