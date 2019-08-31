@@ -1,6 +1,27 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import ESXLogo from '../../assets/images/esx/u1.png'
+import Link from 'next/link';
+
+const NavLink = ({ href = '#', title }) => (
+    <div>
+        <li className="navlink">
+            <Link href={href}>
+                <a>{title}</a>
+            </Link>
+        </li>
+        <style jsx>{`
+        .navlink {
+            list-style: none;
+            margin: 0;
+        }
+        .navlink a {
+            color: #fff;
+            text-decoration: none;
+        }
+    `}</style>
+    </div>
+);
 
 export default props => {
     return (
@@ -14,22 +35,21 @@ export default props => {
                     </div>
                 </div>
                 <ul className="nav">
-                    <li className="navlink"><a href="#">MY PORTFOLIO</a></li>
-                    <li className="navlink"><a href="#">TRADE</a></li>
-                    <li className="navlink"><a href="#">RESEARCH</a></li>
-                    <li className="navlink"><a href="#">NEWS &amp; EVENTS</a></li>
+                    <NavLink href="/quotes" title="MY PORTFOLIO" />
+                    <NavLink href="/quotes" title="TRADE" />
+                    <NavLink href="/quotes" title="RESEARCH" />
+                    <NavLink href="/quotes" title="NEWS &amp; EVENTS" />
                 </ul>
                 <ul className="nav nav-right">
                     <div className="search">
                         <FontAwesomeIcon icon={faSearch} />
                     </div>
-                    <li className="navlink"><a href="#">SIGN UP</a></li>
-                    <li className="navlink"><a href="#">LOGIN</a></li>
+                    <NavLink href="/quotes" title="SIGN UP" />
+                    <NavLink href="/quotes" title="LOGIN" />
                 </ul>
             </header>
             <style jsx>{`
                 .container {
-                    // width: 100%;
                     display: flex;
                     margin: auto;
                     background: #0000005e;
@@ -69,14 +89,6 @@ export default props => {
                     display: flex;
                     justify-content: space-around;
                     width: 16%;
-                }
-                .navlink {
-                    list-style: none;
-                    margin: 0;
-                }
-                .navlink a {
-                    color: #fff;
-                    text-decoration: none;
                 }
                 .search {
                     text-decoration: none;

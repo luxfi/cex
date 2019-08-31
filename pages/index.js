@@ -15,55 +15,76 @@ import TrendingNowSliderItem from "../components/landing/TrendingNowSliderItem"
 import PopularGenres from '../components/landing/PopularGenres'
 import StartCTA from '../components/landing/StartTrading'
 
-@inject('store')
+@inject('movieStore')
 @observer
 export default class Index extends React.Component {
   state = {
     whiteGutter: true
   }
-
+  static async getInitialProps({ mobxStore }) {
+    await mobxStore.movieStore.fetch();
+    console.log('mobxStore', mobxStore)
+    return {
+      topMovies: mobxStore.movieStore.topMovies,
+      movieStore: mobxStore.movieStore,
+      movies: mobxStore.movieStore.movies,
+    };
+  }
   render() {
-    const trendingSliderItems = this.props.store.topMovies.slice(0, 14)
-            .filter(item => item.verticalImg !== "N/A")
-            .map((sliderItem, key) => {
-                const { title, Imdbid, verticalImg } = sliderItem;
-                return <TrendingNowSliderItem
-                    key={Imdbid}
-                    title={title}
-                    imgSrc={verticalImg}
-                    width="166px" />
-            })
+    const { topMovies, movieStore, movies } = this.props
+    console.log('index.js render', this.props)
+    console.log('helllooooooooo')
+    // const trendingSliderItems = this.props.movieStore.topMovies.slice(0, 14)
+    //   .filter(item => item.verticalImg !== "N/A")
+    //   .map((sliderItem, key) => {
+    //     const { title, Imdbid, verticalImg } = sliderItem;
+    //     return <TrendingNowSliderItem
+    //       key={Imdbid}
+    //       title={title}
+    //       imgSrc={verticalImg}
+    //       width="166px" />
+    //   })
+    const trendingSliderItems = topMovies.slice(0, 14)
+      .filter(item => item.verticalImg !== "N/A")
+      .map((sliderItem, key) => {
+        const { title, Imdbid, verticalImg } = sliderItem;
+        return <TrendingNowSliderItem
+          key={Imdbid}
+          title={title}
+          imgSrc={verticalImg}
+          width="166px" />
+      })
 
     return (
       <div>
         <Head>
           <link href="https://fonts.googleapis.com/css?family=Hind&display=swap" rel="stylesheet" />
         </Head>
-        <TickerStrip movieStore={this.props.store} />
+        <TickerStrip movies={movies} />
         <Hero />
         <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Trending Now"} hideInnerPadding>
-          <Slider movieStore={this.props.store} sliderItems={trendingSliderItems} />
+          <Slider movieStore={this.props.movieStore.topMovies} sliderItems={trendingSliderItems} />
         </PageRow>
         <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Top Gainers"}>
-          <Chart topMovies={this.props.store.topMovies} />
+          <Chart topMovies={topMovies} />
         </PageRow>
         <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Popular Genres"}>
-          <PopularGenres/>
+          <PopularGenres />
         </PageRow>
         <StartCTA />
         <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"What is ESX?"}>
-          <WhatPanel/>
+          <WhatPanel />
         </PageRow>
         <StartCTA />
         <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"How To Trade"}>
-          <HowToTradePanel/>
+          <HowToTradePanel />
         </PageRow>
         <StartCTA />
         <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Our Partners"}>
-          <PartnerGrid/>
+          <PartnerGrid />
         </PageRow>
         <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Secured By"}>
-          <SecuredByGrid/>
+          <SecuredByGrid />
         </PageRow>
 
         <Footer />
