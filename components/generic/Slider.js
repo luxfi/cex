@@ -70,7 +70,6 @@ class Slider extends React.Component {
               width: 100%;
               padding: 30px 0px;
               justify-content: center;
-              margin-left: -100px;
           }
         `}</style>
       </div >
