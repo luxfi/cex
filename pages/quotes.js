@@ -8,22 +8,20 @@ import { inject, observer } from 'mobx-react'
 @observer
 export default class Quotes extends React.Component {
   static async getInitialProps({ mobxStore }) {
-    console.log('tickerstrip getinitialprops called')
     await mobxStore.movieStore.fetch();
     return {
       movies: mobxStore.movieStore.movies,
     };
   }
+
   render() {
     const { movies } = this.props;
     return (
       <TickerStripLayout movies={movies}>
-        <div>
-          <p>This is the quotes page</p>
-          <Link href="/">
-            <a>index</a>
-          </Link>
-        </div>
+        <p>This is the quotes page</p>
+        <Link href="/">
+          <a>index</a>
+        </Link>
       </TickerStripLayout>
     );
   }
