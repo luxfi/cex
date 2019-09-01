@@ -6,6 +6,19 @@ export default props => {
   const width = props.width || "166px"
   return (
     <div className="container">
+      <div className="ipo-date-container">
+        <div className="month-day-container">
+          <div className="day">
+            27
+          </div>
+          <div className="month">
+            DEC
+          </div>
+        </div>
+        <div className="year">
+          2019
+        </div>
+      </div>
       <img src={props.imgSrc} alt="slider-item" style={{ width: props.width }} />
       <div className="price">$5.55</div>
       <div className="info">
@@ -20,6 +33,29 @@ export default props => {
                     display: flex;
                     flex-direction: column;
                     width: 165px;
+                }
+                .ipo-date-container {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: flex-end;
+                }
+                .month-day-container {
+                  padding: 4px 8px;
+                  background: #e8e2e2;
+                  margin-bottom: 8px;
+                }
+                .year {
+                  margin: 12px 8px;
+                  font-size: 12px;
+                  color: #959090;
+                }
+                .month {
+                  font-size: 12px;
+                  color: #6a5a5a;
+                }
+                .day {
+                  font-size: 23px;
+                  color: #4f5686;
                 }
                 img {
                     display: flex;
