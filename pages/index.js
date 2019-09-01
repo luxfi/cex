@@ -23,7 +23,6 @@ export default class Index extends React.Component {
   }
   static async getInitialProps({ mobxStore }) {
     await mobxStore.movieStore.fetch();
-    console.log('zy', mobxStore)
     return {
       topMovies: mobxStore.movieStore.topMovies,
       movieStore: mobxStore.movieStore,
