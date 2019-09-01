@@ -1,5 +1,4 @@
 import React from 'react'
-import Head from 'next/head'
 import { inject, observer } from 'mobx-react'
 import TickerStrip from '../components/generic/TickerStrip'
 import PageRow from '../components/generic/PageRow'
@@ -44,9 +43,6 @@ export default class Index extends React.Component {
 
     return (
       <div>
-        <Head>
-          <link href="https://fonts.googleapis.com/css?family=Hind&display=swap" rel="stylesheet" />
-        </Head>
         <TickerStrip movies={movies} />
         <Hero />
         <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Trending Now"} hideInnerPadding>
