@@ -26,12 +26,15 @@ export default class Quotes extends React.Component {
     const trendingSliderItems = topMovies.slice(0, 14)
       .filter(item => item.verticalImg !== "N/A")
       .map((sliderItem, key) => {
-        const { title, Imdbid, verticalImg } = sliderItem;
+        const { title, Imdbid, verticalImg, genre, rated } = sliderItem;
         return <UpcomingIPOsSliderItem
           key={Imdbid}
           title={title}
           imgSrc={verticalImg}
-          width="166px" />
+          width="166px"
+          genre={genre.split(',')[0]}
+          rated={rated}
+        />
       })
     return (
       <TickerStripLayout movies={movies} darkNav={true}>

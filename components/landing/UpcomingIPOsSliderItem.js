@@ -20,7 +20,8 @@ export default props => {
         </div>
       </div>
       <img src={props.imgSrc} alt="slider-item" style={{ width: props.width }} />
-      <div className="price">$5.55</div>
+      <div className="title">{props.title}</div>
+      <div className="genre-rated">{`${props.genre} / ${props.rated}`}</div>
       <div className="info">
         <span className="change">
           <FontAwesomeIcon icon={faArrowUp} style={{ width: '12px', paddingRight: "5px" }} />
@@ -56,6 +57,15 @@ export default props => {
                 .day {
                   font-size: 23px;
                   color: #4f5686;
+                }
+                .title {
+                  color: #535353;
+                  margin-top: 8px;
+                }
+                .genre-rated {
+                  font-size: 10px;
+                  color: #959090;
+                  margin-top 2px;
                 }
                 img {
                     display: flex;
