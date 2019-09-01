@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import TickerStripLayout from "../components/generic/TickerStripLayout"
 import Slider from '../components/generic/Slider'
-import TrendingNowSliderItem from "../components/landing/TrendingNowSliderItem"
+import UpcomingIPOsSliderItem from "../components/landing/UpcomingIPOsSliderItem"
 import PageRow from '../components/generic/PageRow'
 import { inject, observer } from 'mobx-react'
 
@@ -27,7 +27,7 @@ export default class Quotes extends React.Component {
       .filter(item => item.verticalImg !== "N/A")
       .map((sliderItem, key) => {
         const { title, Imdbid, verticalImg } = sliderItem;
-        return <TrendingNowSliderItem
+        return <UpcomingIPOsSliderItem
           key={Imdbid}
           title={title}
           imgSrc={verticalImg}
