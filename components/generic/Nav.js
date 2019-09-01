@@ -53,8 +53,6 @@ export default props => {
                     display: flex;
                     margin: auto;
                     background: #0000005e;
-                    position: absolute;
-                    z-index: 1;
                     width: 100%;
                     
                 }
