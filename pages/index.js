@@ -23,7 +23,7 @@ export default class Index extends React.Component {
   }
   static async getInitialProps({ mobxStore }) {
     await mobxStore.movieStore.fetch();
-    console.log('mobxStore', mobxStore)
+    console.log('zy', mobxStore)
     return {
       topMovies: mobxStore.movieStore.topMovies,
       movieStore: mobxStore.movieStore,
@@ -32,18 +32,6 @@ export default class Index extends React.Component {
   }
   render() {
     const { topMovies, movieStore, movies } = this.props
-    console.log('index.js render', this.props)
-    console.log('helllooooooooo')
-    // const trendingSliderItems = this.props.movieStore.topMovies.slice(0, 14)
-    //   .filter(item => item.verticalImg !== "N/A")
-    //   .map((sliderItem, key) => {
-    //     const { title, Imdbid, verticalImg } = sliderItem;
-    //     return <TrendingNowSliderItem
-    //       key={Imdbid}
-    //       title={title}
-    //       imgSrc={verticalImg}
-    //       width="166px" />
-    //   })
     const trendingSliderItems = topMovies.slice(0, 14)
       .filter(item => item.verticalImg !== "N/A")
       .map((sliderItem, key) => {

@@ -27,8 +27,8 @@ export default props => {
   return (
     <div className="container">
       <header>
-        <Link>
-          <a href="/">
+        <Link href="/">
+          <a>
             <div className="logo">
               <img src={ESXLogo} alt="ESX LOGO" height='80px' style={{ margin: `-16px` }} />
               <div className="tagline">

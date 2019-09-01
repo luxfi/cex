@@ -1,26 +1,30 @@
 import Link from 'next/link'
 import React from 'react'
-import Layout from "../components/generic/Layout"
+import TickerStripLayout from "../components/generic/TickerStripLayout"
 import PageRow from '../components/generic/PageRow'
-
 import { inject, observer } from 'mobx-react'
 
+@inject('movieStore')
 @observer
 export default class Quotes extends React.Component {
-    // static async getInitialProps({ initialStoreState }) {
-    //     console.log('quotes.js getInitialProps', initialStoreState)
-    //     return {}
-    // }
-    render() {
-        return (
-            <Layout>
-                <div>
-                    <p>This is the quotes page</p>
-                    <Link href="/">
-                        <a>index</a>
-                    </Link>
-                </div>
-            </Layout>
-        );
-    }
+  static async getInitialProps({ mobxStore }) {
+    console.log('tickerstrip getinitialprops called')
+    await mobxStore.movieStore.fetch();
+    return {
+      movies: mobxStore.movieStore.movies,
+    };
+  }
+  render() {
+    const { movies } = this.props;
+    return (
+      <TickerStripLayout movies={movies}>
+        <div>
+          <p>This is the quotes page</p>
+          <Link href="/">
+            <a>index</a>
+          </Link>
+        </div>
+      </TickerStripLayout>
+    );
+  }
 }
