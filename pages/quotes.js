@@ -35,7 +35,7 @@ export default class Quotes extends React.Component {
       })
     return (
       <TickerStripLayout movies={movies} darkNav={true}>
-        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Trending Now"} hideInnerPadding>
+        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Upcoming IPOs"} hideInnerPadding>
           <Slider movieStore={this.props.topMovies} sliderItems={trendingSliderItems} />
         </PageRow>
       </TickerStripLayout>
