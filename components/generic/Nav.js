@@ -25,7 +25,7 @@ const NavLink = ({ href = '#', title }) => (
 
 export default props => {
   return (
-    <div className="container">
+    <div className={`container ${props.darkNav ? 'darkNav' : ''}`} >
       <header>
         <Link href="/">
           <a>
@@ -64,6 +64,9 @@ export default props => {
           width: 100%;
           
         }
+        .darkNav {
+          background: #333 !important;
+        }
         header {
           width: 942px;
           height: 70px;
@@ -101,6 +104,6 @@ export default props => {
           width: 12px;
         }
     `}</style>
-    </div>
+    </ div>
   )
 }
