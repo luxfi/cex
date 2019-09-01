@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import React from 'react'
 import Layout from "../components/generic/Layout"
+import PageRow from '../components/generic/PageRow'
+
 import { inject, observer } from 'mobx-react'
 
 @observer
