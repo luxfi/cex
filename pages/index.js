@@ -44,6 +44,9 @@ export default class Index extends React.Component {
 
     return (
       <div>
+        <Head>
+          <link href="https://fonts.googleapis.com/css?family=Hind&display=swap" rel="stylesheet" />
+        </Head>
         <TickerStrip movies={movies} />
         <Hero />
         <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Trending Now"} hideInnerPadding>
