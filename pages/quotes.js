@@ -26,3 +26,4 @@ export default class Quotes extends React.Component {
     );
   }
 }
+
