@@ -4,7 +4,10 @@ export default props => {
         <div className="page-row">
             <div className="left box" />
             <div className="inner-row">
-                <div className="title">{props.rowTitle || 'TITLE'}</div >
+                <div className="top-container">
+                    <div className="title">{props.rowTitle || 'TITLE'}</div >
+                    <div className="filters">{props.filters}</div>
+                </div>
                 {props.children}
             </div>
             <div className="right box" />
@@ -34,6 +37,15 @@ export default props => {
                 display: relative;
                 width: 100%;
                 padding: ${props.hideInnerPadding ? 'inherit' : '0px 75px'};
+            }
+
+            .filters {
+                margin: ${props.hideInnerPadding ? '0px 77px 14px 0px' : '10px 0px 14px 0px'};
+            }
+
+            .top-container {
+                display: flex;
+                justify-content: space-between;
             }
             `}</style>
         </div>
