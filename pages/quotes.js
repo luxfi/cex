@@ -17,7 +17,7 @@ export default class Quotes extends React.Component {
   render() {
     const { movies } = this.props;
     return (
-      <TickerStripLayout movies={movies}>
+      <TickerStripLayout movies={movies} darkNav={true}>
         <p>This is the quotes page</p>
         <Link href="/">
           <a>index</a>
