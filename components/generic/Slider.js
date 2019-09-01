@@ -1,4 +1,5 @@
 import Carousel from 'react-multi-carousel'
+import Head from 'next/head'
 import "../../assets/styles/base.css"
 import 'react-multi-carousel/lib/styles.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -37,6 +38,9 @@ class Slider extends React.Component {
     };
     return (
       <div className="container">
+        <Head>
+          <link href="https://fonts.googleapis.com/css?family=Hind&display=swap" rel="stylesheet" />
+        </Head>
         <CustomLeftArrow />
         < div className="slider" >
           <Carousel
