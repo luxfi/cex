@@ -39,7 +39,17 @@ export default props => (
                 </tr>
             </thead>
             <tbody>
-                <Row />
+                {props.movies.map((movie, index) => (
+                    <Row
+                        name={movie.name}
+                        symbol={movie.symbol}
+                        price={movie.price}
+                        change={movie.change}
+                        marketCap={movie.marketCap}
+                        chart={movie.chart}
+                        key={index}
+                    />
+                ))}
             </tbody>
         </table>
         <style jsx>{`
