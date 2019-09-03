@@ -1,25 +1,27 @@
+const row = (props) => {
+    <tr>
+        <th className="table-cell left" scope="row">{props.name}</th>
+        <td className="table-cell left" >{props.symbol}</td>
+        <td className="table-cell left" >{props.price}</td>
+        <td className="table-cell left" >{props.change}</td>
+        <td className="table-cell left" >{props.marketCap}</td>
+        <td className="table-cell left" >{props.chart}</td>
+        <td className="table-cell left" >{props.trade}</td>
+
+    </tr>
+}
 export default props => (
     <div className="container">
         < table className="table" >
             <tr>
-                <th className="table-cell" scope="col">Player</th>
-                <th className="table-cell" scope="col">Gloobles</th>
-                <th className="table-cell right" scope="col">Za'taak</th>
-            </tr>
-            <tr>
-                <th className="table-cell" scope="row">TR-7</th>
-                <td className="table-cell" >7</td>
-                <td className="table-cell right" >4,569</td>
-            </tr>
-            <tr>
-                <th className="table-cell" scope="row">Khiresh Odo</th>
-                <td className="table-cell" >7</td>
-                <td className="table-cell right" >7,223</td>
-            </tr>
-            <tr>
-                <th className="table-cell" scope="row">Mia Oolong</th>
-                <td className="table-cell" >9</td>
-                <td className="table-cell right" >6,219</td>
+                <th className="table-cell head left" scope="col">Name</th>
+                <th className="table-cell head left" scope="col">Symbol</th>
+                <th className="table-cell head left" scope="col">Price</th>
+                <th className="table-cell head left" scope="col">Market Cap</th>
+                <th className="table-cell head left" scope="col">Chart</th>
+                <th className="table-cell head left" scope="col">Trade</th>
+
+
             </tr>
         </table>
         <style jsx>{`
@@ -45,6 +47,17 @@ export default props => (
             }
             .right {
                 text-align: right;
+            }
+            .lefft {
+                text-align: left;
+            }
+            .head {
+                color: rgba(0, 0, 0, 0.54);
+                font-size: 12px;
+                line-height: 1.3125rem;
+                font-weight: 500;
+                text-transform: uppercase;
+                border-top: 1px solid rgba(224, 224, 224, 1);
             }
         `}</style>
     </div >
