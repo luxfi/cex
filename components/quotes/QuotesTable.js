@@ -1,13 +1,12 @@
+import TradeButton from '../generic/TradeButton.js'
 const row = (props) => {
     <tr>
-        <th className="table-cell left" scope="row">{props.name}</th>
-        <td className="table-cell left" >{props.symbol}</td>
-        <td className="table-cell left" >{props.price}</td>
-        <td className="table-cell left" >{props.change}</td>
-        <td className="table-cell left" >{props.marketCap}</td>
-        <td className="table-cell left" >{props.chart}</td>
-        <td className="table-cell left" >{props.trade}</td>
-
+        <th className="table-cell left" scope="row">{props.name || "Name"}</th>
+        <td className="table-cell left" >{props.symbol || "SMBL"}</td>
+        <td className="table-cell left" >{props.price || "$1.11"}</td>
+        <td className="table-cell left" >{props.change || "1.1%"}</td>
+        <td className="table-cell left" >{props.marketCap || "$111"}</td>
+        <td className="table-cell left" >{props.chart || "TBD"}</td>
     </tr>
 }
 export default props => (
@@ -20,9 +19,9 @@ export default props => (
                 <th className="table-cell head left" scope="col">Market Cap</th>
                 <th className="table-cell head left" scope="col">Chart</th>
                 <th className="table-cell head left" scope="col">Trade</th>
-
-
+                <TradeButton />
             </tr>
+            {row(props)}
         </table>
         <style jsx>{`
             .table-cell {
