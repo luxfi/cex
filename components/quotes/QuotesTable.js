@@ -7,6 +7,8 @@ const row = (props) => {
         <td className="table-cell left" >{props.change || "1.1%"}</td>
         <td className="table-cell left" >{props.marketCap || "$111"}</td>
         <td className="table-cell left" >{props.chart || "TBD"}</td>
+        <td className="table-cell left" ><TradeButton /></td>
+
     </tr>
 }
 export default props => (
@@ -19,7 +21,6 @@ export default props => (
                 <th className="table-cell head left" scope="col">Market Cap</th>
                 <th className="table-cell head left" scope="col">Chart</th>
                 <th className="table-cell head left" scope="col">Trade</th>
-                <TradeButton />
             </tr>
             {row(props)}
         </table>
