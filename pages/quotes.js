@@ -7,6 +7,7 @@ import PageRow from '../components/generic/PageRow'
 import { inject, observer } from 'mobx-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faColumns, faTh, faThList } from '@fortawesome/free-solid-svg-icons'
+import QuotesTable from '../components/quotes/QuotesTable'
 
 @inject('movieStore')
 @observer
@@ -21,9 +22,6 @@ export default class Quotes extends React.Component {
             topMovies: mobxStore.movieStore.topMovies,
         };
     }
-
-
-
 
     render() {
         const { topMovies, movies } = this.props
@@ -146,7 +144,7 @@ export default class Quotes extends React.Component {
                     <Slider movieStore={this.props.topMovies} sliderItems={trendingSliderItems} />
                 </PageRow>
                 <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Quotes"} hideInnerPadding filters={quoteFilters()}>
-                    <Slider movieStore={this.props.topMovies} sliderItems={trendingSliderItems} />
+                    <QuotesTable />
                 </PageRow>
             </TickerStripLayout>
         );
