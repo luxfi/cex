@@ -144,7 +144,7 @@ export default class Quotes extends React.Component {
                     <Slider movieStore={this.props.topMovies} sliderItems={trendingSliderItems} />
                 </PageRow>
                 <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Quotes"} hideInnerPadding filters={quoteFilters()}>
-                    <QuotesTable />
+                    <QuotesTable movies={movies} />
                 </PageRow>
             </TickerStripLayout>
         );
