@@ -6,10 +6,11 @@ export default props => {
             <style jsx>{`
                 img {
                     width: 100%;
-                    position: absolute;
-                    z-index: 0;
+                    position: relative;
+                    z-index: -1;
                     height: 615px;;
                     object-fit: cover;
+                    margin-top: -70px;
                 }
             `}</style>
         </div>

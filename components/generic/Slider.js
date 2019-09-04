@@ -1,4 +1,5 @@
 import Carousel from 'react-multi-carousel'
+import Head from 'next/head'
 import "../../assets/styles/base.css"
 import 'react-multi-carousel/lib/styles.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -30,13 +31,16 @@ class Slider extends React.Component {
 
     render() {
         const CustomLeftArrow = ({ onClick }) => {
-            return <FontAwesomeIcon onClick={() => this.Carousel.next()} icon={faArrowLeft} style={{ cursor: 'pointer', width: "28px", left: "0px", paddingBottom: "34px", color: "#2d92dd", paddingRight: "22px" }} />;
+            return <FontAwesomeIcon onClick={() => this.Carousel.previous()} icon={faArrowLeft} style={{ cursor: 'pointer', width: "28px", left: "0px", paddingBottom: "34px", color: "#2d92dd", paddingRight: "22px" }} />;
         };
         const CustomRightArrow = ({ onClick }) => {
-            return <FontAwesomeIcon onClick={() => this.Carousel.previous()} icon={faArrowRight} style={{ cursor: 'pointer', width: "28px", right: "0px", paddingBottom: "34px", color: "#2d92dd", paddingLeft: "22px" }} />
+            return <FontAwesomeIcon onClick={() => this.Carousel.next()} icon={faArrowRight} style={{ cursor: 'pointer', width: "28px", right: "0px", paddingBottom: "34px", color: "#2d92dd", paddingLeft: "22px" }} />
         };
         return (
             <div className="container">
+                <Head>
+                    <link href="https://fonts.googleapis.com/css?family=Hind&display=swap" rel="stylesheet" />
+                </Head>
                 <CustomLeftArrow />
                 < div className="slider" >
                     <Carousel
@@ -57,20 +61,21 @@ class Slider extends React.Component {
                 </div>
                 <CustomRightArrow />
                 <style jsx>{`
-                    .title {
-                        color: #2d92dd;
-                        font-size: 37px;
-                        margin: 29px 0px 14px 0px;
-                    }
-                    .slider {
-                        width: 1146px;
-                    }
-                    .container {
-                        display: flex;
-                        width: 100%;
-                        padding: 30px 0px;
-                    }
-                `}</style>
+          .title {
+              color: #2d92dd;
+              font-size: 37px;
+              margin: 29px 0px 14px 0px;
+          }
+          .slider {
+              width: 1146px;
+          }
+          .container {
+              display: flex;
+              width: 100%;
+              padding: 30px 0px;
+              justify-content: center;
+          }
+        `}</style>
             </div >
         )
     }

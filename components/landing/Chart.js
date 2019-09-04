@@ -4,7 +4,7 @@ import ChartEntry from "./ChartEntry"
 
 class Chart extends React.Component {
 
-        render() {
+    render() {
         const chartWidth = 1024 // this will need to be set by something else ultimately but for right now whatever
 
         const chartHeight = 300 // probably same deal, should be dynamic
@@ -23,7 +23,7 @@ class Chart extends React.Component {
                 gutter={barGutter}
                 imgSrc={chartItem.verticalImg}
                 percentChange={chartItem.percentChange}
-                fillPercent={chartItem.percentChange/maxChange}
+                fillPercent={chartItem.percentChange / maxChange}
             />)
         })
 

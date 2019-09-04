@@ -15,17 +15,23 @@ export class Store {
   }
 
   @computed get topMovies() {
-      return this.movies.length > 0 ? _.sortBy(this.movies, r => -r.percentChange).slice(0,15) : this.movies
+    return this.movies.length > 0 ? _.sortBy(this.movies, r => -r.percentChange).slice(0, 15) : this.movies
   }
 }
 
-export async function fetchInitialStoreState() {
-  // You can do anything to fetch initial store state
-  const csvFilePath = './assets/tempData/movies.csv'
-  const csv = require('csvtojson')
+export async function fetchInitialStoreState(initialData = []) {
+  let jsonArray = []
+  if (isServer) {
+    // You can do anything to fetch initial store state
+    const csvFilePath = './assets/tempData/movies.csv'
+    const csv = require('csvtojson')
 
 
-  // // Async / await usage
-  const jsonArray = await csv().fromFile(csvFilePath)
+    // // Async / await usage
+    jsonArray = await csv().fromFile(csvFilePath)
+  } else {
+    jsonArray = initialData
+  }
+
   return jsonArray
 }
