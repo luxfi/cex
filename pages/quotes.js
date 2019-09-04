@@ -13,7 +13,7 @@ import QuotesTable from '../components/quotes/QuotesTable'
 @observer
 export default class Quotes extends React.Component {
     state = {
-        whiteGutter: true
+        whiteGutter: true,
     }
     static async getInitialProps({ mobxStore }) {
         await mobxStore.movieStore.fetch();
@@ -25,6 +25,7 @@ export default class Quotes extends React.Component {
 
     render() {
         const { topMovies, movies } = this.props
+        const { currentPage } = this.state;
 
         const trendingSliderItems = topMovies.slice(0, 14)
             .filter(item => item.verticalImg !== "N/A")
