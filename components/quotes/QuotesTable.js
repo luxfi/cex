@@ -5,6 +5,8 @@ import chart from '../../assets/images/chart.png'
 
 
 const Row = (props) => {
+    const { percentChange } = props;
+    const formatedpercentChange = parseFloat(percentChange * 100).toFixed(2) + "%"
     return (
         <tr>
             <td className="table-cell left" scope="row">
@@ -22,11 +24,15 @@ const Row = (props) => {
 
                 </div>
             </td>
-            <td className="table-cell left" >{props.symbol || "SMBL"}</td>
-            <td className="table-cell left" >{props.price || "$1.11"}</td>
-            <td className="table-cell left" >{props.percentChange || "1.1%"}</td>
-            <td className="table-cell left" >{props.marketCap || "$111"}</td>
-            <td className="table-cell left" >{
+            <td className="table-cell symbol left" >{props.symbol || "SMBL"}</td>
+            <td className="table-cell price left" >${props.price || "$1.11"}</td>
+            <td className={`table-cell percent-change left ${
+                props.percentChange > 0 ? "green" : "red"
+                }`} >
+                {formatedpercentChange || "1.1%"}
+            </td>
+            <td className="table-cell market-cap left" >{props.marketCap || "$111"}</td>
+            <td className="table-cell chart left" >{
                 props.chart || <img src={chart} alt="chart" height='40px' />
 
             }</td>
@@ -41,6 +47,7 @@ const Row = (props) => {
                     line-height: 1.43;
                     border-bottom: 1px solid rgba(224, 224, 224, 1);
                     letter-spacing: 0.01071em;
+                    color: rgba(0, 0, 0, 0.54);
                 }
                 .link {
                   font-size: 8pt;
@@ -62,6 +69,16 @@ const Row = (props) => {
                   color: #959090;
                   margin-top 2px;
                 }
+                .symbol {
+                    color: rgba(0, 0, 0, 0.67);
+                    text-decoration: underline;
+                }
+                .green {
+                    color: #0dc109;
+                }
+                .red {
+                    color: rgb(205, 135, 137);
+                }
             `}</style>
         </tr>
     )
@@ -70,9 +87,9 @@ const Row = (props) => {
 
 
 export default ({ movies }) => {
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1)
     const handlePageChange = (page, e) => {
-        setCurrentPage(page);
+        setCurrentPage(page)
     }
 
     const limit = 6
