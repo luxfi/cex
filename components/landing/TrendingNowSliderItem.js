@@ -25,6 +25,7 @@ export default props => {
                     display: flex;
                     height: 93px;
                     object-fit: cover;
+                    pointer-events: none;
                 }
                 .info {
                     display: flex;
