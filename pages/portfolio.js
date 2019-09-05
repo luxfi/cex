@@ -1,12 +1,12 @@
 import Link from 'next/link'
 import React from 'react'
 import TickerStripLayout from "../components/generic/TickerStripLayout"
-import Slider from '../components/generic/Slider'
 import UpcomingIPOsSliderItem from "../components/landing/UpcomingIPOsSliderItem"
 import PageRow from '../components/generic/PageRow'
 import { inject, observer } from 'mobx-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faColumns, faTh, faThList } from '@fortawesome/free-solid-svg-icons'
+import BalancesRow from '../components/portfolio/BalancesRow'
 import QuotesTable from '../components/quotes/QuotesTable'
 
 @inject('movieStore')
@@ -141,6 +141,7 @@ export default class Portfolio extends React.Component {
 
         return (
             <TickerStripLayout movies={movies} darkNav={true}>
+                <BalancesRow />
                 <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"My Positions"} hideInnerPadding filters={quoteFilters()}>
                     <QuotesTable movies={movies} />
                 </PageRow>
