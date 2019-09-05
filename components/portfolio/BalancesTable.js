@@ -1,8 +1,6 @@
 import TradeButton from '../generic/TradeButton.js'
 import Pagination from "../generic/Pagination"
 import React, { useState } from 'react';
-import chart from '../../assets/images/chart.png'
-
 
 const Row = (props) => {
     const { percentChange } = props;
@@ -26,15 +24,18 @@ const Row = (props) => {
             </td>
             <td className="table-cell symbol left" >{props.symbol || "SMBL"}</td>
             <td className="table-cell price left" >${props.price || "$1.11"}</td>
-            <td className={`table-cell percent-change left ${
+            <td className={`table-cell change left ${
                 props.percentChange > 0 ? "green" : "red"
                 }`} >
-                {formatedpercentChange || "1.1%"}
+                ${props.change}
+                <span className="percent-change">
+                    ({formatedpercentChange || "1.1%"})
+                </span>
+
             </td>
             <td className="table-cell market-cap left" >{props.marketCap || "$111"}</td>
-            <td className="table-cell chart left" >{
-                props.chart || <img src={chart} alt="chart" height='40px' />
-
+            <td className="table-cell gain left" >{
+                props.gain
             }</td>
             <td className="table-cell left" ><TradeButton /></td>
             <style jsx>{`
@@ -79,6 +80,10 @@ const Row = (props) => {
                 .red {
                     color: rgb(205, 135, 137);
                 }
+                .percent-change {
+                    font-size: 11px;
+                    margin-left: 4px;
+                }
             `}</style>
         </tr>
     )
@@ -104,9 +109,9 @@ export default ({ movies }) => {
                         <th className="table-cell head left" scope="col">Name</th>
                         <th className="table-cell head left" scope="col">Symbol</th>
                         <th className="table-cell head left" scope="col">Price</th>
-                        <th className="table-cell head left" scope="col">Change</th>
+                        <th className="table-cell head left" scope="col">Day Change</th>
                         <th className="table-cell head left" scope="col">Market Cap</th>
-                        <th className="table-cell head left" scope="col">Chart</th>
+                        <th className="table-cell head left" scope="col">Gain</th>
                         <th className="table-cell head left" scope="col">Trade</th>
                     </tr>
                 </thead>
@@ -119,8 +124,9 @@ export default ({ movies }) => {
                                 symbol,
                                 price,
                                 percentChange,
+                                change,
                                 marketCap,
-                                chart,
+                                gain,
                                 genre,
                                 rated,
                                 verticalImg
@@ -131,8 +137,9 @@ export default ({ movies }) => {
                                     symbol={symbol}
                                     price={price}
                                     percentChange={percentChange}
+                                    change={change}
                                     marketCap={marketCap}
-                                    chart={chart}
+                                    gain={gain}
                                     genre={genre}
                                     rated={rated}
                                     key={index}
