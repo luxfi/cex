@@ -7,7 +7,7 @@ import { inject, observer } from 'mobx-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faColumns, faTh, faThList } from '@fortawesome/free-solid-svg-icons'
 import BalancesRow from '../components/portfolio/BalancesRow'
-import QuotesTable from '../components/quotes/QuotesTable'
+import BalancesTable from '../components/portfolio/BalancesTable'
 
 @inject('movieStore')
 @observer
@@ -141,10 +141,46 @@ export default class Portfolio extends React.Component {
 
         return (
             <TickerStripLayout movies={movies} darkNav={true}>
+                <div className="container-center">
+                    <div className="links">
+                        <a href="#" className="link selected">My Portfolio</a>
+                        <a href="#" className="link divider">|</a>
+                        <a href="#" className="link">Balances</a>
+                        <a href="#" className="link divider">|</a>
+                        <a href="#" className="link">Position</a>
+                        <a href="#" className="link divider">|</a>
+                        <a href="#" className="link">Orders</a>
+                        <a href="#" className="link divider">|</a>
+                        <a href="#" className="link">Watchlists</a>
+                        <a href="#" className="link divider">|</a>
+                        <a href="#" className="link">Alerts</a>
+                    </div>
+                </div>
                 <BalancesRow />
                 <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"My Positions"} hideInnerPadding filters={quoteFilters()}>
-                    <QuotesTable movies={movies} />
+                    <BalancesTable movies={movies} />
                 </PageRow>
+                <style jsx>{`
+                    .container-center {
+                        display: flex;
+                        justify-content: center;
+                    }
+                    .links {
+                        display: flex:
+                        justify-content: center:
+                    }
+                    .link {
+                        padding: 0px 12px;
+                        color: grey;
+                    }
+                    .selected {
+                        color: #6da7ee;
+                        text-decoration: none;
+                    }
+                    .divider {
+                        text-decoration: none;
+                    }
+                `}</style>
             </TickerStripLayout>
         );
     }
