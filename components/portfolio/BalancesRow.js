@@ -2,6 +2,9 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import PageRow from '../generic/PageRow'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
+
 
 @inject('movieStore')
 @observer
@@ -67,9 +70,38 @@ export default class BalancesRow extends React.Component {
             <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Balances"} hideInnerPadding filters={balancesFitler()}>
                 <div className="container-center-content">
                     <div className="flex-container">
-                        <div className="flex-item"> 1</div>
-                        <div className="flex-item">2</div>
-                        <div className="flex-item">3</div>
+                        <div className="flex-item">
+                            <div className="title">Portfolio Value</div>
+                            <div className="value">
+                                <span style={{ color: "#acacac" }}>$</span>
+                                225,555
+                                <span style={{ "font-size": "27px" }}>
+                                    .97
+                                </span>
+                            </div>
+                        </div>
+                        <div className="flex-item">
+                            <div className="title">Cash Position</div>
+                            <div className="value">
+                                <span style={{ color: "#acacac" }}>
+                                    $
+                                </span>12,745
+                                <span style={{ "font-size": "27px" }}>
+                                    .00
+                                </span>
+                            </div>
+                        </div>
+                        <div className="flex-item">
+                            <div className="title">% Change</div>
+                            <div className="value">
+                                <span className="change">
+                                    <FontAwesomeIcon icon={faArrowUp} style={{
+                                        paddingRight: "8px", "padding-bottom": "12px"
+                                    }} />
+                                </span>
+                                5.04<span style={{ color: "#acacac" }}>%</span>
+                            </div>
+                        </div>
                     </div>
                     <style jsx>{`
                         .flex-container {
@@ -79,22 +111,30 @@ export default class BalancesRow extends React.Component {
                             width: 1146px;
                         }
                         .flex-item {
-                            background: grey;
-                            line-height: 100px;
-                            font-weight: bold;
-                            font-size: 2em;
+                            background: #6f6a6a;
                             color: white;
-                            text-align: center;
+                            text-align: left;
                             flex-grow: 1;
                             margin: 8px;
+                            padding: 16px;
                         }
                         .container-center-content {
                             display: flex;
                             justify-content: center;
                         }
+                        .value {
+                            font-size: 54px;
+                            margin-top: 16px;
+                            font-weight: lighter;
+                        }
+                        .change {
+                            color: #0dc109;
+                            margin-top: 2px;
+                            font-size: 32px;
+                        }
                     `}</style>
                 </div>
-            </PageRow>
+            </PageRow >
         );
     }
 }
