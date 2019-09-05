@@ -1,17 +1,11 @@
-import Link from 'next/link'
 import React from 'react'
-import TickerStripLayout from "../components/generic/TickerStripLayout"
-import Slider from '../components/generic/Slider'
-import UpcomingIPOsSliderItem from "../components/landing/UpcomingIPOsSliderItem"
-import PageRow from '../components/generic/PageRow'
 import { inject, observer } from 'mobx-react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faColumns, faTh, faThList } from '@fortawesome/free-solid-svg-icons'
-import QuotesTable from '../components/quotes/QuotesTable'
+import PageRow from '../generic/PageRow'
+
 
 @inject('movieStore')
 @observer
-export default class Portfolio extends React.Component {
+export default class BalancesRow extends React.Component {
     state = {
         whiteGutter: true,
     }
@@ -26,20 +20,6 @@ export default class Portfolio extends React.Component {
     render() {
         const { topMovies, movies } = this.props
         const { currentPage } = this.state;
-
-        const trendingSliderItems = topMovies.slice(0, 14)
-            .filter(item => item.verticalImg !== "N/A")
-            .map((sliderItem, key) => {
-                const { title, Imdbid, verticalImg, genre, rated } = sliderItem;
-                return <UpcomingIPOsSliderItem
-                    key={Imdbid}
-                    title={title}
-                    imgSrc={verticalImg}
-                    width="166px"
-                    genre={genre.split(',')[0]}
-                    rated={rated}
-                />
-            })
 
         const balancesFitler = () => (
             <div className="container">
@@ -84,8 +64,36 @@ export default class Portfolio extends React.Component {
         )
 
         return (
-            <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"My Positions"} hideInnerPadding filters={balancesFitler()}>
-                <QuotesTable movies={movies} />
+            <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Balances"} hideInnerPadding filters={balancesFitler()}>
+                <div className="container-center-content">
+                    <div className="flex-container">
+                        <div className="flex-item"> 1</div>
+                        <div className="flex-item">2</div>
+                        <div className="flex-item">3</div>
+                    </div>
+                    <style jsx>{`
+                        .flex-container {
+                            display: flex;
+                            justify-content: space-around;
+                            align-items: stretch;
+                            width: 1146px;
+                        }
+                        .flex-item {
+                            background: grey;
+                            line-height: 100px;
+                            font-weight: bold;
+                            font-size: 2em;
+                            color: white;
+                            text-align: center;
+                            flex-grow: 1;
+                            margin: 8px;
+                        }
+                        .container-center-content {
+                            display: flex;
+                            justify-content: center;
+                        }
+                    `}</style>
+                </div>
             </PageRow>
         );
     }
