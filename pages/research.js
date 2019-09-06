@@ -6,6 +6,7 @@ import ShareIcons from '../components/research/ShareIcons'
 import StockInfo from '../components/research/StockInfo'
 import MoreLikeThis from '../components/research/MoreLikeThis'
 import RelatedPosts from '../components/research/RelatedPosts'
+import Forecasts from '../components/research/Forecasts'
 
 @inject('store')
 @observer
@@ -27,15 +28,25 @@ export default class Research extends React.Component {
             <TickerStripLayout movies={movieStore.movies} darkNav={true}>
                 <div className="container-center">
                     <div className="inner-container">
-                        <div className="left-column">
+                        <div className="wide-column">
                             <HeaderInfo />
                             <StockInfo movies={movieStore.movies} />
                             <iframe className="video" width="886" height="498" src="https://www.youtube.com/embed/hEJnMQG9ev8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
-                        <div className="right-column">
+                        <div className="thin-column">
                             <ShareIcons />
                             <MoreLikeThis movies={movieStore.movies} />
                             <RelatedPosts movies={movieStore.movies} />
+                        </div>
+                    </div>
+                </div>
+                <div className="container-center" style={{ paddingTop: "20px" }}>
+                    <div className="inner-container">
+                        <div className="thin-column">
+                            <Forecasts movies={movieStore.movies} />
+                        </div>
+                        <div className="wide-column">
+                            <iframe className="video" width="886" height="498" src="https://www.youtube.com/embed/hEJnMQG9ev8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>
@@ -49,10 +60,10 @@ export default class Research extends React.Component {
                         flex-direction: row;
                         width: 1146px;
                     }
-                    .left-column {
+                    .wide-column {
                         width: 906px;
                     }
-                    .right-column {
+                    .thin-column {
                         width: 240px;
                     }
                     .links {

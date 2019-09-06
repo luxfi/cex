@@ -32,14 +32,11 @@ export default props => {
                     flex-direction: row;
                     margin-top: 20px;
                 }
-                .social-links {
-                    width: 221px;
-                }
                 .social-links a {     
                     margin: 3px;
                     display: inline-block;
                     color: white;
-                    padding: 6px;
+                    padding: 7px;
                     border-radius: 2px;
                 }
                 .fa-facebook { background: #3B5998; }
@@ -51,6 +48,9 @@ export default props => {
                     color: black;
                     text-decoration: none;
                     border: 1px solid black;
+                }
+                .social-links a.likes {
+                    padding: 8px 9px 6px;
                 }
             `}</style>
             </div>
