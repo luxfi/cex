@@ -19,13 +19,11 @@ export default props => {
                 .info-container {
                     display: flex;
                     flex-direction: column;
-                    width: 70%;
                 }
                 .change {
                     color: #0dc109;
                     margin-top: 2px;
                 }
-                
             `}</style>
         </div >
     )

@@ -1,12 +1,9 @@
 import React from 'react'
 import TickerStripLayout from "../components/generic/TickerStripLayout"
-import UpcomingIPOsSliderItem from "../components/landing/UpcomingIPOsSliderItem"
-import PageRow from '../components/generic/PageRow'
 import { inject, observer } from 'mobx-react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faColumns, faTh, faThList } from '@fortawesome/free-solid-svg-icons'
 import HeaderInfo from '../components/research/HeaderInfo'
 import ShareIcons from '../components/research/ShareIcons'
+import StockInfo from '../components/research/StockInfo'
 
 @inject('movieStore')
 @observer
@@ -26,14 +23,32 @@ export default class Research extends React.Component {
 
         return (
             <TickerStripLayout movies={movies} darkNav={true}>
-                <header className="container-center">
-                    <HeaderInfo />
-                    <ShareIcons />
-                </header>
+                <div className="container-center">
+                    <div className="inner-container">
+                        <div className="left-column">
+                            <HeaderInfo />
+                            <StockInfo />
+                        </div>
+                        <div className="right-column">
+                            <ShareIcons />
+                        </div>
+                    </div>
+                </div>
                 <style jsx>{`
                     .container-center {
                         display: flex;
                         justify-content: center;
+                    }
+                    .inner-container {
+                        display: flex;
+                        flex-direction: row;
+                        width: 70%;
+                    }
+                    .left-column {
+                        width: 906px;
+                    }
+                    .right-column {
+                        width: 240px;
                     }
                     .links {
                         display: flex:
