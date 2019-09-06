@@ -25,6 +25,12 @@ export default props => {
                     <a href="#" className="link">|</a>
                     <a href="#" className="link">Trailer 2</a>
                 </div>
+                <div className="info-1 dark">
+                    <a href="#">Creators:</a> George Miller, Brendan McCarthy
+                </div>
+                <div className="info-2 dark">
+                    <a href="#">Stars:</a> Tom Hardy, Charlize Theron, Nicholas Hoult
+                </div>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
             </div>
             <style jsx>{`
@@ -38,7 +44,7 @@ export default props => {
                 p {
                     padding: 0px;
                     margin: 0px;
-                    color: #a8a8a8;
+                    margin-top: 16px;
                 }
                 .link {
                     font-size: 8pt;

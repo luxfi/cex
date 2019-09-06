@@ -5,7 +5,7 @@ export default props => {
     return (
 
         <div className="info-container">
-            <h2 className="title" style={{ fontSize: "40px", margin: "20px 0px 4px 0px" }}>
+            <h2 className="title dark" style={{ fontSize: "40px", margin: "20px 0px 4px 0px" }}>
                 Mad Max: Fury Road
                     </h2>
             <p className="price" style={{ fontSize: "16px", margin: "4px 0px 4px 0px" }}>
