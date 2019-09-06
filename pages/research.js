@@ -6,7 +6,7 @@ import ShareIcons from '../components/research/ShareIcons'
 import StockInfo from '../components/research/StockInfo'
 import MoreLikeThis from '../components/research/MoreLikeThis'
 
-@inject('movieStore')
+@inject('store')
 @observer
 export default class Research extends React.Component {
     state = {
