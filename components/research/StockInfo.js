@@ -47,7 +47,7 @@ export default props => {
                     margin-top: 16px;
                 }
                 .link {
-                    font-size: 8pt;
+                    font-size: 11pt;
                     padding-right: 10px;
                     color: #6da7ee;
                 }
@@ -86,6 +86,9 @@ export default props => {
                     font-size: inherit;
                     line-height: inherit;
                     transition: background 0.2s ease,color 0.2s ease,box-shadow 0.2s ease;
+                }
+                .info-1 {
+                    padding-bottom: 8px;
                 }        
             `}</style>
         </div >
