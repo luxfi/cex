@@ -69,7 +69,7 @@ export default class Research extends React.Component {
                     }
                 `}</style>
             </TickerStripLayout>
-        );
+        )
     }
 }
 
