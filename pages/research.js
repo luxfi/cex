@@ -32,7 +32,7 @@ export default class Research extends React.Component {
                         </div>
                         <div className="right-column">
                             <ShareIcons />
-                            <MoreLikeThis />
+                            <MoreLikeThis movies={movieStore.movies} />
                         </div>
                     </div>
                 </div>
