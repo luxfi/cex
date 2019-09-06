@@ -34,16 +34,20 @@ export default props => {
                 </div>
                 <div className="tables">
                     <table className="noborder">
-                        <tr><td>Symbol:</td><td className="dark">MDMX2</td></tr>
-                        <tr><td>Status:</td><td className="dark">Active</td></tr>
-                        <tr><td>IPO Date:</td><td className="dark">Dec 12, 2016</td></tr>
-                        <tr><td>MPAA Rating:</td><td className="dark">PG-13</td></tr>
+                        <tbody>
+                            <tr><td>Symbol:</td><td className="dark">MDMX2</td></tr>
+                            <tr><td>Status:</td><td className="dark">Active</td></tr>
+                            <tr><td>IPO Date:</td><td className="dark">Dec 12, 2016</td></tr>
+                            <tr><td>MPAA Rating:</td><td className="dark">PG-13</td></tr>
+                        </tbody>
                     </table>
                     <table className="noborder">
-                        <tr><td>Symbol:</td><td className="dark">MDMX2</td></tr>
-                        <tr><td>Status:</td><td className="dark">Active</td></tr>
-                        <tr><td>IPO Date:</td><td className="dark">Dec 12, 2016</td></tr>
-                        <tr><td>MPAA Rating:</td><td className="dark">PG-13</td></tr>
+                        <tbody>
+                            <tr><td>Symbol:</td><td className="dark">MDMX2</td></tr>
+                            <tr><td>Status:</td><td className="dark">Active</td></tr>
+                            <tr><td>IPO Date:</td><td className="dark">Dec 12, 2016</td></tr>
+                            <tr><td>MPAA Rating:</td><td className="dark">PG-13</td></tr>
+                        </tbody>
                     </table>
                 </div>
 
