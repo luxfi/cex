@@ -5,6 +5,7 @@ import HeaderInfo from '../components/research/HeaderInfo'
 import ShareIcons from '../components/research/ShareIcons'
 import StockInfo from '../components/research/StockInfo'
 import MoreLikeThis from '../components/research/MoreLikeThis'
+import RelatedPosts from '../components/research/RelatedPosts'
 
 @inject('store')
 @observer
@@ -29,11 +30,12 @@ export default class Research extends React.Component {
                         <div className="left-column">
                             <HeaderInfo />
                             <StockInfo movies={movieStore.movies} />
-                            <iframe className="video" width="896" height="504" src="https://www.youtube.com/embed/hEJnMQG9ev8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe className="video" width="886" height="498" src="https://www.youtube.com/embed/hEJnMQG9ev8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                         <div className="right-column">
                             <ShareIcons />
                             <MoreLikeThis movies={movieStore.movies} />
+                            <RelatedPosts movies={movieStore.movies} />
                         </div>
                     </div>
                 </div>
