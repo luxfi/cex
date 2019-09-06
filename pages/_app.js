@@ -12,7 +12,7 @@ class MyMobxApp extends App {
     //
 
     const isServer = typeof window === 'undefined'
-    const mobxStore = initializeStore(isServer)
+    const mobxStore = initializeStore()
     appContext.ctx.mobxStore = mobxStore
 
     // calls page's `getInitialProps` and fills `appProps.pageProps`
@@ -30,11 +30,11 @@ class MyMobxApp extends App {
     const isServer = typeof window === 'undefined'
     this.mobxStore = isServer ? props.initialMobxState : initializeStore(props.initialMobxState);
   }
-
+  
   render() {
     const { Component, pageProps } = this.props
     return (
-      <Provider {...this.mobxStore}>
+      <Provider store={this.mobxStore}> 
         <Component {...pageProps} />
       </Provider>
     )
