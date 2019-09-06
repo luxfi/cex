@@ -25,13 +25,28 @@ export default props => {
                     <a href="#" className="link">|</a>
                     <a href="#" className="link">Trailer 2</a>
                 </div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                 <div className="info-1 dark">
                     <a href="#">Creators:</a> George Miller, Brendan McCarthy
                 </div>
                 <div className="info-2 dark">
                     <a href="#">Stars:</a> Tom Hardy, Charlize Theron, Nicholas Hoult
                 </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <div className="tables">
+                    <table className="noborder">
+                        <tr><td>Symbol:</td><td className="dark">MDMX2</td></tr>
+                        <tr><td>Status:</td><td className="dark">Active</td></tr>
+                        <tr><td>IPO Date:</td><td className="dark">Dec 12, 2016</td></tr>
+                        <tr><td>MPAA Rating:</td><td className="dark">PG-13</td></tr>
+                    </table>
+                    <table className="noborder">
+                        <tr><td>Symbol:</td><td className="dark">MDMX2</td></tr>
+                        <tr><td>Status:</td><td className="dark">Active</td></tr>
+                        <tr><td>IPO Date:</td><td className="dark">Dec 12, 2016</td></tr>
+                        <tr><td>MPAA Rating:</td><td className="dark">PG-13</td></tr>
+                    </table>
+                </div>
+
             </div>
             <style jsx>{`
                 .stock-info {
@@ -89,7 +104,16 @@ export default props => {
                 }
                 .info-1 {
                     padding-bottom: 8px;
-                }        
+                    margin-top: 20px;
+                } 
+                .tables {
+                    padding-top: 20px;
+                    display: flex;
+                    justify-content: space-between;
+                }     
+                td {
+                    padding-right: 20px;
+                }  
             `}</style>
         </div >
     )
