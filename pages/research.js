@@ -42,7 +42,7 @@ export default class Research extends React.Component {
                     .inner-container {
                         display: flex;
                         flex-direction: row;
-                        width: 70%;
+                        width: 1146px;
                     }
                     .left-column {
                         width: 906px;
