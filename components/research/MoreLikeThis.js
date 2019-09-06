@@ -1,11 +1,14 @@
 export default props => {
     return (
-        <div className="hero-container">
-            hello
+        <div className="container">
+            <div className="title">
+                hello
+            </div>
+
             <style jsx>{`
-                .hero-container {
-                    position: relative;
-                    height: 615px;
+                .title {
+                    color: #2d92dd;
+                    font-size: 35px;        
                 }
             `}</style>
         </div>
