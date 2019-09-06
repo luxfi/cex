@@ -4,6 +4,7 @@ import { inject, observer } from 'mobx-react'
 import HeaderInfo from '../components/research/HeaderInfo'
 import ShareIcons from '../components/research/ShareIcons'
 import StockInfo from '../components/research/StockInfo'
+import MoreLikeThis from '../components/research/MoreLikeThis'
 
 @inject('movieStore')
 @observer
@@ -31,6 +32,7 @@ export default class Research extends React.Component {
                         </div>
                         <div className="right-column">
                             <ShareIcons />
+                            <MoreLikeThis />
                         </div>
                     </div>
                 </div>
