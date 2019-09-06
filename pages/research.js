@@ -29,6 +29,7 @@ export default class Research extends React.Component {
                         <div className="left-column">
                             <HeaderInfo />
                             <StockInfo movies={movieStore.movies} />
+                            <iframe className="video" width="896" height="504" src="https://www.youtube.com/embed/hEJnMQG9ev8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                         <div className="right-column">
                             <ShareIcons />
@@ -66,6 +67,9 @@ export default class Research extends React.Component {
                     }
                     .divider {
                         text-decoration: none;
+                    }
+                    .video {
+                        padding-top: 20px;
                     }
                 `}</style>
             </TickerStripLayout>
