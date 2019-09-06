@@ -9,7 +9,14 @@ export default props => {
         <div className="stock-info">
             <img src={madMaxMovie.verticalImg} alt="poster" style={{ width: "290px", padding: "20px 0px" }} />
             <div className="right-column">
-                <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."</p>
+                <div className="links">
+                    <a href="#" className="link">16+</a>
+                    <a href="#" className="link">|</a>
+                    <a href="#" className="link">43min</a>
+                    <a href="#" className="link">|</a>
+                    <a href="#" className="link">Action, Adventure, Drama</a>
+                </div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
             </div>
             <style jsx>{`
                 .stock-info {
@@ -23,7 +30,14 @@ export default props => {
                     padding: 0px;
                     margin: 0px;
                 }
-               
+                .link {
+                    font-size: 8pt;
+                    padding-right: 10px;
+                    color: #6da7ee;
+                }
+                .links {
+                    margin-bottom: 8px;
+                }           
             `}</style>
         </div >
     )
