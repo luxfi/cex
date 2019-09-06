@@ -32,6 +32,9 @@ export default props => {
                     flex-direction: row;
                     margin-top: 20px;
                 }
+                .social-links {
+                    width: 221px;
+                }
                 .social-links a {     
                     margin: 3px;
                     display: inline-block;
