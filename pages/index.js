@@ -14,23 +14,28 @@ import TrendingNowSliderItem from "../components/landing/TrendingNowSliderItem"
 import PopularGenres from '../components/landing/PopularGenres'
 import StartCTA from '../components/landing/StartTrading'
 
-@inject('movieStore')
+@inject('store')
 @observer
 export default class Index extends React.Component {
   state = {
     whiteGutter: true
   }
   static async getInitialProps({ mobxStore }) {
-    await mobxStore.movieStore.fetch();
+    await mobxStore.movieStore.fetch()
     return {
-      topMovies: mobxStore.movieStore.topMovies,
       movieStore: mobxStore.movieStore,
-      movies: mobxStore.movieStore.movies,
-    };
+      orderBook: mobxStore.orderBook
+    }
   }
+
+  componentDidMount () {
+    console.log('index props componentDidMount', this.props.store.orderBook)
+    this.props.store.orderBook.initiateDataGenerator()
+  }
+
   render() {
-    const { topMovies, movieStore, movies } = this.props
-    const trendingSliderItems = topMovies.slice(0, 14)
+    const { movieStore } = this.props.store
+    const trendingSliderItems = movieStore.topMovies.slice(0, 14)
       .filter(item => item.verticalImg !== "N/A")
       .map((sliderItem, key) => {
         const { title, Imdbid, verticalImg } = sliderItem;
@@ -43,13 +48,13 @@ export default class Index extends React.Component {
 
     return (
       <div>
-        <TickerStrip movies={movies} />
+        <TickerStrip movies={movieStore.movies} />
         <Hero />
         <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Trending Now"} hideInnerPadding>
-          <Slider movieStore={this.props.movieStore.topMovies} sliderItems={trendingSliderItems} />
+          <Slider movieStore={movieStore.topMovies} sliderItems={trendingSliderItems} />
         </PageRow>
         <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Top Gainers"}>
-          <Chart topMovies={topMovies} />
+          <Chart topMovies={movieStore.topMovies} />
         </PageRow>
         <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Popular Genres"}>
           <PopularGenres />
