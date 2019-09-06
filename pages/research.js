@@ -19,7 +19,7 @@ export default class Research extends React.Component {
     }
 
     render() {
-        const { topMovies, movies } = this.props
+        const { movies } = this.props
 
         return (
             <TickerStripLayout movies={movies} darkNav={true}>
@@ -27,7 +27,7 @@ export default class Research extends React.Component {
                     <div className="inner-container">
                         <div className="left-column">
                             <HeaderInfo />
-                            <StockInfo />
+                            <StockInfo movies={movies} />
                         </div>
                         <div className="right-column">
                             <ShareIcons />
