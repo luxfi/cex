@@ -15,20 +15,20 @@ export default class Research extends React.Component {
     static async getInitialProps({ mobxStore }) {
         await mobxStore.movieStore.fetch();
         return {
-            movies: mobxStore.movieStore.movies,
+            movieStore: mobxStore.movieStore,
         };
     }
 
     render() {
-        const { movies } = this.props
+        const { movieStore } = this.props.store
 
         return (
-            <TickerStripLayout movies={movies} darkNav={true}>
+            <TickerStripLayout movies={movieStore.movies} darkNav={true}>
                 <div className="container-center">
                     <div className="inner-container">
                         <div className="left-column">
                             <HeaderInfo />
-                            <StockInfo movies={movies} />
+                            <StockInfo movies={movieStore.movies} />
                         </div>
                         <div className="right-column">
                             <ShareIcons />
