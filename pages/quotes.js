@@ -9,25 +9,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faColumns, faTh, faThList } from '@fortawesome/free-solid-svg-icons'
 import QuotesTable from '../components/quotes/QuotesTable'
 
-@inject('movieStore')
+@inject('store')
 @observer
 export default class Quotes extends React.Component {
     state = {
         whiteGutter: true,
     }
     static async getInitialProps({ mobxStore }) {
-        await mobxStore.movieStore.fetch();
+        await mobxStore.movieStore.fetch()
         return {
-            movies: mobxStore.movieStore.movies,
-            topMovies: mobxStore.movieStore.topMovies,
-        };
+            movieStore: mobxStore.movieStore,
+            orderBook: mobxStore.orderBook
+        }
     }
 
     render() {
-        const { topMovies, movies } = this.props
-        const { currentPage } = this.state;
+        const { movieStore } = this.props.store
 
-        const trendingSliderItems = topMovies.slice(0, 14)
+        const trendingSliderItems = movieStore.topMovies.slice(0, 14)
             .filter(item => item.verticalImg !== "N/A")
             .map((sliderItem, key) => {
                 const { title, Imdbid, verticalImg, genre, rated } = sliderItem;
@@ -140,12 +139,12 @@ export default class Quotes extends React.Component {
         )
 
         return (
-            <TickerStripLayout movies={movies} darkNav={true}>
+            <TickerStripLayout movies={movieStore.movies} darkNav={true}>
                 <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Upcoming IPOs"} hideInnerPadding filters={upcommingIPOFilters()}>
-                    <Slider movieStore={this.props.topMovies} sliderItems={trendingSliderItems} />
+                    <Slider movieStore={movieStore.topMovies} sliderItems={trendingSliderItems} />
                 </PageRow>
                 <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Quotes"} hideInnerPadding filters={quoteFilters()}>
-                    <QuotesTable movies={movies} />
+                    <QuotesTable movies={movieStore.movies} />
                 </PageRow>
             </TickerStripLayout>
         );

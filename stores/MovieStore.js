@@ -2,9 +2,9 @@ import { action, observable, computed } from 'mobx'
 import _ from 'lodash'
 
 export default class MovieStore {
-    @observable movies = [];
+    @observable movies = []
 
-    constructor(initialData = []) {
+    constructor(initialData = {}) {
         this.movies = initialData.movies;
     }
 
