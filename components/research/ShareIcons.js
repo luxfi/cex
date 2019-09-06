@@ -4,7 +4,6 @@ import { faFacebook, faTwitter, faGoogle, faPinterest } from '@fortawesome/free-
 
 export default props => {
     return (
-
         <div className="share-container">
             <div className="social-links">
                 <a href="https://www.facebook.com/sharer/sharer.php?u={PAGEURL}&t={PAGETITLE}" target="_blank" title="Share on Facebook" className="fa-facebook">
