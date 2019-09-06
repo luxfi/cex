@@ -16,6 +16,15 @@ export default props => {
                     <a href="#" className="link">|</a>
                     <a href="#" className="link">Action, Adventure, Drama</a>
                 </div>
+                <a href="#" className="btn invert">Trade This Stock</a>
+                <a href="#" className="btn invert blue">Watch This Trailer</a>
+                <div className="links-2">
+                    <a href="#" className="link">Offical Website</a>
+                    <a href="#" className="link">|</a>
+                    <a href="#" className="link">Trailer 1</a>
+                    <a href="#" className="link">|</a>
+                    <a href="#" className="link">Trailer 2</a>
+                </div>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
             </div>
             <style jsx>{`
@@ -29,6 +38,7 @@ export default props => {
                 p {
                     padding: 0px;
                     margin: 0px;
+                    color: #a8a8a8;
                 }
                 .link {
                     font-size: 8pt;
@@ -37,7 +47,40 @@ export default props => {
                 }
                 .links {
                     margin-bottom: 8px;
-                }           
+                }
+                .links-2 .link {
+                    color: grey;
+                }
+                .links-2 {
+                    margin-bottom: 16px
+                }
+                .btn.invert {
+                    margin: 0;
+                    padding: 0 48px;
+                    height: 48px;
+                    line-height: 48px;
+                    border-radius: 4px;
+                    background-color: #ff911e;
+                    color: white;
+                    margin: 8px 16px 16px 0px;
+                }
+                .btn.invert.blue {
+                    background-color: rgb(60, 153, 247);
+                }
+                .btn {
+                    display: inline-block;
+                    cursor: pointer;
+                    text-decoration: none;
+                    padding: 0.25rem 0.5rem;
+                    margin: -0.25rem -0.5rem;
+                    border-radius: 7px;
+                    color: #ff911e;
+                    background-color: transparent;
+                    border: none;
+                    font-size: inherit;
+                    line-height: inherit;
+                    transition: background 0.2s ease,color 0.2s ease,box-shadow 0.2s ease;
+                }        
             `}</style>
         </div >
     )
