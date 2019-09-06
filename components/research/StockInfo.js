@@ -113,6 +113,7 @@ export default props => {
                 }     
                 td {
                     padding-right: 20px;
+                    padding-bottom: 4px;
                 }  
             `}</style>
         </div >
