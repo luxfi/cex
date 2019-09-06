@@ -1,4 +1,4 @@
-import postPlaceHolder from '../../assets/images/research/posts.png'
+import thumb from '../../assets/images/research/thumb.png'
 
 export default props => {
     const { movies } = props;
@@ -7,10 +7,19 @@ export default props => {
             <div className="title">
                 Forecasts
             </div>
+            <p className="sub-title">
+                OCT 15, 2018
+            </p>
             <div className="forecasts-container">
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dolor sed viverra ipsum nunc aliquet bibendum enim. In massa tempor nec feugiat. Nunc aliquet bibendum enim facilisis gravida. Nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper. Amet luctus venenatis lectus magna fringilla. Volutpat maecenas volutpat blandit aliquam etiam erat velit scelerisque in. Egestas egestas fringilla phasellus faucibus scelerisque eleifend. Sagittis orci a scelerisque purus semper eget duis. Nulla pharetra diam sit amet nisl suscipit. Sed adipiscing diam donec adipiscing tristique risus nec feugiat in. Fusce ut placerat orci nulla. Pharetra vel turpis nunc eget lorem dolor. Tristique senectus et netus et malesuada.
+                    <img src={thumb} className="thumb" />
+
+                    Lorem ipsum dolor sit amet consectetur adipiscing elit dis, rutrum purus torquent leo odio euismod inceptos, ut tincidunt turpis congue netus et donec. Pretium eleifend mauris nisl condimentum placerat, commodo montes diam potenti, bibendum nisi tellus quis. Enim integer nascetur dapibus risus class ullamcorper fames tortor, donec tincidunt rhoncus cursus erat ac tempus, quis senectus diam dictum luctus a lobortis.
                 </p>
+                <p>
+                    Eu facilisi magnis sem fusce sociis varius tellus rutrum curabitur imperdiet, vehicula lectus aliquam ultricies nibh mi nisi luctus ridiculus scelerisque eget, consequat in pretium egestas iaculis faucibus vivamus commodo mauris. Conubia curae dictumst nec dui sollicitudin molestie lacinia enim purus, risus praesent vivamus mattis sociosqu habitasse augue sagittis. Suscipit non tylus nuemenous da bestus vulputate fusce ornare nec sagittis.
+                </p>
+
 
             </div>
 
@@ -28,8 +37,16 @@ export default props => {
         
                 }
                 .forecasts-container {
-                    margin-top: 20px;
                     padding-right: 20px;
+                }
+                .sub-title {
+                    margin: 20px 0px 0px;
+                }
+                .thumb {
+                    width: 100px;
+                    margin-left: -28px;
+                    float: left;
+                    padding-right: 16px;
                 }
             `}</style>
         </div>

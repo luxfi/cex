@@ -7,6 +7,7 @@ import StockInfo from '../components/research/StockInfo'
 import MoreLikeThis from '../components/research/MoreLikeThis'
 import RelatedPosts from '../components/research/RelatedPosts'
 import Forecasts from '../components/research/Forecasts'
+import Chart from '../components/research/Chart'
 
 @inject('store')
 @observer
@@ -36,17 +37,17 @@ export default class Research extends React.Component {
                         <div className="thin-column">
                             <ShareIcons />
                             <MoreLikeThis movies={movieStore.movies} />
-                            <RelatedPosts movies={movieStore.movies} />
+                            <RelatedPosts />
                         </div>
                     </div>
                 </div>
                 <div className="container-center" style={{ paddingTop: "20px" }}>
                     <div className="inner-container">
                         <div className="thin-column">
-                            <Forecasts movies={movieStore.movies} />
+                            <Forecasts />
                         </div>
                         <div className="wide-column">
-                            <iframe className="video" width="886" height="498" src="https://www.youtube.com/embed/hEJnMQG9ev8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <Chart />
                         </div>
                     </div>
                 </div>
