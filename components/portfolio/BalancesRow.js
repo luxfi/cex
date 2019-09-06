@@ -6,22 +6,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 
 
-@inject('movieStore')
 @observer
 export default class BalancesRow extends React.Component {
     state = {
         whiteGutter: true,
     }
-    static async getInitialProps({ mobxStore }) {
-        await mobxStore.movieStore.fetch();
-        return {
-            movies: mobxStore.movieStore.movies,
-            topMovies: mobxStore.movieStore.topMovies,
-        };
-    }
 
     render() {
-        const { topMovies, movies } = this.props
         const { currentPage } = this.state;
 
         const balancesFitler = () => (
