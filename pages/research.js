@@ -6,6 +6,7 @@ import { inject, observer } from 'mobx-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faColumns, faTh, faThList } from '@fortawesome/free-solid-svg-icons'
 import HeaderInfo from '../components/research/HeaderInfo'
+import ShareIcons from '../components/research/ShareIcons'
 
 @inject('movieStore')
 @observer
@@ -27,6 +28,7 @@ export default class Research extends React.Component {
             <TickerStripLayout movies={movies} darkNav={true}>
                 <header className="container-center">
                     <HeaderInfo />
+                    <ShareIcons />
                 </header>
                 <style jsx>{`
                     .container-center {
