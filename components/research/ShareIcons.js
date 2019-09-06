@@ -30,6 +30,7 @@ export default props => {
                 .share-container {
                     display: flex;
                     flex-direction: row;
+                    margin-top: 20px;
                 }
                 .social-links a {     
                     margin: 3px;
