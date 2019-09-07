@@ -2,7 +2,7 @@ import React from 'react'
 import TickerStripLayout from "../components/generic/TickerStripLayout"
 import { inject, observer } from 'mobx-react'
 import ShareIcons from '../components/research/ShareIcons'
-import StockInfo from '../components/research/StockInfo'
+import StockInfo from '../components/trade/StockInfo'
 import MoreLikeThis from '../components/research/MoreLikeThis'
 import RelatedPosts from '../components/research/RelatedPosts'
 import Forecasts from '../components/research/Forecasts'
@@ -10,7 +10,7 @@ import Chart from '../components/research/Chart'
 
 @inject('store')
 @observer
-export default class Research extends React.Component {
+export default class Trade extends React.Component {
     state = {
         whiteGutter: true,
     }
@@ -31,15 +31,16 @@ export default class Research extends React.Component {
                         <h2 className="title dark" style={{ fontSize: "40px", margin: "20px 0px 4px 0px" }}>
                             Mad Max: Fury Road
                         </h2>
+                        <StockInfo movies={movieStore.movies} />
                     </div>
                 </div>
                 <div className="container-center" style={{ paddingTop: "20px" }}>
                     <div className="inner-container">
-                        <div className="thin-column">
-                            <Forecasts />
-                        </div>
                         <div className="wide-column">
                             <Chart />
+                        </div>
+                        <div className="thin-column">
+                            <Forecasts />
                         </div>
                     </div>
                 </div>
@@ -50,7 +51,7 @@ export default class Research extends React.Component {
                     }
                     .inner-container {
                         display: flex;
-                        flex-direction: row;
+                        flex-direction: column;
                         width: 1146px;
                     }
                     .wide-column {
