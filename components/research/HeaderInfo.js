@@ -7,10 +7,10 @@ export default props => {
         <div className="info-container">
             <h2 className="title dark" style={{ fontSize: "40px", margin: "20px 0px 4px 0px" }}>
                 Mad Max: Fury Road
-                    </h2>
+            </h2>
             <p className="price" style={{ fontSize: "16px", margin: "4px 0px 4px 0px" }}>
                 $12.50
-                    </p>
+            </p>
             <p className="change" style={{ fontSize: "27px", margin: "0px" }}>
                 <FontAwesomeIcon icon={faArrowUp} style={{ width: '18px', paddingRight: "8px" }} />
                 $0.80 (7.0%)
