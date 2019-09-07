@@ -34,10 +34,10 @@ export default class Trade extends React.Component {
                                 <div className="box-item">
                                     <table className="noborder">
                                         <tbody>
-                                            <tr><td className="light-grey" style={{ paddingTop: "0px" }}>Symbol:</td><td className="white" style={{ paddingTop: "0px" }} >MDMX2</td></tr>
-                                            <tr><td className="light-grey">Status:</td><td className="white">Active</td></tr>
-                                            <tr><td className="light-grey">IPO Date:</td><td className="white">Dec 12, 2016</td></tr>
-                                            <tr><td className="light-grey" style={{ paddingBottom: "0px" }} >MPAA Rating:</td><td className="white" style={{ paddingBottom: "0px" }}>PG-13</td></tr>
+                                            <tr><td className="light-grey" style={{ paddingTop: "0px" }}>Price</td><td className="white" style={{ paddingTop: "0px" }} >$12.25</td></tr>
+                                            <tr><td className="light-grey">Change</td><td className="white">$0.80 (7.0%)</td></tr>
+                                            <tr><td className="light-grey">Market Cap</td><td className="white">$90.2M</td></tr>
+                                            <tr><td className="light-grey" style={{ paddingBottom: "0px" }} >Volume</td><td className="white" style={{ paddingBottom: "0px" }}>$1.7M</td></tr>
                                         </tbody>
                                     </table>
                                 </div>
