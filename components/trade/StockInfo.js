@@ -8,7 +8,7 @@ export default props => {
 
         <div className="stock-info">
             <img src={madMaxMovie.verticalImg} alt="poster" style={{ width: "77px", height: "112px", padding: "20px 0px" }} />
-            <div className="right-column">
+            <div className="container">
                 <div className="links-2">
                     <a href="#" className="link">Offical Website</a>
                     <a href="#" className="link">|</a>
@@ -39,7 +39,7 @@ export default props => {
                 .stock-info {
                     display: flex;
                 }
-                .right-column {
+                .container {
                     padding: 20px;
                     width: 576px;
                 }
