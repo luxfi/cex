@@ -22,8 +22,6 @@ export default props => {
                     font-size: 32px;
                     margin-top: 30px;
                     font-weight: lighter;
-
-        
                 }
                 .posts-container {
                     margin-top: 20px;

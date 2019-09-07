@@ -32,7 +32,14 @@ export default class Trade extends React.Component {
                             <div className="flex-row space-between">
                                 <StockInfo movies={movieStore.movies} />
                                 <div className="box-item">
-
+                                    <table className="noborder">
+                                        <tbody>
+                                            <tr><td className="light-grey" style={{ paddingTop: "0px" }}>Symbol:</td><td className="white" style={{ paddingTop: "0px" }} >MDMX2</td></tr>
+                                            <tr><td className="light-grey">Status:</td><td className="white">Active</td></tr>
+                                            <tr><td className="light-grey">IPO Date:</td><td className="white">Dec 12, 2016</td></tr>
+                                            <tr><td className="light-grey" style={{ paddingBottom: "0px" }} >MPAA Rating:</td><td className="white" style={{ paddingBottom: "0px" }}>PG-13</td></tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -103,6 +110,17 @@ export default class Trade extends React.Component {
                     }
                     .video {
                         padding-top: 20px;
+                    }
+                    td {
+                        padding-right: 30px;
+                        padding-bottom: 4px;
+                    }  
+                    .white {
+                        color: white;
+                        padding-right: 0px;
+                    }
+                    .light-grey {
+                        color: #bdbdbd;
                     }
                 `}</style>
             </TickerStripLayout>
