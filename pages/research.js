@@ -7,7 +7,7 @@ import StockInfo from '../components/research/StockInfo'
 import MoreLikeThis from '../components/research/MoreLikeThis'
 import RelatedPosts from '../components/research/RelatedPosts'
 import Forecasts from '../components/research/Forecasts'
-import Chart from '../components/research/Chart'
+import Chart from '../components/generic/Chart'
 
 @inject('store')
 @observer
