@@ -7,30 +7,14 @@ export default props => {
     return (
 
         <div className="stock-info">
-            <img src={madMaxMovie.verticalImg} alt="poster" style={{ width: "290px", padding: "20px 0px" }} />
+            <img src={madMaxMovie.verticalImg} alt="poster" style={{ width: "77px", height: "112px", padding: "20px 0px" }} />
             <div className="right-column">
-                <div className="links">
-                    <a href="#" className="link">16+</a>
-                    <a href="#" className="link">|</a>
-                    <a href="#" className="link">43min</a>
-                    <a href="#" className="link">|</a>
-                    <a href="#" className="link">Action, Adventure, Drama</a>
-                </div>
-                <a href="#" className="btn invert">Trade This Stock</a>
-                <a href="#" className="btn invert blue">Watch This Trailer</a>
                 <div className="links-2">
                     <a href="#" className="link">Offical Website</a>
                     <a href="#" className="link">|</a>
                     <a href="#" className="link">Trailer 1</a>
                     <a href="#" className="link">|</a>
                     <a href="#" className="link">Trailer 2</a>
-                </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                <div className="info-1 dark">
-                    <a href="#">Creators:</a> George Miller, Brendan McCarthy
-                </div>
-                <div className="info-2 dark">
-                    <a href="#">Stars:</a> Tom Hardy, Charlize Theron, Nicholas Hoult
                 </div>
                 <div className="tables">
                     <table className="noborder">
@@ -69,15 +53,6 @@ export default props => {
                     padding-right: 10px;
                     color: #6da7ee;
                 }
-                .links {
-                    margin-bottom: 8px;
-                }
-                .links-2 .link {
-                    color: grey;
-                }
-                .links-2 {
-                    margin-bottom: 16px
-                }
                 .btn.invert {
                     margin: 0;
                     padding: 0 48px;
@@ -110,7 +85,7 @@ export default props => {
                     margin-top: 20px;
                 } 
                 .tables {
-                    padding-top: 20px;
+                    padding-top: 8px;
                     display: flex;
                     justify-content: space-between;
                 }     
