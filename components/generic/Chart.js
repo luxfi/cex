@@ -9,7 +9,7 @@ export default props => {
             </div>
             <div className="posts-container">
 
-                <img src={chartPlaceHolder} style={{ width: "906px" }} />
+                <img src={chartPlaceHolder} style={{ width: props.width || "906px" }} />
             </div>
 
             <style jsx>{`

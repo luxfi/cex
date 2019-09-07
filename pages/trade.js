@@ -1,12 +1,9 @@
 import React from 'react'
 import TickerStripLayout from "../components/generic/TickerStripLayout"
 import { inject, observer } from 'mobx-react'
-import ShareIcons from '../components/research/ShareIcons'
 import StockInfo from '../components/trade/StockInfo'
-import MoreLikeThis from '../components/research/MoreLikeThis'
-import RelatedPosts from '../components/research/RelatedPosts'
-import Forecasts from '../components/research/Forecasts'
-import Chart from '../components/research/Chart'
+import Chart from '../components/generic/Chart'
+import madmax from '../assets/images/trade/madmax.jpeg'
 
 @inject('store')
 @observer
@@ -27,20 +24,27 @@ export default class Trade extends React.Component {
         return (
             <TickerStripLayout movies={movieStore.movies} darkNav={true}>
                 <div className="container-center">
-                    <div className="inner-container">
-                        <h2 className="title dark" style={{ fontSize: "40px", margin: "20px 0px 4px 0px" }}>
-                            Mad Max: Fury Road
-                        </h2>
-                        <StockInfo movies={movieStore.movies} />
+                    <div className="inner-container row">
+                        <div className="column-container">
+                            <h2 className="title dark" style={{ fontSize: "40px", margin: "20px 0px 4px 0px", fontWeight: "lighter" }}>
+                                Mad Max: Fury Road
+                            </h2>
+                            <div className="flex-row space-between">
+                                <StockInfo movies={movieStore.movies} />
+                                <div className="box-item">
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="container-center" style={{ paddingTop: "20px" }}>
-                    <div className="inner-container">
+                    <div className="inner-container row">
                         <div className="wide-column">
-                            <Chart />
+                            <Chart width="844px" />
                         </div>
                         <div className="thin-column">
-                            <Forecasts />
+                            <img src={madmax} style={{ width: "282px", paddingLeft: "20px", paddingTop: "99px" }} />
                         </div>
                     </div>
                 </div>
@@ -49,13 +53,35 @@ export default class Trade extends React.Component {
                         display: flex;
                         justify-content: center;
                     }
-                    .inner-container {
+                    .column-container {
                         display: flex;
                         flex-direction: column;
+                        width: 100%;
+                    }
+                    .inner-container.row {
+                        display: flex;
+                        flex-direction: row;
                         width: 1146px;
                     }
+                    .flex-row {
+                        display: flex;
+                        flex-direction: row;
+                    }
+                    .space-between {
+                        justify-content: space-between;
+                    }
+                    .box-item {
+                        background: #6f6a6a;
+                        color: white;
+                        text-align: left;
+                        // flex-grow: 1;
+                        margin: 20px 0px;
+                        padding: 16px;
+                        width: 250px;
+                    }
                     .wide-column {
-                        width: 906px;
+                        // width: 906px;
+                        width: 844px;
                     }
                     .thin-column {
                         width: 240px;
