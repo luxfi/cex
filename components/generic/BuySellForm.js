@@ -10,8 +10,8 @@ export default props => {
     const { inputs, handleInputChange, handleSubmit } = useForm({}, signup)
     return (
         <form onSubmit={handleSubmit} style={{ width: props.width }}>
-            <p>Your balance</p>
-            <p>Obtainable</p>
+            <p className="dark">Your balance 0.0000 USDT D W</p>
+            <p className="dark">Obtainable 0.0000 THETA</p>
             <div className="form-group">
                 <input type="text" name="price" className="form-control" id="inputPrice" placeholder="Price USDT/THETA" onChange={handleInputChange} value={inputs.price} required />
             </div>
@@ -21,14 +21,15 @@ export default props => {
             <div className="form-group">
                 <input type="text" name="USDT" className="form-control" id="inputUSDT" placeholder="Total USDT/THETA" onChange={handleInputChange} value={inputs.USDT} required />
             </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
+            <p className="dark">Fee 0 USDT (0.2%)</p>
+            <button type="submit" className="btn btn-green" style={{ width: props.width }}>BUY</button>
             <style jsx>{`
                 * {
                     box-sizing: border-box;
                 }
 
                 .form-group {
-                    margin-bottom: 1rem;
+                    margin-bottom: 9px;
                 }
 
                 .form-control {
@@ -69,12 +70,23 @@ export default props => {
                     line-height: 1.5;
                     border-radius: .25rem;
                     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+                    margin-top: 4px;
                 }
 
                 .btn-primary {
                     color: #fff;
                     background-color: #007bff;
                     border-color: #007bff;
+                }
+                p {
+                    font-size: 13px;
+                    letter-spacing: 0.25px;
+                }
+
+                .btn-green {
+                    color: #fff;
+                    background-color: rgb(77, 167, 53);
+                    border-color: rbg(77, 167, 53);
                 }
 
                 
