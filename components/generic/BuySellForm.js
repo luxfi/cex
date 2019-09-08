@@ -2,14 +2,24 @@ import React, { useState } from "react";
 import useForm from '../customHooks/useForm'
 
 export default props => {
-    const signup = () => alert(`Price: ${inputs.price}`)
+    const signup = () => alert(`
+        Price: ${inputs.price}
+        Theta: ${inputs.theta}
+        USDT: ${inputs.USDT}
+        `)
     const { inputs, handleInputChange, handleSubmit } = useForm({}, signup)
     return (
         <form onSubmit={handleSubmit} style={{ width: props.width }}>
             <p>Your balance</p>
             <p>Obtainable</p>
             <div className="form-group">
-                <input type="text" name="price" className="form-control" id="inputPrice1" placeholder="Price USDT/THETA" onChange={handleInputChange} value={inputs.price} />
+                <input type="text" name="price" className="form-control" id="inputPrice" placeholder="Price USDT/THETA" onChange={handleInputChange} value={inputs.price} required />
+            </div>
+            <div className="form-group">
+                <input type="text" name="theta" className="form-control" id="inputTheta" placeholder="Amount THETA" onChange={handleInputChange} value={inputs.theta} required />
+            </div>
+            <div className="form-group">
+                <input type="text" name="USDT" className="form-control" id="inputUSDT" placeholder="Total USDT/THETA" onChange={handleInputChange} value={inputs.USDT} required />
             </div>
             <button type="submit" className="btn btn-primary">Submit</button>
             <style jsx>{`
