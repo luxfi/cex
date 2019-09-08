@@ -10,13 +10,24 @@ export default props => {
             </div>
             <div className="posts-container">
                 <img src={chartPlaceHolder} style={{ width: props.width || "906px" }} />
-                <BuySellForm width="300px" />
+                <div className="container-row space-between">
+                    <BuySellForm buttonColor="green" buttonText="BUY" />
+                    <div className="divider" />
+                    <BuySellForm buttonColor="red" buttonText="SELL" />
+                </div>
             </div>
 
             <style jsx>{`
                 .container {
                     display: flex;
                     flex-direction: column;
+                }
+                .container-row {
+                    display: flex;
+                    flex-direction: row;
+                }
+                .space-between {
+                    justify-content: space-between;
                 }
                 .title {
                     color: #2d92dd;
@@ -26,6 +37,12 @@ export default props => {
                 }
                 .posts-container {
                     margin-top: 20px;
+                }
+                .divider {
+                    width: 1px;
+                    background: black;
+                    margin-left: 20px;
+                    margin-right: 20px;
                 }
             `}</style>
         </div>

@@ -22,8 +22,11 @@ export default props => {
                 <input type="text" name="USDT" className="form-control" id="inputUSDT" placeholder="Total USDT" onChange={handleInputChange} value={inputs.USDT} required />
             </div>
             <p className="dark">Fee 0 USDT (0.2%)</p>
-            <button type="submit" className="btn btn-green" style={{ width: props.width }}>BUY</button>
+            <button type="submit" className={`btn btn-${props.buttonColor || "primary"}`} style={{ width: props.width }}>{props.buttonText}</button>
             <style jsx>{`
+                form {
+                    width: 100%;
+                }
                 * {
                     box-sizing: border-box;
                 }
@@ -71,6 +74,7 @@ export default props => {
                     border-radius: .25rem;
                     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
                     margin-top: 4px;
+                    width: 100%;
                 }
 
                 .btn-primary {
@@ -89,8 +93,14 @@ export default props => {
                     border-color: rbg(77, 167, 53);
                 }
 
+                .btn-red {
+                    color: #fff;
+                    background-color: rgb(228, 81, 38);
+                    border-color: rgb(228, 81, 38);
+                }
+
                 
             `}</style>
-        </form>
+        </form >
     )
 }
