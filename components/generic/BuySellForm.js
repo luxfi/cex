@@ -19,7 +19,7 @@ export default props => {
                 <input type="text" name="theta" className="form-control" id="inputTheta" placeholder="Amount THETA" onChange={handleInputChange} value={inputs.theta} required />
             </div>
             <div className="form-group">
-                <input type="text" name="USDT" className="form-control" id="inputUSDT" placeholder="Total USDT/THETA" onChange={handleInputChange} value={inputs.USDT} required />
+                <input type="text" name="USDT" className="form-control" id="inputUSDT" placeholder="Total USDT" onChange={handleInputChange} value={inputs.USDT} required />
             </div>
             <p className="dark">Fee 0 USDT (0.2%)</p>
             <button type="submit" className="btn btn-green" style={{ width: props.width }}>BUY</button>
