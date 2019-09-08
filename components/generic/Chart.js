@@ -1,4 +1,5 @@
-import chartPlaceHolder from '../../assets/images/research/chart.png'
+import chartPlaceHolder from '../../assets/images/generic/chart.png'
+import BuySellForm from './BuySellForm'
 
 export default props => {
     const { movies } = props;
@@ -8,8 +9,8 @@ export default props => {
                 Trade This Stock
             </div>
             <div className="posts-container">
-
                 <img src={chartPlaceHolder} style={{ width: props.width || "906px" }} />
+                <BuySellForm width="300px" />
             </div>
 
             <style jsx>{`
