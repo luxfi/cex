@@ -43,6 +43,14 @@ export default class OrderBook {
       return this.orders
   }
 
+  @computed get buyOrders () {
+    return []
+  }
+
+  @compute get sellOrders () {
+    return []
+  }
+
   // For later
   // @action setupSocket () {
   //   // Connect socket
