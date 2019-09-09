@@ -9,7 +9,7 @@ module.exports = (io) => {
     socket.on('join data feed', (d) => {
       console.log(`Joined data feed`, d)
       socket.join(d.roomId)
-  
+
       feedSocket.to(d.roomId).emit('join success', `Successfully joined ${d.roomId}`)
     })
 

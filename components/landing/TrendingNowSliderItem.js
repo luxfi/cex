@@ -3,19 +3,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 
 export default props => {
-    const width = props.width || "166px"
-    return (
-        <div className="container">
-            <img src={props.imgSrc} alt="slider-item" style={{ width: props.width }} />
-            <div className="price">$5.55</div>
-            <div className="info">
-                <span className="change">
-                    <FontAwesomeIcon icon={faArrowUp} style={{ width: '12px', paddingRight: "5px" }} />
-                    $1 (8.7%)
+  const width = props.width || "166px"
+  return (
+    <div className="container">
+      <img src={props.imgSrc} alt="slider-item" style={{ width: props.width }} />
+      <div className="price">$5.55</div>
+      <div className="info">
+        <span className="change">
+          <FontAwesomeIcon icon={faArrowUp} style={{ width: '12px', paddingRight: "5px" }} />
+          $1 (8.7%)
                 </span>
-                <a href="#" className="btn invert">Trade</a>
-            </div>
-            <style jsx>{`
+        <a href="#" className="btn invert">Trade</a>
+      </div>
+      <style jsx>{`
                 .container {
                     display: flex;
                     flex-direction: column;
@@ -73,6 +73,6 @@ export default props => {
                     font-size: 9px;
                 }
             `}</style>
-        </div>
-    )
+    </div>
+  )
 }

@@ -2,36 +2,36 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 
 export default props => {
-    return (
-        <div className="container">
-            <header>
-                <div className="info-container">
-                    <h2 className="title" style={{ fontSize: "40px", margin: "0px 0px 4px 0px" }}>
-                        Mad Max: Fury Road
+  return (
+    <div className="container">
+      <header>
+        <div className="info-container">
+          <h2 className="title" style={{ fontSize: "40px", margin: "0px 0px 4px 0px" }}>
+            Mad Max: Fury Road
                     </h2>
-                    <p className="price" style={{ fontSize: "18px", margin: "0px 0px 4px 0px" }}>
-                        $12.50
+          <p className="price" style={{ fontSize: "18px", margin: "0px 0px 4px 0px" }}>
+            $12.50
                     </p>
-                    <p className="change" style={{ fontSize: "27px", margin: "0px" }}>
-                        <FontAwesomeIcon icon={faArrowUp} style={{ width: '18px', paddingRight: "8px" }} />
-                        $1 (8.7%)
+          <p className="change" style={{ fontSize: "27px", margin: "0px" }}>
+            <FontAwesomeIcon icon={faArrowUp} style={{ width: '18px', paddingRight: "8px" }} />
+            $1 (8.7%)
                     </p>
-                </div>
-                <div className="links">
-                    <ul className="nav">
-                        <li className="navlink"><a href="#">Trailer 1</a></li>
-                        <div className="divider" />
-                        <li className="navlink"><a href="#">Trailer 2</a></li>
-                        <div className="divider" />
-                        <li className="navlink"><a href="#">Official Website</a></li>
-                        <div className="break" />
-                        <a href="#" className="btn invert">Start Trading Now</a>
-                        <div className="break" />
-                        <li className="navlink"><a href="#">View Demo</a></li>
-                    </ul>
-                </div>
-            </header>
-            <style jsx>{`
+        </div>
+        <div className="links">
+          <ul className="nav">
+            <li className="navlink"><a href="#">Trailer 1</a></li>
+            <div className="divider" />
+            <li className="navlink"><a href="#">Trailer 2</a></li>
+            <div className="divider" />
+            <li className="navlink"><a href="#">Official Website</a></li>
+            <div className="break" />
+            <a href="#" className="btn invert">Start Trading Now</a>
+            <div className="break" />
+            <li className="navlink"><a href="#">View Demo</a></li>
+          </ul>
+        </div>
+      </header>
+      <style jsx>{`
                 .container {
                     // width: 100%;
                     display: flex;
@@ -127,6 +127,6 @@ export default props => {
                 }
                 
             `}</style>
-        </div>
-    )
+    </div>
+  )
 }

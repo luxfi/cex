@@ -1,53 +1,53 @@
 export default props => {
-    const madMaxMovie = props.movies.find(movie => movie.Imdbid === "tt1392190")
-    return (
+  const madMaxMovie = props.movies.find(movie => movie.Imdbid === "tt1392190")
+  return (
 
-        <div className="stock-info">
-            <img src={madMaxMovie.verticalImg} alt="poster" style={{ width: "290px", padding: "20px 0px" }} />
-            <div className="right-column">
-                <div className="links">
-                    <a href="#" className="link">16+</a>
-                    <a href="#" className="link">|</a>
-                    <a href="#" className="link">43min</a>
-                    <a href="#" className="link">|</a>
-                    <a href="#" className="link">Action, Adventure, Drama</a>
+    <div className="stock-info">
+      <img src={madMaxMovie.verticalImg} alt="poster" style={{ width: "290px", padding: "20px 0px" }} />
+      <div className="right-column">
+        <div className="links">
+          <a href="#" className="link">16+</a>
+          <a href="#" className="link">|</a>
+          <a href="#" className="link">43min</a>
+          <a href="#" className="link">|</a>
+          <a href="#" className="link">Action, Adventure, Drama</a>
+        </div>
+        <a href="#" className="btn invert">Trade This Stock</a>
+        <a href="#" className="btn invert blue">Watch This Trailer</a>
+        <div className="links-2">
+          <a href="#" className="link">Offical Website</a>
+          <a href="#" className="link">|</a>
+          <a href="#" className="link">Trailer 1</a>
+          <a href="#" className="link">|</a>
+          <a href="#" className="link">Trailer 2</a>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <div className="info-1 dark">
+          <a href="#">Creators:</a> George Miller, Brendan McCarthy
                 </div>
-                <a href="#" className="btn invert">Trade This Stock</a>
-                <a href="#" className="btn invert blue">Watch This Trailer</a>
-                <div className="links-2">
-                    <a href="#" className="link">Offical Website</a>
-                    <a href="#" className="link">|</a>
-                    <a href="#" className="link">Trailer 1</a>
-                    <a href="#" className="link">|</a>
-                    <a href="#" className="link">Trailer 2</a>
+        <div className="info-2 dark">
+          <a href="#">Stars:</a> Tom Hardy, Charlize Theron, Nicholas Hoult
                 </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                <div className="info-1 dark">
-                    <a href="#">Creators:</a> George Miller, Brendan McCarthy
-                </div>
-                <div className="info-2 dark">
-                    <a href="#">Stars:</a> Tom Hardy, Charlize Theron, Nicholas Hoult
-                </div>
-                <div className="tables">
-                    <table className="noborder">
-                        <tbody>
-                            <tr><td>Symbol:</td><td className="dark">MDMX2</td></tr>
-                            <tr><td>Status:</td><td className="dark">Active</td></tr>
-                            <tr><td>IPO Date:</td><td className="dark">Dec 12, 2016</td></tr>
-                            <tr><td>MPAA Rating:</td><td className="dark">PG-13</td></tr>
-                        </tbody>
-                    </table>
-                    <table className="noborder">
-                        <tbody>
-                            <tr><td>Symbol:</td><td className="dark">MDMX2</td></tr>
-                            <tr><td>Status:</td><td className="dark">Active</td></tr>
-                            <tr><td>IPO Date:</td><td className="dark">Dec 12, 2016</td></tr>
-                            <tr><td>MPAA Rating:</td><td className="dark">PG-13</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <style jsx>{`
+        <div className="tables">
+          <table className="noborder">
+            <tbody>
+              <tr><td>Symbol:</td><td className="dark">MDMX2</td></tr>
+              <tr><td>Status:</td><td className="dark">Active</td></tr>
+              <tr><td>IPO Date:</td><td className="dark">Dec 12, 2016</td></tr>
+              <tr><td>MPAA Rating:</td><td className="dark">PG-13</td></tr>
+            </tbody>
+          </table>
+          <table className="noborder">
+            <tbody>
+              <tr><td>Symbol:</td><td className="dark">MDMX2</td></tr>
+              <tr><td>Status:</td><td className="dark">Active</td></tr>
+              <tr><td>IPO Date:</td><td className="dark">Dec 12, 2016</td></tr>
+              <tr><td>MPAA Rating:</td><td className="dark">PG-13</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <style jsx>{`
                 .stock-info {
                     display: flex;
                 }
@@ -115,6 +115,6 @@ export default props => {
                     padding-bottom: 4px;
                 }  
             `}</style>
-        </div >
-    )
+    </div >
+  )
 }
