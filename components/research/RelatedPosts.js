@@ -1,18 +1,18 @@
 import postPlaceHolder from '../../assets/images/research/posts.png'
 
 export default props => {
-    const { movies } = props;
-    return (
-        <div className="container">
-            <div className="title">
-                Related Posts
+  const { movies } = props;
+  return (
+    <div className="container">
+      <div className="title">
+        Related Posts
             </div>
-            <div className="posts-container">
+      <div className="posts-container">
 
-                <img src={postPlaceHolder} style={{ width: "210px" }} />
-            </div>
+        <img src={postPlaceHolder} style={{ width: "210px" }} />
+      </div>
 
-            <style jsx>{`
+      <style jsx>{`
                 .container {
                     display: flex;
                     flex-direction: column;
@@ -29,6 +29,6 @@ export default props => {
                     margin-top: 20px;
                 }
             `}</style>
-        </div>
-    )
+    </div>
+  )
 }

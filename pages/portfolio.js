@@ -12,60 +12,60 @@ import BalancesTable from '../components/portfolio/BalancesTable'
 @inject('store')
 @observer
 export default class Portfolio extends React.Component {
-    state = {
-        whiteGutter: true,
+  state = {
+    whiteGutter: true,
+  }
+  static async getInitialProps({ mobxStore }) {
+    await mobxStore.movieStore.fetch();
+    return {
+      movieStore: mobxStore.movieStore
     }
-    static async getInitialProps({ mobxStore }) {
-        await mobxStore.movieStore.fetch();
-        return {
-            movieStore: mobxStore.movieStore
-        }
-    }
+  }
 
-    render() {
-        const { movieStore } = this.props.store
-        const { currentPage } = this.state;
+  render() {
+    const { movieStore } = this.props.store
+    const { currentPage } = this.state;
 
-        const trendingSliderItems = movieStore.topMovies.slice(0, 14)
-            .filter(item => item.verticalImg !== "N/A")
-            .map((sliderItem, key) => {
-                const { title, Imdbid, verticalImg, genre, rated } = sliderItem;
-                return <UpcomingIPOsSliderItem
-                    key={Imdbid}
-                    title={title}
-                    imgSrc={verticalImg}
-                    width="166px"
-                    genre={genre.split(',')[0]}
-                    rated={rated}
-                />
-            })
+    const trendingSliderItems = movieStore.topMovies.slice(0, 14)
+      .filter(item => item.verticalImg !== "N/A")
+      .map((sliderItem, key) => {
+        const { title, Imdbid, verticalImg, genre, rated } = sliderItem;
+        return <UpcomingIPOsSliderItem
+          key={Imdbid}
+          title={title}
+          imgSrc={verticalImg}
+          width="166px"
+          genre={genre.split(',')[0]}
+          rated={rated}
+        />
+      })
 
-        const upcommingIPOFilters = () => (
-            <div className="container">
-                <ul>
-                    <li>
-                        <a href="#" className="filter selected">most expected</a>
-                    </li>
-                    <li>
-                        <span className="filter">|</span>
-                    </li>
-                    <li>
-                        <a href="#" className="filter"> IPOs calender </a>
-                    </li>
-                </ul>
-                <ul>
-                    <li>
-                        <a href="#" className="filter selected"><FontAwesomeIcon icon={faColumns} style={{ height: "16px" }} /></a>
-                    </li>
-                    <li>
-                        <a href="#" className="filter"><FontAwesomeIcon icon={faThList} style={{ height: "16px" }} /></a>
-                    </li>
-                    <li>
-                        <a href="#" className="filter"><FontAwesomeIcon icon={faTh} style={{ height: "16px" }} /></a>
-                    </li>
-                </ul>
+    const upcommingIPOFilters = () => (
+      <div className="container">
+        <ul>
+          <li>
+            <a href="#" className="filter selected">most expected</a>
+          </li>
+          <li>
+            <span className="filter">|</span>
+          </li>
+          <li>
+            <a href="#" className="filter"> IPOs calender </a>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <a href="#" className="filter selected"><FontAwesomeIcon icon={faColumns} style={{ height: "16px" }} /></a>
+          </li>
+          <li>
+            <a href="#" className="filter"><FontAwesomeIcon icon={faThList} style={{ height: "16px" }} /></a>
+          </li>
+          <li>
+            <a href="#" className="filter"><FontAwesomeIcon icon={faTh} style={{ height: "16px" }} /></a>
+          </li>
+        </ul>
 
-                <style jsx>{`
+        <style jsx>{`
                     .container {
                         display: flex;
                         flex-direction: row;
@@ -84,39 +84,39 @@ export default class Portfolio extends React.Component {
                         text-decoration: none;
                     }
                 `}</style>
-            </div>
-        )
+      </div>
+    )
 
-        const quoteFilters = () => (
-            <div className="container">
-                <ul>
-                    <li>
-                        <span className="filter ">sort by: </span>
-                    </li>
-                    <li>
-                        <a href="#" className="filter">name</a>
-                    </li>
-                    <li>
-                        <span className="filter">|</span>
-                    </li>
-                    <li>
-                        <a href="#" className="filter selected">price</a>
-                    </li>
-                    <li>
-                        <span className="filter">|</span>
-                    </li>
-                    <li>
-                        <a href="#" className="filter">price change</a>
-                    </li>
-                    <li>
-                        <span className="filter">|</span>
-                    </li>
-                    <li>
-                        <a href="#" className="filter">genre</a>
-                    </li>
-                </ul>
+    const quoteFilters = () => (
+      <div className="container">
+        <ul>
+          <li>
+            <span className="filter ">sort by: </span>
+          </li>
+          <li>
+            <a href="#" className="filter">name</a>
+          </li>
+          <li>
+            <span className="filter">|</span>
+          </li>
+          <li>
+            <a href="#" className="filter selected">price</a>
+          </li>
+          <li>
+            <span className="filter">|</span>
+          </li>
+          <li>
+            <a href="#" className="filter">price change</a>
+          </li>
+          <li>
+            <span className="filter">|</span>
+          </li>
+          <li>
+            <a href="#" className="filter">genre</a>
+          </li>
+        </ul>
 
-                <style jsx>{`
+        <style jsx>{`
                     .container {
                         display: flex;
                         flex-direction: row;
@@ -135,31 +135,31 @@ export default class Portfolio extends React.Component {
                         text-decoration: none;
                     }
                 `}</style>
-            </div>
-        )
+      </div>
+    )
 
-        return (
-            <TickerStripLayout movies={movieStore.movies} darkNav={true}>
-                <div className="container-center">
-                    <div className="links">
-                        <a href="#" className="link selected">My Portfolio</a>
-                        <a href="#" className="link divider">|</a>
-                        <a href="#" className="link">Balances</a>
-                        <a href="#" className="link divider">|</a>
-                        <a href="#" className="link">Position</a>
-                        <a href="#" className="link divider">|</a>
-                        <a href="#" className="link">Orders</a>
-                        <a href="#" className="link divider">|</a>
-                        <a href="#" className="link">Watchlists</a>
-                        <a href="#" className="link divider">|</a>
-                        <a href="#" className="link">Alerts</a>
-                    </div>
-                </div>
-                <BalancesRow />
-                <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"My Positions"} hideInnerPadding filters={quoteFilters()}>
-                    <BalancesTable movies={movieStore.movies} />
-                </PageRow>
-                <style jsx>{`
+    return (
+      <TickerStripLayout movies={movieStore.movies} darkNav={true}>
+        <div className="container-center">
+          <div className="links">
+            <a href="#" className="link selected">My Portfolio</a>
+            <a href="#" className="link divider">|</a>
+            <a href="#" className="link">Balances</a>
+            <a href="#" className="link divider">|</a>
+            <a href="#" className="link">Position</a>
+            <a href="#" className="link divider">|</a>
+            <a href="#" className="link">Orders</a>
+            <a href="#" className="link divider">|</a>
+            <a href="#" className="link">Watchlists</a>
+            <a href="#" className="link divider">|</a>
+            <a href="#" className="link">Alerts</a>
+          </div>
+        </div>
+        <BalancesRow />
+        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"My Positions"} hideInnerPadding filters={quoteFilters()}>
+          <BalancesTable movies={movieStore.movies} />
+        </PageRow>
+        <style jsx>{`
                     .container-center {
                         display: flex;
                         justify-content: center;
@@ -180,8 +180,8 @@ export default class Portfolio extends React.Component {
                         text-decoration: none;
                     }
                 `}</style>
-            </TickerStripLayout>
-        );
-    }
+      </TickerStripLayout>
+    );
+  }
 }
 

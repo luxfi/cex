@@ -30,11 +30,11 @@ class MyMobxApp extends App {
     const isServer = typeof window === 'undefined'
     this.mobxStore = isServer ? props.initialMobxState : initializeStore(props.initialMobxState);
   }
-  
+
   render() {
     const { Component, pageProps } = this.props
     return (
-      <Provider store={this.mobxStore}> 
+      <Provider store={this.mobxStore}>
         <Component {...pageProps} />
       </Provider>
     )

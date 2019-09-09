@@ -2,22 +2,22 @@ import chartPlaceHolder from '../../assets/images/generic/chart.png'
 import BuySellForm from './BuySellForm'
 
 export default props => {
-    const { movies } = props;
-    return (
-        <div className="container">
-            <div className="title">
-                Trade This Stock
+  const { movies } = props;
+  return (
+    <div className="container">
+      <div className="title">
+        Trade This Stock
             </div>
-            <div className="posts-container">
-                <img src={chartPlaceHolder} style={{ width: props.width || "906px" }} />
-                <div className="container-row space-between">
-                    <BuySellForm buttonColor="green" buttonText="BUY" />
-                    <div className="divider" />
-                    <BuySellForm buttonColor="red" buttonText="SELL" />
-                </div>
-            </div>
+      <div className="posts-container">
+        <img src={chartPlaceHolder} style={{ width: props.width || "906px" }} />
+        <div className="container-row space-between">
+          <BuySellForm buttonColor="green" buttonText="BUY" />
+          <div className="divider" />
+          <BuySellForm buttonColor="red" buttonText="SELL" />
+        </div>
+      </div>
 
-            <style jsx>{`
+      <style jsx>{`
                 .container {
                     display: flex;
                     flex-direction: column;
@@ -45,6 +45,6 @@ export default props => {
                     margin-right: 20px;
                 }
             `}</style>
-        </div>
-    )
+    </div>
+  )
 }

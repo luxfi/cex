@@ -1,37 +1,37 @@
 export default props => {
-    const madMaxMovie = props.movies.find(movie => movie.Imdbid === "tt1392190")
-    return (
+  const madMaxMovie = props.movies.find(movie => movie.Imdbid === "tt1392190")
+  return (
 
-        <div className="stock-info">
-            <img src={madMaxMovie.verticalImg} alt="poster" style={{ width: "77px", height: "112px", padding: "20px 0px" }} />
-            <div className="container">
-                <div className="links-2">
-                    <a href="#" className="link">Offical Website</a>
-                    <a href="#" className="link">|</a>
-                    <a href="#" className="link">Trailer 1</a>
-                    <a href="#" className="link">|</a>
-                    <a href="#" className="link">Trailer 2</a>
-                </div>
-                <div className="tables">
-                    <table className="noborder">
-                        <tbody>
-                            <tr><td>Symbol:</td><td className="dark">MDMX2</td></tr>
-                            <tr><td>Status:</td><td className="dark">Active</td></tr>
-                            <tr><td>IPO Date:</td><td className="dark">Dec 12, 2016</td></tr>
-                            <tr><td>MPAA Rating:</td><td className="dark">PG-13</td></tr>
-                        </tbody>
-                    </table>
-                    <table className="noborder">
-                        <tbody>
-                            <tr><td>Symbol:</td><td className="dark">MDMX2</td></tr>
-                            <tr><td>Status:</td><td className="dark">Active</td></tr>
-                            <tr><td>IPO Date:</td><td className="dark">Dec 12, 2016</td></tr>
-                            <tr><td>MPAA Rating:</td><td className="dark">PG-13</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <style jsx>{`
+    <div className="stock-info">
+      <img src={madMaxMovie.verticalImg} alt="poster" style={{ width: "77px", height: "112px", padding: "20px 0px" }} />
+      <div className="container">
+        <div className="links-2">
+          <a href="#" className="link">Offical Website</a>
+          <a href="#" className="link">|</a>
+          <a href="#" className="link">Trailer 1</a>
+          <a href="#" className="link">|</a>
+          <a href="#" className="link">Trailer 2</a>
+        </div>
+        <div className="tables">
+          <table className="noborder">
+            <tbody>
+              <tr><td>Symbol:</td><td className="dark">MDMX2</td></tr>
+              <tr><td>Status:</td><td className="dark">Active</td></tr>
+              <tr><td>IPO Date:</td><td className="dark">Dec 12, 2016</td></tr>
+              <tr><td>MPAA Rating:</td><td className="dark">PG-13</td></tr>
+            </tbody>
+          </table>
+          <table className="noborder">
+            <tbody>
+              <tr><td>Symbol:</td><td className="dark">MDMX2</td></tr>
+              <tr><td>Status:</td><td className="dark">Active</td></tr>
+              <tr><td>IPO Date:</td><td className="dark">Dec 12, 2016</td></tr>
+              <tr><td>MPAA Rating:</td><td className="dark">PG-13</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <style jsx>{`
                 .stock-info {
                     display: flex;
                 }
@@ -90,6 +90,6 @@ export default props => {
                     padding-bottom: 4px;
                 }  
             `}</style>
-        </div >
-    )
+    </div >
+  )
 }
