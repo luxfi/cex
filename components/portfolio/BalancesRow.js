@@ -5,16 +5,12 @@ import PageRow from '../generic/PageRow'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 
-
-@observer
 export default class BalancesRow extends React.Component {
     state = {
-        whiteGutter: true,
+      whiteGutter: true
     }
 
     render() {
-        const { currentPage } = this.state;
-
         const balancesFitler = () => (
             <div className="container">
                 <ul>
