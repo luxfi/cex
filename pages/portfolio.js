@@ -18,8 +18,8 @@ export default class Portfolio extends React.Component {
     static async getInitialProps({ mobxStore }) {
         await mobxStore.movieStore.fetch();
         return {
-            movieStore: mobxStore.movieStore,
-        };
+            movieStore: mobxStore.movieStore
+        }
     }
 
     render() {
