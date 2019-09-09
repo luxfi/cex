@@ -18,25 +18,22 @@ export default class OrderBook {
   }
 
   // For DEMO
-  @action initiateDataGenerator(ticker = 'MDMXFR') {
+  @action initiateDataGenerator(ticker = 'MDMXFR', price = 13.37) {
     this.ticker = ticker
     this.connected = true
 
-    let order1 = new LimitOrder("order01", "bid", 13.37, 10)
-    let order2 = new LimitOrder("order02", "ask", 13.38, 10)
-    let order3 = new LimitOrder("order03", "bid", 13.38, 5)
 
+    let result;
+    let order;
     let book = new LimitOrderBook()
-
-    let result = book.add(order1)
-    result = book.add(order2)
-    result = book.add(order3)
-
-    console.log(result)
+    let x = 0;
 
     this.dataGenerator = setInterval(
       () => {
-        console.log('Generating some data!', this.coinFlipBidAsk())
+        x++;
+        order = new LimitOrder(`order${x}`, this.bidAsk(), this.newPrice(price), this.orderSize())
+        result = book.add(order)
+        console.log(result)
       },
       2500
     ) // Some data generator
@@ -63,8 +60,17 @@ export default class OrderBook {
     return []
   }
 
-  coinFlipBidAsk() {
-    return (Math.floor(Math.random() * 2) == 0) ? 'bid' : 'ask';
+  bidAsk() {
+    return (Math.floor(Math.random() * 2) == 0) ? 'bid' : 'ask'
+  }
+
+  newPrice(x, range) {
+    let r = range || Math.random();
+    return (x + Math.random() * 0.2 * r).toFixed(2)
+  }
+
+  orderSize() {
+    return (Math.random() * 100).toFixed(2)
   }
 
   // For later
