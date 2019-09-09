@@ -99,6 +99,7 @@ export default props => {
                   background-color: #2d92dd;
                   box-shadow: 0 4px 14px 0 rgba(255, 145, 30, 0.39);
                   color: white;
+                  width: 116px;
                 }
                   `}</style>
         </div>
