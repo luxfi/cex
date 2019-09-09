@@ -33,6 +33,18 @@ export default class OrderBook {
     result = book.add(order3)
     
     console.log(result)
+
+    this.dataGenerator = setInterval(
+      () => {
+        console.log('Generating some data!')
+      },
+      2500
+    ) // Some data generator
+  }
+
+  @action terminateDataGenerator () {
+    clearInterval(this.dataGenerator)
+    this.connected = false
   }
 
   @action setTicker(ticker) {

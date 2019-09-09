@@ -33,6 +33,10 @@ export default class Index extends React.Component {
     this.props.store.orderBook.initiateDataGenerator()
   }
 
+  componentWillUnmount () {
+    this.props.store.orderBook.terminateDataGenerator()
+  }
+
   render() {
     const { movieStore } = this.props.store
     const trendingSliderItems = movieStore.topMovies.slice(0, 14)
