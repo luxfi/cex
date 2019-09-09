@@ -2,7 +2,7 @@ const withCSS = require('@zeit/next-css')
 module.exports = withCSS({
     webpack: (config, { defaultLoaders, isServer }) => {
         config.module.rules.push({
-            test: /\.(eot|woff|woff2|ttf|txt|jpg|png|svg|gif)$/,
+            test: /\.(eot|woff|woff2|ttf|txt|jpg|png|jpeg|svg|gif)$/,
             use: [
                 {
                     loader: 'file-loader',

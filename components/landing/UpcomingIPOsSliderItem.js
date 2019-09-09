@@ -1,7 +1,3 @@
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
-
 export default props => {
     const width = props.width || "166px"
     return (
