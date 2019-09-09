@@ -20,17 +20,15 @@ export default props => {
                 <div className="links">
                     <ul className="nav">
                         <li className="navlink"><a href="#">Trailer 1</a></li>
-                        <div className="divider"/>
+                        <div className="divider" />
                         <li className="navlink"><a href="#">Trailer 2</a></li>
-                        <div className="divider"/>
+                        <div className="divider" />
                         <li className="navlink"><a href="#">Official Website</a></li>
-                        <div className="break"/>
+                        <div className="break" />
                         <a href="#" className="btn invert">Start Trading Now</a>
-                        <div className="break"/>
+                        <div className="break" />
                         <li className="navlink"><a href="#">View Demo</a></li>
-
                     </ul>
-
                 </div>
             </header>
             <style jsx>{`

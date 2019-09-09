@@ -9,7 +9,7 @@ import { faColumns, faTh, faThList } from '@fortawesome/free-solid-svg-icons'
 import BalancesRow from '../components/portfolio/BalancesRow'
 import BalancesTable from '../components/portfolio/BalancesTable'
 
-@inject('movieStore')
+@inject('store')
 @observer
 export default class Portfolio extends React.Component {
     state = {
@@ -18,16 +18,15 @@ export default class Portfolio extends React.Component {
     static async getInitialProps({ mobxStore }) {
         await mobxStore.movieStore.fetch();
         return {
-            movies: mobxStore.movieStore.movies,
-            topMovies: mobxStore.movieStore.topMovies,
-        };
+            movieStore: mobxStore.movieStore
+        }
     }
 
     render() {
-        const { topMovies, movies } = this.props
+        const { movieStore } = this.props.store
         const { currentPage } = this.state;
 
-        const trendingSliderItems = topMovies.slice(0, 14)
+        const trendingSliderItems = movieStore.topMovies.slice(0, 14)
             .filter(item => item.verticalImg !== "N/A")
             .map((sliderItem, key) => {
                 const { title, Imdbid, verticalImg, genre, rated } = sliderItem;
@@ -140,7 +139,7 @@ export default class Portfolio extends React.Component {
         )
 
         return (
-            <TickerStripLayout movies={movies} darkNav={true}>
+            <TickerStripLayout movies={movieStore.movies} darkNav={true}>
                 <div className="container-center">
                     <div className="links">
                         <a href="#" className="link selected">My Portfolio</a>
@@ -158,7 +157,7 @@ export default class Portfolio extends React.Component {
                 </div>
                 <BalancesRow />
                 <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"My Positions"} hideInnerPadding filters={quoteFilters()}>
-                    <BalancesTable movies={movies} />
+                    <BalancesTable movies={movieStore.movies} />
                 </PageRow>
                 <style jsx>{`
                     .container-center {
