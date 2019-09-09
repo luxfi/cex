@@ -32,7 +32,7 @@ export default class Research extends React.Component {
                         <div className="wide-column">
                             <HeaderInfo />
                             <StockInfo movies={movieStore.movies} />
-                            <iframe className="video" width="886" height="498" src="https://www.youtube.com/embed/hEJnMQG9ev8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe className="video" width="886" height="498" src="https://www.youtube.com/embed/hEJnMQG9ev8" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                         </div>
                         <div className="thin-column">
                             <ShareIcons />
