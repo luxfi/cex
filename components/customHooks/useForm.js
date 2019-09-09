@@ -15,6 +15,6 @@ const useForm = (initialValues, callback) => {
     handleInputChange,
     inputs
   };
-}ß
+}
 
 export default useForm;

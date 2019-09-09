@@ -36,7 +36,7 @@ export default class OrderBook {
 
     this.dataGenerator = setInterval(
       () => {
-        console.log('Generating some data!')
+        console.log('Generating some data!', this.coinFlipBidAsk())
       },
       2500
     ) // Some data generator
@@ -61,6 +61,10 @@ export default class OrderBook {
 
   @computed get sellOrders() {
     return []
+  }
+
+  coinFlipBidAsk() {
+    return (Math.floor(Math.random() * 2) == 0) ? 'bid' : 'ask';
   }
 
   // For later
