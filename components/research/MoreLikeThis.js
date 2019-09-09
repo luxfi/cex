@@ -9,8 +9,8 @@ export default props => {
                 {movies
                     .filter(movie => movie.verticalImg)
                     .slice(0, 12)
-                    .map(movie => (
-                        <img src={movie.verticalImg} style={{ width: "72px", height: "101px", padding: "2px 4px" }} />
+                    .map((movie, i) => (
+                        <img key={i} src={movie.verticalImg} style={{ width: "72px", height: "101px", padding: "2px 4px" }} />
                     ))}
             </div>
 

@@ -1,7 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { faFacebook, faTwitter, faGoogle, faPinterest } from '@fortawesome/free-brands-svg-icons'
-
 export default props => {
     const madMaxMovie = props.movies.find(movie => movie.Imdbid === "tt1392190")
     return (
