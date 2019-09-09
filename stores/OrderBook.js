@@ -47,7 +47,7 @@ export default class OrderBook {
     return []
   }
 
-  @compute get sellOrders () {
+  @computed get sellOrders () {
     return []
   }
 
