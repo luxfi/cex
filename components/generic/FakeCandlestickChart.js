@@ -28,7 +28,7 @@ function buildRandomBinnedData(total) {
         yClose: values[1],
         yLow: values[0],
         color: y < 25 ? '#EF5D28' : '#12939A',
-        opacity: y > 75 ? 0.7 : 1
+        // opacity: y > 75 ? 0.7 : 1
       };
     });
   return result;
