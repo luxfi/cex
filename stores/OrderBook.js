@@ -30,7 +30,7 @@ export default class OrderBook {
     // this.orderBookData = initialData.orderBookData
     this.ticker = initialData.ticker
     this.connected = initialData.connected
-    this.takeResults = initialData.takeResults
+    this.takeResults = initialData.takeResults || []
   }
 
   // For DEMO
@@ -68,22 +68,11 @@ export default class OrderBook {
     this.ticker = ticker;
   }
 
-  @computed get orders() {
-    return this.orders
-  }
-
-  @computed get buyOrders() {
-    return []
-  }
-
-  @computed get sellOrders() {
-    return []
-  }
-
   @action generateOrderAndAdd(book, id, price, size) {
     const order = new LimitOrder(`order${id}`, bidAsk(), newPrice(price), size)
+    // console.log(`order`, order)
+    // console.log('this.takeresults', this.takeResults)
     let result = book.add(order)
-    debugger
     this.takeResults.push(result)
     return result
   }
@@ -99,6 +88,20 @@ export default class OrderBook {
     }
     return this.generateOrderAndAdd(book, id, price, size)
   }
+
+  @computed get orders() {
+    return this.orders
+  }
+
+  @computed get buyOrders() {
+    return []
+  }
+
+  @computed get sellOrders() {
+    return []
+  }
+
+
 
   generatefullDay(book) {
     // estimate between 200 and 2000 trades a day
