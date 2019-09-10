@@ -79,6 +79,18 @@ export default class OrderBook {
     return book.add(order);
   }
 
+  generatefullDay(book) {
+    // estimate between 200 and 2000 trades a day
+  }
+
+  generatefullWeek(book) {
+    //
+  }
+
+  generatefullMonth(book) {
+
+  }
+
   // For later
   // @action setupSocket () {
   //   // Connect socket
