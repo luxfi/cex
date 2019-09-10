@@ -10,7 +10,8 @@ const bidAsk = () => {
 
 const newPrice = (x, range) => {
   let r = range || Math.random();
-  return (x + Math.random() * 0.2 * r).toFixed(2)
+  let random_sign = -1 + Math.round(Math.random()) * 2;
+  return (x + Math.random() * 0.2 * r * random_sign).toFixed(2)
 }
 
 const generateOrderSize = () => {
