@@ -8,6 +8,7 @@ import MoreLikeThis from '../components/research/MoreLikeThis'
 import RelatedPosts from '../components/research/RelatedPosts'
 import Forecasts from '../components/research/Forecasts'
 import Chart from '../components/generic/Chart'
+import { formatTakeResults } from '../components/utils/formatOrderBookDataForChart'
 
 @inject('store')
 @observer
@@ -33,7 +34,9 @@ export default class Research extends React.Component {
   }
 
   render() {
-    const { movieStore } = this.props.store
+    const { movieStore, orderBook } = this.props.store
+    let takeResultsArray = orderBook.takeResults.slice(0);
+    const data = formatTakeResults(takeResultsArray)
 
     return (
       <TickerStripLayout movies={movieStore.movies} darkNav={true}>

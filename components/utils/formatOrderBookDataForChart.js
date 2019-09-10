@@ -1,0 +1,30 @@
+export function formatTakeResults(data) {
+  if (data.length === 0) return data
+  let groupByNumber = Math.floor(2000 / 20)
+  let reducer = function (accumulator, currentValue, currentIndex) {
+    if ((currentIndex % groupByNumber === 0) && currentIndex !== 0) {
+      accumulator.push([])
+    }
+    let currentArray = accumulator[accumulator.length - 1]
+    currentArray.push(currentValue)
+    return accumulator
+  }
+  let result = data
+    .map(d => parseFloat(d.taker.price)) //get prices from each order
+    .reduce(reducer, [[]]) //group arrays by amount of x values in chart
+    .map(data => {
+      const max = Math.max.apply(Math, data);
+      const min = Math.max.apply(Math, data);
+      const open = data[0];
+      const close = data[data.length - 1]
+      debugger;
+      return {
+        yHigh: max,
+        yOpen: open,
+        yClose: close,
+        yLow: min,
+      }
+    })
+
+  debugger;
+}
