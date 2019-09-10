@@ -24,15 +24,16 @@ export default class OrderBook {
 
 
     let result;
-    let order;
     let book = new LimitOrderBook()
-    let x = 0;
+    let id = 0;
+    let size;
 
     this.dataGenerator = setInterval(
       () => {
-        x++;
-        order = new LimitOrder(`order${x}`, this.bidAsk(), this.newPrice(price), this.orderSize())
-        result = book.add(order)
+        id++;
+        size = this.generateOrderSize();
+        // order = new LimitOrder(`order${x}`, this.bidAsk(), this.newPrice(price), this.orderSize())
+        result = this.generateOrderandAdd(book, id, price, size)
         console.log(result)
       },
       2500
@@ -69,8 +70,13 @@ export default class OrderBook {
     return (x + Math.random() * 0.2 * r).toFixed(2)
   }
 
-  orderSize() {
+  generateOrderSize() {
     return (Math.random() * 100).toFixed(2)
+  }
+
+  generateOrderandAdd(book, id, price, size) {
+    const order = new LimitOrder(`order${id}`, this.bidAsk(), this.newPrice(price), size)
+    return book.add(order);
   }
 
   // For later
