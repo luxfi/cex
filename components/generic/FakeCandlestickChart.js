@@ -44,7 +44,7 @@ export default class CandlestickExample extends React.Component {
     return (
       <div className="candlestick-example">
         <div className="chart">
-          <FlexibleWidthXYPlot animation yDomain={[0, 100]} height={300}>
+          <FlexibleWidthXYPlot animation yDomain={[0, 100]} height={450}>
             <XAxis />
             <YAxis />
             {/* <LineSeries color="#12939A" data={data} />
