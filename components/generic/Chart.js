@@ -1,5 +1,6 @@
 import chartPlaceHolder from '../../assets/images/generic/chart.png'
 import BuySellForm from './BuySellForm'
+import FakeChart from './FakeChart.js'
 
 export default props => {
   const { movies } = props;
@@ -9,7 +10,8 @@ export default props => {
         Trade This Stock
             </div>
       <div className="posts-container">
-        <img src={chartPlaceHolder} style={{ width: props.width || "906px" }} />
+        {/* <img src={chartPlaceHolder} style={{ width: props.width || "906px" }} /> */}
+        <FakeChart />
         <div className="container-row space-between">
           <BuySellForm buttonColor="green" buttonText="BUY" />
           <div className="divider" />
