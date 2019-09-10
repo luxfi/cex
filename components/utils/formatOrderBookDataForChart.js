@@ -19,7 +19,7 @@ export function formatTakeResults(data) {
       const close = data[data.length - 1]
       const y = (open + close) / 2;
       return {
-        x: group,
+        x: group + 1,
         y,
         yHigh: max,
         yOpen: open,
@@ -29,5 +29,6 @@ export function formatTakeResults(data) {
         // opacity: y > 75 ? 0.7 : 1
       }
     })
+  console.log(result)
   return result;
 }
