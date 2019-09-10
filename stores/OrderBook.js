@@ -4,17 +4,33 @@ import _ from 'lodash'
 const LimitOrder = require('limit-order-book').LimitOrder
 const LimitOrderBook = require('limit-order-book').LimitOrderBook
 
+const bidAsk = () => {
+  return (Math.floor(Math.random() * 2) == 0) ? 'bid' : 'ask'
+}
+
+const newPrice = (x, range) => {
+  let r = range || Math.random();
+  return (x + Math.random() * 0.2 * r).toFixed(2)
+}
+
+const generateOrderSize = () => {
+  return (Math.random() * 100).toFixed(2)
+}
+
 export default class OrderBook {
   @observable ticker = ''
   @observable connected = false
+  @observable takeResults = []
 
   constructor(initialData = {
     ticker: '',
-    connected: false
+    connected: false,
+    takeResults: []
   }) {
     // this.orderBookData = initialData.orderBookData
     this.ticker = initialData.ticker
     this.connected = initialData.connected
+    this.takeResults = initialData.takeResults
   }
 
   // For DEMO
@@ -26,18 +42,21 @@ export default class OrderBook {
     let result;
     let book = new LimitOrderBook()
     let id = 0;
-    let size;
+    let size = generateOrderSize();
 
-    this.dataGenerator = setInterval(
-      () => {
-        id++;
-        size = this.generateOrderSize();
-        // order = new LimitOrder(`order${x}`, this.bidAsk(), this.newPrice(price), this.orderSize())
-        result = this.generateOrderandAdd(book, id, price, size)
-        console.log(result)
-      },
-      2500
-    ) // Some data generator
+    result = this.generateOrders(ticker, 2000, book, id, price, size)
+    console.log(result)
+
+    // this.dataGenerator = setInterval(
+    //   () => {
+    //     id++;
+    //     size = this.generateOrderSize();
+    //     // order = new LimitOrder(`order${x}`, this.bidAsk(), this.newPrice(price), this.orderSize())
+    //     result = this.generateOrderAndAdd(book, id, price, size)
+    //     console.log(result)
+    //   },
+    //   2500
+    // ) // Some data generator
   }
 
   @action terminateDataGenerator() {
@@ -61,22 +80,24 @@ export default class OrderBook {
     return []
   }
 
-  bidAsk() {
-    return (Math.floor(Math.random() * 2) == 0) ? 'bid' : 'ask'
+  @action generateOrderAndAdd(book, id, price, size) {
+    const order = new LimitOrder(`order${id}`, bidAsk(), newPrice(price), size)
+    let result = book.add(order)
+    debugger
+    this.takeResults.push(result)
+    return result
   }
 
-  newPrice(x, range) {
-    let r = range || Math.random();
-    return (x + Math.random() * 0.2 * r).toFixed(2)
-  }
-
-  generateOrderSize() {
-    return (Math.random() * 100).toFixed(2)
-  }
-
-  generateOrderandAdd(book, id, price, size) {
-    const order = new LimitOrder(`order${id}`, this.bidAsk(), this.newPrice(price), size)
-    return book.add(order);
+  @action generateOrders(ticker, numberOfOrders, book, idNumber = 1, price, size) {
+    let n = 0;
+    let id;
+    while (n < numberOfOrders - 1) {
+      id = `${ticker}${idNumber}`
+      this.generateOrderAndAdd(book, id, price, size)
+      idNumber++
+      n++
+    }
+    return this.generateOrderAndAdd(book, id, price, size)
   }
 
   generatefullDay(book) {
