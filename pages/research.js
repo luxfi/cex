@@ -60,7 +60,7 @@ export default class Research extends React.Component {
               <Forecasts />
             </div>
             <div className="wide-column">
-              <Chart />
+              <Chart data={data} />
             </div>
           </div>
         </div>

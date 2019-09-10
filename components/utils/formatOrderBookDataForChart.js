@@ -12,19 +12,22 @@ export function formatTakeResults(data) {
   let result = data
     .map(d => parseFloat(d.taker.price)) //get prices from each order
     .reduce(reducer, [[]]) //group arrays by amount of x values in chart
-    .map(data => {
+    .map((data, group) => {
       const max = Math.max.apply(Math, data);
-      const min = Math.max.apply(Math, data);
+      const min = Math.min.apply(Math, data);
       const open = data[0];
       const close = data[data.length - 1]
-      debugger;
+      const y = (open + close) / 2;
       return {
+        x: group,
+        y,
         yHigh: max,
         yOpen: open,
         yClose: close,
         yLow: min,
+        color: close < open ? '#EF5D28' : '#12939A',
+        // opacity: y > 75 ? 0.7 : 1
       }
     })
-
-  debugger;
+  return result;
 }
