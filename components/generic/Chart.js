@@ -1,6 +1,6 @@
 import chartPlaceHolder from '../../assets/images/generic/chart.png'
 import BuySellForm from './BuySellForm'
-import FakeChart from './FakeChart.js'
+import FakeChart from './FakeCandlestickChart'
 
 export default props => {
   const { movies } = props;

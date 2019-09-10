@@ -23,8 +23,6 @@ class FakeChart extends React.Component {
         <LineMarkSeries data={data} />
       </XYPlot>;
     }
-    console.log(data)
-
     return (
       <Chart data={data} />
     );
