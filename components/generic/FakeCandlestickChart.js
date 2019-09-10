@@ -18,7 +18,7 @@ function buildRandomBinnedData(total) {
         Math.random()
       ]
         .sort()
-        .map(d => Math.floor(d * 100));
+        .map(d => Math.floor(d * 100) / 100 * 2 + 13);
       const y = (values[2] + values[1]) / 2;
       return {
         x: i,
@@ -27,7 +27,7 @@ function buildRandomBinnedData(total) {
         yOpen: values[2],
         yClose: values[1],
         yLow: values[0],
-        color: y < 25 ? '#EF5D28' : '#12939A',
+        color: y < .25 * 2 + 13 ? '#EF5D28' : '#12939A',
         // opacity: y > 75 ? 0.7 : 1
       };
     });
@@ -44,7 +44,7 @@ export default class CandlestickExample extends React.Component {
     return (
       <div className="candlestick-example">
         <div className="chart">
-          <FlexibleWidthXYPlot animation yDomain={[0, 100]} height={450}>
+          <FlexibleWidthXYPlot animation yDomain={[13, 15]} height={450}>
             <XAxis />
             <YAxis />
             {/* <LineSeries color="#12939A" data={data} />
