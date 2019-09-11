@@ -24,7 +24,7 @@ export default props => {
           </a >
           <a href="#" target="_blank" title="likes" className="likes">
             1.5k
-                    </a >
+          </a >
         </div >
         <style jsx>{`
                 .share-container {
@@ -38,12 +38,16 @@ export default props => {
                     color: white;
                     padding: 7px;
                     border-radius: 2px;
+                    height: 18px;
                 }
-                .fa-facebook { background: #3B5998; }
-                .fa-twitter { background: #55ACEE; }
-                .fa-google { background: #dd4b39; }
-                .fa-pinterest { background: #cb2027; }
-                .fa-envelope { background: #007bb5; }
+                .social-links {
+                  height: 38.5px;
+                }
+                .fa-facebook { background: #3B5998; width: 16px; }
+                .fa-twitter { background: #55ACEE; width: 16px; }
+                .fa-google { background: #dd4b39; width: 16px; }
+                .fa-pinterest { background: #cb2027; width: 16px; }
+                .fa-envelope { background: #007bb5; width: 16px; }
                 .social-links a.likes {
                     color: black;
                     text-decoration: none;
@@ -51,6 +55,8 @@ export default props => {
                 }
                 .social-links a.likes {
                     padding: 8px 9px 6px;
+                    width: 32px;
+                    height: 16px;
                 }
             `}</style>
       </div>
