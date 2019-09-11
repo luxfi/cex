@@ -2,6 +2,8 @@ import chartPlaceHolder from '../../assets/images/generic/chart.png'
 import BuySellForm from './BuySellForm'
 import FakeChart from './FakeCandlestickChart'
 import { timelineLabels } from '../utils/dateRange'
+import ChartIntervalControl from '../generic/ChartIntervalControls'
+
 import moment from 'moment/moment.js'
 
 export default props => {
@@ -16,6 +18,7 @@ export default props => {
         Trade This Stock
       </div>
       {JSON.stringify(lastSeven)}
+      <ChartIntervalControl />
       <div className="posts-container">
         <FakeChart data={data} yDomain={yDomain} />
         <div className="container-row space-between">
