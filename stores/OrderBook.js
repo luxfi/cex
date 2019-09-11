@@ -8,11 +8,6 @@ const bidAsk = () => {
   return (Math.floor(Math.random() * 2) == 0) ? 'bid' : 'ask'
 }
 
-const newPrice = (x, range) => {
-  let r = range || Math.random();
-  let random_sign = -1 + Math.round(Math.random()) * 2;
-  return (x + Math.random() * 0.2 * r * random_sign).toFixed(2)
-}
 
 const generateOrderSize = () => {
   return (Math.random() * 100).toFixed(2)
@@ -22,16 +17,25 @@ export default class OrderBook {
   @observable ticker = ''
   @observable connected = false
   @observable takeResults = []
+  @observable price = 13.37
+  @observable high = 13.37
+  @observable low = 13.37
 
   constructor(initialData = {
     ticker: '',
     connected: false,
-    takeResults: []
+    takeResults: [],
+    price: 13.37,
+    high: 13.37,
+    low: 13.37
   }) {
     // this.orderBookData = initialData.orderBookData
     this.ticker = initialData.ticker
     this.connected = initialData.connected
     this.takeResults = initialData.takeResults || []
+    this.price = initialData.price || 13.37
+    this.high = initialData.high || 13.37
+    this.low = initialData.low || 13.37
   }
 
   // For DEMO
@@ -70,7 +74,7 @@ export default class OrderBook {
   }
 
   @action generateOrderAndAdd(book, id, price, size) {
-    const order = new LimitOrder(`order${id}`, bidAsk(), newPrice(price), size)
+    const order = new LimitOrder(`order${id}`, bidAsk(), this.setNewPrice(price), size)
     // console.log(`order`, order)
     // console.log('this.takeresults', this.takeResults)
     let result = book.add(order)
@@ -88,6 +92,24 @@ export default class OrderBook {
       n++
     }
     return this.generateOrderAndAdd(book, id, price, size)
+  }
+
+  @action setNewPrice = (x, range) => {
+    let rnd = Math.random(); // generate number, 0 <= x < 1.0
+    let volatility = .02 // 2%
+    let changePercent = 2 * volatility * rnd;
+    if (changePercent > volatility) {
+      changePercent -= (2 * volatility)
+    }
+    let changeAmount = this.price * changePercent
+    let newPrice = (this.price + changeAmount)
+    this.price = newPrice;
+    if (newPrice < this.low) { this.low = newPrice } //set new low
+    if (newPrice > this.high) { this.high = newPrice } //set new high
+    return newPrice;
+    // let r = range || Math.random();
+    // let random_sign = -1 + Math.round(Math.random()) * 2;
+    // return (x + Math.random() * 0.2 * r * random_sign).toFixed(2)
   }
 
   @computed get orders() {

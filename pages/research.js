@@ -37,6 +37,7 @@ export default class Research extends React.Component {
     const { movieStore, orderBook } = this.props.store
     let takeResultsArray = orderBook.takeResults.slice(0);
     const data = formatTakeResults(takeResultsArray)
+    const yDomain = [orderBook.low * .94, orderBook.high * 1.06]
 
     return (
       <TickerStripLayout movies={movieStore.movies} darkNav={true}>
@@ -60,7 +61,7 @@ export default class Research extends React.Component {
               <Forecasts />
             </div>
             <div className="wide-column">
-              <Chart data={data} />
+              <Chart data={data} yDomain={yDomain} />
             </div>
           </div>
         </div>
