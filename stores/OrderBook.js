@@ -96,7 +96,7 @@ export default class OrderBook {
 
   @action setNewPrice = (x, range) => {
     let rnd = Math.random(); // generate number, 0 <= x < 1.0
-    let volatility = .02 // 2%
+    let volatility = .01 // 1%
     let changePercent = 2 * volatility * rnd;
     if (changePercent > volatility) {
       changePercent -= (2 * volatility)

@@ -1,17 +1,20 @@
 import chartPlaceHolder from '../../assets/images/generic/chart.png'
 import BuySellForm from './BuySellForm'
 import FakeChart from './FakeCandlestickChart'
+import { timelineLabels } from '../utils/dateRange'
 
 export default props => {
   const { movies, data, yDomain } = props;
+
+  let labels = timelineLabels('18:00', 2, 'hours')
 
   return (
     <div className="container">
       <div className="title">
         Trade This Stock
-            </div>
+      </div>
+      {labels}
       <div className="posts-container">
-        {/* <img src={chartPlaceHolder} style={{ width: props.width || "906px" }} /> */}
         <FakeChart data={data} yDomain={yDomain} />
         <div className="container-row space-between">
           <BuySellForm buttonColor="green" buttonText="BUY" />

@@ -1,6 +1,6 @@
 export function formatTakeResults(data) {
   if (data.length === 0) return data
-  let groupByNumber = Math.floor(2000 / 20)
+  let groupByNumber = Math.floor(2000 / 40)
   let reducer = function (accumulator, currentValue, currentIndex) {
     if ((currentIndex % groupByNumber === 0) && currentIndex !== 0) {
       accumulator.push([])
