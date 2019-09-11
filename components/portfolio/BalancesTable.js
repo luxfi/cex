@@ -3,42 +3,42 @@ import Pagination from "../generic/Pagination"
 import React, { useState } from 'react';
 
 const Row = (props) => {
-    const { percentChange } = props;
-    const formatedpercentChange = parseFloat(percentChange * 100).toFixed(2) + "%"
-    return (
-        <tr>
-            <td className="table-cell left" scope="row">
-                <div className="container">
-                    <img src={props.imgSrc} alt="slider-item" style={{ width: "52px" }} />
-                    <div className="right">
-                        <div className="title">{props.title}</div>
-                        <div className="genre-rated">{`${props.genre.split(",")[0]} / ${props.rated}`}</div>
-                        <div className="links">
-                            <a href="#" className="link">Trailer</a>
-                            <a href="#" className="link">|</a>
-                            <a href="#" className="link">Official Website</a>
-                        </div>
-                    </div>
+  const { percentChange } = props;
+  const formatedpercentChange = parseFloat(percentChange * 100).toFixed(2) + "%"
+  return (
+    <tr>
+      <td className="table-cell left" scope="row">
+        <div className="container">
+          <img src={props.imgSrc} alt="slider-item" style={{ width: "52px" }} />
+          <div className="right">
+            <div className="title">{props.title}</div>
+            <div className="genre-rated">{`${props.genre.split(",")[0]} / ${props.rated}`}</div>
+            <div className="links">
+              <a href="#" className="link">Trailer</a>
+              <a href="#" className="link">|</a>
+              <a href="#" className="link">Official Website</a>
+            </div>
+          </div>
 
-                </div>
-            </td>
-            <td className="table-cell symbol left" >{props.symbol || "SMBL"}</td>
-            <td className="table-cell price left" >${props.price || "$1.11"}</td>
-            <td className={`table-cell change left ${
-                props.percentChange > 0 ? "green" : "red"
-                }`} >
-                ${props.change}
-                <span className="percent-change">
-                    ({formatedpercentChange || "1.1%"})
+        </div>
+      </td>
+      <td className="table-cell symbol left" >{props.symbol || "SMBL"}</td>
+      <td className="table-cell price left" >${props.price || "$1.11"}</td>
+      <td className={`table-cell change left ${
+        props.percentChange > 0 ? "green" : "red"
+        }`} >
+        ${props.change}
+        <span className="percent-change">
+          ({formatedpercentChange || "1.1%"})
                 </span>
 
-            </td>
-            <td className="table-cell market-cap left" >{props.marketCap || "$111"}</td>
-            <td className="table-cell gain left" >{
-                props.gain
-            }</td>
-            <td className="table-cell left" ><TradeButton /></td>
-            <style jsx>{`
+      </td>
+      <td className="table-cell market-cap left" >{props.marketCap || "$111"}</td>
+      <td className="table-cell gain left" >{
+        props.gain
+      }</td>
+      <td className="table-cell left" ><TradeButton /></td>
+      <style jsx>{`
                 .table-cell {
                     display: table-cell;
                     padding: 14px 40px 14px 16px;
@@ -85,155 +85,155 @@ const Row = (props) => {
                     margin-left: 4px;
                 }
             `}</style>
-        </tr>
-    )
+    </tr>
+  )
 }
 
 
 
 export default ({ movies }) => {
-    const [currentPage, setCurrentPage] = useState(1)
-    const handlePageChange = (page, e) => {
-        setCurrentPage(page)
-    }
+  const [currentPage, setCurrentPage] = useState(1)
+  const handlePageChange = (page, e) => {
+    setCurrentPage(page)
+  }
 
-    const limit = 6
-    const pageCount = 3
-    const total = movies.length
+  const limit = 6
+  const pageCount = 3
+  const total = movies.length
 
-    return (
-        <div className="container">
-            < table className="table" >
-                <thead>
-                    <tr>
-                        <th className="table-cell head left" scope="col">Name</th>
-                        <th className="table-cell head left" scope="col">Symbol</th>
-                        <th className="table-cell head left" scope="col">Price</th>
-                        <th className="table-cell head left" scope="col">Day Change</th>
-                        <th className="table-cell head left" scope="col">Market Cap</th>
-                        <th className="table-cell head left" scope="col">Gain</th>
-                        <th className="table-cell head left" scope="col">Trade</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {movies
-                        .slice(currentPage - 1, currentPage - 1 + limit)
-                        .map((movie, index) => {
-                            const {
-                                title,
-                                symbol,
-                                price,
-                                percentChange,
-                                change,
-                                marketCap,
-                                gain,
-                                genre,
-                                rated,
-                                verticalImg
-                            } = movie
-                            return (
-                                <Row
-                                    title={title}
-                                    symbol={symbol}
-                                    price={price}
-                                    percentChange={percentChange}
-                                    change={change}
-                                    marketCap={marketCap}
-                                    gain={gain}
-                                    genre={genre}
-                                    rated={rated}
-                                    key={index}
-                                    imgSrc={verticalImg}
-                                />
-                            )
-                        }
-                        )}
-                </tbody>
-            </table>
-            <div className='pagination-container'>
-                <div className='pagination-item'>
-                    <Pagination
-                        total={total}
-                        limit={limit}
-                        pageCount={pageCount}
-                        currentPage={currentPage}
+  return (
+    <div className="container">
+      < table className="table" >
+        <thead>
+          <tr>
+            <th className="table-cell head left" scope="col">Name</th>
+            <th className="table-cell head left" scope="col">Symbol</th>
+            <th className="table-cell head left" scope="col">Price</th>
+            <th className="table-cell head left" scope="col">Day Change</th>
+            <th className="table-cell head left" scope="col">Market Cap</th>
+            <th className="table-cell head left" scope="col">Gain</th>
+            <th className="table-cell head left" scope="col">Trade</th>
+          </tr>
+        </thead>
+        <tbody>
+          {movies
+            .slice(currentPage - 1, currentPage - 1 + limit)
+            .map((movie, index) => {
+              const {
+                title,
+                symbol,
+                price,
+                percentChange,
+                change,
+                marketCap,
+                gain,
+                genre,
+                rated,
+                verticalImg
+              } = movie
+              return (
+                <Row
+                  title={title}
+                  symbol={symbol}
+                  price={price}
+                  percentChange={percentChange}
+                  change={change}
+                  marketCap={marketCap}
+                  gain={gain}
+                  genre={genre}
+                  rated={rated}
+                  key={index}
+                  imgSrc={verticalImg}
+                />
+              )
+            }
+            )}
+        </tbody>
+      </table>
+      <div className='pagination-container'>
+        <div className='pagination-item'>
+          <Pagination
+            total={total}
+            limit={limit}
+            pageCount={pageCount}
+            currentPage={currentPage}
+          >
+            {({
+              pages,
+              currentPage,
+              hasNextPage,
+              hasPreviousPage,
+              previousPage,
+              nextPage,
+              totalPages,
+              getPageItemProps
+            }) => (
+                <div>
+                  <button
+                    {...getPageItemProps({
+                      pageValue: 1,
+                      onPageChange: handlePageChange
+                    })}
+                  >
+                    first
+                                    </button>
+
+                  {hasPreviousPage && (
+                    <button
+                      {...getPageItemProps({
+                        pageValue: previousPage,
+                        onPageChange: handlePageChange
+                      })}
                     >
-                        {({
-                            pages,
-                            currentPage,
-                            hasNextPage,
-                            hasPreviousPage,
-                            previousPage,
-                            nextPage,
-                            totalPages,
-                            getPageItemProps
-                        }) => (
-                                <div>
-                                    <button
-                                        {...getPageItemProps({
-                                            pageValue: 1,
-                                            onPageChange: handlePageChange
-                                        })}
-                                    >
-                                        first
+                      {"<"}
+                    </button>
+                  )}
+
+                  {pages.map(page => {
+                    let activePage = null;
+                    if (currentPage === page) {
+                      activePage = { backgroundColor: "#fdce09" };
+                    }
+                    return (
+                      <button
+                        {...getPageItemProps({
+                          pageValue: page,
+                          key: page,
+                          style: activePage,
+                          onPageChange: handlePageChange
+                        })}
+                      >
+                        {page}
+                      </button>
+                    );
+                  })}
+
+                  {hasNextPage && (
+                    <button
+                      {...getPageItemProps({
+                        pageValue: nextPage,
+                        onPageChange: handlePageChange
+                      })}
+                    >
+                      {">"}
+                    </button>
+                  )}
+
+                  <button
+                    {...getPageItemProps({
+                      pageValue: totalPages,
+                      onPageChange: handlePageChange
+                    })}
+                  >
+                    last
                                     </button>
-
-                                    {hasPreviousPage && (
-                                        <button
-                                            {...getPageItemProps({
-                                                pageValue: previousPage,
-                                                onPageChange: handlePageChange
-                                            })}
-                                        >
-                                            {"<"}
-                                        </button>
-                                    )}
-
-                                    {pages.map(page => {
-                                        let activePage = null;
-                                        if (currentPage === page) {
-                                            activePage = { backgroundColor: "#fdce09" };
-                                        }
-                                        return (
-                                            <button
-                                                {...getPageItemProps({
-                                                    pageValue: page,
-                                                    key: page,
-                                                    style: activePage,
-                                                    onPageChange: handlePageChange
-                                                })}
-                                            >
-                                                {page}
-                                            </button>
-                                        );
-                                    })}
-
-                                    {hasNextPage && (
-                                        <button
-                                            {...getPageItemProps({
-                                                pageValue: nextPage,
-                                                onPageChange: handlePageChange
-                                            })}
-                                        >
-                                            {">"}
-                                        </button>
-                                    )}
-
-                                    <button
-                                        {...getPageItemProps({
-                                            pageValue: totalPages,
-                                            onPageChange: handlePageChange
-                                        })}
-                                    >
-                                        last
-                                    </button>
-                                </div>
-                            )}
-                    </Pagination>
                 </div>
+              )}
+          </Pagination>
+        </div>
 
-            </div>
-            <style jsx>{`
+      </div>
+      <style jsx>{`
             .table-cell {
                 display: table-cell;
                 padding: 14px 40px 14px 16px;
@@ -276,7 +276,7 @@ export default ({ movies }) => {
                 width: 1146px;
             }
         `}</style>
-        </div >
+    </div >
 
-    )
+  )
 }

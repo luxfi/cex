@@ -1,23 +1,34 @@
 import chartPlaceHolder from '../../assets/images/generic/chart.png'
 import BuySellForm from './BuySellForm'
+import FakeChart from './FakeCandlestickChart'
+import { timelineLabels } from '../utils/dateRange'
+import ChartIntervalControl from '../generic/ChartIntervalControls'
+
+import moment from 'moment/moment.js'
 
 export default props => {
-    const { movies } = props;
-    return (
-        <div className="container">
-            <div className="title">
-                Trade This Stock
-            </div>
-            <div className="posts-container">
-                <img src={chartPlaceHolder} style={{ width: props.width || "906px" }} />
-                <div className="container-row space-between">
-                    <BuySellForm buttonColor="green" buttonText="BUY" />
-                    <div className="divider" />
-                    <BuySellForm buttonColor="red" buttonText="SELL" />
-                </div>
-            </div>
+  const { movies, data, yDomain } = props;
 
-            <style jsx>{`
+  let labels = timelineLabels('18:00', 15, 'minutes')
+  let lastSeven = labels.slice(Math.max(labels.length - 7, 1))
+
+  return (
+    <div className="container">
+      <div className="title">
+        Trade This Stock
+      </div>
+      {JSON.stringify(lastSeven)}
+      <ChartIntervalControl />
+      <div className="posts-container">
+        <FakeChart data={data} yDomain={yDomain} />
+        <div className="container-row space-between">
+          <BuySellForm buttonColor="green" buttonText="BUY" />
+          <div className="divider" />
+          <BuySellForm buttonColor="red" buttonText="SELL" />
+        </div>
+      </div>
+
+      <style jsx>{`
                 .container {
                     display: flex;
                     flex-direction: column;
@@ -45,6 +56,6 @@ export default props => {
                     margin-right: 20px;
                 }
             `}</style>
-        </div>
-    )
+    </div>
+  )
 }

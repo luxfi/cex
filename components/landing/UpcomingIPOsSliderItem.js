@@ -1,30 +1,30 @@
 export default props => {
-    const width = props.width || "166px"
-    return (
-        <div className="container">
-            <div className="ipo-date-container">
-                <div className="month-day-container">
-                    <div className="day">
-                        27
+  const width = props.width || "166px"
+  return (
+    <div className="container">
+      <div className="ipo-date-container">
+        <div className="month-day-container">
+          <div className="day">
+            27
           </div>
-                    <div className="month">
-                        DEC
+          <div className="month">
+            DEC
           </div>
-                </div>
-                <div className="year">
-                    2019
         </div>
-            </div>
-            <img src={props.imgSrc} alt="slider-item" style={{ width: props.width }} />
-            <div className="title">{props.title}</div>
-            <div className="genre-rated">{`${props.genre} / ${props.rated}`}</div>
-            <div className="links">
-                <a href="#" className="link">Trailer</a>
-                <a href="#" className="link">|</a>
-                <a href="#" className="link">Official Website</a>
-            </div>
-            <a href="#" className="btn invert">Add to Watchlist</a>
-            <style jsx>{`
+        <div className="year">
+          2019
+        </div>
+      </div>
+      <img src={props.imgSrc} alt="slider-item" style={{ width: props.width }} />
+      <div className="title">{props.title}</div>
+      <div className="genre-rated">{`${props.genre} / ${props.rated}`}</div>
+      <div className="links">
+        <a href="#" className="link">Trailer</a>
+        <a href="#" className="link">|</a>
+        <a href="#" className="link">Official Website</a>
+      </div>
+      <a href="#" className="btn invert">Add to Watchlist</a>
+      <style jsx>{`
                 .container {
                     display: flex;
                     flex-direction: column;
@@ -102,6 +102,6 @@ export default props => {
                   width: 116px;
                 }
                   `}</style>
-        </div>
-    )
+    </div>
+  )
 }

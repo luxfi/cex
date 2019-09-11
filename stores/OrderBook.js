@@ -4,45 +4,67 @@ import _ from 'lodash'
 const LimitOrder = require('limit-order-book').LimitOrder
 const LimitOrderBook = require('limit-order-book').LimitOrderBook
 
+const bidAsk = () => {
+  return (Math.floor(Math.random() * 2) == 0) ? 'bid' : 'ask'
+}
+
+
+const generateOrderSize = () => {
+  return (Math.random() * 100).toFixed(2)
+}
+
 export default class OrderBook {
   @observable ticker = ''
   @observable connected = false
+  @observable takeResults = []
+  @observable price = 13.37
+  @observable high = 13.37
+  @observable low = 13.37
 
   constructor(initialData = {
     ticker: '',
-    connected: false
+    connected: false,
+    takeResults: [],
+    price: 13.37,
+    high: 13.37,
+    low: 13.37
   }) {
     // this.orderBookData = initialData.orderBookData
     this.ticker = initialData.ticker
     this.connected = initialData.connected
+    this.takeResults = initialData.takeResults || []
+    this.price = initialData.price || 13.37
+    this.high = initialData.high || 13.37
+    this.low = initialData.low || 13.37
   }
 
   // For DEMO
-  @action initiateDataGenerator (ticker='MDMXFR') {
+  @action initiateDataGenerator(ticker = 'MDMXFR', price = 13.37) {
     this.ticker = ticker
     this.connected = true
 
-    let order1 = new LimitOrder("order01", "bid", 13.37, 10)
-    let order2 = new LimitOrder("order02", "ask", 13.38, 10)
-    let order3 = new LimitOrder("order03", "bid", 13.38, 5)
-    
+
+    let result;
     let book = new LimitOrderBook()
-    
-    let result = book.add(order1)
-    result = book.add(order2)
-    result = book.add(order3)
-    
+    let id = 0;
+    let size = generateOrderSize();
+
+    result = this.generateOrders(ticker, 2000, book, id, price, size)
     console.log(result)
 
-    this.dataGenerator = setInterval(
-      () => {
-        console.log('Generating some data!')
-      },
-      2500
-    ) // Some data generator
+    // this.dataGenerator = setInterval(
+    //   () => {
+    //     id++;
+    //     size = this.generateOrderSize();
+    //     // order = new LimitOrder(`order${x}`, this.bidAsk(), this.newPrice(price), this.orderSize())
+    //     result = this.generateOrderAndAdd(book, id, price, size)
+    //     console.log(result)
+    //   },
+    //   2500
+    // ) // Some data generator
   }
 
-  @action terminateDataGenerator () {
+  @action terminateDataGenerator() {
     clearInterval(this.dataGenerator)
     this.connected = false
   }
@@ -51,16 +73,69 @@ export default class OrderBook {
     this.ticker = ticker;
   }
 
+  @action generateOrderAndAdd(book, id, price, size) {
+    const order = new LimitOrder(`order${id}`, bidAsk(), this.setNewPrice(price), size)
+    // console.log(`order`, order)
+    // console.log('this.takeresults', this.takeResults)
+    let result = book.add(order)
+    this.takeResults.push(result)
+    return result
+  }
+
+  @action generateOrders(ticker, numberOfOrders, book, idNumber = 1, price, size) {
+    let n = 0;
+    let id;
+    while (n < numberOfOrders - 1) {
+      id = `${ticker}${idNumber}`
+      this.generateOrderAndAdd(book, id, price, size)
+      idNumber++
+      n++
+    }
+    return this.generateOrderAndAdd(book, id, price, size)
+  }
+
+  @action setNewPrice = (x, range) => {
+    let rnd = Math.random(); // generate number, 0 <= x < 1.0
+    let volatility = .01 // 1%
+    let changePercent = 2 * volatility * rnd;
+    if (changePercent > volatility) {
+      changePercent -= (2 * volatility)
+    }
+    let changeAmount = this.price * changePercent
+    let newPrice = (this.price + changeAmount)
+    this.price = newPrice;
+    if (newPrice < this.low) { this.low = newPrice } //set new low
+    if (newPrice > this.high) { this.high = newPrice } //set new high
+    return newPrice;
+    // let r = range || Math.random();
+    // let random_sign = -1 + Math.round(Math.random()) * 2;
+    // return (x + Math.random() * 0.2 * r * random_sign).toFixed(2)
+  }
+
   @computed get orders() {
-      return this.orders
+    return this.orders
   }
 
-  @computed get buyOrders () {
+  @computed get buyOrders() {
     return []
   }
 
-  @computed get sellOrders () {
+  @computed get sellOrders() {
     return []
+  }
+
+
+
+  generatefullDay(book) {
+    // estimate between 200 and 2000 trades a day
+  }
+
+  generatefullWeek(book) {
+    //
+  }
+
+  generatefullMonth(book) {
+
   }
 
   // For later

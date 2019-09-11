@@ -1,7 +1,7 @@
 const TradeButton = () => {
-    return (
-        <button className="btn invert">
-            Trade
+  return (
+    <button className="btn invert">
+      Trade
             <style jsx>{`
                 .btn.invert {
                     margin: 0;
@@ -32,8 +32,8 @@ const TradeButton = () => {
                     font-size: 9px;
                 }
         `}</style>
-        </button>
-    )
+    </button>
+  )
 }
 
 export default TradeButton
