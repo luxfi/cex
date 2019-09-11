@@ -62,7 +62,7 @@ export default class BalancesRow extends React.Component {
               <div className="value">
                 <span style={{ color: "#acacac" }}>$</span>
                 225,555
-                                <span style={{ "font-size": "27px" }}>
+                                <span style={{ fontSize: "27px" }}>
                   .97
                                 </span>
               </div>
@@ -73,7 +73,7 @@ export default class BalancesRow extends React.Component {
                 <span style={{ color: "#acacac" }}>
                   $
                                 </span>12,745
-                                <span style={{ "font-size": "27px" }}>
+                                <span style={{ fontSize: "27px" }}>
                   .00
                                 </span>
               </div>
