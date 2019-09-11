@@ -41,12 +41,12 @@ export default class CandlestickExample extends React.Component {
 
   render() {
     // const { data } = this.state;
-    const { data } = this.props;
-
+    const { data, yDomain } = this.props;
+    let domain = yDomain || [13, 13.7]
     return (
       <div className="candlestick-example">
         <div className="chart">
-          <FlexibleWidthXYPlot animation yDomain={[13, 13.8]} height={450}>
+          <FlexibleWidthXYPlot animation yDomain={domain} height={450}>
             <XAxis />
             <YAxis />
             {/* <LineSeries color="#12939A" data={data} />

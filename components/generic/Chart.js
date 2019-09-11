@@ -3,7 +3,7 @@ import BuySellForm from './BuySellForm'
 import FakeChart from './FakeCandlestickChart'
 
 export default props => {
-  const { movies, data } = props;
+  const { movies, data, yDomain } = props;
 
   return (
     <div className="container">
@@ -12,7 +12,7 @@ export default props => {
             </div>
       <div className="posts-container">
         {/* <img src={chartPlaceHolder} style={{ width: props.width || "906px" }} /> */}
-        <FakeChart data={data} />
+        <FakeChart data={data} yDomain={yDomain} />
         <div className="container-row space-between">
           <BuySellForm buttonColor="green" buttonText="BUY" />
           <div className="divider" />
