@@ -1,17 +1,17 @@
 export default props => {
-    // console.log('Row title', props)
-    return (
-        <div className="page-row">
-            <div className="left box" />
-            <div className="inner-row">
-                <div className="top-container">
-                    <div className="title">{props.rowTitle || 'TITLE'}</div >
-                    <div className="filters">{props.filters}</div>
-                </div>
-                {props.children}
-            </div>
-            <div className="right box" />
-            <style jsx>{`
+  // console.log('Row title', props)
+  return (
+    <div className="page-row">
+      <div className="left box" />
+      <div className="inner-row">
+        <div className="top-container">
+          <div className="title">{props.rowTitle || 'TITLE'}</div >
+          <div className="filters">{props.filters}</div>
+        </div>
+        {props.children}
+      </div>
+      <div className="right box" />
+      <style jsx>{`
             .title {
                 color: #2d92dd;
                 font-size: 35px;
@@ -49,6 +49,6 @@ export default props => {
                 justify-content: space-between;
             }
             `}</style>
-        </div>
-    )
+    </div>
+  )
 }

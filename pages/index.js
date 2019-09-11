@@ -28,12 +28,12 @@ export default class Index extends React.Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     console.log('index props componentDidMount', this.props.store.orderBook)
     this.props.store.orderBook.initiateDataGenerator()
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.props.store.orderBook.terminateDataGenerator()
   }
 

@@ -17,26 +17,26 @@ import kochlorberImg from '../../assets/images/partners/kochlorber.png'
 import weinsteinImg from '../../assets/images/partners/weinstein.png'
 
 export default props => {
-    return (
-        <div className="image-row">
-            <img className="partner-image" src={disneyImg} alt="Walt Disney Pictures"/>
-            <img className="partner-image" src={paramountImg} alt="Paramount Pictures"/>
-            <img className="partner-image" src={warnerbrothersImg} alt="Warner Brothers"/>
-            <img className="partner-image" src={sonyImg} alt="Sony Pictures"/>
-            <img className="partner-image" src={universalImg} alt="NBC Universal"/>
-            <img className="partner-image" src={dreamworksImg} alt="Dreamworks Pictures"/>
-            <img className="partner-image" src={newlineImg} alt="New Line Cinema"/>
-            <img className="partner-image" src={lionsgateImg} alt="Lionsgate"/>
-            <img className="partner-image" src={touchstoneImg} alt="Touchstone Pictures"/>
-            <img className="partner-image" src={hollywoodImg} alt="Hollywood Pictures"/>
-            <img className="partner-image" src={columbiaImg} alt="Columbia Pictures"/>
-            <img className="partner-image" src={focusImg} alt="Focus Features"/>
-            <img className="partner-image" src={miramaxImg} alt="Miramax Films"/>
-            <img className="partner-image" src={warnerindependentImg} alt="Warner Independent Pictures"/>
-            <img className="partner-image" src={unitedartistsImg} alt="United Artists"/>
-            <img className="partner-image" src={kochlorberImg} alt="Koch Lorber Films"/>
-            <img className="partner-image" src={weinsteinImg} alt="The Weinstein Company"/>
-            <style jsx>{`
+  return (
+    <div className="image-row">
+      <img className="partner-image" src={disneyImg} alt="Walt Disney Pictures" />
+      <img className="partner-image" src={paramountImg} alt="Paramount Pictures" />
+      <img className="partner-image" src={warnerbrothersImg} alt="Warner Brothers" />
+      <img className="partner-image" src={sonyImg} alt="Sony Pictures" />
+      <img className="partner-image" src={universalImg} alt="NBC Universal" />
+      <img className="partner-image" src={dreamworksImg} alt="Dreamworks Pictures" />
+      <img className="partner-image" src={newlineImg} alt="New Line Cinema" />
+      <img className="partner-image" src={lionsgateImg} alt="Lionsgate" />
+      <img className="partner-image" src={touchstoneImg} alt="Touchstone Pictures" />
+      <img className="partner-image" src={hollywoodImg} alt="Hollywood Pictures" />
+      <img className="partner-image" src={columbiaImg} alt="Columbia Pictures" />
+      <img className="partner-image" src={focusImg} alt="Focus Features" />
+      <img className="partner-image" src={miramaxImg} alt="Miramax Films" />
+      <img className="partner-image" src={warnerindependentImg} alt="Warner Independent Pictures" />
+      <img className="partner-image" src={unitedartistsImg} alt="United Artists" />
+      <img className="partner-image" src={kochlorberImg} alt="Koch Lorber Films" />
+      <img className="partner-image" src={weinsteinImg} alt="The Weinstein Company" />
+      <style jsx>{`
             .image-row {
                 display: flex;
                 flex: 1;
@@ -51,6 +51,6 @@ export default props => {
                 padding-bottom: 5px;
             }
             `}</style>
-        </div>
-    )
+    </div>
+  )
 }

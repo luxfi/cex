@@ -6,32 +6,32 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 
 export default class BalancesRow extends React.Component {
-    state = {
-      whiteGutter: true
-    }
+  state = {
+    whiteGutter: true
+  }
 
-    render() {
-        const balancesFitler = () => (
-            <div className="container">
-                <ul>
-                    <li>
-                        <a href="#" className="filter selected">day</a>
-                    </li>
-                    <li>
-                        <span className="filter">|</span>
-                    </li>
-                    <li>
-                        <a href="#" className="filter">month</a>
-                    </li>
-                    <li>
-                        <span className="filter">|</span>
-                    </li>
-                    <li>
-                        <a href="#" className="filter">year</a>
-                    </li>
-                </ul>
+  render() {
+    const balancesFitler = () => (
+      <div className="container">
+        <ul>
+          <li>
+            <a href="#" className="filter selected">day</a>
+          </li>
+          <li>
+            <span className="filter">|</span>
+          </li>
+          <li>
+            <a href="#" className="filter">month</a>
+          </li>
+          <li>
+            <span className="filter">|</span>
+          </li>
+          <li>
+            <a href="#" className="filter">year</a>
+          </li>
+        </ul>
 
-                <style jsx>{`
+        <style jsx>{`
                     .container {
                         display: flex;
                         flex-direction: row;
@@ -50,47 +50,48 @@ export default class BalancesRow extends React.Component {
                         text-decoration: none;
                     }
                 `}</style>
-            </div>
-        )
+      </div>
+    )
 
-        return (
-            <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Balances"} hideInnerPadding filters={balancesFitler()}>
-                <div className="container-center-content">
-                    <div className="flex-container">
-                        <div className="flex-item">
-                            <div className="title">Portfolio Value</div>
-                            <div className="value">
-                                <span style={{ color: "#acacac" }}>$</span>
-                                225,555
-                                <span style={{ "font-size": "27px" }}>
-                                    .97
+    return (
+      <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Balances"} hideInnerPadding filters={balancesFitler()}>
+        <div className="container-center-content">
+          <div className="flex-container">
+            <div className="flex-item">
+              <div className="title">Portfolio Value</div>
+              <div className="value">
+                <span style={{ color: "#acacac" }}>$</span>
+                225,555
+                                <span style={{ fontSize: "27px" }}>
+                  .97
                                 </span>
-                            </div>
-                        </div>
-                        <div className="flex-item">
-                            <div className="title">Cash Position</div>
-                            <div className="value">
-                                <span style={{ color: "#acacac" }}>
-                                    $
+              </div>
+            </div>
+            <div className="flex-item">
+              <div className="title">Cash Position</div>
+              <div className="value">
+                <span style={{ color: "#acacac" }}>
+                  $
                                 </span>12,745
-                                <span style={{ "font-size": "27px" }}>
-                                    .00
+                                <span style={{ fontSize: "27px" }}>
+                  .00
                                 </span>
-                            </div>
-                        </div>
-                        <div className="flex-item">
-                            <div className="title">% Change</div>
-                            <div className="value">
-                                <span className="change">
-                                    <FontAwesomeIcon icon={faArrowUp} style={{
-                                        paddingRight: "8px", "padding-bottom": "12px"
-                                    }} />
-                                </span>
-                                5.04<span style={{ color: "#acacac" }}>%</span>
-                            </div>
-                        </div>
-                    </div>
-                    <style jsx>{`
+              </div>
+            </div>
+            <div className="flex-item">
+              <div className="title">% Change</div>
+              <div className="value">
+                <span className="change">
+                  <FontAwesomeIcon icon={faArrowUp} style={{
+                    paddingRight: "8px", "padding-bottom": "12px", height: "32px",
+                    width: "32px"
+                  }} />
+                </span>
+                5.04<span style={{ color: "#acacac" }}>%</span>
+              </div>
+            </div>
+          </div>
+          <style jsx>{`
                         .flex-container {
                             display: flex;
                             justify-content: space-around;
@@ -108,6 +109,7 @@ export default class BalancesRow extends React.Component {
                         .container-center-content {
                             display: flex;
                             justify-content: center;
+                            height: 135px;
                         }
                         .value {
                             font-size: 54px;
@@ -120,9 +122,9 @@ export default class BalancesRow extends React.Component {
                             font-size: 32px;
                         }
                     `}</style>
-                </div>
-            </PageRow >
-        );
-    }
+        </div>
+      </PageRow >
+    );
+  }
 }
 

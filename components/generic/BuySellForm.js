@@ -2,28 +2,28 @@ import React, { useState } from "react";
 import useForm from '../customHooks/useForm'
 
 export default props => {
-    const signup = () => alert(`
+  const signup = () => alert(`
         Price: ${inputs.price}
         Theta: ${inputs.theta}
         USDT: ${inputs.USDT}
         `)
-    const { inputs, handleInputChange, handleSubmit } = useForm({}, signup)
-    return (
-        <form onSubmit={handleSubmit} style={{ width: props.width }}>
-            <p className="dark">Your balance 0.0000 USDT D W</p>
-            <p className="dark">Obtainable 0.0000 THETA</p>
-            <div className="form-group">
-                <input type="text" name="price" className="form-control" id="inputPrice" placeholder="Price USDT/THETA" onChange={handleInputChange} value={inputs.price} required />
-            </div>
-            <div className="form-group">
-                <input type="text" name="theta" className="form-control" id="inputTheta" placeholder="Amount THETA" onChange={handleInputChange} value={inputs.theta} required />
-            </div>
-            <div className="form-group">
-                <input type="text" name="USDT" className="form-control" id="inputUSDT" placeholder="Total USDT" onChange={handleInputChange} value={inputs.USDT} required />
-            </div>
-            <p className="dark">Fee 0 USDT (0.2%)</p>
-            <button type="submit" className={`btn btn-${props.buttonColor || "primary"}`} style={{ width: props.width }}>{props.buttonText}</button>
-            <style jsx>{`
+  const { inputs, handleInputChange, handleSubmit } = useForm({}, signup)
+  return (
+    <form onSubmit={handleSubmit} style={{ width: props.width }}>
+      <p className="dark">Your balance 0.0000 USDT D W</p>
+      <p className="dark">Obtainable 0.0000 THETA</p>
+      <div className="form-group">
+        <input type="text" name="price" className="form-control" id="inputPrice" placeholder="Price USDT/THETA" onChange={handleInputChange} value={inputs.price} required />
+      </div>
+      <div className="form-group">
+        <input type="text" name="theta" className="form-control" id="inputTheta" placeholder="Amount THETA" onChange={handleInputChange} value={inputs.theta} required />
+      </div>
+      <div className="form-group">
+        <input type="text" name="USDT" className="form-control" id="inputUSDT" placeholder="Total USDT" onChange={handleInputChange} value={inputs.USDT} required />
+      </div>
+      <p className="dark">Fee 0 USDT (0.2%)</p>
+      <button type="submit" className={`btn btn-${props.buttonColor || "primary"}`} style={{ width: props.width }}>{props.buttonText}</button>
+      <style jsx>{`
                 form {
                     width: 100%;
                 }
@@ -101,6 +101,6 @@ export default props => {
 
                 
             `}</style>
-        </form >
-    )
+    </form >
+  )
 }
