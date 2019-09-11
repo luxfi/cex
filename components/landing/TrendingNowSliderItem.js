@@ -43,6 +43,8 @@ export default props => {
                 .arrow-up {
                     height: 14px;
                     padding: 0px 4px;
+                    height: 32px;
+                    width: 32px;
                 }
                 .btn.invert {
                     margin: 0;

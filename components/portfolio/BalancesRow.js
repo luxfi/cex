@@ -83,7 +83,8 @@ export default class BalancesRow extends React.Component {
               <div className="value">
                 <span className="change">
                   <FontAwesomeIcon icon={faArrowUp} style={{
-                    paddingRight: "8px", "padding-bottom": "12px"
+                    paddingRight: "8px", "padding-bottom": "12px", height: "32px",
+                    width: "32px"
                   }} />
                 </span>
                 5.04<span style={{ color: "#acacac" }}>%</span>
@@ -108,6 +109,7 @@ export default class BalancesRow extends React.Component {
                         .container-center-content {
                             display: flex;
                             justify-content: center;
+                            height: 135px;
                         }
                         .value {
                             font-size: 54px;
