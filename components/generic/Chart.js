@@ -2,18 +2,20 @@ import chartPlaceHolder from '../../assets/images/generic/chart.png'
 import BuySellForm from './BuySellForm'
 import FakeChart from './FakeCandlestickChart'
 import { timelineLabels } from '../utils/dateRange'
+import moment from 'moment/moment.js'
 
 export default props => {
   const { movies, data, yDomain } = props;
 
-  let labels = timelineLabels('18:00', 2, 'hours')
+  let labels = timelineLabels('18:00', 15, 'minutes')
+  let lastSeven = labels.slice(Math.max(labels.length - 7, 1))
 
   return (
     <div className="container">
       <div className="title">
         Trade This Stock
       </div>
-      {labels}
+      {JSON.stringify(lastSeven)}
       <div className="posts-container">
         <FakeChart data={data} yDomain={yDomain} />
         <div className="container-row space-between">

@@ -15,5 +15,5 @@ export const timelineLabels = (desiredStartTime, interval, period) => {
     timeLabels.push(startTimeMoment.format('HH:mm'));
   }
 
-  return JSON.stringify(timeLabels);
+  return timeLabels;
 };
