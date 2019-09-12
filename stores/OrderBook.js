@@ -5,12 +5,11 @@ const LimitOrder = require('limit-order-book').LimitOrder
 const LimitOrderBook = require('limit-order-book').LimitOrderBook
 
 const bidAsk = () => {
-  return (Math.floor(Math.random() * 2) == 0) ? 'bid' : 'ask'
+  return (Math.floor(Math.random() * 2) == 0) ? 'bid' : 'ask' // 50/50 chance of "bid" or "ask"
 }
 
-
 const generateOrderSize = () => {
-  return (Math.random() * 100).toFixed(2)
+  return (Math.random() * 100).toFixed(0) // random 1 through 100
 }
 
 export default class OrderBook {
@@ -46,14 +45,13 @@ export default class OrderBook {
     this.ticker = ticker
     this.connected = true
 
-
-    let result;
+    let takeResult;
     let book = new LimitOrderBook()
     let id = 0;
     let size = generateOrderSize();
 
-    result = this.generateOrders(ticker, 2000, book, id, price, size)
-    console.log(result)
+    takeResult = this.generateOrders(ticker, 2000, book, id, price, size)
+    console.log(takeResult)
 
     this.dataGenerator = setInterval(
       () => {
