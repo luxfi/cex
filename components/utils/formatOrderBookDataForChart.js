@@ -10,6 +10,7 @@ export function formatTakeResults(data, printInterval = 5) {
     currentArray.push(currentValue)
     return accumulator
   }
+  debugger;
   const result = data
     .map(d => parseFloat(d.taker.price)) //get prices from each order
     .reduce(reducer, [[]]) //group arrays by amount of x values in chart
