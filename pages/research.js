@@ -68,7 +68,6 @@ export default class Research extends React.Component {
       .map(make => [make.makers[0].price.toFixed(2), make.makers[0].size, (make.makers[0].price.toFixed(2) * make.makers[0].size).toFixed(2)])
     let makersBook = sumDataByNumber(makers)
     let takersBook = sumDataByNumber(takers)
-    debugger;
     return (
       <TickerStripLayout movies={movieStore.movies} darkNav={true}>
         <div className="container-center">

@@ -60,7 +60,7 @@ export default class OrderBook {
     this.dataGenerator = setInterval(
       () => {
         id++;
-        size = this.generateOrderSize();
+        size = generateOrderSize();
         // order = new LimitOrder(`order${x}`, this.bidAsk(), this.newPrice(price), this.orderSize())
         // result = this.generateOrderAndAdd(book, id, price, size)
         this.generateOrderAndAdd(book, id, price, size)
@@ -93,7 +93,7 @@ export default class OrderBook {
     let currentOrderSize = generateOrderSize()
     let takeResult = this.placeNewOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize, book)
     this.updateOrderBook(takeResult)
-    this.takeResults.push(size)
+    this.takeResults.push(takeResult)
     return takeResult
   }
 
