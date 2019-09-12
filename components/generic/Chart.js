@@ -4,10 +4,8 @@ import FakeChart from './FakeCandlestickChart'
 import { timelineLabels } from '../utils/dateRange'
 import ChartIntervalControl from '../generic/ChartIntervalControls'
 
-import moment from 'moment/moment.js'
-
 export default props => {
-  const { movies, data, yDomain } = props;
+  const { data, yDomain, updatePrintInterval, printInterval } = props;
 
   let labels = timelineLabels('18:00', 15, 'minutes')
   let lastSeven = labels.slice(Math.max(labels.length - 7, 1))
@@ -18,7 +16,7 @@ export default props => {
         Trade This Stock
       </div>
       {JSON.stringify(lastSeven)}
-      <ChartIntervalControl />
+      <ChartIntervalControl updatePrintInterval={updatePrintInterval} printInterval={printInterval} />
       <div className="posts-container">
         <FakeChart data={data} yDomain={yDomain} />
         <div className="container-row space-between">
