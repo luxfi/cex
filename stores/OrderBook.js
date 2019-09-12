@@ -146,11 +146,11 @@ export default class OrderBook {
     }
     let changeAmount = this.price * changePercent
     let newPrice = (this.price + changeAmount)
-    newPrice = Math.floor(newPrice * 100) / 100
-    this.price = newPrice;
+    this.price = newPrice; // this price is only used to realistic data
     if (newPrice < this.low) { this.low = newPrice } //set new low
     if (newPrice > this.high) { this.high = newPrice } //set new high
-    return newPrice;
+    newPrice = Math.floor(newPrice * 100) / 100
+    return newPrice // return a price that is fixed to 2 decimals 
     // let r = range || Math.random();
     // let random_sign = -1 + Math.round(Math.random()) * 2;
     // return (x + Math.random() * 0.2 * r * random_sign).toFixed(2)
@@ -161,7 +161,6 @@ export default class OrderBook {
   }
 
   @computed get buyOrders() {
-    debugger;
     return []
   }
 
