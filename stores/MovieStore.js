@@ -4,8 +4,8 @@ import _ from 'lodash'
 export default class MovieStore {
   @observable movies = []
 
-  constructor(initialData = {}) {
-    this.movies = initialData.movies;
+  constructor(initialData = { movies: [] }) {
+    this.movies = initialData.movies
   }
 
   // hydrate(serializedStore) {
@@ -15,11 +15,11 @@ export default class MovieStore {
   async fetch() {
     // const response = await this.movies || await fetchInitialStoreState()
     const response = await this.movies || await fetchInitialStoreState()
-    this.setMovies(response);
+    this.setMovies(response)
   }
 
   @action setMovies(movies) {
-    this.movies = movies;
+    this.movies = movies
   }
 
   @computed get topMovies() {
