@@ -9,7 +9,7 @@ const bidAsk = () => {
 }
 
 const generateOrderSize = () => {
-  return parseInt((Math.random() * 10).toFixed(0)) + 1 // random 1 through 10
+  return parseInt((Math.random() * 100).toFixed(0)) + 1 // random 1 through 100
 }
 
 export default class OrderBook {
@@ -21,6 +21,8 @@ export default class OrderBook {
   @observable low = 13.37
   @observable printInterval = 5
   orderBookHash = {}
+  id = 0
+
 
   constructor(initialData = {
     ticker: '',
@@ -30,7 +32,8 @@ export default class OrderBook {
     high: 13.37,
     low: 13.37,
     printInterval: 5,
-    orderBookHash: {}
+    orderBookHash: {},
+    id: 0
   }) {
     // this.orderBookData = initialData.orderBookData
     this.ticker = initialData.ticker
@@ -41,6 +44,7 @@ export default class OrderBook {
     this.low = initialData.low || 13.37
     this.printInterval = initialData.printInterval || 5
     this.orderBookHash = initialData.orderBookHash = {}
+    this.id = initialData.id = 0
   }
 
   // For DEMO
@@ -48,10 +52,10 @@ export default class OrderBook {
     this.ticker = ticker
     this.connected = true
 
-    let takeResult;
+    let takeResult
     let book = new LimitOrderBook()
-    let id = 0;
-    let size = generateOrderSize();
+    let size = generateOrderSize()
+    let id = this.id
 
     takeResult = this.generateOrders(ticker, 2000, book, id, price, size)
     console.log(takeResult)
@@ -59,11 +63,10 @@ export default class OrderBook {
 
     this.dataGenerator = setInterval(
       () => {
-        id++;
         size = generateOrderSize();
         // order = new LimitOrder(`order${x}`, this.bidAsk(), this.newPrice(price), this.orderSize())
         // result = this.generateOrderAndAdd(book, id, price, size)
-        this.generateOrderAndAdd(book, id, price, size)
+        this.generateOrders(ticker = 'MDMXFR', 1, book, id, price, size) //TODO fix this so the ticker is pulled correctly
       },
       2500
     ) // Some data generator
