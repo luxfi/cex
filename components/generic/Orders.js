@@ -2,11 +2,11 @@ import React from "react";
 
 export default class Orders extends React.Component {
   render() {
-    const { orders } = this.props
-    console.log('orders....', orders)
+    const { buyOrders } = this.props
+    console.log('orders....', buyOrders)
     return (
       <div className="orders">
-        {orders}
+        {buyOrders}
         <style jsx>{`
         `}</style>
       </div >
