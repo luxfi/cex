@@ -1,7 +1,8 @@
-export function formatTakeResults(data) {
+export function formatTakeResults(data, printInterval = 5) {
   if (data.length === 0) return data
-  let groupByNumber = Math.floor(2000 / 40)
-  let reducer = function (accumulator, currentValue, currentIndex) {
+  let interval = 8 * printInterval;;
+  let groupByNumber = Math.floor(2000 / interval)
+  const reducer = (accumulator, currentValue, currentIndex) => {
     if ((currentIndex % groupByNumber === 0) && currentIndex !== 0) {
       accumulator.push([])
     }
@@ -9,7 +10,7 @@ export function formatTakeResults(data) {
     currentArray.push(currentValue)
     return accumulator
   }
-  let result = data
+  const result = data
     .map(d => parseFloat(d.taker.price)) //get prices from each order
     .reduce(reducer, [[]]) //group arrays by amount of x values in chart
     .map((data, group) => {
