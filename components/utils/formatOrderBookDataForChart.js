@@ -1,7 +1,7 @@
 export function formatTakeResults(data, printInterval = 5) {
   if (data.length === 0) return data
-  let interval = 8 * printInterval;;
-  let groupByNumber = Math.floor(2000 / interval)
+  let interval = 200 / printInterval
+  let groupByNumber = Math.floor(data.length / interval)
   const reducer = (accumulator, currentValue, currentIndex) => {
     if ((currentIndex % groupByNumber === 0) && currentIndex !== 0) {
       accumulator.push([])
