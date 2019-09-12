@@ -36,12 +36,13 @@ export default class Research extends React.Component {
   render() {
     const { movieStore, orderBook } = this.props.store
     let takeResultsArray = orderBook.takeResults.slice(0);
-    const data = formatTakeResults(takeResultsArray)
+    const { printInterval } = orderBook;
+    const data = formatTakeResults(takeResultsArray, printInterval)
     const yDomain = [orderBook.low * .94, orderBook.high * 1.06]
     const updatePrintInterval = (time) => {
       orderBook.updatePrintInterval(time)
     }
-    const { printInterval } = orderBook;
+
 
     return (
       <TickerStripLayout movies={movieStore.movies} darkNav={true}>
