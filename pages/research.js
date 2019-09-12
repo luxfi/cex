@@ -20,7 +20,7 @@ export default class Research extends React.Component {
     await mobxStore.movieStore.fetch()
     return {
       movieStore: mobxStore.movieStore,
-      orderBook: mobxStore.orderBook
+      orderBook: mobxStore.orderBook,
     }
   }
 
@@ -38,6 +38,10 @@ export default class Research extends React.Component {
     let takeResultsArray = orderBook.takeResults.slice(0);
     const data = formatTakeResults(takeResultsArray)
     const yDomain = [orderBook.low * .94, orderBook.high * 1.06]
+    const updatePrintInterval = (time) => {
+      orderBook.updatePrintInterval(time)
+    }
+    const { printInterval } = orderBook;
 
     return (
       <TickerStripLayout movies={movieStore.movies} darkNav={true}>
@@ -61,7 +65,7 @@ export default class Research extends React.Component {
               <Forecasts />
             </div>
             <div className="wide-column">
-              <Chart data={data} yDomain={yDomain} />
+              <Chart data={data} yDomain={yDomain} updatePrintInterval={updatePrintInterval} printInterval={printInterval} />
             </div>
           </div>
         </div>

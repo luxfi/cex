@@ -20,6 +20,7 @@ export default class OrderBook {
   @observable price = 13.37
   @observable high = 13.37
   @observable low = 13.37
+  @observable printInterval = 5
 
   constructor(initialData = {
     ticker: '',
@@ -27,7 +28,8 @@ export default class OrderBook {
     takeResults: [],
     price: 13.37,
     high: 13.37,
-    low: 13.37
+    low: 13.37,
+    printInterval: 5
   }) {
     // this.orderBookData = initialData.orderBookData
     this.ticker = initialData.ticker
@@ -36,6 +38,7 @@ export default class OrderBook {
     this.price = initialData.price || 13.37
     this.high = initialData.high || 13.37
     this.low = initialData.low || 13.37
+    this.printInterval = initialData.printInterval || 5
   }
 
   // For DEMO
@@ -71,6 +74,10 @@ export default class OrderBook {
 
   @action setTicker(ticker) {
     this.ticker = ticker;
+  }
+
+  @action updatePrintInterval(time) {
+    this.printInterval = time;
   }
 
   @action generateOrderAndAdd(book, id, price, size) {
