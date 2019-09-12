@@ -55,19 +55,19 @@ export default class Research extends React.Component {
   render() {
     const { movieStore, orderBook } = this.props.store
     let takeResultsArray = orderBook.takeResults.slice(0);
-    const { printInterval } = orderBook;
+    const { printInterval, orders } = orderBook;
     const data = formatTakeResults(takeResultsArray, printInterval)
     const yDomain = [orderBook.low * .94, orderBook.high * 1.06]
     const updatePrintInterval = (time) => {
       orderBook.updatePrintInterval(time)
     }
     // let currentPrice = takeResultsArray[takeResultsArray - 1].taker.price.toFixed(2)
-    const takers = takeResultsArray.map(take => [take.taker.price.toFixed(2), take.taker.size, (take.taker.price.toFixed(2) * take.taker.size).toFixed(2)])
-    const makers = takeResultsArray
-      .filter(make => make.makers[0])
-      .map(make => [make.makers[0].price.toFixed(2), make.makers[0].size, (make.makers[0].price.toFixed(2) * make.makers[0].size).toFixed(2)])
-    let makersBook = sumDataByNumber(makers)
-    let takersBook = sumDataByNumber(takers)
+    // const takers = takeResultsArray.map(take => [take.taker.price.toFixed(2), take.taker.size, (take.taker.price.toFixed(2) * take.taker.size).toFixed(2)])
+    // const makers = takeResultsArray
+    //   .filter(make => make.makers[0])
+    //   .map(make => [make.makers[0].price.toFixed(2), make.makers[0].size, (make.makers[0].price.toFixed(2) * make.makers[0].size).toFixed(2)])
+    // let makersBook = sumDataByNumber(makers)
+    // let takersBook = sumDataByNumber(takers)
     return (
       <TickerStripLayout movies={movieStore.movies} darkNav={true}>
         <div className="container-center">
@@ -91,7 +91,7 @@ export default class Research extends React.Component {
             </div>
             <div className="wide-column">
               <Chart data={data} yDomain={yDomain} updatePrintInterval={updatePrintInterval} printInterval={printInterval} />
-              <Orders />
+              <Orders orders={orders} />
             </div>
           </div>
         </div>

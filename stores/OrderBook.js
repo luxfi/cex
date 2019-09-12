@@ -154,13 +154,12 @@ export default class OrderBook {
     if (newPrice > this.high) { this.high = newPrice } //set new high
     newPrice = Math.floor(newPrice * 100) / 100
     return newPrice // return a price that is fixed to 2 decimals 
-    // let r = range || Math.random();
-    // let random_sign = -1 + Math.round(Math.random()) * 2;
-    // return (x + Math.random() * 0.2 * r * random_sign).toFixed(2)
   }
 
   @computed get orders() {
-    return this.orders
+    let book = this.cleanedOrderBookHash
+    // let orders = book.filter(order => order.type === "bid")
+    return "hello"
   }
 
   @computed get buyOrders() {
@@ -169,6 +168,21 @@ export default class OrderBook {
 
   @computed get sellOrders() {
     return []
+  }
+
+  @computed get cleanedOrderBookHash() {
+    let cleanedOrderBookHash = {}
+    Object.keys(this.orderBookHash).forEach(m => {
+      const { price, size, type } = this.orderBookHash[m]
+
+      if (!cleanedOrderBookHash[price]) {
+        cleanedOrderBookHash[price].size = size
+      } else {
+        cleanedOrderBookHash[price].size += size
+      }
+      cleanedOrderBookHash[price].type = type
+    })
+    return cleanedOrderBookHash;
   }
 
 
