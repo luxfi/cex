@@ -20,7 +20,7 @@ export default class OrderBook {
   @observable high = 13.37
   @observable low = 13.37
   @observable printInterval = 5
-  orderBookHash = {}
+  @observable orderBookHash = {}
   id = 0
 
 
@@ -43,7 +43,7 @@ export default class OrderBook {
     this.high = initialData.high || 13.37
     this.low = initialData.low || 13.37
     this.printInterval = initialData.printInterval || 5
-    this.orderBookHash = initialData.orderBookHash = {}
+    this.orderBookHash = initialData.orderBookHash || {}
     this.id = initialData.id = 0
   }
 
@@ -117,6 +117,7 @@ export default class OrderBook {
       if (updatedSize === 0) { // remove order if no bids/sells outstanding
         delete this.orderBookHash[currentOrderID]
       } else {
+        debugger
         this.orderBookHash[currentOrderID].size = updatedSize
       }
     })
@@ -170,9 +171,9 @@ export default class OrderBook {
     const filtered = Object.keys(book)
       .filter(key => firstTwentyKeys.includes(key))
       .reduce((obj, key) => {
-        obj[key] = book[key];
-        return obj;
-      }, {});
+        obj[key] = book[key]
+        return obj
+      }, {})
     // orders = book.filter(order => order.type === "bid")
     return "hello"
   }
@@ -183,7 +184,6 @@ export default class OrderBook {
 
   @computed get cleanedOrderBookHash() {
     let cleanedOrderBookHash = {}
-    debugger;
     Object.keys(this.orderBookHash).forEach(m => {
       const { price, size, type } = this.orderBookHash[m]
       debugger
@@ -196,7 +196,7 @@ export default class OrderBook {
     })
     console.log('this.orderBookHash', this.orderBookHash)
     console.log('cleanedOrderBookHash', cleanedOrderBookHash)
-    return cleanedOrderBookHash;
+    return cleanedOrderBookHash
   }
 
 
