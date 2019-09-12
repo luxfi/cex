@@ -156,14 +156,25 @@ export default class OrderBook {
     return newPrice // return a price that is fixed to 2 decimals 
   }
 
-  @computed get orders() {
-    let book = this.cleanedOrderBookHash
-    // let orders = book.filter(order => order.type === "bid")
-    return "hello"
-  }
-
   @computed get buyOrders() {
-    return []
+    let book = this.cleanedOrderBookHash
+    console.log('book', book)
+    let orders = {}
+    let firstTwentyOrders = {}
+    Object.keys(book).forEach(m => {
+      const { price, size, type } = this.orderBookHash[m]
+      if (orders[type] === "bid") orders[price].size = size
+    })
+    let firstTwentyKeys = Object.keys(firstTwentyOrders).sort(function (a, b) { return a - b }).slice(0, 19)
+
+    const filtered = Object.keys(book)
+      .filter(key => firstTwentyKeys.includes(key))
+      .reduce((obj, key) => {
+        obj[key] = book[key];
+        return obj;
+      }, {});
+    // orders = book.filter(order => order.type === "bid")
+    return "hello"
   }
 
   @computed get sellOrders() {
@@ -172,9 +183,10 @@ export default class OrderBook {
 
   @computed get cleanedOrderBookHash() {
     let cleanedOrderBookHash = {}
+    debugger;
     Object.keys(this.orderBookHash).forEach(m => {
       const { price, size, type } = this.orderBookHash[m]
-
+      debugger
       if (!cleanedOrderBookHash[price]) {
         cleanedOrderBookHash[price].size = size
       } else {
@@ -182,6 +194,8 @@ export default class OrderBook {
       }
       cleanedOrderBookHash[price].type = type
     })
+    console.log('this.orderBookHash', this.orderBookHash)
+    console.log('cleanedOrderBookHash', cleanedOrderBookHash)
     return cleanedOrderBookHash;
   }
 
