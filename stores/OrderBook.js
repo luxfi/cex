@@ -9,7 +9,7 @@ const bidAsk = () => {
 }
 
 const generateOrderSize = () => {
-  return (Math.random() * 100).toFixed(0) // random 1 through 100
+  return parseInt((Math.random() * 10).toFixed(0)) + 1 // random 1 through 10
 }
 
 export default class OrderBook {
@@ -20,6 +20,7 @@ export default class OrderBook {
   @observable high = 13.37
   @observable low = 13.37
   @observable printInterval = 5
+  orderBookHash = {}
 
   constructor(initialData = {
     ticker: '',
@@ -28,7 +29,8 @@ export default class OrderBook {
     price: 13.37,
     high: 13.37,
     low: 13.37,
-    printInterval: 5
+    printInterval: 5,
+    orderBookHash: {}
   }) {
     // this.orderBookData = initialData.orderBookData
     this.ticker = initialData.ticker
@@ -38,6 +40,7 @@ export default class OrderBook {
     this.high = initialData.high || 13.37
     this.low = initialData.low || 13.37
     this.printInterval = initialData.printInterval || 5
+    this.orderBookHash = initialData.orderBookHash = {}
   }
 
   // For DEMO
@@ -52,11 +55,12 @@ export default class OrderBook {
 
     takeResult = this.generateOrders(ticker, 2000, book, id, price, size)
     console.log(takeResult)
+    console.log("orderBookHash", this.orderBookHash)
 
     this.dataGenerator = setInterval(
       () => {
         id++;
-        // size = this.generateOrderSize();
+        size = this.generateOrderSize();
         // order = new LimitOrder(`order${x}`, this.bidAsk(), this.newPrice(price), this.orderSize())
         // result = this.generateOrderAndAdd(book, id, price, size)
         this.generateOrderAndAdd(book, id, price, size)
@@ -79,12 +83,46 @@ export default class OrderBook {
   }
 
   @action generateOrderAndAdd(book, id, price, size) {
-    const order = new LimitOrder(`order${id}`, bidAsk(), this.setNewPrice(price), size)
-    // console.log(`order`, order)
-    // console.log('this.takeresults', this.takeResults)
-    let result = book.add(order)
-    this.takeResults.push(result)
-    return result
+    // const order = new LimitOrder(`order${id}`, bidAsk(), this.setNewPrice(price), size)
+    // // console.log(`order`, order)
+    // // console.log('this.takeresults', this.takeResults)
+    // let result = book.add(order)
+    let currentOrderID = `order${id}`
+    let currentOrderType = bidAsk()
+    let currentOrderPrice = this.setNewPrice(price)
+    let currentOrderSize = generateOrderSize()
+    let takeResult = this.placeNewOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize, book)
+    this.updateOrderBook(takeResult)
+    this.takeResults.push(size)
+    return takeResult
+  }
+
+  @action updateOrderBook(takeResult) {
+    let makers = takeResult.makers
+    if (makers.length === 0) return // return if no transactions were made
+    let sizeRemainingForCurrentOrder = takeResult.taker.sizeRemaining
+    let currentOrderID = takeResult.taker.orderId
+    if (sizeRemainingForCurrentOrder === 0) { // remove order if no bids/sells outstanding
+      delete this.orderBookHash[currentOrderID]
+    } else {
+      this.orderBookHash[currentOrderID].size = sizeRemainingForCurrentOrder
+    }
+
+    makers.forEach(maker => {
+      let updatedSize = maker.sizeRemaining
+      let currentOrderID = maker.orderId
+      if (updatedSize === 0) { // remove order if no bids/sells outstanding
+        delete this.orderBookHash[currentOrderID]
+      } else {
+        this.orderBookHash[currentOrderID].size = updatedSize
+      }
+    })
+  }
+
+  @action placeNewOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize, book) {
+    let currentOrder = new LimitOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize)
+    this.orderBookHash[currentOrderID] = { type: currentOrderType, price: currentOrderPrice, size: currentOrderSize }
+    return book.add(currentOrder) //takeResult
   }
 
   @action generateOrders(ticker, numberOfOrders, book, idNumber = 1, price, size) {
@@ -92,7 +130,7 @@ export default class OrderBook {
     let id;
     while (n < numberOfOrders - 1) {
       id = `${ticker}${idNumber}`
-      this.generateOrderAndAdd(book, id, price, size)
+      this.generateOrderAndAdd(book, id, price, generateOrderSize())
       idNumber++
       n++
     }
@@ -108,6 +146,7 @@ export default class OrderBook {
     }
     let changeAmount = this.price * changePercent
     let newPrice = (this.price + changeAmount)
+    newPrice = Math.floor(newPrice * 100) / 100
     this.price = newPrice;
     if (newPrice < this.low) { this.low = newPrice } //set new low
     if (newPrice > this.high) { this.high = newPrice } //set new high
