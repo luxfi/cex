@@ -1,9 +1,9 @@
 export function formatTakeResults(data, printInterval = 5) {
   if (data.length === 0) return data
-  let interval = 200 / printInterval
-  let groupByNumber = Math.floor(data.length / interval)
+  let amountOfArrays = 105 / printInterval
+  let eachArrayLength = Math.floor(data.length / (amountOfArrays))
   const reducer = (accumulator, currentValue, currentIndex) => {
-    if ((currentIndex % groupByNumber === 0) && currentIndex !== 0) {
+    if ((currentIndex % eachArrayLength === 0) && currentIndex !== 0) {
       accumulator.push([])
     }
     let currentArray = accumulator[accumulator.length - 1]
