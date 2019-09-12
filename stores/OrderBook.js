@@ -124,6 +124,7 @@ export default class OrderBook {
   }
 
   @computed get buyOrders() {
+    debugger;
     return []
   }
 

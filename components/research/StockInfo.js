@@ -39,10 +39,10 @@ export default props => {
           </table>
           <table className="noborder">
             <tbody>
-              <tr><td>Phase:</td><td className="dark">MDMX2</td></tr>
-              <tr><td>Release Date:</td><td className="dark">Active</td></tr>
-              <tr><td>Gross:</td><td className="dark">Dec 12, 2016</td></tr>
-              <tr><td>Theaters:</td><td className="dark">PG-13</td></tr>
+              <tr><td>Phase:</td><td className="dark">Release</td></tr>
+              <tr><td>Release Date:</td><td className="dark">Oct 12, 2018</td></tr>
+              <tr><td>Gross:</td><td className="dark">$16,006,065</td></tr>
+              <tr><td>Theaters:</td><td className="dark">3640</td></tr>
             </tbody>
           </table>
         </div>
