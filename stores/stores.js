@@ -3,6 +3,7 @@ import { useStaticRendering } from 'mobx-react'
 
 import MovieStore from './MovieStore'
 import OrderBook from './OrderBook'
+import UserStore from './UserStore'
 
 const isServer = typeof window === 'undefined'
 useStaticRendering(isServer)
@@ -10,8 +11,20 @@ useStaticRendering(isServer)
 let store = null
 
 const _initialData = {
-  movieStore: {},
-  orderBook: {}
+  movieStore: {
+      movies: []
+    },
+  orderBook: {
+    ticker: '',
+    connected: false,
+    takeResults: [],
+    price: 13.37,
+    high: 13.37,
+    low: 13.37
+  },
+  userStore: {
+    email: ''
+  }
 }
 
 export default function initializeStore(initialData = _initialData) {
@@ -19,13 +32,15 @@ export default function initializeStore(initialData = _initialData) {
     // Server stuff
     store = {
       movieStore: new MovieStore(initialData.movieStore),
-      orderBook: new OrderBook(initialData.orderBook)
+      orderBook: new OrderBook(initialData.orderBook),
+      userStore: new UserStore(initialData.userStore)
     }
   } else if (store === null) {
     // Client stuff
     store = {
       movieStore: new MovieStore(initialData.movieStore),
-      orderBook: new OrderBook(initialData.orderBook)
+      orderBook: new OrderBook(initialData.orderBook),
+      userStore: new UserStore(initialData.userStore)
     }
   }
   // Otherwise we don't need to re-initialize the store
