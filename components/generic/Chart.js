@@ -1,24 +1,22 @@
 import chartPlaceHolder from '../../assets/images/generic/chart.png'
 import BuySellForm from './BuySellForm'
-import FakeChart from './FakeCandlestickChart'
+import FakeCandlestickChart from './FakeCandlestickChart'
 import { timelineLabels } from '../utils/dateRange'
 import ChartIntervalControl from '../generic/ChartIntervalControls'
 
 export default props => {
   const { data, yDomain, updatePrintInterval, printInterval } = props;
 
-  let labels = timelineLabels('18:00', 15, 'minutes')
-  labels = labels.slice(0, 7)
+  let labels = timelineLabels()
 
   return (
     <div className="container">
       <div className="title">
         Trade This Stock
       </div>
-      {JSON.stringify(labels)}
       <ChartIntervalControl updatePrintInterval={updatePrintInterval} printInterval={printInterval} />
       <div className="posts-container">
-        <FakeChart data={data} yDomain={yDomain} />
+        <FakeCandlestickChart data={data} yDomain={yDomain} labels={labels} />
         <div className="container-row space-between">
           <BuySellForm buttonColor="green" buttonText="BUY" />
           <div className="divider" />
