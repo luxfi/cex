@@ -55,16 +55,16 @@ export default class OrderBook {
     result = this.generateOrders(ticker, 2000, book, id, price, size)
     console.log(result)
 
-    // this.dataGenerator = setInterval(
-    //   () => {
-    //     id++;
-    //     size = this.generateOrderSize();
-    //     // order = new LimitOrder(`order${x}`, this.bidAsk(), this.newPrice(price), this.orderSize())
-    //     result = this.generateOrderAndAdd(book, id, price, size)
-    //     console.log(result)
-    //   },
-    //   2500
-    // ) // Some data generator
+    this.dataGenerator = setInterval(
+      () => {
+        id++;
+        // size = this.generateOrderSize();
+        // order = new LimitOrder(`order${x}`, this.bidAsk(), this.newPrice(price), this.orderSize())
+        // result = this.generateOrderAndAdd(book, id, price, size)
+        this.generateOrderAndAdd(book, id, price, size)
+      },
+      2500
+    ) // Some data generator
   }
 
   @action terminateDataGenerator() {
