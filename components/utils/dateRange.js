@@ -41,7 +41,7 @@ export const timelineLabels = () => {
   const startTimeMoment = moment(roundedLast15Min, 'HH:mm')
   for (let i = 0; i <= 21; i += 1) {
     if ( (i + fiveMinuteIntervals) % 3 === 0) {
-      startTimeMoment.subtract(i === 0 ? 0 : interval, period)
+      startTimeMoment.subtract(i === 0 + fiveMinuteIntervals ? 0 : interval, period)
       timeLabels.push(startTimeMoment.format('HH:mm'))
     } else {
       timeLabels.push('')
