@@ -23,7 +23,7 @@ const firstTwentyKeys = (orders, orderType) => {
 export default class OrderBook {
   @observable ticker = ''
   @observable connected = false
-  @observable takeResults = []
+  takeResults = observable([])
   @observable price = 13.37
   @observable high = 13.37
   @observable low = 13.37
@@ -107,6 +107,9 @@ export default class OrderBook {
     // if (typeof window !== 'undefined') {
     //   console.log("takeResult", takeResult)
     // }
+    this.takeResults.push(takeResult)
+    if (currentOrderPrice < this.low) { this.low = currentOrderPrice } //set new low
+    if (currentOrderPrice > this.high) { this.high = currentOrderPrice } //set new high
     this.updateOrders()
     return takeResult
   }
