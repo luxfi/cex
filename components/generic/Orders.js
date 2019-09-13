@@ -7,7 +7,7 @@ export default class Orders extends React.Component {
     return (
       <div className="orders">
         {
-          orders.map(o => <div>price: {o.price}, size: {o.size}, total: {(o.price * o.size).toFixed(0)}</div>)
+          orders.map((o, i) => <div key={i}>price: {o.price}, size: {o.size}, total: {(o.price * o.size).toFixed(0)}</div>)
         }
         <style jsx>{`
         `}</style>
