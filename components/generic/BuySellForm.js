@@ -27,9 +27,11 @@ export default class BuySellForm extends React.Component {
     let id = Date.now() // unique id
     let currentOrderID = `${this.props.ticker}-${id}`
     // id type price size book
-    this.state.price = ""
-    this.state.size = ""
-    this.state.total = ""
+    this.setState({
+      price: "",
+      size: "",
+      total: ""
+    })
     // this.props.orderBook.placeNewOrder(currentOrderID, this.props.orderType, price, size)
   }
 
@@ -40,21 +42,31 @@ export default class BuySellForm extends React.Component {
     if (event.target.name === "price") {
       if (event.target.value === "") { this.state.total = 0 }
       else {
-        if (this.state.size) this.state.total = parseFloat(event.target.value) * parseFloat(this.state.size)
+        if (this.state.size) {
+          let total = parseFloat(event.target.value) * parseFloat(this.state.size)
+          this.setState({ total: total })
+        }
       }
     }
     if (event.target.name === "size") {
       if (event.target.value === "") { this.state.total = 0 }
       else {
-        if (this.state.price) this.state.total = parseFloat(event.target.value) * parseFloat(this.state.price)
+        if (this.state.price) {
+          let total = this.state.total = parseFloat(event.target.value) * parseFloat(this.state.price)
+          this.setState({ total: total })
+        }
       }
     }
     if (event.target.name === "total") {
       if (event.target.value === "") { this.state.total = 0 }
       else {
-        if (this.state.price) this.state.size = parseFloat(event.target.value) / parseFloat(this.state.price)
+        if (this.state.price) {
+          let size = parseFloat(event.target.value) / parseFloat(this.state.price)
+          this.setState({ size: size })
+        }
       }
     }
+
   }
 
   render() {
