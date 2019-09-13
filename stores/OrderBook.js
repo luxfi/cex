@@ -36,7 +36,9 @@ const getOrderRows = (orderBookHash, orderType) => {
     if (type === orderType) orders[m] = { size }
   })
 
-  const firstTwentyKeys = Object.keys(orders).sort(function (a, b) { return a - b }).slice(0, 20)
+  let sortFn = "bid" ? function (a, b) { return b - a } : function (a, b) { return a - b }
+
+  const firstTwentyKeys = Object.keys(orders).sort(sortFn).slice(0, 20)
   const filtered = []
   firstTwentyKeys.forEach(k => {
     filtered.push({ price: k, ...book[k] })
