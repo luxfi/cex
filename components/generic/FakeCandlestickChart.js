@@ -1,7 +1,9 @@
 import React from 'react';
 import { XAxis, YAxis, FlexibleWidthXYPlot, ChartLabel } from 'react-vis';
 import Candlestick from './Candlestick';
+import { observer } from 'mobx-react'
 
+@observer
 export default class CandlestickExample extends React.Component {
   render() {
     const { data, yDomain, labels } = this.props
