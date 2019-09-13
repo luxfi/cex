@@ -24,15 +24,17 @@ export default class BuySellForm extends React.Component {
     e.preventDefault();
     const price = parseFloat(this.state.price)
     const size = parseFloat(this.state.size)
+    // debugger;
+    if (!price || !size) return //still need to validate
     let id = Date.now() // unique id
     let currentOrderID = `${this.props.ticker}-${id}`
     // id type price size book
+    this.props.orderBook.placeNewOrder(currentOrderID, this.props.orderType, price, size)
     this.setState({
       price: "",
       size: "",
       total: ""
     })
-    // this.props.orderBook.placeNewOrder(currentOrderID, this.props.orderType, price, size)
   }
 
   handleInputChange(event) {
@@ -76,13 +78,13 @@ export default class BuySellForm extends React.Component {
         <p className="dark">Obtainable 0.0000 THETA</p> */}
         <p>{this.props.buttonText}</p>
         <div className="form-group">
-          <input type="text" name="price" className="form-control" id="inputPrice" placeholder="Price USD" onChange={this.handleInputChange} value={this.state.price} required />
+          <input type="text" name="price" className="form-control" id="inputPrice" placeholder="Price USD" onChange={this.handleInputChange} value={this.state.price} />
         </div>
         <div className="form-group">
-          <input type="text" name="size" className="form-control" id="inputTheta" placeholder="Amount" onChange={this.handleInputChange} value={this.state.size} required />
+          <input type="text" name="size" className="form-control" id="inputTheta" placeholder="Amount" onChange={this.handleInputChange} value={this.state.size} />
         </div>
         <div className="form-group">
-          <input type="text" name="total" className="form-control" id="inputUSDT" placeholder="Total" onChange={this.handleInputChange} value={this.state.total} required />
+          <input type="text" name="total" className="form-control" id="inputUSDT" placeholder="Total" onChange={this.handleInputChange} value={this.state.total} />
         </div>
         <p className="dark">Fee 0 USDT (0.2%)</p>
         <button type="submit" className={`btn btn-${this.props.buttonColor || "primary"}`} style={{ width: this.props.width }}>{this.props.buttonText}</button>
