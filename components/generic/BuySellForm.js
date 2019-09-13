@@ -37,16 +37,17 @@ export default class BuySellForm extends React.Component {
   render() {
     return (
       <form onSubmit={this.submitOrder} style={{ width: this.props.width }}>
-        <p className="dark">Your balance 0.0000 USDT D W</p>
-        <p className="dark">Obtainable 0.0000 THETA</p>
+        {/* <p className="dark">Your balance 0.0000 USDT D W</p>
+        <p className="dark">Obtainable 0.0000 THETA</p> */}
+        <p>{this.props.buttonText}</p>
         <div className="form-group">
-          <input type="text" name="price" className="form-control" id="inputPrice" placeholder="Price USDT/THETA" onChange={this.handleInputChange} value={this.state.price} required />
+          <input type="text" name="price" className="form-control" id="inputPrice" placeholder="Price USD" onChange={this.handleInputChange} value={this.state.price} required />
         </div>
         <div className="form-group">
-          <input type="text" name="theta" className="form-control" id="inputTheta" placeholder="Amount THETA" onChange={this.handleInputChange} value={this.state.value} required />
+          <input type="text" name="theta" className="form-control" id="inputTheta" placeholder="Amount" onChange={this.handleInputChange} value={this.state.value} required />
         </div>
         <div className="form-group">
-          <input type="text" name="USDT" className="form-control" id="inputUSDT" placeholder="Total USDT" onChange={this.handleInputChange} value={this.state.amt} required />
+          <input type="text" name="USDT" className="form-control" id="inputUSDT" placeholder="Total" onChange={this.handleInputChange} value={this.state.amt} required />
         </div>
         <p className="dark">Fee 0 USDT (0.2%)</p>
         <button type="submit" className={`btn btn-${this.props.buttonColor || "primary"}`} style={{ width: this.props.width }}>{this.props.buttonText}</button>
