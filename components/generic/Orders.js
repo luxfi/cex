@@ -5,6 +5,7 @@ import { observer } from 'mobx-react'
 export default class Orders extends React.Component {
   render() {
     const { orders } = this.props
+    console.log('orders', orders)
     // console.log('orders orders', orders)
     return (
       <div className="orders">
