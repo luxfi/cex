@@ -22,14 +22,14 @@ const cleanOrderBookHash = (orderBookHash) => {
       cleanedOrderBookHash[price].size += size
     }
   })
-  console.log('orderBookHash', orderBookHash)
-  console.log('cleanedOrderBookHash', cleanedOrderBookHash)
+  // console.log('orderBookHash', orderBookHash)
+  // console.log('cleanedOrderBookHash', cleanedOrderBookHash)
   return cleanedOrderBookHash
 }
 
 const getOrderRows = (orderBookHash, orderType) => {
   let book = cleanOrderBookHash(orderBookHash)
-  console.log('book', book)
+  // console.log('book', book)
   const orders = {}
   Object.keys(book).forEach(m => {
     const { size, type } = book[m]
@@ -168,7 +168,7 @@ export default class OrderBook {
     let takeResult = book.add(currentOrder)
     debugger
     this.updateOrderBook(takeResult) //takeResult
-    console.log("takeResult", takeResult)
+    // console.log("takeResult", takeResult)
     return takeResult
   }
 
