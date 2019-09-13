@@ -84,7 +84,7 @@ export default class OrderBook {
 
     this.book = new LimitOrderBook()
     const size = generateOrderSize()
-    this.generateOrders(this.ticker, 2000, this.book, this.id, this.price, size)
+    this.generateOrders(this.ticker = 'MDMXFR', 2000, this.book, Date.now(), this.price, size)
   }
 
   // For DEMO
@@ -98,15 +98,15 @@ export default class OrderBook {
     // console.log(takeResult)
     // console.log("orderBookHash", this.orderBookHash)
 
-    this.dataGenerator = setInterval(
-      () => {
-        size = generateOrderSize()
-        // order = new LimitOrder(`order${x}`, this.bidAsk(), this.newPrice(price), this.orderSize())
-        // result = this.generateOrderAndAdd(book, id, price, size)
-        this.generateOrders(ticker = 'MDMXFR', 1, this.book, this.id, this.price, size) //TODO fix this so the ticker is pulled correctly
-      },
-      2500
-    ) // Some data generator
+    // this.dataGenerator = setInterval(
+    //   () => {
+    //     size = generateOrderSize()
+    //     // order = new LimitOrder(`order${x}`, this.bidAsk(), this.newPrice(price), this.orderSize())
+    //     // result = this.generateOrderAndAdd(book, id, price, size)
+    //     this.generateOrders(ticker = 'MDMXFR', 1, this.book, Date.now(), this.price, size) //TODO fix this so the ticker is pulled correctly
+    //   },
+    //   2500
+    // ) // Some data generator
   }
 
   @action terminateDataGenerator() {
@@ -162,13 +162,13 @@ export default class OrderBook {
     this.orderBookHash = orderBookCopy
   }
 
-  @action placeNewOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize, book) {
+  @action placeNewOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize, book = this.book) {
     let currentOrder = new LimitOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize)
     this.orderBookHash[currentOrderID] = { type: currentOrderType, price: currentOrderPrice, size: currentOrderSize }
     return book.add(currentOrder) //takeResult
   }
 
-  @action generateOrders(ticker, numberOfOrders, book, idNumber = 1, price, size) {
+  @action generateOrders(ticker, numberOfOrders, book, idNumber = Date.now(), price, size) {
     let n = 0;
     let id;
     while (n < numberOfOrders - 1) {
@@ -177,6 +177,7 @@ export default class OrderBook {
       idNumber++
       n++
     }
+    id = `${ticker}${idNumber}`
     return this.generateOrderAndAdd(book, id, price, size)
   }
 

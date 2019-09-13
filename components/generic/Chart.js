@@ -4,7 +4,7 @@ import { timelineLabels } from '../utils/dateRange'
 import ChartIntervalControl from '../generic/ChartIntervalControls'
 
 export default props => {
-  const { data, yDomain, updatePrintInterval, printInterval, buyOrders, sellOrders } = props
+  const { data, yDomain, updatePrintInterval, printInterval, buyOrders, sellOrders, orderBook } = props
 
   let labels = timelineLabels()
 
@@ -17,9 +17,9 @@ export default props => {
       <div className="posts-container">
         <FakeCandlestickChart data={data} yDomain={yDomain} labels={labels} />
         <div className="container-row space-between">
-          <BuySellForm buttonColor="green" buttonText="BUY" orders={buyOrders} />
+          <BuySellForm buttonColor="green" buttonText="BUY" orderType="buy" ticker={"MDMXFR"} orders={buyOrders} orderBook={orderBook} />
           <div className="divider" />
-          <BuySellForm buttonColor="red" buttonText="SELL" orders={sellOrders} />
+          <BuySellForm buttonColor="red" buttonText="SELL" orderType="buy" ticker={"MDMXFR"} orders={sellOrders} orderBook={orderBook} />
         </div>
       </div>
 

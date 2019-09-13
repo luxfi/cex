@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import useForm from '../customHooks/useForm'
+// import useForm from '../customHooks/useForm'
 import Orders from './Orders'
 
 export default class BuySellForm extends React.Component {
@@ -16,15 +16,21 @@ export default class BuySellForm extends React.Component {
       size: '',
       total: '',
     };
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.submitOrder = this.submitOrder.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this)
+    this.submitOrder = this.submitOrder.bind(this)
   }
 
   submitOrder(e) {
     e.preventDefault();
-    const price = this.state.price;
-    const size = this.state.size;
-    this.props.orderBook.addorder({ price, size })
+    const price = parseFloat(this.state.price)
+    const size = parseFloat(this.state.size)
+    let id = Date.now() // unique id
+    let currentOrderID = `${this.props.ticker}-${id}`
+    // id type price size book
+    this.state.price = ""
+    this.state.size = ""
+    this.state.total = ""
+    // this.props.orderBook.placeNewOrder(currentOrderID, this.props.orderType, price, size)
   }
 
   handleInputChange(event) {
@@ -34,19 +40,19 @@ export default class BuySellForm extends React.Component {
     if (event.target.name === "price") {
       if (event.target.value === "") { this.state.total = 0 }
       else {
-        if (this.state.size) this.state.total = parseInt(event.target.value) * parseInt(this.state.size)
+        if (this.state.size) this.state.total = parseFloat(event.target.value) * parseFloat(this.state.size)
       }
     }
     if (event.target.name === "size") {
       if (event.target.value === "") { this.state.total = 0 }
       else {
-        if (this.state.price) this.state.total = parseInt(event.target.value) * parseInt(this.state.price)
+        if (this.state.price) this.state.total = parseFloat(event.target.value) * parseFloat(this.state.price)
       }
     }
     if (event.target.name === "total") {
       if (event.target.value === "") { this.state.total = 0 }
       else {
-        if (this.state.price) this.state.size = parseInt(event.target.value) / parseInt(this.state.price)
+        if (this.state.price) this.state.size = parseFloat(event.target.value) / parseFloat(this.state.price)
       }
     }
   }
