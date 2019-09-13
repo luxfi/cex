@@ -19,7 +19,7 @@ export default props => {
         <div className="container-row space-between">
           <BuySellForm buttonColor="green" buttonText="BUY" orderType="buy" ticker={"MDMXFR"} orders={buyOrders} orderBook={orderBook} />
           <div className="divider" />
-          <BuySellForm buttonColor="red" buttonText="SELL" orderType="buy" ticker={"MDMXFR"} orders={sellOrders} orderBook={orderBook} />
+          <BuySellForm buttonColor="red" buttonText="SELL" orderType="sell" ticker={"MDMXFR"} orders={sellOrders} orderBook={orderBook} />
         </div>
       </div>
 
