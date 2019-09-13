@@ -17,9 +17,9 @@ export default props => {
       <div className="posts-container">
         <FakeCandlestickChart data={data} yDomain={yDomain} labels={labels} />
         <div className="container-row space-between">
-          <BuySellForm buttonColor="green" buttonText="BUY" orderType="buy" ticker={"MDMXFR"} orders={buyOrders} orderBook={orderBook} />
+          <BuySellForm buttonColor="green" buttonText="BUY" orderType="bid" ticker={"MDMXFR"} orders={buyOrders} orderBook={orderBook} />
           <div className="divider" />
-          <BuySellForm buttonColor="red" buttonText="SELL" orderType="sell" ticker={"MDMXFR"} orders={sellOrders} orderBook={orderBook} />
+          <BuySellForm buttonColor="red" buttonText="SELL" orderType="ask" ticker={"MDMXFR"} orders={sellOrders} orderBook={orderBook} />
         </div>
       </div>
 

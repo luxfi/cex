@@ -38,7 +38,6 @@ export default class OrderBook {
   constructor(initialData = {
     ticker: '',
     connected: false,
-    takeResults: [],
     price: 13.37,
     high: 13.37,
     low: 13.37,
@@ -47,7 +46,6 @@ export default class OrderBook {
     // this.orderBookData = initialData.orderBookData
     this.ticker = initialData.ticker
     this.connected = initialData.connected
-    this.takeResults = initialData.takeResults || []
     this.price = initialData.price || 13.37
     this.high = initialData.high || 13.37
     this.low = initialData.low || 13.37
