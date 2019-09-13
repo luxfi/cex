@@ -14,7 +14,7 @@ export default class BuySellForm extends React.Component {
     this.state = {
       price: '',
       size: '',
-      amt: '',
+      total: '',
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.submitOrder = this.submitOrder.bind(this);
@@ -28,10 +28,27 @@ export default class BuySellForm extends React.Component {
   }
 
   handleInputChange(event) {
-    event.persist();
     this.setState({
       [event.target.name]: event.target.value
     });
+    if (event.target.name === "price") {
+      if (event.target.value === "") { this.state.total = 0 }
+      else {
+        if (this.state.size) this.state.total = parseInt(event.target.value) * parseInt(this.state.size)
+      }
+    }
+    if (event.target.name === "size") {
+      if (event.target.value === "") { this.state.total = 0 }
+      else {
+        if (this.state.price) this.state.total = parseInt(event.target.value) * parseInt(this.state.price)
+      }
+    }
+    if (event.target.name === "total") {
+      if (event.target.value === "") { this.state.total = 0 }
+      else {
+        if (this.state.price) this.state.size = parseInt(event.target.value) / parseInt(this.state.price)
+      }
+    }
   }
 
   render() {
@@ -44,10 +61,10 @@ export default class BuySellForm extends React.Component {
           <input type="text" name="price" className="form-control" id="inputPrice" placeholder="Price USD" onChange={this.handleInputChange} value={this.state.price} required />
         </div>
         <div className="form-group">
-          <input type="text" name="theta" className="form-control" id="inputTheta" placeholder="Amount" onChange={this.handleInputChange} value={this.state.value} required />
+          <input type="text" name="size" className="form-control" id="inputTheta" placeholder="Amount" onChange={this.handleInputChange} value={this.state.size} required />
         </div>
         <div className="form-group">
-          <input type="text" name="USDT" className="form-control" id="inputUSDT" placeholder="Total" onChange={this.handleInputChange} value={this.state.amt} required />
+          <input type="text" name="total" className="form-control" id="inputUSDT" placeholder="Total" onChange={this.handleInputChange} value={this.state.total} required />
         </div>
         <p className="dark">Fee 0 USDT (0.2%)</p>
         <button type="submit" className={`btn btn-${this.props.buttonColor || "primary"}`} style={{ width: this.props.width }}>{this.props.buttonText}</button>
