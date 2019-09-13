@@ -43,8 +43,6 @@ export default class OrderBook {
     high: 13.37,
     low: 13.37,
     printInterval: 5,
-    buys: [],
-    sells: []
   }) {
     // this.orderBookData = initialData.orderBookData
     this.ticker = initialData.ticker
@@ -55,8 +53,6 @@ export default class OrderBook {
     this.low = initialData.low || 13.37
     this.printInterval = initialData.printInterval || 5
     this.book = new LimitOrderBook()
-    this.buys = initialData.buys || []
-    this.sells = initialData.sells || []
     const size = generateOrderSize()
     this.generateOrders(this.ticker = 'MDMXFR', 2000, this.book, Date.now(), this.price, size)
   }
@@ -121,12 +117,14 @@ export default class OrderBook {
     //update buyOrders
     const bidMap = this.book.bidLimits.map
     const arrayOfBidPrices = firstTwentyKeys(bidMap, "bid")
-    this.buys = arrayOfBidPrices.map(k => ({ size: bidMap[k].volume, price: bidMap[k].price }))
+    // this.buys = arrayOfBidPrices.map(k => ({ size: bidMap[k].volume, price: bidMap[k].price }))
+    this.buys.replace(arrayOfBidPrices.map(price => ({ size: bidMap[price].volume, price: bidMap[price].price })))
 
     //update sellOrders
     const askMap = this.book.askLimits.map
     const arrayOfAskPrices = firstTwentyKeys(askMap, "ask")
-    this.sells = arrayOfAskPrices.map(k => ({ size: askMap[k].volume, price: askMap[k].price }))
+    // this.sells = arrayOfAskPrices.map(k => ({ size: askMap[k].volume, price: askMap[k].price }))
+    this.sells.replace(arrayOfAskPrices.map(price => ({ size: askMap[price].volume, price: askMap[price].price })))
   }
 
   @action generateOrders(ticker, numberOfOrders, book, idNumber = Date.now(), price, size) {
