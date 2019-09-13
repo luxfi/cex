@@ -132,7 +132,6 @@ export default class OrderBook {
     let currentOrderPrice = this.setNewPrice(price)
     let currentOrderSize = generateOrderSize()
     let takeResult = this.placeNewOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize, book)
-    this.updateOrderBook(takeResult)
     this.takeResults.push(takeResult)
     return takeResult
   }
@@ -165,7 +164,10 @@ export default class OrderBook {
   @action placeNewOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize, book = this.book) {
     let currentOrder = new LimitOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize)
     this.orderBookHash[currentOrderID] = { type: currentOrderType, price: currentOrderPrice, size: currentOrderSize }
-    return book.add(currentOrder) //takeResult
+    let takeResult = book.add(currentOrder)
+    debugger;
+    this.updateOrderBook(takeResult) //takeResult
+    return takeResult
   }
 
   @action generateOrders(ticker, numberOfOrders, book, idNumber = Date.now(), price, size) {
