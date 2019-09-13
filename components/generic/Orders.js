@@ -1,5 +1,7 @@
 import React from "react";
+import { observer } from 'mobx-react'
 
+@observer
 export default class Orders extends React.Component {
   render() {
     const { orders } = this.props
