@@ -54,8 +54,8 @@ export default class Research extends React.Component {
 
   render() {
     const { movieStore, orderBook } = this.props.store
-    let takeResultsArray = orderBook.takeResults.slice(0);
-    const { printInterval, buyOrders } = orderBook;
+    let takeResultsArray = orderBook.takeResults.slice(0)
+    const { printInterval, buyOrders, sellOrders } = orderBook
     const data = formatTakeResults(takeResultsArray, printInterval)
     const yDomain = [orderBook.low * .94, orderBook.high * 1.06]
     const updatePrintInterval = (time) => {
@@ -90,8 +90,13 @@ export default class Research extends React.Component {
               <Forecasts />
             </div>
             <div className="wide-column">
-              <Chart data={data} yDomain={yDomain} updatePrintInterval={updatePrintInterval} printInterval={printInterval} />
-              <Orders buyOrders={buyOrders} />
+              <Chart
+                data={data}
+                yDomain={yDomain}
+                updatePrintInterval={updatePrintInterval}
+                printInterval={printInterval}
+                buyOrders={buyOrders}
+                sellOrders={sellOrders} />
             </div>
           </div>
         </div>

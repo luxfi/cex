@@ -12,6 +12,39 @@ const generateOrderSize = () => {
   return parseInt((Math.random() * 100).toFixed(0)) + 1 // random 1 through 100
 }
 
+const cleanOrderBookHash = (orderBookHash) => {
+  let cleanedOrderBookHash = {}
+  Object.keys(orderBookHash).forEach(m => {
+    const { price, size, type } = orderBookHash[m]
+    if (!cleanedOrderBookHash[price]) {
+      cleanedOrderBookHash[price] = { size, type }
+    } else {
+      cleanedOrderBookHash[price].size += size
+    }
+  })
+  console.log('orderBookHash', orderBookHash)
+  console.log('cleanedOrderBookHash', cleanedOrderBookHash)
+  return cleanedOrderBookHash
+}
+
+const getOrderRows = (orderBookHash, orderType) => {
+  let book = cleanOrderBookHash(orderBookHash)
+  console.log('book', book)
+  const orders = {}
+  Object.keys(book).forEach(m => {
+    const { size, type } = book[m]
+    if (type === orderType) orders[m] = { size }
+  })
+
+  const firstTwentyKeys = Object.keys(orders).sort(function (a, b) { return a - b }).slice(0, 20)
+  const filtered = []
+  firstTwentyKeys.forEach(k => {
+    filtered.push({price: k, ...book[k]})
+  })
+
+  return filtered
+}
+
 export default class OrderBook {
   @observable ticker = ''
   @observable connected = false
@@ -22,6 +55,7 @@ export default class OrderBook {
   @observable printInterval = 5
   @observable orderBookHash = {}
   id = 0
+  book = new LimitOrderBook()
 
 
   constructor(initialData = {
@@ -45,28 +79,29 @@ export default class OrderBook {
     this.printInterval = initialData.printInterval || 5
     this.orderBookHash = initialData.orderBookHash || {}
     this.id = initialData.id = 0
+
+    this.book = new LimitOrderBook()
+    const size = generateOrderSize()
+    this.generateOrders(this.ticker, 2000, this.book, this.id, this.price, size)
   }
 
   // For DEMO
   @action initiateDataGenerator(ticker = 'MDMXFR', price = 13.37) {
+    console.log('Initiating data generator!')
     this.ticker = ticker
     this.connected = true
 
-    let takeResult
-    let book = new LimitOrderBook()
     let size = generateOrderSize()
-    let id = this.id
 
-    takeResult = this.generateOrders(ticker, 2000, book, id, price, size)
-    console.log(takeResult)
-    console.log("orderBookHash", this.orderBookHash)
+    // console.log(takeResult)
+    // console.log("orderBookHash", this.orderBookHash)
 
     this.dataGenerator = setInterval(
       () => {
-        size = generateOrderSize();
+        size = generateOrderSize()
         // order = new LimitOrder(`order${x}`, this.bidAsk(), this.newPrice(price), this.orderSize())
         // result = this.generateOrderAndAdd(book, id, price, size)
-        this.generateOrders(ticker = 'MDMXFR', 1, book, id, price, size) //TODO fix this so the ticker is pulled correctly
+        this.generateOrders(ticker = 'MDMXFR', 1, this.book, this.id, this.price, size) //TODO fix this so the ticker is pulled correctly
       },
       2500
     ) // Some data generator
@@ -105,22 +140,24 @@ export default class OrderBook {
     if (makers.length === 0) return // return if no transactions were made
     let sizeRemainingForCurrentOrder = takeResult.taker.sizeRemaining
     let currentOrderID = takeResult.taker.orderId
+    const orderBookCopy = this.orderBookHash
     if (sizeRemainingForCurrentOrder === 0) { // remove order if no bids/sells outstanding
-      delete this.orderBookHash[currentOrderID]
-    } else {
-      this.orderBookHash[currentOrderID].size = sizeRemainingForCurrentOrder
+      delete orderBookCopy[currentOrderID]
+    } else if(orderBookCopy[currentOrderID]) {
+      orderBookCopy[currentOrderID].size = sizeRemainingForCurrentOrder
     }
 
     makers.forEach(maker => {
       let updatedSize = maker.sizeRemaining
       let currentOrderID = maker.orderId
       if (updatedSize === 0) { // remove order if no bids/sells outstanding
-        delete this.orderBookHash[currentOrderID]
-      } else {
-        debugger
-        this.orderBookHash[currentOrderID].size = updatedSize
+        delete orderBookCopy[currentOrderID]
+      } else if(orderBookCopy[currentOrderID]) {
+        orderBookCopy[currentOrderID].size = updatedSize
       }
     })
+
+    this.orderBookHash = orderBookCopy
   }
 
   @action placeNewOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize, book) {
@@ -158,48 +195,12 @@ export default class OrderBook {
   }
 
   @computed get buyOrders() {
-    let book = this.cleanedOrderBookHash
-    console.log('book', book)
-    let orders = {}
-    let firstTwentyOrders = {}
-    Object.keys(book).forEach(m => {
-      const { price, size, type } = this.orderBookHash[m]
-      if (orders[type] === "bid") orders[price].size = size
-    })
-    let firstTwentyKeys = Object.keys(firstTwentyOrders).sort(function (a, b) { return a - b }).slice(0, 19)
-
-    const filtered = Object.keys(book)
-      .filter(key => firstTwentyKeys.includes(key))
-      .reduce((obj, key) => {
-        obj[key] = book[key]
-        return obj
-      }, {})
-    // orders = book.filter(order => order.type === "bid")
-    return "hello"
+    return getOrderRows(this.orderBookHash, 'bid')
   }
 
   @computed get sellOrders() {
-    return []
+    return getOrderRows(this.orderBookHash, 'ask')
   }
-
-  @computed get cleanedOrderBookHash() {
-    let cleanedOrderBookHash = {}
-    Object.keys(this.orderBookHash).forEach(m => {
-      const { price, size, type } = this.orderBookHash[m]
-      debugger
-      if (!cleanedOrderBookHash[price]) {
-        cleanedOrderBookHash[price].size = size
-      } else {
-        cleanedOrderBookHash[price].size += size
-      }
-      cleanedOrderBookHash[price].type = type
-    })
-    console.log('this.orderBookHash', this.orderBookHash)
-    console.log('cleanedOrderBookHash', cleanedOrderBookHash)
-    return cleanedOrderBookHash
-  }
-
-
 
   generatefullDay(book) {
     // estimate between 200 and 2000 trades a day

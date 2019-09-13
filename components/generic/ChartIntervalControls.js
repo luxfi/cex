@@ -8,7 +8,7 @@ export default class ChartIntervalControls extends React.Component {
 
   render() {
     const { printInterval } = this.props
-    console.log('printInterval', printInterval)
+    // console.log('printInterval', printInterval)
     return (
       <div className="chart-interval-controls">
         <div className="group space-single"><div className={`button ${printInterval === 1 && 'selected'}`} title="1min" onClick={e => this.handleClick(1)}>1min</div></div>

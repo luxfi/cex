@@ -2,11 +2,13 @@ import React from "react";
 
 export default class Orders extends React.Component {
   render() {
-    const { buyOrders } = this.props
-    console.log('orders....', buyOrders)
+    const { orders } = this.props
+    // console.log('orders orders', orders)
     return (
       <div className="orders">
-        {buyOrders}
+        {
+          orders.map(o => <div>price: {o.price}, size: {o.size}</div>)
+        }
         <style jsx>{`
         `}</style>
       </div >

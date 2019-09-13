@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 import useForm from '../customHooks/useForm'
+import Orders from './Orders'
 
 export default props => {
   const signup = () => alert(`
@@ -23,6 +24,7 @@ export default props => {
       </div>
       <p className="dark">Fee 0 USDT (0.2%)</p>
       <button type="submit" className={`btn btn-${props.buttonColor || "primary"}`} style={{ width: props.width }}>{props.buttonText}</button>
+      <Orders orders={props.orders} />
       <style jsx>{`
                 form {
                     width: 100%;
