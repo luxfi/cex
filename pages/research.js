@@ -96,7 +96,8 @@ export default class Research extends React.Component {
                 updatePrintInterval={updatePrintInterval}
                 printInterval={printInterval}
                 buyOrders={buyOrders}
-                sellOrders={sellOrders} />
+                sellOrders={sellOrders}
+                orderBook={orderBook} />
             </div>
           </div>
         </div>
