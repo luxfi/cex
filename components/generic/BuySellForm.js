@@ -2,30 +2,56 @@ import React, { useState } from "react"
 import useForm from '../customHooks/useForm'
 import Orders from './Orders'
 
-export default props => {
-  const signup = () => alert(`
-        Price: ${inputs.price}
-        Theta: ${inputs.theta}
-        USDT: ${inputs.USDT}
-        `)
-  const { inputs, handleInputChange, handleSubmit } = useForm({}, signup)
-  return (
-    <form onSubmit={handleSubmit} style={{ width: props.width }}>
-      <p className="dark">Your balance 0.0000 USDT D W</p>
-      <p className="dark">Obtainable 0.0000 THETA</p>
-      <div className="form-group">
-        <input type="text" name="price" className="form-control" id="inputPrice" placeholder="Price USDT/THETA" onChange={handleInputChange} value={inputs.price} required />
-      </div>
-      <div className="form-group">
-        <input type="text" name="theta" className="form-control" id="inputTheta" placeholder="Amount THETA" onChange={handleInputChange} value={inputs.theta} required />
-      </div>
-      <div className="form-group">
-        <input type="text" name="USDT" className="form-control" id="inputUSDT" placeholder="Total USDT" onChange={handleInputChange} value={inputs.USDT} required />
-      </div>
-      <p className="dark">Fee 0 USDT (0.2%)</p>
-      <button type="submit" className={`btn btn-${props.buttonColor || "primary"}`} style={{ width: props.width }}>{props.buttonText}</button>
-      <Orders orders={props.orders} />
-      <style jsx>{`
+export default class BuySellForm extends React.Component {
+  // const signup = () => alert(`
+  //       Price: ${inputs.price}
+  //       Theta: ${inputs.theta}
+  //       USDT: ${inputs.USDT}
+  //       `)
+  // const { inputs, handleInputChange, handleSubmit } = useForm({}, signup)
+  constructor(props) {
+    super(props);
+    this.state = {
+      price: '',
+      size: '',
+      amt: '',
+    };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.submitOrder = this.submitOrder.bind(this);
+  }
+
+  submitOrder(e) {
+    e.preventDefault();
+    const price = this.state.price;
+    const size = this.state.size;
+    this.props.orderBook.addorder({ price, size })
+  }
+
+  handleInputChange(event) {
+    event.persist();
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.submitOrder} style={{ width: this.props.width }}>
+        <p className="dark">Your balance 0.0000 USDT D W</p>
+        <p className="dark">Obtainable 0.0000 THETA</p>
+        <div className="form-group">
+          <input type="text" name="price" className="form-control" id="inputPrice" placeholder="Price USDT/THETA" onChange={this.handleInputChange} value={this.state.price} required />
+        </div>
+        <div className="form-group">
+          <input type="text" name="theta" className="form-control" id="inputTheta" placeholder="Amount THETA" onChange={this.handleInputChange} value={this.state.value} required />
+        </div>
+        <div className="form-group">
+          <input type="text" name="USDT" className="form-control" id="inputUSDT" placeholder="Total USDT" onChange={this.handleInputChange} value={this.state.amt} required />
+        </div>
+        <p className="dark">Fee 0 USDT (0.2%)</p>
+        <button type="submit" className={`btn btn-${this.props.buttonColor || "primary"}`} style={{ width: this.props.width }}>{this.props.buttonText}</button>
+        <Orders orders={this.props.orders} />
+        <style jsx>{`
                 form {
                     width: 100%;
                 }
@@ -103,6 +129,7 @@ export default props => {
 
                 
             `}</style>
-    </form >
-  )
+      </form >
+    )
+  }
 }
