@@ -30,6 +30,5 @@ export function formatTakeResults(data, printInterval = 5) {
         // opacity: y > 75 ? 0.7 : 1
       }
     })
-  console.log(result)
   return result;
 }

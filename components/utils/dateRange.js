@@ -26,8 +26,6 @@ let roundLast15Min = function (m) {
 }
 
 export const timelineLabels = () => {
-  console.log(moment().format('MMMM Do YYYY, h:mm:ss a'))
-  console.log(moment().format('MMMM Do YYYY, HH:mm:ss a'))
   let now = moment()
   let roundedLast15Min = roundLast15Min(moment())
   let duration = moment.duration(now.diff(roundedLast15Min))
