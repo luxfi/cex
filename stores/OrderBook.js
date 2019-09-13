@@ -39,7 +39,7 @@ const getOrderRows = (orderBookHash, orderType) => {
   const firstTwentyKeys = Object.keys(orders).sort(function (a, b) { return a - b }).slice(0, 20)
   const filtered = []
   firstTwentyKeys.forEach(k => {
-    filtered.push({price: k, ...book[k]})
+    filtered.push({ price: k, ...book[k] })
   })
 
   return filtered
@@ -143,7 +143,7 @@ export default class OrderBook {
     const orderBookCopy = this.orderBookHash
     if (sizeRemainingForCurrentOrder === 0) { // remove order if no bids/sells outstanding
       delete orderBookCopy[currentOrderID]
-    } else if(orderBookCopy[currentOrderID]) {
+    } else if (orderBookCopy[currentOrderID]) {
       orderBookCopy[currentOrderID].size = sizeRemainingForCurrentOrder
     }
 
@@ -152,7 +152,7 @@ export default class OrderBook {
       let currentOrderID = maker.orderId
       if (updatedSize === 0) { // remove order if no bids/sells outstanding
         delete orderBookCopy[currentOrderID]
-      } else if(orderBookCopy[currentOrderID]) {
+      } else if (orderBookCopy[currentOrderID]) {
         orderBookCopy[currentOrderID].size = updatedSize
       }
     })
