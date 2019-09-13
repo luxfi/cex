@@ -38,37 +38,34 @@ export default class BuySellForm extends React.Component {
   }
 
   handleInputChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
+    const newState = this.state
+    newState[event.target.name] = event.target.value
     if (event.target.name === "price") {
-      if (event.target.value === "") { this.state.total = 0 }
+      if (event.target.value === "") { newState.total = 0 }
       else {
-        if (this.state.size) {
-          let total = parseFloat(event.target.value) * parseFloat(this.state.size)
-          this.setState({ total: total })
+        if (newState.size) {
+          const total = parseFloat(event.target.value) * parseFloat(newState.size)
+          newState.total = total.toFixed(2)
+        }
+      }
+    } else if (event.target.name === "size") {
+      if (event.target.value === "") { newState.total = 0 }
+      else {
+        if (newState.price) {
+          const total = parseFloat(event.target.value) * parseFloat(newState.price)
+          newState.total = total.toFixed(2)
+        }
+      }
+    } else if (event.target.name === "total") {
+      if (event.target.value === "") { newState.total = 0 }
+      else {
+        if (newState.price) {
+          const size = parseFloat(event.target.value) / parseFloat(newState.price)
+          newState.size = size.toFixed(2)
         }
       }
     }
-    if (event.target.name === "size") {
-      if (event.target.value === "") { this.state.total = 0 }
-      else {
-        if (this.state.price) {
-          let total = this.state.total = parseFloat(event.target.value) * parseFloat(this.state.price)
-          this.setState({ total: total })
-        }
-      }
-    }
-    if (event.target.name === "total") {
-      if (event.target.value === "") { this.state.total = 0 }
-      else {
-        if (this.state.price) {
-          let size = parseFloat(event.target.value) / parseFloat(this.state.price)
-          this.setState({ size: size })
-        }
-      }
-    }
-
+    this.setState(newState)
   }
 
   render() {

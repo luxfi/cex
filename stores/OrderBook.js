@@ -36,9 +36,11 @@ const getOrderRows = (orderBookHash, orderType) => {
     if (type === orderType) orders[m] = { size }
   })
 
+  // list orders for buys('bid') at highest price first 
+  // list orders for sells('ask') at lowest price first 
   let sortFn = orderType === "bid" ? function (a, b) { return b - a } : function (a, b) { return a - b }
 
-  const firstTwentyKeys = Object.keys(orders).sort(sortFn).slice(0, 20)
+  const firstTwentyKeys = Object.keys(orders).sort(sortFn).slice(0, 20) // take first 20
   const filtered = []
   firstTwentyKeys.forEach(k => {
     filtered.push({ price: k, ...book[k] })
@@ -137,8 +139,8 @@ export default class OrderBook {
   }
 
   @action updateOrderBook(takeResult) {
-    let makers = takeResult.makers
-    if (makers.length === 0) return // return if no transactions were made
+    if (_.isEmpty(takeResult.makers))
+      return // return if no transactions were made
     let sizeRemainingForCurrentOrder = takeResult.taker.sizeRemaining
     let currentOrderID = takeResult.taker.orderId
     const orderBookCopy = this.orderBookHash
@@ -148,7 +150,7 @@ export default class OrderBook {
       orderBookCopy[currentOrderID].size = sizeRemainingForCurrentOrder
     }
 
-    makers.forEach(maker => {
+    takeResult.makers.forEach(maker => {
       let updatedSize = maker.sizeRemaining
       let currentOrderID = maker.orderId
       if (updatedSize === 0) { // remove order if no bids/sells outstanding
@@ -164,11 +166,12 @@ export default class OrderBook {
 
   @action placeNewOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize, book = this.book) {
     let currentOrder = new LimitOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize)
-    this.orderBookHash[currentOrderID] = { type: currentOrderType, price: currentOrderPrice, size: currentOrderSize }
     let takeResult = book.add(currentOrder)
-    debugger
+    this.orderBookHash[currentOrderID] = { type: currentOrderType, price: currentOrderPrice, size: currentOrderSize }
     this.updateOrderBook(takeResult) //takeResult
-    // console.log("takeResult", takeResult)
+    if (typeof window !== 'undefined') {
+      console.log("takeResult", takeResult)
+    }
     return takeResult
   }
 
