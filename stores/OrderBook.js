@@ -1,5 +1,6 @@
 import { action, observable, computed } from 'mobx'
 import _ from 'lodash'
+import { arch } from 'os'
 // import io from 'socket.io-client'
 const LimitOrder = require('limit-order-book').LimitOrder
 const LimitOrderBook = require('limit-order-book').LimitOrderBook
@@ -12,41 +13,11 @@ const generateOrderSize = () => {
   return parseInt((Math.random() * 100).toFixed(0)) + 1 // random 1 through 100
 }
 
-const cleanOrderBookHash = (orderBookHash) => {
-  let cleanedOrderBookHash = {}
-  Object.keys(orderBookHash).forEach(m => {
-    const { price, size, type } = orderBookHash[m]
-    if (!cleanedOrderBookHash[price]) {
-      cleanedOrderBookHash[price] = { size, type }
-    } else {
-      cleanedOrderBookHash[price].size += size
-    }
-  })
-  // console.log('orderBookHash', orderBookHash)
-  // console.log('cleanedOrderBookHash', cleanedOrderBookHash)
-  return cleanedOrderBookHash
-}
-
-const getOrderRows = (orderBookHash, orderType) => {
-  let book = cleanOrderBookHash(orderBookHash)
-  // console.log('book', book)
-  const orders = {}
-  Object.keys(book).forEach(m => {
-    const { size, type } = book[m]
-    if (type === orderType) orders[m] = { size }
-  })
-
+const firstTwentyKeys = (orders, orderType) => {
   // list orders for buys('bid') at highest price first 
   // list orders for sells('ask') at lowest price first 
-  let sortFn = orderType === "bid" ? function (a, b) { return b - a } : function (a, b) { return a - b }
-
-  const firstTwentyKeys = Object.keys(orders).sort(sortFn).slice(0, 20) // take first 20
-  const filtered = []
-  firstTwentyKeys.forEach(k => {
-    filtered.push({ price: k, ...book[k] })
-  })
-
-  return filtered
+  const sortFn = orderType === "bid" ? function (a, b) { return b - a } : function (a, b) { return a - b }
+  return Object.keys(orders).sort(sortFn).slice(0, 20) // take first 20
 }
 
 export default class OrderBook {
@@ -57,8 +28,10 @@ export default class OrderBook {
   @observable high = 13.37
   @observable low = 13.37
   @observable printInterval = 5
-  @observable orderBookHash = {}
-  id = 0
+  buys = observable([])
+  sells = observable([])
+  // @observable buys = []
+  // @observable sell = []
   book = new LimitOrderBook()
 
 
@@ -70,8 +43,8 @@ export default class OrderBook {
     high: 13.37,
     low: 13.37,
     printInterval: 5,
-    orderBookHash: {},
-    id: 0
+    buys: [],
+    sells: []
   }) {
     // this.orderBookData = initialData.orderBookData
     this.ticker = initialData.ticker
@@ -81,22 +54,18 @@ export default class OrderBook {
     this.high = initialData.high || 13.37
     this.low = initialData.low || 13.37
     this.printInterval = initialData.printInterval || 5
-    this.orderBookHash = initialData.orderBookHash || {}
-    this.id = initialData.id = 0
-
     this.book = new LimitOrderBook()
+    this.buys = initialData.buys || []
+    this.sells = initialData.sells || []
     const size = generateOrderSize()
     this.generateOrders(this.ticker = 'MDMXFR', 2000, this.book, Date.now(), this.price, size)
   }
 
   // For DEMO
   @action initiateDataGenerator(ticker = 'MDMXFR', price = 13.37) {
-    console.log('Initiating data generator!')
     this.ticker = ticker
     this.connected = true
-
     let size = generateOrderSize()
-
     // console.log(takeResult)
     // console.log("orderBookHash", this.orderBookHash)
 
@@ -138,41 +107,26 @@ export default class OrderBook {
     return takeResult
   }
 
-  @action updateOrderBook(takeResult) {
-    if (_.isEmpty(takeResult.makers))
-      return // return if no transactions were made
-    let sizeRemainingForCurrentOrder = takeResult.taker.sizeRemaining
-    let currentOrderID = takeResult.taker.orderId
-    const orderBookCopy = this.orderBookHash
-    if (sizeRemainingForCurrentOrder === 0) { // remove order if no bids/sells outstanding
-      delete orderBookCopy[currentOrderID]
-    } else if (orderBookCopy[currentOrderID]) {
-      orderBookCopy[currentOrderID].size = sizeRemainingForCurrentOrder
-    }
-
-    takeResult.makers.forEach(maker => {
-      let updatedSize = maker.sizeRemaining
-      let currentOrderID = maker.orderId
-      if (updatedSize === 0) { // remove order if no bids/sells outstanding
-        delete orderBookCopy[currentOrderID]
-      } else if (orderBookCopy[currentOrderID]) {
-        orderBookCopy[currentOrderID].size = updatedSize
-      }
-    })
-
-    this.orderBookHash = orderBookCopy
-    // console.log("orderBookHash", this.orderBookHash)
-  }
-
   @action placeNewOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize, book = this.book) {
     let currentOrder = new LimitOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize)
     let takeResult = book.add(currentOrder)
-    this.orderBookHash[currentOrderID] = { type: currentOrderType, price: currentOrderPrice, size: currentOrderSize }
-    this.updateOrderBook(takeResult) //takeResult
-    if (typeof window !== 'undefined') {
-      console.log("takeResult", takeResult)
-    }
+    // if (typeof window !== 'undefined') {
+    //   console.log("takeResult", takeResult)
+    // }
+    this.updateOrders()
     return takeResult
+  }
+
+  @action updateOrders() {
+    //update buyOrders
+    const bidMap = this.book.bidLimits.map
+    const arrayOfBidPrices = firstTwentyKeys(bidMap, "bid")
+    this.buys = arrayOfBidPrices.map(k => ({ size: bidMap[k].volume, price: bidMap[k].price }))
+
+    //update sellOrders
+    const askMap = this.book.askLimits.map
+    const arrayOfAskPrices = firstTwentyKeys(askMap, "ask")
+    this.sells = arrayOfAskPrices.map(k => ({ size: askMap[k].volume, price: askMap[k].price }))
   }
 
   @action generateOrders(ticker, numberOfOrders, book, idNumber = Date.now(), price, size) {
@@ -205,11 +159,11 @@ export default class OrderBook {
   }
 
   @computed get buyOrders() {
-    return getOrderRows(this.orderBookHash, 'bid')
+    return this.buys
   }
 
   @computed get sellOrders() {
-    return getOrderRows(this.orderBookHash, 'ask')
+    return this.sells
   }
 
   generatefullDay(book) {
