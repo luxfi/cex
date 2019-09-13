@@ -159,14 +159,16 @@ export default class OrderBook {
     })
 
     this.orderBookHash = orderBookCopy
+    // console.log("orderBookHash", this.orderBookHash)
   }
 
   @action placeNewOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize, book = this.book) {
     let currentOrder = new LimitOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize)
     this.orderBookHash[currentOrderID] = { type: currentOrderType, price: currentOrderPrice, size: currentOrderSize }
     let takeResult = book.add(currentOrder)
-    debugger;
+    debugger
     this.updateOrderBook(takeResult) //takeResult
+    console.log("takeResult", takeResult)
     return takeResult
   }
 
