@@ -8,7 +8,7 @@ export default class Orders extends React.Component {
       <div className="orders">
         <div className="tables">
           <div className="orders">
-            <div className="row header left"><div className="cell">Price</div><div className="cell right">Amt</div><div className="cell right">Row</div></div>
+            <div className="row header left"><div className="cell">Price</div><div className="cell right">Amt</div><div className="cell right">Total</div></div>
             {/* {
                 orders.map((o, i) => <div key={i}>price: {o.price}, size: {o.size}, total: {(o.price * o.size).toFixed(0)}</div>)
               } */}
