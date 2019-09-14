@@ -50,7 +50,6 @@ export default class OrderBook {
     this.high = initialData.high || 13.37
     this.low = initialData.low || 13.37
     this.printInterval = initialData.printInterval || 5
-    this.book = new LimitOrderBook()
     const size = generateOrderSize()
     this.generateOrders(this.ticker = 'MDMXFR', 2000, this.book, Date.now(), this.price, size)
   }
@@ -60,18 +59,16 @@ export default class OrderBook {
     this.ticker = ticker
     this.connected = true
     let size = generateOrderSize()
-    // console.log(takeResult)
-    // console.log("orderBookHash", this.orderBookHash)
 
-    // this.dataGenerator = setInterval(
-    //   () => {
-    //     size = generateOrderSize()
-    //     // order = new LimitOrder(`order${x}`, this.bidAsk(), this.newPrice(price), this.orderSize())
-    //     // result = this.generateOrderAndAdd(book, id, price, size)
-    //     this.generateOrders(ticker = 'MDMXFR', 1, this.book, Date.now(), this.price, size) //TODO fix this so the ticker is pulled correctly
-    //   },
-    //   2500
-    // ) // Some data generator
+    this.dataGenerator = setInterval(
+      () => {
+        size = generateOrderSize()
+        // order = new LimitOrder(`order${x}`, this.bidAsk(), this.newPrice(price), this.orderSize())
+        // result = this.generateOrderAndAdd(book, id, price, size)
+        this.generateOrders(ticker = 'MDMXFR', 1, this.book, Date.now(), this.price, size) //TODO fix this so the ticker is pulled correctly
+      },
+      2500
+    ) // Some data generator
   }
 
   @action terminateDataGenerator() {
