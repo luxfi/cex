@@ -2,6 +2,7 @@ import { action, observable, computed } from 'mobx'
 import _ from 'lodash'
 import { arch } from 'os'
 // import io from 'socket.io-client'
+import uuid from 'node-uuid'
 const LimitOrder = require('limit-order-book').LimitOrder
 const LimitOrderBook = require('limit-order-book').LimitOrderBook
 
@@ -42,7 +43,8 @@ export default class OrderBook {
     high: 13.37,
     low: 13.37,
     printInterval: 5,
-  }) {
+    id: uuid.v4()
+  }, ) {
     // this.orderBookData = initialData.orderBookData
     this.ticker = initialData.ticker
     this.connected = initialData.connected
@@ -50,6 +52,7 @@ export default class OrderBook {
     this.high = initialData.high || 13.37
     this.low = initialData.low || 13.37
     this.printInterval = initialData.printInterval || 5
+    this.id = initialData.id
     const size = generateOrderSize()
     this.generateOrders(this.ticker = 'MDMXFR', 2000, this.book, Date.now(), this.price, size)
   }
