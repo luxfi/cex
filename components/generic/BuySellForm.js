@@ -24,7 +24,6 @@ export default class BuySellForm extends React.Component {
     e.preventDefault();
     const price = parseFloat(this.state.price)
     const size = parseFloat(this.state.size)
-    // debugger;
     if (!price || !size) return //still need to validate
     let id = Date.now() // unique id
     let currentOrderID = `${this.props.ticker}-${id}`
