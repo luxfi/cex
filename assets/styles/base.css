@@ -1,27 +1,7 @@
 body {
-  font-family: ‘BWHaasGroteskTF-55Roman-Web, sans-serif’, sans-serif;
+    font-family: ‘BWHaasGroteskTF-55Roman-Web,sans-serif’, sans-serif;
 }
 
 .custom-item {
-  padding-right: 1px;
-}
-
-a {
-  color: #6da7ee;
-}
-
-p {
-  color: rgb(142, 142, 142)
-}
-
-.dark {
-  color: rgb(64, 64, 64)
-}
-
-td {
-  color: rgb(142, 142, 142)
-}
-
-svg.rv-xy-plot__inner {
-  overflow: visible;
+    padding-right: 1px;
 }

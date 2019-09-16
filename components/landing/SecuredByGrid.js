@@ -7,16 +7,16 @@ import trusteImg from '../../assets/images/secured/truste.png'
 import verisignImg from '../../assets/images/secured/verisign.png'
 
 export default props => {
-  return (
-    <div className="image-row">
-      <img className="partner-image" src={mcafeeImg} alt="McAfee" />
-      <img className="partner-image" src={paypalImg} alt="PayPal" />
-      <img className="partner-image" src={bbbImg} alt="Better Business Bureau" />
-      <img className="partner-image" src={trusteImg} alt="TrustE" />
-      <img className="partner-image" src={scanalertImg} alt="Scan Alert" />
-      <img className="partner-image" src={comodoImg} alt="Comodo" />
-      <img className="partner-image" src={verisignImg} alt="VeriSign" />
-      <style jsx>{`
+    return (
+        <div className="image-row">             
+            <img className="partner-image" src={mcafeeImg} alt="McAfee"/>  
+            <img className="partner-image" src={paypalImg} alt="PayPal"/>
+            <img className="partner-image" src={bbbImg} alt="Better Business Bureau"/>
+            <img className="partner-image" src={trusteImg} alt="TrustE"/>
+            <img className="partner-image" src={scanalertImg} alt="Scan Alert"/>
+            <img className="partner-image" src={comodoImg} alt="Comodo"/>
+            <img className="partner-image" src={verisignImg} alt="VeriSign"/>
+            <style jsx>{`
             .image-row {
                 display: flex;
                 flex: 1;
@@ -31,6 +31,6 @@ export default props => {
                 padding-bottom: 5px;
             }
             `}</style>
-    </div>
-  )
+        </div>
+    )
 }

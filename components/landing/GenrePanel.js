@@ -1,23 +1,23 @@
 export default props => {
-  return (
-    <div className="genre-panel">
-      <h2 className="genre-title">
-        {props.genreTitle}
-      </h2>
-      <div className="break" />
-      <h1 className="genre-movie-title">
-        {props.genreMovieTitle}
-      </h1>
-      <div className="break" />
-      <img className="genre-image" src={props.genreImage} />
-      <div className="break" />
-      <div className="links">
-        <a href="#" className="link">Trailer</a>
-        <a href="#" className="link">|</a>
-        <a href="#" className="link">Official Website</a>
-      </div>
-      <img className="graph-image" src={props.graphImage} />
-      <style jsx>{`
+    return (
+        <div className="genre-panel">
+            <h2 className="genre-title">
+                {props.genreTitle}
+            </h2>
+            <div className="break"/>
+            <h1 className="genre-movie-title">
+                {props.genreMovieTitle}
+            </h1>
+            <div className="break"/>
+            <img className="genre-image" src={props.genreImage} />
+            <div className="break"/>
+            <div className="links">
+                <a href="#" className="link">Trailer</a>
+                <a href="#" className="link">|</a>
+                <a href="#" className="link">Official Website</a>
+            </div>
+            <img className="graph-image" src={props.graphImage} />
+            <style jsx>{`
             .genre-panel {
                 flex: 1;
                 height: auto;
@@ -57,6 +57,6 @@ export default props => {
                 height: 125px;
             }
             `}</style>
-    </div>
-  )
+        </div>
+    )
 }

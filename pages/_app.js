@@ -1,40 +1,36 @@
-import App from 'next/app';
+import App from 'next/app'
 import React from 'react'
+import { fetchInitialStoreState, Store } from '../store'
 import { Provider } from 'mobx-react'
 
-import initializeStore from '../stores/stores';
-
 class MyMobxApp extends App {
+  state = {
+    store: new Store(),
+  }
+
+  // Fetching serialized(JSON) store state
   static async getInitialProps(appContext) {
-    //
-    // Use getInitialProps as a step in the lifecycle when
-    // we can initialize our store (nextJS DOCS)
-    //
-
-    const isServer = typeof window === 'undefined'
-    const mobxStore = initializeStore()
-    appContext.ctx.mobxStore = mobxStore
-
-    // calls page's `getInitialProps` and fills `appProps.pageProps`
     const appProps = await App.getInitialProps(appContext)
+    const initialStoreState = await fetchInitialStoreState()
 
     return {
       ...appProps,
-      isServer,
-      initialMobxState: mobxStore,
+      initialStoreState,
     }
   }
 
-  constructor(props) {
-    super(props)
-    const isServer = typeof window === 'undefined'
-    this.mobxStore = isServer ? props.initialMobxState : initializeStore(props.initialMobxState);
+  // Hydrate serialized state to store
+  static getDerivedStateFromProps(props, state) {
+    state.store.hydrate(props.initialStoreState)
+    return state
   }
 
   render() {
     const { Component, pageProps } = this.props
+    // console.log("hey")
+    // console.log(this.props.initialStoreState)
     return (
-      <Provider store={this.mobxStore}>
+      <Provider store={this.state.store}>
         <Component {...pageProps} />
       </Provider>
     )

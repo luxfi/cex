@@ -3,77 +3,77 @@ import "../../assets/styles/base.css"
 import 'react-multi-carousel/lib/styles.css'
 
 export default props => {
-  return (
-    <div className="footer-container">
-      <div className="footer-gutter" />
-      <div className="footer-column">
-        <h2 className="title" >
-          Company
+    return (
+        <div className="footer-container">
+            <div className="footer-gutter"/>
+            <div className="footer-column">
+                <h2 className="title" >
+                    Company
                 </h2>
-        <p className="element" >
-          <a href="#">About</a>
-        </p>
-        <p className="element" >
-          <a href="#">Legal & Privacy</a>
-        </p>
-        <p className="element" >
-          <a href="#">Support</a>
-        </p>
-      </div>
-      <div className="column-pad" />
-      <div className="footer-column">
-        <h2 className="title" >
-          Learn
-                </h2>
-        <p className="element" >
-          <a href="#">How to trade</a>
-        </p>
-        <p className="element" >
-          <a href="#">Technology</a>
-        </p>
-        <p className="element" >
-          <a href="#">Supported Platforms</a>
-        </p>
-      </div>
-      <div className="column-pad" />
-      <div className="footer-column">
-        <h2 className="title" >
-          Social
-                </h2>
-        <p className="element" >
-          <a href="#">Blog</a>
-        </p>
-        <p className="element" >
-          <a href="#">Twitter</a>
-        </p>
-        <p className="element" >
-          <a href="#">Facebook</a>
-        </p>
-      </div>
-      <div className="column-pad" />
-      <div className="footer-column">
-        <h2 className="title" >
-          Media
-                </h2>
-        <p className="element" >
-          <a href="#">Brand</a>
-        </p>
-        <p className="element" >
-          <a href="#">Press</a>
-        </p>
-        <p className="element" >
-          <a href="#">Clients & Partners</a>
-        </p>
-      </div>
-      <div className="column-pad" />
-      <div className="footer-column">
-        <img src={ESXLogo} alt="ESX" height='40px' style={{ margin: `-16px` }} />
-        <p className="element" >
-          2018 © ESX, Co
+                <p className="element" >
+                    <a href="#">About</a>
                 </p>
-      </div>
-      <div className="footer-gutter" />
-      <style jsx>{`
+                <p className="element" >
+                    <a href="#">Legal & Privacy</a>
+                </p>
+                <p className="element" >
+                    <a href="#">Support</a>
+                </p>
+            </div>
+            <div className="column-pad"/>
+            <div className="footer-column">
+                <h2 className="title" >
+                    Learn
+                </h2>
+                <p className="element" >
+                    <a href="#">How to trade</a>
+                </p>
+                <p className="element" >
+                    <a href="#">Technology</a>
+                </p>
+                <p className="element" >
+                    <a href="#">Supported Platforms</a>
+                </p>
+            </div>
+            <div className="column-pad"/>
+            <div className="footer-column">
+                <h2 className="title" >
+                    Social
+                </h2>
+                <p className="element" >
+                    <a href="#">Blog</a>
+                </p>
+                <p className="element" >
+                    <a href="#">Twitter</a>
+                </p>
+                <p className="element" >
+                    <a href="#">Facebook</a>
+                </p>
+            </div>
+            <div className="column-pad"/>
+            <div className="footer-column">
+                <h2 className="title" >
+                    Media
+                </h2>
+                <p className="element" >
+                    <a href="#">Brand</a>
+                </p>
+                <p className="element" >
+                    <a href="#">Press</a>
+                </p>
+                <p className="element" >
+                    <a href="#">Clients & Partners</a>
+                </p>
+            </div>
+            <div className="column-pad"/>
+            <div className="footer-column">
+                <img src={ESXLogo} alt="ESX" height='40px' style={{ margin: `-16px` }} />
+                <p className="element" >
+                    2018 © ESX, Co
+                </p>
+            </div>
+            <div className="footer-gutter"/>
+            <style jsx>{`
 
                 a {
                     color: gray;
@@ -117,6 +117,6 @@ export default props => {
                     justify-content: center;
                 }
             `}</style>
-    </div>
-  )
+        </div>
+    )
 }

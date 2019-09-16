@@ -1,33 +1,33 @@
 import Ticker from './Ticker'
 
 export default props => {
-  // console.log("The first title: ", props.movieStore.movies && props.movieStore.movies[0].title)
-  const tickers = props.movies.slice(0, 14).map((ticker, key) => {
-    const { title, price, change, percentChange, symbol, Imdbid } = ticker;
-    return <Ticker
-      key={Imdbid}
-      title={title}
-      price={price}
-      change={change}
-      symbol={symbol}
-      percentChange={percentChange} />
-  })
+    // console.log("The first title: ", props.movieStore.movies && props.movieStore.movies[0].title)
+    const tickers = props.movieStore.movies.slice(0, 14).map((ticker, key) => {
+        const { title, price, change, percentChange, symbol, Imdbid } = ticker;
+        return <Ticker
+            key={Imdbid}
+            title={title}
+            price={price}
+            change={change}
+            symbol={symbol}
+            percentChange={percentChange} />
+    })
 
-  return (
-    <div>
-      <div className="navi-markets-bar">
-        <div className="navi-data-strip">
-          <div className="navi-data-strip__ticker-viewport">
-            <div className="navi-data-strip__ticker-viewport-inner">
-              <ul className="navi-data-strip__tickers-list-first animate-tickers-left" style={{ left: '-50px' }}>
-                {tickers}
-              </ul>
+    return (
+        <div>
+            <div className="navi-markets-bar">
+                <div className="navi-data-strip">
+                    <div className="navi-data-strip__ticker-viewport">
+                        <div className="navi-data-strip__ticker-viewport-inner">
+                            <ul className="navi-data-strip__tickers-list-first animate-tickers-left" style={{ left: '-50px' }}>
+                                {tickers}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <style jsx>{`
+            <style jsx>{`
                 .navi,
                 .navi-markets-bar {
                     -webkit-font-smoothing: antialiased;
@@ -312,6 +312,6 @@ export default props => {
                     display: none
                 }
             `}</style>
-    </div>
-  )
+        </div>
+    )
 }
