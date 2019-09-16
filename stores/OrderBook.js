@@ -25,6 +25,7 @@ export default class OrderBook {
   @observable connected = false
   takeResults = observable([])
   @observable price = 13.37
+  @observable currentPrice = 13.37
   @observable high = 13.37
   @observable low = 13.37
   @observable printInterval = 5

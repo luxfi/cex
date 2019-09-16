@@ -56,7 +56,7 @@ class Trade extends React.Component {
                 <div className="box-item">
                   <table className="noborder">
                     <tbody>
-                      <tr><td className="light-grey" style={{ paddingTop: "0px" }}>Price</td><td className="white" style={{ paddingTop: "0px" }} >{movieToTrade.price}</td></tr>
+                      <tr><td className="light-grey" style={{ paddingTop: "0px" }}>Price</td><td className="white" style={{ paddingTop: "0px" }} >${orderBook.price.toFixed(2)}</td></tr>
                       <tr><td className="light-grey">Change</td><td className="white">$0.80 (7.0%){movieToTrade.change}</td></tr>
                       <tr><td className="light-grey">Market Cap</td><td className="white">{movieToTrade.marketCap}</td></tr>
                       <tr><td className="light-grey" style={{ paddingBottom: "0px" }} >Volume</td><td className="white" style={{ paddingBottom: "0px" }}>{movieToTrade.volumeWeekly}</td></tr>
