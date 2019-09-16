@@ -8,7 +8,7 @@ export default props => {
   return (
     <div className="container">
       <img src={props.imgSrc} alt="slider-item" style={{ width: props.width }} />
-      <div className="price">$5.55</div>
+      <div className="price">{props.price}</div>
       <div className="info">
         <span className="change">
           <FontAwesomeIcon icon={faArrowUp} style={{ width: '12px', paddingRight: "5px" }} />
