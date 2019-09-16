@@ -2,8 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import TradeLink from './TradeLink'
 
-
-
 export default props => {
   return (
     <div className="container">

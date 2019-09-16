@@ -1,7 +1,9 @@
-export default () => {
+import TradeLink from './TradeLink'
+
+export default (props) => {
   return (
     <div className="non-row">
-      <a href="#" className="btn invert">Start Trading Now</a>
+      <TradeLink title={"Start Trading Now"} ticker={"MDMXFR"} />
       <a href="#" className="demo">View Demo</a>
 
       <style jsx>{`
