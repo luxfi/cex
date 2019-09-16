@@ -8,7 +8,26 @@ import MoreLikeThis from '../components/research/MoreLikeThis'
 import RelatedPosts from '../components/research/RelatedPosts'
 import Forecasts from '../components/research/Forecasts'
 import Chart from '../components/generic/Chart'
+import Orders from '../components/generic/Orders'
 import { formatTakeResults } from '../components/utils/formatOrderBookDataForChart'
+import { faSortAmountDown } from '@fortawesome/free-solid-svg-icons'
+
+
+
+const sumDataByNumber = (array) => {
+  let hash = {}
+  array.forEach(el => {
+    let price = el[0]
+    let size = el[1]
+    let amount = parseInt(el[2]) || 0
+    let sum = !hash[price] ? 0 : amount + hash[price]["amount"]
+    hash[price] = {
+      "size": size,
+      "amount": sum
+    }
+  });
+  return hash;
+}
 
 @inject('store')
 @observer
@@ -20,7 +39,7 @@ export default class Research extends React.Component {
     await mobxStore.movieStore.fetch()
     return {
       movieStore: mobxStore.movieStore,
-      orderBook: mobxStore.orderBook
+      orderBook: mobxStore.orderBook,
     }
   }
 
@@ -35,10 +54,20 @@ export default class Research extends React.Component {
 
   render() {
     const { movieStore, orderBook } = this.props.store
-    let takeResultsArray = orderBook.takeResults.slice(0);
-    const data = formatTakeResults(takeResultsArray)
+    let takeResultsArray = orderBook.takeResults.slice(0)
+    const { printInterval, buyOrders, sellOrders } = orderBook
+    const data = formatTakeResults(takeResultsArray, printInterval)
     const yDomain = [orderBook.low * .94, orderBook.high * 1.06]
-
+    const updatePrintInterval = (time) => {
+      orderBook.updatePrintInterval(time)
+    }
+    // let currentPrice = takeResultsArray[takeResultsArray - 1].taker.price.toFixed(2)
+    // const takers = takeResultsArray.map(take => [take.taker.price.toFixed(2), take.taker.size, (take.taker.price.toFixed(2) * take.taker.size).toFixed(2)])
+    // const makers = takeResultsArray
+    //   .filter(make => make.makers[0])
+    //   .map(make => [make.makers[0].price.toFixed(2), make.makers[0].size, (make.makers[0].price.toFixed(2) * make.makers[0].size).toFixed(2)])
+    // let makersBook = sumDataByNumber(makers)
+    // let takersBook = sumDataByNumber(takers)
     return (
       <TickerStripLayout movies={movieStore.movies} darkNav={true}>
         <div className="container-center">
@@ -61,7 +90,14 @@ export default class Research extends React.Component {
               <Forecasts />
             </div>
             <div className="wide-column">
-              <Chart data={data} yDomain={yDomain} />
+              <Chart
+                data={data}
+                yDomain={yDomain}
+                updatePrintInterval={updatePrintInterval}
+                printInterval={printInterval}
+                buyOrders={buyOrders}
+                sellOrders={sellOrders}
+                orderBook={orderBook} />
             </div>
           </div>
         </div>

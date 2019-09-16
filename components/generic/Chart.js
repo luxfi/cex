@@ -1,30 +1,25 @@
-import chartPlaceHolder from '../../assets/images/generic/chart.png'
 import BuySellForm from './BuySellForm'
-import FakeChart from './FakeCandlestickChart'
+import FakeCandlestickChart from './FakeCandlestickChart'
 import { timelineLabels } from '../utils/dateRange'
 import ChartIntervalControl from '../generic/ChartIntervalControls'
 
-import moment from 'moment/moment.js'
-
 export default props => {
-  const { movies, data, yDomain } = props;
+  const { data, yDomain, updatePrintInterval, printInterval, buyOrders, sellOrders, orderBook } = props
 
-  let labels = timelineLabels('18:00', 15, 'minutes')
-  let lastSeven = labels.slice(Math.max(labels.length - 7, 1))
+  let labels = timelineLabels()
 
   return (
     <div className="container">
       <div className="title">
         Trade This Stock
       </div>
-      {JSON.stringify(lastSeven)}
-      <ChartIntervalControl />
+      <ChartIntervalControl updatePrintInterval={updatePrintInterval} printInterval={printInterval} />
       <div className="posts-container">
-        <FakeChart data={data} yDomain={yDomain} />
+        <FakeCandlestickChart data={data} yDomain={yDomain} labels={labels} />
         <div className="container-row space-between">
-          <BuySellForm buttonColor="green" buttonText="BUY" />
+          <BuySellForm buttonColor="green" buttonText="BUY" orderType="bid" ticker={"MDMXFR"} orders={buyOrders} orderBook={orderBook} />
           <div className="divider" />
-          <BuySellForm buttonColor="red" buttonText="SELL" />
+          <BuySellForm buttonColor="red" buttonText="SELL" orderType="ask" ticker={"MDMXFR"} orders={sellOrders} orderBook={orderBook} />
         </div>
       </div>
 
