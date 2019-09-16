@@ -20,7 +20,7 @@ export default props => {
           <div className="navi-data-strip__ticker-viewport">
             <div className="navi-data-strip__ticker-viewport-inner">
               <ul className="navi-data-strip__tickers-list-first animate-tickers-left" style={{ left: '-50px' }}>
-                {tickers}
+                {tickers}{tickers}
               </ul>
             </div>
           </div>
