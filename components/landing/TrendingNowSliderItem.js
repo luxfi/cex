@@ -1,6 +1,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
+import TradeButton from "../generic/TradeButton"
 
 export default props => {
   const width = props.width || "166px"
@@ -13,7 +14,7 @@ export default props => {
           <FontAwesomeIcon icon={faArrowUp} style={{ width: '12px', paddingRight: "5px" }} />
           $1 (8.7%)
                 </span>
-        <a href="#" className="btn invert">Trade</a>
+        <TradeButton ticker={props.ticker} />
       </div>
       <style jsx>{`
                 .container {

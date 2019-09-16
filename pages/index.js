@@ -42,12 +42,13 @@ export default class Index extends React.Component {
     const trendingSliderItems = movieStore.topMovies.slice(0, 14)
       .filter(item => item.verticalImg !== "N/A")
       .map((sliderItem, key) => {
-        const { title, Imdbid, verticalImg } = sliderItem;
+        const { title, Imdbid, verticalImg, ticker } = sliderItem;
         return <TrendingNowSliderItem
           key={Imdbid}
           title={title}
           imgSrc={verticalImg}
-          width="166px" />
+          width="166px"
+          tikcer={ticker} />
       })
 
     return (
