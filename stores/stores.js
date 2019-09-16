@@ -11,20 +11,9 @@ useStaticRendering(isServer)
 let store = null
 
 const _initialData = {
-  movieStore: {
-      movies: []
-    },
-  orderBook: {
-    ticker: '',
-    connected: false,
-    takeResults: [],
-    price: 13.37,
-    high: 13.37,
-    low: 13.37
-  },
-  userStore: {
-    email: ''
-  }
+  movieStore: {},
+  orderBook: {},
+  userStore: {}
 }
 
 export default function initializeStore(initialData = _initialData) {
