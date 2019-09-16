@@ -6,7 +6,7 @@ import { observer } from 'mobx-react'
 @observer
 export default class CandlestickExample extends React.Component {
   render() {
-    const { data, yDomain, labels } = this.props
+    const { data, yDomain, labels, marginLeft } = this.props
     let domain = yDomain || [13, 13.7]
     let xPercentFirst = -0.0050
     let xPercentLast = 1 - 0.01
@@ -23,7 +23,7 @@ export default class CandlestickExample extends React.Component {
     return (
       <div className="candlestick-example">
         <div className="chart">
-          <FlexibleWidthXYPlot animation yDomain={domain} height={450}>
+          <FlexibleWidthXYPlot animation yDomain={domain} height={450} style={{ marginLeft: "-12px" }}>
             {/* <XAxis /> */}
             <YAxis />
             <Candlestick
@@ -59,7 +59,7 @@ export default class CandlestickExample extends React.Component {
           }
         }
         `}</style>
-      </div>
+      </div >
     );
   }
 }

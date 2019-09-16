@@ -42,7 +42,7 @@ export default props => {
           <NavLink href="/portfolio" title="MY PORTFOLIO" />
           <NavLink href="/quotes" title="TRADE" />
           <NavLink href="/research" title="RESEARCH" />
-          <NavLink href="/events" title="NEWS &amp; EVENTS" />
+          <NavLink href="#" title="NEWS &amp; EVENTS" />
         </ul>
         <ul className="nav nav-right">
           <div className="search">
