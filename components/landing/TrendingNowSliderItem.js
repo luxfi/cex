@@ -31,6 +31,7 @@ export default props => {
                     display: flex;
                     justify-content: space-between;
                     margin-top: 2px;
+                    font-size: 13px;
                 }
                 .price {
                     font-size: 12px;
