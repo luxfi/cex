@@ -8,12 +8,12 @@ export default props => {
   return (
     <div className="container">
       <img src={props.imgSrc} alt="slider-item" style={{ width: props.width }} />
-      <div className="price">{props.price}</div>
+      <div className="price">${props.price}</div>
       <div className="info">
         <span className="change">
           <FontAwesomeIcon icon={faArrowUp} style={{ width: '12px', paddingRight: "5px" }} />
-          $1 (8.7%)
-                </span>
+          ${(props.change * props.price).toFixed(2)} ({props.change}%)
+        </span>
         <TradeButton ticker={props.ticker} />
       </div>
       <style jsx>{`

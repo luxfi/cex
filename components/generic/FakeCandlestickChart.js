@@ -1,6 +1,6 @@
 import React from 'react';
 import { XAxis, YAxis, FlexibleWidthXYPlot, ChartLabel } from 'react-vis';
-import Candlestick from './Candlestick';
+import CandleStick from './CandleStick';
 import { observer } from 'mobx-react'
 
 @observer
