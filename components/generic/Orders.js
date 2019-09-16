@@ -13,7 +13,7 @@ export default class Orders extends React.Component {
           <div className="orders">
             <div className="row header left"><div className="cell">Price</div><div className="cell right">Amount</div><div className="cell right">Total</div></div>
             {
-              orders.map((o, i) => <div key={i} className="row"><div className="cell left">{o.price.toFixed(2)}</div><div className="cell right">{o.size}</div><div className="cell right">{(o.price * o.size).toFixed(2)}</div></div>)
+              orders.map((o, i) => <div key={i} className="row"><div className="cell left">${o.price.toFixed(2)}</div><div className="cell right">{o.size}</div><div className="cell right" style={{ width: "100px" }}>${(o.price * o.size).toFixed(2)}</div></div>)
             }
           </div>
         </div>
