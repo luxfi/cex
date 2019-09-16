@@ -36,7 +36,7 @@ const Row = (props) => {
         props.chart || <img src={chart} alt="chart" height='40px' />
 
       }</td>
-      <td className="table-cell left" ><TradeButton /></td>
+      <td className="table-cell left" ><TradeButton ticker={props.symbol} /></td>
       <style jsx>{`
                 .table-cell {
                     display: table-cell;
