@@ -1,8 +1,14 @@
-const TradeButton = () => {
+import Link from 'next/link'
+
+const TradeButton = ({ ticker }) => {
   return (
-    <button className="btn invert">
-      Trade
-            <style jsx>{`
+    <div>
+      <Link href={`/trade?ticker=${ticker}`}>
+        <button className="btn invert">
+          Trade
+        </button>
+      </Link>
+      <style jsx>{`
                 .btn.invert {
                     margin: 0;
                     padding: 0 6px;
@@ -32,7 +38,7 @@ const TradeButton = () => {
                     font-size: 9px;
                 }
         `}</style>
-    </button>
+    </div >
   )
 }
 
