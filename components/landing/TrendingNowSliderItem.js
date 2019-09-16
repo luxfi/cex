@@ -23,7 +23,6 @@ export default props => {
                 }
                 img {
                     display: flex;
-                    height: 93px;
                     object-fit: cover;
                     pointer-events: none;
                 }
