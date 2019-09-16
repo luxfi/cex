@@ -51,7 +51,7 @@ export default class OrderBook {
     this.low = initialData.low || 13.37
     this.printInterval = initialData.printInterval || 5
     const size = generateOrderSize()
-    this.generateOrders(this.ticker = 'MDMXFR', 2000, this.book, Date.now(), this.price, size)
+    this.generateOrders(this.ticker = 'MDMXFR', 1000, this.book, Date.now(), this.price, size)
   }
 
   // For DEMO
