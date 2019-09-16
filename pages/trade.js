@@ -4,40 +4,62 @@ import { inject, observer } from 'mobx-react'
 import StockInfo from '../components/trade/StockInfo'
 import Chart from '../components/generic/Chart'
 import madmax from '../assets/images/trade/madmax.jpeg'
+import { formatTakeResults } from '../components/utils/formatOrderBookDataForChart'
+import { withRouter } from 'next/router'
+
 
 @inject('store')
 @observer
-export default class Trade extends React.Component {
+class Trade extends React.Component {
   state = {
     whiteGutter: true,
   }
   static async getInitialProps({ mobxStore }) {
-    await mobxStore.movieStore.fetch();
+    await mobxStore.movieStore.fetch()
     return {
       movieStore: mobxStore.movieStore,
-    };
+      orderBook: mobxStore.orderBook,
+    }
+  }
+
+  componentDidMount() {
+    console.log('index props componentDidMount', this.props.store.orderBook)
+    const { router } = this.props
+    this.props.store.orderBook.initiateDataGenerator()
+  }
+
+  componentWillUnmount() {
+    this.props.store.orderBook.terminateDataGenerator()
   }
 
   render() {
-    const { movieStore } = this.props.store
-
+    const { movieStore, orderBook } = this.props.store
+    let takeResultsArray = orderBook.takeResults.slice(0)
+    const { printInterval, buyOrders, sellOrders } = orderBook
+    const data = formatTakeResults(takeResultsArray, printInterval)
+    const yDomain = [orderBook.low * .94, orderBook.high * 1.06]
+    const updatePrintInterval = (time) => {
+      orderBook.updatePrintInterval(time)
+    }
+    const { router } = this.props
+    const movieToTrade = movieStore.movies.find(movie => movie.ticker === router.query.ticker) || { ticker: 'hello' }
     return (
       <TickerStripLayout movies={movieStore.movies} darkNav={true}>
         <div className="container-center">
           <div className="inner-container row">
             <div className="column-container">
               <h2 className="title dark" style={{ fontSize: "40px", margin: "20px 0px 4px 0px", fontWeight: "lighter" }}>
-                Mad Max: Fury Road
-                            </h2>
+                {movieToTrade.title}
+              </h2>
               <div className="flex-row space-between">
-                <StockInfo movies={movieStore.movies} />
+                <StockInfo movie={movieToTrade} />
                 <div className="box-item">
                   <table className="noborder">
                     <tbody>
-                      <tr><td className="light-grey" style={{ paddingTop: "0px" }}>Price</td><td className="white" style={{ paddingTop: "0px" }} >$12.25</td></tr>
-                      <tr><td className="light-grey">Change</td><td className="white">$0.80 (7.0%)</td></tr>
-                      <tr><td className="light-grey">Market Cap</td><td className="white">$90.2M</td></tr>
-                      <tr><td className="light-grey" style={{ paddingBottom: "0px" }} >Volume</td><td className="white" style={{ paddingBottom: "0px" }}>$1.7M</td></tr>
+                      <tr><td className="light-grey" style={{ paddingTop: "0px" }}>Price</td><td className="white" style={{ paddingTop: "0px" }} >${orderBook.price.toFixed(2)}</td></tr>
+                      <tr><td className="light-grey">Change</td><td className="white">$0.80 (7.0%){movieToTrade.change}</td></tr>
+                      <tr><td className="light-grey">Market Cap</td><td className="white">{movieToTrade.marketCap}</td></tr>
+                      <tr><td className="light-grey" style={{ paddingBottom: "0px" }} >Volume</td><td className="white" style={{ paddingBottom: "0px" }}>{movieToTrade.volumeWeekly}</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -48,7 +70,15 @@ export default class Trade extends React.Component {
         <div className="container-center" style={{ paddingTop: "20px" }}>
           <div className="inner-container row">
             <div className="wide-column">
-              <Chart width="844px" />
+              <Chart
+                data={data}
+                yDomain={yDomain}
+                updatePrintInterval={updatePrintInterval}
+                printInterval={printInterval}
+                buyOrders={buyOrders}
+                sellOrders={sellOrders}
+                orderBook={orderBook}
+                width="844px" />
             </div>
             <div className="thin-column">
               <img src={madmax} style={{ width: "282px", paddingLeft: "20px", paddingTop: "99px" }} />
@@ -123,8 +153,9 @@ export default class Trade extends React.Component {
                         color: #bdbdbd;
                     }
                 `}</style>
-      </TickerStripLayout>
+      </TickerStripLayout >
     )
   }
 }
 
+export default withRouter(Trade)

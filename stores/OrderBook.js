@@ -25,6 +25,7 @@ export default class OrderBook {
   @observable connected = false
   takeResults = observable([])
   @observable price = 13.37
+  @observable currentPrice = 13.37
   @observable high = 13.37
   @observable low = 13.37
   @observable printInterval = 5
@@ -51,7 +52,7 @@ export default class OrderBook {
     this.low = initialData.low || 13.37
     this.printInterval = initialData.printInterval || 5
     const size = generateOrderSize()
-    this.generateOrders(this.ticker = 'MDMXFR', 2000, this.book, Date.now(), this.price, size)
+    this.generateOrders(this.ticker = 'MDMXFR', 1000, this.book, Date.now(), this.price, size)
   }
 
   // For DEMO
@@ -140,10 +141,13 @@ export default class OrderBook {
 
   @action setNewPrice = (x, range) => {
     let rnd = Math.random(); // generate number, 0 <= x < 1.0
-    let volatility = .01 // 1%
+    let volatility = .02 // 1%
     let changePercent = 2 * volatility * rnd;
     if (changePercent > volatility) {
       changePercent -= (2 * volatility)
+    }
+    if (Math.abs(changePercent) === changePercent) {
+      changePercent = changePercent * 1.10
     }
     let changeAmount = this.price * changePercent
     let newPrice = (this.price + changeAmount)
