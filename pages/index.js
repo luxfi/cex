@@ -48,7 +48,7 @@ export default class Index extends React.Component {
           title={title}
           imgSrc={verticalImg}
           width="166px"
-          tikcer={ticker} />
+          ticker={ticker} />
       })
 
     return (
