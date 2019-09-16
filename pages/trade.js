@@ -5,11 +5,12 @@ import StockInfo from '../components/trade/StockInfo'
 import Chart from '../components/generic/Chart'
 import madmax from '../assets/images/trade/madmax.jpeg'
 import { formatTakeResults } from '../components/utils/formatOrderBookDataForChart'
+import { withRouter } from 'next/router'
 
 
 @inject('store')
 @observer
-export default class Trade extends React.Component {
+class Trade extends React.Component {
   state = {
     whiteGutter: true,
   }
@@ -23,6 +24,7 @@ export default class Trade extends React.Component {
 
   componentDidMount() {
     console.log('index props componentDidMount', this.props.store.orderBook)
+    const { router } = this.props
     this.props.store.orderBook.initiateDataGenerator()
   }
 
@@ -39,14 +41,16 @@ export default class Trade extends React.Component {
     const updatePrintInterval = (time) => {
       orderBook.updatePrintInterval(time)
     }
+    const { router } = this.props
+
     return (
       <TickerStripLayout movies={movieStore.movies} darkNav={true}>
         <div className="container-center">
           <div className="inner-container row">
             <div className="column-container">
               <h2 className="title dark" style={{ fontSize: "40px", margin: "20px 0px 4px 0px", fontWeight: "lighter" }}>
-                Mad Max: Fury Road
-                            </h2>
+                Mad Max: Fury Road {router.query.ticker}
+              </h2>
               <div className="flex-row space-between">
                 <StockInfo movies={movieStore.movies} />
                 <div className="box-item">
@@ -154,3 +158,4 @@ export default class Trade extends React.Component {
   }
 }
 
+export default withRouter(Trade)
