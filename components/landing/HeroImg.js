@@ -1,17 +1,18 @@
 import heroImg from '../../assets/images/home/madmax.jpg'
 export default props => {
-    return (
-        <div>
-            <img src={heroImg} alt="hero image" />
-            <style jsx>{`
+  return (
+    <div>
+      <img src={heroImg} alt="hero image" />
+      <style jsx>{`
                 img {
                     width: 100%;
-                    position: absolute;
-                    z-index: 0;
+                    position: relative;
+                    z-index: -1;
                     height: 615px;;
                     object-fit: cover;
+                    margin-top: -70px;
                 }
             `}</style>
-        </div>
-    )
+    </div>
+  )
 }

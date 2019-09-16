@@ -7,20 +7,20 @@ import dramaImg from '../../assets/images/genres/drama.png'
 import dramaGraphImg from '../../assets/images/genres/dramagraph.png'
 
 export default props => {
-    return (
-        <div>
-            <div className="popular-genres-panel">
-                <span className="genre-panel">
-                    <GenrePanel genreTitle="Sci-Fi" genreMovieTitle="The Matrix" genreImage={scifiImg} graphImage={scifiGraphImg}/>
-                </span>
-                <span className="genre-panel">
-                    <GenrePanel genreTitle="Action" genreMovieTitle="Ocean's Eleven" genreImage={actionImg} graphImage={actionGraphImg}/>
-                </span>
-                <span className="genre-panel">
-                    <GenrePanel genreTitle="Drama" genreMovieTitle="San Andreas" genreImage={dramaImg} graphImage={dramaGraphImg}/>
-                </span>
-            </div>
-            <style jsx>{`
+  return (
+    <div>
+      <div className="popular-genres-panel">
+        <span className="genre-panel">
+          <GenrePanel genreTitle="Sci-Fi" genreMovieTitle="The Matrix" genreImage={scifiImg} graphImage={scifiGraphImg} />
+        </span>
+        <span className="genre-panel">
+          <GenrePanel genreTitle="Action" genreMovieTitle="Ocean's Eleven" genreImage={actionImg} graphImage={actionGraphImg} />
+        </span>
+        <span className="genre-panel">
+          <GenrePanel genreTitle="Drama" genreMovieTitle="San Andreas" genreImage={dramaImg} graphImage={dramaGraphImg} />
+        </span>
+      </div>
+      <style jsx>{`
             .popular-genres-panel {
                 display: flex;
                 justify-content: center;
@@ -67,6 +67,6 @@ export default props => {
                 padding-top: 10px;
             }
             `}</style>
-        </div>
-    )
+    </div>
+  )
 }
