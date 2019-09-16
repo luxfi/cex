@@ -5,7 +5,7 @@ import { AbstractSeries } from 'react-vis';
 const predefinedClassName =
   'rv-xy-plot__series rv-xy-plot__series--candlestick';
 
-class CandlestickSeries extends AbstractSeries {
+class CandleStick extends AbstractSeries {
   render() {
     const { className, data, marginLeft, marginTop } = this.props;
     if (!data) {
@@ -79,6 +79,6 @@ class CandlestickSeries extends AbstractSeries {
   }
 }
 
-CandlestickSeries.displayName = 'CandlestickSeries';
+CandleStick.displayName = 'CandleStick';
 
-export default CandlestickSeries;
+export default CandleStick;
