@@ -64,7 +64,7 @@ export default props => {
             <div className="divider" />
             <li className="navlink"><a href="#">Official Website</a></li>
             <div className="break" />
-            <TradeLink title={"Start Trading Now"} ticker={"MDMX2"} />
+            <TradeLink title={"Start Trading Now"} ticker={"MDMXFR"} />
             <div className="break" />
             <li className="navlink"><a href="#">View Demo</a></li>
           </ul>

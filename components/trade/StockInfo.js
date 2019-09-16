@@ -1,9 +1,8 @@
-export default props => {
-  const madMaxMovie = props.movies.find(movie => movie.Imdbid === "tt1392190")
+export default ({ movie }) => {
   return (
 
     <div className="stock-info">
-      <img src={madMaxMovie.verticalImg} alt="poster" style={{ width: "77px", height: "112px", padding: "20px 0px" }} />
+      <img src={movie.verticalImg} alt="poster" style={{ width: "77px", height: "112px", padding: "20px 0px" }} />
       <div className="container">
         <div className="links-2">
           <a href="#" className="link">Offical Website</a>
@@ -15,18 +14,18 @@ export default props => {
         <div className="tables">
           <table className="noborder">
             <tbody>
-              <tr><td>Symbol:</td><td className="dark">MDMX2</td></tr>
-              <tr><td>Status:</td><td className="dark">Active</td></tr>
-              <tr><td>IPO Date:</td><td className="dark">Dec 12, 2016</td></tr>
-              <tr><td>MPAA Rating:</td><td className="dark">PG-13</td></tr>
+              <tr><td>Symbol:</td><td className="dark">{movie.ticker}</td></tr>
+              <tr><td>Status:</td><td className="dark">{movie.status}</td></tr>
+              <tr><td>IPO Date:</td><td className="dark">{movie.ipoDate}</td></tr>
+              <tr><td>MPAA Rating:</td><td className="dark">{movie.rated}</td></tr>
             </tbody>
           </table>
           <table className="noborder">
             <tbody>
-              <tr><td>Phase:</td><td className="dark">Release</td></tr>
-              <tr><td>Release Date:</td><td className="dark">Oct 12, 2018</td></tr>
-              <tr><td>Gross:</td><td className="dark">$16,006,065</td></tr>
-              <tr><td>Theaters:</td><td className="dark">3640</td></tr>
+              <tr><td>Phase:</td><td className="dark">{movie.phase}</td></tr>
+              <tr><td>Release Date:</td><td className="dark">{movie.openingDate}</td></tr>
+              <tr><td>Gross:</td><td className="dark">{movie.boxOffice}</td></tr>
+              <tr><td>Theaters:</td><td className="dark">{movie.theaters}</td></tr>
             </tbody>
           </table>
         </div>

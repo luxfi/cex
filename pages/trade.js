@@ -42,17 +42,17 @@ class Trade extends React.Component {
       orderBook.updatePrintInterval(time)
     }
     const { router } = this.props
-
+    const movieToTrade = movieStore.movies.find(movie => movie.ticker === router.query.ticker) || { ticker: 'hello' }
     return (
       <TickerStripLayout movies={movieStore.movies} darkNav={true}>
         <div className="container-center">
           <div className="inner-container row">
             <div className="column-container">
               <h2 className="title dark" style={{ fontSize: "40px", margin: "20px 0px 4px 0px", fontWeight: "lighter" }}>
-                Mad Max: Fury Road {router.query.ticker}
+                {movieToTrade.title}
               </h2>
               <div className="flex-row space-between">
-                <StockInfo movies={movieStore.movies} />
+                <StockInfo movie={movieToTrade} />
                 <div className="box-item">
                   <table className="noborder">
                     <tbody>
