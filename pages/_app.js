@@ -43,7 +43,7 @@ const theme = createMuiTheme({
 
 const HANZO_PAGES = ['signup', 'login', 'account', 'invest', 'portfolio2']
 
-const isHanzoPage = (page) => {
+const checkHanzoPage = (page) => {
   let hanzoPage = false
   HANZO_PAGES.forEach(p => {
     if (page.toLowerCase().indexOf(p) > -1) hanzoPage = true
@@ -64,20 +64,8 @@ class MyMobxApp extends App {
     appContext.ctx.mobxStore = mobxStore
 
     let pageProps = {}
-    const hanzoPage = isHanzoPage(route)
+    const hanzoPage = checkHanzoPage(route)
 
-    if (hanzoPage) {
-      console.log('On a Hanzo page!', route)
-      // const { Component, ctx } = appContext
-
-      // if (Component.getInitialProps) {
-      //   pageProps = await Component.getInitialProps(ctx)
-      // }
-    } else {
-      console.log('Not a Hanzo page', route)
-
-      // calls page's `getInitialProps` and fills `appProps.pageProps`
-    }
     const appProps = await App.getInitialProps(appContext)
     pageProps = appProps.pageProps
 
@@ -85,7 +73,7 @@ class MyMobxApp extends App {
       pageProps,
       isServer,
       initialMobxState: mobxStore,
-      isHanzoPage: hanzoPage
+      hanzoPage
     }
   }
 
@@ -96,7 +84,7 @@ class MyMobxApp extends App {
   }
 
   componentDidMount() {
-    if (typeof window != 'undefined' && this.props.isHanzoPage) {
+    if (typeof window !== 'undefined' && this.props.hanzoPage) {
       startLoading()
 
       let api = new Api( HANZO_KEY, HANZO_ENDPOINT )
@@ -113,26 +101,53 @@ class MyMobxApp extends App {
   }
 
   render() {
-    const { Component, pageProps, isHanzoPage } = this.props
+    const { Component, pageProps, hanzoPage, isServer } = this.props
 
-    if (isHanzoPage) {
-      return pug`
-        Container
-          MuiThemeProvider(theme=theme)
-            MuiPickersUtilsProvider(utils=MomentUtils)
-              RefProvider
-                BalanceProvider
-                  Header
-                  Component
-                  Footer
-                  Loader
-      `
+    // if (isHanzoPage) {
+      // return pug`
+      //   Container
+      //     Provider(store=this.mobxStore)
+      //       MuiThemeProvider(theme=theme)
+      //         MuiPickersUtilsProvider(utils=MomentUtils)
+      //           RefProvider
+      //             BalanceProvider
+      //               Header
+      //               Component(...pageProps)
+      //               Footer
+      //               Loader
+      // `
+    // }
+
+    // return (
+    //   <Provider store={this.mobxStore}>
+    //     <Component {...pageProps} />
+    //   </Provider>
+    // )
+
+    const localRoute = typeof window !== 'undefined' ? window.location.href : 'no window'
+    let isHanzoPage = hanzoPage
+    // Hail Mary
+    if (!isServer) {
+      isHanzoPage = checkHanzoPage(localRoute)
     }
+    console.log('Rendering _app with isHanzoPage', isHanzoPage, localRoute)
 
     return (
-      <Provider store={this.mobxStore}>
-        <Component {...pageProps} />
-      </Provider>
+      <Container>
+        <Provider store={this.mobxStore}>
+          <MuiThemeProvider theme={theme}>
+            <MuiPickersUtilsProvider utils={MomentUtils}>
+              <RefProvider>
+                <BalanceProvider>
+                  { isHanzoPage && <Header /> }
+                  <Component {...pageProps} />
+                  { isHanzoPage && <Loader /> }
+                </BalanceProvider>
+              </RefProvider>
+            </MuiPickersUtilsProvider>
+          </MuiThemeProvider>
+        </Provider>
+      </Container>
     )
   }
 
@@ -143,19 +158,28 @@ class MyMobxApp extends App {
   }
 }
 
-export default MyMobxApp
+Router.events.on('routeChangeStart', (r) => {
+  const isHanzo = checkHanzoPage(r)
+  console.log('Starting route change', r, isHanzo)
+  if (isHanzo) {
+    startLoading(' ')
+    setTimeout(() => {
+      stopLoading()
+    }, 3000)
+  }
+})
 
-Router.events.on('routeChangeStart', () => {
-  startLoading(' ')
-  setTimeout(() => {
+Router.events.on('routeChangeComplete', (r) => {
+  const isHanzo = checkHanzoPage(r)
+  console.log('Route change complete', r, isHanzo)
+  if (isHanzo) {
     stopLoading()
-  }, 3000)
+  }
 })
 
-Router.events.on('routeChangeComplete', () => {
-  stopLoading()
-})
+// Router.events.on('routeChangeError', (err, r) => {
+//   console.log('Route change error', err, r)
+//   stopLoading()
+// })
 
-Router.events.on('routeChangeError', () => {
-  stopLoading()
-})
+export default MyMobxApp

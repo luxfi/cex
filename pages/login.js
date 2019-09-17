@@ -23,7 +23,7 @@ class Login extends React.Component {
       orderBook: mobxStore.orderBook,
     }
   }
-  
+
   constructor(props) {
     super(props)
 
@@ -45,7 +45,7 @@ class Login extends React.Component {
 
   login() {
     if (!!getEncodedPrivateKey()) {
-      Router.push('/invest')
+      Router.push('/portfolio')
     } else {
       Router.push('/account/mnemonic')
     }
