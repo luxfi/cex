@@ -5,7 +5,6 @@ export default (props) => {
     <div className="non-row">
       <TradeLink title={"Start Trading Now"} ticker={"MDMXFR"} />
       <a href="#" className="demo">View Demo</a>
-
       <style jsx>{`
           .btn {
             cursor: pointer;

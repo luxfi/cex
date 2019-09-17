@@ -1,3 +1,4 @@
+import { Link } from "react-scroll"
 export default props => {
   const madMaxMovie = props.movies.find(movie => movie.Imdbid === "tt1392190")
   return (
@@ -12,7 +13,14 @@ export default props => {
           <a href="#" className="link">|</a>
           <a href="#" className="link">Action, Adventure, Drama</a>
         </div>
-        <a href="#" className="btn invert">Trade This Stock</a>
+        <Link to="section1"
+          spy={true}
+          smooth={true}
+          offset={-50}
+          duration={500}
+        ><a href="#" className="btn invert">Trade This Stock</a>
+        </Link>
+
         <a href="#" className="btn invert blue">Watch This Trailer</a>
         <div className="links-2">
           <a href="#" className="link">Offical Website</a>
