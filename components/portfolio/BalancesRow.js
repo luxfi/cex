@@ -83,7 +83,7 @@ export default class BalancesRow extends React.Component {
               <div className="value">
                 <span className="change">
                   <FontAwesomeIcon icon={faArrowUp} style={{
-                    paddingRight: "8px", "padding-bottom": "12px", height: "32px",
+                    paddingRight: "8px", paddingBottom: "12px", height: "32px",
                     width: "32px"
                   }} />
                 </span>

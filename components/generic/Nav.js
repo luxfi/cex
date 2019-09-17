@@ -78,6 +78,9 @@ export default props => {
           line-height: 30px;
           font-size: 12px;
           margin: auto;
+          padding-left: 0px;
+          padding-right: 0px;
+          width: 1242px;
         }
         .tagline {
           display: flex;

@@ -25,3 +25,23 @@ td {
 svg.rv-xy-plot__inner {
   overflow: visible;
 }
+
+/* undo reeeset.css */
+
+*, :after, :before {
+  box-sizing: unset;
+}
+
+div#__next {
+  /* position: relative; */
+  background-color: transparent;
+}
+
+body> :nth-child(1) {
+  background-color: transparent;
+}
+
+html {
+  color: unset;
+  background-color: transparent;
+}
