@@ -15,7 +15,7 @@ export default props => {
             .title {
                 color: #2d92dd;
                 font-size: 35px;
-                margin: ${props.hideInnerPadding ? '0px 0px 14px 77px' : '10px 0px 14px 0px'};
+                // margin: ${props.hideInnerPadding ? '0px 0px 14px 77px' : '10px 0px 14px 0px'};
                 
             }
 
@@ -37,10 +37,12 @@ export default props => {
                 display: relative;
                 width: 100%;
                 padding: ${props.hideInnerPadding ? 'inherit' : '0px 75px'};
+                width: 1146px;
             }
 
             .filters {
-                margin: ${props.hideInnerPadding ? '0px 77px 14px 0px' : '10px 0px 14px 0px'};
+                // margin: ${props.hideInnerPadding ? '0px 77px 14px 0px' : '10px 0px 14px 0px'};
+                margin: 0px 0px 14px 0px;
                 font-size: 14px;
             }
 
