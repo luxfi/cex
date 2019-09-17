@@ -57,20 +57,20 @@ export default class BalancesRow extends React.Component {
       <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Balances"} hideInnerPadding filters={balancesFitler()}>
         <div className="container-center-content">
           <div className="flex-container">
-            <div className="flex-item">
+            <div className="flex-item green">
               <div className="title">Portfolio Value</div>
               <div className="value">
-                <span style={{ color: "#acacac" }}>$</span>
+                <span style={{ color: "rgba(255, 255, 255, 0.44)" }}>$</span>
                 225,555
                                 <span style={{ fontSize: "27px" }}>
                   .97
                                 </span>
               </div>
             </div>
-            <div className="flex-item">
+            <div className="flex-item blue">
               <div className="title">Cash Position</div>
               <div className="value">
-                <span style={{ color: "#acacac" }}>
+                <span style={{ color: "rgba(255, 255, 255, 0.44)" }}>
                   $
                                 </span>12,745
                                 <span style={{ fontSize: "27px" }}>
@@ -78,7 +78,7 @@ export default class BalancesRow extends React.Component {
                                 </span>
               </div>
             </div>
-            <div className="flex-item">
+            <div className="flex-item purple">
               <div className="title">% Change</div>
               <div className="value">
                 <span className="change">
@@ -87,7 +87,7 @@ export default class BalancesRow extends React.Component {
                     width: "32px"
                   }} />
                 </span>
-                5.04<span style={{ color: "#acacac" }}>%</span>
+                5.04<span style={{ color: "rgba(255, 255, 255, 0.44)" }}>%</span>
               </div>
             </div>
           </div>
@@ -120,6 +120,15 @@ export default class BalancesRow extends React.Component {
                             color: #0dc109;
                             margin-top: 2px;
                             font-size: 32px;
+                        }
+                        .green {
+                          background-color: #2ecc71;
+                        }
+                        .purple {
+                          background-color: #8e44ad;
+                        }
+                        .blue {
+                          background-color: #3498db;
                         }
                     `}</style>
         </div>

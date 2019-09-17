@@ -1,10 +1,10 @@
-export default ({ title = "Missing Title", symbol = "XXX", price = 11.11, change = 1, percentChange = .1111, id }) => {
+export default ({ title = "Missing Title", ticker = "XXX", price = 11.11, change = 1, percentChange = .1111, id }) => {
   const direction = change >= 0 ? "positive" : "negative";
   return (
     <span className="navi-data-strip__ticker">
       <a href="#" className="navi-data-strip__ticker-link">
         <span className="navi-data-strip__ticker-label">{title}</span>
-        <span className="navi-data-strip__ticker-symbol">({symbol})</span>
+        <span className="navi-data-strip__ticker-symbol">({ticker})</span>
         <span className="navi-data-strip__ticker-market-price">{price}</span>
         <span className={`navi-data-strip__ticker-direction navi-data-strip__ticker-direction--${direction}`} />
         <span className={`navi-data-strip__ticker-value navi-data-strip__ticker-value--${direction}`}>{change}</span>

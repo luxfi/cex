@@ -29,7 +29,7 @@ export default class Quotes extends React.Component {
     const trendingSliderItems = movieStore.topMovies.slice(0, 14)
       .filter(item => item.verticalImg !== "N/A")
       .map((sliderItem, key) => {
-        const { title, Imdbid, verticalImg, genre, rated } = sliderItem;
+        const { title, Imdbid, verticalImg, genre, rated, ipoDate } = sliderItem;
         return <UpcomingIPOsSliderItem
           key={Imdbid}
           title={title}
@@ -37,6 +37,7 @@ export default class Quotes extends React.Component {
           width="166px"
           genre={genre.split(',')[0]}
           rated={rated}
+          ipoDate={ipoDate}
         />
       })
 
@@ -140,7 +141,7 @@ export default class Quotes extends React.Component {
 
     return (
       <TickerStripLayout movies={movieStore.movies} darkNav={true}>
-        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Upcoming IPOs"} hideInnerPadding filters={upcommingIPOFilters()}>
+        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Upcoming IPOs"} hideInnerPadding filters={upcommingIPOFilters()} paddingHack>
           <Slider movieStore={movieStore.topMovies} sliderItems={trendingSliderItems} />
         </PageRow>
         <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Quotes"} hideInnerPadding filters={quoteFilters()}>
