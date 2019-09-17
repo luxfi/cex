@@ -52,6 +52,10 @@ header#navbar {
   background: #333 !important;
 }
 
-.WatchedComponent-logoImg-4 {
+img#logo {
   max-height: 62px !important;
+}
+
+.card.login.transparent {
+  width: 400px;
 }

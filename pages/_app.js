@@ -39,6 +39,17 @@ const theme = createMuiTheme({
       paper: '#1e2748',
     },
   },
+  overrides: {
+    MuiButton: {
+      root: {
+        backgroundColor: 'transparent',
+        color: 'white',
+      },
+      outlined: {
+        border: "1px solid white"
+      }
+    }
+  }
 })
 
 const HANZO_PAGES = ['signup', 'login', 'account', 'invest', 'portfolio2']

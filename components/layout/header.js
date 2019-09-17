@@ -16,7 +16,7 @@ import ArrowUpward from '@material-ui/icons/ArrowUpward'
 import ArrowDownward from '@material-ui/icons/ArrowDownward'
 import ExitToApp from '@material-ui/icons/ExitToApp'
 
-import { withStyles } from '@material-ui/core/styles'
+import { withStyles, MuiThemeProvider } from '@material-ui/core/styles'
 import { watch } from 'react-referential'
 import {
   getIdentity,
@@ -233,7 +233,7 @@ class Header extends React.Component {
           )#navbar
             Toolbar(className=classes.noPadding)
               Link(href='https://emix.one')
-                img(className=classes.logoImg src='/static/img/logo.png')
+                img(id="logo" className=classes.logoImg src='/static/img/logo.png')
               div(className=classes.grow)
 
               Button(onClick=this.login style={marginRight: '20px'})
@@ -271,7 +271,7 @@ const styles = (theme) => {
     },
     menu: {
       width: 200,
-    }
+    },
   }
 }
 
