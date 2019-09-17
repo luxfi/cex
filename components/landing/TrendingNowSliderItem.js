@@ -7,7 +7,7 @@ export default props => {
   const width = props.width || "166px"
   return (
     <div className="container">
-      <img src={props.imgSrc} alt="slider-item" style={{ width: props.width }} />
+      <img src={props.imgSrc} alt="slider-item" style={{ width: props.width, height: "266px" }} />
       <div className="price">${props.price}</div>
       <div className="info">
         <span className="change">
