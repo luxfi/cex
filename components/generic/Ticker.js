@@ -4,7 +4,7 @@ export default ({ title = "Missing Title", ticker = "XXX", price = 11.11, change
     <span className="navi-data-strip__ticker">
       <a href="#" className="navi-data-strip__ticker-link">
         <span className="navi-data-strip__ticker-label">{title}</span>
-        <span className="navi-data-strip__ticker-symbol">({symbol})</span>
+        <span className="navi-data-strip__ticker-symbol">({ticker})</span>
         <span className="navi-data-strip__ticker-market-price">{price}</span>
         <span className={`navi-data-strip__ticker-direction navi-data-strip__ticker-direction--${direction}`} />
         <span className={`navi-data-strip__ticker-value navi-data-strip__ticker-value--${direction}`}>{change}</span>
