@@ -33,10 +33,8 @@ export default props => {
                     -webkit-font-smoothing: antialiased;
                     -moz-osx-font-smoothing: grayscale;
                     box-sizing: border-box;
-                    font: initial;
                     line-height: 1;
-                    visibility: visible
-                }
+                    visibility: visible;                }
 
                 .navi-menu {
                     -webkit-transform: translateX(-100%);
@@ -46,7 +44,7 @@ export default props => {
                     transition: transform .4s step-end, -webkit-transform .4s step-end;
                     overflow: hidden;
                     position: absolute;
-                    visibility: hidden
+                    visibility: hidden;
                 }
 
                 .navi-menu__inner {
@@ -57,47 +55,47 @@ export default props => {
                     transform: translateY(-100%);
                     transition: -webkit-transform .3s ease .1s;
                     transition: transform .3s ease .1s;
-                    transition: transform .3s ease .1s, -webkit-transform .3s ease .1s
+                    transition: transform .3s ease .1s, -webkit-transform .3s ease .1s;
                 }
 
                 .navi-menu__inner .navi-submenu {
-                    height: 0
+                    height: 0;
                 }
 
                 .navi-menu__inner .navi-sections,
                 .navi-menu__inner .navi-submenu--is-open {
                     opacity: 0;
-                    transition: opacity .2s ease
+                    transition: opacity .2s ease;
                 }
 
                 .navi-menu__inner .navi-sections {
-                    height: 0
+                    height: 0;
                 }
 
                 .navi {
-                    position: relative
+                    position: relative;
                 }
 
                 .navi[data-user-subscribed=true] .navi-subscribe-link {
-                    display: none
+                    display: none;
                 }
 
                 .navi-bar {
                     background-color: #fff;
                     text-align: center;
                     margin-bottom: 20px;
-                    padding-top: 11px
+                    padding-top: 11px;
                 }
 
                 .navi-bar__left,
                 .navi-bar__right {
                     position: absolute;
-                    display: inline-block
+                    display: inline-block;
                 }
 
                 .navi-bar__left {
                     left: 20px;
-                    text-align: left
+                    text-align: left;
                 }
 
                 .navi-bar__logo--text {
@@ -105,12 +103,12 @@ export default props => {
                     font-size: 50px;
                     line-height: 1;
                     text-decoration: none;
-                    color: #000
+                    color: #000;
                 }
 
 
                 .navi-markets-bar {
-                    margin: auto
+                    margin: auto;
                 }
 
                 
@@ -118,32 +116,32 @@ export default props => {
                     0% {
                         -webkit-transform: translateX(0);
                         transform: translateX(0);
-                        opacity: 1
+                        opacity: 1;
                     }
                     50% {
                         -webkit-transform: translateX(-100%);
                         transform: translateX(-100%);
-                        opacity: 1
+                        opacity: 1;
                     }
                     50.1% {
                         -webkit-transform: translateX(-100%);
                         transform: translateX(-100%);
-                        opacity: 0
+                        opacity: 0;
                     }
                     50.2% {
                         -webkit-transform: translateX(100%);
                         transform: translateX(100%);
-                        opacity: 0
+                        opacity: 0;
                     }
                     50.3% {
                         -webkit-transform: translateX(100%);
                         transform: translateX(100%);
-                        opacity: 1
+                        opacity: 1;
                     }
                     to {
                         -webkit-transform: translateX(0);
                         transform: translateX(0);
-                        opacity: 1
+                        opacity: 1;
                     }
                 }
 
@@ -151,32 +149,32 @@ export default props => {
                     0% {
                         -webkit-transform: translateX(0);
                         transform: translateX(0);
-                        opacity: 1
+                        opacity: 1;
                     }
                     50% {
                         -webkit-transform: translateX(-100%);
                         transform: translateX(-100%);
-                        opacity: 1
+                        opacity: 1;
                     }
                     50.1% {
                         -webkit-transform: translateX(-100%);
                         transform: translateX(-100%);
-                        opacity: 0
+                        opacity: 0;
                     }
                     50.2% {
                         -webkit-transform: translateX(100%);
                         transform: translateX(100%);
-                        opacity: 0
+                        opacity: 0;
                     }
                     50.3% {
                         -webkit-transform: translateX(100%);
                         transform: translateX(100%);
-                        opacity: 1
+                        opacity: 1;
                     }
                     to {
                         -webkit-transform: translateX(0);
                         transform: translateX(0);
-                        opacity: 1
+                        opacity: 1;
                     }
                 }
 
@@ -184,7 +182,7 @@ export default props => {
                     0% {
                         -webkit-transform: translateX(100%);
                         transform: translateX(100%);
-                        opacity: 1
+                        opacity: 1;
                     }
                     50% {
                         -webkit-transform: translateX(0);
@@ -209,7 +207,7 @@ export default props => {
                     to {
                         -webkit-transform: translateX(100%);
                         transform: translateX(100%);
-                        opacity: 1
+                        opacity: 1;
                     }
                 }
 
@@ -217,32 +215,32 @@ export default props => {
                     0% {
                         -webkit-transform: translateX(100%);
                         transform: translateX(100%);
-                        opacity: 1
+                        opacity: 1;
                     }
                     50% {
                         -webkit-transform: translateX(0);
                         transform: translateX(0);
-                        opacity: 1
+                        opacity: 1;
                     }
                     99.7% {
                         -webkit-transform: translateX(-100%);
                         transform: translateX(-100%);
-                        opacity: 1
+                        opacity: 1;
                     }
                     99.8% {
                         -webkit-transform: translateX(-100%);
                         transform: translateX(-100%);
-                        opacity: 0
+                        opacity: 0;
                     }
                     99.9% {
                         -webkit-transform: translateX(100%);
                         transform: translateX(100%);
-                        opacity: 0
+                        opacity: 0;
                     }
                     to {
                         -webkit-transform: translateX(100%);
                         transform: translateX(100%);
-                        opacity: 1
+                        opacity: 1;
                     }
                 }
 
