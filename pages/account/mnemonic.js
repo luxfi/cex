@@ -38,7 +38,7 @@ class Account extends React.Component {
   setMnemonic(mnemonic) {
     setEncodedPrivateKeyFromMnemonic(mnemonic)
 
-    Router.push('/account')
+    Router.push('/portfolio')
   }
 
   logout() {
