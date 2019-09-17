@@ -60,3 +60,11 @@ img#logo {
 .card.login.transparent {
   width: 400px;
 }
+
+button.MuiButtonBase-root.MuiButton-root.button.MuiButton-text {
+  background: #ff911e;
+}
+
+.columns.columns.columns>* {
+  flex: unset;
+}
