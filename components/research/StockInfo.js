@@ -18,7 +18,7 @@ export default props => {
           smooth={true}
           offset={-50}
           duration={500}
-        ><a href="#" className="btn invert">Trade This Stock</a>
+        ><span href="#" className="btn invert">Trade This Stock</span>
         </Link>
 
         <a href="#" className="btn invert blue">Watch This Trailer</a>

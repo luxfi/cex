@@ -22,7 +22,7 @@ export default props => {
               <ul className="navi-data-strip__tickers-list-first animate-tickers-left" style={{ left: '-1px' }}>
                 {tickers}
               </ul>
-              <ul className="navi-data-strip__tickers-list-first animate-tickers-left" style={{ left: '-1px' }}>
+              <ul className="navi-data-strip__tickers-list-second animate-tickers-left" style={{ left: '-1px' }}>
                 {tickers}
               </ul>
             </div>
