@@ -43,7 +43,7 @@ const theme = createMuiTheme({
 
 const HANZO_PAGES = ['signup', 'login', 'account', 'invest', 'portfolio2']
 
-const  isHanzoPage = (page) => {
+const isHanzoPage = (page) => {
   let hanzoPage = false
   HANZO_PAGES.forEach(p => {
     if (page.toLowerCase().indexOf(p) > -1) hanzoPage = true
@@ -59,7 +59,6 @@ class MyMobxApp extends App {
     //
 
     const { route } = appContext.router
-    console.log('On route', route)
     const isServer = typeof window === 'undefined'
     const mobxStore = initializeStore()
     appContext.ctx.mobxStore = mobxStore
@@ -69,18 +68,18 @@ class MyMobxApp extends App {
 
     if (hanzoPage) {
       console.log('On a Hanzo page!', route)
-      const { Component, ctx } = appContext
+      // const { Component, ctx } = appContext
 
-      if (Component.getInitialProps) {
-        pageProps = await Component.getInitialProps(ctx)
-      }
+      // if (Component.getInitialProps) {
+      //   pageProps = await Component.getInitialProps(ctx)
+      // }
     } else {
-      console.log('Not a Hanzo page')
+      console.log('Not a Hanzo page', route)
 
       // calls page's `getInitialProps` and fills `appProps.pageProps`
-      const appProps = await App.getInitialProps(appContext)
-      pageProps = appProps.pageProps
     }
+    const appProps = await App.getInitialProps(appContext)
+    pageProps = appProps.pageProps
 
     return {
       pageProps,
