@@ -50,6 +50,7 @@ html {
 
 header#navbar {
   background: #333 !important;
+  height: 70px;
 }
 
 img#logo {
