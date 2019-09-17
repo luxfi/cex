@@ -45,3 +45,17 @@ html {
   color: unset;
   background-color: transparent;
 }
+
+/* fix admin */
+
+header#navbar {
+  background: #333 !important;
+}
+
+img#logo {
+  max-height: 62px !important;
+}
+
+.card.login.transparent {
+  width: 400px;
+}

@@ -28,7 +28,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
 const theme = createMuiTheme({
   palette: {
-    type: 'dark',
+    type: 'light',
     primary: {
       main: blue[500],
     },
@@ -39,6 +39,17 @@ const theme = createMuiTheme({
       paper: '#1e2748',
     },
   },
+  overrides: {
+    MuiButton: {
+      root: {
+        backgroundColor: 'transparent',
+        color: 'white',
+      },
+      outlined: {
+        border: "1px solid white"
+      }
+    }
+  }
 })
 
 const HANZO_PAGES = ['signup', 'login', 'account', 'invest', 'portfolio2']
@@ -87,7 +98,7 @@ class MyMobxApp extends App {
     if (typeof window !== 'undefined' && this.props.hanzoPage) {
       startLoading()
 
-      let api = new Api( HANZO_KEY, HANZO_ENDPOINT )
+      let api = new Api(HANZO_KEY, HANZO_ENDPOINT)
 
       loadLibrary(api.client).then(() => {
         stopLoading()
@@ -151,7 +162,7 @@ class MyMobxApp extends App {
     )
   }
 
-  componentDidCatch (error, errorInfo) {
+  componentDidCatch(error, errorInfo) {
     console.log('CUSTOM ERROR HANDLING', error)
     // This is needed to render errors correctly in development / production
     super.componentDidCatch(error, errorInfo)

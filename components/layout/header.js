@@ -16,7 +16,7 @@ import ArrowUpward from '@material-ui/icons/ArrowUpward'
 import ArrowDownward from '@material-ui/icons/ArrowDownward'
 import ExitToApp from '@material-ui/icons/ExitToApp'
 
-import { withStyles } from '@material-ui/core/styles'
+import { withStyles, MuiThemeProvider } from '@material-ui/core/styles'
 import { watch } from 'react-referential'
 import {
   getIdentity,
@@ -64,7 +64,7 @@ class Header extends React.Component {
       return;
     }
 
-    const shouldShow = (this.lastScroll !== null) ?  (lastScroll < this.lastScroll) : null;
+    const shouldShow = (this.lastScroll !== null) ? (lastScroll < this.lastScroll) : null;
 
     if (shouldShow !== this.state.shouldShow) {
       this.setState((prevState, props) => ({
@@ -271,7 +271,7 @@ const styles = (theme) => {
     },
     menu: {
       width: 200,
-    }
+    },
   }
 }
 
