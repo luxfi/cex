@@ -45,8 +45,10 @@ class Login extends React.Component {
 
   login() {
     if (!!getEncodedPrivateKey()) {
+      console.log('Pushing /portfolio')
       Router.push('/portfolio')
     } else {
+      console.log('Pushing /account/mnemonic')
       Router.push('/account/mnemonic')
     }
   }
