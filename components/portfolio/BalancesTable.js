@@ -6,7 +6,7 @@ const Row = (props) => {
   const { percentChange } = props;
   const formatedpercentChange = parseFloat(percentChange * 100).toFixed(2) + "%"
   return (
-    <tr>
+    <tr className={props.class}>
       <td className="table-cell left" scope="row">
         <div className="container">
           <img src={props.imgSrc} alt="slider-item" style={{ width: "52px" }} />
@@ -46,7 +46,6 @@ const Row = (props) => {
                     text-align: left;
                     font-weight: 400;
                     line-height: 1.43;
-                    border-bottom: 1px solid rgba(224, 224, 224, 1);
                     letter-spacing: 0.01071em;
                     color: rgba(0, 0, 0, 0.54);
                 }
@@ -83,6 +82,12 @@ const Row = (props) => {
                 .percent-change {
                     font-size: 11px;
                     margin-left: 4px;
+                }
+                tr.blue {
+                  background: #f3f8f9;
+                }
+                tr {
+                  border-color: none;
                 }
             `}</style>
     </tr>
@@ -133,6 +138,7 @@ export default ({ movies }) => {
               } = movie
               return (
                 <Row
+                  class={index % 2 === 1 ? "blue" : ""}
                   title={title}
                   ticker={ticker}
                   price={price}

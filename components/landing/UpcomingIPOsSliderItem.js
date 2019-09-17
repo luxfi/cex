@@ -1,18 +1,21 @@
+import moment from 'moment/moment.js'
+
 export default props => {
   const width = props.width || "166px"
+  const { ipoDate } = props
   return (
     <div className="container">
       <div className="ipo-date-container">
         <div className="month-day-container">
           <div className="day">
-            27
+            {moment(ipoDate).format('D')}
           </div>
           <div className="month">
-            DEC
+            {moment(ipoDate).format('MMM')}
           </div>
         </div>
         <div className="year">
-          2019
+          {moment(ipoDate).format('YYYY')}
         </div>
       </div>
       <img src={props.imgSrc} alt="slider-item" style={{ width: props.width }} />
@@ -40,6 +43,7 @@ export default props => {
                   padding: 4px 8px;
                   background: #e8e2e2;
                   margin-bottom: 8px;
+                  width: 28px;
                 }
                 .year {
                   margin: 12px 8px;

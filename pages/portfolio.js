@@ -29,7 +29,7 @@ export default class Portfolio extends React.Component {
     const trendingSliderItems = movieStore.topMovies.slice(0, 14)
       .filter(item => item.verticalImg !== "N/A")
       .map((sliderItem, key) => {
-        const { title, Imdbid, verticalImg, genre, rated, change } = sliderItem;
+        const { title, Imdbid, verticalImg, genre, rated, change, ipoDate } = sliderItem;
         return <UpcomingIPOsSliderItem
           key={Imdbid}
           title={title}
@@ -38,6 +38,7 @@ export default class Portfolio extends React.Component {
           genre={genre.split(',')[0]}
           rated={rated}
           change={change}
+          ipoDate={ipoDate}
         />
       })
 
