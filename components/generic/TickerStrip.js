@@ -33,7 +33,6 @@ export default props => {
                     -webkit-font-smoothing: antialiased;
                     -moz-osx-font-smoothing: grayscale;
                     box-sizing: border-box;
-                    font: initial;
                     line-height: 1;
                     visibility: visible
                 }

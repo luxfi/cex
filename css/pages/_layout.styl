@@ -1,0 +1,83 @@
+.columns
+  & > *
+    margin-left: $spacing
+    margin-right: $spacing
+
+  & > :first-child
+    margin-left: 0 !important
+
+  & > :last-child
+    margin-right: 0 !important
+
+html
+  color: $white
+  background-color: $backgroundDarkColor
+
+hero, .hero.hero
+  min-height: 100vh
+  height: auto
+  padding: 0
+  align-items: center
+  position: relative
+  padding-bottom: 10vh
+
+  & > *
+    text-align: center
+
+header
+  z-index: 1000 !important
+
+body
+  & > :nth-child(1)
+    position: relative
+    background-color: $backgroundDarkColor
+
+    &:after
+      content: ''
+      display: block
+      position: absolute
+      bottom: 0
+      left: 0
+      height: 15vh
+      width: 100vw
+      background-image: url('/static/img/cubes-dark.svg')
+      z-index: 1
+      opacity: 0.7
+
+footer
+  background-color: $dashFooterDarkColor
+  position: fixed
+  bottom: 0
+  left: 0
+  z-index: 1000
+
+.content
+  position: relative
+
+.card
+  background-color: transparent
+
+  &.transparent
+    box-shadow: none
+
+    .card-header
+      background-color: transparent
+
+    .card-body
+      padding-left: 0
+      padding-right: 0
+
+  .card-header.rows
+    flex-direction: column
+
+.register
+.login
+.profile
+  background-color: transparent
+  color: $white
+  padding-top: 0
+  padding-bottom: 0
+
+  +below($pageWidth)
+    padding-left: 1rem
+    padding-right: 1rem
