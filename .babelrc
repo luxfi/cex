@@ -3,6 +3,7 @@
     "next/babel"
   ],
   "plugins": [
+    "transform-react-pug",
     [
       "@babel/plugin-proposal-decorators",
       {
