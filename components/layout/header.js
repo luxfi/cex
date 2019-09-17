@@ -64,7 +64,7 @@ class Header extends React.Component {
       return;
     }
 
-    const shouldShow = (this.lastScroll !== null) ?  (lastScroll < this.lastScroll) : null;
+    const shouldShow = (this.lastScroll !== null) ? (lastScroll < this.lastScroll) : null;
 
     if (shouldShow !== this.state.shouldShow) {
       this.setState((prevState, props) => ({
@@ -175,7 +175,7 @@ class Header extends React.Component {
           )
             Toolbar(className=classes.noPadding)
               Link(href='https://emix.one')
-                img(className=classes.logoImg src='/static/img/logo.svg')
+                img(className=classes.logoImg src='/static/img/logo.png')
               div(className=classes.grow)
               MuiText(
                 select
@@ -233,7 +233,7 @@ class Header extends React.Component {
           )#navbar
             Toolbar(className=classes.noPadding)
               Link(href='https://emix.one')
-                img(className=classes.logoImg src='/static/img/logo.svg')
+                img(className=classes.logoImg src='/static/img/logo.png')
               div(className=classes.grow)
 
               Button(onClick=this.login style={marginRight: '20px'})
