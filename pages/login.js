@@ -16,6 +16,14 @@ import '../styles.styl'
 
 @watch('indexPage')
 class Login extends React.Component {
+  static async getInitialProps({ mobxStore }) {
+    await mobxStore.movieStore.fetch()
+    return {
+      movieStore: mobxStore.movieStore,
+      orderBook: mobxStore.orderBook,
+    }
+  }
+  
   constructor(props) {
     super(props)
 
