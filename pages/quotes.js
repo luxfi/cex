@@ -141,7 +141,7 @@ export default class Quotes extends React.Component {
 
     return (
       <TickerStripLayout movies={movieStore.movies} darkNav={true}>
-        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Upcoming IPOs"} hideInnerPadding filters={upcommingIPOFilters()}>
+        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Upcoming IPOs"} hideInnerPadding filters={upcommingIPOFilters()} paddingHack>
           <Slider movieStore={movieStore.topMovies} sliderItems={trendingSliderItems} />
         </PageRow>
         <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Quotes"} hideInnerPadding filters={quoteFilters()}>
