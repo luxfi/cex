@@ -175,7 +175,7 @@ class Header extends React.Component {
           )
             Toolbar(className=classes.noPadding)
               Link(href='/')
-                img(className=classes.logoImg src='/static/img/logo.svg')
+                img(id="logo" className=classes.logoImg src='/static/img/logo.png')
               div(className=classes.grow)
               MuiText(
                 select
@@ -233,7 +233,7 @@ class Header extends React.Component {
           )#navbar
             Toolbar(className=classes.noPadding)
               Link(href='/')
-                img(className=classes.logoImg src='/static/img/logo.svg')
+                img(id="logo" className=classes.logoImg src='/static/img/logo.png')
               div(className=classes.grow)
 
               Button(onClick=this.login style={marginRight: '20px'})

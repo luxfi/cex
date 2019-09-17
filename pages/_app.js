@@ -44,11 +44,15 @@ const theme = createMuiTheme({
       root: {
         backgroundColor: 'transparent',
         color: 'white',
+        fontSize: '12px'
       },
       outlined: {
         border: "1px solid white"
       }
     }
+  },
+  typography: {
+    fontFamily: "‘BWHaasGroteskTF-55Roman-Web, sans-serif’, sans-serif"
   }
 })
 
@@ -115,18 +119,18 @@ class MyMobxApp extends App {
     const { Component, pageProps, hanzoPage, isServer } = this.props
 
     // if (isHanzoPage) {
-      // return pug`
-      //   Container
-      //     Provider(store=this.mobxStore)
-      //       MuiThemeProvider(theme=theme)
-      //         MuiPickersUtilsProvider(utils=MomentUtils)
-      //           RefProvider
-      //             BalanceProvider
-      //               Header
-      //               Component(...pageProps)
-      //               Footer
-      //               Loader
-      // `
+    // return pug`
+    //   Container
+    //     Provider(store=this.mobxStore)
+    //       MuiThemeProvider(theme=theme)
+    //         MuiPickersUtilsProvider(utils=MomentUtils)
+    //           RefProvider
+    //             BalanceProvider
+    //               Header
+    //               Component(...pageProps)
+    //               Footer
+    //               Loader
+    // `
     // }
 
     // return (
@@ -150,9 +154,9 @@ class MyMobxApp extends App {
             <MuiPickersUtilsProvider utils={MomentUtils}>
               <RefProvider>
                 <BalanceProvider>
-                  { isHanzoPage && <Header /> }
+                  {isHanzoPage && <Header />}
                   <Component {...pageProps} />
-                  { isHanzoPage && <Loader /> }
+                  {isHanzoPage && <Loader />}
                 </BalanceProvider>
               </RefProvider>
             </MuiPickersUtilsProvider>
