@@ -83,8 +83,8 @@ export default class MnemonicForm extends Form {
         if this.state.step == 1
           .card.mnemonic-copy.transparent
             .card-header.rows
-              h2 Back up your Emix Account
-              p Emix does not store your unencrypted account. Copy your recovery code somewhere safe, you must have it to recover your account.
+              h2 Back up your ESX Account
+              p ESX does not store your unencrypted account. Copy your recovery code somewhere safe, you must have it to recover your account.
             .card-body
               Copy(
                 ...this.inputs.mnemonic
@@ -104,7 +104,7 @@ export default class MnemonicForm extends Form {
           .card.mnemonic-confirm.transparent
             .card-header.rows
               h2 Almost Done
-              p Enter your recovery code to finish setting up your Emix account.
+              p Enter your recovery code to finish setting up your ESX account.
             .card-body
               form(
                 autoComplete=this.props.autoComplete

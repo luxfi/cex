@@ -174,7 +174,7 @@ class Header extends React.Component {
             color="default"
           )
             Toolbar(className=classes.noPadding)
-              Link(href='https://emix.one')
+              Link(href='/')
                 img(className=classes.logoImg src='/static/img/logo.svg')
               div(className=classes.grow)
               MuiText(
@@ -232,7 +232,7 @@ class Header extends React.Component {
             color="default"
           )#navbar
             Toolbar(className=classes.noPadding)
-              Link(href='https://emix.one')
+              Link(href='/')
                 img(className=classes.logoImg src='/static/img/logo.svg')
               div(className=classes.grow)
 

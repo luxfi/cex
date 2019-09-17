@@ -159,7 +159,7 @@ export default class KYCForm extends Form {
         })
       )
         h5 Please verify your identity.
-        p Because Emix interacts directly with your bank, regulators have asked that we collect identity information. Your data is cryptographically secured and sent only to Emix's banking endpoint.
+        p Because ESX interacts directly with your bank, regulators have asked that we collect identity information. Your data is cryptographically secured and sent only to ESX's banking endpoint.
         br
         p PERSONAL DETAILS
         Card

@@ -81,7 +81,7 @@ class Invest extends React.Component {
 
   render() {
     let props = this.props
-
+    console.log('Found tokens', tokens)
     return pug`
       main#account-index.account
         .content
@@ -96,8 +96,8 @@ class Invest extends React.Component {
           .token-cards.columns.justify-flex-start
             for token in tokens
               Link(
-                href='/invest/deal?slug='+token.slug
-                hrefAs='/invest/'+token.slug
+                href='/invest/deal?slug=assassination-nation'
+                hrefAs='/invest/assassination-nation'
                 underline='none'
               )
                 InvestCard(...token)
