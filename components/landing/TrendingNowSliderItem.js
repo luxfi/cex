@@ -7,13 +7,13 @@ export default props => {
   const width = props.width || "166px"
   return (
     <div className="container">
-      <img src={props.imgSrc} alt="slider-item" style={{ width: props.width }} />
-      <div className="price">$5.55</div>
+      <img src={props.imgSrc} alt="slider-item" style={{ width: props.width, height: "266px" }} />
+      <div className="price">${props.price}</div>
       <div className="info">
         <span className="change">
           <FontAwesomeIcon icon={faArrowUp} style={{ width: '12px', paddingRight: "5px" }} />
-          $1 (8.7%)
-                </span>
+          ${(props.change * props.price).toFixed(2)} ({props.change}%)
+        </span>
         <TradeButton ticker={props.ticker} />
       </div>
       <style jsx>{`
@@ -31,6 +31,7 @@ export default props => {
                     display: flex;
                     justify-content: space-between;
                     margin-top: 2px;
+                    font-size: 13px;
                 }
                 .price {
                     font-size: 12px;

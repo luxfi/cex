@@ -22,7 +22,7 @@ const Row = (props) => {
 
         </div>
       </td>
-      <td className="table-cell symbol left" >{props.symbol || "SMBL"}</td>
+      <td className="table-cell ticker left" >{props.ticker || "SMBL"}</td>
       <td className="table-cell price left" >${props.price || "$1.11"}</td>
       <td className={`table-cell change left ${
         props.percentChange > 0 ? "green" : "red"
@@ -37,7 +37,7 @@ const Row = (props) => {
       <td className="table-cell gain left" >{
         props.gain
       }</td>
-      <td className="table-cell left" ><TradeButton /></td>
+      <td className="table-cell left" ><TradeButton ticker={props.ticker} /></td>
       <style jsx>{`
                 .table-cell {
                     display: table-cell;
@@ -70,7 +70,7 @@ const Row = (props) => {
                   color: #959090;
                   margin-top 2px;
                 }
-                .symbol {
+                .ticker {
                     color: rgba(0, 0, 0, 0.67);
                     text-decoration: underline;
                 }
@@ -121,7 +121,7 @@ export default ({ movies }) => {
             .map((movie, index) => {
               const {
                 title,
-                symbol,
+                ticker,
                 price,
                 percentChange,
                 change,
@@ -134,7 +134,7 @@ export default ({ movies }) => {
               return (
                 <Row
                   title={title}
-                  symbol={symbol}
+                  ticker={ticker}
                   price={price}
                   percentChange={percentChange}
                   change={change}
