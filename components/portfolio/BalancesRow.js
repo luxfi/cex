@@ -113,7 +113,7 @@ export default class BalancesRow extends React.Component {
                         }
                         .value {
                             font-size: 54px;
-                            margin-top: 16px;
+                            margin-top: 0px;
                             font-weight: lighter;
                         }
                         .change {

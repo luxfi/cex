@@ -38,7 +38,7 @@ export default props => {
                 display: relative;
                 width: 100%;
                 padding: ${props.hideInnerPadding ? 'inherit' : '0px 75px'};
-                // width: 1146px;
+                width: 1146px;
             }
 
             .filters {
