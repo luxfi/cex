@@ -118,7 +118,7 @@ class Header extends React.Component {
       anchorEl: null,
     })
 
-    Router.push('/')
+    Router.push('/login')
   }
 
   signup = () => {
@@ -169,8 +169,19 @@ class Header extends React.Component {
                     inputProps={{ 'aria-label': 'search' }}
                   />
                 </div>
-                <Button color="inherit" onClick={this.login}>Login</Button>
-                <Button color="inherit" variant="outlined" onClick={this.signup}>Sign Up</Button>
+                <Button
+                  color="inherit"
+                  onClick={this.login}
+                  className={classes.menuButton}>
+                  Login
+                </Button>
+                <Button
+                  color="inherit"
+                  variant="outlined"
+                  onClick={this.signup}
+                  className={classes.menuButton}>
+                  Sign Up
+                </Button>
               </Toolbar>
             </AppBar>
           </HideOnScroll>
@@ -322,9 +333,6 @@ const styles = (theme) => {
     },
     flex: {
       display: 'flex',
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
     },
   }
 }
