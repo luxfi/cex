@@ -1,6 +1,9 @@
 import App, { Container } from 'next/app';
 import React from 'react'
 import { Provider } from 'mobx-react'
+import { config } from '@fortawesome/fontawesome-svg-core' // 👈
+import '@fortawesome/fontawesome-svg-core/styles.css' // 👈
+config.autoAddCss = false // 👈
 
 import initializeStore from '../stores/stores'
 
@@ -36,7 +39,7 @@ const theme = createMuiTheme({
       main: 'rgba(29,226,160,0.7)',
     },
     background: {
-      paper: '#1e2748',
+      paper: 'white',
     },
   },
   overrides: {

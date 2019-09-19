@@ -1,14 +1,14 @@
 import Form,
-  {
-    InputData,
-    MuiText,
-    MuiPhone,
-    MuiTaxId,
-    MuiDatePicker,
-    MuiCountry,
-    MuiState,
-    WebcamCapture,
-  } from 'react-referential-forms'
+{
+  InputData,
+  MuiText,
+  MuiPhone,
+  MuiTaxId,
+  MuiDatePicker,
+  MuiCountry,
+  MuiState,
+  WebcamCapture,
+} from 'react-referential-forms'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
@@ -42,7 +42,7 @@ export default class KYCForm extends Form {
         name: 'firstName',
         data: props.data,
         value: this.props.rootData.get('account.firstName'),
-        middleware: [ isRequired ],
+        middleware: [isRequired],
       }),
       middleName: new InputData({
         name: 'middleName',
@@ -52,34 +52,34 @@ export default class KYCForm extends Form {
         name: 'lastName',
         data: props.data,
         value: this.props.rootData.get('account.lastName'),
-        middleware: [ isRequired ],
+        middleware: [isRequired],
       }),
       phone: new InputData({
         name: 'kyc.phone',
         data: props.data,
-        middleware: [ isRequired, isPhone ],
+        middleware: [isRequired, isPhone],
       }),
       taxId: new InputData({
         name: 'kyc.taxId',
         data: props.data,
-        middleware: [ isRequired ],
+        middleware: [isRequired],
       }),
       birthdate: new InputData({
         name: 'kyc.birthdate',
         data: props.data,
-        middleware: [ isRequired ],
+        middleware: [isRequired],
       }),
       gender: new InputData({
         name: 'kyc.gender',
         data: props.data,
         value: 'unspecified',
-        middleware: [ isRequired ],
+        middleware: [isRequired],
         options: genderOpts,
       }),
       addressLine1: new InputData({
         name: 'kyc.address.line1',
         data: props.data,
-        middleware: [ isRequired ],
+        middleware: [isRequired],
       }),
       addressLine2: new InputData({
         name: 'kyc.address.line2',
@@ -88,39 +88,39 @@ export default class KYCForm extends Form {
       city: new InputData({
         name: 'kyc.address.city',
         data: props.data,
-        middleware: [ isRequired ],
+        middleware: [isRequired],
       }),
       postalCode: new InputData({
         name: 'kyc.address.postalCode',
         data: props.data,
-        middleware: [ isRequired ],
+        middleware: [isRequired],
       }),
       country: new InputData({
         name: 'kyc.address.country',
         data: props.data,
         value: 'US',
-        middleware: [ isRequired ],
+        middleware: [isRequired],
       }),
       state: new InputData({
         name: 'kyc.address.state',
         data: props.data,
         value: 'CA',
-        middleware: [ isRequired ],
+        middleware: [isRequired],
       }),
       kycFace: new InputData({
         name: 'kyc.documents.0',
         data: props.data,
-        middleware: [ isRequired ],
+        middleware: [isRequired],
       }),
       kycIdFront: new InputData({
         name: 'kyc.documents.1',
         data: props.data,
-        middleware: [ isRequired ],
+        middleware: [isRequired],
       }),
       kycIdBack: new InputData({
         name: 'kyc.documents.2',
         data: props.data,
-        middleware: [ isRequired ],
+        middleware: [isRequired],
       }),
     }
 
@@ -132,7 +132,7 @@ export default class KYCForm extends Form {
   }
 
   _submit() {
-    let api = new Api( HANZO_KEY, HANZO_ENDPOINT )
+    let api = new Api(HANZO_KEY, HANZO_ENDPOINT)
 
     let opts = this.props.data.get()
     opts.kyc.taxId = '' + opts.kyc.taxId

@@ -22,9 +22,11 @@ export default props => {
           <a href="mailto:?subject={PAGETITLE}&body={PAGEDESCRIPTION}:{PAGEURL}" target="_blank" title="Share via Email" className="fa-envelope">
             <FontAwesomeIcon icon={faEnvelope} />
           </a >
-          <a href="#" target="_blank" title="likes" className="likes">
-            1.5k
-          </a >
+          <div style={{ display: "inline-block" }}>
+            <a href="#" target="_blank" title="likes" className="likes">
+              1.5k
+            </a >
+          </div>
         </div >
         <style jsx>{`
                 .share-container {
@@ -54,7 +56,7 @@ export default props => {
                     border: 1px solid black;
                 }
                 .social-links a.likes {
-                    padding: 8px 9px 6px;
+                    padding: 6px 9px 8px;
                     width: 32px;
                     height: 16px;
                 }

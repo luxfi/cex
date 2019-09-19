@@ -68,3 +68,7 @@ button.MuiButtonBase-root.MuiButton-root.button.MuiButton-text {
 .columns.columns.columns>* {
   flex: unset;
 }
+
+.kyc {
+  background-color: white !important;
+}

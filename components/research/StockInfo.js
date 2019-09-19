@@ -29,7 +29,7 @@ export default props => {
           <a href="#" className="link">|</a>
           <a href="#" className="link">Trailer 2</a>
         </div>
-        <p>in a post-apocalyptic waste land, a women rebels against a tyrannical ruler in search for her homeland with the aid of a group of female prisoners a, psychotic worshiper, and a drifter named max.</p>
+        <p>In a post-apocalyptic waste land, a women rebels against a tyrannical ruler in search for her homeland with the aid of a group of female prisoners a, psychotic worshiper, and a drifter named max.</p>
         <div className="info-1 dark">
           <a href="#">Creators:</a> George Miller, Brendan McCarthy
                 </div>
