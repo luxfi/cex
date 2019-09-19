@@ -60,61 +60,7 @@ class Header extends React.Component {
     this.state = {
       anchorEl: null,
     }
-
-    this.lastScroll = null;
-    // this.handleScroll = this.handleScroll.bind(this);
   }
-
-  // componentDidMount() {
-  //   window.addEventListener('scroll', this.handleScroll, { passive: true });
-  // }
-
-  // componentWillUnmount() {
-  //   window.removeEventListener('scroll', this.handleScroll);
-  // }
-
-  // handleScroll(evt) {
-  //   let identity = getIdentity()
-  //   let accountLoaded = !!this.props.rootData.get('account.id') && identity
-
-  //   if (accountLoaded) {
-  //     return
-  //   }
-
-  //   const lastScroll = window.scrollY;
-
-  //   if (lastScroll === this.lastScroll) {
-  //     return;
-  //   }
-
-  //   const shouldShow = (this.lastScroll !== null) ? (lastScroll < this.lastScroll) : null;
-
-  //   if (shouldShow !== this.state.shouldShow) {
-  //     this.setState((prevState, props) => ({
-  //       ...prevState,
-  //       shouldShow,
-  //     }));
-  //     if (shouldShow) {
-  //       document.getElementById("navbar").style.transform = 'translateY(0)';
-  //       document.getElementById("navbar").style.transition = 'transform 1s';
-
-  //     }
-  //     else if (!shouldShow) {
-  //       document.getElementById("navbar").style.transform = 'translateY(-115px)';
-  //       document.getElementById("navbar").style.transition = 'transform 1s';
-  //     }
-  //   }
-
-  //   if (window.scrollY === 0) {
-  //     document.getElementById("navbar").style.backgroundColor = 'transparent';
-  //     document.getElementById("navbar").style.transition = 'background-color .5s';
-  //   }
-  //   else {
-  //     document.getElementById("navbar").style.backgroundColor = "#1a1e3c";
-  //   }
-
-  //   this.lastScroll = lastScroll;
-  // }
 
   handleMenu = (event) => {
     this.setState({
@@ -161,7 +107,8 @@ class Header extends React.Component {
       anchorEl: null,
     })
 
-    this.props.rootData.ref('account').clear()
+    // commented out this code for Artem to convert to MOBX
+    // this.props.rootData.ref('account').clear()
     removeIdentity()
     Router.push('/')
   }
@@ -222,6 +169,8 @@ class Header extends React.Component {
                     inputProps={{ 'aria-label': 'search' }}
                   />
                 </div>
+                <Button color="inherit" onClick={this.login}>Login</Button>
+                <Button color="inherit" variant="outlined" onClick={this.signup}>Sign Up</Button>
               </Toolbar>
             </AppBar>
           </HideOnScroll>
@@ -373,6 +322,9 @@ const styles = (theme) => {
     },
     flex: {
       display: 'flex',
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
     },
   }
 }
