@@ -57,7 +57,7 @@ export default class Index extends React.Component {
       <div>
         <TickerStrip movies={movieStore.movies} />
         <Hero />
-        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Trending Now"} paddingHack>
+        {/* <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Trending Now"} paddingHack>
           <Slider movieStore={movieStore.topMovies} sliderItems={trendingSliderItems} />
         </PageRow>
         <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Top Gainers"}>
@@ -66,7 +66,7 @@ export default class Index extends React.Component {
         <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Popular Genres"}>
           <PopularGenres />
         </PageRow>
-        <StartCTA />
+        <StartCTA /> */}
         <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"What is ESX?"}>
           <WhatPanel />
         </PageRow>
