@@ -15,7 +15,7 @@ export default props => {
       <style jsx>{`
                 .hero-container {
                     position: relative;
-                    height: 615px;
+                    height: 679px;
                 }
             `}</style>
     </div>
