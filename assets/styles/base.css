@@ -48,14 +48,14 @@ html {
 
 /* fix admin */
 
-header#navbar {
+/* header#navbar {
   background: #333 !important;
   height: 70px;
-}
+} */
 
-img#logo {
+/* img#logo {
   max-height: 77px !important;
-}
+} */
 
 .card.login.transparent {
   width: 400px;

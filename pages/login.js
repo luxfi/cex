@@ -11,8 +11,8 @@ import {
   getEncodedPrivateKey,
 } from '../src/wallet'
 
-import 'reeeset/src/reeeset.css'
-import '../styles.styl'
+// import 'reeeset/src/reeeset.css'
+// import '../styles.styl'
 
 @watch('indexPage')
 class Login extends React.Component {

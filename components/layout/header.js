@@ -7,11 +7,14 @@ import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import Input from '@material-ui/core/Input'
+import InputBase from '@material-ui/core/InputBase'
 import MenuItem from '@material-ui/core/MenuItem'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import Typography from '@material-ui/core/Typography'
 import Slide from '@material-ui/core/Slide'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
+import SearchIcon from '@material-ui/icons/Search'
+import ESXLogo from '../../assets/images/esx/u1.png'
 import Link from '../link'
 import Router from 'next/router'
 
@@ -20,12 +23,13 @@ import ArrowUpward from '@material-ui/icons/ArrowUpward'
 import ArrowDownward from '@material-ui/icons/ArrowDownward'
 import ExitToApp from '@material-ui/icons/ExitToApp'
 
-import { withStyles, MuiThemeProvider } from '@material-ui/core/styles'
+import { fade, withStyles } from '@material-ui/core/styles'
 import { watch } from 'react-referential'
 import {
   getIdentity,
   removeIdentity,
 } from '../../src/wallet'
+import { classExpression } from 'babel-types'
 
 let currencies = {
   usd: 'USD',
@@ -185,6 +189,9 @@ class Header extends React.Component {
 
     let open = !!this.state.anchorEl
 
+    // This resolves to nothing and doesn't affect browser history
+    const dudUrl = 'javascript:;';
+
     const LoggedInNavBar = () => {
       return (
         <AppBar className={classes.root} position='fixed' color="default" >
@@ -198,9 +205,23 @@ class Header extends React.Component {
           <HideOnScroll>
             <AppBar id="navbar" className={classes.root} position='fixed' color="default">
               <Toolbar className={classes.noPadding}>
-                <Typography variant="h6" className={classes.title}>
-                  News
-            </Typography>
+                <Link href={dudUrl} className={classes.flex}> {/* get rid of inline style */}
+                  <img id="logo" src={ESXLogo} alt="ESX" height='60px' />
+                </Link>
+                <div className={classes.grow} />
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <SearchIcon />
+                  </div>
+                  <InputBase
+                    placeholder="Search…"
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                    }}
+                    inputProps={{ 'aria-label': 'search' }}
+                  />
+                </div>
               </Toolbar>
             </AppBar>
           </HideOnScroll>
@@ -301,26 +322,57 @@ class Header extends React.Component {
 const styles = (theme) => {
   return {
     root: {
-      background: 'transparent',
-      boxShadow: 'none',
+      flexGrow: 1,
     },
-    noPadding: {
-      padding: 0,
+    menuButton: {
+      marginRight: theme.spacing(2),
     },
     grow: {
       flexGrow: 1,
+      display: 'none',
+      [theme.breakpoints.up('sm')]: {
+        display: 'block',
+      },
     },
-    logoImg: {
-      marginTop: 7,
-      maxHeight: 42,
+    search: {
+      position: 'relative',
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: fade(theme.palette.common.white, 0.15),
+      '&:hover': {
+        backgroundColor: fade(theme.palette.common.white, 0.25),
+      },
+      marginLeft: 0,
+      width: '100%',
+      [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(1),
+        width: 'auto',
+      },
     },
-    textField: {
-      marginTop: -7,
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
+    searchIcon: {
+      width: theme.spacing(7),
+      height: '100%',
+      position: 'absolute',
+      pointerEvents: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
-    menu: {
-      width: 200,
+    inputRoot: {
+      color: 'inherit',
+    },
+    inputInput: {
+      padding: theme.spacing(1, 1, 1, 7),
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      [theme.breakpoints.up('sm')]: {
+        width: 120,
+        '&:focus': {
+          width: 200,
+        },
+      },
+    },
+    flex: {
+      display: 'flex',
     },
   }
 }
