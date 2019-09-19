@@ -1,11 +1,11 @@
-import Nav from '../generic/Nav'
+// import Nav from '../generic/Nav'
 import HeroImg from './HeroImg'
 import HeroBanner from './HeroBanner'
 
 export default props => {
   return (
     <div className="hero-container">
-      <Nav />
+      {/* <Nav /> */}
 
       <HeroImg />
 

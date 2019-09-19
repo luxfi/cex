@@ -20,6 +20,7 @@ import { HANZO_KEY, HANZO_ENDPOINT } from '../src/settings.js'
 
 import blue from '@material-ui/core/colors/blue'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 // import 'reeeset/src/reeeset.css'
 // import '../styles.styl'
@@ -148,21 +149,25 @@ class MyMobxApp extends App {
     console.log('Rendering _app with isHanzoPage', isHanzoPage, localRoute)
 
     return (
-      <Container>
-        <Provider store={this.mobxStore}>
-          <MuiThemeProvider theme={theme}>
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-              <RefProvider>
-                <BalanceProvider>
-                  {isHanzoPage && <Header />}
-                  <Component {...pageProps} />
-                  {isHanzoPage && <Loader />}
-                </BalanceProvider>
-              </RefProvider>
-            </MuiPickersUtilsProvider>
-          </MuiThemeProvider>
-        </Provider>
-      </Container>
+      <React.Fragment>
+        <CssBaseline />
+        <Container>
+          <Provider store={this.mobxStore}>
+            <MuiThemeProvider theme={theme}>
+              <MuiPickersUtilsProvider utils={MomentUtils}>
+                <RefProvider>
+                  <BalanceProvider>
+                    {isHanzoPage && <Header />}
+                    <Component {...pageProps} />
+                    {isHanzoPage && <Loader />}
+                  </BalanceProvider>
+                </RefProvider>
+              </MuiPickersUtilsProvider>
+            </MuiThemeProvider>
+          </Provider>
+        </Container>
+        {/* The rest of your application */}
+      </React.Fragment>
     )
   }
 
