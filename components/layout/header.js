@@ -6,8 +6,12 @@ import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
+import Input from '@material-ui/core/Input'
 import MenuItem from '@material-ui/core/MenuItem'
 import AccountCircle from '@material-ui/icons/AccountCircle'
+import Typography from '@material-ui/core/Typography'
+import Slide from '@material-ui/core/Slide'
+import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import Link from '../link'
 import Router from 'next/router'
 
@@ -29,6 +33,21 @@ let currencies = {
   jpy: 'JPY',
 }
 
+// replace custom code to use material native hideonscroll
+function HideOnScroll(props) {
+  const { children, window } = props;
+  // Note that you normally won't need to set the window ref as useScrollTrigger
+  // will default to window.
+  // This is only being set here because the demo is in an iframe.
+  const trigger = useScrollTrigger({ target: window ? window() : undefined });
+
+  return (
+    <Slide appear={false} direction="down" in={!trigger}>
+      {children}
+    </Slide>
+  );
+}
+
 @watch('header')
 class Header extends React.Component {
   constructor(props) {
@@ -39,59 +58,59 @@ class Header extends React.Component {
     }
 
     this.lastScroll = null;
-    this.handleScroll = this.handleScroll.bind(this);
+    // this.handleScroll = this.handleScroll.bind(this);
   }
 
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll, { passive: true });
-  }
+  // componentDidMount() {
+  //   window.addEventListener('scroll', this.handleScroll, { passive: true });
+  // }
 
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
+  // componentWillUnmount() {
+  //   window.removeEventListener('scroll', this.handleScroll);
+  // }
 
-  handleScroll(evt) {
-    let identity = getIdentity()
-    let accountLoaded = !!this.props.rootData.get('account.id') && identity
+  // handleScroll(evt) {
+  //   let identity = getIdentity()
+  //   let accountLoaded = !!this.props.rootData.get('account.id') && identity
 
-    if (accountLoaded) {
-      return
-    }
+  //   if (accountLoaded) {
+  //     return
+  //   }
 
-    const lastScroll = window.scrollY;
+  //   const lastScroll = window.scrollY;
 
-    if (lastScroll === this.lastScroll) {
-      return;
-    }
+  //   if (lastScroll === this.lastScroll) {
+  //     return;
+  //   }
 
-    const shouldShow = (this.lastScroll !== null) ? (lastScroll < this.lastScroll) : null;
+  //   const shouldShow = (this.lastScroll !== null) ? (lastScroll < this.lastScroll) : null;
 
-    if (shouldShow !== this.state.shouldShow) {
-      this.setState((prevState, props) => ({
-        ...prevState,
-        shouldShow,
-      }));
-      if (shouldShow) {
-        document.getElementById("navbar").style.transform = 'translateY(0)';
-        document.getElementById("navbar").style.transition = 'transform 1s';
+  //   if (shouldShow !== this.state.shouldShow) {
+  //     this.setState((prevState, props) => ({
+  //       ...prevState,
+  //       shouldShow,
+  //     }));
+  //     if (shouldShow) {
+  //       document.getElementById("navbar").style.transform = 'translateY(0)';
+  //       document.getElementById("navbar").style.transition = 'transform 1s';
 
-      }
-      else if (!shouldShow) {
-        document.getElementById("navbar").style.transform = 'translateY(-115px)';
-        document.getElementById("navbar").style.transition = 'transform 1s';
-      }
-    }
+  //     }
+  //     else if (!shouldShow) {
+  //       document.getElementById("navbar").style.transform = 'translateY(-115px)';
+  //       document.getElementById("navbar").style.transition = 'transform 1s';
+  //     }
+  //   }
 
-    if (window.scrollY === 0) {
-      document.getElementById("navbar").style.backgroundColor = 'transparent';
-      document.getElementById("navbar").style.transition = 'background-color .5s';
-    }
-    else {
-      document.getElementById("navbar").style.backgroundColor = "#1a1e3c";
-    }
+  //   if (window.scrollY === 0) {
+  //     document.getElementById("navbar").style.backgroundColor = 'transparent';
+  //     document.getElementById("navbar").style.transition = 'background-color .5s';
+  //   }
+  //   else {
+  //     document.getElementById("navbar").style.backgroundColor = "#1a1e3c";
+  //   }
 
-    this.lastScroll = lastScroll;
-  }
+  //   this.lastScroll = lastScroll;
+  // }
 
   handleMenu = (event) => {
     this.setState({
@@ -165,6 +184,37 @@ class Header extends React.Component {
     let accountLoaded = !!this.props.rootData.get('account.id') && identity
 
     let open = !!this.state.anchorEl
+
+    const LoggedInNavBar = () => {
+      return (
+        <AppBar className={classes.root} position='fixed' color="default" >
+        </AppBar>
+      )
+    }
+
+    const GuestNavBar = () => {
+      return (
+        <React.Fragment>
+          <HideOnScroll>
+            <AppBar id="navbar" className={classes.root} position='fixed' color="default">
+              <Toolbar className={classes.noPadding}>
+                <Typography variant="h6" className={classes.title}>
+                  News
+            </Typography>
+              </Toolbar>
+            </AppBar>
+          </HideOnScroll>
+          <Toolbar />
+        </React.Fragment>
+
+      )
+    }
+
+    if (accountLoaded) {
+      return <LoggedInNavBar />
+    }
+
+    return <GuestNavBar />
 
     return pug`
         if accountLoaded
