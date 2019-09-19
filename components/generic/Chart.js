@@ -2,6 +2,7 @@ import BuySellForm from './BuySellForm'
 import FakeCandlestickChart from './FakeCandlestickChart'
 import { timelineLabels } from '../utils/dateRange'
 import ChartIntervalControl from '../generic/ChartIntervalControls'
+import { Element } from 'react-scroll'
 
 export default props => {
   const { data, yDomain, updatePrintInterval, printInterval, buyOrders, sellOrders, orderBook } = props
@@ -9,8 +10,8 @@ export default props => {
   let labels = timelineLabels()
 
   return (
-    <div className="container">
-      <div className="title">
+    <Element className="container">
+      <div className="title" name="section1">
         Trade This Stock
       </div>
       <ChartIntervalControl updatePrintInterval={updatePrintInterval} printInterval={printInterval} />
@@ -51,6 +52,6 @@ export default props => {
                     margin-right: 20px;
                 }
             `}</style>
-    </div>
+    </Element>
   )
 }
