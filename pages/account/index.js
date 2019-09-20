@@ -1,5 +1,6 @@
 import React from 'react'
 import Router from 'next/router'
+import Container from '@material-ui/core/Container'
 import Emitter from '../../src/emitter'
 import { MuiText } from 'react-referential-forms'
 import TokenCard from '../../components/token-card'
@@ -81,6 +82,19 @@ class Account extends React.Component {
 
   render() {
     let props = this.props
+
+    return (
+      <main className="account" id="account-index" >
+        <Container maxWidth="md">
+          <h1>{`Hello ${props.rootData.get('account.firstName')}`}</h1>
+          <Link href="/account/kyc">Check your identify verification status</Link>
+          <br />
+          <h3>PORTFOLIO BALANCE</h3>
+          <h2>$0.00</h2>
+        </Container>
+      </main>
+    )
+
 
     return pug`
       main#account-index.account
