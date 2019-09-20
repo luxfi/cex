@@ -17,9 +17,10 @@ import Api from '../../src/hanzo/api'
 import { watch } from 'react-referential'
 import { HANZO_KEY, HANZO_ENDPOINT } from '../../src/settings.js'
 
-import isRequired from '../../src/control-middlewares/isRequired'
+// import isRequired from '../../src/control-middlewares/isRequired'
 import isEmail from '../../src/control-middlewares/isEmail'
 import isPassword from '../../src/control-middlewares/isPassword'
+// import { renderDate } from 'react-referential-forms';
 
 const styles = theme => ({
   '@global': {
@@ -33,10 +34,6 @@ const styles = theme => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
@@ -46,75 +43,119 @@ const styles = theme => ({
   },
 });
 
-const submit = (e) => {
-  e.preventDefault()
-  Router.push('/')
-}
+class LoginForm extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      email: '',
+      password: '',
+      emailError: false,
+      passwordError: false,
+    }
+    this.submitLogin = this.submitLogin.bind(this)
+  }
 
-const SignIn = (props) => {
-  const { classes } = props
-  return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form className={classes.form} noValidate onSubmit={submit}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-    </Container>
-  );
-}
+  submitLogin(e) {
+    e.preventDefault()
+    if (this.state.email === "" || this.password === "")
+      return
+    // clear errors for logic flow
+    this.setState({ emailError: false })
+    this.setState({ passwordError: false })
+    let errors = false;
+    try {
+      isEmail(this.state.email)
+    }
+    catch (e) {
+      errors = true
+      this.setState({ emailError: e.message })
+    }
+    try {
+      isPassword(this.state.password)
+    }
+    catch (e) {
+      errors = true
+      this.setState({ passwordError: e.message })
+    }
+    finally {
+      if (!errors) {
+        Router.push('/')
+      }
+    }
+  }
 
-export default withStyles(styles)(SignIn)
+  render() {
+    const { classes } = this.props
+    return (
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form className={classes.form} noValidate onSubmit={this.submitLogin}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              error={!!this.state.emailError}
+              helperText={this.state.emailError ? this.state.emailError : ''}
+              value={this.state.email}
+              onChange={event => this.setState({ [event.target.name]: event.target.value })}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              error={!!this.state.passwordError}
+              helperText={this.state.passwordError ? this.state.passwordError : ' '}
+              value={this.state.password}
+              onChange={event => this.setState({ [event.target.name]: event.target.value })}
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="#" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
+        </div>
+      </Container>
+    )
+  }
+}
+export default withStyles(styles)(LoginForm)
 
 // @watch('loginForm')
 // export default class LoginForm extends Form {
