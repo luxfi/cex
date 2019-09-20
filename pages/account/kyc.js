@@ -18,40 +18,40 @@ class KYC extends React.Component {
     this.state = {
     }
 
-    this.mainRef = React.createRef()
+    // this.mainRef = React.createRef()
 
-    this.emitter = new Emitter()
+    // this.emitter = new Emitter()
 
-    this.emitter.on('kyc:success', res => {
-      this.props.rootData.set('account', res)
+    // this.emitter.on('kyc:success', res => {
+    //   this.props.rootData.set('account', res)
 
-      this.setState({
-        confirmed: true,
-      })
+    //   this.setState({
+    //     confirmed: true,
+    //   })
 
-      requestAnimationFrame(() => {
-        this.mainRef.current.scrollIntoView()
-      })
-    })
+    //   requestAnimationFrame(() => {
+    //     this.mainRef.current.scrollIntoView()
+    //   })
+    // })
 
     this.state = {
       confirmed: false,
     }
   }
 
-  componentWillUnmount() {
-    this.emitter.off('kyc:success')
-  }
+  // componentWillUnmount() {
+  //   this.emitter.off('kyc:success')
+  // }
 
-  logout() {
-    this.props.rootData.ref('account').clear()
-    removeIdentity()
-    Router.push('/')
-  }
+  // logout() {
+  //   this.props.rootData.ref('account').clear()
+  //   removeIdentity()
+  //   Router.push('/')
+  // }
 
-  done = () => {
-    Router.push('/')
-  }
+  // done = () => {
+  //   Router.push('/')
+  // }
 
   render() {
     let props = this.props

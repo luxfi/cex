@@ -30,26 +30,26 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 const theme = createMuiTheme({
   palette: {
     type: 'light',
-    primary: {
-      main: blue[500],
-    },
-    secondary: {
-      main: 'rgba(29,226,160,0.7)',
-    },
-    background: {
-      paper: '#1e2748',
-    },
+    // primary: {
+    //   main: blue[500],
+    // },
+    // secondary: {
+    //   main: 'rgba(29,226,160,0.7)',
+    // },
+    // background: {
+    //   paper: '#1e2748',
+    // },
   },
   overrides: {
     MuiButton: {
-      root: {
-        backgroundColor: 'transparent',
-        color: 'white',
-        fontSize: '12px'
-      },
-      outlined: {
-        border: "1px solid white"
-      }
+      // root: {
+      //   backgroundColor: 'transparent',
+      //   color: 'white',
+      //   fontSize: '12px'
+      // },
+      // outlined: {
+      //   border: "1px solid white"
+      // }
     }
   },
   typography: {
