@@ -178,24 +178,24 @@ class MyMobxApp extends App {
   }
 }
 
-Router.events.on('routeChangeStart', (r) => {
-  const isHanzo = checkHanzoPage(r)
-  console.log('Starting route change', r, isHanzo)
-  if (isHanzo) {
-    startLoading(' ')
-    setTimeout(() => {
-      stopLoading()
-    }, 3000)
-  }
-})
+// Router.events.on('routeChangeStart', (r) => {
+//   const isHanzo = checkHanzoPage(r)
+//   console.log('Starting route change', r, isHanzo)
+//   if (isHanzo) {
+//     startLoading(' ')
+//     setTimeout(() => {
+//       stopLoading()
+//     }, 3000)
+//   }
+// })
 
-Router.events.on('routeChangeComplete', (r) => {
-  const isHanzo = checkHanzoPage(r)
-  console.log('Route change complete', r, isHanzo)
-  if (isHanzo) {
-    stopLoading()
-  }
-})
+// Router.events.on('routeChangeComplete', (r) => {
+//   const isHanzo = checkHanzoPage(r)
+//   console.log('Route change complete', r, isHanzo)
+//   if (isHanzo) {
+//     stopLoading()
+//   }
+// })
 
 // Router.events.on('routeChangeError', (err, r) => {
 //   console.log('Route change error', err, r)
