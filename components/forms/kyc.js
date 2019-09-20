@@ -83,6 +83,14 @@ export default function Checkout() {
       <CssBaseline />
       <main className={classes.layout}>
         <Paper className={classes.paper}>
+          <Typography component="h1" variant="h5" align="left">
+            Please verify your identity
+          </Typography>
+          {/* <h2>Please verify your identity.</h2> */}
+          <p>Because ESX interacts directly with your bank, regulators have asked that we collect identity information. Your data is cryptographically secured and sent only to ESX's banking endpoint.</p>
+          <br />
+        </Paper>
+        <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
             Identity Verification
           </Typography>
@@ -97,11 +105,11 @@ export default function Checkout() {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
+                  Thank you
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order confirmation, and will
-                  send you an update when your order has shipped.
+                  We are verifying your account and will
+                  send you an update when completed.
                 </Typography>
               </React.Fragment>
             ) : (
@@ -111,7 +119,7 @@ export default function Checkout() {
                     {activeStep !== 0 && (
                       <Button onClick={handleBack} className={classes.button}>
                         Back
-                    </Button>
+                      </Button>
                     )}
                     <Button
                       variant="contained"
