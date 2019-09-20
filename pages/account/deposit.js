@@ -20,9 +20,9 @@ export default class Account extends React.Component {
   constructor(props) {
     super(props)
 
-    if (!getEncodedPrivateKey() || !canDecodePrivateKey()) {
-      this.logout()
-    }
+    // if (!getEncodedPrivateKey() || !canDecodePrivateKey()) {
+    //   this.logout()
+    // }
 
     this.emitter = new Emitter()
 
@@ -35,7 +35,7 @@ export default class Account extends React.Component {
 
     this.emitter.on('pick-token:submit', (token) => {
       this.setState({
-        token:token,
+        token: token,
         step: 3,
       })
     })
