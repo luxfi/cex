@@ -1,9 +1,47 @@
-import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
+import React from 'react'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import TextField from '@material-ui/core/TextField'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
+import { makeStyles } from '@material-ui/core/styles'
+import FormControl from '@material-ui/core/FormControl'
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  formControl: {
+    // margin: theme.spacing(1),
+    // minWidth: 120,
+    width: '100%'
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 export default function PersonalDetails() {
+  const classes = useStyles()
+  const [values, setValues] = React.useState({
+    gender: '',
+  })
+
+  // const inputLabel = React.useRef(null);
+  // const [labelWidth, setLabelWidth] = React.useState(0);
+  // React.useEffect(() => {
+  //   setLabelWidth(inputLabel.current.offsetWidth);
+  // }, [])
+
+  function handleChange(event) {
+    setValues(oldValues => ({
+      ...oldValues,
+      [event.target.name]: event.target.value,
+    }))
+  }
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -61,13 +99,22 @@ export default function PersonalDetails() {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            id="gender"
-            name="gender"
-            label="Gender"
-            fullWidth
-            autoComplete="gender"
-          />
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="gender">Gender</InputLabel>
+            <Select
+              value={values.gender}
+              onChange={handleChange}
+              inputProps={{
+                name: 'gender',
+                id: 'gender',
+              }}
+            >
+              <MenuItem value={'male'}>Male</MenuItem>
+              <MenuItem value={'female'}>Female</MenuItem>
+              <MenuItem value={'other'}>Other</MenuItem>
+              <MenuItem value={'unspecified'}>Unspecified</MenuItem>
+            </Select>
+          </FormControl>
         </Grid>
       </Grid>
     </React.Fragment>

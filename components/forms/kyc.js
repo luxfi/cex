@@ -325,16 +325,16 @@ export default function Checkout() {
 //                 variant='outlined'
 //               )
 //             .form-group.columns
-//               MuiDatePicker(
-//                 ...this.inputs.birthdate
-//                 label='Birthday'
-//                 variant='outlined'
-//               )
-//               MuiText(
-//                 ...this.inputs.gender
-//                 label='Gender'
-//                 variant='outlined'
-//               )
+              // MuiDatePicker(
+              //   ...this.inputs.birthdate
+              //   label='Birthday'
+              //   variant='outlined'
+              // )
+              // MuiText(
+              //   ...this.inputs.gender
+              //   label='Gender'
+              //   variant='outlined'
+              // )
 //         br
 //         p PRIMARY ADDRESS
 //         Card
