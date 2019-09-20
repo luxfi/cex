@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
-import ESXLogo from '../../assets/images/esx/u1.png'
 import Link from 'next/link';
 
 const NavLink = ({ href = '#', title }) => (
@@ -30,7 +29,7 @@ export default props => {
         <Link href="/">
           <a>
             <div className="logo">
-              <img src={ESXLogo} alt="ESX LOGO" height='80px' style={{ margin: `-16px` }} />
+              <img src="/static/img/logo.png" alt="ESX LOGO" height='80px' style={{ margin: `-16px` }} />
               <div className="tagline">
                 <span>BUY AND SELL</span>
                 <span>HOLLYWOOD MOVIES</span>

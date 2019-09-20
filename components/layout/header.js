@@ -14,7 +14,6 @@ import Typography from '@material-ui/core/Typography'
 import Slide from '@material-ui/core/Slide'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import SearchIcon from '@material-ui/icons/Search'
-import ESXLogo from '../../assets/images/esx/u1.png'
 import Link from '../link'
 import Router from 'next/router'
 
@@ -150,7 +149,7 @@ class Header extends React.Component {
             <AppBar id="navbar" className={classes.root} position='fixed' color="default">
               <Toolbar className={classes.noPadding}>
                 <Link href="/" className={classes.flex}> {/* get rid of inline style */}
-                  <img id="logo" src={ESXLogo} alt="ESX" height='60px' />
+                  <img id="logo" src="/static/img/logo.png" alt="ESX" height='60px' />
                 </Link>
                 <div className={classes.grow} />
                 <div className={classes.search}>
