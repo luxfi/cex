@@ -136,9 +136,6 @@ class Header extends React.Component {
 
     let open = !!this.state.anchorEl
 
-    // This resolves to nothing and doesn't affect browser history
-    const dudUrl = 'javascript:;';
-
     const LoggedInNavBar = () => {
       return (
         <AppBar className={classes.root} position='fixed' color="default" >
@@ -152,7 +149,7 @@ class Header extends React.Component {
           <HideOnScroll>
             <AppBar id="navbar" className={classes.root} position='fixed' color="default">
               <Toolbar className={classes.noPadding}>
-                <Link href={dudUrl} className={classes.flex}> {/* get rid of inline style */}
+                <Link href="/" className={classes.flex}> {/* get rid of inline style */}
                   <img id="logo" src={ESXLogo} alt="ESX" height='60px' />
                 </Link>
                 <div className={classes.grow} />
