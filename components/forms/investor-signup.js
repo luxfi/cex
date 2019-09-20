@@ -104,7 +104,7 @@ class LoginForm extends React.Component {
               autoComplete="email"
               autoFocus
               error={!!this.state.emailError}
-              helperText={this.state.emailError ? this.state.emailError : ''}
+              helperText={this.state.emailError && this.state.emailError}
               value={this.state.email}
               onChange={event => this.setState({ [event.target.name]: event.target.value })}
             />
@@ -119,7 +119,7 @@ class LoginForm extends React.Component {
               id="password"
               autoComplete="current-password"
               error={!!this.state.passwordError}
-              helperText={this.state.passwordError ? this.state.passwordError : ' '}
+              helperText={this.state.passwordError && this.state.passwordError}
               value={this.state.password}
               onChange={event => this.setState({ [event.target.name]: event.target.value })}
             />
