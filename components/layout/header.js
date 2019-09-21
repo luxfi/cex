@@ -106,8 +106,7 @@ class Header extends React.Component {
       anchorEl: null,
     })
 
-    // commented out this code for Artem to convert to MOBX
-    // this.props.rootData.ref('account').clear()
+    this.props.rootData.ref('account').clear()
     removeIdentity()
     Router.push('/')
   }
@@ -130,7 +129,7 @@ class Header extends React.Component {
 
   render() {
     let { classes, ...props } = this.props
-    let identity = getIdentity()
+    let identity = getIdentity() || true // added or true to make it always true for now (Tyler) Todo: wire this up correctly
     let accountLoaded = !!this.props.rootData.get('account.id') && identity
 
     let open = !!this.state.anchorEl
@@ -175,42 +174,51 @@ class Header extends React.Component {
                     inputProps={{ 'aria-label': 'search' }}
                   />
                 </div>
-                <Button
-                  color="inherit"
-                  onClick={this.login}
-                  className={classes.menuButton}>
-                  Login
-                </Button>
-                <Button
-                  color="inherit"
-                  variant="outlined"
-                  onClick={this.signup}
-                  className={classes.menuButton}>
-                  Sign Up
-                </Button>
-                <MuiText
-                  select value='usd'
-                  className={classes.textField}
-                  margin="normal"
-                  options={currencies}
-                />
-                <IconButton aria-controls="menu" aria-haspopup="true" onClick={handleClick}>
-                  <AccountCircle style={{ fontSize: "36" }} />
-                </IconButton>
-                <Menu
-                  id="menu"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={open}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={this.account}><AccountCircle /><span style={{ padding: "15px" }}>Account</span></MenuItem>
-                  <MenuItem onClick={this.deposit}><ArrowUpward /><span style={{ padding: "15px" }}>Deposit</span></MenuItem>
-                  <MenuItem onClick={this.send}><Send /><span style={{ padding: "15px" }}>Send</span></MenuItem>
-                  <MenuItem onClick={this.redeem}><ArrowDownward /><span style={{ padding: "15px" }}>Redeem</span></MenuItem>
-                  <MenuItem onClick={this.logout}><ExitToApp /><span style={{ padding: "15px" }}>Logout</span></MenuItem>
+                {accountLoaded ? (
+                  <React.Fragment>
+                    <MuiText
+                      select
+                      value='usd'
+                      className={classes.textField}
+                      margin="normal"
+                      options={currencies}
+                    />
+                    <IconButton aria-controls="menu" aria-haspopup="true" onClick={handleClick}>
+                      <AccountCircle style={{ fontSize: "36" }} />
+                    </IconButton>
+                    <Menu
+                      id="menu"
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={open}
+                      onClose={handleClose}
+                    >
+                      <MenuItem onClick={this.account}><AccountCircle /><span style={{ padding: "15px" }}>Account</span></MenuItem>
+                      <MenuItem onClick={this.deposit}><ArrowUpward /><span style={{ padding: "15px" }}>Deposit</span></MenuItem>
+                      <MenuItem onClick={this.send}><Send /><span style={{ padding: "15px" }}>Send</span></MenuItem>
+                      <MenuItem onClick={this.redeem}><ArrowDownward /><span style={{ padding: "15px" }}>Redeem</span></MenuItem>
+                      <MenuItem onClick={this.logout}><ExitToApp /><span style={{ padding: "15px" }}>Logout</span></MenuItem>
 
-                </Menu>
+                    </Menu>
+                  </React.Fragment>
+                ) : (
+                    <React.Fragment>
+                      <Button
+                        color="inherit"
+                        onClick={this.login}
+                        className={classes.menuButton}>
+                        Login
+                      </Button>
+                      <Button
+                        color="inherit"
+                        variant="outlined"
+                        onClick={this.signup}
+                        className={classes.menuButton}>
+                        Sign Up
+                      </Button>
+                    </React.Fragment>
+                  )}
+
               </Toolbar>
             </AppBar>
           </HideOnScroll>
@@ -218,10 +226,6 @@ class Header extends React.Component {
         </React.Fragment >
 
       )
-    }
-
-    if (accountLoaded) {
-      return <LoggedInNavBar />
     }
 
     return <GuestNavBar />
