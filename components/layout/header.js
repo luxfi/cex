@@ -207,47 +207,11 @@ class Header extends React.Component {
                   <MenuItem onClick={this.account}><AccountCircle /><span style={{ padding: "15px" }}>Account</span></MenuItem>
                   <MenuItem onClick={this.deposit}><ArrowUpward /><span style={{ padding: "15px" }}>Deposit</span></MenuItem>
                   <MenuItem onClick={this.send}><Send /><span style={{ padding: "15px" }}>Send</span></MenuItem>
-                  <MenuItem onClick={this.redeem}><ArrowUpward /><span style={{ padding: "15px" }}>Redeem</span></MenuItem>
+                  <MenuItem onClick={this.redeem}><ArrowDownward /><span style={{ padding: "15px" }}>Redeem</span></MenuItem>
                   <MenuItem onClick={this.logout}><ExitToApp /><span style={{ padding: "15px" }}>Logout</span></MenuItem>
 
                 </Menu>
               </Toolbar>
-              {/* IconButton(
-                aria-owns=(open ? 'menu-appbar' : undefined)
-                aria-haspopup='true'
-                onClick=this.handleMenu
-                color='inherit'
-              )
-                AccountCircle(style={ fontSize: 36 })
-              Menu(
-                id='menu-appbar'
-                anchorEl=this.state.anchorEl
-                anchorOrigin={
-                  vertical: 'bottom',
-                  horizontal: 'right',
-                }
-                transformOrigin={
-                  vertical: 'bottom',
-                  horizontal: 'right',
-                }
-                open=open
-                onClose=this.handleClose
-              )
-                MenuItem(onClick=this.account)
-                  AccountCircle
-                  span(style={ padding: 15}) Account
-                MenuItem(onClick=this.deposit)
-                  ArrowUpward
-                  span(style={ padding: 15}) Deposit
-                MenuItem(onClick=this.send)
-                  Send
-                  span(style={ padding: 15}) Send
-                MenuItem(onClick=this.redeem)
-                  ArrowDownward
-                  span(style={ padding: 15}) Redeem
-                MenuItem(onClick=this.logout)
-                  ExitToApp
-                  span(style={ padding: 15}) Logout */}
             </AppBar>
           </HideOnScroll>
           <Toolbar />
