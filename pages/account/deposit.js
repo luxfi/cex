@@ -5,6 +5,7 @@ import PickToken from '../../components/forms/pick-token'
 import PickAddress from '../../components/forms/pick-address'
 import PickAmount from '../../components/forms/pick-amount'
 import ArrowUpward from '@material-ui/icons/ArrowUpward'
+import Container from '@material-ui/core/Container'
 import Emitter from '../../src/emitter'
 
 import { watch } from 'react-referential'
@@ -106,10 +107,16 @@ export default class Account extends React.Component {
   done = () => {
     Router.push('/')
   }
-
   render() {
     let { classes } = this.props
     let { step } = this.state
+
+    // return (
+    //   <main id="account-deposit" className="account">
+    //     <Container maxWidth="md">
+    //     </Container>
+    //   </main>
+    // )
 
     return pug`
       main#account-deposit.account
