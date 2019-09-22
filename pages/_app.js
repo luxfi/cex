@@ -149,7 +149,7 @@ class MyMobxApp extends App {
     console.log('Rendering _app with isHanzoPage', isHanzoPage, localRoute)
 
     return (
-      <React.Fragment>
+      <>
         <CssBaseline />
         <Container>
           <Provider store={this.mobxStore}>
@@ -167,7 +167,7 @@ class MyMobxApp extends App {
           </Provider>
         </Container>
         {/* The rest of your application */}
-      </React.Fragment>
+      </>
     )
   }
 

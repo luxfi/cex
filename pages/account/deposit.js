@@ -79,7 +79,7 @@ export default function Checkout() {
   };
 
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
       <main className={classes.layout}>
         <Paper className={classes.paper}>
@@ -93,18 +93,18 @@ export default function Checkout() {
               </Step>
             ))}
           </Stepper>
-          <React.Fragment>
+          <>
             {activeStep === steps.length ? (
-              <React.Fragment>
+              <>
                 <Typography variant="h5" gutterBottom>
                   Thank you
                 </Typography>
                 <Typography variant="subtitle1">
                   Your transaction is being processed.
                 </Typography>
-              </React.Fragment>
+              </>
             ) : (
-                <React.Fragment>
+                <>
                   {getStepContent(activeStep)}
                   <div className={classes.buttons}>
                     {activeStep !== 0 && (
@@ -121,12 +121,12 @@ export default function Checkout() {
                       {activeStep === steps.length - 1 ? 'Continue' : 'Next'}
                     </Button>
                   </div>
-                </React.Fragment>
+                </>
               )}
-          </React.Fragment>
+          </>
         </Paper>
       </main>
-    </React.Fragment>
+    </>
   )
 }
 

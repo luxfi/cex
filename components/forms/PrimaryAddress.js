@@ -3,9 +3,10 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
+
 export default function PrimaryAddress() {
   return (
-    <React.Fragment>
+    <>
       <Typography variant="h6" gutterBottom>
         Primary Address
       </Typography>
@@ -70,6 +71,6 @@ export default function PrimaryAddress() {
           />
         </Grid> */}
       </Grid>
-    </React.Fragment>
+    </>
   );
 }
