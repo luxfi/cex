@@ -43,7 +43,7 @@ export default function PersonalDetails() {
   }
 
   return (
-    <React.Fragment>
+    <>
       <Typography variant="h6" gutterBottom>
         Personal Details
       </Typography>
@@ -117,6 +117,6 @@ export default function PersonalDetails() {
           </FormControl>
         </Grid>
       </Grid>
-    </React.Fragment>
+    </>
   );
 }

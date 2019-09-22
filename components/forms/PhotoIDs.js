@@ -26,7 +26,7 @@ export default function PhotoIDs() {
   const classes = useStyles();
 
   return (
-    <React.Fragment>
+    <>
       <Typography variant="h6" gutterBottom>
         PhotoIDs
       </Typography>
@@ -38,6 +38,6 @@ export default function PhotoIDs() {
           </ListItem>
         ))}
       </List>
-    </React.Fragment>
+    </>
   );
 }

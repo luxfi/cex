@@ -153,7 +153,7 @@ class Header extends React.Component {
         setAnchorEl(null);
       }
       return (
-        <React.Fragment>
+        <>
           <HideOnScroll>
             <AppBar id="navbar" className={classes.root} position='fixed' color="default">
               <Toolbar className={classes.noPadding}>
@@ -175,7 +175,7 @@ class Header extends React.Component {
                   />
                 </div>
                 {accountLoaded ? (
-                  <React.Fragment>
+                  <>
                     <MuiText
                       select
                       value='usd'
@@ -200,9 +200,9 @@ class Header extends React.Component {
                       <MenuItem onClick={this.logout}><ExitToApp /><span style={{ padding: "15px" }}>Logout</span></MenuItem>
 
                     </Menu>
-                  </React.Fragment>
+                  </>
                 ) : (
-                    <React.Fragment>
+                    <>
                       <Button
                         color="inherit"
                         onClick={this.login}
@@ -216,14 +216,14 @@ class Header extends React.Component {
                         className={classes.menuButton}>
                         Sign Up
                       </Button>
-                    </React.Fragment>
+                    </>
                   )}
 
               </Toolbar>
             </AppBar>
           </HideOnScroll>
           <Toolbar />
-        </React.Fragment >
+        </ >
 
       )
     }
