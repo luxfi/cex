@@ -91,11 +91,11 @@ class Header extends React.Component {
     Router.push("/account/deposit")
   }
 
-  redeem = () => {
+  withdrawal = () => {
     this.setState({
       anchorEl: null
     })
-    Router.push("/account/redeem")
+    Router.push("/account/withdrawal")
   }
 
   logout = () => {
@@ -222,9 +222,9 @@ class Header extends React.Component {
                         <Send />
                         <span style={{ padding: "15px" }}>Send</span>
                       </MenuItem> */}
-                      <MenuItem onClick={this.redeem}>
+                      <MenuItem onClick={this.withdrawal}>
                         <ArrowDownward />
-                        <span style={{ padding: "15px" }}>Redeem</span>
+                        <span style={{ padding: "15px" }}>Withdrawal</span>
                       </MenuItem>
                       <MenuItem onClick={this.logout}>
                         <ExitToApp />
