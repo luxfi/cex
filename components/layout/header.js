@@ -1,164 +1,176 @@
-import React from 'react'
+import React from "react"
 
-import Form, { MuiText } from 'react-referential-forms'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import IconButton from '@material-ui/core/IconButton'
-import Button from '@material-ui/core/Button'
-import Menu from '@material-ui/core/Menu'
-import Input from '@material-ui/core/Input'
-import InputBase from '@material-ui/core/InputBase'
-import MenuItem from '@material-ui/core/MenuItem'
-import AccountCircle from '@material-ui/icons/AccountCircle'
-import Typography from '@material-ui/core/Typography'
-import Slide from '@material-ui/core/Slide'
-import useScrollTrigger from '@material-ui/core/useScrollTrigger'
-import SearchIcon from '@material-ui/icons/Search'
-import Link from '../link'
-import Router from 'next/router'
+import Form, { MuiText } from "react-referential-forms"
+import AppBar from "@material-ui/core/AppBar"
+import Toolbar from "@material-ui/core/Toolbar"
+import IconButton from "@material-ui/core/IconButton"
+import Button from "@material-ui/core/Button"
+import Menu from "@material-ui/core/Menu"
+import Input from "@material-ui/core/Input"
+import InputBase from "@material-ui/core/InputBase"
+import MenuItem from "@material-ui/core/MenuItem"
+import AccountCircle from "@material-ui/icons/AccountCircle"
+import Typography from "@material-ui/core/Typography"
+import Slide from "@material-ui/core/Slide"
+import useScrollTrigger from "@material-ui/core/useScrollTrigger"
+import SearchIcon from "@material-ui/icons/Search"
+import Link from "../link"
+import Router from "next/router"
 
-import Send from '@material-ui/icons/Send'
-import ArrowUpward from '@material-ui/icons/ArrowUpward'
-import ArrowDownward from '@material-ui/icons/ArrowDownward'
-import ExitToApp from '@material-ui/icons/ExitToApp'
+import Send from "@material-ui/icons/Send"
+import ArrowUpward from "@material-ui/icons/ArrowUpward"
+import ArrowDownward from "@material-ui/icons/ArrowDownward"
+import ExitToApp from "@material-ui/icons/ExitToApp"
 
-import { fade, withStyles } from '@material-ui/core/styles'
-import { watch } from 'react-referential'
-import {
-  getIdentity,
-  removeIdentity,
-} from '../../src/wallet'
-import { classExpression } from 'babel-types'
+import { fade, withStyles } from "@material-ui/core/styles"
+import { watch } from "react-referential"
+import { getIdentity, removeIdentity } from "../../src/wallet"
+import { classExpression } from "babel-types"
 
 let currencies = {
-  usd: 'USD',
-  eur: 'EUR',
-  jpy: 'JPY',
+  usd: "USD",
+  eur: "EUR",
+  jpy: "JPY"
 }
 
 // replace custom code to use material native hideonscroll
 function HideOnScroll(props) {
-  const { children, window } = props;
+  const { children, window } = props
   // Note that you normally won't need to set the window ref as useScrollTrigger
   // will default to window.
   // This is only being set here because the demo is in an iframe.
-  const trigger = useScrollTrigger({ target: window ? window() : undefined });
+  const trigger = useScrollTrigger({ target: window ? window() : undefined })
 
   return (
     <Slide appear={false} direction="down" in={!trigger}>
       {children}
     </Slide>
-  );
+  )
 }
 
-@watch('header')
+@watch("header")
 class Header extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      anchorEl: null,
+      anchorEl: null
     }
   }
 
-  handleMenu = (event) => {
+  handleMenu = event => {
     this.setState({
-      anchorEl: event.currentTarget,
+      anchorEl: event.currentTarget
     })
   }
 
   handleClose = () => {
     this.setState({
-      anchorEl: null,
+      anchorEl: null
     })
   }
 
   account = () => {
     this.setState({
-      anchorEl: null,
+      anchorEl: null
     })
-    Router.push('/account/')
+    Router.push("/account/")
   }
 
   send = () => {
     this.setState({
-      anchorEl: null,
+      anchorEl: null
     })
-    Router.push('/account/send')
+    Router.push("/account/send")
   }
 
   deposit = () => {
     this.setState({
-      anchorEl: null,
+      anchorEl: null
     })
-    Router.push('/account/deposit')
+    Router.push("/account/deposit")
   }
 
   redeem = () => {
     this.setState({
-      anchorEl: null,
+      anchorEl: null
     })
-    Router.push('/account/redeem')
+    Router.push("/account/redeem")
   }
 
   logout = () => {
     this.setState({
-      anchorEl: null,
+      anchorEl: null
     })
 
-    this.props.rootData.ref('account').clear()
+    this.props.rootData.ref("account").clear()
     removeIdentity()
-    Router.push('/')
+    Router.push("/")
   }
 
   login = () => {
     this.setState({
-      anchorEl: null,
+      anchorEl: null
     })
 
-    Router.push('/login')
+    Router.push("/login")
   }
 
   signup = () => {
     this.setState({
-      anchorEl: null,
+      anchorEl: null
     })
 
-    Router.push('/signup')
+    Router.push("/signup")
   }
 
   render() {
     let { classes, ...props } = this.props
-    let identity = getIdentity() || true // added or true to make it always true for now (Tyler) Todo: wire this up correctly
-    let accountLoaded = !!this.props.rootData.get('account.id') && identity
+    let identity = getIdentity()
+    let accountLoaded = !!this.props.rootData.get("account.id") && identity
 
     let open = !!this.state.anchorEl
 
     const LoggedInNavBar = () => {
       return (
-        <AppBar className={classes.root} position='fixed' color="default" >
-        </AppBar>
+        <AppBar
+          className={classes.root}
+          position="fixed"
+          color="default"
+        ></AppBar>
       )
     }
 
     const GuestNavBar = () => {
-      const [anchorEl, setAnchorEl] = React.useState(null);
-      const open = Boolean(anchorEl);
+      const [anchorEl, setAnchorEl] = React.useState(null)
+      const open = Boolean(anchorEl)
 
       function handleClick(event) {
-        setAnchorEl(event.currentTarget);
+        setAnchorEl(event.currentTarget)
       }
 
       function handleClose() {
-        setAnchorEl(null);
+        setAnchorEl(null)
       }
       return (
         <>
           <HideOnScroll>
-            <AppBar id="navbar" className={classes.root} position='fixed' color="default">
+            <AppBar
+              id="navbar"
+              className={classes.root}
+              position="fixed"
+              color="default"
+            >
               <Toolbar className={classes.noPadding}>
-                <Link href="/" className={classes.flex}> {/* get rid of inline style */}
-                  <img id="logo" src="/static/img/logo.png" alt="ESX" height='60px' />
+                <Link href="/" className={classes.flex}>
+                  {" "}
+                  {/* get rid of inline style */}
+                  <img
+                    id="logo"
+                    src="/static/img/logo.png"
+                    alt="ESX"
+                    height="60px"
+                  />
                 </Link>
                 <div className={classes.grow} />
                 <div className={classes.search}>
@@ -169,21 +181,25 @@ class Header extends React.Component {
                     placeholder="Search…"
                     classes={{
                       root: classes.inputRoot,
-                      input: classes.inputInput,
+                      input: classes.inputInput
                     }}
-                    inputProps={{ 'aria-label': 'search' }}
+                    inputProps={{ "aria-label": "search" }}
                   />
                 </div>
                 {accountLoaded ? (
                   <>
                     <MuiText
                       select
-                      value='usd'
+                      value="usd"
                       className={classes.textField}
                       margin="normal"
                       options={currencies}
                     />
-                    <IconButton aria-controls="menu" aria-haspopup="true" onClick={handleClick}>
+                    <IconButton
+                      aria-controls="menu"
+                      aria-haspopup="true"
+                      onClick={handleClick}
+                    >
                       <AccountCircle style={{ fontSize: "36" }} />
                     </IconButton>
                     <Menu
@@ -193,38 +209,52 @@ class Header extends React.Component {
                       open={open}
                       onClose={handleClose}
                     >
-                      <MenuItem onClick={this.account}><AccountCircle /><span style={{ padding: "15px" }}>Account</span></MenuItem>
-                      <MenuItem onClick={this.deposit}><ArrowUpward /><span style={{ padding: "15px" }}>Deposit</span></MenuItem>
-                      <MenuItem onClick={this.send}><Send /><span style={{ padding: "15px" }}>Send</span></MenuItem>
-                      <MenuItem onClick={this.redeem}><ArrowDownward /><span style={{ padding: "15px" }}>Redeem</span></MenuItem>
-                      <MenuItem onClick={this.logout}><ExitToApp /><span style={{ padding: "15px" }}>Logout</span></MenuItem>
-
+                      <MenuItem onClick={this.account}>
+                        <AccountCircle />
+                        <span style={{ padding: "15px" }}>Account</span>
+                      </MenuItem>
+                      <MenuItem onClick={this.deposit}>
+                        <ArrowUpward />
+                        <span style={{ padding: "15px" }}>Deposit</span>
+                      </MenuItem>
+                      <MenuItem onClick={this.send}>
+                        <Send />
+                        <span style={{ padding: "15px" }}>Send</span>
+                      </MenuItem>
+                      <MenuItem onClick={this.redeem}>
+                        <ArrowDownward />
+                        <span style={{ padding: "15px" }}>Redeem</span>
+                      </MenuItem>
+                      <MenuItem onClick={this.logout}>
+                        <ExitToApp />
+                        <span style={{ padding: "15px" }}>Logout</span>
+                      </MenuItem>
                     </Menu>
                   </>
                 ) : (
-                    <>
-                      <Button
-                        color="inherit"
-                        onClick={this.login}
-                        className={classes.menuButton}>
-                        Login
-                      </Button>
-                      <Button
-                        color="inherit"
-                        variant="outlined"
-                        onClick={this.signup}
-                        className={classes.menuButton}>
-                        Sign Up
-                      </Button>
-                    </>
-                  )}
-
+                  <>
+                    <Button
+                      color="inherit"
+                      onClick={this.login}
+                      className={classes.menuButton}
+                    >
+                      Login
+                    </Button>
+                    <Button
+                      color="inherit"
+                      variant="outlined"
+                      onClick={this.signup}
+                      className={classes.menuButton}
+                    >
+                      Sign Up
+                    </Button>
+                  </>
+                )}
               </Toolbar>
             </AppBar>
           </HideOnScroll>
           <Toolbar />
-        </ >
-
+        </>
       )
     }
 
@@ -312,61 +342,61 @@ class Header extends React.Component {
   }
 }
 
-const styles = (theme) => {
+const styles = theme => {
   return {
     root: {
-      flexGrow: 1,
+      flexGrow: 1
     },
     menuButton: {
-      marginRight: theme.spacing(2),
+      marginRight: theme.spacing(2)
     },
     grow: {
       flexGrow: 1,
-      display: 'none',
-      [theme.breakpoints.up('sm')]: {
-        display: 'block',
-      },
+      display: "none",
+      [theme.breakpoints.up("sm")]: {
+        display: "block"
+      }
     },
     search: {
-      position: 'relative',
+      position: "relative",
       borderRadius: theme.shape.borderRadius,
       backgroundColor: fade(theme.palette.common.white, 0.15),
-      '&:hover': {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
+      "&:hover": {
+        backgroundColor: fade(theme.palette.common.white, 0.25)
       },
       marginLeft: 0,
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
+      width: "100%",
+      [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(1),
-        width: 'auto',
-      },
+        width: "auto"
+      }
     },
     searchIcon: {
       width: theme.spacing(7),
-      height: '100%',
-      position: 'absolute',
-      pointerEvents: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+      height: "100%",
+      position: "absolute",
+      pointerEvents: "none",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
     },
     inputRoot: {
-      color: 'inherit',
+      color: "inherit"
     },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 7),
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
+      transition: theme.transitions.create("width"),
+      width: "100%",
+      [theme.breakpoints.up("sm")]: {
         width: 120,
-        '&:focus': {
-          width: 200,
-        },
-      },
+        "&:focus": {
+          width: 200
+        }
+      }
     },
     flex: {
-      display: 'flex',
-    },
+      display: "flex"
+    }
   }
 }
 
