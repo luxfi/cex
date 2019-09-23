@@ -186,7 +186,8 @@ class Header extends React.Component {
                     inputProps={{ "aria-label": "search" }}
                   />
                 </div>
-                {accountLoaded ? (
+                {/* {accountLoaded ? ( */}
+                {!accountLoaded ? ( // temporary until create real login...
                   <>
                     <MuiText
                       select
@@ -217,10 +218,10 @@ class Header extends React.Component {
                         <ArrowUpward />
                         <span style={{ padding: "15px" }}>Deposit</span>
                       </MenuItem>
-                      <MenuItem onClick={this.send}>
+                      {/* <MenuItem onClick={this.send}> // propbably won't need this, decide later (tyler)
                         <Send />
                         <span style={{ padding: "15px" }}>Send</span>
-                      </MenuItem>
+                      </MenuItem> */}
                       <MenuItem onClick={this.redeem}>
                         <ArrowDownward />
                         <span style={{ padding: "15px" }}>Redeem</span>
