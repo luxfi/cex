@@ -49,9 +49,12 @@ const useStyles = makeStyles(theme => ({
     flexWrap: "wrap"
   },
   textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
+    // marginLeft: theme.spacing(1),
+    // marginRight: theme.spacing(1),
     width: "100%"
+  },
+  input: {
+    padding: "12px"
   }
 }))
 
@@ -68,7 +71,7 @@ function getStepContent(step) {
   }
 }
 
-export default function Checkout() {
+export default function Mnemonic() {
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
 
@@ -150,6 +153,15 @@ const Code = () => {
         rows="4"
         className={classes.textField}
         variant="outlined"
+        InputProps={{
+          readOnly: true,
+          className: classes.input,
+          style: {
+            // needed this here for padding, not sure why...
+          }
+        }}
+        margin="normal"
+        value="good lottery carpet report chapter model digital mosquito divert battle nuclear candy"
       />
     </>
   )
