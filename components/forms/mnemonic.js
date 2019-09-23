@@ -52,9 +52,6 @@ const useStyles = makeStyles(theme => ({
     // marginLeft: theme.spacing(1),
     // marginRight: theme.spacing(1),
     width: "100%"
-  },
-  input: {
-    padding: "12px"
   }
 }))
 
@@ -109,7 +106,8 @@ export default function Mnemonic() {
                   Thank you
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your transaction is being processed.
+                  Please keep your code in case you need to recover your
+                  password.
                 </Typography>
               </>
             ) : (
@@ -155,26 +153,41 @@ const Code = () => {
         variant="outlined"
         InputProps={{
           readOnly: true,
-          className: classes.input,
           style: {
+            padding: "12px"
             // needed this here for padding, not sure why...
           }
         }}
         margin="normal"
         value="good lottery carpet report chapter model digital mosquito divert battle nuclear candy"
       />
+      <small>
+        You will be asked to re-enter your recovery code on the next step to
+        finish setting up your account
+      </small>
     </>
   )
 }
 
 const Confirmation = () => {
+  const classes = useStyles()
   return (
     <>
-      <h2>Back up your ESX Account</h2>
-      <p>
-        ESX does not store your unencrypted account. Copy your recovery code
-        somewhere safe, you must have it to recover your account.
-      </p>
+      <h2>Almost Done</h2>
+      <p>Enter your recovery code to finish setting up your ESX account.</p>
+      <TextField
+        multiline
+        rows="4"
+        className={classes.textField}
+        variant="outlined"
+        InputProps={{
+          style: {
+            padding: "12px"
+            // needed this here for padding, not sure why...
+          }
+        }}
+        margin="normal"
+      />
     </>
   )
 }
