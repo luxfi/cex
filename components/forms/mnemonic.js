@@ -7,6 +7,7 @@ import Step from "@material-ui/core/Step"
 import StepLabel from "@material-ui/core/StepLabel"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
+import TextField from "@material-ui/core/TextField"
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -42,6 +43,15 @@ const useStyles = makeStyles(theme => ({
   button: {
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1)
+  },
+  container: {
+    display: "flex",
+    flexWrap: "wrap"
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: "100%"
   }
 }))
 
@@ -61,6 +71,10 @@ function getStepContent(step) {
 export default function Checkout() {
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
+
+  const handleChange = name => event => {
+    setValues({ ...values, [name]: event.target.value })
+  }
 
   const handleNext = () => {
     setActiveStep(activeStep + 1)
@@ -123,6 +137,7 @@ export default function Checkout() {
 }
 
 const Code = () => {
+  const classes = useStyles()
   return (
     <>
       <h2>Back up your ESX Account</h2>
@@ -130,6 +145,12 @@ const Code = () => {
         ESX does not store your unencrypted account. Copy your recovery code
         somewhere safe, you must have it to recover your account.
       </p>
+      <TextField
+        multiline
+        rows="4"
+        className={classes.textField}
+        variant="outlined"
+      />
     </>
   )
 }
@@ -145,6 +166,7 @@ const Confirmation = () => {
     </>
   )
 }
+
 // import Form, { InputData } from 'react-referential-forms'
 // import Input from '../controls/input'
 // import Copy from '../controls/copy'
