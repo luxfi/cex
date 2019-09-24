@@ -1,170 +1,268 @@
-import React from 'react'
+import React from "react"
 
-import Form, { MuiText } from 'react-referential-forms'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import IconButton from '@material-ui/core/IconButton'
-import Button from '@material-ui/core/Button'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import AccountCircle from '@material-ui/icons/AccountCircle'
-import Link from '../link'
-import Router from 'next/router'
+import Form, { MuiText } from "react-referential-forms"
+import AppBar from "@material-ui/core/AppBar"
+import Toolbar from "@material-ui/core/Toolbar"
+import IconButton from "@material-ui/core/IconButton"
+import Button from "@material-ui/core/Button"
+import Menu from "@material-ui/core/Menu"
+import Input from "@material-ui/core/Input"
+import InputBase from "@material-ui/core/InputBase"
+import MenuItem from "@material-ui/core/MenuItem"
+import AccountCircle from "@material-ui/icons/AccountCircle"
+import Typography from "@material-ui/core/Typography"
+import Slide from "@material-ui/core/Slide"
+import useScrollTrigger from "@material-ui/core/useScrollTrigger"
+import SearchIcon from "@material-ui/icons/Search"
+import Link from "../link"
+import Router from "next/router"
 
-import Send from '@material-ui/icons/Send'
-import ArrowUpward from '@material-ui/icons/ArrowUpward'
-import ArrowDownward from '@material-ui/icons/ArrowDownward'
-import ExitToApp from '@material-ui/icons/ExitToApp'
+import Send from "@material-ui/icons/Send"
+import ArrowUpward from "@material-ui/icons/ArrowUpward"
+import ArrowDownward from "@material-ui/icons/ArrowDownward"
+import ExitToApp from "@material-ui/icons/ExitToApp"
 
-import { withStyles, MuiThemeProvider } from '@material-ui/core/styles'
-import { watch } from 'react-referential'
-import {
-  getIdentity,
-  removeIdentity,
-} from '../../src/wallet'
+import { fade, withStyles } from "@material-ui/core/styles"
+import { watch } from "react-referential"
+import { getIdentity, removeIdentity } from "../../src/wallet"
+import { classExpression } from "babel-types"
 
 let currencies = {
-  usd: 'USD',
-  eur: 'EUR',
-  jpy: 'JPY',
+  usd: "USD",
+  eur: "EUR",
+  jpy: "JPY"
 }
 
-@watch('header')
+// replace custom code to use material native hideonscroll
+function HideOnScroll(props) {
+  const { children, window } = props
+  // Note that you normally won't need to set the window ref as useScrollTrigger
+  // will default to window.
+  // This is only being set here because the demo is in an iframe.
+  const trigger = useScrollTrigger({ target: window ? window() : undefined })
+
+  return (
+    <Slide appear={false} direction="down" in={!trigger}>
+      {children}
+    </Slide>
+  )
+}
+
+@watch("header")
 class Header extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      anchorEl: null,
+      anchorEl: null
     }
-
-    this.lastScroll = null;
-    this.handleScroll = this.handleScroll.bind(this);
   }
 
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll, { passive: true });
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
-
-  handleScroll(evt) {
-    let identity = getIdentity()
-    let accountLoaded = !!this.props.rootData.get('account.id') && identity
-
-    if (accountLoaded) {
-      return
-    }
-
-    const lastScroll = window.scrollY;
-
-    if (lastScroll === this.lastScroll) {
-      return;
-    }
-
-    const shouldShow = (this.lastScroll !== null) ? (lastScroll < this.lastScroll) : null;
-
-    if (shouldShow !== this.state.shouldShow) {
-      this.setState((prevState, props) => ({
-        ...prevState,
-        shouldShow,
-      }));
-      if (shouldShow) {
-        document.getElementById("navbar").style.transform = 'translateY(0)';
-        document.getElementById("navbar").style.transition = 'transform 1s';
-
-      }
-      else if (!shouldShow) {
-        document.getElementById("navbar").style.transform = 'translateY(-115px)';
-        document.getElementById("navbar").style.transition = 'transform 1s';
-      }
-    }
-
-    if (window.scrollY === 0) {
-      document.getElementById("navbar").style.backgroundColor = 'transparent';
-      document.getElementById("navbar").style.transition = 'background-color .5s';
-    }
-    else {
-      document.getElementById("navbar").style.backgroundColor = "#1a1e3c";
-    }
-
-    this.lastScroll = lastScroll;
-  }
-
-  handleMenu = (event) => {
+  handleMenu = event => {
     this.setState({
-      anchorEl: event.currentTarget,
+      anchorEl: event.currentTarget
     })
   }
 
   handleClose = () => {
     this.setState({
-      anchorEl: null,
+      anchorEl: null
     })
   }
 
   account = () => {
     this.setState({
-      anchorEl: null,
+      anchorEl: null
     })
-    Router.push('/account/')
+    Router.push("/account/")
   }
 
   send = () => {
     this.setState({
-      anchorEl: null,
+      anchorEl: null
     })
-    Router.push('/account/send')
+    Router.push("/account/send")
   }
 
   deposit = () => {
     this.setState({
-      anchorEl: null,
+      anchorEl: null
     })
-    Router.push('/account/deposit')
+    Router.push("/account/deposit")
   }
 
-  redeem = () => {
+  withdrawal = () => {
     this.setState({
-      anchorEl: null,
+      anchorEl: null
     })
-    Router.push('/account/redeem')
+    Router.push("/account/withdrawal")
   }
 
   logout = () => {
     this.setState({
-      anchorEl: null,
+      anchorEl: null
     })
 
-    this.props.rootData.ref('account').clear()
+    this.props.rootData.ref("account").clear()
     removeIdentity()
-    Router.push('/')
+    Router.push("/")
   }
 
   login = () => {
     this.setState({
-      anchorEl: null,
+      anchorEl: null
     })
 
-    Router.push('/')
+    Router.push("/login")
   }
 
   signup = () => {
     this.setState({
-      anchorEl: null,
+      anchorEl: null
     })
 
-    Router.push('/signup')
+    Router.push("/signup")
   }
 
   render() {
     let { classes, ...props } = this.props
     let identity = getIdentity()
-    let accountLoaded = !!this.props.rootData.get('account.id') && identity
+    let accountLoaded = !!this.props.rootData.get("account.id") && identity
 
     let open = !!this.state.anchorEl
+
+    const LoggedInNavBar = () => {
+      return (
+        <AppBar
+          className={classes.root}
+          position="fixed"
+          color="default"
+        ></AppBar>
+      )
+    }
+
+    const GuestNavBar = () => {
+      const [anchorEl, setAnchorEl] = React.useState(null)
+      const open = Boolean(anchorEl)
+
+      function handleClick(event) {
+        setAnchorEl(event.currentTarget)
+      }
+
+      function handleClose() {
+        setAnchorEl(null)
+      }
+      return (
+        <>
+          <HideOnScroll>
+            <AppBar
+              id="navbar"
+              className={classes.root}
+              position="fixed"
+              color="default"
+            >
+              <Toolbar className={classes.noPadding}>
+                <Link href="/" className={classes.flex}>
+                  {" "}
+                  {/* get rid of inline style */}
+                  <img
+                    id="logo"
+                    src="/static/img/logo.png"
+                    alt="ESX"
+                    height="60px"
+                  />
+                </Link>
+                <Typography variant="h7">
+                  Community Inspired SuperFan Network
+                </Typography>
+                <div className={classes.grow} />
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <SearchIcon />
+                  </div>
+                  <InputBase
+                    placeholder="Search…"
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput
+                    }}
+                    inputProps={{ "aria-label": "search" }}
+                  />
+                </div>
+                {/* {accountLoaded ? ( */}
+                {!accountLoaded ? ( // temporary until create real login...
+                  <>
+                    <MuiText
+                      select
+                      value="usd"
+                      className={classes.textField}
+                      margin="normal"
+                      options={currencies}
+                    />
+                    <IconButton
+                      aria-controls="menu"
+                      aria-haspopup="true"
+                      onClick={handleClick}
+                    >
+                      <AccountCircle style={{ fontSize: "36" }} />
+                    </IconButton>
+                    <Menu
+                      id="menu"
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={open}
+                      onClose={handleClose}
+                    >
+                      <MenuItem onClick={this.account}>
+                        <AccountCircle />
+                        <span style={{ padding: "15px" }}>Account</span>
+                      </MenuItem>
+                      <MenuItem onClick={this.deposit}>
+                        <ArrowUpward />
+                        <span style={{ padding: "15px" }}>Deposit</span>
+                      </MenuItem>
+                      {/* <MenuItem onClick={this.send}> // propbably won't need this, decide later (tyler)
+                        <Send />
+                        <span style={{ padding: "15px" }}>Send</span>
+                      </MenuItem> */}
+                      <MenuItem onClick={this.withdrawal}>
+                        <ArrowDownward />
+                        <span style={{ padding: "15px" }}>Withdrawal</span>
+                      </MenuItem>
+                      <MenuItem onClick={this.logout}>
+                        <ExitToApp />
+                        <span style={{ padding: "15px" }}>Logout</span>
+                      </MenuItem>
+                    </Menu>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      color="inherit"
+                      onClick={this.login}
+                      className={classes.menuButton}
+                    >
+                      Login
+                    </Button>
+                    <Button
+                      color="inherit"
+                      variant="outlined"
+                      onClick={this.signup}
+                      className={classes.menuButton}
+                    >
+                      Sign Up
+                    </Button>
+                  </>
+                )}
+              </Toolbar>
+            </AppBar>
+          </HideOnScroll>
+          <Toolbar />
+        </>
+      )
+    }
+
+    return <GuestNavBar />
 
     return pug`
         if accountLoaded
@@ -248,30 +346,61 @@ class Header extends React.Component {
   }
 }
 
-const styles = (theme) => {
+const styles = theme => {
   return {
     root: {
-      background: 'transparent',
-      boxShadow: 'none',
+      flexGrow: 1
     },
-    noPadding: {
-      padding: 0,
+    menuButton: {
+      marginRight: theme.spacing(2)
     },
     grow: {
       flexGrow: 1,
+      display: "none",
+      [theme.breakpoints.up("sm")]: {
+        display: "block"
+      }
     },
-    logoImg: {
-      marginTop: 7,
-      maxHeight: 42,
+    search: {
+      position: "relative",
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: fade(theme.palette.common.white, 0.15),
+      "&:hover": {
+        backgroundColor: fade(theme.palette.common.white, 0.25)
+      },
+      marginLeft: 0,
+      width: "100%",
+      [theme.breakpoints.up("sm")]: {
+        marginLeft: theme.spacing(1),
+        width: "auto"
+      }
     },
-    textField: {
-      marginTop: -7,
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
+    searchIcon: {
+      width: theme.spacing(7),
+      height: "100%",
+      position: "absolute",
+      pointerEvents: "none",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
     },
-    menu: {
-      width: 200,
+    inputRoot: {
+      color: "inherit"
     },
+    inputInput: {
+      padding: theme.spacing(1, 1, 1, 7),
+      transition: theme.transitions.create("width"),
+      width: "100%",
+      [theme.breakpoints.up("sm")]: {
+        width: 120,
+        "&:focus": {
+          width: 200
+        }
+      }
+    },
+    flex: {
+      display: "flex"
+    }
   }
 }
 

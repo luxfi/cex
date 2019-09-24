@@ -8,7 +8,7 @@ export default props => {
                     width: 100%;
                     position: relative;
                     z-index: -1;
-                    height: 615px;;
+                    height: 685px;
                     object-fit: cover;
                     margin-top: -70px;
                 }
