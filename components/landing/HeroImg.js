@@ -1,18 +1,31 @@
+import React from "react"
 import heroImg from "../../assets/img/terminator.jpg"
 export default props => {
+  const { className, children } = props
   return (
-    <div>
-      <img src={heroImg} alt="hero image" />
+    <>
+      <div
+        style={{
+          backgroundImage: `url('${heroImg}')`
+        }}
+        className={`hero-image ${className}`}
+      >
+        {children}
+      </div>
       <style jsx>{`
-        img {
-          width: 100%;
-          position: relative;
-          z-index: -1;
-          object-fit: cover;
-          margin-top: -70px;
+        .hero-image {
           overflow: hidden;
+          height: 90vh;
+          maxheight: "1000px";
+          background-position: center center;
+          background-size: cover;
+          margin: 0px;
+          padding: 0px;
+          border: 0px;
+          display: flex;
+          align-items: center;
         }
       `}</style>
-    </div>
+    </>
   )
 }
