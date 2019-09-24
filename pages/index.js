@@ -1,20 +1,20 @@
-import React from 'react'
-import { inject, observer } from 'mobx-react'
-import TickerStrip from '../components/generic/TickerStrip'
-import PageRow from '../components/generic/PageRow'
-import Slider from '../components/generic/Slider'
-import Footer from '../components/generic/Footer'
-import Hero from '../components/landing/Hero'
-import Chart from '../components/landing/Chart'
-import PartnerGrid from '../components/landing/PartnerGrid'
-import SecuredByGrid from '../components/landing/SecuredByGrid'
-import WhatPanel from '../components/landing/WhatPanel'
-import HowToTradePanel from '../components/landing/HowToTradePanel'
+import React from "react"
+import { inject, observer } from "mobx-react"
+import TickerStrip from "../components/generic/TickerStrip"
+import PageRow from "../components/generic/PageRow"
+import Slider from "../components/generic/Slider"
+import Footer from "../components/generic/Footer"
+import Hero from "../components/landing/Hero"
+import Chart from "../components/landing/Chart"
+import PartnerGrid from "../components/landing/PartnerGrid"
+import SecuredByGrid from "../components/landing/SecuredByGrid"
+import WhatPanel from "../components/landing/WhatPanel"
+import HowToTradePanel from "../components/landing/HowToTradePanel"
 import TrendingNowSliderItem from "../components/landing/TrendingNowSliderItem"
-import PopularGenres from '../components/landing/PopularGenres'
-import StartCTA from '../components/landing/StartTrading'
+import PopularGenres from "../components/landing/PopularGenres"
+import StartCTA from "../components/landing/StartTrading"
 
-@inject('store')
+@inject("store")
 @observer
 export default class Index extends React.Component {
   state = {
@@ -29,7 +29,7 @@ export default class Index extends React.Component {
   }
 
   componentDidMount() {
-    console.log('index props componentDidMount', this.props.store.orderBook)
+    console.log("index props componentDidMount", this.props.store.orderBook)
     this.props.store.orderBook.initiateDataGenerator()
   }
 
@@ -39,23 +39,26 @@ export default class Index extends React.Component {
 
   render() {
     const { movieStore } = this.props.store
-    const trendingSliderItems = movieStore.topMovies.slice(0, 14)
+    const trendingSliderItems = movieStore.topMovies
+      .slice(0, 14)
       .filter(item => item.verticalImg !== "N/A")
       .map((sliderItem, key) => {
-        const { title, Imdbid, verticalImg, ticker, price, change } = sliderItem;
-        return <TrendingNowSliderItem
-          key={Imdbid}
-          title={title}
-          imgSrc={verticalImg}
-          width="166px"
-          ticker={ticker}
-          price={price}
-          change={change} />
+        const { title, Imdbid, verticalImg, ticker, price, change } = sliderItem
+        return (
+          <TrendingNowSliderItem
+            key={Imdbid}
+            title={title}
+            imgSrc={verticalImg}
+            width="166px"
+            ticker={ticker}
+            price={price}
+            change={change}
+          />
+        )
       })
 
     return (
       <div>
-        <TickerStrip movies={movieStore.movies} />
         <Hero />
         {/* <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Trending Now"} paddingHack>
           <Slider movieStore={movieStore.topMovies} sliderItems={trendingSliderItems} />
@@ -83,8 +86,7 @@ export default class Index extends React.Component {
         </PageRow>
 
         <Footer />
-      </div >
-
+      </div>
     )
   }
 }

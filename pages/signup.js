@@ -1,30 +1,27 @@
-import React from 'react'
-import Router from 'next/router'
-import { watch } from 'react-referential'
-import InvestorSignupForm from '../components/forms/investor-signup'
-import CreatorSignupForm from '../components/forms/creator-signup'
-import Emitter from '../src/emitter'
-import { setIdentity } from '../src/wallet'
+import React from "react"
+import Router from "next/router"
+import { watch } from "react-referential"
+import SignupForm from "../components/forms/signup"
+import Emitter from "../src/emitter"
+import { setIdentity } from "../src/wallet"
 
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
+import Tabs from "@material-ui/core/Tabs"
+import Tab from "@material-ui/core/Tab"
 
-import Link from '../components/link'
-import {
-  getEncodedPrivateKey,
-} from '../src/wallet'
+import Link from "../components/link"
+import { getEncodedPrivateKey } from "../src/wallet"
 
 class SignUp extends React.Component {
   static async getInitialProps({ mobxStore }) {
     await mobxStore.movieStore.fetch()
     return {
       movieStore: mobxStore.movieStore,
-      orderBook: mobxStore.orderBook,
+      orderBook: mobxStore.orderBook
     }
   }
 
   render() {
-    return <InvestorSignupForm />
+    return <SignupForm />
   }
 }
 // @watch('signupPage')
