@@ -13,9 +13,10 @@ import Hero from "../components/landing/Hero"
 import styles from "../assets/jss/views/landingPage.js"
 
 // Sections for this page
-import ProductSection from "../views/LandingPage/Sections/ProductSection.js"
-import TeamSection from "../views/LandingPage/Sections/TeamSection.js"
-import WorkSection from "../views/LandingPage/Sections/WorkSection.js"
+import InvestorTopPicksSection from "../views/LandingPage/Sections/InvestorTopPicksSection"
+import ProductSection from "../views/LandingPage/Sections/ProductSection"
+import TeamSection from "../views/LandingPage/Sections/TeamSection"
+import WorkSection from "../views/LandingPage/Sections/WorkSection"
 
 @inject("store")
 @observer
@@ -46,6 +47,7 @@ class Index extends React.Component {
         <Hero />
         <div className={`${classes.main} ${classes.mainRaised}`}>
           <div className={classes.container}>
+            <InvestorTopPicksSection />
             {/* <ProductSection />
             <TeamSection />
             <WorkSection /> */}
