@@ -3,6 +3,7 @@ import { inject, observer } from "mobx-react"
 import TickerStrip from "../components/generic/TickerStrip"
 import PageRow from "../components/generic/PageRow"
 import Slider from "../components/generic/Slider"
+import Header from "../components/layout/header"
 import Footer from "../components/generic/Footer"
 import Hero from "../components/landing/Hero"
 import Chart from "../components/landing/Chart"
@@ -59,6 +60,7 @@ export default class Index extends React.Component {
 
     return (
       <div>
+        <Header />
         <Hero />
         {/* <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Trending Now"} paddingHack>
           <Slider movieStore={movieStore.topMovies} sliderItems={trendingSliderItems} />
