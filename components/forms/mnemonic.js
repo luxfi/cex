@@ -139,6 +139,22 @@ export default function Mnemonic() {
 
 const Code = () => {
   const classes = useStyles()
+
+  const copy = () => {
+    /* Get the text field */
+    var copyText = document.getElementById("myInput")
+
+    /* Select the text field */
+    copyText.select()
+    copyText.setSelectionRange(0, 99999) /*For mobile devices*/
+
+    /* Copy the text inside the text field */
+    document.execCommand("copy")
+
+    /* Alert the copied text */
+    alert("Copied the text: " + copyText.value)
+  }
+
   return (
     <>
       <h2>Back up your ESX Account</h2>
@@ -146,6 +162,9 @@ const Code = () => {
         ESX does not store your unencrypted account. Copy your recovery code
         somewhere safe, you must have it to recover your account.
       </p>
+      <Button variant="contained" color="secondary" onclick={() => this.copy()}>
+        Copy text
+      </Button>
       <TextField
         multiline
         rows="4"
