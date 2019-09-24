@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const steps = ["Linked Accounts", "Deposit Amount"]
+const steps = ["Linked Accounts", "Withdrawal Amount"]
 
 function getStepContent(step) {
   switch (step) {
@@ -124,24 +124,20 @@ export default function Checkout() {
   )
 }
 
-// import React from 'react'
-// import Router from 'next/router'
-// import PickBank from '../../components/forms/pick-bank'
-// import PickToken from '../../components/forms/pick-token'
-// import PickAddress from '../../components/forms/pick-address'
-// import PickAmount from '../../components/forms/pick-amount'
-// import ArrowUpward from '@material-ui/icons/ArrowUpward'
-// import Container from '@material-ui/core/Container'
-// import Emitter from '../../src/emitter'
+// import React from "react"
+// import Router from "next/router"
+// import PickBank from "../../components/forms/pick-bank"
+// import PickToken from "../../components/forms/pick-token"
+// import PickAddress from "../../components/forms/pick-address"
+// import PickAmount from "../../components/forms/pick-amount"
+// import ArrowDownward from "@material-ui/icons/ArrowDownward"
+// import Emitter from "../../src/emitter"
 
-// import { watch } from 'react-referential'
-// import { loadable } from '../../components/app/loader'
-// import {
-//   getEncodedPrivateKey,
-//   canDecodePrivateKey,
-// } from '../../src/wallet'
+// import { watch } from "react-referential"
+// import { loadable } from "../../components/app/loader"
+// import { getEncodedPrivateKey, canDecodePrivateKey } from "../../src/wallet"
 
-// @watch('depositPage')
+// @watch("redeemPage")
 // @loadable
 // export default class Account extends React.Component {
 //   constructor(props) {
@@ -149,51 +145,51 @@ export default function Checkout() {
 
 //     // if (!getEncodedPrivateKey() || !canDecodePrivateKey()) {
 //     //   this.logout()
-//     // }
+//     // } // kill until mobx setup (tyler)
 
 //     this.emitter = new Emitter()
 
-//     this.emitter.on('pick-bank:submit', (bank) => {
-//       this.setState({
-//         bank: bank,
-//         step: 2,
-//       })
-//     })
-
-//     this.emitter.on('pick-token:submit', (token) => {
+//     this.emitter.on("pick-token:submit", token => {
 //       this.setState({
 //         token: token,
-//         step: 3,
+//         step: 2
 //       })
 //     })
 
-//     this.emitter.on('pick-address:submit', (address) => {
+//     this.emitter.on("pick-address:submit", address => {
 //       this.setState({
 //         address: address,
-//         step: 4,
+//         step: 3
 //       })
 //     })
 
-//     this.emitter.on('pick-amount:submit', (amount) => {
+//     this.emitter.on("pick-amount:submit", amount => {
 //       this.setState({
 //         amount: amount,
-//         step: 5,
+//         step: 4
 //       })
 //     })
 
-//     this.emitter.on('pick-bank:back', () => {
+//     this.emitter.on("pick-bank:submit", bank => {
+//       this.setState({
+//         bank: bank,
+//         step: 5
+//       })
+//     })
+
+//     this.emitter.on("pick-token:back", () => {
 //       this.back()
 //     })
 
-//     this.emitter.on('pick-token:back', () => {
+//     this.emitter.on("pick-address:back", () => {
 //       this.back()
 //     })
 
-//     this.emitter.on('pick-address:back', () => {
+//     this.emitter.on("pick-amount:back", () => {
 //       this.back()
 //     })
 
-//     this.emitter.on('pick-amount:back', () => {
+//     this.emitter.on("pick-bank:back", () => {
 //       this.back()
 //     })
 
@@ -202,63 +198,57 @@ export default function Checkout() {
 //       token: null,
 //       address: null,
 //       amount: null,
-//       step: 1,
+//       step: 1
 //     }
 //   }
 
 //   componentWillUnmount() {
-//     this.emitter.off('pick-bank:submit')
-//     this.emitter.off('pick-bank:back')
-//     this.emitter.off('pick-token:submit')
-//     this.emitter.off('pick-token:back')
-//     this.emitter.off('pick-address:submit')
-//     this.emitter.off('pick-address:back')
-//     this.emitter.off('pick-amount:submit')
-//     this.emitter.off('pick-amount:back')
+//     this.emitter.off("pick-token:submit")
+//     this.emitter.off("pick-token:back")
+//     this.emitter.off("pick-address:submit")
+//     this.emitter.off("pick-address:back")
+//     this.emitter.off("pick-amount:submit")
+//     this.emitter.off("pick-amount:back")
+//     this.emitter.off("pick-bank:submit")
+//     this.emitter.off("pick-bank:back")
 //   }
 
 //   back() {
 //     if (this.state.step == 1) {
-//       Router.push('/')
+//       Router.push("/")
 //     }
 //     this.setState({ step: this.state.step - 1 })
 //   }
 
 //   logout() {
-//     this.props.rootData.ref('account').clear()
+//     this.props.rootData.ref("account").clear()
 //     removeIdentity()
-//     Router.push('/')
+//     Router.push("/")
 //   }
 
 //   done = () => {
-//     Router.push('/')
+//     Router.push("/")
 //   }
+
 //   render() {
 //     let { classes } = this.props
 //     let { step } = this.state
 
-//     // return (
-//     //   <main id="account-deposit" className="account">
-//     //     <Container maxWidth="md">
-//     //     </Container>
-//     //   </main>
-//     // )
-
 //     return pug`
-//       main#account-deposit.account
+//       main#account-redeem.account
 //         .content
 //           if step != 5
 //             .icon
-//               ArrowUpward(style={ fontSize: 100 })
-//               br
+//               ArrowDownward(style={ fontSize: 100 })
+//             br
 //           if step == 1
-//             PickBank(data=this.props.data emitter=this.emitter)
-//           if step == 2
 //             PickToken(data=this.props.data emitter=this.emitter)
-//           if step == 3
+//           if step == 2
 //             PickAddress(data=this.props.data emitter=this.emitter)
-//           if step == 4
+//           if step == 3
 //             PickAmount(data=this.props.data emitter=this.emitter)
+//           if step == 4
+//             PickBank(data=this.props.data emitter=this.emitter)
 //           if step == 5
 //             .confirmation
 //               img(src='/static/img/big-check.svg')

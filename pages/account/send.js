@@ -1,73 +1,70 @@
-import React from 'react'
-import Router from 'next/router'
-import PickReceiver from '../../components/forms/pick-receiver'
-import PickToken from '../../components/forms/pick-token'
-import PickAddress from '../../components/forms/pick-address'
-import PickAmount from '../../components/forms/pick-amount'
-import Send from '@material-ui/icons/Send'
-import Emitter from '../../src/emitter'
+import React from "react"
+import Router from "next/router"
+import PickReceiver from "../../components/forms/pick-receiver"
+import PickToken from "../../components/forms/pick-token"
+import PickAddress from "../../components/forms/pick-address"
+import PickAmount from "../../components/forms/pick-amount"
+import Send from "@material-ui/icons/Send"
+import Emitter from "../../src/emitter"
 
-import { withStyles } from '@material-ui/core/styles'
-import { watch } from 'react-referential'
-import { loadable } from '../../components/app/loader'
-import {
-  getEncodedPrivateKey,
-  canDecodePrivateKey,
-} from '../../src/wallet'
+import { withStyles } from "@material-ui/core/styles"
+import { watch } from "react-referential"
+import { loadable } from "../../components/app/loader"
+import { getEncodedPrivateKey, canDecodePrivateKey } from "../../src/wallet"
 
-@watch('sendPage')
+@watch("sendPage")
 @loadable
 class Account extends React.Component {
   constructor(props) {
     super(props)
 
-    if (!getEncodedPrivateKey() || !canDecodePrivateKey()) {
-      this.logout()
-    }
+    // if (!getEncodedPrivateKey() || !canDecodePrivateKey()) {
+    //   this.logout()
+    // } //comment out until we create login using mobx (tyler)
 
     this.emitter = new Emitter()
 
-    this.emitter.on('pick-token:submit', (token) => {
+    this.emitter.on("pick-token:submit", token => {
       this.setState({
-        token:token,
-        step: 2,
+        token: token,
+        step: 2
       })
     })
 
-    this.emitter.on('pick-address:submit', (address) => {
+    this.emitter.on("pick-address:submit", address => {
       this.setState({
         address: address,
-        step: 3,
+        step: 3
       })
     })
 
-    this.emitter.on('pick-amount:submit', (amount) => {
+    this.emitter.on("pick-amount:submit", amount => {
       this.setState({
         amount: amount,
-        step: 4,
+        step: 4
       })
     })
 
-    this.emitter.on('pick-receiver:submit', (receiver) => {
+    this.emitter.on("pick-receiver:submit", receiver => {
       this.setState({
         to: receiver,
-        step: 5,
+        step: 5
       })
     })
 
-    this.emitter.on('pick-token:back', () => {
+    this.emitter.on("pick-token:back", () => {
       this.back()
     })
 
-    this.emitter.on('pick-address:back', () => {
+    this.emitter.on("pick-address:back", () => {
       this.back()
     })
 
-    this.emitter.on('pick-amount:back', () => {
+    this.emitter.on("pick-amount:back", () => {
       this.back()
     })
 
-    this.emitter.on('pick-receiver:back', () => {
+    this.emitter.on("pick-receiver:back", () => {
       this.back()
     })
 
@@ -76,36 +73,36 @@ class Account extends React.Component {
       token: null,
       address: null,
       amount: null,
-      step: 1,
+      step: 1
     }
   }
 
   componentWillUnmount() {
-    this.emitter.off('pick-token:submit')
-    this.emitter.off('pick-token:back')
-    this.emitter.off('pick-address:submit')
-    this.emitter.off('pick-address:back')
-    this.emitter.off('pick-amount:submit')
-    this.emitter.off('pick-amount:back')
-    this.emitter.off('pick-receiver:submit')
-    this.emitter.off('pick-receiver:back')
+    this.emitter.off("pick-token:submit")
+    this.emitter.off("pick-token:back")
+    this.emitter.off("pick-address:submit")
+    this.emitter.off("pick-address:back")
+    this.emitter.off("pick-amount:submit")
+    this.emitter.off("pick-amount:back")
+    this.emitter.off("pick-receiver:submit")
+    this.emitter.off("pick-receiver:back")
   }
 
   back() {
     if (this.state.step == 1) {
-      Router.push('/')
+      Router.push("/")
     }
     this.setState({ step: this.state.step - 1 })
   }
 
   logout() {
-    this.props.rootData.ref('account').clear()
+    this.props.rootData.ref("account").clear()
     removeIdentity()
-    Router.push('/')
+    Router.push("/")
   }
 
   done = () => {
-    Router.push('/')
+    Router.push("/")
   }
 
   render() {
@@ -139,16 +136,14 @@ class Account extends React.Component {
   }
 }
 
-const styles = (theme) => {
+const styles = theme => {
   return {
     rotated: {
-      transform: 'rotate(-45deg)',
-      position: 'relative',
-      left: '3px',
-    },
+      transform: "rotate(-45deg)",
+      position: "relative",
+      left: "3px"
+    }
   }
 }
 
 export default withStyles(styles)(Account)
-
-

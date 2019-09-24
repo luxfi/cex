@@ -20,6 +20,7 @@ import { HANZO_KEY, HANZO_ENDPOINT } from '../src/settings.js'
 
 import blue from '@material-ui/core/colors/blue'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 // import 'reeeset/src/reeeset.css'
 // import '../styles.styl'
@@ -29,26 +30,26 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 const theme = createMuiTheme({
   palette: {
     type: 'light',
-    primary: {
-      main: blue[500],
-    },
-    secondary: {
-      main: 'rgba(29,226,160,0.7)',
-    },
-    background: {
-      paper: '#1e2748',
-    },
+    // primary: {
+    //   main: blue[500],
+    // },
+    // secondary: {
+    //   main: 'rgba(29,226,160,0.7)',
+    // },
+    // background: {
+    //   paper: '#1e2748',
+    // },
   },
   overrides: {
     MuiButton: {
-      root: {
-        backgroundColor: 'transparent',
-        color: 'white',
-        fontSize: '12px'
-      },
-      outlined: {
-        border: "1px solid white"
-      }
+      // root: {
+      //   backgroundColor: 'transparent',
+      //   color: 'white',
+      //   fontSize: '12px'
+      // },
+      // outlined: {
+      //   border: "1px solid white"
+      // }
     }
   },
   typography: {
@@ -148,21 +149,25 @@ class MyMobxApp extends App {
     console.log('Rendering _app with isHanzoPage', isHanzoPage, localRoute)
 
     return (
-      <Container>
-        <Provider store={this.mobxStore}>
-          <MuiThemeProvider theme={theme}>
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-              <RefProvider>
-                <BalanceProvider>
-                  {isHanzoPage && <Header />}
-                  <Component {...pageProps} />
-                  {isHanzoPage && <Loader />}
-                </BalanceProvider>
-              </RefProvider>
-            </MuiPickersUtilsProvider>
-          </MuiThemeProvider>
-        </Provider>
-      </Container>
+      <>
+        <CssBaseline />
+        <Container>
+          <Provider store={this.mobxStore}>
+            <MuiThemeProvider theme={theme}>
+              <MuiPickersUtilsProvider utils={MomentUtils}>
+                <RefProvider>
+                  <BalanceProvider>
+                    {isHanzoPage && <Header />}
+                    <Component {...pageProps} />
+                    {isHanzoPage && <Loader />}
+                  </BalanceProvider>
+                </RefProvider>
+              </MuiPickersUtilsProvider>
+            </MuiThemeProvider>
+          </Provider>
+        </Container>
+        {/* The rest of your application */}
+      </>
     )
   }
 
@@ -173,24 +178,24 @@ class MyMobxApp extends App {
   }
 }
 
-Router.events.on('routeChangeStart', (r) => {
-  const isHanzo = checkHanzoPage(r)
-  console.log('Starting route change', r, isHanzo)
-  if (isHanzo) {
-    startLoading(' ')
-    setTimeout(() => {
-      stopLoading()
-    }, 3000)
-  }
-})
+// Router.events.on('routeChangeStart', (r) => {
+//   const isHanzo = checkHanzoPage(r)
+//   console.log('Starting route change', r, isHanzo)
+//   if (isHanzo) {
+//     startLoading(' ')
+//     setTimeout(() => {
+//       stopLoading()
+//     }, 3000)
+//   }
+// })
 
-Router.events.on('routeChangeComplete', (r) => {
-  const isHanzo = checkHanzoPage(r)
-  console.log('Route change complete', r, isHanzo)
-  if (isHanzo) {
-    stopLoading()
-  }
-})
+// Router.events.on('routeChangeComplete', (r) => {
+//   const isHanzo = checkHanzoPage(r)
+//   console.log('Route change complete', r, isHanzo)
+//   if (isHanzo) {
+//     stopLoading()
+//   }
+// })
 
 // Router.events.on('routeChangeError', (err, r) => {
 //   console.log('Route change error', err, r)

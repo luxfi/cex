@@ -39,10 +39,10 @@ class Portfolio2 extends React.Component {
   constructor(props) {
     super(props)
 
-    if (!getEncodedPrivateKey() || !canDecodePrivateKey()) {
-      this.generateMnemonic()
-      return
-    }
+    // if (!getEncodedPrivateKey() || !canDecodePrivateKey()) {
+    //   this.generateMnemonic()
+    //   return
+    // }
 
     if (!this.props.rootData.get('account.id')) {
       this.props.startLoading(' ')
@@ -64,7 +64,7 @@ class Portfolio2 extends React.Component {
 
   loadAccount() {
     // Load profile from Hanzo
-    let api = new Api( HANZO_KEY, HANZO_ENDPOINT )
+    let api = new Api(HANZO_KEY, HANZO_ENDPOINT)
 
     return api.client.account.get()
       .then((res) => {

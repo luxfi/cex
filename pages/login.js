@@ -1,6 +1,6 @@
 import React from 'react'
 import Router from 'next/router'
-import { watch } from 'react-referential'
+// import { watch } from 'react-referential'
 import LoginForm from '../components/forms/login'
 import Emitter from '../src/emitter'
 import { setIdentity } from '../src/wallet'
@@ -11,10 +11,10 @@ import {
   getEncodedPrivateKey,
 } from '../src/wallet'
 
-import 'reeeset/src/reeeset.css'
-import '../styles.styl'
+// import 'reeeset/src/reeeset.css'
+// import '../styles.styl'
 
-@watch('indexPage')
+// @watch('indexPage')
 class Login extends React.Component {
   static async getInitialProps({ mobxStore }) {
     await mobxStore.movieStore.fetch()
@@ -24,59 +24,63 @@ class Login extends React.Component {
     }
   }
 
-  constructor(props) {
-    super(props)
-
-    this.emitter = new Emitter()
-
-    this.emitter.on('login:success', res => {
-      this.props.rootData.set('account.token', res.token)
-      setIdentity(res.identity)
-
-      this.login()
-    })
-
-    this.hasIdentity = !!getIdentity()
-
-    if (this.hasIdentity) {
-      this.login()
-    }
-  }
-
-  login() {
-    if (!!getEncodedPrivateKey()) {
-      console.log('Pushing /portfolio')
-      Router.push('/portfolio')
-    } else {
-      console.log('Pushing /account/mnemonic')
-      Router.push('/account/mnemonic')
-    }
-  }
-
-  componentWillUnmount() {
-    this.emitter.off('login:success')
-  }
-
   render() {
-    return pug`
-      if !this.hasIdentity
-        main#index.hero.columns
-          .content.columns
-            .card.login.transparent
-              .card-header.rows
-                h2 Login
-                Link(
-                  href='/signup',
-                  underline='hover'
-                )
-                  | Create your account
-              .card-body
-                LoginForm(
-                  data=this.props.data
-                  emitter=this.emitter
-                )
-    `
+    return <LoginForm />
   }
+
+  // commented out for mobx later...
+  // constructor(props) {
+  //   super(props)
+  // this.emitter = new Emitter()
+
+  // this.emitter.on('login:success', res => {
+  //   this.props.rootData.set('account.token', res.token)
+  //   setIdentity(res.identity)
+
+  //   this.login()
+  // })
+
+  // this.hasIdentity = !!getIdentity()
+
+  // if (this.hasIdentity) {
+  //   this.login()
+  // }
 }
+
+// login() {
+//   if (!!getEncodedPrivateKey()) {
+//     console.log('Pushing /portfolio')
+//     Router.push('/portfolio')
+//   } else {
+//     console.log('Pushing /account/mnemonic')
+//     Router.push('/account/mnemonic')
+//   }
+// }
+
+// componentWillUnmount() {
+//   this.emitter.off('login:success')
+// }
+
+//   render() {
+//     return pug`
+//       if !this.hasIdentity
+//         main#index.hero.columns
+//           .content.columns
+//             .card.login.transparent
+//               .card-header.rows
+//                 h2 Login
+//                 Link(
+//                   href='/signup',
+//                   underline='hover'
+//                 )
+//                   | Create your account
+//               .card-body
+//                 LoginForm(
+//                   data=this.props.data
+//                   emitter=this.emitter
+//                 )
+//     `
+//   }
+// }
 
 export default Login
