@@ -172,6 +172,9 @@ class Header extends React.Component {
                     height="60px"
                   />
                 </Link>
+                <Typography variant="h7">
+                  Community Inspired SuperFan Network
+                </Typography>
                 <div className={classes.grow} />
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
