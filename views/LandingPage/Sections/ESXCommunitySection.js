@@ -43,7 +43,7 @@ export default props => {
         <GridContainer
           style={{
             marginLeft: "-7px",
-            marginRight: -"7px"
+            marginRight: "-7px"
           }}
         >
           <GridItem xs={12} sm={12} md={3}>

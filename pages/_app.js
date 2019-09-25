@@ -15,7 +15,7 @@ import Footer from "../components/generic/Footer"
 import initializeStore from "../stores/stores"
 
 // NEW ***********
-import Router from "next/router"
+import { withRouter } from "next/router"
 import { MuiPickersUtilsProvider } from "react-referential-forms"
 import RefProvider from "react-referential"
 import BalanceProvider from "../src/balances"
@@ -26,7 +26,7 @@ import { loadLibrary } from "../src/library"
 import Api from "../src/hanzo/api"
 import { HANZO_KEY, HANZO_ENDPOINT } from "../src/settings.js"
 
-// import styles from "assets/jss/material-kit-react/views/landingPage.js"
+// import styles from "assets/jss/material-kit-react/views/app.js"
 import styles from "../assets/jss/views/landingPage.js"
 
 // ****************
@@ -125,8 +125,8 @@ class MyMobxApp extends App {
   }
 
   render() {
-    const { Component, pageProps, classes } = this.props
-
+    const { Component, pageProps, classes, router } = this.props
+    const onHomePage = router.pathname === "/" || router.pathname === "/#"
     return (
       <>
         <CssBaseline />
@@ -137,7 +137,7 @@ class MyMobxApp extends App {
                 <RefProvider>
                   <BalanceProvider>
                     <div className={classes.stickyFooterRoot}>
-                      <Header />
+                      <Header onHomePage={onHomePage} />
                       <Component {...pageProps} />
                       {/* <Loader /> */}
                       <div className={classes.stickyFooter}>
@@ -161,4 +161,4 @@ class MyMobxApp extends App {
   }
 }
 
-export default withStyles(styles)(MyMobxApp)
+export default withRouter(withStyles(styles)(MyMobxApp))
