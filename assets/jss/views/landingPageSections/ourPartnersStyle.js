@@ -23,7 +23,8 @@ const ourPartnersStyle = {
     color: "#6c757d"
   },
   description: {
-    color: "#999"
+    color: "#999",
+    marginTop: "-6px" // find a cleaner way later
   },
   justifyCenter: {
     justifyContent: "center !important"

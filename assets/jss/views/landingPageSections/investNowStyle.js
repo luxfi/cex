@@ -3,16 +3,19 @@ import imagesStyle from "../../imagesStyles.js"
 
 const investNowStyle = {
   section: {
-    padding: "70px 0",
+    // padding: "70px 0",
+    padding: "106px 0",
     textAlign: "center",
-    backgroundColor: "#f4f3f3"
+    backgroundColor: "#f4f3f3",
+    height: "400px"
   },
   title: {
     ...title,
     marginBottom: "1rem",
     marginTop: "30px",
     minHeight: "32px",
-    textDecoration: "none"
+    textDecoration: "none",
+    textAlign: "center"
   },
   ...imagesStyle,
   itemGrid: {

@@ -40,7 +40,7 @@ export default props => {
         <h2 className={classes.title} style={{ textAlign: "left" }}>
           Our Partners
         </h2>
-        <GridContainer style={{ justifyContent: "center" }}>
+        <GridContainer style={{ justifyContent: "center", paddingTop: "36px" }}>
           <GridItem xs={12} sm={12} md={2}>
             <Card plain>
               <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
