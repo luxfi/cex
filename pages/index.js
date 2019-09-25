@@ -5,8 +5,6 @@ import { withStyles } from "@material-ui/core/styles"
 import { inject, observer } from "mobx-react"
 
 // core components
-import Header from "../components/layout/header"
-import Footer from "../components/generic/Footer"
 import Hero from "../components/landing/Hero"
 
 // import styles from "assets/jss/material-kit-react/views/landingPage.js"
@@ -17,9 +15,6 @@ import InvestorTopPicksSection from "../views/LandingPage/Sections/InvestorTopPi
 import InvestNowSection from "../views/LandingPage/Sections/InvestNowSection"
 import OurPartnersSection from "../views/LandingPage/Sections/OurPartnersSection"
 import ESXCommunitySection from "../views/LandingPage/Sections/ESXCommunitySection"
-import ProductSection from "../views/LandingPage/Sections/ProductSection"
-import TeamSection from "../views/LandingPage/Sections/TeamSection"
-import WorkSection from "../views/LandingPage/Sections/WorkSection"
 
 @inject("store")
 @observer
@@ -45,8 +40,7 @@ class Index extends React.Component {
     // const { movieStore } = this.props.store
     const { classes } = this.props
     return (
-      <div className={classes.stickyFooterRoot}>
-        <Header />
+      <>
         <Hero />
         <div className={`${classes.main} ${classes.mainRaised}`}>
           <div className={classes.container}>
@@ -54,15 +48,9 @@ class Index extends React.Component {
             <InvestNowSection />
             <OurPartnersSection />
             <ESXCommunitySection />
-            {/* <ProductSection />
-            <TeamSection />
-            <WorkSection /> */}
           </div>
         </div>
-        <div className={classes.stickyFooter}>
-          <Footer />
-        </div>
-      </div>
+      </>
     )
   }
 }
