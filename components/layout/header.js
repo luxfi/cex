@@ -10,6 +10,7 @@ import Input from "@material-ui/core/Input"
 import InputBase from "@material-ui/core/InputBase"
 import MenuItem from "@material-ui/core/MenuItem"
 import AccountCircle from "@material-ui/icons/AccountCircle"
+import Container from "@material-ui/core/Container"
 import Typography from "@material-ui/core/Typography"
 import Slide from "@material-ui/core/Slide"
 import useScrollTrigger from "@material-ui/core/useScrollTrigger"
@@ -157,104 +158,106 @@ class Header extends React.Component {
           <HideOnScroll>
             <AppBar
               id="navbar"
-              className={classes.root}
               position="fixed"
-              color="default"
+              className={classes.transparent}
             >
-              <Toolbar className={classes.noPadding}>
-                <Link href="/" className={classes.flex}>
-                  {" "}
-                  {/* get rid of inline style */}
-                  <img
-                    id="logo"
-                    src="/static/img/logo.png"
-                    alt="ESX"
-                    height="60px"
-                  />
-                </Link>
-                <Typography variant="h7">
-                  Community Inspired SuperFan Network
-                </Typography>
-                <div className={classes.grow} />
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <SearchIcon />
-                  </div>
-                  <InputBase
-                    placeholder="Search…"
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput
-                    }}
-                    inputProps={{ "aria-label": "search" }}
-                  />
-                </div>
-                {/* {accountLoaded ? ( */}
-                {!accountLoaded ? ( // temporary until create real login...
-                  <>
-                    <MuiText
-                      select
-                      value="usd"
-                      className={classes.textField}
-                      margin="normal"
-                      options={currencies}
+              {" "}
+              <Container maxWidth="lg">
+                <Toolbar className={`${classes.noPadding} ${classes.toolBar}`}>
+                  <Link href="/" className={classes.flex}>
+                    {" "}
+                    {/* get rid of inline style */}
+                    <img
+                      id="logo"
+                      src="/static/img/logo.png"
+                      alt="ESX"
+                      height="60px"
                     />
-                    <IconButton
-                      aria-controls="menu"
-                      aria-haspopup="true"
-                      onClick={handleClick}
-                    >
-                      <AccountCircle style={{ fontSize: "36" }} />
-                    </IconButton>
-                    <Menu
-                      id="menu"
-                      anchorEl={anchorEl}
-                      keepMounted
-                      open={open}
-                      onClose={handleClose}
-                    >
-                      <MenuItem onClick={this.account}>
-                        <AccountCircle />
-                        <span style={{ padding: "15px" }}>Account</span>
-                      </MenuItem>
-                      <MenuItem onClick={this.deposit}>
-                        <ArrowUpward />
-                        <span style={{ padding: "15px" }}>Deposit</span>
-                      </MenuItem>
-                      {/* <MenuItem onClick={this.send}> // propbably won't need this, decide later (tyler)
+                  </Link>
+                  <Typography variant="subtitle2">
+                    Entertainment Stock Exchange
+                  </Typography>
+                  <div className={classes.grow} />
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <SearchIcon />
+                    </div>
+                    <InputBase
+                      placeholder="Search…"
+                      classes={{
+                        root: classes.inputRoot,
+                        input: classes.inputInput
+                      }}
+                      inputProps={{ "aria-label": "search" }}
+                    />
+                  </div>
+                  {/* {accountLoaded ? ( */}
+                  {!accountLoaded ? ( // temporary until create real login...
+                    <>
+                      {/* <MuiText
+                        select
+                        value="usd"
+                        className={`${classes.menuButton} ${classes.select}`}
+                        margin="normal"
+                        options={currencies}
+                      /> */}
+                      <IconButton
+                        aria-controls="menu"
+                        aria-haspopup="true"
+                        onClick={handleClick}
+                      >
+                        <AccountCircle style={{ fontSize: "36" }} />
+                      </IconButton>
+                      <Menu
+                        id="menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={open}
+                        onClose={handleClose}
+                      >
+                        <MenuItem onClick={this.account}>
+                          <AccountCircle />
+                          <span style={{ padding: "15px" }}>Account</span>
+                        </MenuItem>
+                        <MenuItem onClick={this.deposit}>
+                          <ArrowUpward />
+                          <span style={{ padding: "15px" }}>Deposit</span>
+                        </MenuItem>
+                        {/* <MenuItem onClick={this.send}> // propbably won't need this, decide later (tyler)
                         <Send />
                         <span style={{ padding: "15px" }}>Send</span>
                       </MenuItem> */}
-                      <MenuItem onClick={this.withdrawal}>
-                        <ArrowDownward />
-                        <span style={{ padding: "15px" }}>Withdrawal</span>
-                      </MenuItem>
-                      <MenuItem onClick={this.logout}>
-                        <ExitToApp />
-                        <span style={{ padding: "15px" }}>Logout</span>
-                      </MenuItem>
-                    </Menu>
-                  </>
-                ) : (
-                  <>
-                    <Button
-                      color="inherit"
-                      onClick={this.login}
-                      className={classes.menuButton}
-                    >
-                      Login
-                    </Button>
-                    <Button
-                      color="inherit"
-                      variant="outlined"
-                      onClick={this.signup}
-                      className={classes.menuButton}
-                    >
-                      Sign Up
-                    </Button>
-                  </>
-                )}
-              </Toolbar>
+                        <MenuItem onClick={this.withdrawal}>
+                          <ArrowDownward />
+                          <span style={{ padding: "15px" }}>Withdrawal</span>
+                        </MenuItem>
+                        <MenuItem onClick={this.logout}>
+                          <ExitToApp />
+                          <span style={{ padding: "15px" }}>Logout</span>
+                        </MenuItem>
+                      </Menu>
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        color="inherit"
+                        onClick={this.login}
+                        className={classes.menuButton}
+                      >
+                        Login
+                      </Button>
+                      <Button
+                        color="inherit"
+                        variant="outlined"
+                        onClick={this.signup}
+                        className={classes.menuButton}
+                      >
+                        Sign Up
+                      </Button>
+                    </>
+                  )}
+                </Toolbar>
+              </Container>
             </AppBar>
           </HideOnScroll>
           <Toolbar />
@@ -278,7 +281,7 @@ class Header extends React.Component {
               MuiText(
                 select
                 value='usd'
-                className=classes.textField
+                className=classes.menuButton
                 SelectProps={
                   MenuProps: {
                     className: classes.menu,
@@ -357,9 +360,10 @@ const styles = theme => {
     grow: {
       flexGrow: 1,
       display: "none",
-      [theme.breakpoints.up("sm")]: {
-        display: "block"
-      }
+      // [theme.breakpoints.up("sm")]: {
+      //   display: "block"
+      // },
+      display: "block"
     },
     search: {
       position: "relative",
@@ -372,8 +376,11 @@ const styles = theme => {
       width: "100%",
       [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(1),
-        width: "auto"
-      }
+        width: "auto",
+        display: "inline"
+      },
+      marginRight: theme.spacing(2),
+      display: "none"
     },
     searchIcon: {
       width: theme.spacing(7),
@@ -400,6 +407,23 @@ const styles = theme => {
     },
     flex: {
       display: "flex"
+    },
+    transparent: {
+      background: "transparent !important",
+      boxShadow: "none",
+      color: "#FFFFFF"
+    },
+    select: {
+      [theme.breakpoints.up("sm")]: {
+        marginLeft: theme.spacing(1),
+        width: "auto",
+        display: "inline"
+      },
+      marginRight: theme.spacing(2),
+      display: "none"
+    },
+    toolBar: {
+      paddingTop: "25px"
     }
   }
 }
