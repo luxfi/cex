@@ -15,7 +15,7 @@ export default props => {
       <style jsx>{`
         .hero-image {
           overflow: hidden;
-          height: 60vh;
+          height: 70vh;
           maxheight: "1000px";
           background-position: center center;
           background-size: cover;
