@@ -252,6 +252,15 @@ const buttonStyle = {
       boxShadow: "none"
     }
   },
+  outlined: {
+    "&,&:focus,&:hover,&:visited": {
+      color: "inherit",
+      background: "transparent",
+      boxShadow: "none",
+      border: "2px solid black",
+      boxSizing: "border-box"
+    }
+  },
   disabled: {
     opacity: "0.65",
     pointerEvents: "none"

@@ -43,7 +43,9 @@ export default props => {
   return (
     <>
       <div className={classes.section}>
-        <h2 className={classes.title}>Investor Top Picks</h2>
+        <h2 className={classes.title} style={{ textAlign: "left" }}>
+          Investor Top Picks
+        </h2>
         <GridContainer>
           <GridItem xs={12} sm={12} md={4}>
             <Card plain>
