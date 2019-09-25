@@ -49,16 +49,14 @@ export default props => {
           Invest more than screen time in your favorite films.
         </h2>
         <Button>Invest Now</Button>
-        <span className="spacer" style={{ margin: "10px" }}>
-          {""}
-        </span>
         <Button
           color="outlined"
           href="#"
           target="_blank"
           rel="noopener noreferrer"
           style={{
-            color: "black"
+            color: "black",
+            marginLeft: "20px"
           }}
         >
           What is ESX?
