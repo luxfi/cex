@@ -163,7 +163,7 @@ class Header extends React.Component {
             >
               {" "}
               <Container maxWidth="lg">
-                <Toolbar className={classes.noPadding}>
+                <Toolbar className={`${classes.noPadding} ${classes.toolBar}`}>
                   <Link href="/" className={classes.flex}>
                     {" "}
                     {/* get rid of inline style */}
@@ -352,8 +352,7 @@ class Header extends React.Component {
 const styles = theme => {
   return {
     root: {
-      flexGrow: 1,
-      paddingTop: "25px"
+      flexGrow: 1
     },
     menuButton: {
       marginRight: theme.spacing(2)
@@ -422,6 +421,9 @@ const styles = theme => {
       },
       marginRight: theme.spacing(2),
       display: "none"
+    },
+    toolBar: {
+      paddingTop: "25px"
     }
   }
 }
