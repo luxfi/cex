@@ -161,14 +161,16 @@ const title = {
   textDecoration: "none",
   fontWeight: "700",
   fontFamily: `"Roboto Slab", "Times New Roman", serif`,
-  textAlign: "left",
-  paddingLeft: "7px",
-  paddingRight: "7px"
+  textAlign: "left"
+  // paddingLeft: "7px",
+  // paddingRight: "7px"
 }
 
 const cardTitle = {
   ...title,
-  marginTop: ".625rem"
+  marginTop: ".625rem",
+  paddingLeft: "7px",
+  paddingRight: "7px"
 }
 
 const cardLink = {
