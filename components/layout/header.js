@@ -352,7 +352,8 @@ class Header extends React.Component {
 const styles = theme => {
   return {
     root: {
-      flexGrow: 1
+      flexGrow: 1,
+      paddingTop: "25px"
     },
     menuButton: {
       marginRight: theme.spacing(2)
