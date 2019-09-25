@@ -1,90 +1,70 @@
-import React from 'react'
-import { inject, observer } from 'mobx-react'
-import TickerStrip from '../components/generic/TickerStrip'
-import PageRow from '../components/generic/PageRow'
-import Slider from '../components/generic/Slider'
-import Footer from '../components/generic/Footer'
-import Hero from '../components/landing/Hero'
-import Chart from '../components/landing/Chart'
-import PartnerGrid from '../components/landing/PartnerGrid'
-import SecuredByGrid from '../components/landing/SecuredByGrid'
-import WhatPanel from '../components/landing/WhatPanel'
-import HowToTradePanel from '../components/landing/HowToTradePanel'
-import TrendingNowSliderItem from "../components/landing/TrendingNowSliderItem"
-import PopularGenres from '../components/landing/PopularGenres'
-import StartCTA from '../components/landing/StartTrading'
+import React from "react"
+// @material-ui/core components
+import { withStyles } from "@material-ui/core/styles"
 
-@inject('store')
+import { inject, observer } from "mobx-react"
+
+// core components
+import Header from "../components/layout/header"
+import Footer from "../components/generic/Footer"
+import Hero from "../components/landing/Hero"
+
+// import styles from "assets/jss/material-kit-react/views/landingPage.js"
+import styles from "../assets/jss/views/landingPage.js"
+
+// Sections for this page
+import InvestorTopPicksSection from "../views/LandingPage/Sections/InvestorTopPicksSection"
+import InvestNowSection from "../views/LandingPage/Sections/InvestNowSection"
+import OurPartnersSection from "../views/LandingPage/Sections/OurPartnersSection"
+import ESXCommunitySection from "../views/LandingPage/Sections/ESXCommunitySection"
+import ProductSection from "../views/LandingPage/Sections/ProductSection"
+import TeamSection from "../views/LandingPage/Sections/TeamSection"
+import WorkSection from "../views/LandingPage/Sections/WorkSection"
+
+@inject("store")
 @observer
-export default class Index extends React.Component {
-  state = {
-    whiteGutter: true
-  }
-  static async getInitialProps({ mobxStore }) {
-    await mobxStore.movieStore.fetch()
-    return {
-      movieStore: mobxStore.movieStore,
-      orderBook: mobxStore.orderBook
-    }
-  }
+class Index extends React.Component {
+  // static async getInitialProps({ mobxStore }) {
+  //   await mobxStore.movieStore.fetch()
+  //   return {
+  //     movieStore: mobxStore.movieStore,
+  //     orderBook: mobxStore.orderBook
+  //   }
+  // }
 
-  componentDidMount() {
-    console.log('index props componentDidMount', this.props.store.orderBook)
-    this.props.store.orderBook.initiateDataGenerator()
-  }
+  // componentDidMount() {
+  //   console.log("index props componentDidMount", this.props.store.orderBook)
+  //   this.props.store.orderBook.initiateDataGenerator()
+  // }
 
-  componentWillUnmount() {
-    this.props.store.orderBook.terminateDataGenerator()
-  }
+  // componentWillUnmount() {
+  //   this.props.store.orderBook.terminateDataGenerator()
+  // }
 
   render() {
-    const { movieStore } = this.props.store
-    const trendingSliderItems = movieStore.topMovies.slice(0, 14)
-      .filter(item => item.verticalImg !== "N/A")
-      .map((sliderItem, key) => {
-        const { title, Imdbid, verticalImg, ticker, price, change } = sliderItem;
-        return <TrendingNowSliderItem
-          key={Imdbid}
-          title={title}
-          imgSrc={verticalImg}
-          width="166px"
-          ticker={ticker}
-          price={price}
-          change={change} />
-      })
-
+    // const { movieStore } = this.props.store
+    const { classes } = this.props
     return (
-      <div>
-        <TickerStrip movies={movieStore.movies} />
+      <div className={classes.stickyFooterRoot}>
+        <Header />
         <Hero />
-        {/* <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Trending Now"} paddingHack>
-          <Slider movieStore={movieStore.topMovies} sliderItems={trendingSliderItems} />
-        </PageRow>
-        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Top Gainers"}>
-          <Chart topMovies={movieStore.topMovies} />
-        </PageRow>
-        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Popular Genres"}>
-          <PopularGenres />
-        </PageRow>
-        <StartCTA /> */}
-        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"What is ESX?"}>
-          <WhatPanel />
-        </PageRow>
-        <StartCTA />
-        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"How To Trade"}>
-          <HowToTradePanel />
-        </PageRow>
-        <StartCTA />
-        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Our Partners"}>
-          <PartnerGrid />
-        </PageRow>
-        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Secured By"}>
-          <SecuredByGrid />
-        </PageRow>
-
-        <Footer />
-      </div >
-
+        <div className={`${classes.main} ${classes.mainRaised}`}>
+          <div className={classes.container}>
+            <InvestorTopPicksSection />
+            <InvestNowSection />
+            <OurPartnersSection />
+            <ESXCommunitySection />
+            {/* <ProductSection />
+            <TeamSection />
+            <WorkSection /> */}
+          </div>
+        </div>
+        <div className={classes.stickyFooter}>
+          <Footer />
+        </div>
+      </div>
     )
   }
 }
+
+export default withStyles(styles)(Index)
