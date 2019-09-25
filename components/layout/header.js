@@ -194,13 +194,13 @@ class Header extends React.Component {
                   {/* {accountLoaded ? ( */}
                   {!accountLoaded ? ( // temporary until create real login...
                     <>
-                      <MuiText
+                      {/* <MuiText
                         select
                         value="usd"
                         className={`${classes.menuButton} ${classes.select}`}
                         margin="normal"
                         options={currencies}
-                      />
+                      /> */}
                       <IconButton
                         aria-controls="menu"
                         aria-haspopup="true"
