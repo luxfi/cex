@@ -4,13 +4,17 @@ import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
 
-const styles = {
+const styles = theme => ({
   grid: {
-    marginRight: "-15px",
-    marginLeft: "-15px",
-    width: "auto"
+    // width: "auto"
+    margin: "0 -15px !important",
+    width: "unset",
+    [theme.breakpoints.down("sm")]: {
+      margin: "0px !important",
+      padding: "7px"
+    }
   }
-}
+})
 
 const useStyles = makeStyles(styles)
 
