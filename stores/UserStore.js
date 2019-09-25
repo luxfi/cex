@@ -1,31 +1,35 @@
 import { action, observable, computed } from 'mobx'
+import Api from '../../src/hanzo/api'
+import * as ethers from 'ethers'
 // import _ from 'lodash'
 
 /**
  * Later we'll wrap the fetch stuff up a bit more cleanly and / or use a helper library
- */
+*/
 
-// TODO
+
 const BASE_HANZO_API_URL = "TODO" // should get this from a config object
+const api = new Api(HANZO_KEY, HANZO_ENDPOINT)
 
 export default class UserStore {
 
-    // logged in user object returned by API
-  @observable currentUser = undefined
-    // use for wait states in UI
+  // ** GENERIC HELPERS **
+  // use for wait states in UI
   @observable updating = false
-    // any errors returned by APIs
-    // (not sure of type)
+  // any errors returned by APIs
+  // (not sure of type)
   @observable errors = undefined
 
-    // TODO store this w httpOnly in a cookie w all the proper security precautions. 
-  @observable token = window.localStorage.getItem('jwt');
+  // ** USER INFO **
+  // User Email
+  @observable email = undefined
+  // User Password
+  @observable password = undefined
+  // logged in user object returned by API
+  @observable currentUser = undefined
+  // Token comes from the Hanzo API
+  @observable token = undefined
 
-    // use for login / reg for temp UI states (if validation errors or whatnot)
-  @observable displayValues = {
-    email: '',
-    password: ''
-  }
 
   constructor(initialData = {  }) {
     // TODO Do we still need this?
@@ -77,31 +81,51 @@ export default class UserStore {
   }
 
     // Assumes values are in `displayValues`
-  @action login() {
+  @action async login() {
     this.updating = true
-    fetch(BASE_HANZO_API_URL + '/users/login',  // these might be wrong :)
-      {
-        method: 'post',
-        body: JSON.stringify({
-          email: email,
-          password: password
-        })
-      }
-    )
-    .then(
-      action(({ user }) => { 
-        this.currentUser = user 
-        this.setToken(user.token)
+    // fetch(BASE_HANZO_API_URL + '/users/login',  // these might be wrong :)
+    //   {
+    //     method: 'post',
+    //     body: JSON.stringify({
+    //       email: email,
+    //       password: password
+    //     })
+    //   }
+    // )
+    // .then(
+    //   action(({ user }) => { 
+    //     this.currentUser = user 
+    //     this.setToken(user.token)
+    //   })
+    // )
+    // .catch(action((err) => {
+    //   this.errors = (err.response && err.response.body && err.response.body.errors)
+    //     ? err.response.body.errors : ''
+    //   throw err
+    // }))
+    // .finally(
+    //   action(() => { this.updating = false })
+    // )
+
+    try {
+      let p = this.password
+
+      const res = await api.client.account.login({
+        email: this.email,
+        password: p,
       })
-    )
-    .catch(action((err) => {
-      this.errors = (err.response && err.response.body && err.response.body.errors)
-        ? err.response.body.errors : ''
-      throw err
-    }))
-    .finally(
-      action(() => { this.updating = false })
-    )
+
+      // TODO Not sure what this is? This needs to go in the password update function
+      // this.inputs.password.val(this.inputs.password.val().replace(/./g, '•'))
+
+      let i = this.email + p
+
+      this.identity = ethers.utils.sha256(ethers.utils.toUtf8Bytes(i))
+      this.token = res.token
+
+    } catch (ex) {
+      
+    }
   }
 
 
