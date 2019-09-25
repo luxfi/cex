@@ -197,7 +197,7 @@ class Header extends React.Component {
                       <MuiText
                         select
                         value="usd"
-                        className={classes.menuButton}
+                        className={`${classes.menuButton} ${classes.select}`}
                         margin="normal"
                         options={currencies}
                       />
@@ -360,9 +360,10 @@ const styles = theme => {
     grow: {
       flexGrow: 1,
       display: "none",
-      [theme.breakpoints.up("sm")]: {
-        display: "block"
-      }
+      // [theme.breakpoints.up("sm")]: {
+      //   display: "block"
+      // },
+      display: "block"
     },
     search: {
       position: "relative",
@@ -375,9 +376,11 @@ const styles = theme => {
       width: "100%",
       [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(1),
-        width: "auto"
+        width: "auto",
+        display: "inline"
       },
-      marginRight: theme.spacing(2)
+      marginRight: theme.spacing(2),
+      display: "none"
     },
     searchIcon: {
       width: theme.spacing(7),
@@ -409,6 +412,15 @@ const styles = theme => {
       background: "transparent !important",
       boxShadow: "none",
       color: "#FFFFFF"
+    },
+    select: {
+      [theme.breakpoints.up("sm")]: {
+        marginLeft: theme.spacing(1),
+        width: "auto",
+        display: "inline"
+      },
+      marginRight: theme.spacing(2),
+      display: "none"
     }
   }
 }
