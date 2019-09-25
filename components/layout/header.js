@@ -174,9 +174,6 @@ class Header extends React.Component {
                       height="60px"
                     />
                   </Link>
-                  <Typography variant="subtitle2">
-                    Entertainment Stock Exchange
-                  </Typography>
                   <div className={classes.grow} />
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
