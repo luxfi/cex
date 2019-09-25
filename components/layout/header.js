@@ -158,9 +158,8 @@ class Header extends React.Component {
           <HideOnScroll>
             <AppBar
               id="navbar"
-              className={classes.root}
               position="fixed"
-              color="default"
+              className={classes.transparent}
             >
               {" "}
               <Container maxWidth="lg">
@@ -198,7 +197,7 @@ class Header extends React.Component {
                       <MuiText
                         select
                         value="usd"
-                        className={classes.textField}
+                        className={classes.menuButton}
                         margin="normal"
                         options={currencies}
                       />
@@ -282,7 +281,7 @@ class Header extends React.Component {
               MuiText(
                 select
                 value='usd'
-                className=classes.textField
+                className=classes.menuButton
                 SelectProps={
                   MenuProps: {
                     className: classes.menu,
@@ -377,7 +376,8 @@ const styles = theme => {
       [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(1),
         width: "auto"
-      }
+      },
+      marginRight: theme.spacing(2)
     },
     searchIcon: {
       width: theme.spacing(7),
@@ -404,6 +404,11 @@ const styles = theme => {
     },
     flex: {
       display: "flex"
+    },
+    transparent: {
+      background: "transparent !important",
+      boxShadow: "none",
+      color: "#FFFFFF"
     }
   }
 }

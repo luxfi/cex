@@ -50,6 +50,7 @@ export default props => {
         .hero-container {
           position: relative;
           overflow: hidden;
+          margin-top: -64px;
         }
       `}</style>
     </div>
