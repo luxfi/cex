@@ -16,6 +16,7 @@ import styles from "../assets/jss/views/landingPage.js"
 import InvestorTopPicksSection from "../views/LandingPage/Sections/InvestorTopPicksSection"
 import InvestNowSection from "../views/LandingPage/Sections/InvestNowSection"
 import OurPartnersSection from "../views/LandingPage/Sections/OurPartnersSection"
+import ESXCommunitySection from "../views/LandingPage/Sections/ESXCommunitySection"
 import ProductSection from "../views/LandingPage/Sections/ProductSection"
 import TeamSection from "../views/LandingPage/Sections/TeamSection"
 import WorkSection from "../views/LandingPage/Sections/WorkSection"
@@ -52,6 +53,7 @@ class Index extends React.Component {
             <InvestorTopPicksSection />
             <InvestNowSection />
             <OurPartnersSection />
+            <ESXCommunitySection />
             {/* <ProductSection />
             <TeamSection />
             <WorkSection /> */}
