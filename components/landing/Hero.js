@@ -23,7 +23,10 @@ export default props => {
         <div className={classes.container}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={6}>
-              <h1>Terminator: Dark Fate Announcement goes here</h1>
+              <h1>
+                TERMINATOR: DARK FATE New Trailer Reunites Sarah Connor and The
+                Terminator
+              </h1>
               <h4>
                 It will feel no pity. No remorse. No pain. No fear. It will have
                 only one purpose: to return to the present and prevent the
