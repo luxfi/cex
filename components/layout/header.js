@@ -189,8 +189,7 @@ class Header extends React.Component {
                       inputProps={{ "aria-label": "search" }}
                     />
                   </div>
-                  {/* {accountLoaded ? ( */}
-                  {!accountLoaded ? ( // temporary until create real login...
+                  {accountLoaded ? (
                     <>
                       {/* <MuiText
                         select
