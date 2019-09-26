@@ -1,6 +1,5 @@
 import React from "react"
-
-import Form, { MuiText } from "react-referential-forms"
+import { inject, observer } from "mobx-react"
 import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 import IconButton from "@material-ui/core/IconButton"
@@ -48,9 +47,12 @@ function HideOnScroll(props) {
     </Slide>
   )
 }
-
-@watch("header")
+@inject("store")
+@observer
 class Header extends React.Component {
+  static async getInitialProps({ mobxStore }) {
+    return { ...mobxStore }
+  }
   constructor(props) {
     super(props)
 
@@ -126,9 +128,10 @@ class Header extends React.Component {
   }
 
   render() {
-    let { classes, onHomePage, ...props } = this.props
+    let { classes, onHomePage, store, ...props } = this.props
     let identity = getIdentity()
-    let accountLoaded = !!this.props.rootData.get("account.id") && identity
+    // let accountLoaded = !!this.props.rootData.get("account.id") && identity
+    let accountLoaded = store.userStore.loggedIn
 
     let open = !!this.state.anchorEl
 
