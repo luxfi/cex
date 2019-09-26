@@ -83,6 +83,7 @@ export default class UserStore {
   constructor(initialData = {  }) {
     // TODO Do we still need this?
     // :aa I don't think so.... why would we?
+    // E: This might be required for persisting state across page changes
   }
   
     // TODO store this w httpOnly in a cookie w all the proper security precautions. 
@@ -272,4 +273,3 @@ function stringPresentAndValid(s) {
   return typeof s === 'string'
     && s.length >= 2
 }
-
