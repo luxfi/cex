@@ -104,6 +104,7 @@ export default class UserStore {
       // this.errors = (err.response && err.response.body && err.response.body.errors)
       //   ? err.response.body.errors : ''
       console.log("Error signing up", ex)
+      debugger
       onError && onError(ex)
     } finally {
       this.updating = false

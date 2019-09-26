@@ -6,7 +6,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Checkbox from "@material-ui/core/Checkbox"
 import Link from "@material-ui/core/Link"
 import Grid from "@material-ui/core/Grid"
-import SnackBar from "../SnackBar"
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
@@ -34,47 +33,6 @@ const styles = theme => ({
 })
 
 class SignupForm extends React.Component {
-  // constructor(props) {
-  //   super(props)
-  //   this.state = {
-  //     email: "",
-  //     password: "",
-  //     emailError: false,
-  //     passwordError: false
-  //   }
-  //   this.submitLogin = this.submitLogin.bind(this)
-  // }
-
-  submitLogin(e, signUp) {
-    e.preventDefault()
-    const onSuccess = () => Router.push("/account/mnemonic")
-    const onError = ex => {
-      debugger
-    }
-    signUp(onSuccess, onError)
-    // if (this.state.email === "" || this.password === "") return
-    // // clear errors for logic flow
-    // this.setState({ emailError: false })
-    // this.setState({ passwordError: false })
-    // let errors = false
-    // try {
-    //   isEmail(this.state.email)
-    // } catch (e) {
-    //   errors = true
-    //   this.setState({ emailError: e.message })
-    // }
-    // try {
-    //   isPassword(this.state.password)
-    // } catch (e) {
-    //   errors = true
-    //   this.setState({ passwordError: e.message })
-    // } finally {
-    //   if (!errors) {
-    //     Router.push("/account/mnemonic")
-    //   }
-    // }
-  }
-
   render() {
     const {
       classes,
@@ -99,78 +57,108 @@ class SignupForm extends React.Component {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-          <form
-            className={classes.form}
-            noValidate
-            onSubmit={e => this.submitLogin(e, signUp)}
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="firstName"
+            label="firstName"
+            type="firstName"
+            id="firstName"
+            onBlur={validateFirstName}
+            // autoComplete="current-firstName"
+            // error={!validfirstName}
+            // helperText={this.state.firstNameError && this.state.firstNameError}
+            value={firstName}
+            onChange={evt => setValue(evt.target.name, evt.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="lastName"
+            label="lastName"
+            type="lastName"
+            id="lastName"
+            onBlur={validateLastName}
+            // autoComplete="current-lastName"
+            // error={!validlastName}
+            // helperText={this.state.lastNameError && this.state.lastNameError}
+            value={lastName}
+            onChange={evt => setValue(evt.target.name, evt.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            onBlur={validateEmail}
+            // autoComplete="email"
+            autoFocus
+            // error={!validEmail}
+            // helperText={this.state.emailError && this.state.emailError}
+            value={email}
+            onChange={evt => setValue(evt.target.name, evt.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            onBlur={validatePassword}
+            // autoComplete="current-password"
+            // error={!validPassword}
+            // helperText={this.state.passwordError && this.state.passwordError}
+            value={password}
+            onChange={evt => setValue(evt.target.name, evt.target.value)}
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                value="over18"
+                color="primary"
+                name="over18"
+                value={over18}
+                onChange={evt => setValue(evt.target.name, evt.target.checked)}
+              />
+            }
+            label="I am over 18."
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            disabled={!isValidSignup}
+            onClick={() => {
+              signUp(
+                () => Router.push("/account/kyc"),
+                ex => {
+                  console.log("hit error callback **", ex)
+                }
+              )
+            }}
           >
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              onBlur={validateEmail}
-              // autoComplete="email"
-              autoFocus
-              // error={!validEmail}
-              // helperText={this.state.emailError && this.state.emailError}
-              value={email}
-              onChange={evt => setValue(evt.target.name, evt.target.value)}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              onBlur={validatePassword}
-              // autoComplete="current-password"
-              // error={!validPassword}
-              // helperText={this.state.passwordError && this.state.passwordError}
-              value={password}
-              onChange={evt => setValue(evt.target.name, evt.target.value)}
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  value="over18"
-                  color="primary"
-                  name="over18"
-                  value={over18}
-                  onChange={evt =>
-                    setValue(evt.target.name, evt.target.checked)
-                  }
-                />
-              }
-              label="I am over 18."
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              disabled={!isValidSignup}
-              onClick={signUp}
-            >
-              Sign Up
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="/login" variant="body2">
-                  Sign in?
-                </Link>
-              </Grid>
+            Sign Up
+          </Button>
+          <Grid container>
+            <Grid item xs>
+              <Link href="/login" variant="body2">
+                Sign in?
+              </Link>
             </Grid>
-          </form>
+          </Grid>
         </div>
-        <SnackBar />
       </Container>
     )
   }
