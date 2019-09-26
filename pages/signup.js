@@ -32,8 +32,8 @@ class SignUp extends React.Component {
         password={password}
         over18={over18}
         isValidSignup={userStore.isValidSignupOne}
-        signUp={() => {
-          userStore.signUp()
+        signUp={(onSuccess, onError) => {
+          userStore.signUp(onSuccess, onError)
         }}
         validateEmail={() => {
           userStore.validateEmail()
