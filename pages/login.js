@@ -1,6 +1,7 @@
 import React from 'react'
 import Router from 'next/router'
-// import { watch } from 'react-referential'
+import { inject, observer } from "mobx-react"
+
 import LoginForm from '../components/forms/login'
 
 @inject("store")
