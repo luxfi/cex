@@ -50,9 +50,9 @@ export default class UserStore {
 
   // ... Etc
 
-  constructor(initialData = {}) {
-    // TODO Do we still need this?
-  }
+  // constructor(initialData = {}) {
+  //   // TODO Do we still need this?
+  // }
 
   // TODO store this w httpOnly in a cookie w all the proper security precautions.
   @action setToken(token) {
@@ -65,11 +65,8 @@ export default class UserStore {
     }
   }
 
-  @computed loggedIn() {
-    return !!this.token
-  }
-
-  @action setValue2(key, val) {
+  @action setValue(key, val) {
+    console.log("key, val", [key, val])
     this[key] = val
   }
 
@@ -160,5 +157,9 @@ export default class UserStore {
 
   @computed get isValidLogin() {
     return this.validEmail && this.validPassword
+  }
+
+  @computed get loggedIn() {
+    return !!this.token
   }
 }

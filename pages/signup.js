@@ -16,15 +16,11 @@ import { getEncodedPrivateKey } from "../src/wallet"
 @inject("store")
 class SignUp extends React.Component {
   static async getInitialProps({ mobxStore }) {
-    return {
-      userStore: mobxStore.userStore,
-      movieStore: mobxStore.movieStore,
-      orderBook: mobxStore.orderBook
-    }
+    return { ...mobxStore }
   }
 
   render() {
-    return <SignupForm userStore={this.props.userStore} />
+    return <SignupForm store={this.props.store} />
   }
 }
 // @watch('signupPage')
