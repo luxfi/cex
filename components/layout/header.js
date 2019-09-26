@@ -105,9 +105,10 @@ class Header extends React.Component {
     this.setState({
       anchorEl: null
     })
-
-    this.props.rootData.ref("account").clear()
-    removeIdentity()
+    debugger
+    this.props.store.userStore.logout()
+    // this.props.store.ref("account").clear()
+    // removeIdentity()
     Router.push("/")
   }
 

@@ -198,11 +198,26 @@ export default class UserStore {
       const i = this.email + this.password
 
       this.identity = ethers.utils.sha256(ethers.utils.toUtf8Bytes(i))
-
       this.setToken(res.token)
       onSuccess && onSuccess()
     } catch (ex) {
       console.log("Error logging in", ex)
+      onError && onError()
+    } finally {
+      this.updating = false
+    }
+  }
+  @action async logout(onSuccess, onError) {
+    this.updating = true
+
+    try {
+      const res = await this.api.client.account.logout()
+
+      // TODO Not sure what this is? This needs to go in the password update function
+      // this.inputs.password.val(this.inputs.password.val().replace(/./g, '•'))
+      onSuccess && onSuccess()
+    } catch (ex) {
+      console.log("Error logging out", ex)
       onError && onError()
     } finally {
       this.updating = false
