@@ -33,7 +33,7 @@ import styles from "../assets/jss/views/landingPage.js"
 
 const theme = createMuiTheme({
   palette: {
-    type: "dark"
+    type: "light"
     // primary: {
     //   main: blue[500],
     // },

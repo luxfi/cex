@@ -3,7 +3,6 @@ import { container, title } from "../esx.js"
 const articlePageStyle = theme => ({
   container: {
     zIndex: "12",
-    color: "#FFFFFF",
     ...container
   },
   title: {
@@ -12,7 +11,8 @@ const articlePageStyle = theme => ({
     position: "relative",
     marginTop: "30px",
     minHeight: "32px",
-    textDecoration: "none"
+    textDecoration: "none",
+    fontSize: "3em"
   },
   subtitle: {
     fontSize: "1.313rem",
@@ -23,6 +23,16 @@ const articlePageStyle = theme => ({
     background: "#FFFFFF",
     position: "relative",
     zIndex: "3"
+  },
+  mainImage: {
+    // padding: "70px 0",
+    // padding: "106px",
+    textAlign: "center",
+    backgroundColor: "#f4f3f3",
+    height: "629px",
+    margin: "70px 0px",
+    borderRadius: "8px",
+    overflow: "hidden"
   },
   mainRaised: {
     margin: "-60px 30px 0px",
@@ -38,8 +48,9 @@ const articlePageStyle = theme => ({
     // },
     display: "block"
   },
-  section: {
-    display: "flex"
+  flex: {
+    display: "flex",
+    alignItems: "flex-end"
   },
   investButton: {
     marginLeft: 0,
