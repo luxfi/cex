@@ -1,189 +1,76 @@
-import Link from 'next/link'
-import React from 'react'
-import TickerStripLayout from "../components/generic/TickerStripLayout"
-import UpcomingIPOsSliderItem from "../components/landing/UpcomingIPOsSliderItem"
-import PageRow from '../components/generic/PageRow'
-import { inject, observer } from 'mobx-react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faColumns, faTh, faThList } from '@fortawesome/free-solid-svg-icons'
-import BalancesRow from '../components/portfolio/BalancesRow'
-import BalancesTable from '../components/portfolio/BalancesTable'
+import React from "react"
+// @material-ui/core components
+import { withStyles } from "@material-ui/core/styles"
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import AppBar from '@material-ui/core/AppBar'
 
-@inject('store')
+import { inject, observer } from "mobx-react"
+
+// core components
+
+// import styles from "assets/jss/material-kit-react/views/landingPage.js"
+import styles from "../assets/jss/views/landingPage.js"
+
+// Sections for this page
+import InvestorTopPicksSection from "../views/LandingPage/Sections/InvestorTopPicksSection"
+import PortfolioCta from "../views/ProfilePage/PortfolioCta"
+
+@inject("store")
 @observer
-export default class Portfolio extends React.Component {
-  state = {
-    whiteGutter: true,
-  }
-  static async getInitialProps({ mobxStore }) {
-    await mobxStore.movieStore.fetch();
-    return {
-      movieStore: mobxStore.movieStore
-    }
-  }
+class Portfolio extends React.Component {
+  // static async getInitialProps({ mobxStore }) {
+  //   await mobxStore.movieStore.fetch()
+  //   return {
+  //     movieStore: mobxStore.movieStore,
+  //     orderBook: mobxStore.orderBook
+  //   }
+  // }
+
+  // componentDidMount() {
+  //   console.log("index props componentDidMount", this.props.store.orderBook)
+  //   this.props.store.orderBook.initiateDataGenerator()
+  // }
+
+  // componentWillUnmount() {
+  //   this.props.store.orderBook.terminateDataGenerator()
+  // }
 
   render() {
-    const { movieStore } = this.props.store
-    const { currentPage } = this.state;
-
-    const trendingSliderItems = movieStore.topMovies.slice(0, 14)
-      .filter(item => item.verticalImg !== "N/A")
-      .map((sliderItem, key) => {
-        const { title, Imdbid, verticalImg, genre, rated, change, ipoDate } = sliderItem;
-        return <UpcomingIPOsSliderItem
-          key={Imdbid}
-          title={title}
-          imgSrc={verticalImg}
-          width="166px"
-          genre={genre.split(',')[0]}
-          rated={rated}
-          change={change}
-          ipoDate={ipoDate}
-        />
-      })
-
-    const upcommingIPOFilters = () => (
-      <div className="container">
-        <ul>
-          <li>
-            <a href="#" className="filter selected">most expected</a>
-          </li>
-          <li>
-            <span className="filter">|</span>
-          </li>
-          <li>
-            <a href="#" className="filter"> IPOs calender </a>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <a href="#" className="filter selected"><FontAwesomeIcon icon={faColumns} style={{ height: "16px" }} /></a>
-          </li>
-          <li>
-            <a href="#" className="filter"><FontAwesomeIcon icon={faThList} style={{ height: "16px" }} /></a>
-          </li>
-          <li>
-            <a href="#" className="filter"><FontAwesomeIcon icon={faTh} style={{ height: "16px" }} /></a>
-          </li>
-        </ul>
-
-        <style jsx>{`
-                    .container {
-                        display: flex;
-                        flex-direction: row;
-                    }
-                    ul {
-                        list-style-type: none;
-                        display: flex;
-                        padding-left: 24px;
-                    }
-                    .filter {
-                        padding-right: 10px;
-                        color: #6a5a5a;
-                    }
-                    .selected {
-                        color: #6da7ee;
-                        text-decoration: none;
-                    }
-                `}</style>
-      </div>
-    )
-
-    const quoteFilters = () => (
-      <div className="container">
-        <ul>
-          <li>
-            <span className="filter ">sort by: </span>
-          </li>
-          <li>
-            <a href="#" className="filter">name</a>
-          </li>
-          <li>
-            <span className="filter">|</span>
-          </li>
-          <li>
-            <a href="#" className="filter selected">price</a>
-          </li>
-          <li>
-            <span className="filter">|</span>
-          </li>
-          <li>
-            <a href="#" className="filter">price change</a>
-          </li>
-          <li>
-            <span className="filter">|</span>
-          </li>
-          <li>
-            <a href="#" className="filter">genre</a>
-          </li>
-        </ul>
-
-        <style jsx>{`
-                    .container {
-                        display: flex;
-                        flex-direction: row;
-                    }
-                    ul {
-                        list-style-type: none;
-                        display: flex;
-                        padding-left: 24px;
-                    }
-                    .filter {
-                        padding-right: 10px;
-                        color: #6a5a5a;
-                    }
-                    .selected {
-                        color: #6da7ee;
-                        text-decoration: none;
-                    }
-                `}</style>
-      </div>
-    )
-
+    // const { movieStore } = this.props.store
+    const { classes } = this.props
     return (
-      <TickerStripLayout movies={movieStore.movies} darkNav={true}>
-        <div className="container-center">
-          <div className="links">
-            <a href="#" className="link selected">My Portfolio</a>
-            <a href="#" className="link divider">|</a>
-            <a href="#" className="link">Balances</a>
-            <a href="#" className="link divider">|</a>
-            <a href="#" className="link">Position</a>
-            <a href="#" className="link divider">|</a>
-            <a href="#" className="link">Orders</a>
-            <a href="#" className="link divider">|</a>
-            <a href="#" className="link">Watchlists</a>
-            <a href="#" className="link divider">|</a>
-            <a href="#" className="link">Alerts</a>
+      <>
+        <div style={{ height: "140px" }}></div>
+        <div className={`${classes.main} ${classes.mainRaised}`}>
+          <AppBar position="static">
+            <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+              <Tab label="Portfolio" {...a11yProps(0)} />
+              <Tab label="Trade" {...a11yProps(1)} />
+              <Tab label="Benefits" {...a11yProps(2)} />
+              <Tab label="Newsfeed" {...a11yProps(3)} />
+            </Tabs>
+          </AppBar>
+          <TabPanel value={value} index={0}>
+            Portfolio
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            Trade
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            Benefits
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            Newsfeed
+          </TabPanel>
+          <div className={classes.container}>
+            <InvestorTopPicksSection />
+            <PortfolioCta/>
           </div>
         </div>
-        <BalancesRow />
-        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"My Positions"} hideInnerPadding filters={quoteFilters()}>
-          <BalancesTable movies={movieStore.movies} />
-        </PageRow>
-        <style jsx>{`
-                    .container-center {
-                        display: flex;
-                        justify-content: center;
-                    }
-                    .links {
-                        display: flex:
-                        justify-content: center:
-                    }
-                    .link {
-                        padding: 0px 12px;
-                        color: grey;
-                    }
-                    .selected {
-                        color: #6da7ee;
-                        text-decoration: none;
-                    }
-                    .divider {
-                        text-decoration: none;
-                    }
-                `}</style>
-      </TickerStripLayout>
-    );
+      </>
+    )
   }
 }
 
+export default withStyles(styles)(Portfolio)
