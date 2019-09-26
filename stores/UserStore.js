@@ -158,7 +158,7 @@ export default class UserStore {
   }
 
   @computed get isValidSignupOne () {
-    console.log('Get signup One', this.validEmail && this.validPassword && this.over18)
+    console.log('Get over18', this.over18)
     return this.validEmail && this.validPassword && this.over18
   }
 

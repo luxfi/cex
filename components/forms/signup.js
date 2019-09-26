@@ -105,7 +105,7 @@ class SignupForm extends React.Component {
               // error={!!this.state.emailError}
               // helperText={this.state.emailError && this.state.emailError}
               value={email}
-              onChange={setValue}
+              onChange={ evt => setValue(evt.target.name, evt.target.value) }
             />
             <TextField
               variant="outlined"
@@ -121,10 +121,18 @@ class SignupForm extends React.Component {
               // error={!!this.state.passwordError}
               // helperText={this.state.passwordError && this.state.passwordError}
               value={password}
-              onChange={setValue}
+              onChange={ evt => setValue(evt.target.name, evt.target.value) }
             />
             <FormControlLabel
-              control={<Checkbox value="over18" color="primary" name="over18" value={over18} onChange={setValue} />}
+              control={
+                <Checkbox 
+                  value="over18" 
+                  color="primary" 
+                  name="over18" 
+                  value={over18} 
+                  onChange={evt => setValue(evt.target.name, evt.target.checked)} 
+                />
+              }
               label="I am over 18."
             />
             <Button

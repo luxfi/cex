@@ -24,8 +24,8 @@ class SignUp extends React.Component {
     const { email, password, over18 } = userStore
     console.log('Valid signupOne?', userStore.isValidSignupOne)
     return <SignupForm 
-      setValue={(evt) => {
-        userStore.setValue(evt.target.name, evt.target.value)
+      setValue={(key, val) => {
+        userStore.setValue(key, val)
       }}
       email={email}
       password={password}
