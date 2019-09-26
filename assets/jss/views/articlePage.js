@@ -19,6 +19,10 @@ const articlePageStyle = theme => ({
     maxWidth: "500px",
     margin: "10px auto 0"
   },
+  sectionTitle: {
+    marginTop: "70px",
+    display: "inline"
+  },
   main: {
     background: "#FFFFFF",
     position: "relative",
@@ -33,6 +37,50 @@ const articlePageStyle = theme => ({
     margin: "70px 0px",
     borderRadius: "8px",
     overflow: "hidden"
+  },
+  flexWrap: {
+    display: "flex",
+    flexWrap: "wrap"
+  },
+  // secondImage: {
+  //   display: "block",
+  //   width: "100%",
+  //   // maxWidth: "500px" /*actual image width*/,
+  //   // height: "auto" /* maintain aspect ratio*/,
+  //   margin: "auto" /*optional centering of image*/,
+  //   width: "388px",
+  //   height: "218px"
+  // },
+  // secondImageWrapper: {
+  //   textAlign: "center",
+  //   backgroundColor: "#f4f3f3",
+  //   height: "calc(width)",
+  //   margin: "70px 0px",
+  //   borderRadius: "8px",
+  //   overflow: "hidden",
+  //   width: "50%"
+  // },
+
+  secondImage: {
+    textAlign: "center",
+    backgroundColor: "#f4f3f3",
+    marginRight: "32px",
+    borderRadius: "8px",
+    overflow: "hidden",
+    width: "47%",
+    float: "left"
+  },
+  thirdImage: {
+    textAlign: "center",
+    backgroundColor: "#f4f3f3",
+    marginRight: "32px",
+    borderRadius: "8px",
+    overflow: "hidden",
+    width: "23%",
+    float: "left"
+  },
+  articleSection: {
+    marginTop: "70px"
   },
   mainRaised: {
     margin: "-60px 30px 0px",
