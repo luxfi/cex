@@ -21,20 +21,30 @@ class SignUp extends React.Component {
 
   render() {
     const { userStore } = this.props.store
-    const { email, password, over18 } = userStore
-    console.log('Valid signupOne?', userStore.isValidSignupOne)
-    return <SignupForm 
-      setValue={(key, val) => {
-        userStore.setValue(key, val)
-      }}
-      email={email}
-      password={password}
-      over18={over18}
-      isValidSignup={userStore.isValidSignupOne}
-      signUp={() => { userStore.signUp() }}
-      validateEmail={() => { userStore.validateEmail() }}
-      validatePassword={() => { userStore.validatePassword() }}
-    />
+    const { email, password, over18, validEmail, validPassword } = userStore
+    console.log("Valid signupOne?", userStore.isValidSignupOne)
+    return (
+      <SignupForm
+        setValue={(key, val) => {
+          userStore.setValue(key, val)
+        }}
+        email={email}
+        password={password}
+        over18={over18}
+        isValidSignup={userStore.isValidSignupOne}
+        signUp={() => {
+          userStore.signUp()
+        }}
+        validateEmail={() => {
+          userStore.validateEmail()
+        }}
+        validatePassword={() => {
+          userStore.validatePassword()
+        }}
+        validEmail={validEmail}
+        validPassword={validPassword}
+      />
+    )
   }
 }
 // @watch('signupPage')
