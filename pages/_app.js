@@ -22,9 +22,6 @@ import BalanceProvider from "../src/balances"
 import Loader, { startLoading, stopLoading } from "../components/app/loader"
 
 import MomentUtils from "@date-io/moment"
-import { loadLibrary } from "../src/library"
-import Api from "../src/hanzo/api"
-import { HANZO_KEY, HANZO_ENDPOINT } from "../src/settings.js"
 
 // import styles from "assets/jss/material-kit-react/views/app.js"
 import styles from "../assets/jss/views/landingPage.js"
@@ -33,7 +30,7 @@ import styles from "../assets/jss/views/landingPage.js"
 
 const theme = createMuiTheme({
   palette: {
-    type: "dark"
+    type: "light"
     // primary: {
     //   main: blue[500],
     // },
@@ -106,27 +103,28 @@ class MyMobxApp extends App {
   }
 
   componentDidMount() {
-    if (typeof window !== "undefined" && this.props.hanzoPage) {
-      startLoading()
+    // if (typeof window !== "undefined" && this.props.hanzoPage) {
+    //   startLoading()
 
-      let api = new Api(HANZO_KEY, HANZO_ENDPOINT)
+    //   let api = new Api(HANZO_KEY, HANZO_ENDPOINT)
 
-      loadLibrary(api.client)
-        .then(() => {
-          stopLoading()
-        })
-        .catch(err => {
-          console.log("library loading error", err)
-          stopLoading()
-        })
-    } else {
-      stopLoading()
-    }
+    //   loadLibrary(api.client)
+    //     .then(() => {
+    //       stopLoading()
+    //     })
+    //     .catch(err => {
+    //       console.log("library loading error", err)
+    //       stopLoading()
+    //     })
+    // } else {
+    //   stopLoading()
+    // }
   }
 
   render() {
     const { Component, pageProps, classes, router } = this.props
     const onHomePage = router.pathname === "/" || router.pathname === "/#"
+    
     return (
       <>
         <CssBaseline />
