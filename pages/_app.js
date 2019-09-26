@@ -2,10 +2,20 @@ import App, { Container } from "next/app"
 import React from "react"
 import { Provider } from "mobx-react"
 
+// @material-ui/core components
+import { withStyles } from "@material-ui/core/styles"
+import blue from "@material-ui/core/colors/blue"
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles"
+import CssBaseline from "@material-ui/core/CssBaseline"
+
+// core components
+import Header from "../components/layout/header"
+import Footer from "../components/generic/Footer"
+
 import initializeStore from "../stores/stores"
 
 // NEW ***********
-import Router from "next/router"
+import { withRouter } from "next/router"
 import { MuiPickersUtilsProvider } from "react-referential-forms"
 import RefProvider from "react-referential"
 import BalanceProvider from "../src/balances"
@@ -13,12 +23,8 @@ import Loader, { startLoading, stopLoading } from "../components/app/loader"
 
 import MomentUtils from "@date-io/moment"
 
-import blue from "@material-ui/core/colors/blue"
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles"
-import CssBaseline from "@material-ui/core/CssBaseline"
-
-// import 'reeeset/src/reeeset.css'
-// import '../styles.styl'
+// import styles from "assets/jss/material-kit-react/views/app.js"
+import styles from "../assets/jss/views/landingPage.js"
 
 // ****************
 
@@ -116,37 +122,9 @@ class MyMobxApp extends App {
   }
 
   render() {
-    const { Component, pageProps, hanzoPage, isServer } = this.props
-
-    // if (isHanzoPage) {
-    // return pug`
-    //   Container
-    //     Provider(store=this.mobxStore)
-    //       MuiThemeProvider(theme=theme)
-    //         MuiPickersUtilsProvider(utils=MomentUtils)
-    //           RefProvider
-    //             BalanceProvider
-    //               Header
-    //               Component(...pageProps)
-    //               Footer
-    //               Loader
-    // `
-    // }
-
-    // return (
-    //   <Provider store={this.mobxStore}>
-    //     <Component {...pageProps} />
-    //   </Provider>
-    // )
-
-    const localRoute =
-      typeof window !== "undefined" ? window.location.href : "no window"
-    let isHanzoPage = hanzoPage
-    // Hail Mary
-    if (!isServer) {
-      isHanzoPage = checkHanzoPage(localRoute)
-    }
-
+    const { Component, pageProps, classes, router } = this.props
+    const onHomePage = router.pathname === "/" || router.pathname === "/#"
+    
     return (
       <>
         <CssBaseline />
@@ -156,14 +134,20 @@ class MyMobxApp extends App {
               <MuiPickersUtilsProvider utils={MomentUtils}>
                 <RefProvider>
                   <BalanceProvider>
-                    <Component {...pageProps} />
+                    <div className={classes.stickyFooterRoot}>
+                      <Header onHomePage={onHomePage} />
+                      <Component {...pageProps} />
+                      {/* <Loader /> */}
+                      <div className={classes.stickyFooter}>
+                        <Footer />
+                      </div>
+                    </div>
                   </BalanceProvider>
                 </RefProvider>
               </MuiPickersUtilsProvider>
             </MuiThemeProvider>
           </Provider>
         </Container>
-        {/* The rest of your application */}
       </>
     )
   }
@@ -175,28 +159,4 @@ class MyMobxApp extends App {
   }
 }
 
-// Router.events.on('routeChangeStart', (r) => {
-//   const isHanzo = checkHanzoPage(r)
-//   console.log('Starting route change', r, isHanzo)
-//   if (isHanzo) {
-//     startLoading(' ')
-//     setTimeout(() => {
-//       stopLoading()
-//     }, 3000)
-//   }
-// })
-
-// Router.events.on('routeChangeComplete', (r) => {
-//   const isHanzo = checkHanzoPage(r)
-//   console.log('Route change complete', r, isHanzo)
-//   if (isHanzo) {
-//     stopLoading()
-//   }
-// })
-
-// Router.events.on('routeChangeError', (err, r) => {
-//   console.log('Route change error', err, r)
-//   stopLoading()
-// })
-
-export default MyMobxApp
+export default withRouter(withStyles(styles)(MyMobxApp))
