@@ -212,7 +212,7 @@ export default class UserStore {
 
     try {
       const res = await this.api.client.account.logout()
-
+      this.forgetUser()
       // TODO Not sure what this is? This needs to go in the password update function
       // this.inputs.password.val(this.inputs.password.val().replace(/./g, '•'))
       onSuccess && onSuccess()
