@@ -16,10 +16,8 @@ import { HANZO_KEY, HANZO_ENDPOINT } from "../src/settings.js"
 */
 
 
-const BASE_HANZO_API_URL = "TODO" // should get this from a config object
-const api = new Api(HANZO_KEY, HANZO_ENDPOINT)
-
 export default class UserStore {
+  api = new Api(HANZO_KEY, HANZO_ENDPOINT)
 
   // ** GENERIC HELPERS **
   // use for wait states in UI
@@ -49,6 +47,10 @@ export default class UserStore {
   @observable lastName = undefined
   @observable confirmPassword = undefined
 
+  // ** KYC **
+
+  // ... Etc
+
   constructor(initialData = {  }) {
     // TODO Do we still need this?
   }
@@ -65,7 +67,11 @@ export default class UserStore {
   }
 
   @computed loggedIn() {
-    return !!this.currentUser
+    return !!this.token
+  }
+
+  @action setValue (key, val) {
+    this[key] = val
   }
 
   @action validateEmail (email) {
@@ -76,13 +82,13 @@ export default class UserStore {
     this.validPassword = isPassword(password)
   }
 
-  @action async signUp () {
+  @action async signUp (onSuccess, onError) {
     // ** ONLY CALL WHEN @computer isValidSignup IS TRUE **
     // Sign the user up
     this.updating = true
 
     try {
-      const res = await api.client.account.create({
+      const res = await this.api.client.account.create({
         email: this.email,
         firstName: this.firstName,
         lastName: this.lastName,
@@ -95,21 +101,23 @@ export default class UserStore {
       this.identity = ethers.utils.sha256(ethers.utils.toUtf8Bytes(i))
 
       this.setToken(res.token)
-
+      onSuccess && onSuccess()
     } catch (ex) {
-      this.errors = (err.response && err.response.body && err.response.body.errors)
-        ? err.response.body.errors : ''
+      // this.errors = (err.response && err.response.body && err.response.body.errors)
+      //   ? err.response.body.errors : ''
+        console.log('Error signing up', ex)
+        onError && onError()
     } finally {
       this.updating = false
     }
   }
 
     // Assumes values are in `displayValues`
-  @action async login() {
+  @action async login (onSuccess, onError) {
     this.updating = true
     
     try {
-      const res = await api.client.account.login({
+      const res = await this.api.client.account.login({
         email: this.email,
         password: this.password,
       })
@@ -122,22 +130,23 @@ export default class UserStore {
       this.identity = ethers.utils.sha256(ethers.utils.toUtf8Bytes(i))
 
       this.setToken(res.token)
-
+      onSuccess && onSuccess()
     } catch (ex) {
       // this.errors = (err.response && err.response.body && err.response.body.errors)
       //   ? err.response.body.errors : ''
       console.log('Error logging in', ex)
+      onError && onError()
     } finally {
       this.updating = false
     }
   }
 
-  @action forgetUser() {
+  @action forgetUser () {
     this.currentUser = undefined
     this.setToken(undefined)
   }
 
-  @computed get isValidSignup() {
+  @computed get isValidSignup () {
     return this.validEmail 
           && this.validPassword 
           && this.password === this.confirmPassword
@@ -146,5 +155,10 @@ export default class UserStore {
           && typeof this.lastName === 'string'
           && this.lastName.length >= 2
           && this.over18
+  }
+
+  @compute get isValidLogin () {
+    return this.validEmail
+          && this.validPassword
   }
 }
