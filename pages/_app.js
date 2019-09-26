@@ -12,9 +12,6 @@ import BalanceProvider from "../src/balances"
 import Loader, { startLoading, stopLoading } from "../components/app/loader"
 
 import MomentUtils from "@date-io/moment"
-import { loadLibrary } from "../src/library"
-import Api from "../src/hanzo/api"
-import { HANZO_KEY, HANZO_ENDPOINT } from "../src/settings.js"
 
 import blue from "@material-ui/core/colors/blue"
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles"
@@ -100,22 +97,22 @@ class MyMobxApp extends App {
   }
 
   componentDidMount() {
-    if (typeof window !== "undefined" && this.props.hanzoPage) {
-      startLoading()
+    // if (typeof window !== "undefined" && this.props.hanzoPage) {
+    //   startLoading()
 
-      let api = new Api(HANZO_KEY, HANZO_ENDPOINT)
+    //   let api = new Api(HANZO_KEY, HANZO_ENDPOINT)
 
-      loadLibrary(api.client)
-        .then(() => {
-          stopLoading()
-        })
-        .catch(err => {
-          console.log("library loading error", err)
-          stopLoading()
-        })
-    } else {
-      stopLoading()
-    }
+    //   loadLibrary(api.client)
+    //     .then(() => {
+    //       stopLoading()
+    //     })
+    //     .catch(err => {
+    //       console.log("library loading error", err)
+    //       stopLoading()
+    //     })
+    // } else {
+    //   stopLoading()
+    // }
   }
 
   render() {
@@ -149,7 +146,6 @@ class MyMobxApp extends App {
     if (!isServer) {
       isHanzoPage = checkHanzoPage(localRoute)
     }
-    console.log("Rendering _app with isHanzoPage", isHanzoPage, localRoute)
 
     return (
       <>
@@ -161,7 +157,6 @@ class MyMobxApp extends App {
                 <RefProvider>
                   <BalanceProvider>
                     <Component {...pageProps} />
-                    {isHanzoPage && <Loader />}
                   </BalanceProvider>
                 </RefProvider>
               </MuiPickersUtilsProvider>
