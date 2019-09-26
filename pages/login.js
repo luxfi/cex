@@ -1,22 +1,38 @@
-import React from 'react'
-import Router from 'next/router'
+import React from "react"
+import Router from "next/router"
 import { inject, observer } from "mobx-react"
 
-import LoginForm from '../components/forms/login'
+import LoginForm from "../components/forms/login"
 
 @inject("store")
 @observer
 class Login extends React.Component {
   static async getInitialProps({ mobxStore }) {
-    await mobxStore.movieStore.fetch()
-    return {
-      movieStore: mobxStore.movieStore,
-      orderBook: mobxStore.orderBook,
-    }
+    return { ...mobxStore }
   }
 
   render() {
-    return <LoginForm />
+    const { userStore } = this.props.store
+    const { email, password, isValidLogin } = userStore
+    return (
+      <LoginForm
+        setValue={(key, val) => {
+          userStore.setValue(key, val)
+        }}
+        email={email}
+        password={password}
+        login={(onSuccess, onError) => {
+          userStore.login(onSuccess, onError)
+        }}
+        validateEmail={() => {
+          userStore.validateEmail()
+        }}
+        validatePassword={() => {
+          userStore.validatePassword()
+        }}
+        isValidLogin={isValidLogin}
+      />
+    )
   }
 
   // commented out for mobx later...
