@@ -42,11 +42,13 @@ export default class UserStore {
   // ** SIGNUP INFO **
   @observable validEmail = false
   @observable validPassword = false
+  @observable validFirstName = false
+  @observable validLastName = false
   @observable over18 = false
   @observable firstName = undefined
   @observable middleName = undefined
   @observable lastName = undefined
-  @observable confirmPassword = undefined
+  @observable passwordConfirm = undefined
 
   // ** KYC **
   @observable phone = undefined
@@ -107,8 +109,16 @@ export default class UserStore {
     this.validEmail = isEmail(this.email)
   }
 
-  @action validatePassword(password) {
-    this.validPassword = isPassword(password)
+  @action validatePassword() {
+    this.validPassword = isPassword(this.password)
+  }
+
+  @action validateFirstName() {
+    this.validFirstName = stringPresentAndValid(this.firstName)
+  }
+
+  @action validateLastName() {
+    this.validLastName = stringPresentAndValid(this.lastName)
   }
 
   @action validatePhone(phone) {
@@ -167,7 +177,6 @@ export default class UserStore {
       // this.errors = (err.response && err.response.body && err.response.body.errors)
       //   ? err.response.body.errors : ''
       console.log("Error signing up", ex)
-      debugger
       onError && onError(ex)
     } finally {
       this.updating = false
@@ -244,12 +253,21 @@ export default class UserStore {
   }
 
   @computed get isValidSignup() {
+    console.log("validEmail", this.validEmail)
+    console.log("validPassword", this.validPassword)
+    console.log(
+      "password === passwordConfirm",
+      this.password === this.passwordConfirm
+    )
+    console.log("over18", this.over18)
+    console.log("isValidName", this.isValidName)
+
     return (
       this.validEmail &&
       this.validPassword &&
-      this.password === this.confirmPassword &&
+      this.password === this.passwordConfirm &&
       this.over18 &&
-      this.isValidName()
+      this.isValidName
     )
   }
 
