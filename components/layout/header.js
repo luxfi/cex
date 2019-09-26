@@ -207,7 +207,10 @@ class Header extends React.Component {
                         aria-haspopup="true"
                         onClick={handleClick}
                       >
-                        <AccountCircle style={{ fontSize: "36" }} />
+                        <AccountCircle
+                          style={{ fontSize: "36" }}
+                          className={onHomePage && classes.white}
+                        />
                       </IconButton>
                       <Menu
                         id="menu"
@@ -424,7 +427,10 @@ const styles = theme => {
       marginRight: theme.spacing(2),
       display: "none"
     },
-    toolBar: {}
+    toolBar: {},
+    white: {
+      color: "white"
+    }
   }
 }
 
