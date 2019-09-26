@@ -7,6 +7,7 @@ import * as ethers from 'ethers'
 import Api from '../src/hanzo/api'
 import isEmail from "../src/control-middlewares/isEmail"
 import isPassword from "../src/control-middlewares/isPassword"
+import isPhone from "../src/control-middlewares/isPhone"
 
 // Constants
 import { HANZO_KEY, HANZO_ENDPOINT } from "../src/settings.js"
@@ -14,7 +15,6 @@ import { HANZO_KEY, HANZO_ENDPOINT } from "../src/settings.js"
 /**
  * Later we'll wrap the fetch stuff up a bit more cleanly and / or use a helper library
 */
-
 
 export default class UserStore {
   api = new Api(HANZO_KEY, HANZO_ENDPOINT)
@@ -44,15 +44,38 @@ export default class UserStore {
   @observable validPassword = false
   @observable over18 = false
   @observable firstName = undefined
+  @observable middleName = undefined
   @observable lastName = undefined
   @observable confirmPassword = undefined
 
   // ** KYC **
+  @observable phone = undefined
+  @observable taxId = undefined
+  @observable birthdate = undefined
+  @observable gender = 'unspecified'
+  @observable address1 = undefined
+  @observable address2 = undefined
+  @observable city = undefined
+  @observable postalCode = undefined
+  @observable country = undefined
+  @observable state = undefined
+  @observable documents0 = undefined
+  @observable documents1 = undefined
+  @observable documents2 = undefined
+
+  @observable validPhone = false
+
+
+  /* what to do with ?
+   opts.kyc.ethereumAddress = this.props.ethKey.address
+    opts.kyc.eosPublicKey = this.props.eosKey.publicKey
+  */
 
   // ... Etc
 
   constructor(initialData = {  }) {
     // TODO Do we still need this?
+    // :aa I don't think so.... why would we?
   }
   
     // TODO store this w httpOnly in a cookie w all the proper security precautions. 
@@ -78,8 +101,12 @@ export default class UserStore {
     this.validEmail = isEmail(email)
   }
 
-  @action validatePassword (password) {
+  @action validatePassword(password) {
     this.validPassword = isPassword(password)
+  }
+
+  @action validatePhone(phone) {
+    this.validPhone = isPhone(phone)
   }
 
   @action async signUp (onSuccess, onError) {
