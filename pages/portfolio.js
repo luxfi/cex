@@ -1,9 +1,12 @@
 import React from "react"
+import PropTypes from "prop-types"
 // @material-ui/core components
-import { withStyles } from "@material-ui/core/styles"
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
-import AppBar from '@material-ui/core/AppBar'
+import { makeStyles, withStyles } from "@material-ui/core/styles"
+import Tabs from "@material-ui/core/Tabs"
+import Tab from "@material-ui/core/Tab"
+import AppBar from "@material-ui/core/AppBar"
+import Typography from "@material-ui/core/Typography"
+import Box from "@material-ui/core/Box"
 
 import { inject, observer } from "mobx-react"
 
@@ -16,27 +19,70 @@ import styles from "../assets/jss/views/landingPage.js"
 import InvestorTopPicksSection from "../views/LandingPage/Sections/InvestorTopPicksSection"
 import PortfolioCta from "../views/ProfilePage/PortfolioCta"
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <Typography
+      component="div"
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      <Box p={3}>{children}</Box>
+    </Typography>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+
 @inject("store")
 @observer
 class Portfolio extends React.Component {
-  // static async getInitialProps({ mobxStore }) {
-  //   await mobxStore.movieStore.fetch()
-  //   return {
-  //     movieStore: mobxStore.movieStore,
-  //     orderBook: mobxStore.orderBook
-  //   }
-  // }
 
-  // componentDidMount() {
-  //   console.log("index props componentDidMount", this.props.store.orderBook)
-  //   this.props.store.orderBook.initiateDataGenerator()
-  // }
-
-  // componentWillUnmount() {
-  //   this.props.store.orderBook.terminateDataGenerator()
-  // }
+  TabPanel(props) {
+    const { children, value, index, ...other } = props;
+  
+    return (
+      <Typography
+        component="div"
+        role="tabpanel"
+        hidden={value !== index}
+        id={`simple-tabpanel-${index}`}
+        aria-labelledby={`simple-tab-${index}`}
+        {...other}
+      >
+        <Box p={3}>{children}</Box>
+      </Typography>
+    );
+  }
+  
+  a11yProps(index) {
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
+    };
+  }
 
   render() {
+    TabPanel.propTypes = {
+      children: PropTypes.node,
+      index: PropTypes.any.isRequired,
+      value: PropTypes.any.isRequired,
+    };
+    
+    const [value, setValue] = React.useState(0);
+  
+    const handleChange = (event, newValue) => {
+      setValue(newValue);
+    };
     // const { movieStore } = this.props.store
     const { classes } = this.props
     return (
