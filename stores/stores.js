@@ -1,11 +1,11 @@
-import { action, observable, computed } from 'mobx'
-import { useStaticRendering } from 'mobx-react'
+import { action, observable, computed } from "mobx"
+import { useStaticRendering } from "mobx-react"
 
-import MovieStore from './MovieStore'
-import OrderBook from './OrderBook'
-import UserStore from './UserStore'
+import MovieStore from "./MovieStore"
+import OrderBook from "./OrderBook"
+import UserStore from "./UserStore"
 
-const isServer = typeof window === 'undefined'
+const isServer = typeof window === "undefined"
 useStaticRendering(isServer)
 
 let store = null
@@ -31,6 +31,8 @@ export default function initializeStore(initialData = _initialData) {
       orderBook: new OrderBook(initialData.orderBook),
       userStore: new UserStore(initialData.userStore)
     }
+    // console.log("isServer", isServer)
+    // store.userStore.loadSession()
   }
   // Otherwise we don't need to re-initialize the store
   return store

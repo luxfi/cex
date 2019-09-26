@@ -103,20 +103,11 @@ class MyMobxApp extends App {
   }
 
   componentDidMount() {
-    // if (typeof window !== "undefined" && this.props.hanzoPage) {
-    //   startLoading()
-    //   let api = new Api(HANZO_KEY, HANZO_ENDPOINT)
-    //   loadLibrary(api.client)
-    //     .then(() => {
-    //       stopLoading()
-    //     })
-    //     .catch(err => {
-    //       console.log("library loading error", err)
-    //       stopLoading()
-    //     })
-    // } else {
-    //   stopLoading()
-    // }
+    console.log("ComponentDidMount", this.props.isServer)
+    if (!this.props.isServer) {
+      // debugger
+      // this.props.initialMobxState.userStore.loadSession()
+    }
   }
 
   render() {

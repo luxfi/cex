@@ -86,6 +86,17 @@ export default class UserStore {
     // TODO Do we still need this?
     // :aa I don't think so.... why would we?
     // E: This might be required for persisting state across page changes
+    // const isServer = typeof window === "undefined"
+    // if (!isServer) this.loadSession()
+  }
+
+  /**
+   * Fetches all todos from the server
+   */
+  @action loadSession() {
+    this.isLoading = true
+    this.token = this.api.client.getCustomerToken()
+    this.isLoading = false
   }
 
   // TODO store this w httpOnly in a cookie w all the proper security precautions.
@@ -310,4 +321,9 @@ export default class UserStore {
 
 function stringPresentAndValid(s) {
   return typeof s === "string" && s.length >= 2
+}
+
+export async function fetchUserSession() {
+  // You can do anything to fetch initial store state
+  return {}
 }
