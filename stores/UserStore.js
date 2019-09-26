@@ -64,10 +64,17 @@ export default class UserStore {
   @observable documents2 = undefined
 
   @observable validPhone = false
+  @observable validTaxId = false
+  @observable validBirthdate = false
+  // gender is a dropdown and defaults to 'unspecified' -- no need to track
+  @observable validAddress1 = false
+  @observable validCity = false
+  @observable validPostalCode = false
+  // country is a dropdown
+  // state is a dropdown
 
-
-  /* what to do with ?
-   opts.kyc.ethereumAddress = this.props.ethKey.address
+  /* what to do with ... TODO
+    opts.kyc.ethereumAddress = this.props.ethKey.address
     opts.kyc.eosPublicKey = this.props.eosKey.publicKey
   */
 
@@ -109,9 +116,37 @@ export default class UserStore {
     this.validPhone = isPhone(phone)
   }
 
+  @action validateTaxId(id) {
+      // 9 digits etc
+      // https://howtodoinjava.com/regex/java-regex-validate-social-security-numbers-ssn/
+    const regex = /^(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$/
+    this.validTaxId = regex.test(id)
+  }
+
+  @action validateBirthdate(d) {
+      // TODO valid date and range (this could be unnecessary if a date control is used)
+    this.validBirthdate = stringPresentAndValid(d)
+  }
+
+  @action validateAddress1(a) {
+      // TODO call API for street addresses in the US and make this unnecessary :)
+      // in the meantime check for a valid date
+    this.validAddress1 = stringPresentAndValid(a)
+  }
+
+  @action validateCity(c) {
+    // TODO call API for street addresses in the US and make this unnecessary :)
+    // in the meantime check for a valid date
+    this.validCity = stringPresentAndValid(c)
+  }
+
+  @action validatePostalCode(c) {
+    const regex = /^\d{ 5}$/
+    this.validPostalCode = regex(c)
+  }
+
   @action async signUp (onSuccess, onError) {
-    // ** ONLY CALL WHEN @computer isValidSignup IS TRUE **
-    // Sign the user up
+    // ** ONLY CALL WHEN @computed isValidSignup IS TRUE **
     this.updating = true
 
     try {
@@ -139,7 +174,6 @@ export default class UserStore {
     }
   }
 
-    // Assumes values are in `displayValues`
   @action async login (onSuccess, onError) {
     this.updating = true
     
@@ -159,9 +193,37 @@ export default class UserStore {
       this.setToken(res.token)
       onSuccess && onSuccess()
     } catch (ex) {
-      // this.errors = (err.response && err.response.body && err.response.body.errors)
-      //   ? err.response.body.errors : ''
       console.log('Error logging in', ex)
+      onError && onError()
+    } finally {
+      this.updating = false
+    }
+  }
+
+  @action async updateKYC(onSuccess, onError) {
+    // ** ONLY CALL WHEN @computed isValidKYC IS TRUE **
+    this.updating = true
+    let opts = {
+      phone,
+      taxId,
+      birthdate,
+      gender,
+      address1,
+      address2,
+      city,
+      postalCode,
+      country,
+      state,
+      documents0,
+      documents1,
+      documents2
+    } = this
+
+    try {
+      const res = await this.api.client.account.update({opts})
+      onSuccess && onSuccess()
+    } catch (ex) {
+      console.log('Error saving KYC options', ex)
       onError && onError()
     } finally {
       this.updating = false
@@ -173,19 +235,41 @@ export default class UserStore {
     this.setToken(undefined)
   }
 
+  @computed get isValidName() {
+    return stringPresentAndValid(this.firstName) 
+        && stringPresentAndValid(this.lastName)
+          // middle name is not checked
+  }
+
   @computed get isValidSignup () {
     return this.validEmail 
           && this.validPassword 
           && this.password === this.confirmPassword
-          && typeof this.firstName === 'string'
-          && this.firstName.length >= 2
-          && typeof this.lastName === 'string'
-          && this.lastName.length >= 2
           && this.over18
+          && this.isValidName()
   }
 
   @computed get isValidLogin () {
     return this.validEmail
           && this.validPassword
   }
+
+ 
+  @computed get isValidKYC() {
+    return this.isValidName()
+          && this.validPhone
+          && this.validTaxId
+          && this.validBirthdate
+          && this.validAddress1
+          && this.validCity
+          && this.postalCode
+            // country is dropdown (noted above)
+  }
+
 }
+
+function stringPresentAndValid(s) {
+  return typeof s === 'string'
+    && s.length >= 2
+}
+
