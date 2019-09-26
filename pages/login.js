@@ -2,19 +2,9 @@ import React from 'react'
 import Router from 'next/router'
 // import { watch } from 'react-referential'
 import LoginForm from '../components/forms/login'
-import Emitter from '../src/emitter'
-import { setIdentity } from '../src/wallet'
 
-import Link from '../components/link'
-import {
-  getIdentity,
-  getEncodedPrivateKey,
-} from '../src/wallet'
-
-// import 'reeeset/src/reeeset.css'
-// import '../styles.styl'
-
-// @watch('indexPage')
+@inject("store")
+@observer
 class Login extends React.Component {
   static async getInitialProps({ mobxStore }) {
     await mobxStore.movieStore.fetch()

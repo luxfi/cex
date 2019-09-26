@@ -12,15 +12,29 @@ import Tab from "@material-ui/core/Tab"
 import Link from "../components/link"
 import { getEncodedPrivateKey } from "../src/wallet"
 
-@observer
 @inject("store")
+@observer
 class SignUp extends React.Component {
   static async getInitialProps({ mobxStore }) {
     return { ...mobxStore }
   }
 
   render() {
-    return <SignupForm store={this.props.store} />
+    const { userStore } = this.props.store
+    const { email, password, over18 } = userStore
+    console.log('Valid signupOne?', userStore.isValidSignupOne)
+    return <SignupForm 
+      setValue={(evt) => {
+        userStore.setValue(evt.target.name, evt.target.value)
+      }}
+      email={email}
+      password={password}
+      over18={over18}
+      isValidSignup={userStore.isValidSignupOne}
+      signUp={() => { userStore.signUp() }}
+      validateEmail={() => { userStore.validateEmail() }}
+      validatePassword={() => { userStore.validatePassword() }}
+    />
   }
 }
 // @watch('signupPage')

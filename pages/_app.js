@@ -131,18 +131,16 @@ class MyMobxApp extends App {
             <MuiThemeProvider theme={theme}>
               <MuiPickersUtilsProvider utils={MomentUtils}>
                 <RefProvider>
-                  <BalanceProvider>
-                    <div className={classes.root}>
-                      <div className={classes.main} component="main">
-                        <Header onHomePage={onHomePage} />
-                        <Component {...pageProps} />
-                        {/* <Loader /> */}
-                      </div>
-                      <div className={classes.stickyFooter}>
-                        <Footer />
-                      </div>
+                  <div className={classes.root}>
+                    <div className={classes.main} component="main">
+                      <Header onHomePage={onHomePage} />
+                      <Component {...pageProps} />
+                      {/* <Loader /> */}
                     </div>
-                  </BalanceProvider>
+                    <div className={classes.stickyFooter}>
+                      <Footer />
+                    </div>
+                  </div>
                 </RefProvider>
               </MuiPickersUtilsProvider>
             </MuiThemeProvider>

@@ -9,17 +9,6 @@ import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
-import Router from "next/router"
-import * as ethers from "ethers"
-import Api from "../../src/hanzo/api"
-
-import { watch } from "react-referential"
-import { HANZO_KEY, HANZO_ENDPOINT } from "../../src/settings.js"
-
-// import isRequired from '../../src/control-middlewares/isRequired'
-import isEmail from "../../src/control-middlewares/isEmail"
-import isPassword from "../../src/control-middlewares/isPassword"
-// import { renderDate } from 'react-referential-forms'
 
 const styles = theme => ({
   "@global": {
@@ -42,46 +31,58 @@ const styles = theme => ({
   }
 })
 
-class LoginForm extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      email: "",
-      password: "",
-      emailError: false,
-      passwordError: false
-    }
-    this.submitLogin = this.submitLogin.bind(this)
-  }
+class SignupForm extends React.Component {
+  // constructor(props) {
+  //   super(props)
+  //   this.state = {
+  //     email: "",
+  //     password: "",
+  //     emailError: false,
+  //     passwordError: false
+  //   }
+  //   this.submitLogin = this.submitLogin.bind(this)
+  // }
 
-  submitLogin(e) {
-    e.preventDefault()
-    // if (this.state.email === "" || this.password === "") return
-    // // clear errors for logic flow
-    // this.setState({ emailError: false })
-    // this.setState({ passwordError: false })
-    // let errors = false
-    // try {
-    //   isEmail(this.state.email)
-    // } catch (e) {
-    //   errors = true
-    //   this.setState({ emailError: e.message })
-    // }
-    // try {
-    //   isPassword(this.state.password)
-    // } catch (e) {
-    //   errors = true
-    //   this.setState({ passwordError: e.message })
-    // } finally {
-    //   if (!errors) {
-    //     Router.push("/account/mnemonic")
-    //   }
-    // }
-  }
+  // submitLogin(e) {
+  //   e.preventDefault()
+  //   if (this.state.email === "" || this.password === "") return
+  //   // clear errors for logic flow
+  //   this.setState({ emailError: false })
+  //   this.setState({ passwordError: false })
+  //   let errors = false
+  //   try {
+  //     isEmail(this.state.email)
+  //   } catch (e) {
+  //     errors = true
+  //     this.setState({ emailError: e.message })
+  //   }
+  //   try {
+  //     isPassword(this.state.password)
+  //   } catch (e) {
+  //     errors = true
+  //     this.setState({ passwordError: e.message })
+  //   } finally {
+  //     if (!errors) {
+  //       Router.push("/account/mnemonic")
+  //     }
+  //   }
+  // }
 
   render() {
-    const { classes, store } = this.props
-    const { userStore } = store
+    const { 
+      classes,
+      setValue,
+      email,
+      password,
+      over18,
+      isValidSignup,
+      signUp,
+      validateEmail,
+      validatePassword
+    } = this.props
+
+    // TODO Remove form)
+
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -98,14 +99,13 @@ class LoginForm extends React.Component {
               id="email"
               label="Email Address"
               name="email"
+              onBlur={validateEmail}
               // autoComplete="email"
               autoFocus
-              error={!!this.state.emailError}
-              helperText={this.state.emailError && this.state.emailError}
-              value={userStore.email}
-              onChange={event => {
-                userStore.setValue(event.target.name, event.target.value)
-              }}
+              // error={!!this.state.emailError}
+              // helperText={this.state.emailError && this.state.emailError}
+              value={email}
+              onChange={setValue}
             />
             <TextField
               variant="outlined"
@@ -116,16 +116,15 @@ class LoginForm extends React.Component {
               label="Password"
               type="password"
               id="password"
+              onBlur={validatePassword}
               // autoComplete="current-password"
-              error={!!this.state.passwordError}
-              helperText={this.state.passwordError && this.state.passwordError}
-              value={userStore.password}
-              onChange={event => {
-                userStore.setValue(event.target.name, event.target.value)
-              }}
+              // error={!!this.state.passwordError}
+              // helperText={this.state.passwordError && this.state.passwordError}
+              value={password}
+              onChange={setValue}
             />
             <FormControlLabel
-              control={<Checkbox value="over18" color="primary" />}
+              control={<Checkbox value="over18" color="primary" name="over18" value={over18} onChange={setValue} />}
               label="I am over 18."
             />
             <Button
@@ -134,6 +133,8 @@ class LoginForm extends React.Component {
               variant="contained"
               color="primary"
               className={classes.submit}
+              disabled={!isValidSignup}
+              onClick={signUp}
             >
               Sign Up
             </Button>
@@ -150,7 +151,7 @@ class LoginForm extends React.Component {
     )
   }
 }
-export default withStyles(styles)(LoginForm)
+export default withStyles(styles)(SignupForm)
 
 // @watch('signupForm')
 // export default class LoginForm extends Form {
