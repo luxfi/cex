@@ -21,8 +21,16 @@ class SignUp extends React.Component {
 
   render() {
     const { userStore } = this.props.store
-    const { email, password, over18, validEmail, validPassword } = userStore
-    console.log("Valid signupOne?", userStore.isValidSignupOne)
+    const {
+      email,
+      password,
+      passwordConfirm,
+      over18,
+      validEmail,
+      validPassword,
+      firstName,
+      lastName
+    } = userStore
     return (
       <SignupForm
         setValue={(key, val) => {
@@ -30,8 +38,9 @@ class SignUp extends React.Component {
         }}
         email={email}
         password={password}
+        passwordConfirm={passwordConfirm}
         over18={over18}
-        isValidSignup={userStore.isValidSignupOne}
+        isValidSignup={userStore.isValidSignup}
         signUp={(onSuccess, onError) => {
           userStore.signUp(onSuccess, onError)
         }}
@@ -43,6 +52,14 @@ class SignUp extends React.Component {
         }}
         validEmail={validEmail}
         validPassword={validPassword}
+        firstName={firstName}
+        lastName={lastName}
+        validateFirstName={() => {
+          userStore.validateFirstName()
+        }}
+        validateLastName={() => {
+          userStore.validateLastName()
+        }}
       />
     )
   }
