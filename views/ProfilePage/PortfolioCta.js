@@ -18,10 +18,6 @@ import ContentLoader, { Facebook } from "react-content-loader"
 // import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
 import styles from "../../assets/jss/views/landingPageSections/investNowStyle.js"
 
-import team1 from "../../../assets/img/faces/avatar.jpg"
-import team2 from "../../../assets/img/faces/christian.jpg"
-import team3 from "../../../assets/img/faces/kendall.jpg"
-
 const useStyles = makeStyles(styles)
 
 const MyLoader = () => (
