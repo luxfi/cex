@@ -124,7 +124,7 @@ class MyMobxApp extends App {
     const onHomePage = router.pathname === "/" || router.pathname === "/#"
 
     return (
-      <div className={classes.root}>
+      <>
         <CssBaseline />
         <Container>
           <Provider store={this.mobxStore}>
@@ -132,13 +132,15 @@ class MyMobxApp extends App {
               <MuiPickersUtilsProvider utils={MomentUtils}>
                 <RefProvider>
                   <BalanceProvider>
-                    <div className={classes.main} component="main">
-                      <Header onHomePage={onHomePage} />
-                      <Component {...pageProps} />
-                      {/* <Loader /> */}
-                    </div>
-                    <div className={classes.stickyFooter}>
-                      <Footer />
+                    <div className={classes.root}>
+                      <div className={classes.main} component="main">
+                        <Header onHomePage={onHomePage} />
+                        <Component {...pageProps} />
+                        {/* <Loader /> */}
+                      </div>
+                      <div className={classes.stickyFooter}>
+                        <Footer />
+                      </div>
                     </div>
                   </BalanceProvider>
                 </RefProvider>
@@ -146,7 +148,7 @@ class MyMobxApp extends App {
             </MuiThemeProvider>
           </Provider>
         </Container>
-      </div>
+      </>
     )
   }
 
