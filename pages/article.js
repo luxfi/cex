@@ -5,15 +5,13 @@ import { withStyles } from "@material-ui/core/styles"
 import { inject, observer } from "mobx-react"
 
 // core components
+import Breadcrumbs from "../components/Breadcrumbs.js"
 
 // import styles from "assets/jss/material-kit-react/views/landingPage.js"
 import styles from "../assets/jss/views/landingPage.js"
 
 // Sections for this page
-import InvestorTopPicksSection from "../views/LandingPage/Sections/InvestorTopPicksSection"
 import InvestNowSection from "../views/LandingPage/Sections/InvestNowSection"
-import OurPartnersSection from "../views/LandingPage/Sections/OurPartnersSection"
-import ESXCommunitySection from "../views/LandingPage/Sections/ESXCommunitySection"
 
 @inject("store")
 @observer
@@ -43,10 +41,8 @@ class Index extends React.Component {
         <div style={{ height: "140px" }}></div>
         <div className={`${classes.main} ${classes.mainRaised}`}>
           <div className={classes.container}>
-            <InvestorTopPicksSection />
+            <Breadcrumbs />
             <InvestNowSection />
-            <OurPartnersSection />
-            <ESXCommunitySection />
           </div>
         </div>
       </>
