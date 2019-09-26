@@ -3,22 +3,16 @@ import { action, observable, computed } from "mobx"
 import * as ethers from "ethers"
 // import _ from 'lodash'
 
-// Proprietary Libraries
-import Api from "../src/hanzo/api"
+// Utilities
 import isEmail from "../src/control-middlewares/isEmail"
 import isPassword from "../src/control-middlewares/isPassword"
 import isPhone from "../src/control-middlewares/isPhone"
-
-// Constants
-import { HANZO_KEY, HANZO_ENDPOINT } from "../src/settings.js"
 
 /**
  * Later we'll wrap the fetch stuff up a bit more cleanly and / or use a helper library
  */
 
 export default class UserStore {
-  api = new Api(HANZO_KEY, HANZO_ENDPOINT)
-
   // ** GENERIC HELPERS **
   // use for wait states in UI
   @observable updating = false
@@ -80,14 +74,20 @@ export default class UserStore {
     opts.kyc.eosPublicKey = this.props.eosKey.publicKey
   */
 
+  // ** Watchlist **
+  @observable watchlist = []
+
+  // **
+
   // ... Etc
 
-  constructor(initialData = {}) {
+  constructor(initialData = {}, hanzoApi) {
     // TODO Do we still need this?
     // :aa I don't think so.... why would we?
     // E: This might be required for persisting state across page changes
-    // const isServer = typeof window === "undefined"
-    // if (!isServer) this.loadSession()
+
+    // Pass down the Hanzo API through a central point
+    this.api = hanzoApi
   }
 
   /**
