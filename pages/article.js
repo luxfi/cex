@@ -6,9 +6,10 @@ import { inject, observer } from "mobx-react"
 
 // core components
 import Breadcrumbs from "../components/Breadcrumbs.js"
+import Button from "../components/CustomButtons/Button"
 
 // import styles from "assets/jss/material-kit-react/views/landingPage.js"
-import styles from "../assets/jss/views/landingPage.js"
+import styles from "../assets/jss/views/articlePage.js"
 
 // Sections for this page
 import InvestNowSection from "../views/LandingPage/Sections/InvestNowSection"
@@ -42,6 +43,26 @@ class Index extends React.Component {
         <div className={`${classes.main} ${classes.mainRaised}`}>
           <div className={classes.container}>
             <Breadcrumbs />
+            <div className={classes.section}>
+              <h2 className={classes.title} style={{ textAlign: "left" }}>
+                Filming The Lone Wolf Dies
+              </h2>
+              <div className={classes.grow} />
+              <Button
+                color="outlined"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: "black",
+                  marginLeft: "20px",
+                  height: "48px"
+                }}
+                className={classes.investButton}
+              >
+                Invest Now
+              </Button>
+            </div>
             <InvestNowSection />
           </div>
         </div>
