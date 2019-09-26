@@ -24,7 +24,7 @@ import Loader, { startLoading, stopLoading } from "../components/app/loader"
 import MomentUtils from "@date-io/moment"
 
 // import styles from "assets/jss/material-kit-react/views/app.js"
-import styles from "../assets/jss/views/landingPage.js"
+import styles from "../assets/jss/views/app.js"
 
 // ****************
 
@@ -124,7 +124,7 @@ class MyMobxApp extends App {
     const onHomePage = router.pathname === "/" || router.pathname === "/#"
 
     return (
-      <>
+      <div className={classes.root}>
         <CssBaseline />
         <Container>
           <Provider store={this.mobxStore}>
@@ -132,13 +132,13 @@ class MyMobxApp extends App {
               <MuiPickersUtilsProvider utils={MomentUtils}>
                 <RefProvider>
                   <BalanceProvider>
-                    <div className={classes.stickyFooterRoot}>
+                    <div className={classes.main} component="main">
                       <Header onHomePage={onHomePage} />
                       <Component {...pageProps} />
                       {/* <Loader /> */}
-                      <div className={classes.stickyFooter}>
-                        <Footer />
-                      </div>
+                    </div>
+                    <div className={classes.stickyFooter}>
+                      <Footer />
                     </div>
                   </BalanceProvider>
                 </RefProvider>
@@ -146,7 +146,7 @@ class MyMobxApp extends App {
             </MuiThemeProvider>
           </Provider>
         </Container>
-      </>
+      </div>
     )
   }
 
