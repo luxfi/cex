@@ -56,31 +56,32 @@ class LoginForm extends React.Component {
 
   submitLogin(e) {
     e.preventDefault()
-    if (this.state.email === "" || this.password === "") return
-    // clear errors for logic flow
-    this.setState({ emailError: false })
-    this.setState({ passwordError: false })
-    let errors = false
-    try {
-      isEmail(this.state.email)
-    } catch (e) {
-      errors = true
-      this.setState({ emailError: e.message })
-    }
-    try {
-      isPassword(this.state.password)
-    } catch (e) {
-      errors = true
-      this.setState({ passwordError: e.message })
-    } finally {
-      if (!errors) {
-        Router.push("/")
-      }
-    }
+    // if (this.state.email === "" || this.password === "") return
+    // // clear errors for logic flow
+    // this.setState({ emailError: false })
+    // this.setState({ passwordError: false })
+    // let errors = false
+    // try {
+    //   isEmail(this.state.email)
+    // } catch (e) {
+    //   errors = true
+    //   this.setState({ emailError: e.message })
+    // }
+    // try {
+    //   isPassword(this.state.password)
+    // } catch (e) {
+    //   errors = true
+    //   this.setState({ passwordError: e.message })
+    // } finally {
+    //   if (!errors) {
+    //     Router.push("/account/mnemonic")
+    //   }
+    // }
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, userStore } = this.props
+    debugger
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -101,10 +102,10 @@ class LoginForm extends React.Component {
               autoFocus
               error={!!this.state.emailError}
               helperText={this.state.emailError && this.state.emailError}
-              value={this.state.email}
-              onChange={event =>
-                this.setState({ [event.target.name]: event.target.value })
-              }
+              value={""}
+              onChange={event => {
+                userStore.setValue2(event.target.name, event.target.value)
+              }}
             />
             <TextField
               variant="outlined"
@@ -118,10 +119,10 @@ class LoginForm extends React.Component {
               autoComplete="current-password"
               error={!!this.state.passwordError}
               helperText={this.state.passwordError && this.state.passwordError}
-              value={this.state.password}
-              onChange={event =>
-                this.setState({ [event.target.name]: event.target.value })
-              }
+              value={""}
+              onChange={event => {
+                userStore.setValue2(event.target.name, event.target.value)
+              }}
             />
             <FormControlLabel
               control={<Checkbox value="over18" color="primary" />}
