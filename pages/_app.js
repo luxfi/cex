@@ -105,9 +105,7 @@ class MyMobxApp extends App {
   componentDidMount() {
     // if (typeof window !== "undefined" && this.props.hanzoPage) {
     //   startLoading()
-
     //   let api = new Api(HANZO_KEY, HANZO_ENDPOINT)
-
     //   loadLibrary(api.client)
     //     .then(() => {
     //       stopLoading()
@@ -124,7 +122,7 @@ class MyMobxApp extends App {
   render() {
     const { Component, pageProps, classes, router } = this.props
     const onHomePage = router.pathname === "/" || router.pathname === "/#"
-    
+
     return (
       <>
         <CssBaseline />

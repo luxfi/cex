@@ -3,7 +3,8 @@ import { container, title } from "../esx.js"
 const articlePageStyle = theme => ({
   container: {
     zIndex: "12",
-    ...container
+    ...container,
+    fontSize: "16px"
   },
   title: {
     ...title,
