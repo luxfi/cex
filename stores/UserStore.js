@@ -157,7 +157,7 @@ export default class UserStore {
           && this.over18
   }
 
-  @compute get isValidLogin () {
+  @computed get isValidLogin () {
     return this.validEmail
           && this.validPassword
   }
