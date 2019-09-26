@@ -52,7 +52,6 @@ class SignupForm extends React.Component {
     } = this.props
 
     // TODO Remove form)
-
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
