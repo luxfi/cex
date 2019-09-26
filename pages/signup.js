@@ -4,6 +4,7 @@ import { watch } from "react-referential"
 import SignupForm from "../components/forms/signup"
 import Emitter from "../src/emitter"
 import { setIdentity } from "../src/wallet"
+import { inject, observer } from "mobx-react"
 
 import Tabs from "@material-ui/core/Tabs"
 import Tab from "@material-ui/core/Tab"
@@ -11,17 +12,19 @@ import Tab from "@material-ui/core/Tab"
 import Link from "../components/link"
 import { getEncodedPrivateKey } from "../src/wallet"
 
+@observer
+@inject("store")
 class SignUp extends React.Component {
   static async getInitialProps({ mobxStore }) {
-    await mobxStore.movieStore.fetch()
     return {
+      userStore: mobxStore.userStore,
       movieStore: mobxStore.movieStore,
       orderBook: mobxStore.orderBook
     }
   }
 
   render() {
-    return <SignupForm />
+    return <SignupForm userStore={this.props.userStore} />
   }
 }
 // @watch('signupPage')
