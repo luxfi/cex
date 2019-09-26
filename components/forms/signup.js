@@ -80,8 +80,8 @@ class LoginForm extends React.Component {
   }
 
   render() {
-    const { classes, userStore } = this.props
-    debugger
+    const { classes, store } = this.props
+    const { userStore } = store
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -98,13 +98,13 @@ class LoginForm extends React.Component {
               id="email"
               label="Email Address"
               name="email"
-              autoComplete="email"
+              // autoComplete="email"
               autoFocus
               error={!!this.state.emailError}
               helperText={this.state.emailError && this.state.emailError}
-              value={""}
+              value={userStore.email}
               onChange={event => {
-                userStore.setValue2(event.target.name, event.target.value)
+                userStore.setValue(event.target.name, event.target.value)
               }}
             />
             <TextField
@@ -116,12 +116,12 @@ class LoginForm extends React.Component {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              // autoComplete="current-password"
               error={!!this.state.passwordError}
               helperText={this.state.passwordError && this.state.passwordError}
-              value={""}
+              value={userStore.password}
               onChange={event => {
-                userStore.setValue2(event.target.name, event.target.value)
+                userStore.setValue(event.target.name, event.target.value)
               }}
             />
             <FormControlLabel
