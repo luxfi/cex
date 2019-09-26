@@ -1,7 +1,15 @@
+// Generic Libraries
 import { action, observable, computed } from 'mobx'
-import Api from '../../src/hanzo/api'
 import * as ethers from 'ethers'
 // import _ from 'lodash'
+
+// Proprietary Libraries
+import Api from '../src/hanzo/api'
+import isEmail from "../src/control-middlewares/isEmail"
+import isPassword from "../src/control-middlewares/isPassword"
+
+// Constants
+import { HANZO_KEY, HANZO_ENDPOINT } from "../src/settings.js"
 
 /**
  * Later we'll wrap the fetch stuff up a bit more cleanly and / or use a helper library
@@ -20,7 +28,10 @@ export default class UserStore {
   // (not sure of type)
   @observable errors = undefined
 
-  // ** USER INFO **
+  /*
+  ** USER INFO **
+  Works for both signup and login
+  */
   // User Email
   @observable email = undefined
   // User Password
@@ -30,6 +41,13 @@ export default class UserStore {
   // Token comes from the Hanzo API
   @observable token = undefined
 
+  // ** SIGNUP INFO **
+  @observable validEmail = false
+  @observable validPassword = false
+  @observable over18 = false
+  @observable firstName = undefined
+  @observable lastName = undefined
+  @observable confirmPassword = undefined
 
   constructor(initialData = {  }) {
     // TODO Do we still need this?
@@ -38,99 +56,95 @@ export default class UserStore {
     // TODO store this w httpOnly in a cookie w all the proper security precautions. 
   @action setToken(token) {
     if (!!token) {
-      window.localStorage.setItem('jwt', token)
-    } 
-    else {
-      window.localStorage.removeItem('jwt')
+      this.token = token
+      window.localStorage.setItem('token', token)
+    } else {
+      this.token = undefined
+      window.localStorage.removeItem('token')
     }
-    this.token = token  // assign after for cleaner state mgt ;)
   }
 
   @computed loggedIn() {
     return !!this.currentUser
-  }  
+  }
 
-  @action register(
-    email,
-    password  
-  ) {
+  @action validateEmail (email) {
+    this.validEmail = isEmail(email)
+  }
+
+  @action validatePassword (password) {
+    this.validPassword = isPassword(password)
+  }
+
+  @action async signUp () {
+    // ** ONLY CALL WHEN @computer isValidSignup IS TRUE **
+    // Sign the user up
     this.updating = true
-    fetch(BASE_HANZO_API_URL + '/users', // these might be wrong :)
-      {
-        method: 'post',
-        body: JSON.stringify({
-          email: email,
-          password: password
-        })
-      }
-    )
-    .then( 
-      action(({ user }) => {
-        this.currentUser = user
-        this.setToken(user.token)
+
+    try {
+      const res = await api.client.account.create({
+        email: this.email,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        password: this.password,
+        passwordConfirm: this.passwordConfirm,
       })
-    )
-    .catch(action((err) => {
-      this.errors = (err.response && err.response.body && err.response.body.errors) 
+
+      const i = this.email + this.password
+
+      this.identity = ethers.utils.sha256(ethers.utils.toUtf8Bytes(i))
+
+      this.setToken(res.token)
+
+    } catch (ex) {
+      this.errors = (err.response && err.response.body && err.response.body.errors)
         ? err.response.body.errors : ''
-      throw err
-    }))
-    .finally(
-      action(() => { this.updating = false})
-    )
+    } finally {
+      this.updating = false
+    }
   }
 
     // Assumes values are in `displayValues`
   @action async login() {
     this.updating = true
-    // fetch(BASE_HANZO_API_URL + '/users/login',  // these might be wrong :)
-    //   {
-    //     method: 'post',
-    //     body: JSON.stringify({
-    //       email: email,
-    //       password: password
-    //     })
-    //   }
-    // )
-    // .then(
-    //   action(({ user }) => { 
-    //     this.currentUser = user 
-    //     this.setToken(user.token)
-    //   })
-    // )
-    // .catch(action((err) => {
-    //   this.errors = (err.response && err.response.body && err.response.body.errors)
-    //     ? err.response.body.errors : ''
-    //   throw err
-    // }))
-    // .finally(
-    //   action(() => { this.updating = false })
-    // )
-
+    
     try {
-      let p = this.password
-
       const res = await api.client.account.login({
         email: this.email,
-        password: p,
+        password: this.password,
       })
 
       // TODO Not sure what this is? This needs to go in the password update function
       // this.inputs.password.val(this.inputs.password.val().replace(/./g, '•'))
 
-      let i = this.email + p
+      const i = this.email + this.password
 
       this.identity = ethers.utils.sha256(ethers.utils.toUtf8Bytes(i))
-      this.token = res.token
+
+      this.setToken(res.token)
 
     } catch (ex) {
-      
+      // this.errors = (err.response && err.response.body && err.response.body.errors)
+      //   ? err.response.body.errors : ''
+      console.log('Error logging in', ex)
+    } finally {
+      this.updating = false
     }
   }
-
 
   @action forgetUser() {
     this.currentUser = undefined
     this.setToken(undefined)
+  }
+
+  @computed get isValidSignup() {
+    return this.validEmail 
+          && this.validPassword 
+          && this.password === this.confirmPassword
+          && typeof this.firstName === 'string'
+          && this.firstName.length >= 2
+          && typeof this.lastName === 'string'
+          && this.lastName.length >= 2
+          && this.over18
   }
 }
