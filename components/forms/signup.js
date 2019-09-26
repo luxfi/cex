@@ -37,15 +37,18 @@ class SignupForm extends React.Component {
     const {
       classes,
       setValue,
+      firstName,
+      lastName,
       email,
       password,
+      passwordConfirm,
       over18,
       isValidSignup,
       signUp,
       validateEmail,
       validatePassword,
-      validEmail,
-      validPassword
+      validateFirstName,
+      validateLastName
     } = this.props
 
     // TODO Remove form)
@@ -63,7 +66,7 @@ class SignupForm extends React.Component {
             required
             fullWidth
             name="firstName"
-            label="firstName"
+            label="First Name"
             type="firstName"
             id="firstName"
             onBlur={validateFirstName}
@@ -79,7 +82,7 @@ class SignupForm extends React.Component {
             required
             fullWidth
             name="lastName"
-            label="lastName"
+            label="Last Name"
             type="lastName"
             id="lastName"
             onBlur={validateLastName}
@@ -121,6 +124,23 @@ class SignupForm extends React.Component {
             value={password}
             onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="passwordConfirm"
+            label="Password"
+            type="password"
+            id="passwordConfirm"
+            // onBlur={validateConfirmedPassword}
+            // autoComplete="current-passwordConfirm"
+            // error={!validpasswordConfirm}
+            // helperText={this.state.passwordConfirmError && this.state.passwordConfirmError}
+            value={passwordConfirm}
+            onChange={evt => setValue(evt.target.name, evt.target.value)}
+          />
+
           <FormControlLabel
             control={
               <Checkbox
