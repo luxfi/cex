@@ -6,9 +6,11 @@ import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Checkbox from "@material-ui/core/Checkbox"
 import Link from "@material-ui/core/Link"
 import Grid from "@material-ui/core/Grid"
+import SnackBar from "../SnackBar"
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
+import Router from "next/router"
 
 const styles = theme => ({
   "@global": {
@@ -43,33 +45,38 @@ class SignupForm extends React.Component {
   //   this.submitLogin = this.submitLogin.bind(this)
   // }
 
-  // submitLogin(e) {
-  //   e.preventDefault()
-  //   if (this.state.email === "" || this.password === "") return
-  //   // clear errors for logic flow
-  //   this.setState({ emailError: false })
-  //   this.setState({ passwordError: false })
-  //   let errors = false
-  //   try {
-  //     isEmail(this.state.email)
-  //   } catch (e) {
-  //     errors = true
-  //     this.setState({ emailError: e.message })
-  //   }
-  //   try {
-  //     isPassword(this.state.password)
-  //   } catch (e) {
-  //     errors = true
-  //     this.setState({ passwordError: e.message })
-  //   } finally {
-  //     if (!errors) {
-  //       Router.push("/account/mnemonic")
-  //     }
-  //   }
-  // }
+  submitLogin(e, signUp) {
+    e.preventDefault()
+    const onSuccess = () => Router.push("/account/mnemonic")
+    const onError = ex => {
+      debugger
+    }
+    signUp(onSuccess, onError)
+    // if (this.state.email === "" || this.password === "") return
+    // // clear errors for logic flow
+    // this.setState({ emailError: false })
+    // this.setState({ passwordError: false })
+    // let errors = false
+    // try {
+    //   isEmail(this.state.email)
+    // } catch (e) {
+    //   errors = true
+    //   this.setState({ emailError: e.message })
+    // }
+    // try {
+    //   isPassword(this.state.password)
+    // } catch (e) {
+    //   errors = true
+    //   this.setState({ passwordError: e.message })
+    // } finally {
+    //   if (!errors) {
+    //     Router.push("/account/mnemonic")
+    //   }
+    // }
+  }
 
   render() {
-    const { 
+    const {
       classes,
       setValue,
       email,
@@ -78,7 +85,9 @@ class SignupForm extends React.Component {
       isValidSignup,
       signUp,
       validateEmail,
-      validatePassword
+      validatePassword,
+      validEmail,
+      validPassword
     } = this.props
 
     // TODO Remove form)
@@ -90,7 +99,11 @@ class SignupForm extends React.Component {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-          <form className={classes.form} noValidate onSubmit={this.submitLogin}>
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={e => this.submitLogin(e, signUp)}
+          >
             <TextField
               variant="outlined"
               margin="normal"
@@ -102,10 +115,10 @@ class SignupForm extends React.Component {
               onBlur={validateEmail}
               // autoComplete="email"
               autoFocus
-              // error={!!this.state.emailError}
+              // error={!validEmail}
               // helperText={this.state.emailError && this.state.emailError}
               value={email}
-              onChange={ evt => setValue(evt.target.name, evt.target.value) }
+              onChange={evt => setValue(evt.target.name, evt.target.value)}
             />
             <TextField
               variant="outlined"
@@ -118,19 +131,21 @@ class SignupForm extends React.Component {
               id="password"
               onBlur={validatePassword}
               // autoComplete="current-password"
-              // error={!!this.state.passwordError}
+              // error={!validPassword}
               // helperText={this.state.passwordError && this.state.passwordError}
               value={password}
-              onChange={ evt => setValue(evt.target.name, evt.target.value) }
+              onChange={evt => setValue(evt.target.name, evt.target.value)}
             />
             <FormControlLabel
               control={
-                <Checkbox 
-                  value="over18" 
-                  color="primary" 
-                  name="over18" 
-                  value={over18} 
-                  onChange={evt => setValue(evt.target.name, evt.target.checked)} 
+                <Checkbox
+                  value="over18"
+                  color="primary"
+                  name="over18"
+                  value={over18}
+                  onChange={evt =>
+                    setValue(evt.target.name, evt.target.checked)
+                  }
                 />
               }
               label="I am over 18."
@@ -155,6 +170,7 @@ class SignupForm extends React.Component {
             </Grid>
           </form>
         </div>
+        <SnackBar />
       </Container>
     )
   }

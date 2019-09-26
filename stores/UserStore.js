@@ -65,22 +65,22 @@ export default class UserStore {
     }
   }
 
-  @action setValue (key, val) {
+  @action setValue(key, val) {
     // console.log("key, val", [key, val])
     this[key] = val
   }
 
-  @action validateEmail () {
-    console.log('Validating email', isEmail(this.email))
+  @action validateEmail() {
+    console.log("Validating email", isEmail(this.email))
     this.validEmail = isEmail(this.email)
   }
 
-  @action validatePassword () {
-    console.log('Validating password', isPassword(this.password))
+  @action validatePassword() {
+    console.log("Validating password", isPassword(this.password))
     this.validPassword = isPassword(this.password)
   }
 
-  @action async signUp (onSuccess, onError) {
+  @action async signUp(onSuccess, onError) {
     // ** ONLY CALL WHEN @computer isValidSignup IS TRUE **
     // Sign the user up
     this.updating = true
@@ -104,7 +104,7 @@ export default class UserStore {
       // this.errors = (err.response && err.response.body && err.response.body.errors)
       //   ? err.response.body.errors : ''
       console.log("Error signing up", ex)
-      onError && onError()
+      onError && onError(ex)
     } finally {
       this.updating = false
     }
@@ -144,7 +144,7 @@ export default class UserStore {
     this.setToken(undefined)
   }
 
-  @computed get isValidSignup () {
+  @computed get isValidSignup() {
     return (
       this.validEmail &&
       this.validPassword &&
@@ -157,16 +157,16 @@ export default class UserStore {
     )
   }
 
-  @computed get isValidSignupOne () {
-    console.log('Get over18', this.over18)
+  @computed get isValidSignupOne() {
+    console.log("Get over18", this.over18)
     return this.validEmail && this.validPassword && this.over18
   }
 
-  @computed get isValidLogin () {
+  @computed get isValidLogin() {
     return this.validEmail && this.validPassword
   }
 
-  @computed get loggedIn () {
+  @computed get loggedIn() {
     return !!this.token
   }
 }
