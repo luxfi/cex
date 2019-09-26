@@ -126,7 +126,7 @@ class Header extends React.Component {
   }
 
   render() {
-    let { classes, ...props } = this.props
+    let { classes, onHomePage, ...props } = this.props
     let identity = getIdentity()
     let accountLoaded = !!this.props.rootData.get("account.id") && identity
 
@@ -159,7 +159,8 @@ class Header extends React.Component {
             <AppBar
               id="navbar"
               position="fixed"
-              className={classes.transparent}
+              className={onHomePage ? classes.transparent : ""}
+              color={onHomePage ? "" : "white"}
             >
               {" "}
               <Container maxWidth="lg">
@@ -408,7 +409,8 @@ const styles = theme => {
     transparent: {
       background: "transparent !important",
       boxShadow: "none",
-      color: "#FFFFFF"
+      color: "#FFFFFF",
+      paddingTop: "25px"
     },
     select: {
       [theme.breakpoints.up("sm")]: {
@@ -419,9 +421,7 @@ const styles = theme => {
       marginRight: theme.spacing(2),
       display: "none"
     },
-    toolBar: {
-      paddingTop: "25px"
-    }
+    toolBar: {}
   }
 }
 

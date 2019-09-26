@@ -5,7 +5,6 @@ import { withStyles } from "@material-ui/core/styles"
 import { inject, observer } from "mobx-react"
 
 // core components
-import Hero from "../components/landing/Hero"
 
 // import styles from "assets/jss/material-kit-react/views/landingPage.js"
 import styles from "../assets/jss/views/landingPage.js"
@@ -41,7 +40,7 @@ class Index extends React.Component {
     const { classes } = this.props
     return (
       <>
-        <Hero />
+        <div style={{ height: "140px" }}></div>
         <div className={`${classes.main} ${classes.mainRaised}`}>
           <div className={classes.container}>
             <InvestorTopPicksSection />
