@@ -43,7 +43,7 @@ export default class OrderBook {
     high: 13.37,
     low: 13.37,
     printInterval: 5,
-  }) {
+  }, hanzoApi) {
     // this.orderBookData = initialData.orderBookData
     this.ticker = initialData.ticker
     this.connected = initialData.connected
@@ -53,6 +53,8 @@ export default class OrderBook {
     this.printInterval = initialData.printInterval || 5
     const size = generateOrderSize()
     this.generateOrders(this.ticker = 'MDMXFR', 1000, this.book, Date.now(), this.price, size)
+
+    this.api = hanzoApi
   }
 
   // For DEMO

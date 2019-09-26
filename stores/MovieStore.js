@@ -4,8 +4,9 @@ import _ from 'lodash'
 export default class MovieStore {
   @observable movies = []
 
-  constructor(initialData = { movies: [] }) {
+  constructor(initialData = { movies: [] }, hanzoApi) {
     this.movies = initialData.movies
+    this.api = hanzoApi
   }
 
   // hydrate(serializedStore) {
