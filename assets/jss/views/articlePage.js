@@ -4,7 +4,8 @@ const articlePageStyle = theme => ({
   container: {
     zIndex: "12",
     ...container,
-    fontSize: "16px"
+    fontSize: "16px",
+    paddingBottom: "70px"
   },
   title: {
     ...title,
