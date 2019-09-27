@@ -88,6 +88,7 @@ export default class UserStore {
 
     // Pass down the Hanzo API through a central point
     this.api = hanzoApi
+    this.loadSession()
   }
 
   /**
@@ -95,7 +96,9 @@ export default class UserStore {
    */
   @action loadSession() {
     this.isLoading = true
-    this.token = this.api.client.getCustomerToken()
+    if (this.api.client.getCustomerToken) {
+      this.token = this.api.client.getCustomerToken
+    }
     this.isLoading = false
   }
 
