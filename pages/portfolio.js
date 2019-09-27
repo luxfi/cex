@@ -2,9 +2,10 @@ import React from "react"
 import PropTypes from "prop-types"
 // @material-ui/core components
 import { makeStyles, withStyles } from "@material-ui/core/styles"
+import AppBar from "@material-ui/core/AppBar"
+import Chip from "@material-ui/core/Chip"
 import Tabs from "@material-ui/core/Tabs"
 import Tab from "@material-ui/core/Tab"
-import AppBar from "@material-ui/core/AppBar"
 
 import { inject, observer } from "mobx-react"
 
@@ -21,6 +22,14 @@ import TabPanel from "../views/ProfilePage/TabPanel"
 @inject("store")
 @observer
 class Portfolio extends React.Component {
+
+  state = {
+    tabIndex: 0
+  }
+
+  handleChange = (event, newValue) => {
+    this.setState({ tabIndex: newValue })
+  }
 
   render() {
     // const { movieStore } = this.props.store
@@ -49,32 +58,26 @@ class Portfolio extends React.Component {
     return (
       <>
         <div style={{ height: "140px" }}></div>
-        <div className={`${classes.main} ${classes.mainRaised}`}>
-          <AppBar position="static">
-            <Tabs aria-label="simple tabs example">
-              <Tab label="Portfolio" />
-              <Tab label="Trade" />
-              <Tab label="Benefits" />
-              <Tab label="Newsfeed" />
-            </Tabs>
-          </AppBar>
-          <TabPanel index={0}>
-            Portfolio
-          </TabPanel>
-          <TabPanel index={1}>
-            Trade
-          </TabPanel>
-          <TabPanel index={2}>
-            Benefits
-          </TabPanel>
-          <TabPanel index={3}>
-            Newsfeed
-          </TabPanel>
-          <div className={classes.container}>
-            <InvestorTopPicksSection />
-            <PortfolioCta/>
-          </div>
-        </div>
+        <Tabs aria-label="simple tabs example" value={this.state.tabIndex} onChange={this.handleChange}>
+          <Tab label="Portfolio" component={'div'} />
+          <Tab label="Trade" />
+          <Tab label="Benefits" />
+          <Tab label="Newsfeed" />
+        </Tabs>
+        <TabPanel index={0}>
+          Portfolio
+        </TabPanel>
+        <TabPanel index={1}>
+          Trade
+        </TabPanel>
+        <TabPanel index={2}>
+          Benefits
+        </TabPanel>
+        <TabPanel index={3}>
+          Newsfeed
+        </TabPanel>
+        <InvestorTopPicksSection />
+        <PortfolioCta/>
       </>
     )
   }
