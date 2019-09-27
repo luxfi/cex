@@ -1,32 +1,32 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Paper from '@material-ui/core/Paper';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
-import PersonalDetails from './PersonalDetails';
-import PrimaryAddress from './PrimaryAddress';
-import PhotoIDs from './PhotoIDs';
+import React from "react"
+import { makeStyles } from "@material-ui/core/styles"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import AppBar from "@material-ui/core/AppBar"
+import Toolbar from "@material-ui/core/Toolbar"
+import Paper from "@material-ui/core/Paper"
+import Stepper from "@material-ui/core/Stepper"
+import Step from "@material-ui/core/Step"
+import StepLabel from "@material-ui/core/StepLabel"
+import Button from "@material-ui/core/Button"
+import Link from "@material-ui/core/Link"
+import Typography from "@material-ui/core/Typography"
+import PersonalDetails from "./PersonalDetails"
+import PrimaryAddress from "./PrimaryAddress"
+import PhotoIDs from "./PhotoIDs"
 
 const useStyles = makeStyles(theme => ({
   appBar: {
-    position: 'relative',
+    position: "relative"
   },
   layout: {
-    width: 'auto',
+    width: "auto",
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
       width: 600,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
+      marginLeft: "auto",
+      marginRight: "auto"
+    }
   },
   paper: {
     marginTop: theme.spacing(3),
@@ -35,48 +35,48 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
       marginTop: theme.spacing(6),
       marginBottom: theme.spacing(6),
-      padding: theme.spacing(3),
-    },
+      padding: theme.spacing(3)
+    }
   },
   stepper: {
-    padding: theme.spacing(3, 0, 5),
+    padding: theme.spacing(3, 0, 5)
   },
   buttons: {
-    display: 'flex',
-    justifyContent: 'flex-end',
+    display: "flex",
+    justifyContent: "flex-end"
   },
   button: {
     marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(1),
-  },
-}));
+    marginLeft: theme.spacing(1)
+  }
+}))
 
-const steps = ['Personal Details', 'Primary Address', 'Photo IDs'];
+const steps = ["Personal Details", "Primary Address", "Photo IDs"]
 
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <PersonalDetails />;
+      return <PersonalDetails />
     case 1:
-      return <PrimaryAddress />;
+      return <PrimaryAddress />
     case 2:
-      return <PhotoIDs />;
+      return <PhotoIDs />
     default:
-      throw new Error('Unknown step');
+      throw new Error("Unknown step")
   }
 }
 
 export default function Checkout() {
-  const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const classes = useStyles()
+  const [activeStep, setActiveStep] = React.useState(0)
 
   const handleNext = () => {
-    setActiveStep(activeStep + 1);
-  };
+    setActiveStep(activeStep + 1)
+  }
 
   const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
+    setActiveStep(activeStep - 1)
+  }
 
   return (
     <>
@@ -87,7 +87,11 @@ export default function Checkout() {
             Please verify your identity
           </Typography>
           {/* <h2>Please verify your identity.</h2> */}
-          <p>Because ESX interacts directly with your bank, regulators have asked that we collect identity information. Your data is cryptographically secured and sent only to ESX's banking endpoint.</p>
+          <p>
+            Because ESX interacts directly with your bank, regulators have asked
+            that we collect identity information. Your data is cryptographically
+            secured and sent only to ESX's banking endpoint.
+          </p>
           <br />
         </Paper>
         <Paper className={classes.paper}>
@@ -108,30 +112,30 @@ export default function Checkout() {
                   Thank you
                 </Typography>
                 <Typography variant="subtitle1">
-                  We are verifying your account and will
-                  send you an update when completed.
+                  We are verifying your account and will send you an update when
+                  completed.
                 </Typography>
               </>
             ) : (
-                <>
-                  {getStepContent(activeStep)}
-                  <div className={classes.buttons}>
-                    {activeStep !== 0 && (
-                      <Button onClick={handleBack} className={classes.button}>
-                        Back
-                      </Button>
-                    )}
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                      className={classes.button}
-                    >
-                      {activeStep === steps.length - 1 ? 'Continue' : 'Next'}
+              <>
+                {getStepContent(activeStep)}
+                <div className={classes.buttons}>
+                  {activeStep !== 0 && (
+                    <Button onClick={handleBack} className={classes.button}>
+                      Back
                     </Button>
-                  </div>
-                </>
-              )}
+                  )}
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                    className={classes.button}
+                  >
+                    {activeStep === steps.length - 1 ? "Continue" : "Next"}
+                  </Button>
+                </div>
+              </>
+            )}
           </>
         </Paper>
       </main>
@@ -333,16 +337,16 @@ export default function Checkout() {
 //                 variant='outlined'
 //               )
 //             .form-group.columns
-              // MuiDatePicker(
-              //   ...this.inputs.birthdate
-              //   label='Birthday'
-              //   variant='outlined'
-              // )
-              // MuiText(
-              //   ...this.inputs.gender
-              //   label='Gender'
-              //   variant='outlined'
-              // )
+// MuiDatePicker(
+//   ...this.inputs.birthdate
+//   label='Birthday'
+//   variant='outlined'
+// )
+// MuiText(
+//   ...this.inputs.gender
+//   label='Gender'
+//   variant='outlined'
+// )
 //         br
 //         p PRIMARY ADDRESS
 //         Card
@@ -417,4 +421,3 @@ export default function Checkout() {
 //       `
 //   }
 // }
-
