@@ -157,7 +157,7 @@ class LoginForm extends React.Component {
             disabled={!isValidLogin}
             onClick={() => {
               login(
-                () => Router.push("/profile"),
+                () => Router.push("/portfolio"),
                 ex => {
                   console.log("hit error callback **", ex)
                 }

@@ -105,7 +105,6 @@ class Header extends React.Component {
     this.setState({
       anchorEl: null
     })
-    debugger
     this.props.store.userStore.logout()
     // this.props.store.ref("account").clear()
     // removeIdentity()
@@ -226,7 +225,7 @@ class Header extends React.Component {
                           <AccountCircle />
                           <span style={{ padding: "15px" }}>Account</span>
                         </MenuItem>
-                        <MenuItem onClick={this.deposit}>
+                        {/* <MenuItem onClick={this.deposit}>
                           <ArrowUpward />
                           <span style={{ padding: "15px" }}>Deposit</span>
                         </MenuItem>
@@ -234,10 +233,10 @@ class Header extends React.Component {
                         <Send />
                         <span style={{ padding: "15px" }}>Send</span>
                       </MenuItem> */}
-                        <MenuItem onClick={this.withdrawal}>
+                        {/* <MenuItem onClick={this.withdrawal}>
                           <ArrowDownward />
                           <span style={{ padding: "15px" }}>Withdrawal</span>
-                        </MenuItem>
+                        </MenuItem> */}
                         <MenuItem onClick={this.logout}>
                           <ExitToApp />
                           <span style={{ padding: "15px" }}>Logout</span>
