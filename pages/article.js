@@ -53,6 +53,19 @@ const ThirdImageLoader = () => (
   </ContentLoader>
 )
 
+const AvatarLoader = () => (
+  <ContentLoader
+    height={70}
+    width={60}
+    speed={2}
+    primaryColor="#f3f3f3"
+    secondaryColor="#ecebeb"
+  >
+    {/* Only SVG shapes */}
+    <circle cx="30" cy="30" r="30" />
+  </ContentLoader>
+)
+
 @inject("store")
 @observer
 class Index extends React.Component {
@@ -78,7 +91,7 @@ class Index extends React.Component {
     const { classes } = this.props
     return (
       <>
-        <div style={{ height: "140px" }}></div>
+        <div style={{ height: "62px" }}></div>
         <div className={`${classes.main} ${classes.mainRaised}`}>
           <div className={classes.container}>
             <Breadcrumbs />
@@ -237,9 +250,27 @@ class Index extends React.Component {
                 </p>
               </section>
               <div style={{ height: "70px" }}></div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <span style={{ width: "30px" }}>
+                  <AvatarLoader />
+                </span>
+                <span
+                  style={{
+                    marginLeft: "12px",
+                    fontWeight: "bold",
+                    marginBottom: "70px"
+                  }}
+                >
+                  Author's Name
+                </span>
+              </div>
             </article>
             <InvestNowSection />
-            <div style={{ height: "70px" }}></div>
+            <div
+              style={{
+                height: "70px"
+              }}
+            ></div>
           </div>
         </div>
       </>

@@ -1,58 +1,54 @@
 // Generic Libraries
-import { action, observable, computed } from 'mobx'
-import * as ethers from 'ethers'
+import { action, observable, computed } from "mobx"
+import * as ethers from "ethers"
 // import _ from 'lodash'
 
-// Proprietary Libraries
-import Api from '../src/hanzo/api'
+// Utilities
 import isEmail from "../src/control-middlewares/isEmail"
 import isPassword from "../src/control-middlewares/isPassword"
 import isPhone from "../src/control-middlewares/isPhone"
 
-// Constants
-import { HANZO_KEY, HANZO_ENDPOINT } from "../src/settings.js"
-
 /**
  * Later we'll wrap the fetch stuff up a bit more cleanly and / or use a helper library
-*/
+ */
 
 export default class UserStore {
-  api = new Api(HANZO_KEY, HANZO_ENDPOINT)
-
   // ** GENERIC HELPERS **
   // use for wait states in UI
   @observable updating = false
   // any errors returned by APIs
   // (not sure of type)
-  @observable errors = undefined
+  @observable errors = null
 
   /*
   ** USER INFO **
   Works for both signup and login
   */
   // User Email
-  @observable email = undefined
+  @observable email = ""
   // User Password
-  @observable password = undefined
+  @observable password = ""
   // logged in user object returned by API
-  @observable currentUser = undefined
+  @observable currentUser = ""
   // Token comes from the Hanzo API
-  @observable token = undefined
+  @observable token = null
 
   // ** SIGNUP INFO **
   @observable validEmail = false
   @observable validPassword = false
+  @observable validFirstName = false
+  @observable validLastName = false
   @observable over18 = false
   @observable firstName = undefined
   @observable middleName = undefined
   @observable lastName = undefined
-  @observable confirmPassword = undefined
+  @observable passwordConfirm = undefined
 
   // ** KYC **
   @observable phone = undefined
   @observable taxId = undefined
   @observable birthdate = undefined
-  @observable gender = 'unspecified'
+  @observable gender = "unspecified"
   @observable address1 = undefined
   @observable address2 = undefined
   @observable city = undefined
@@ -78,39 +74,65 @@ export default class UserStore {
     opts.kyc.eosPublicKey = this.props.eosKey.publicKey
   */
 
+  // ** Watchlist **
+  @observable watchlist = []
+
+  // **
+
   // ... Etc
 
-  constructor(initialData = {  }) {
+  constructor(initialData = {}, hanzoApi) {
     // TODO Do we still need this?
     // :aa I don't think so.... why would we?
     // E: This might be required for persisting state across page changes
+
+    // Pass down the Hanzo API through a central point
+    this.api = hanzoApi
+    this.loadSession()
   }
-  
-    // TODO store this w httpOnly in a cookie w all the proper security precautions. 
+
+  /**
+   * Fetches all todos from the server
+   */
+  @action loadSession() {
+    this.isLoading = true
+    if (this.api.client.getCustomerToken) {
+      this.token = this.api.client.getCustomerToken
+    }
+    this.isLoading = false
+  }
+
+  // TODO store this w httpOnly in a cookie w all the proper security precautions.
   @action setToken(token) {
     if (!!token) {
       this.token = token
-      window.localStorage.setItem('token', token)
+      window.localStorage.setItem("token", token)
     } else {
       this.token = undefined
-      window.localStorage.removeItem('token')
+      window.localStorage.removeItem("token")
     }
   }
 
-  @computed loggedIn() {
-    return !!this.token
-  }
-
-  @action setValue (key, val) {
+  @action setValue(key, val) {
+    // console.log("key, val", [key, val])
     this[key] = val
   }
 
-  @action validateEmail (email) {
-    this.validEmail = isEmail(email)
+  @action validateEmail() {
+    console.log("Validating email", isEmail(this.email))
+    this.validEmail = isEmail(this.email)
   }
 
-  @action validatePassword(password) {
-    this.validPassword = isPassword(password)
+  @action validatePassword() {
+    this.validPassword = isPassword(this.password)
+  }
+
+  @action validateFirstName() {
+    this.validFirstName = stringPresentAndValid(this.firstName)
+  }
+
+  @action validateLastName() {
+    this.validLastName = stringPresentAndValid(this.lastName)
   }
 
   @action validatePhone(phone) {
@@ -118,20 +140,20 @@ export default class UserStore {
   }
 
   @action validateTaxId(id) {
-      // 9 digits etc
-      // https://howtodoinjava.com/regex/java-regex-validate-social-security-numbers-ssn/
+    // 9 digits etc
+    // https://howtodoinjava.com/regex/java-regex-validate-social-security-numbers-ssn/
     const regex = /^(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$/
     this.validTaxId = regex.test(id)
   }
 
   @action validateBirthdate(d) {
-      // TODO valid date and range (this could be unnecessary if a date control is used)
+    // TODO valid date and range (this could be unnecessary if a date control is used)
     this.validBirthdate = stringPresentAndValid(d)
   }
 
   @action validateAddress1(a) {
-      // TODO call API for street addresses in the US and make this unnecessary :)
-      // in the meantime check for a valid date
+    // TODO call API for street addresses in the US and make this unnecessary :)
+    // in the meantime check for a valid date
     this.validAddress1 = stringPresentAndValid(a)
   }
 
@@ -146,7 +168,7 @@ export default class UserStore {
     this.validPostalCode = regex(c)
   }
 
-  @action async signUp (onSuccess, onError) {
+  @action async signUp(onSuccess, onError) {
     // ** ONLY CALL WHEN @computed isValidSignup IS TRUE **
     this.updating = true
 
@@ -156,7 +178,7 @@ export default class UserStore {
         firstName: this.firstName,
         lastName: this.lastName,
         password: this.password,
-        passwordConfirm: this.passwordConfirm,
+        passwordConfirm: this.passwordConfirm
       })
 
       const i = this.email + this.password
@@ -168,20 +190,20 @@ export default class UserStore {
     } catch (ex) {
       // this.errors = (err.response && err.response.body && err.response.body.errors)
       //   ? err.response.body.errors : ''
-        console.log('Error signing up', ex)
-        onError && onError()
+      console.log("Error signing up", ex)
+      onError && onError(ex)
     } finally {
       this.updating = false
     }
   }
 
-  @action async login (onSuccess, onError) {
+  @action async login(onSuccess, onError) {
     this.updating = true
-    
+
     try {
       const res = await this.api.client.account.login({
         email: this.email,
-        password: this.password,
+        password: this.password
       })
 
       // TODO Not sure what this is? This needs to go in the password update function
@@ -190,11 +212,26 @@ export default class UserStore {
       const i = this.email + this.password
 
       this.identity = ethers.utils.sha256(ethers.utils.toUtf8Bytes(i))
-
       this.setToken(res.token)
       onSuccess && onSuccess()
     } catch (ex) {
-      console.log('Error logging in', ex)
+      console.log("Error logging in", ex)
+      onError && onError()
+    } finally {
+      this.updating = false
+    }
+  }
+  @action async logout(onSuccess, onError) {
+    this.updating = true
+
+    try {
+      const res = await this.api.client.account.logout()
+      this.forgetUser()
+      // TODO Not sure what this is? This needs to go in the password update function
+      // this.inputs.password.val(this.inputs.password.val().replace(/./g, '•'))
+      onSuccess && onSuccess()
+    } catch (ex) {
+      console.log("Error logging out", ex)
       onError && onError()
     } finally {
       this.updating = false
@@ -204,7 +241,7 @@ export default class UserStore {
   @action async updateKYC(onSuccess, onError) {
     // ** ONLY CALL WHEN @computed isValidKYC IS TRUE **
     this.updating = true
-    let opts = {
+    let opts = ({
       phone,
       taxId,
       birthdate,
@@ -218,58 +255,78 @@ export default class UserStore {
       documents0,
       documents1,
       documents2
-    } = this
+    } = this)
 
     try {
-      const res = await this.api.client.account.update({opts})
+      const res = await this.api.client.account.update({ opts })
       onSuccess && onSuccess()
     } catch (ex) {
-      console.log('Error saving KYC options', ex)
+      console.log("Error saving KYC options", ex)
       onError && onError()
     } finally {
       this.updating = false
     }
   }
 
-  @action forgetUser () {
+  @action forgetUser() {
     this.currentUser = undefined
     this.setToken(undefined)
   }
 
   @computed get isValidName() {
-    return stringPresentAndValid(this.firstName) 
-        && stringPresentAndValid(this.lastName)
-          // middle name is not checked
+    return (
+      stringPresentAndValid(this.firstName) &&
+      stringPresentAndValid(this.lastName)
+    )
+    // middle name is not checked
   }
 
-  @computed get isValidSignup () {
-    return this.validEmail 
-          && this.validPassword 
-          && this.password === this.confirmPassword
-          && this.over18
-          && this.isValidName()
+  @computed get isValidSignup() {
+    console.log("validEmail", this.validEmail)
+    console.log("validPassword", this.validPassword)
+    console.log(
+      "password === passwordConfirm",
+      this.password === this.passwordConfirm
+    )
+    console.log("over18", this.over18)
+    console.log("isValidName", this.isValidName)
+
+    return (
+      this.validEmail &&
+      this.validPassword &&
+      this.password === this.passwordConfirm &&
+      this.over18 &&
+      this.isValidName
+    )
   }
 
-  @computed get isValidLogin () {
-    return this.validEmail
-          && this.validPassword
+  @computed get isValidLogin() {
+    return this.validEmail && this.validPassword
   }
 
- 
+  @computed get loggedIn() {
+    return !!this.token
+  }
+
   @computed get isValidKYC() {
-    return this.isValidName()
-          && this.validPhone
-          && this.validTaxId
-          && this.validBirthdate
-          && this.validAddress1
-          && this.validCity
-          && this.postalCode
-            // country is dropdown (noted above)
+    return (
+      this.isValidName() &&
+      this.validPhone &&
+      this.validTaxId &&
+      this.validBirthdate &&
+      this.validAddress1 &&
+      this.validCity &&
+      this.postalCode
+    )
+    // country is dropdown (noted above)
   }
-
 }
 
 function stringPresentAndValid(s) {
-  return typeof s === 'string'
-    && s.length >= 2
+  return typeof s === "string" && s.length >= 2
+}
+
+export async function fetchUserSession() {
+  // You can do anything to fetch initial store state
+  return {}
 }
