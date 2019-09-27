@@ -1,25 +1,25 @@
-import React from 'react'
+import React from "react"
 
-import control from './control'
-import classnames from 'classnames'
+import control from "./control"
+import classnames from "classnames"
 
 @control
-export default class Input extends React.Component{
+export default class Input extends React.Component {
   static defaultProps = {
-    type: 'text',
-    autoComplete: 'new-password',
+    type: "text",
+    autoComplete: "new-password",
     autoFocus: undefined,
     disabled: undefined,
     maxLength: undefined,
     readOnly: undefined,
-    placeholder: '',
-    label: '',
-    instructions: '',
-    wrap: '',
-    spellCheck: '',
+    placeholder: "",
+    label: "",
+    instructions: "",
+    wrap: "",
+    spellCheck: "",
     rows: undefined,
     cols: undefined,
-    showErrors: true,
+    showErrors: true
   }
 
   constructor(props) {
@@ -29,7 +29,7 @@ export default class Input extends React.Component{
   componentDidMount() {
     requestAnimationFrame(() => {
       this.setState({ appIsMounted: true })
-    });
+    })
   }
 
   render() {
