@@ -163,8 +163,8 @@ class Header extends React.Component {
             <AppBar
               id="navbar"
               position="fixed"
-              className={onHomePage ? classes.transparent : ""}
-              color={onHomePage ? "" : "white"}
+              className={(onHomePage = true ? classes.transparent : "")}
+              color={(onHomePage = true ? "" : "white")}
             >
               {" "}
               <Container maxWidth="lg">
@@ -208,7 +208,7 @@ class Header extends React.Component {
                         onClick={handleClick}
                       >
                         <AccountCircle
-                          style={{ fontSize: "36" }}
+                          style={{ fontSize: "2rem" }}
                           className={onHomePage && classes.white}
                         />
                       </IconButton>
