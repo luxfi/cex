@@ -163,8 +163,8 @@ class Header extends React.Component {
             <AppBar
               id="navbar"
               position="fixed"
-              className={(onHomePage ? classes.transparent : "")}
-              color={(onHomePage  ? "" : "white")}
+              className={onHomePage ? classes.transparent : ""}
+              color={onHomePage ? "" : "white"}
             >
               {" "}
               <Container maxWidth="lg">
@@ -179,6 +179,9 @@ class Header extends React.Component {
                       height="60px"
                     />
                   </Link>
+                  <Typography variant="subtitle2" className={classes.white}>
+                    Entertainment Stock Exchange
+                  </Typography>
                   <div className={classes.grow} />
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
