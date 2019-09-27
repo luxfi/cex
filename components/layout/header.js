@@ -73,11 +73,11 @@ class Header extends React.Component {
     })
   }
 
-  account = () => {
+  portfolio = () => {
     this.setState({
       anchorEl: null
     })
-    Router.push("/account/")
+    Router.push("/portfolio")
   }
 
   send = () => {
@@ -105,7 +105,6 @@ class Header extends React.Component {
     this.setState({
       anchorEl: null
     })
-    debugger
     this.props.store.userStore.logout()
     // this.props.store.ref("account").clear()
     // removeIdentity()
@@ -178,6 +177,9 @@ class Header extends React.Component {
                       height="60px"
                     />
                   </Link>
+                  <Typography variant="subtitle2" className={classes.white}>
+                    Entertainment Stock Exchange
+                  </Typography>
                   <div className={classes.grow} />
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -218,11 +220,11 @@ class Header extends React.Component {
                         open={open}
                         onClose={handleClose}
                       >
-                        <MenuItem onClick={this.account}>
+                        <MenuItem onClick={this.portfolio}>
                           <AccountCircle />
-                          <span style={{ padding: "15px" }}>Account</span>
+                          <span style={{ padding: "15px" }}>Portfolio</span>
                         </MenuItem>
-                        <MenuItem onClick={this.deposit}>
+                        {/* <MenuItem onClick={this.deposit}>
                           <ArrowUpward />
                           <span style={{ padding: "15px" }}>Deposit</span>
                         </MenuItem>
@@ -230,10 +232,10 @@ class Header extends React.Component {
                         <Send />
                         <span style={{ padding: "15px" }}>Send</span>
                       </MenuItem> */}
-                        <MenuItem onClick={this.withdrawal}>
+                        {/* <MenuItem onClick={this.withdrawal}>
                           <ArrowDownward />
                           <span style={{ padding: "15px" }}>Withdrawal</span>
-                        </MenuItem>
+                        </MenuItem> */}
                         <MenuItem onClick={this.logout}>
                           <ExitToApp />
                           <span style={{ padding: "15px" }}>Logout</span>
@@ -269,86 +271,6 @@ class Header extends React.Component {
     }
 
     return <GuestNavBar />
-
-    return pug`
-        if accountLoaded
-          AppBar(
-            className=classes.root
-            position='fixed'
-            color="default"
-          )
-            Toolbar(className=classes.noPadding)
-              Link(href='/')
-                img(id="logo" className=classes.logoImg src='/static/img/logo.png')
-              div(className=classes.grow)
-              MuiText(
-                select
-                value='usd'
-                className=classes.menuButton
-                SelectProps={
-                  MenuProps: {
-                    className: classes.menu,
-                  },
-                }
-                margin="normal"
-                options=currencies
-              )
-              IconButton(
-                aria-owns=(open ? 'menu-appbar' : undefined)
-                aria-haspopup='true'
-                onClick=this.handleMenu
-                color='inherit'
-              )
-                AccountCircle(style={ fontSize: 36 })
-              Menu(
-                id='menu-appbar'
-                anchorEl=this.state.anchorEl
-                anchorOrigin={
-                  vertical: 'bottom',
-                  horizontal: 'right',
-                }
-                transformOrigin={
-                  vertical: 'bottom',
-                  horizontal: 'right',
-                }
-                open=open
-                onClose=this.handleClose
-              )
-                MenuItem(onClick=this.account)
-                  AccountCircle
-                  span(style={ padding: 15}) Account
-                MenuItem(onClick=this.deposit)
-                  ArrowUpward
-                  span(style={ padding: 15}) Deposit
-                MenuItem(onClick=this.send)
-                  Send
-                  span(style={ padding: 15}) Send
-                MenuItem(onClick=this.redeem)
-                  ArrowDownward
-                  span(style={ padding: 15}) Redeem
-                MenuItem(onClick=this.logout)
-                  ExitToApp
-                  span(style={ padding: 15}) Logout
-        else
-          AppBar(
-            className=classes.root
-            position='fixed'
-            color="default"
-          )#navbar
-            Toolbar(className=classes.noPadding)
-              Link(href='/')
-                img(id="logo" className=classes.logoImg src='/static/img/logo.png')
-              div(className=classes.grow)
-
-              Button(onClick=this.login style={marginRight: '20px'})
-                |LOGIN
-
-              Button(
-                variant="outlined"
-                className=classes.button
-                onClick=this.signup)
-                |SIGN UP
-    `
   }
 }
 
