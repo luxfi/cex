@@ -6,9 +6,6 @@ const appStyle = theme => ({
     flexDirection: "column",
     minHeight: "100vh"
   },
-  main: {
-    marginBottom: theme.spacing(2)
-  },
   stickyFooter: {
     marginTop: "auto"
   }
