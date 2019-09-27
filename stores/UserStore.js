@@ -97,7 +97,7 @@ export default class UserStore {
   @action loadSession() {
     this.isLoading = true
     if (this.api.client.getCustomerToken) {
-      this.token = this.api.client.getCustomerToken
+      this.token = this.api.client.getCustomerToken()
     }
     this.isLoading = false
   }
