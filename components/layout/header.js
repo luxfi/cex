@@ -163,8 +163,7 @@ class Header extends React.Component {
             <AppBar
               id="navbar"
               position="fixed"
-              className={(onHomePage ? classes.transparent : "")}
-              color={(onHomePage  ? "" : "white")}
+              className={(onHomePage ? classes.transparent : classes.whiteBackground)}
             >
               {" "}
               <Container maxWidth="lg">
@@ -209,7 +208,7 @@ class Header extends React.Component {
                       >
                         <AccountCircle
                           style={{ fontSize: "2rem" }}
-                          className={onHomePage && classes.white}
+                          className={onHomePage ? classes.white : null}
                         />
                       </IconButton>
                       <Menu
@@ -430,6 +429,9 @@ const styles = theme => {
     toolBar: {},
     white: {
       color: "white"
+    },
+    whiteBackground: {
+      backgroundColor: 'white'
     }
   }
 }
