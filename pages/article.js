@@ -91,7 +91,7 @@ class Index extends React.Component {
     const { classes } = this.props
     return (
       <>
-        <div style={{ height: "140px" }}></div>
+        <div style={{ height: "112px" }}></div>
         <div className={`${classes.main} ${classes.mainRaised}`}>
           <div className={classes.container}>
             <Breadcrumbs />
