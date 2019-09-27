@@ -269,6 +269,9 @@ export default class UserStore {
   }
 
   @action forgetUser() {
+    if (this.api.client.deleteCustomerToken) {
+      this.token = this.api.client.deleteCustomerToken()
+    }
     this.currentUser = undefined
     this.setToken(undefined)
   }
