@@ -10,16 +10,6 @@ import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
 import Router from "next/router"
-import * as ethers from "ethers"
-import Api from "../../src/hanzo/api"
-
-import { watch } from "react-referential"
-import { HANZO_KEY, HANZO_ENDPOINT } from "../../src/settings.js"
-
-// import isRequired from '../../src/control-middlewares/isRequired'
-import isEmail from "../../src/control-middlewares/isEmail"
-import isPassword from "../../src/control-middlewares/isPassword"
-// import { renderDate } from 'react-referential-forms'
 
 const styles = theme => ({
   "@global": {
@@ -42,45 +32,26 @@ const styles = theme => ({
   }
 })
 
-class LoginForm extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      email: "",
-      password: "",
-      emailError: false,
-      passwordError: false
-    }
-    this.submitLogin = this.submitLogin.bind(this)
-  }
-
-  submitLogin(e) {
-    e.preventDefault()
-    if (this.state.email === "" || this.password === "") return
-    // clear errors for logic flow
-    this.setState({ emailError: false })
-    this.setState({ passwordError: false })
-    let errors = false
-    try {
-      isEmail(this.state.email)
-    } catch (e) {
-      errors = true
-      this.setState({ emailError: e.message })
-    }
-    try {
-      isPassword(this.state.password)
-    } catch (e) {
-      errors = true
-      this.setState({ passwordError: e.message })
-    } finally {
-      if (!errors) {
-        Router.push("/")
-      }
-    }
-  }
-
+class SignupForm extends React.Component {
   render() {
-    const { classes } = this.props
+    const {
+      classes,
+      setValue,
+      firstName,
+      lastName,
+      email,
+      password,
+      passwordConfirm,
+      over18,
+      isValidSignup,
+      signUp,
+      validateEmail,
+      validatePassword,
+      validateFirstName,
+      validateLastName
+    } = this.props
+
+    // TODO Remove form)
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -88,68 +59,130 @@ class LoginForm extends React.Component {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-          <form className={classes.form} noValidate onSubmit={this.submitLogin}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              error={!!this.state.emailError}
-              helperText={this.state.emailError && this.state.emailError}
-              value={this.state.email}
-              onChange={event =>
-                this.setState({ [event.target.name]: event.target.value })
-              }
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              error={!!this.state.passwordError}
-              helperText={this.state.passwordError && this.state.passwordError}
-              value={this.state.password}
-              onChange={event =>
-                this.setState({ [event.target.name]: event.target.value })
-              }
-            />
-            <FormControlLabel
-              control={<Checkbox value="over18" color="primary" />}
-              label="I am over 18."
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign Up
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="/login" variant="body2">
-                  Sign in?
-                </Link>
-              </Grid>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="firstName"
+            label="First Name"
+            type="firstName"
+            id="firstName"
+            onBlur={validateFirstName}
+            // autoComplete="current-firstName"
+            // error={!validfirstName}
+            // helperText={this.state.firstNameError && this.state.firstNameError}
+            value={firstName}
+            onChange={evt => setValue(evt.target.name, evt.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="lastName"
+            label="Last Name"
+            type="lastName"
+            id="lastName"
+            onBlur={validateLastName}
+            // autoComplete="current-lastName"
+            // error={!validlastName}
+            // helperText={this.state.lastNameError && this.state.lastNameError}
+            value={lastName}
+            onChange={evt => setValue(evt.target.name, evt.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            onBlur={validateEmail}
+            // autoComplete="email"
+            autoFocus
+            // error={!validEmail}
+            // helperText={this.state.emailError && this.state.emailError}
+            value={email}
+            onChange={evt => setValue(evt.target.name, evt.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            onBlur={validatePassword}
+            // autoComplete="current-password"
+            // error={!validPassword}
+            // helperText={this.state.passwordError && this.state.passwordError}
+            value={password}
+            onChange={evt => setValue(evt.target.name, evt.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="passwordConfirm"
+            label="Password"
+            type="password"
+            id="passwordConfirm"
+            // onBlur={validateConfirmedPassword}
+            // autoComplete="current-passwordConfirm"
+            // error={!validpasswordConfirm}
+            // helperText={this.state.passwordConfirmError && this.state.passwordConfirmError}
+            value={passwordConfirm}
+            onChange={evt => setValue(evt.target.name, evt.target.value)}
+          />
+
+          <FormControlLabel
+            control={
+              <Checkbox
+                value="over18"
+                color="primary"
+                name="over18"
+                value={over18}
+                onChange={evt => setValue(evt.target.name, evt.target.checked)}
+              />
+            }
+            label="I am over 18."
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            disabled={!isValidSignup}
+            onClick={() => {
+              signUp(
+                () => Router.push("/account/kyc"),
+                ex => {
+                  console.log("hit error callback **", ex)
+                }
+              )
+            }}
+          >
+            Sign Up
+          </Button>
+          <Grid container>
+            <Grid item xs>
+              <Link href="/login" variant="body2">
+                Sign in?
+              </Link>
             </Grid>
-          </form>
+          </Grid>
         </div>
       </Container>
     )
   }
 }
-export default withStyles(styles)(LoginForm)
+export default withStyles(styles)(SignupForm)
 
 // @watch('signupForm')
 // export default class LoginForm extends Form {

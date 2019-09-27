@@ -1,6 +1,5 @@
 import React from "react"
-
-import Form, { MuiText } from "react-referential-forms"
+import { inject, observer } from "mobx-react"
 import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 import IconButton from "@material-ui/core/IconButton"
@@ -48,9 +47,12 @@ function HideOnScroll(props) {
     </Slide>
   )
 }
-
-@watch("header")
+@inject("store")
+@observer
 class Header extends React.Component {
+  static async getInitialProps({ mobxStore }) {
+    return { ...mobxStore }
+  }
   constructor(props) {
     super(props)
 
@@ -103,9 +105,10 @@ class Header extends React.Component {
     this.setState({
       anchorEl: null
     })
-
-    this.props.rootData.ref("account").clear()
-    removeIdentity()
+    debugger
+    this.props.store.userStore.logout()
+    // this.props.store.ref("account").clear()
+    // removeIdentity()
     Router.push("/")
   }
 
@@ -126,9 +129,10 @@ class Header extends React.Component {
   }
 
   render() {
-    let { classes, onHomePage, ...props } = this.props
+    let { classes, onHomePage, store, ...props } = this.props
     let identity = getIdentity()
-    let accountLoaded = !!this.props.rootData.get("account.id") && identity
+    // let accountLoaded = !!this.props.rootData.get("account.id") && identity
+    let accountLoaded = store.userStore.loggedIn
 
     let open = !!this.state.anchorEl
 
@@ -159,8 +163,8 @@ class Header extends React.Component {
             <AppBar
               id="navbar"
               position="fixed"
-              className={onHomePage ? classes.transparent : ""}
-              color={onHomePage ? "" : "white"}
+              className={(onHomePage ? classes.transparent : "")}
+              color={(onHomePage  ? "" : "white")}
             >
               {" "}
               <Container maxWidth="lg">
@@ -189,8 +193,7 @@ class Header extends React.Component {
                       inputProps={{ "aria-label": "search" }}
                     />
                   </div>
-                  {/* {accountLoaded ? ( */}
-                  {!accountLoaded ? ( // temporary until create real login...
+                  {accountLoaded ? (
                     <>
                       {/* <MuiText
                         select
@@ -204,7 +207,10 @@ class Header extends React.Component {
                         aria-haspopup="true"
                         onClick={handleClick}
                       >
-                        <AccountCircle style={{ fontSize: "36" }} />
+                        <AccountCircle
+                          style={{ fontSize: "2rem" }}
+                          className={onHomePage && classes.white}
+                        />
                       </IconButton>
                       <Menu
                         id="menu"
@@ -421,7 +427,10 @@ const styles = theme => {
       marginRight: theme.spacing(2),
       display: "none"
     },
-    toolBar: {}
+    toolBar: {},
+    white: {
+      color: "white"
+    }
   }
 }
 

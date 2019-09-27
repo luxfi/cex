@@ -24,7 +24,7 @@ import Loader, { startLoading, stopLoading } from "../components/app/loader"
 import MomentUtils from "@date-io/moment"
 
 // import styles from "assets/jss/material-kit-react/views/app.js"
-import styles from "../assets/jss/views/landingPage.js"
+import styles from "../assets/jss/views/app.js"
 
 // ****************
 
@@ -103,28 +103,17 @@ class MyMobxApp extends App {
   }
 
   componentDidMount() {
-    // if (typeof window !== "undefined" && this.props.hanzoPage) {
-    //   startLoading()
-
-    //   let api = new Api(HANZO_KEY, HANZO_ENDPOINT)
-
-    //   loadLibrary(api.client)
-    //     .then(() => {
-    //       stopLoading()
-    //     })
-    //     .catch(err => {
-    //       console.log("library loading error", err)
-    //       stopLoading()
-    //     })
-    // } else {
-    //   stopLoading()
-    // }
+    console.log("ComponentDidMount", this.props.isServer)
+    if (!this.props.isServer) {
+      // debugger
+      // this.props.initialMobxState.userStore.loadSession()
+    }
   }
 
   render() {
     const { Component, pageProps, classes, router } = this.props
     const onHomePage = router.pathname === "/" || router.pathname === "/#"
-    
+
     return (
       <>
         <CssBaseline />
@@ -133,16 +122,16 @@ class MyMobxApp extends App {
             <MuiThemeProvider theme={theme}>
               <MuiPickersUtilsProvider utils={MomentUtils}>
                 <RefProvider>
-                  <BalanceProvider>
-                    <div className={classes.stickyFooterRoot}>
+                  <div className={classes.root}>
+                    <div className={classes.main} component="main">
                       <Header onHomePage={onHomePage} />
                       <Component {...pageProps} />
                       {/* <Loader /> */}
-                      <div className={classes.stickyFooter}>
-                        <Footer />
-                      </div>
                     </div>
-                  </BalanceProvider>
+                    <div className={classes.stickyFooter}>
+                      <Footer />
+                    </div>
+                  </div>
                 </RefProvider>
               </MuiPickersUtilsProvider>
             </MuiThemeProvider>
