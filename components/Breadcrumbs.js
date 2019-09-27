@@ -35,7 +35,7 @@ export default function CustomSeparator() {
           <Link color="inherit" href="/">
             Home
           </Link>
-          <Typography color="grey">Filming The Lone Wolf Dies</Typography>
+          <Typography>Filming The Lone Wolf Dies</Typography>
         </Breadcrumbs>
       </Paper>
     </div>
