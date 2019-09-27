@@ -42,7 +42,7 @@ class Index extends React.Component {
     return (
       <>
         <Hero />
-        <div className={`${classes.main} ${classes.mainRaised}`}>
+        <div className={`${classes.main}`}>
           <div className={classes.container}>
             <InvestorTopPicksSection />
             <InvestNowSection />
