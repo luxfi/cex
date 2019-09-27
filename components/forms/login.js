@@ -43,16 +43,10 @@ const styles = theme => ({
 })
 
 class LoginForm extends React.Component {
-  // constructor(props) {
-  //   super(props)
-  //   this.state = {
-  //     email: '',
-  //     password: '',
-  //     emailError: false,
-  //     passwordError: false,
-  //   }
-  //   this.submitLogin = this.submitLogin.bind(this)
-  // }
+  constructor(props) {
+    super(props)
+    this.handleKeypress = this.handleKeypress.bind(this)
+  }
 
   // submitLogin(e) {
   //   e.preventDefault()
@@ -82,6 +76,22 @@ class LoginForm extends React.Component {
   //     }
   //   }
   // }
+
+  handleKeypress(e) {
+    var key = e.which || e.keyCode
+    if (key === 13) {
+      // 13 is enter
+      document.getElementById("login-submit-button").click()
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener("keypress", this.handleKeypress)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keypress", this.handleKeypress)
+  }
 
   render() {
     const {
@@ -138,6 +148,7 @@ class LoginForm extends React.Component {
             label="Remember me"
           />
           <Button
+            id="login-submit-button"
             type="submit"
             fullWidth
             variant="contained"

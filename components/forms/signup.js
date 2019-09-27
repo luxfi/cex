@@ -33,6 +33,27 @@ const styles = theme => ({
 })
 
 class SignupForm extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.handleKeypress = this.handleKeypress.bind(this)
+  }
+
+  handleKeypress(e) {
+    var key = e.which || e.keyCode
+    if (key === 13) {
+      // 13 is enter
+      document.getElementById("signup-submit-button").click()
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener("keypress", this.handleKeypress)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keypress", this.handleKeypress)
+  }
   render() {
     const {
       classes,
@@ -153,6 +174,7 @@ class SignupForm extends React.Component {
             label="I am over 18."
           />
           <Button
+            id="signup-submit-button"
             type="submit"
             fullWidth
             variant="contained"
