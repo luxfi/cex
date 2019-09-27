@@ -4,6 +4,7 @@ import { watch } from "react-referential"
 import SignupForm from "../components/forms/signup"
 import Emitter from "../src/emitter"
 import { setIdentity } from "../src/wallet"
+import { inject, observer } from "mobx-react"
 
 import Tabs from "@material-ui/core/Tabs"
 import Tab from "@material-ui/core/Tab"
@@ -11,17 +12,56 @@ import Tab from "@material-ui/core/Tab"
 import Link from "../components/link"
 import { getEncodedPrivateKey } from "../src/wallet"
 
+@inject("store")
+@observer
 class SignUp extends React.Component {
   static async getInitialProps({ mobxStore }) {
-    await mobxStore.movieStore.fetch()
-    return {
-      movieStore: mobxStore.movieStore,
-      orderBook: mobxStore.orderBook
-    }
+    return { ...mobxStore }
   }
 
   render() {
-    return <SignupForm />
+    const { userStore } = this.props.store
+    const {
+      email,
+      password,
+      passwordConfirm,
+      over18,
+      validEmail,
+      validPassword,
+      firstName,
+      lastName
+    } = userStore
+    return (
+      <SignupForm
+        setValue={(key, val) => {
+          userStore.setValue(key, val)
+        }}
+        email={email}
+        password={password}
+        passwordConfirm={passwordConfirm}
+        over18={over18}
+        isValidSignup={userStore.isValidSignup}
+        signUp={(onSuccess, onError) => {
+          userStore.signUp(onSuccess, onError)
+        }}
+        validateEmail={() => {
+          userStore.validateEmail()
+        }}
+        validatePassword={() => {
+          userStore.validatePassword()
+        }}
+        validEmail={validEmail}
+        validPassword={validPassword}
+        firstName={firstName}
+        lastName={lastName}
+        validateFirstName={() => {
+          userStore.validateFirstName()
+        }}
+        validateLastName={() => {
+          userStore.validateLastName()
+        }}
+      />
+    )
   }
 }
 // @watch('signupPage')
