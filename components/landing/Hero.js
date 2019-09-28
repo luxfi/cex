@@ -1,4 +1,5 @@
 import React from "react"
+import Link from "next/link"
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles"
 
@@ -14,9 +15,16 @@ import styles from "../../assets/jss/views/hero"
 
 const useStyles = makeStyles(styles)
 
+const ButtonLink = ({ className, href, hrefAs, children, prefetch }) => (
+  <Link href={href} as={hrefAs} prefetch>
+    <a className={className}>{children}</a>
+  </Link>
+)
+
 export default props => {
   const classes = useStyles()
   const { ...rest } = props
+  const hrefLink = props.loggedIn ? "/article" : "/signup"
   return (
     <div className="hero-container">
       <HeroImg {...rest}>
@@ -34,9 +42,10 @@ export default props => {
               </h4>
               <br />
               <Button
+                component={ButtonLink}
+                href={hrefLink}
                 color="danger"
                 size="lg"
-                href="#"
                 target="_blank"
                 rel="noopener noreferrer"
               >
