@@ -14,12 +14,12 @@ import { inject, observer } from "mobx-react"
 // core components
 import PillsTabs from "../components/PillsTabs.js"
 
-// import styles from "assets/jss/material-kit-react/views/landingPage.js"
+// import styles from "assets/jss/material-kit-react/views/portfolioPage.js"
 import styles from "../assets/jss/views/articlePage.js"
 
 // Sections for this page
 import InvestorTopPicksSection from "../views/LandingPage/Sections/InvestorTopPicksSection"
-import PortfolioCta from "../views/ProfilePage/PortfolioCta"
+import PortfolioCTA from "../views/ProfilePage/PortfolioCTA"
 import TabPanel from "../views/ProfilePage/TabPanel"
 
 const CustomChip = ({ className, children, label, ...props }) => {
@@ -48,7 +48,7 @@ class Portfolio extends React.Component {
         <div style={{ height: "70px" }}></div>
         <PillsTabs />
         <InvestorTopPicksSection />
-        <PortfolioCta />
+        <PortfolioCTA />
       </div>
     )
   }
