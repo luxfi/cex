@@ -38,10 +38,11 @@ class Index extends React.Component {
 
   render() {
     // const { movieStore } = this.props.store
-    const { classes } = this.props
+    const { classes, store } = this.props
+    const loggedIn = store.userStore.loggedIn
     return (
       <>
-        <Hero />
+        <Hero loggedIn={loggedIn} />
         <div className={`${classes.main}`}>
           <div className={classes.container}>
             <InvestorTopPicksSection />
