@@ -16,7 +16,7 @@ import CardFooter from "../../components/Card/CardFooter.js"
 import ContentLoader, { Facebook } from "react-content-loader"
 
 // import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
-import styles from "../../assets/jss/views/landingPageSections/investNowStyle.js"
+import styles from "../../assets/jss/views/portfolioPageSections/PortfolioCTAStyle.js"
 
 const useStyles = makeStyles(styles)
 
@@ -41,11 +41,18 @@ export default props => {
   return (
     <>
       <div className={classes.section}>
-        <h2 className={classes.title}>
-          Become a Pro Trader.
-        </h2>
-        <span>Pro Traders make a lot more money and know a lot more things than non pro traders.</span>
-        <Button>Remind Later</Button>
+        <h2 className={classes.title}>Become a Pro Trader.</h2>
+        <span>
+          Pro Traders make a lot more money and know a lot more things than non
+          pro traders.
+        </span>
+        <Button
+          style={{
+            marginLeft: "20px"
+          }}
+        >
+          Remind Later
+        </Button>
         <Button
           color="outlined"
           href="#"
