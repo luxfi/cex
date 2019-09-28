@@ -41,20 +41,9 @@ const theme = createMuiTheme({
     //   paper: '#1e2748',
     // },
   },
-  overrides: {
-    MuiButton: {
-      // root: {
-      //   backgroundColor: 'transparent',
-      //   color: 'white',
-      //   fontSize: '12px'
-      // },
-      // outlined: {
-      //   border: "1px solid white"
-      // }
-    }
-  },
   typography: {
-    fontFamily: "‘BWHaasGroteskTF-55Roman-Web, sans-serif’, sans-serif"
+    fontFamily: "‘BWHaasGroteskTF-55Roman-Web, sans-serif’, sans-serif",
+    useNextVariants: true
   }
 })
 
