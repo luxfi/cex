@@ -16,11 +16,45 @@ import Toolbar from "@material-ui/core/Toolbar"
 import Container from "@material-ui/core/Container"
 import Typography from "@material-ui/core/Typography"
 import Link from "../link"
-import GridContainer from "../Grid/GridContainer.js"
-import GridItem from "../Grid/GridItem.js"
 import Button from "../CustomButtons/Button.js"
+import Modal from "../Modal.js"
 
 import { withStyles } from "@material-ui/core/styles"
+
+const AboutESX = ({ classes }) => {
+  const [open, setOpen] = React.useState(false)
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+  return (
+    <>
+      <Button
+        className={classes.menuButton}
+        color="transparent"
+        onClick={handleOpen}
+      >
+        About ESX
+      </Button>
+      <Modal handleClose={handleClose} open={open} title="What is ESX?">
+        <p>ESX is a film investing platform for everyone.</p>{" "}
+        <p>
+          We allow regular people — not just wealthy film producers — to invest
+          in promising films, with as little as $10 or as much as $100,000 per
+          investment.
+        </p>{" "}
+        <p>
+          ESX was created to democratize fundraising for film while giving
+          anyone the chance to back the next greatest film.
+        </p>
+      </Modal>
+    </>
+  )
+}
 
 @inject("store")
 @observer
@@ -49,9 +83,7 @@ class Footer extends React.Component {
               Entertainment Stock Exchange
             </Typography>
             <div className={classes.grow} />
-            <Button className={classes.menuButton} color="transparent">
-              About ESX
-            </Button>
+            <AboutESX classes={classes} />
             <Button className={classes.menuButton} color="transparent">
               Partnerships
             </Button>
