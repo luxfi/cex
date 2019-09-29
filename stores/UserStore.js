@@ -297,7 +297,7 @@ export default class UserStore {
     return (
       this.validEmail &&
       this.validPassword &&
-      this.passwordsMatch() &&
+      this.passwordsMatch &&
       this.over18 &&
       this.isValidName
     )
