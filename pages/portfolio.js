@@ -4,7 +4,6 @@ import Link from "next/link"
 // @material-ui/core components
 import { makeStyles, withStyles } from "@material-ui/core/styles"
 import AppBar from "@material-ui/core/AppBar"
-// import Chip from "@material-ui/core/Chip"
 import Tabs from "@material-ui/core/Tabs"
 import Tab from "@material-ui/core/Tab"
 import Container from "@material-ui/core/Container"
@@ -21,14 +20,6 @@ import styles from "../assets/jss/views/articlePage.js"
 import InvestorTopPicksSection from "../views/LandingPage/Sections/InvestorTopPicksSection"
 import ProTraderCTA from "../views/ProfilePage/ProTraderCTA"
 import TabPanel from "../views/ProfilePage/TabPanel"
-
-const CustomChip = ({ className, children, label, ...props }) => {
-  return (
-    <Chip label={label} className={className}>
-      {children}
-    </Chip>
-  )
-}
 
 @inject("store")
 @observer
