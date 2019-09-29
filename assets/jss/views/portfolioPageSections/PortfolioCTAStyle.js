@@ -1,7 +1,7 @@
 import { cardTitle, title } from "../../esx.js"
 import imagesStyle from "../../imagesStyles.js"
 
-const investNowStyle = {
+const portfolioPageStyle = {
   section: {
     // padding: "70px 0",
     padding: "32px 0",
@@ -48,4 +48,4 @@ const investNowStyle = {
   }
 }
 
-export default investNowStyle
+export default portfolioPageStyle
