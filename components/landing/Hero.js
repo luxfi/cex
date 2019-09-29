@@ -15,10 +15,12 @@ import styles from "../../assets/jss/views/hero"
 
 const useStyles = makeStyles(styles)
 
-const ButtonLink = ({ className, href, hrefAs, children, prefetch }) => (
-  <Link href={href} as={hrefAs} prefetch>
-    <a className={className}>{children}</a>
-  </Link>
+const ButtonLink = React.forwardRef(
+  ({ className, href, hrefAs, children, prefetch }, ref) => (
+    <Link ref={ref} href={href} as={hrefAs} prefetch>
+      <a className={className}>{children}</a>
+    </Link>
+  )
 )
 
 export default props => {
