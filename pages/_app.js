@@ -92,7 +92,6 @@ class MyMobxApp extends App {
   }
 
   componentDidMount() {
-    console.log("ComponentDidMount", this.props.isServer)
     if (!this.props.isServer) {
       // debugger
       // this.props.initialMobxState.userStore.loadSession()
