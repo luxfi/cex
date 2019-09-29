@@ -176,7 +176,7 @@ class Footer extends React.Component {
             <div className={classes.grow} />
             <span className={classes.socialLinks}>
               <a
-                href="https://www.facebook.com/sharer/sharer.php?u={PAGEURL}&t={PAGETITLE}"
+                href="https://www.facebook.com/"
                 target="_blank"
                 title="Share on Facebook"
                 className={`${classes.anchor} fa-facebook`}
@@ -184,28 +184,12 @@ class Footer extends React.Component {
                 <FontAwesomeIcon icon={faFacebook} />
               </a>
               <a
-                href="https://twitter.com/intent/tweet?source={PAGEURL}&text={PAGETITLE}:{PAGEURL}&via={TWITTERUSERNAME}"
+                href="https://twitter.com/"
                 target="_blank"
                 title="Tweet"
                 className={`${classes.anchor} fa-twitter`}
               >
                 <FontAwesomeIcon icon={faTwitter} />
-              </a>
-              <a
-                href="https://plus.google.com/share?url={PAGEURL}"
-                target="_blank"
-                title="Share on Google+"
-                className={`${classes.anchor} fa-google`}
-              >
-                <FontAwesomeIcon icon={faGoogle} />
-              </a>
-              <a
-                href="http://pinterest.com/pin/create/button/?url={PAGEURL}&media={PAGEIMAGEURL}&description={PAGEDESCRIPTION}"
-                target="_blank"
-                title="Pin it"
-                className={`${classes.anchor} fa-pinterest`}
-              >
-                <FontAwesomeIcon icon={faPinterest} />
               </a>
               <a
                 href="mailto:?subject={PAGETITLE}&body={PAGEDESCRIPTION}:{PAGEURL}"
