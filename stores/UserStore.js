@@ -297,7 +297,7 @@ export default class UserStore {
     return (
       this.validEmail &&
       this.validPassword &&
-      this.password === this.passwordConfirm &&
+      this.passwordsMatch() &&
       this.over18 &&
       this.isValidName
     )
@@ -322,6 +322,10 @@ export default class UserStore {
       this.postalCode
     )
     // country is dropdown (noted above)
+  }
+
+  @computed get passwordsMatch() {
+    return this.password === this.passwordConfirm
   }
 }
 

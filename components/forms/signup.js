@@ -1,15 +1,20 @@
 import React from "react"
+import { inject, observer } from "mobx-react"
+import Router from "next/router"
+
+// @material-ui/core components
 import Button from "@material-ui/core/Button"
 import CssBaseline from "@material-ui/core/CssBaseline"
 import TextField from "@material-ui/core/TextField"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Checkbox from "@material-ui/core/Checkbox"
-import Link from "../link"
 import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
-import Router from "next/router"
+
+// Custom Link
+import Link from "../link"
 
 const styles = theme => ({
   "@global": {
@@ -32,10 +37,12 @@ const styles = theme => ({
   }
 })
 
+@inject("store")
+@observer
 class SignupForm extends React.Component {
   constructor(props) {
     super(props)
-
+    this.state = { checkPassword: false }
     this.handleKeypress = this.handleKeypress.bind(this)
   }
 
@@ -54,6 +61,7 @@ class SignupForm extends React.Component {
   componentWillUnmount() {
     window.removeEventListener("keypress", this.handleKeypress)
   }
+
   render() {
     const {
       classes,
@@ -69,8 +77,11 @@ class SignupForm extends React.Component {
       validateEmail,
       validatePassword,
       validateFirstName,
-      validateLastName
+      validateLastName,
+      store
     } = this.props
+
+    const { passwordsMatch } = store.userStore
 
     // TODO Remove form)
     return (
@@ -155,12 +166,18 @@ class SignupForm extends React.Component {
             id="passwordConfirm"
             // onBlur={validateConfirmedPassword}
             // autoComplete="current-passwordConfirm"
-            // error={!validpasswordConfirm}
-            // helperText={this.state.passwordConfirmError && this.state.passwordConfirmError}
+            error={
+              this.state.checkPassword && passwordConfirm && !passwordsMatch
+            }
+            helperText={
+              this.state.checkPassword &&
+              passwordConfirm &&
+              !passwordsMatch &&
+              "passwords do not match"
+            }
             value={passwordConfirm}
             onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
-
           <FormControlLabel
             control={
               <Checkbox
@@ -168,6 +185,7 @@ class SignupForm extends React.Component {
                 color="primary"
                 name="over18"
                 value={over18}
+                onClick={() => this.setState({ checkPassword: true })}
                 onChange={evt => setValue(evt.target.name, evt.target.checked)}
               />
             }
