@@ -7,13 +7,8 @@ import { makeStyles } from "@material-ui/core/styles"
 // @material-ui/icons
 
 // core components
-import GridContainer from "../../components/Grid/GridContainer.js"
-import GridItem from "../../components/Grid/GridItem.js"
 import Button from "../../components/CustomButtons/Button.js"
-import Card from "../../components/Card/Card.js"
-import CardBody from "../../components/Card/CardBody.js"
-import CardFooter from "../../components/Card/CardFooter.js"
-import ContentLoader, { Facebook } from "react-content-loader"
+import ContentLoader from "react-content-loader"
 
 // import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
 import styles from "../../assets/jss/views/portfolioPageSections/PortfolioCTAStyle.js"
@@ -35,8 +30,6 @@ const MyLoader = () => (
 
 export default props => {
   const classes = useStyles()
-  const { ...rest } = props
-  const imageClasses = classNames(classes.imgCardTop)
 
   return (
     <>
