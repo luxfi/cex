@@ -1,9 +1,10 @@
 import React from "react"
+import Link from "next/link"
+import { inject, observer } from "mobx-react"
+
 // @material-ui/core components
 import { withStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
-
-import { inject, observer } from "mobx-react"
 
 // core components
 import Breadcrumbs from "../components/Breadcrumbs.js"
@@ -67,14 +68,19 @@ const AvatarLoader = () => (
   </ContentLoader>
 )
 
+const ButtonLink = ({ className, href, hrefAs, children, prefetch }) => (
+  <Link href={href} as={hrefAs} prefetch>
+    <a className={className}>{children}</a>
+  </Link>
+)
+
 @inject("store")
 @observer
 class Index extends React.Component {
   // static async getInitialProps({ mobxStore }) {
   //   await mobxStore.movieStore.fetch()
   //   return {
-  //     movieStore: mobxStore.movieStore,
-  //     orderBook: mobxStore.orderBook
+  //     store: mobxStore
   //   }
   // }
 
@@ -89,7 +95,9 @@ class Index extends React.Component {
 
   render() {
     // const { movieStore } = this.props.store
-    const { classes } = this.props
+    const { classes, store } = this.props
+    const { loggedIn } = store.userStore
+    const hrefLink = loggedIn ? "/portfolio" : "/signup"
     return (
       <>
         <div className={classes.container}>
@@ -101,8 +109,9 @@ class Index extends React.Component {
               </h1>
               <div className={classes.grow} />
               <Button
+                component={ButtonLink}
                 color="outlined"
-                href="#"
+                href={hrefLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -260,7 +269,7 @@ class Index extends React.Component {
               </span>
             </div>
           </article>
-          <InvestNowSection />
+          <InvestNowSection loggedIn={loggedIn} />
           <div
             style={{
               height: "70px"

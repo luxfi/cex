@@ -1,4 +1,5 @@
 import React from "react"
+import Link from "next/link"
 // nodejs library that concatenates classes
 import classNames from "classnames"
 // @material-ui/core components
@@ -37,10 +38,17 @@ const MyLoader = () => (
   </ContentLoader>
 )
 
+const ButtonLink = ({ className, href, hrefAs, children, prefetch }) => (
+  <Link href={href} as={hrefAs} prefetch>
+    <a className={className}>{children}</a>
+  </Link>
+)
+
 export default props => {
   const classes = useStyles()
-  const { ...rest } = props
+  const { loggedIn, ...rest } = props
   const imageClasses = classNames(classes.imgCardTop)
+  const hrefLink = loggedIn ? "/portfolio" : "/signup"
 
   return (
     <>
@@ -48,7 +56,9 @@ export default props => {
         <h2 className={classes.title}>
           Invest more than screen time in your favorite films.
         </h2>
-        <Button>Invest Now</Button>
+        <Button component={ButtonLink} href={hrefLink}>
+          Invest Now
+        </Button>
         <Button
           color="outlined"
           href="#"

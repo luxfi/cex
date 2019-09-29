@@ -169,7 +169,7 @@ class LoginForm extends React.Component {
           <Grid container>
             <Grid item xs>
               {/* <Link href="#" variant="body2"> */}
-                Forgot password? [NYI]
+              Forgot password? [NYI]
               {/* </Link> */}
             </Grid>
             <Grid item>
