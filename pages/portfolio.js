@@ -17,7 +17,7 @@ import ProTraderCTA from "../views/ProfilePage/ProTraderCTA"
 
 @inject("store")
 @observer
-class Portfolio extends React.Component {
+class Portfolio extends React.Component {\
   render() {
     const { classes } = this.props
     return (
