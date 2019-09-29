@@ -47,17 +47,11 @@ const RemindLater = ({ classes }) => {
       >
         Remind Later
       </Button>
-      <Modal handleClose={handleClose} open={open} title="What is ESX?">
-        <p>ESX is a film investing platform for everyone.</p>{" "}
+      <Modal handleClose={handleClose} open={open} title="Remind Later">
+        <p>We will set a reminder for you to sign up to a pro trader account</p>{" "}
         <p>
-          We allow regular people — not just wealthy film producers — to invest
-          in promising films, with as little as $10 or as much as $100,000 per
-          investment.
+          Research and trade film stocks from our intuitive streaming platform.
         </p>{" "}
-        <p>
-          ESX was created to democratize fundraising for film while giving
-          anyone the chance to back the next greatest film.
-        </p>
       </Modal>
     </>
   )
@@ -85,17 +79,20 @@ const JoinNow = ({ classes }) => {
       >
         Join Now
       </Button>
-      <Modal handleClose={handleClose} open={open} title="What is ESX?">
-        <p>ESX is a film investing platform for everyone.</p>{" "}
+      <Modal handleClose={handleClose} open={open} title="Join Now">
         <p>
-          We allow regular people — not just wealthy film producers — to invest
-          in promising films, with as little as $10 or as much as $100,000 per
-          investment.
+          Research and trade film stocks from our intuitive streaming platform.
         </p>{" "}
         <p>
-          ESX was created to democratize fundraising for film while giving
-          anyone the chance to back the next greatest film.
-        </p>
+          ESX makes it simple to just buy and sell stocks or take advantage of
+          our bloomberg terminal real-time data tracking and charting tools. We
+          will cater to every class of investor and trading style with our cloud
+          scalable 10,000x transactions per second capable platform.
+        </p>{" "}
+        <p>
+          When money is at stake, you want answers. Get valuable insights from
+          professionals who know the markets and share your passion.
+        </p>{" "}
       </Modal>
     </>
   )
