@@ -24,7 +24,7 @@ const ButtonLink = ({ className, href, hrefAs, children, prefetch }) => (
 export default props => {
   const classes = useStyles()
   const { ...rest } = props
-  const hrefLink = props.loggedIn ? "/article" : "/signup"
+  const hrefLink = props.loggedIn ? "/portfolio" : "/signup"
   return (
     <div className="hero-container">
       <HeroImg {...rest}>

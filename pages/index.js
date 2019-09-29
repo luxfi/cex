@@ -46,7 +46,7 @@ class Index extends React.Component {
         <div className={`${classes.main}`}>
           <div className={classes.container}>
             <InvestorTopPicksSection />
-            <InvestNowSection />
+            <InvestNowSection loggedIn={loggedIn} />
             <OurPartnersSection />
             <ESXCommunitySection />
           </div>
