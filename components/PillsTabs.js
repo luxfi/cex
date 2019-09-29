@@ -70,22 +70,22 @@ const theme = createMuiTheme({
             // boxShadow: "0 7px 10px -5px rgba(76, 175, 80, 0.4)"
           }
         }
-      },
-      labelContainer: {
-        padding: "0!important",
-        color: "inherit"
-      },
-      label: {
-        lineHeight: "24px",
-        textTransform: "uppercase",
-        fontSize: "13px",
-        fontWeight: "500",
-        position: "relative",
-        display: "block",
-        color: "inherit",
-        paddingLeft: "12px",
-        paddingRight: "12px"
       }
+      // labelContainer: {
+      //   padding: "0!important",
+      //   color: "inherit"
+      // },
+      // label: {
+      //   lineHeight: "24px",
+      //   textTransform: "uppercase",
+      //   fontSize: "13px",
+      //   fontWeight: "500",
+      //   position: "relative",
+      //   display: "block",
+      //   color: "inherit",
+      //   paddingLeft: "12px",
+      //   paddingRight: "12px"
+      // }
     }
   }
 })
