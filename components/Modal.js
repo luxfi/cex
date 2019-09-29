@@ -12,13 +12,46 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3)
+    // border: "2px solid #000",
+    // boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    maxWidth: "600px"
+  },
+  modalHeader: {
+    borderBottom: "none",
+    paddingTop: "16px",
+    paddingRight: "16px",
+    paddingBottom: "0",
+    paddingLeft: "16px",
+    minHeight: "16.43px"
+  },
+  modalTitle: {
+    alignSelf: "flex-end",
+    color: "inherit",
+    display: "flex",
+    fontSize: "24px",
+    fontWeight: "300",
+    lineHeight: "normal",
+    overflow: "hidden",
+    transformOrigin: "149px 48px",
+    margin: "0"
+  },
+  modalBody: {
+    color: "rgba(0,0,0,.54)",
+    fontSize: "13px",
+    lineHeight: "18px",
+    overflow: "hidden",
+    padding: "16px",
+    width: "90%"
   }
 }))
 
-export default function TransitionsModal({ open, handleClose, children }) {
+export default function TransitionsModal({
+  open,
+  handleClose,
+  children,
+  title
+}) {
   const classes = useStyles()
 
   return (
@@ -37,7 +70,11 @@ export default function TransitionsModal({ open, handleClose, children }) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            {children}
+            <div className={classes.modalHeader}>
+              <div className={classes.modalTitle}>{title}</div>
+            </div>
+            <div className={classes.modalBody}>{children}</div>
+            {/* {children} */}
             {/* <h2 id="transition-modal-title">Transition modal</h2>
             <p id="transition-modal-description">
               react-transiton-group animates me.
