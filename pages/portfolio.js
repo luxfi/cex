@@ -19,7 +19,7 @@ import styles from "../assets/jss/views/articlePage.js"
 
 // Sections for this page
 import InvestorTopPicksSection from "../views/LandingPage/Sections/InvestorTopPicksSection"
-import PortfolioCTA from "../views/ProfilePage/PortfolioCTA"
+import ProTraderCTA from "../views/ProfilePage/ProTraderCTA"
 import TabPanel from "../views/ProfilePage/TabPanel"
 
 const CustomChip = ({ className, children, label, ...props }) => {
@@ -48,7 +48,7 @@ class Portfolio extends React.Component {
         <div style={{ height: "70px" }}></div>
         <PillsTabs />
         <InvestorTopPicksSection />
-        <PortfolioCTA />
+        <ProTraderCTA />
       </div>
     )
   }

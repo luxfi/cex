@@ -11,7 +11,7 @@ import Button from "../../components/CustomButtons/Button.js"
 import ContentLoader from "react-content-loader"
 
 // import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
-import styles from "../../assets/jss/views/portfolioPageSections/PortfolioCTAStyle.js"
+import styles from "../../assets/jss/views/portfolioPageSections/proTraderCTAStyle.js"
 
 const useStyles = makeStyles(styles)
 
