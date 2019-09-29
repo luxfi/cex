@@ -1,5 +1,6 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
+import NextLink from "next/link"
 
 //font awesome share icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -56,6 +57,77 @@ const AboutESX = ({ classes }) => {
   )
 }
 
+const Partnerships = ({ classes }) => {
+  const [open, setOpen] = React.useState(false)
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+  return (
+    <>
+      <Button
+        className={classes.menuButton}
+        color="transparent"
+        onClick={handleOpen}
+      >
+        Partnerships
+      </Button>
+      <Modal handleClose={handleClose} open={open} title="Partnerships">
+        <p>
+          Proxicoin - $750 million in capacity 8-10 films per year at scale 1-4
+          television properties per year
+        </p>{" "}
+        <p>
+          Twisted Pictures - Horror / Urban production company led by Mark Burg,
+          producer of the Saw franchise
+        </p>{" "}
+        <p>
+          Centauri Media - $250mm film production fund with potential of up to 5
+          studio released films a year
+        </p>
+      </Modal>
+    </>
+  )
+}
+
+const ContactUs = ({ classes }) => {
+  const [open, setOpen] = React.useState(false)
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+  return (
+    <>
+      <Button
+        className={classes.menuButton}
+        color="transparent"
+        onClick={handleOpen}
+      >
+        Contact Us
+      </Button>
+      <Modal handleClose={handleClose} open={open} title="Contact Us">
+        <p>Put Contact Infomation Here</p>{" "}
+      </Modal>
+    </>
+  )
+}
+
+const ButtonLink = React.forwardRef(
+  ({ className, href, hrefAs, children, prefetch }, ref) => (
+    <NextLink ref={ref} href={href} as={hrefAs} prefetch>
+      <a className={className}>{children}</a>
+    </NextLink>
+  )
+)
+
 @inject("store")
 @observer
 class Footer extends React.Component {
@@ -84,21 +156,16 @@ class Footer extends React.Component {
             </Typography>
             <div className={classes.grow} />
             <AboutESX classes={classes} />
-            <Button className={classes.menuButton} color="transparent">
-              Partnerships
-            </Button>
-            <Button className={classes.menuButton} color="transparent">
-              Contact Us
-            </Button>
+            <Partnerships classes={classes} />
+            <ContactUs classes={classes} />
             {!loggedIn && (
               <Button
-                className={classes.menubutton}
+                className={classes.signUpButton}
+                component={ButtonLink}
                 color="outlined"
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
+                href={"/signup"}
                 style={{
-                  color: "#fff"
+                  color: "white"
                 }}
               >
                 Sign Up
@@ -198,6 +265,10 @@ const styles = theme => {
     },
     white: {
       color: "#fff"
+    },
+    signUpButton: {
+      color: "white !important",
+      border: "2px solid white !important"
     }
   }
 }
