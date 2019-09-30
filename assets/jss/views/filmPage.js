@@ -132,8 +132,16 @@ export default theme => ({
   },
   faPlay: {
     paddingRight: "10px"
-  }
+  },
 
+  seeMoreOuter : {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center"
+  },
+  seeMoreButton: {
+    display: "block"
+  }
 
 })
 
