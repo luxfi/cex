@@ -97,7 +97,7 @@ export default class UserStore {
   @action loadSession() {
     this.isLoading = true
     if (this.api.client.getCustomerToken) {
-      this.token = this.api.client.getCustomerToken
+      this.token = this.api.client.getCustomerToken()
     }
     this.isLoading = false
   }
@@ -297,13 +297,15 @@ export default class UserStore {
     return (
       this.validEmail &&
       this.validPassword &&
-      this.password === this.passwordConfirm &&
+      this.passwordsMatch &&
       this.over18 &&
       this.isValidName
     )
   }
 
   @computed get isValidLogin() {
+    console.log("this.validEmail", this.validEmail)
+    console.log("this.validPassword", this.validPassword)
     return this.validEmail && this.validPassword
   }
 
@@ -322,6 +324,10 @@ export default class UserStore {
       this.postalCode
     )
     // country is dropdown (noted above)
+  }
+
+  @computed get passwordsMatch() {
+    return this.password === this.passwordConfirm
   }
 }
 

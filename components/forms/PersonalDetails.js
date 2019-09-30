@@ -1,32 +1,33 @@
-import React from 'react'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import TextField from '@material-ui/core/TextField'
-import InputLabel from '@material-ui/core/InputLabel'
-import MenuItem from '@material-ui/core/MenuItem'
-import Select from '@material-ui/core/Select'
-import { makeStyles } from '@material-ui/core/styles'
-import FormControl from '@material-ui/core/FormControl'
+import React from "react"
+import Grid from "@material-ui/core/Grid"
+import Typography from "@material-ui/core/Typography"
+import TextField from "@material-ui/core/TextField"
+import InputLabel from "@material-ui/core/InputLabel"
+import MenuItem from "@material-ui/core/MenuItem"
+import Select from "@material-ui/core/Select"
+import { makeStyles } from "@material-ui/core/styles"
+import FormControl from "@material-ui/core/FormControl"
+import BirthdayPicker from "../BirthdayPicker"
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap"
   },
   formControl: {
     // margin: theme.spacing(1),
     // minWidth: 120,
-    width: '100%'
+    width: "100%"
   },
   selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-}));
+    marginTop: theme.spacing(2)
+  }
+}))
 
 export default function PersonalDetails() {
   const classes = useStyles()
   const [values, setValues] = React.useState({
-    gender: '',
+    gender: ""
   })
 
   // const inputLabel = React.useRef(null);
@@ -38,7 +39,7 @@ export default function PersonalDetails() {
   function handleChange(event) {
     setValues(oldValues => ({
       ...oldValues,
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.value
     }))
   }
 
@@ -89,14 +90,15 @@ export default function PersonalDetails() {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
+          {/* <TextField
             required
             id="birthday"
             name="birthday"
             label="Birthday"
             fullWidth
             autoComplete="bday"
-          />
+          /> */}
+          <BirthdayPicker />
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl className={classes.formControl}>
@@ -105,18 +107,18 @@ export default function PersonalDetails() {
               value={values.gender}
               onChange={handleChange}
               inputProps={{
-                name: 'gender',
-                id: 'gender',
+                name: "gender",
+                id: "gender"
               }}
             >
-              <MenuItem value={'male'}>Male</MenuItem>
-              <MenuItem value={'female'}>Female</MenuItem>
-              <MenuItem value={'other'}>Other</MenuItem>
-              <MenuItem value={'unspecified'}>Unspecified</MenuItem>
+              <MenuItem value={"male"}>Male</MenuItem>
+              <MenuItem value={"female"}>Female</MenuItem>
+              <MenuItem value={"other"}>Other</MenuItem>
+              <MenuItem value={"unspecified"}>Unspecified</MenuItem>
             </Select>
           </FormControl>
         </Grid>
       </Grid>
     </>
-  );
+  )
 }
