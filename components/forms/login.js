@@ -102,6 +102,7 @@ class LoginForm extends React.Component {
       validatePassword,
       validateEmail,
       isValidLogin,
+      validEmail,
       login
     } = this.props
     return (
