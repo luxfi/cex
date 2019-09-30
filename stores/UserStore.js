@@ -304,6 +304,8 @@ export default class UserStore {
   }
 
   @computed get isValidLogin() {
+    console.log("this.validEmail", this.validEmail)
+    console.log("this.validPassword", this.validPassword)
     return this.validEmail && this.validPassword
   }
 

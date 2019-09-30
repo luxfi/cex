@@ -13,7 +13,13 @@ class Login extends React.Component {
 
   render() {
     const { userStore } = this.props.store
-    const { email, password, isValidLogin } = userStore
+    const {
+      email,
+      password,
+      isValidLogin,
+      validEmail,
+      validPassword
+    } = userStore
     return (
       <LoginForm
         setValue={(key, val) => {
@@ -31,6 +37,8 @@ class Login extends React.Component {
           userStore.validatePassword()
         }}
         isValidLogin={isValidLogin}
+        validEmail={validEmail}
+        validPassword={validPassword}
       />
     )
   }
