@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react"
 
+import PortfolioMeta from './Sections/PortfolioMeta'
 import Watchlist from './Sections/Watchlist'
 
 const PortfolioView = (props) => {
@@ -11,7 +12,7 @@ const PortfolioView = (props) => {
 
   return (
     <div>
-      This is the portfolio page!
+      <PortfolioMeta />
       <Watchlist />
     </div>
   )
