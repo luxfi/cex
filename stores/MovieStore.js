@@ -1,23 +1,24 @@
 import { action, observable, computed } from 'mobx'
 import _ from 'lodash'
 
-export default class MovieStore {
-  @observable movies = []
 
-  constructor(initialData = { movies: [] }, hanzoApi) {
-    this.movies = initialData.movies
+
+export default class MovieStore {
+  
+  @observable currentMovie = undefined
+
+  constructor(initialData , hanzoApi) {
+    this.movies = initialData
     this.api = hanzoApi
+      // TEMP
+    this.currentMovie = this.movies[0]
+    this.currentMovie.shortDescription = "Lorem ipsum dolor sit amet, \
+      consectetur adipiscing elit, sed do eiusmod tempor incididunt."
   }
 
   // hydrate(serializedStore) {
   //     this.movies = serializedStore
   // }
-
-  async fetch() {
-    // const response = await this.movies || await fetchInitialStoreState()
-    const response = await this.movies || await fetchInitialStoreState()
-    this.setMovies(response)
-  }
 
   @action setMovies(movies) {
     this.movies = movies
@@ -28,6 +29,7 @@ export default class MovieStore {
   }
 }
 
+/*
 export async function fetchInitialStoreState(initialData = []) {
   let jsonArray = []
 
@@ -41,3 +43,4 @@ export async function fetchInitialStoreState(initialData = []) {
 
   return jsonArray
 }
+*/
