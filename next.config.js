@@ -15,7 +15,6 @@ module.exports = withCSS(
           postcss([
             autoprefixer({ browsers: "> 1%" }),
             "rucksack-css",
-            "css-mqpacker",
             comments({ removeAll: true })
           ])
         ]
