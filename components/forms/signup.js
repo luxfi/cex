@@ -42,7 +42,7 @@ const styles = theme => ({
 class SignupForm extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { checkPassword: false }
+    this.state = { checkedOver18: false }
     this.handleKeypress = this.handleKeypress.bind(this)
   }
 
@@ -78,6 +78,8 @@ class SignupForm extends React.Component {
       validatePassword,
       validateFirstName,
       validateLastName,
+      validEmail,
+      validPassword,
       store
     } = this.props
 
@@ -134,8 +136,12 @@ class SignupForm extends React.Component {
             onBlur={validateEmail}
             // autoComplete="email"
             autoFocus
-            // error={!validEmail}
-            // helperText={this.state.emailError && this.state.emailError}
+            error={this.state.checkedOver18 && !validEmail}
+            helperText={
+              this.state.checkedOver18 &&
+              !validEmail &&
+              "please enter a valid email"
+            }
             value={email}
             onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
@@ -150,8 +156,12 @@ class SignupForm extends React.Component {
             id="password"
             onBlur={validatePassword}
             // autoComplete="current-password"
-            // error={!validPassword}
-            // helperText={this.state.passwordError && this.state.passwordError}
+            error={this.state.checkedOver18 && !validPassword}
+            helperText={
+              this.state.checkedOver18 &&
+              !validEmail &&
+              "please make sure password is long enough"
+            }
             value={password}
             onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
@@ -167,10 +177,10 @@ class SignupForm extends React.Component {
             // onBlur={validateConfirmedPassword}
             // autoComplete="current-passwordConfirm"
             error={
-              this.state.checkPassword && passwordConfirm && !passwordsMatch
+              this.state.checkedOver18 && passwordConfirm && !passwordsMatch
             }
             helperText={
-              this.state.checkPassword &&
+              this.state.checkedOver18 &&
               passwordConfirm &&
               !passwordsMatch &&
               "passwords do not match"
@@ -185,7 +195,7 @@ class SignupForm extends React.Component {
                 color="primary"
                 name="over18"
                 value={over18}
-                onClick={() => this.setState({ checkPassword: true })}
+                onClick={() => this.setState({ checkedOver18: true })}
                 onChange={evt => setValue(evt.target.name, evt.target.checked)}
               />
             }
