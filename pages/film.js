@@ -102,7 +102,7 @@ class Index extends React.Component {
   renderUpperRow(classes, selectedTab, movie) {
     return (
       <div className={classNames(classes.leftAndRight, classes.breadcrumbRow)} style={ {marginTop: "20px"} }>
-        <Breadcrumbs>
+        <Breadcrumbs className={classes.breadcrumbs}>
           {movie.name}
         </Breadcrumbs>
         <PageTabs classes={classes} selectedTab={selectedTab} onTab={this.onTab} />
