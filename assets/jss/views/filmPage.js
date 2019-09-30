@@ -1,12 +1,21 @@
-import { container, title } from "../esx.js"
-import { blockStatement } from "babel-types";
+import { 
+  container, 
+  title, 
+  darkThemeBG, 
+  darkThemeText 
+} from "../esx.js"
 
 export default theme => ({
+
+
+
   container: {
     ...container,
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
+    background: darkThemeBG,
+    color: darkThemeText
   },
 
   leftAndRight: {
@@ -26,12 +35,19 @@ export default theme => ({
   breadcrumbRow: {
     marginBottom: "30px"
   },
+  breadcrumbs: {
+    
+    color: darkThemeText + " !important"
+
+  },
+
 
   pageTabsOuter: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-end",
-    alignItems: "flex-start"
+    alignItems: "flex-start",
+    padding: "0 30px"
   },
   pageTab: {
     display: "block",
@@ -43,8 +59,9 @@ export default theme => ({
     lineHeight: "1.1"
   },
   selectedTab: {
-    //textDecoration: "underline" 
-    borderBottom: "1px solid black"
+      // better than textDecoration: underline, 
+      // which renders too close to the text 
+    borderBottom: "1px solid " + darkThemeText
   },
 
   mainArea: {
@@ -69,7 +86,8 @@ export default theme => ({
     fontSize: "3rem",
     fontFamily: "sans-serif",
     textTransform: "uppercase",
-    marginTop: "0px"
+    marginTop: "0px",
+    color: "inherit"
   },
   description: {
     fontSize: "1.313rem",
@@ -137,7 +155,8 @@ export default theme => ({
   seeMoreOuter : {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "center"
+    justifyContent: "center",
+    borderBottom: "1px solid #999"
   },
   seeMoreButton: {
     display: "block"
