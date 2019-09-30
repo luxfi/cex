@@ -1,5 +1,6 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
+import NextLink from "next/link"
 
 //font awesome share icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -16,11 +17,116 @@ import Toolbar from "@material-ui/core/Toolbar"
 import Container from "@material-ui/core/Container"
 import Typography from "@material-ui/core/Typography"
 import Link from "../link"
-import GridContainer from "../Grid/GridContainer.js"
-import GridItem from "../Grid/GridItem.js"
 import Button from "../CustomButtons/Button.js"
+import Modal from "../Modal.js"
 
 import { withStyles } from "@material-ui/core/styles"
+
+const AboutESX = ({ classes }) => {
+  const [open, setOpen] = React.useState(false)
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+  return (
+    <>
+      <Button
+        className={classes.menuButton}
+        color="transparent"
+        onClick={handleOpen}
+      >
+        About ESX
+      </Button>
+      <Modal handleClose={handleClose} open={open} title="What is ESX?">
+        <p>ESX is a film investing platform for everyone.</p>{" "}
+        <p>
+          We allow regular people — not just wealthy film producers — to invest
+          in promising films, with as little as $10 or as much as $100,000 per
+          investment.
+        </p>{" "}
+        <p>
+          ESX was created to democratize fundraising for film while giving
+          anyone the chance to back the next greatest film.
+        </p>
+      </Modal>
+    </>
+  )
+}
+
+const Partnerships = ({ classes }) => {
+  const [open, setOpen] = React.useState(false)
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+  return (
+    <>
+      <Button
+        className={classes.menuButton}
+        color="transparent"
+        onClick={handleOpen}
+      >
+        Partnerships
+      </Button>
+      <Modal handleClose={handleClose} open={open} title="Partnerships">
+        <p>
+          Proxicoin - $750 million in capacity 8-10 films per year at scale 1-4
+          television properties per year
+        </p>{" "}
+        <p>
+          Twisted Pictures - Horror / Urban production company led by Mark Burg,
+          producer of the Saw franchise
+        </p>{" "}
+        <p>
+          Centauri Media - $250mm film production fund with potential of up to 5
+          studio released films a year
+        </p>
+      </Modal>
+    </>
+  )
+}
+
+const ContactUs = ({ classes }) => {
+  const [open, setOpen] = React.useState(false)
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+  return (
+    <>
+      <Button
+        className={classes.menuButton}
+        color="transparent"
+        onClick={handleOpen}
+      >
+        Contact Us
+      </Button>
+      <Modal handleClose={handleClose} open={open} title="Contact Us">
+        <p>Put Contact Infomation Here</p>{" "}
+      </Modal>
+    </>
+  )
+}
+
+const ButtonLink = React.forwardRef(
+  ({ className, href, hrefAs, children, prefetch }, ref) => (
+    <NextLink ref={ref} href={href} as={hrefAs} prefetch>
+      <a className={className}>{children}</a>
+    </NextLink>
+  )
+)
 
 @inject("store")
 @observer
@@ -49,24 +155,17 @@ class Footer extends React.Component {
               Entertainment Stock Exchange
             </Typography>
             <div className={classes.grow} />
-            <Button className={classes.menuButton} color="transparent">
-              About ESX
-            </Button>
-            <Button className={classes.menuButton} color="transparent">
-              Partnerships
-            </Button>
-            <Button className={classes.menuButton} color="transparent">
-              Contact Us
-            </Button>
+            <AboutESX classes={classes} />
+            <Partnerships classes={classes} />
+            <ContactUs classes={classes} />
             {!loggedIn && (
               <Button
-                className={classes.menubutton}
+                className={classes.signUpButton}
+                component={ButtonLink}
                 color="outlined"
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
+                href={"/signup"}
                 style={{
-                  color: "#fff"
+                  color: "white"
                 }}
               >
                 Sign Up
@@ -77,7 +176,7 @@ class Footer extends React.Component {
             <div className={classes.grow} />
             <span className={classes.socialLinks}>
               <a
-                href="https://www.facebook.com/sharer/sharer.php?u={PAGEURL}&t={PAGETITLE}"
+                href="https://www.facebook.com/"
                 target="_blank"
                 title="Share on Facebook"
                 className={`${classes.anchor} fa-facebook`}
@@ -85,28 +184,12 @@ class Footer extends React.Component {
                 <FontAwesomeIcon icon={faFacebook} />
               </a>
               <a
-                href="https://twitter.com/intent/tweet?source={PAGEURL}&text={PAGETITLE}:{PAGEURL}&via={TWITTERUSERNAME}"
+                href="https://twitter.com/"
                 target="_blank"
                 title="Tweet"
                 className={`${classes.anchor} fa-twitter`}
               >
                 <FontAwesomeIcon icon={faTwitter} />
-              </a>
-              <a
-                href="https://plus.google.com/share?url={PAGEURL}"
-                target="_blank"
-                title="Share on Google+"
-                className={`${classes.anchor} fa-google`}
-              >
-                <FontAwesomeIcon icon={faGoogle} />
-              </a>
-              <a
-                href="http://pinterest.com/pin/create/button/?url={PAGEURL}&media={PAGEIMAGEURL}&description={PAGEDESCRIPTION}"
-                target="_blank"
-                title="Pin it"
-                className={`${classes.anchor} fa-pinterest`}
-              >
-                <FontAwesomeIcon icon={faPinterest} />
               </a>
               <a
                 href="mailto:?subject={PAGETITLE}&body={PAGEDESCRIPTION}:{PAGEURL}"
@@ -166,6 +249,10 @@ const styles = theme => {
     },
     white: {
       color: "#fff"
+    },
+    signUpButton: {
+      color: "white !important",
+      border: "2px solid white !important"
     }
   }
 }

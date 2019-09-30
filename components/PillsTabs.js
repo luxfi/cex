@@ -90,19 +90,21 @@ const theme = createMuiTheme({
   }
 })
 
-const PillsTabs = () => {
-  const [index, onChange] = useState(0)
+const PillsTabs = (props) => {
+  // const [index, onChange] = useState(0)
+  const { tabIdx, handleChange } = props
+
   return (
     <MuiThemeProvider theme={theme}>
       <Tabs
         // variant={"fullWidth"}
-        value={index}
-        onChange={(e, val) => onChange(val)}
+        value={tabIdx}
+        onChange={handleChange}
       >
-        <Tab label="Portfolio" />
-        <Tab label="Trade" />
-        <Tab label="Benefits" />
-        <Tab label="Newsfeed" />
+        <Tab label="Portfolio" disableFocusRipple />
+        <Tab label="Trade" disableFocusRipple />
+        <Tab label="Benefits" disabled />
+        <Tab label="Newsfeed" disabled />
       </Tabs>
     </MuiThemeProvider>
   )

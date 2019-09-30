@@ -1,15 +1,20 @@
 import React from "react"
+import { inject, observer } from "mobx-react"
+import Router from "next/router"
+
+// @material-ui/core components
 import Button from "@material-ui/core/Button"
 import CssBaseline from "@material-ui/core/CssBaseline"
 import TextField from "@material-ui/core/TextField"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Checkbox from "@material-ui/core/Checkbox"
-import Link from "@material-ui/core/Link"
 import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
-import Router from "next/router"
+
+// Custom Link
+import Link from "../link"
 
 const styles = theme => ({
   "@global": {
@@ -32,10 +37,12 @@ const styles = theme => ({
   }
 })
 
+@inject("store")
+@observer
 class SignupForm extends React.Component {
   constructor(props) {
     super(props)
-
+    this.state = { checkedOver18: false }
     this.handleKeypress = this.handleKeypress.bind(this)
   }
 
@@ -54,6 +61,7 @@ class SignupForm extends React.Component {
   componentWillUnmount() {
     window.removeEventListener("keypress", this.handleKeypress)
   }
+
   render() {
     const {
       classes,
@@ -69,8 +77,13 @@ class SignupForm extends React.Component {
       validateEmail,
       validatePassword,
       validateFirstName,
-      validateLastName
+      validateLastName,
+      validEmail,
+      validPassword,
+      store
     } = this.props
+
+    const { passwordsMatch } = store.userStore
 
     // TODO Remove form)
     return (
@@ -123,8 +136,12 @@ class SignupForm extends React.Component {
             onBlur={validateEmail}
             // autoComplete="email"
             autoFocus
-            // error={!validEmail}
-            // helperText={this.state.emailError && this.state.emailError}
+            error={this.state.checkedOver18 && !validEmail}
+            helperText={
+              this.state.checkedOver18 &&
+              !validEmail &&
+              "please enter a valid email"
+            }
             value={email}
             onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
@@ -139,8 +156,12 @@ class SignupForm extends React.Component {
             id="password"
             onBlur={validatePassword}
             // autoComplete="current-password"
-            // error={!validPassword}
-            // helperText={this.state.passwordError && this.state.passwordError}
+            error={this.state.checkedOver18 && !validPassword}
+            helperText={
+              this.state.checkedOver18 &&
+              !validEmail &&
+              "please make sure password is long enough"
+            }
             value={password}
             onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
@@ -155,12 +176,18 @@ class SignupForm extends React.Component {
             id="passwordConfirm"
             // onBlur={validateConfirmedPassword}
             // autoComplete="current-passwordConfirm"
-            // error={!validpasswordConfirm}
-            // helperText={this.state.passwordConfirmError && this.state.passwordConfirmError}
+            error={
+              this.state.checkedOver18 && passwordConfirm && !passwordsMatch
+            }
+            helperText={
+              this.state.checkedOver18 &&
+              passwordConfirm &&
+              !passwordsMatch &&
+              "passwords do not match"
+            }
             value={passwordConfirm}
             onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
-
           <FormControlLabel
             control={
               <Checkbox
@@ -168,6 +195,7 @@ class SignupForm extends React.Component {
                 color="primary"
                 name="over18"
                 value={over18}
+                onClick={() => this.setState({ checkedOver18: true })}
                 onChange={evt => setValue(evt.target.name, evt.target.checked)}
               />
             }

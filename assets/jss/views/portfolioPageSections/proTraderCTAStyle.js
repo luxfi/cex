@@ -4,7 +4,7 @@ import imagesStyle from "../../imagesStyles.js"
 const portfolioPageStyle = {
   section: {
     // padding: "70px 0",
-    padding: "32px 0",
+    padding: "48px 0",
     textAlign: "center",
     backgroundColor: "#f4f3f3",
     borderRadius: "32px"
@@ -15,7 +15,8 @@ const portfolioPageStyle = {
     // minHeight: "32px",
     marginTop: "0.875rem",
     textDecoration: "none",
-    textAlign: "center"
+    textAlign: "left",
+    marginLeft: "24px"
   },
   ...imagesStyle,
   itemGrid: {
@@ -27,7 +28,8 @@ const portfolioPageStyle = {
     color: "#6c757d"
   },
   description: {
-    color: "#999"
+    color: "#999",
+    padding: "16px"
   },
   justifyCenter: {
     justifyContent: "center !important"
