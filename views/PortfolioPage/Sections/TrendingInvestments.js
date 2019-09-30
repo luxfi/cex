@@ -1,6 +1,7 @@
 import React from "react"
 // nodejs library that concatenates classes
 import classNames from "classnames"
+import ContentLoader from "react-content-loader"
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles"
 
@@ -9,27 +10,26 @@ import { makeStyles } from "@material-ui/core/styles"
 // core components
 import GridContainer from "../../../components/Grid/GridContainer.js"
 import GridItem from "../../../components/Grid/GridItem.js"
-import Card from "../../../components/Card/Card.js"
-import CardBody from "../../../components/Card/CardBody.js"
-import ContentLoader, { Facebook } from "react-content-loader"
 
 import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
 import { List, ListItem, Divider } from "@material-ui/core"
 
 const useStyles = makeStyles(styles)
 
-const MyLoader = (props) => (
-  <ContentLoader
-    height={`${props.h}px`}
-    width={`${props.w}px`}
-    speed={2}
-    primaryColor="#f3f3f3"
-    secondaryColor="#ecebeb"
-  >
-    {/* Only SVG shapes */}
-    <rect x="0" y="0" rx="5" ry="5" width={props.w} height={props.h} />
-  </ContentLoader>
-)
+const MyLoader = (props) => {
+  return (
+    <ContentLoader
+      height={props.h}
+      width={props.w}
+      speed={2}
+      primaryColor="#f3f3f3"
+      secondaryColor="#ecebeb"
+    >
+      {/* Only SVG shapes */}
+      <rect x="0" y="0" rx="3" ry="3" width={props.w} height={props.h} />
+    </ContentLoader>
+  )
+}
 
 const dataStub = [
   {
@@ -75,7 +75,7 @@ export default props => {
                 <GridItem xs={6}>
                   {trendingItem.chart}
                 </GridItem>
-                <GridItem xs={4}>
+                <GridItem xs={4} style={{ textAlign: 'right' }}>
                   ${trendingItem.price}
                 </GridItem>
               </GridContainer>
