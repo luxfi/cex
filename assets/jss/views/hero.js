@@ -2,6 +2,7 @@ import { container, title } from "../esx"
 
 const heroStyle = {
   container: {
+    marginTop: "300px",
     zIndex: "12",
     color: "#FFFFFF",
     ...container

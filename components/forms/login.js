@@ -4,7 +4,7 @@ import CssBaseline from "@material-ui/core/CssBaseline"
 import TextField from "@material-ui/core/TextField"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Checkbox from "@material-ui/core/Checkbox"
-import Link from "@material-ui/core/Link"
+import Link from "../link"
 import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core/styles"
@@ -45,6 +45,8 @@ const styles = theme => ({
 class LoginForm extends React.Component {
   constructor(props) {
     super(props)
+    this.state = { displayErrors: false }
+    this.handleSubmit = this.handleSubmit.bind(this)
     this.handleKeypress = this.handleKeypress.bind(this)
   }
 
@@ -93,6 +95,19 @@ class LoginForm extends React.Component {
     window.removeEventListener("keypress", this.handleKeypress)
   }
 
+  handleSubmit(isValidLogin) {
+    if (isValidLogin) {
+      login(
+        () => Router.push("/portfolio"),
+        ex => {
+          console.log("hit error callback **", ex)
+        }
+      )
+    } else {
+      this.setState({ displayErrors: true })
+    }
+  }
+
   render() {
     const {
       classes,
@@ -102,8 +117,11 @@ class LoginForm extends React.Component {
       validatePassword,
       validateEmail,
       isValidLogin,
+      validEmail,
+      validPassword,
       login
     } = this.props
+
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -120,10 +138,15 @@ class LoginForm extends React.Component {
             label="Email Address"
             name="email"
             onBlur={validateEmail}
+            // onClick={e => e.stopPropagation()}
             // autoComplete="email"
             autoFocus
-            // error={!validEmail}
-            // helperText={this.state.emailError && this.state.emailError}
+            error={this.state.displayErrors && !validEmail}
+            helperText={
+              this.state.displayErrors && !validEmail
+                ? "please enter valid email address"
+                : ""
+            }
             value={email}
             onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
@@ -136,10 +159,15 @@ class LoginForm extends React.Component {
             label="Password"
             type="password"
             id="password"
+            // onClick={e => e.stopPropagation()}
             onBlur={validatePassword}
             // autoComplete="current-password"
-            // error={!validPassword}
-            // helperText={this.state.passwordError && this.state.passwordError}
+            error={this.state.displayErrors && !validPassword}
+            helperText={
+              this.state.displayErrors && !validPassword
+                ? "please make sure the password is long enough"
+                : ""
+            }
             value={password}
             onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
@@ -154,22 +182,15 @@ class LoginForm extends React.Component {
             variant="contained"
             color="primary"
             className={classes.submit}
-            disabled={!isValidLogin}
-            onClick={() => {
-              login(
-                () => Router.push("/portfolio"),
-                ex => {
-                  console.log("hit error callback **", ex)
-                }
-              )
-            }}
+            // disabled={}
+            onClick={() => this.handleSubmit(isValidLogin)}
           >
             Sign In
           </Button>
           <Grid container>
             <Grid item xs>
               {/* <Link href="#" variant="body2"> */}
-                Forgot password? [NYI]
+              Forgot password? [NYI]
               {/* </Link> */}
             </Grid>
             <Grid item>
