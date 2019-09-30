@@ -11,7 +11,7 @@ export default class MovieStore {
 
   constructor(initialData, hanzoApi) {
     this.loadMovies()
-    this.movies = initialData
+    // this.movies = initialData
     this.api = hanzoApi
     // TEMP
     this.currentMovie = this.movies[0]
