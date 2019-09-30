@@ -13,6 +13,7 @@ import Breadcrumbs from "../components/Breadcrumbs.js"
 import Button from "../components/CustomButtons/Button"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+  // the nice looking double chevrons are part of the "pro" package that costs money
 import { faPlay, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 
 //import ContentLoader from "react-content-loader"
