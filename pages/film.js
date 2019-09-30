@@ -13,7 +13,7 @@ import Breadcrumbs from "../components/Breadcrumbs.js"
 import Button from "../components/CustomButtons/Button"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlay } from '@fortawesome/free-solid-svg-icons'
+import { faPlay, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 
 //import ContentLoader from "react-content-loader"
 
@@ -51,6 +51,23 @@ const PageTabs = props => {
   )
 }
 
+const SeeMoreButton = props => {
+  const {
+    classes,
+    onToggle,
+    expanded
+  } = props
+
+  return (
+    <div className={classes.seeMoreOuter}>
+      <a className={classes.seeMoreButton} onClick={() => onToggle()} >
+        <FontAwesomeIcon icon={(expanded) ? faChevronUp : faChevronDown} />
+      </a>
+    </div>
+  )
+}
+
+
 @inject("store")
 @observer
 class Index extends React.Component {
@@ -62,7 +79,7 @@ class Index extends React.Component {
       expanded: false
     }
     this.onTab = this.onTab.bind(this)
-    this.onExpand = this.onExpand.bind(this)
+    this.toggleExpanded = this.toggleExpanded.bind(this)
   }
 
   onTab(tab) {
@@ -75,12 +92,10 @@ class Index extends React.Component {
     }
   }
 
-  onExpand(expand) {
-    if (this.state.expanded != expand) {
-      this.setState({
-        expanded: expand
-      })
-    }
+  toggleExpanded() {
+    this.setState({
+      expanded: !this.state.expanded
+    })
   }
 
   renderUpperRow(classes, selectedTab, movie) {
@@ -149,6 +164,7 @@ class Index extends React.Component {
       <article className={classes.container}>
         {this.renderUpperRow(classes, this.state.selectedTab, movie)}
         {this.renderMainArea(classes, movie)}
+        <SeeMoreButton classes={classes} onToggle={this.toggleExpanded} expanded={this.state.expanded} />
       </article>
     )
   }
