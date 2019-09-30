@@ -153,7 +153,7 @@ class Index extends React.Component {
             </Button>
           </div>
         </div>
-        <img className={classes.mainImage} src={movie.verticalImg} width="300" height="444" />
+        <img className={classes.mainImage} src={movie.Poster} width="300" height="444" />
       </div>
     )
   }
