@@ -69,6 +69,12 @@ export default theme => ({
     marginBottom: "32px"
   },
 
+  flexCentered : {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center"  
+  },
+
   copyArea: {
     paddingTop: "30px"
   },
@@ -107,6 +113,14 @@ export default theme => ({
     marginLeft: "70px",
   },
   
+  graphImage: {
+    display: "block",
+    textAlign: "center",
+    backgroundColor: "#f4f3f3",
+  },
+
+
+
   articleSection: {
     marginTop: "70px"
   },
