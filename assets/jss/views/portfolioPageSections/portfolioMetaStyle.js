@@ -56,7 +56,7 @@ export default Object.assign({}, { cardTitle, title, imagesStyle }, {
     fontSize: '1.5em'
   },
   metaFlex: {
-    flexGrow: 1
+    // flexGrow: 1
   },
   metaHighlightNumber: {
     fontWeight: 400,

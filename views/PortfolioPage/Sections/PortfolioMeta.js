@@ -87,15 +87,15 @@ export default props => {
       <GridItem xs={6} md={4}>
         <Card className={classes.card} style={{ minHeight: '221px' }}>
           <CardBody>
-            <GridContainer direction="column" justify={'space-between'} className={classes.earningsContainer}>
+            <GridContainer direction="column" justify={'space-around'} className={classes.earningsContainer}>
               <GridItem xs={12} className={classNames(classes.fontBoost, classes.metaFlex)}>
                 <GridContainer>
                   <GridItem xs={6}>
-                    <Typography variant='h1' className={classes.earningsText} gutterBottom>Rank</Typography>
-                    <Typography variant='inherit' className={classes.metaHighlightNumber}><Icon color='disabled' className={classes.metaIcon}>stars_rounded</Icon> {dataStub.rank}</Typography>
-                    <Typography className={classes.earningsChangeText} gutterBottom>
-                      You're in the top <Typography component='span' variant='inherit' className={classes.darkSpan}>{dataStub.percentile}</Typography>
-                    </Typography>
+                      <Typography variant='h1' className={classes.earningsText} gutterBottom>Rank</Typography>
+                      <Typography variant='inherit' className={classes.metaHighlightNumber}><Icon color='disabled' className={classes.metaIcon}>stars_rounded</Icon> {dataStub.rank}</Typography>
+                      <Typography className={classes.earningsChangeText} gutterBottom>
+                        You're in the top <Typography component='span' variant='inherit' className={classes.darkSpan}>{dataStub.percentile}</Typography>
+                      </Typography>
                   </GridItem>
                   <GridItem xs={6}>
                     <Typography variant='h1' className={classes.earningsText} gutterBottom>Benefits</Typography>
