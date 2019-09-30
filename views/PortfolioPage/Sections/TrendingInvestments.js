@@ -66,22 +66,27 @@ export default props => {
       <List>
         {
           dataStub.map((trendingItem, i) =>
-          <div>
-            <ListItem key={i}>
-              <GridContainer style={{ width: '100%' }} alignItems='center' >
-                <GridItem xs={2}>
-                  {trendingItem.ticker}
-                </GridItem>
-                <GridItem xs={6}>
-                  {trendingItem.chart}
-                </GridItem>
-                <GridItem xs={4} style={{ textAlign: 'right' }}>
-                  ${trendingItem.price}
-                </GridItem>
-              </GridContainer>
-            </ListItem>
-            <Divider />
-          </div>
+            (<div key={`listKey_${i}`}>
+              <ListItem>
+                <GridContainer style={{ width: '100%' }} alignItems='center' >
+                  <GridItem xs={2}>
+                    {trendingItem.ticker}
+                  </GridItem>
+                  <GridItem xs={6}>
+                    <div style={{ width: '200px', height: '100px' }}>
+                      {trendingItem.chart}
+                    </div>
+                  </GridItem>
+                  <GridItem xs={4} style={{ textAlign: 'right' }}>
+                    ${trendingItem.price}
+                  </GridItem>
+                </GridContainer>
+              </ListItem>
+              {
+                i === dataStub.length - 1 ?
+                null : <Divider />
+              }
+            </div>)
           )
         }
       </List>
