@@ -1,26 +1,21 @@
 import React from "react"
+import Link from "next/link"
+
 // nodejs library that concatenates classes
 import classNames from "classnames"
+
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles"
 
 // @material-ui/icons
 
 // core components
-import GridContainer from "../../../components/Grid/GridContainer.js"
-import GridItem from "../../../components/Grid/GridItem.js"
 import Button from "../../../components/CustomButtons/Button.js"
-import Card from "../../../components/Card/Card.js"
-import CardBody from "../../../components/Card/CardBody.js"
-import CardFooter from "../../../components/Card/CardFooter.js"
-import ContentLoader, { Facebook } from "react-content-loader"
+import ContentLoader from "react-content-loader"
+import Modal from "../../../components/Modal.js"
 
 // import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
 import styles from "../../../assets/jss/views/landingPageSections/investNowStyle.js"
-
-import team1 from "../../../assets/img/faces/avatar.jpg"
-import team2 from "../../../assets/img/faces/christian.jpg"
-import team3 from "../../../assets/img/faces/kendall.jpg"
 
 const useStyles = makeStyles(styles)
 
@@ -37,10 +32,29 @@ const MyLoader = () => (
   </ContentLoader>
 )
 
+const ButtonLink = React.forwardRef(
+  ({ className, href, hrefAs, children, prefetch }, ref) => (
+    <Link ref={ref} href={href} as={hrefAs} prefetch>
+      <a className={className}>{children}</a>
+    </Link>
+  )
+)
+
 export default props => {
   const classes = useStyles()
-  const { ...rest } = props
+  const { loggedIn, ...rest } = props
   const imageClasses = classNames(classes.imgCardTop)
+  const hrefLink = loggedIn ? "/portfolio" : "/signup"
+
+  const [open, setOpen] = React.useState(false)
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
 
   return (
     <>
@@ -48,19 +62,32 @@ export default props => {
         <h2 className={classes.title}>
           Invest more than screen time in your favorite films.
         </h2>
-        <Button>Invest Now</Button>
+        <Button component={ButtonLink} href={hrefLink}>
+          Invest Now
+        </Button>
+
         <Button
           color="outlined"
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
           style={{
             color: "black",
             marginLeft: "20px"
           }}
+          onClick={handleOpen}
         >
           What is ESX?
         </Button>
+        <Modal handleClose={handleClose} open={open} title="What is ESX?">
+          <p>ESX is a film investing platform for everyone.</p>{" "}
+          <p>
+            We allow regular people — not just wealthy film producers — to
+            invest in promising films, with as little as $10 or as much as
+            $100,000 per investment.
+          </p>{" "}
+          <p>
+            ESX was created to democratize fundraising for film while giving
+            anyone the chance to back the next greatest film.
+          </p>
+        </Modal>
       </div>
       <style jsx>{`
         .hero-container {
