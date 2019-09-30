@@ -1,46 +1,53 @@
 import React from "react"
-import { makeStyles } from "@material-ui/core/styles"
+import { makeStyles, withStyles } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
 import Breadcrumbs from "@material-ui/core/Breadcrumbs"
 import Typography from "@material-ui/core/Typography"
 import Link from "../components/link"
 import NavigateNextIcon from "@material-ui/icons/NavigateNext"
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     justifyContent: "center",
     flexWrap: "wrap"
   },
   paper: {
-    padding: theme.spacing(3, 0),
+      // don't pad here! .. let the containing element do it.  
     backgroundColor: "transparent"
-    // fontWeight: theme.typography.fontWeightRegular,
   },
   crumbs: {
     color: "grey"
   }
-}))
+})
 
-export default function CustomSeparator() {
-  const classes = useStyles()
 
-  return (
-    <div className={classes.root}>
-      <Paper elevation={0} className={classes.paper}>
-        <Breadcrumbs
-          separator={<NavigateNextIcon fontSize="small" />}
-          aria-label="breadcrumb"
-          className={classes.crumbs}
-        >
-          <Link color="inherit" href="/">
-            Home
-          </Link>
-          <Typography>Filming The Lone Wolf Dies</Typography>
-        </Breadcrumbs>
-      </Paper>
-    </div>
-  )
+const TEMP_LAMENESS = "Filming The Lone Wolf Dies"; // TODO
+
+class CustomSeparator extends React.Component  {
+
+  render() {
+    const {classes} = this.props
+
+    const pageName = this.props.children ? this.props.children : TEMP_LAMENESS;
+
+    return (
+      <div className={classes.root}>
+        <Paper elevation={0} className={classes.paper}>
+          <Breadcrumbs
+            separator={<NavigateNextIcon fontSize="small" />}
+            aria-label="breadcrumb"
+            className={classes.crumbs}
+          >
+            <Link color="inherit" href="/">Home</Link>
+            <Typography>{pageName}</Typography>
+          </Breadcrumbs>
+        </Paper>
+      </div>
+    )
+  }
 }
+
+export default withStyles(styles)(CustomSeparator)
 
 // import React from 'react';
 // import { emphasize, withStyles, makeStyles } from '@material-ui/core/styles';
