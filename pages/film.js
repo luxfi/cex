@@ -20,6 +20,9 @@ import { faPlay, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-
 
 import styles from "../assets/jss/views/filmPage.js"
 
+import dummyFilmGraph from "../static/img/film-graph--dummy-600x383.png"
+
+
 // Sections for this page
 //import InvestNowSection from "../views/LandingPage/Sections/InvestNowSection"
 
@@ -76,7 +79,7 @@ class Index extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedTab: "about",
+      selectedTab: "invest",
       expanded: false
     }
     this.onTab = this.onTab.bind(this)
@@ -110,61 +113,71 @@ class Index extends React.Component {
     )
   }
 
-  renderMainArea(classes, movie) {
+  renderAboutMain(classes, movie) {
     return(
-      <>
-        <div className={classNames(classes.leftAndRight, classes.mainArea)}>
-          <div className={classNames(classes.copyArea, classes.topAndBottom)} >
-            <div className={classes.titleAndDescription} >
-              <h1 className={classes.title} style={{ textAlign: "left" }}>{movie.name}</h1>
-              <p className={classes.description}>{movie.shortDescription}</p>
-            </div>
-            <div className={classes.movieButtonsOuter}>
-              <Button
-                component={ButtonLink}
-                color="link"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  color: "black",
-                  marginLeft: "20px",
-                  height: "48px"
-                }}
-                className={classes.movieButton}
-              >
-                <FontAwesomeIcon icon={faPlay} style={{paddingRight: "2px"}}/>
-                Watch Trailer
-              </Button>
-              <Button
-                component={ButtonLink}
-                color="link"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  color: "black",
-                  marginLeft: "20px",
-                  height: "48px"
-                }}
-                className={classes.movieButton}
-              >
-                Invest
-              </Button>
-            </div>
+      <div className={classNames(classes.leftAndRight, classes.mainArea)}>
+        <div className={classNames(classes.copyArea, classes.topAndBottom)} >
+          <div className={classes.titleAndDescription} >
+            <h1 className={classes.title} style={{ textAlign: "left" }}>{movie.name}</h1>
+            <p className={classes.description}>{movie.shortDescription}</p>
           </div>
-          <img className={classes.mainImage} src={movie.verticalImg} width="300" height="444" />
+          <div className={classes.movieButtonsOuter}>
+            <Button
+              component={ButtonLink}
+              color="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: "black",
+                marginLeft: "20px",
+                height: "48px"
+              }}
+              className={classes.movieButton}
+            >
+              <FontAwesomeIcon icon={faPlay} style={{paddingRight: "2px"}}/>
+              Watch Trailer
+            </Button>
+            <Button
+              component={ButtonLink}
+              color="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: "black",
+                marginLeft: "20px",
+                height: "48px"
+              }}
+              className={classes.movieButton}
+            >
+              Invest
+            </Button>
+          </div>
+        </div>
+        <img className={classes.mainImage} src={movie.verticalImg} width="300" height="444" />
       </div>
-      </>
     )
   }
 
+  renderInvestMain(classes, movie) {
+    return (
+      <div className={classNames(classes.flexCentered, classes.mainArea)}>
+        <img className={classes.graphImage} src={dummyFilmGraph} width="600" height="383" />
+      </div>
+    )
+  }
+
+
   render() {
     const { classes, store } = this.props
-    //const { loggedIn } = store.userStore
-    const movie  = store.movieStore.currentMovie;
+    const movie  = store.movieStore.currentMovie
     return (
       <article className={classes.container}>
         {this.renderUpperRow(classes, this.state.selectedTab, movie)}
-        {this.renderMainArea(classes, movie)}
+        {(this.state.selectedTab === "about") ? 
+            this.renderAboutMain(classes, movie)
+            :
+            this.renderInvestMain(classes, movie)
+        }
         <SeeMoreButton classes={classes} onToggle={this.toggleExpanded} expanded={this.state.expanded} />
       </article>
     )
