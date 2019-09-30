@@ -7,9 +7,17 @@ import moviesFromJson from "../assets/tempData/movies"
 export default class MovieStore {
   @observable movies = []
   @observable isLoading = true
+  @observable currentMovie = undefined
 
-  constructor() {
+  constructor(initialData, hanzoApi) {
     this.loadMovies()
+    this.movies = initialData
+    this.api = hanzoApi
+    // TEMP
+    this.currentMovie = this.movies[0]
+    this.currentMovie.shortDescription =
+      "Lorem ipsum dolor sit amet, \
+      consectetur adipiscing elit, sed do eiusmod tempor incididunt."
   }
 
   /**
