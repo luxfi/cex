@@ -13,7 +13,7 @@ import Card from "../../../components/Card/Card.js"
 import CardBody from "../../../components/Card/CardBody.js"
 import ContentLoader, { Facebook } from "react-content-loader"
 
-import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
+import styles from "../../../assets/jss/views/portfolioPageSections/portfolioTradeStyle.js"
 
 const useStyles = makeStyles(styles)
 
@@ -62,7 +62,7 @@ export default props => {
     <>
       <div className={classes.section}>
         <h2 className={classes.title} style={{ textAlign: "left" }}>
-          Investor Top Picks
+          Top Picks for You
         </h2>
         <GridContainer>
           {

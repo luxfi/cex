@@ -72,5 +72,12 @@ export default Object.assign({}, { cardTitle, title, imagesStyle }, {
     fontSize: '.7em',
     fontWeight: 400,
     color: grayText
+  },
+  topCategoriesChip: {
+    backgroundColor: 'rgb(239, 239, 240)',
+    color: 'rgb(135, 147, 158)',
+    fontWeight: 600,
+    letterSpacing: '1px',
+    marginRight: '10px'
   }
 })

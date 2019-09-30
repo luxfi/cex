@@ -110,7 +110,7 @@ export default props => {
               <GridItem xs={12} className={classNames(classes.fontBoost, classes.metaFlex)}>
                 <Typography variant='h1' gutterBottom className={classes.topCategoriesTitle}>Top Categories</Typography>
                 {
-                  dataStub.topCategories.map((c, i) => <Chip key={`topCategoryChip_${i}`} label={c} />)
+                  dataStub.topCategories.map((c, i) => <Chip key={`topCategoryChip_${i}`} label={c} className={classes.topCategoriesChip} />)
                 }
               </GridItem>
             </GridContainer>
