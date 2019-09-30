@@ -32,53 +32,47 @@ const MyLoader = () => (
 
 const dataStub = [
   {
-    title: 'Call of the Wild: A Space Odyssey',
-    image: <MyLoader />,
-    description: `Deep in the human unconscious is a pervasive need for a
-    logical universe that makes sense. But the real universe is
-    always one step beyond logic.`
+    title: `Call of the Wild: A Space Odyssey`,
+    body: `Deep in the human unconscious is a pervasive need for a logical universe that makes sense. But the real universe is always one step beyond logic.`,
+    image: (<MyLoader />)
   },
   {
-    title: 'Call of the Wild: A Space Odyssey',
-    image: <MyLoader />,
-    description: `Deep in the human unconscious is a pervasive need for a
-    logical universe that makes sense. But the real universe is
-    always one step beyond logic.`
+    title: `Call of the Wild: A Space Odyssey`,
+    body: `Deep in the human unconscious is a pervasive need for a logical universe that makes sense. But the real universe is always one step beyond logic.`,
+    image: (<MyLoader />)
   },
   {
-    title: 'Call of the Wild: A Space Odyssey',
-    image: <MyLoader />,
-    description: `Deep in the human unconscious is a pervasive need for a
-    logical universe that makes sense. But the real universe is
-    always one step beyond logic.`
+    title: `Call of the Wild: A Space Odyssey`,
+    body: `Deep in the human unconscious is a pervasive need for a logical universe that makes sense. But the real universe is always one step beyond logic.`,
+    image: (<MyLoader />)
   }
 ]
 
 export default props => {
   const classes = useStyles()
-  const { ...rest } = props
-  const imageClasses = classNames(classes.imgCardTop)
+  // const imageClasses = classNames(classes.imgCardTop)
+
   return (
     <>
       <div className={classes.section}>
         <h2 className={classes.title} style={{ textAlign: "left" }}>
-          Investor Top Picks
+          Your Watchlist
         </h2>
         <GridContainer>
           {
-            dataStub.map((d, i) => 
-              <GridItem key={`picks_${i}`} xs={12} sm={12} md={4}>
+            dataStub.map((watchlistItem, i) => 
+              <GridItem key={i} xs={12} sm={12} md={4}>
                 <Card plain>
                   <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
                     {/* <img src={team1} alt="..." className={imageClasses} /> */}
-                    {d.image}
+                    {watchlistItem.image}
                   </GridItem>
                   <h4 className={classes.cardTitle}>
-                    {d.title}
+                    {watchlistItem.title}
                   </h4>
                   <CardBody>
                     <p className={classes.description}>
-                      {d.description}
+                      {watchlistItem.body}
                     </p>
                   </CardBody>
                 </Card>
