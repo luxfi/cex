@@ -20,7 +20,7 @@ import ProTraderCTA from "../views/ProfilePage/ProTraderCTA"
 @observer
 class Portfolio extends React.Component {
   state = {
-    tabIdx: 1
+    tabIdx: 0
   }
 
   setTab = (evt, val) => {
