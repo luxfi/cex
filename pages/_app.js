@@ -1,4 +1,5 @@
 import App, { Container } from "next/app"
+import Head from 'next/head'
 import React from "react"
 import { Provider } from "mobx-react"
 
@@ -104,6 +105,11 @@ class MyMobxApp extends App {
 
     return (
       <>
+        <Head>
+          <title>ESX | Entertainment Stock Exchange</title>
+          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+          <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+        </Head>
         <CssBaseline />
         <Container>
           <Provider store={this.mobxStore}>
