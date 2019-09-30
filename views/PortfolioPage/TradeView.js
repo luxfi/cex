@@ -1,6 +1,9 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react"
 
+import TrendingInvestments from './Sections/TrendingInvestments'
+import TopPicks from './Sections/TopInvestmentPicks'
+
 const TradeView = (props) => {
   const { tabIdx, index } = props
 
@@ -9,7 +12,8 @@ const TradeView = (props) => {
 
   return (
     <div>
-      This is the trade page!
+      <TopPicks />
+      <TrendingInvestments />
     </div>
   )
 }
