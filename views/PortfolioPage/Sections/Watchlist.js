@@ -2,6 +2,7 @@ import React from "react"
 // nodejs library that concatenates classes
 import classNames from "classnames"
 // @material-ui/core components
+import { Typography, Link } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
 // @material-ui/icons
@@ -51,6 +52,10 @@ const dataStub = [
 export default props => {
   const classes = useStyles()
   // const imageClasses = classNames(classes.imgCardTop)
+  const {
+    watchlist,
+    remove
+  } = props
 
   return (
     <>
@@ -58,9 +63,10 @@ export default props => {
         <h2 className={classes.title} style={{ textAlign: "left" }}>
           Your Watchlist
         </h2>
-        <GridContainer>
+        <GridContainer justify={'center'}>
           {
-            dataStub.map((watchlistItem, i) => 
+            watchlist.length > 0 ?
+            watchlist.map((watchlistItem, i) => 
               <GridItem key={i} xs={12} sm={12} md={4}>
                 <Card plain>
                   <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
@@ -78,6 +84,7 @@ export default props => {
                 </Card>
               </GridItem>
             )
+            : <Typography>You aren't watching any movies yet! Try adding some from the <Link href="/">home page</Link>.</Typography>
           }
         </GridContainer>
       </div>
