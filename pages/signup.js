@@ -31,6 +31,10 @@ class SignUp extends React.Component {
       firstName,
       lastName
     } = userStore
+    const setErrorMessage = message => {
+      store.uiStore.errorMessage = message
+      store.uiStore.snackBarOpen = true
+    }
     return (
       <SignupForm
         setValue={(key, val) => {
@@ -60,6 +64,7 @@ class SignUp extends React.Component {
         validateLastName={() => {
           userStore.validateLastName()
         }}
+        setErrorMessage={setErrorMessage}
       />
     )
   }
