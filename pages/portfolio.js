@@ -33,7 +33,9 @@ class Portfolio extends React.Component {
     const { tabIdx } = this.state
 
     // What functions do we need from the movie and user store?
-    const findMovieByTicker =  (t) => { movieStore.getMovieByTicker(t) }
+    const findMovieByTicker = t => { movieStore.getMovieByTicker(t) }
+    const addToWatchlist = t => { userPortfolio.addToWatchlist(t, findMovieByTicker) }
+    const removeFromWatchlist = t => { userPortfolio.removeFromWatchlist(t) }
 
     return (
       <div className={classes.container}>
