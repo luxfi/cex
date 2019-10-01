@@ -13,6 +13,10 @@ export default theme => ({
     ...flexCenteredRow
   },
 
+  flexCenteredColumn: {
+    ...flexCenteredColumn
+  },
+
   container: {
     ...container,
     display: "flex",
@@ -123,7 +127,7 @@ export default theme => ({
 
   graphImage: {
     display: "block",
-    textAlign: "center",
+    margin: "0 auto",
     backgroundColor: "#f4f3f3",
   },
 
@@ -214,7 +218,37 @@ export default theme => ({
     tableLayout: "fixed",
     width: "80%",
     borderSpacing: "0 1em"
-  }
+  },
+
+  investCompanyName: {
+    margin: "0 auto", 
+    marginTop: "32px"   
+  },
+  investCompanyDescription: {
+    margin: "0 auto"    
+  },
+  investPrice: {
+    margin: "0 auto",   
+    marginTop: "12px", 
+    marginTop: "8px" 
+  },
+  deltaRow: {
+    margin: "0 auto",    
+    marginBottom: "12px" 
+  },
+  statsButton: {
+    margin: "0 auto"    
+  },
+
+  dollarSign: {
+    fontSize: "2rem"
+  },
+  dollarValue: {
+    fontSize: "2.4rem"
+  },
+  centsValue: {
+    fontSize: "2rem"
+  },
 
 })
 
