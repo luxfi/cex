@@ -1,4 +1,4 @@
-export default [
+module.exports = [
   {
     name: "Terminator: Dark Fate",
     movieSlug: "terminator-dark-fate",
