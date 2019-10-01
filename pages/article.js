@@ -1,6 +1,7 @@
 import React from "react"
 import Link from "next/link"
 import { inject, observer } from "mobx-react"
+import { withRouter } from "next/router"
 
 // @material-ui/core components
 import { withStyles } from "@material-ui/core/styles"
@@ -100,6 +101,13 @@ class Index extends React.Component {
     const { classes, store } = this.props
     const { loggedIn } = store.userStore
     const hrefLink = loggedIn ? "/portfolio" : "/signup"
+
+    // get router slug and find article
+    const { router } = this.props
+    const { slug } = router.query
+    debugger
+    // const article = store.articleStore.getArticle(slug)
+
     return (
       <>
         <div className={classes.container}>
@@ -283,4 +291,4 @@ class Index extends React.Component {
   }
 }
 
-export default withStyles(styles)(Index)
+export default withStyles(styles)(withRouter(Index))
