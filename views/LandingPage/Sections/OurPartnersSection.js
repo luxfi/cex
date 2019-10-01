@@ -72,7 +72,7 @@ export default props => {
                   <img
                     src={imgSrc}
                     alt=""
-                    style={{ width: "100%", maxHeight: "64px" }}
+                    style={{ width: "75%", maxHeight: "64px" }}
                   />
                 </GridItem>
               </Card>
