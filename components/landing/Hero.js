@@ -11,6 +11,9 @@ import GridContainer from "../Grid/GridContainer.js"
 import GridItem from "../Grid/GridItem.js"
 import Button from "../CustomButtons/Button.js"
 
+//material
+import Typography from "@material-ui/core/Typography"
+
 import styles from "../../assets/jss/views/hero"
 
 const useStyles = makeStyles(styles)
@@ -33,7 +36,17 @@ export default props => {
         <div className={classes.container}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={6}>
-              <h1>
+              <div style={{ width: "362px" }}>
+                <Typography variant="h5">
+                  ESX is proud to announce the first offering of
+                </Typography>
+                <p></p>
+                <Typography variant="h3">TERMINATOR: DARK FATE</Typography>
+                <Typography variant="h5">
+                  Own equity in next summer's biggest blockbuster now!
+                </Typography>
+              </div>
+              {/* <h1>
                 TERMINATOR: DARK FATE New Trailer Reunites Sarah Connor and The
                 Terminator
               </h1>
@@ -41,7 +54,7 @@ export default props => {
                 It will feel no pity. No remorse. No pain. No fear. It will have
                 only one purpose: to return to the present and prevent the
                 future. This weapon will be called...The Terminator.
-              </h4>
+              </h4> */}
               <br />
               <Button
                 component={ButtonLink}
