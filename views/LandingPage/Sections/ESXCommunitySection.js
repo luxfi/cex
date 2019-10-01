@@ -1,5 +1,6 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
+import Link from "next/link"
 import dynamic from "next/dynamic"
 // nodejs library that concatenates classes
 import classNames from "classnames"
@@ -71,21 +72,23 @@ class ArticleView extends React.Component {
     return (
       <GridContainer>
         {homePageArticles.map((d, i) => (
-          <GridItem key={`picks_${i}`} xs={12} sm={12} md={3}>
-            <Card plain>
-              <GridItem xs={2} sm={2} md={2}>
-                <ImageAvatars alt={d.articleTitle} src={d.avatar} />
-                {/* <MyLoader /> */}
-              </GridItem>
-              {/* <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
+          <Link href={`article/${d.articleSlug}`}>
+            <GridItem key={`picks_${i}`} xs={12} sm={12} md={3}>
+              <Card plain>
+                <GridItem xs={2} sm={2} md={2}>
+                  <ImageAvatars alt={d.articleTitle} src={d.avatar} />
+                  {/* <MyLoader /> */}
+                </GridItem>
+                {/* <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
                 <img src={d.heroImage} alt={d.name} className={classes.img} />
               </GridItem> */}
-              <h4 className={classes.cardTitle}>{d.articleTitle}</h4>
-              <CardBody>
-                <p className={classes.description}>{d.description}</p>
-              </CardBody>
-            </Card>
-          </GridItem>
+                <h4 className={classes.cardTitle}>{d.articleTitle}</h4>
+                <CardBody>
+                  <p className={classes.description}>{d.description}</p>
+                </CardBody>
+              </Card>
+            </GridItem>
+          </Link>
         ))}
       </GridContainer>
     )
