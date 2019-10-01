@@ -80,7 +80,8 @@ class SignupForm extends React.Component {
       validateLastName,
       validEmail,
       validPassword,
-      store
+      store,
+      setErrorMessage
     } = this.props
 
     const { passwordsMatch } = store.userStore
@@ -214,6 +215,7 @@ class SignupForm extends React.Component {
                 () => Router.push("/account/kyc"),
                 ex => {
                   console.log("hit error callback **", ex)
+                  setErrorMessage(ex)
                 }
               )
             }}

@@ -95,12 +95,12 @@ class LoginForm extends React.Component {
     window.removeEventListener("keypress", this.handleKeypress)
   }
 
-  handleSubmit(login, isValidLogin) {
+  handleSubmit(login, isValidLogin, setErrorMessage) {
     if (isValidLogin) {
       login(
         () => Router.push("/portfolio"),
         ex => {
-          console.log("hit error callback **", ex)
+          setErrorMessage(ex)
         }
       )
     } else {
@@ -119,7 +119,8 @@ class LoginForm extends React.Component {
       isValidLogin,
       validEmail,
       validPassword,
-      login
+      login,
+      setErrorMessage
     } = this.props
 
     return (
@@ -183,7 +184,9 @@ class LoginForm extends React.Component {
             color="primary"
             className={classes.submit}
             // disabled={}
-            onClick={() => this.handleSubmit(login, isValidLogin)}
+            onClick={() =>
+              this.handleSubmit(login, isValidLogin, setErrorMessage)
+            }
           >
             Sign In
           </Button>
