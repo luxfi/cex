@@ -6,7 +6,7 @@ import Stepper from "@material-ui/core/Stepper"
 import Step from "@material-ui/core/Step"
 import StepLabel from "@material-ui/core/StepLabel"
 import Button from "@material-ui/core/Button"
-import Link from "../link"
+import Link from "next/link"
 import Typography from "@material-ui/core/Typography"
 import PersonalDetails from "./PersonalDetails"
 import PrimaryAddress from "./PrimaryAddress"
@@ -56,7 +56,7 @@ const useStyles = makeStyles(theme => ({
 const steps = ["Personal Details", "Primary Address", "Photo IDs"]
 
 const ButtonLink = React.forwardRef(
-  ({ className, href, hrefAs, children, prefetch }, ref) => (
+  ({ className, href, hrefAs, children }, ref) => (
     <Link ref={ref} href={href} as={hrefAs} prefetch>
       <a className={className}>{children}</a>
     </Link>
