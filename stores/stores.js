@@ -36,8 +36,8 @@ export default function initializeStore(initialData = _initialData) {
       articleStore: new ArticleStore(initialData.articleStore, api),
       orderBook: new OrderBook(initialData.orderBook, api),
       userStore: new UserStore(initialData.userStore, api),
-      userPortfolio: new UserPortfolio(initialData.userPortfolio, api)
-      // uiStore: new UIStore(initialData.uiStore, api)
+      userPortfolio: new UserPortfolio(initialData.userPortfolio, api),
+      uiStore: new UIStore(initialData.uiStore, api)
     }
   } else if (store === null) {
     // Client stuff

@@ -1,7 +1,8 @@
 // Generic Libraries
 import { action, observable, computed } from 'mobx'
-// import _ from 'lodash'
+import _ from 'lodash'
 
+import { padDollarAmount } from '../components/utils/generic'
 /**
  * Later we'll wrap the fetch stuff up a bit more cleanly and / or use a helper library
 */
@@ -15,40 +16,52 @@ export default class UserPortfolio {
   // (not sure of type)
   @observable errors = undefined
 
+  // ** Portfolio Info **
+  @observable holdings = 0.00
+  @observable weeklyChange = 0.00
+  @observable rank = 0
+  @observable rankPercent = 0
+  @observable benefits = 0
+  @observable benefitsThisMonth = 0
+
   // ** Watchlist **
-  @observable watchlist = {}
+  @observable watchlist = []
+  /*
+  Each watchlist item looks like:
+  {
+    ticker: string,
+    dateAdded: epoch
+  }
+  */
 
   // ** Investments  **
-  @observable investments = {}
+  // What the user owns
+  @observable investments = []
+  /*
+  Each invetment looks like:
+  {
+    ticker: string,
+    amount: number,
+    price: number,
+    categories: array[string]
+  }
+  */
 
   // ... Etc
 
   constructor(initialData = {  }, hanzoApi) {
-    // TODO Do we still need this?
-    // :aa I don't think so.... why would we?
-    // E: This might be required for persisting state across page changes
-
     // Pass down the Hanzo API through a central point
     this.api = hanzoApi
   }
 
   @action async getWatchlist (onSuccess, onError) {
+    // ONLY CALL ON CLIENT
+
     this.updating = true
     
     try {
-      const res = await this.api.client.account.login({
-        email: this.email,
-        password: this.password,
-      })
+      // Using localStorage for now
 
-      // TODO Not sure what this is? This needs to go in the password update function
-      // this.inputs.password.val(this.inputs.password.val().replace(/./g, '•'))
-
-      const i = this.email + this.password
-
-      this.identity = ethers.utils.sha256(ethers.utils.toUtf8Bytes(i))
-
-      this.setToken(res.token)
       onSuccess && onSuccess()
     } catch (ex) {
       console.log('Error logging in', ex)
@@ -57,24 +70,24 @@ export default class UserPortfolio {
       this.updating = false
     }
   }
+
+
 
   @action async getInvestments (onSuccess, onError) {
+    // ONLY CALL ON CLIENT
+
     this.updating = true
     
     try {
-      const res = await this.api.client.account.login({
-        email: this.email,
-        password: this.password,
+      // Using localStorage for now
+
+      
+      let holdings = 0.00
+      this.investments.map(h => {
+        holdings += (h.amount * h.price)
       })
+      this.holdings = holdings
 
-      // TODO Not sure what this is? This needs to go in the password update function
-      // this.inputs.password.val(this.inputs.password.val().replace(/./g, '•'))
-
-      const i = this.email + this.password
-
-      this.identity = ethers.utils.sha256(ethers.utils.toUtf8Bytes(i))
-
-      this.setToken(res.token)
       onSuccess && onSuccess()
     } catch (ex) {
       console.log('Error logging in', ex)
@@ -84,10 +97,44 @@ export default class UserPortfolio {
     }
   }
 
-  @computed get isValidName() {
-    return stringPresentAndValid(this.firstName) 
-        && stringPresentAndValid(this.lastName)
-          // middle name is not checked
+  @action onOrderExecute (order, orderType, quantity) {
+    // order is the thing movie that was bought or sold
+    // orderType is buy/sell
+    // quantity is how many
   }
 
+  @computed get userHoldings () {
+    return padDollarAmount(this.holdings)
+  }
+
+  @computed get earningsChangeWeek () {
+    const sign = this.weeklyChange < 0 ? '-' : '+'
+    // TODO can't really do this until we have an actual API and database
+    return `${sign}${padDollarAmount(this.weeklyChange)}`
+  }
+
+  @computed get userTopWatchlist () {
+    return this.watchlist.slice(0, 3)
+  }
+
+  @computed get topPortfolioCategories () {
+    // Go through and calculate the top categories of the holdings of the user by genre tag
+    const categoryCount = {}
+
+    this.investments.forEach(i => {
+      i.categories.forEach(c => {
+        if (!categoryCount[c]) categoryCount[c] = 1
+        else categoryCount[c]++
+      })
+    })
+
+    const keys = Object.keys(categoryCount)
+    if (keys.length === 0) return []
+    const toSort = []
+    keys.forEach(k => {
+      toSort.push({key: k, count: categoryCount[k]})
+    })
+
+    return _.sortBy(toSort, 'count').reverse().slice(0, 3)
+  }
 }
