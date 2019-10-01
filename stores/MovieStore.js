@@ -15,9 +15,6 @@ export default class MovieStore {
     this.api = hanzoApi
     // TEMP
     this.currentMovie = this.movies[0]
-    this.currentMovie.shortDescription =
-      "Lorem ipsum dolor sit amet, \
-      consectetur adipiscing elit, sed do eiusmod tempor incididunt."
   }
 
   /**
@@ -61,6 +58,9 @@ export default class MovieStore {
   //     ? _.sortBy(this.movies, r => -r.percentChange).slice(0, 15)
   //     : this.movies
   // }
+  @computed get investorTopPicks() {
+    return this.movies.length > 0 ? this.movies.slice(0, 3) : this.movies
+  }
 }
 
 export class Movie {
@@ -75,7 +75,6 @@ export class Movie {
   @observable articles = []
   @observable genre = []
   @observable trailer = []
-  @observable poster = ""
   @observable website = ""
   @observable rated = ""
   @observable imdbid = ""
@@ -83,6 +82,9 @@ export class Movie {
   @observable director = []
   @observable releaseDate = ""
   @observable writer = []
+  @observable posterImg = ""
+  @observable heroImg = []
+  @observable shortDescription = ""
 
   /**
    * Indicates whether changes in this object
@@ -151,6 +153,9 @@ export class Movie {
     this.director = json.director
     this.releaseDate = json.releaseDate
     this.writer = json.writer
+    this.shortDescription = json.shortDescription
+    this.posterImg = json.posterImg
+    this.heroImg = json.heroImg
   }
 
   // dispose() {
