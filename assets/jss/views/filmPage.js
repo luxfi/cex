@@ -250,5 +250,32 @@ export default theme => ({
     fontSize: "2rem"
   },
 
+
+  investMoreOuter: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingTop: "32px"
+
+  },
+  investMoreTable: {
+    borderTop: "1px #444 solid",
+    width: "300px",
+    "&:first-child": {
+      marginRight: "60px"
+    },
+    "& td": {
+      borderBottom: "1px #444 solid",
+      fontSize: "1.3rem",
+      color: "#999",
+      textAlign: "right",
+      "&:first-child": {
+        textAlign: "left",
+      }
+    }
+
+
+  }
+
 })
 

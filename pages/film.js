@@ -93,8 +93,8 @@ class Index extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedTab: "invest",
-      expanded: true
+      selectedTab: "about",
+      expanded: false
     }
     this.onTab = this.onTab.bind(this)
     this.toggleExpanded = this.toggleExpanded.bind(this)
@@ -250,7 +250,22 @@ class Index extends React.Component {
 
   renderInvestMore(classes, movie) {
     return (
-      <h1> invest more</h1>
+      <div className={classes.investMoreOuter}>
+        <table className={classes.investMoreTable}>
+          <tr><td>OPEN</td><td>631.45</td></tr>
+          <tr><td>OPEN</td><td>631.45</td></tr>
+          <tr><td>OPEN</td><td>631.45</td></tr>
+          <tr><td>OPEN</td><td>631.45</td></tr>
+          <tr><td>OPEN</td><td>631.45</td></tr>
+        </table>
+        <table className={classes.investMoreTable}>
+          <tr><td>OPEN</td><td>631.45</td></tr>
+          <tr><td>OPEN</td><td>631.45</td></tr>
+          <tr><td>OPEN</td><td>631.45</td></tr>
+          <tr><td>OPEN</td><td>631.45</td></tr>
+          <tr><td>OPEN</td><td>631.45</td></tr>
+        </table>
+      </div>
     )
   }
 
