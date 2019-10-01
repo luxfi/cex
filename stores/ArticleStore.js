@@ -148,7 +148,7 @@ export class Article {
     this.date = json.date
     this.author = json.author
     this.avatar = json.avatar
-    this.articleSections = []
+    this.articleSections = json.articleSections
   }
 
   // dispose() {
