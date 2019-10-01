@@ -36,7 +36,7 @@ export default class Research extends React.Component {
     whiteGutter: true,
   }
   static async getInitialProps({ mobxStore }) {
-    await mobxStore.movieStore.fetch()
+    // await mobxStore.movieStore.fetch()
     return {
       movieStore: mobxStore.movieStore,
       orderBook: mobxStore.orderBook,

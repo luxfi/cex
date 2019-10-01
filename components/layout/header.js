@@ -50,9 +50,10 @@ function HideOnScroll(props) {
 @inject("store")
 @observer
 class Header extends React.Component {
-  static async getInitialProps({ mobxStore }) {
-    return { ...mobxStore }
-  }
+  // static async getInitialProps({ mobxStore }) {
+  //   return { ...mobxStore }
+  // }
+
   constructor(props) {
     super(props)
 
@@ -162,7 +163,9 @@ class Header extends React.Component {
             <AppBar
               id="navbar"
               position="fixed"
-              className={(onHomePage ? classes.transparent : classes.whiteBackground)}
+              className={
+                onHomePage ? classes.transparent : classes.whiteBackground
+              }
             >
               {" "}
               <Container maxWidth="lg">
@@ -353,7 +356,7 @@ const styles = theme => {
       color: "white"
     },
     whiteBackground: {
-      backgroundColor: 'white'
+      backgroundColor: "white"
     }
   }
 }
