@@ -29,6 +29,14 @@ const MyLoader = () => (
   </ContentLoader>
 )
 
+const partners = [
+  "https://upload.wikimedia.org/wikipedia/en/4/4d/Paramount_Pictures_2010.svg",
+  "https://upload.wikimedia.org/wikipedia/commons/6/65/TWDC_Logo.svg",
+  "https://upload.wikimedia.org/wikipedia/commons/6/65/Lionsgate_Logo.svg",
+  "https://upload.wikimedia.org/wikipedia/commons/6/64/Warner_Bros_logo.svg",
+  "https://upload.wikimedia.org/wikipedia/commons/c/ca/Sony_logo.svg"
+]
+
 export default props => {
   const classes = useStyles()
   const { ...rest } = props
@@ -41,7 +49,36 @@ export default props => {
           Our Partners
         </h2>
         <GridContainer style={{ justifyContent: "center", paddingTop: "36px" }}>
-          <GridItem xs={12} sm={12} md={2}>
+          {partners.map((imgSrc, i) => (
+            <GridItem
+              xs={12}
+              sm={12}
+              md={2}
+              key={i}
+              style={{ display: "flex" }}
+            >
+              <Card plain>
+                <GridItem
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  className={classes.itemGrid}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    height: "100%"
+                  }}
+                >
+                  <img
+                    src={imgSrc}
+                    alt=""
+                    style={{ width: "100%", maxHeight: "64px" }}
+                  />
+                </GridItem>
+              </Card>
+            </GridItem>
+          ))}
+          {/* <GridItem xs={12} sm={12} md={2}>
             <Card plain>
               <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
                 <MyLoader />
@@ -75,7 +112,7 @@ export default props => {
                 <MyLoader />
               </GridItem>
             </Card>
-          </GridItem>
+          </GridItem> */}
         </GridContainer>
       </div>
       <style jsx>{`
