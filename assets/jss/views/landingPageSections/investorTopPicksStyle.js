@@ -18,6 +18,10 @@ const investorTopPicksStyle = {
     marginLeft: "auto",
     marginRight: "auto"
   },
+  img: {
+    maxWidth: "100%",
+    maxHeight: "100%"
+  },
   cardTitle,
   smallTitle: {
     color: "#6c757d"
