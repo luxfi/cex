@@ -3,22 +3,22 @@ import Link from "next/link"
 import { inject, observer } from "mobx-react"
 import { withRouter } from "next/router"
 import dynamic from "next/dynamic"
+import ContentLoader from "react-content-loader"
 
 // @material-ui/core components
 import { withStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
 
 // core components
-import Breadcrumbs from "../../components/Breadcrumbs.js"
-import Button from "../../components/CustomButtons/Button"
-import ContentLoader from "react-content-loader"
-import ImageAvatars from "../../components/ImageAvatars"
+import Breadcrumbs from "../components/Breadcrumbs.js"
+import Button from "../components/CustomButtons/Button"
+import ImageAvatars from "../components/ImageAvatars"
 
 // import styles from "assets/jss/material-kit-react/views/landingPage.js"
-import styles from "../../assets/jss/views/articlePage.js"
+import styles from "../assets/jss/views/articlePage.js"
 
 // Sections for this page
-import InvestNowSection from "../../views/LandingPage/Sections/InvestNowSection"
+import InvestNowSection from "../views/LandingPage/Sections/InvestNowSection"
 
 const MyLoader = () => (
   <ContentLoader
@@ -87,7 +87,7 @@ const ButtonLink = React.forwardRef(
 
 @inject("store")
 @observer
-class Index extends React.Component {
+class Article extends React.Component {
   // static async getInitialProps({ mobxStore }) {
   //   await mobxStore.movieStore.fetch()
   //   return {
@@ -400,4 +400,4 @@ const ArticleSections = ({ classes, article }) => {
   )
 }
 
-export default withRouter(withStyles(styles)(Index))
+export default withRouter(withStyles(styles)(Article))
