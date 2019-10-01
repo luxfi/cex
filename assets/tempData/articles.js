@@ -56,7 +56,7 @@ export default [
           }
         ],
         sectionImage:
-          "https://nerdist.com/wp-content/uploads/2019/09/BDPRY_VERT_TSR_DOM_2764x4096_R01_master.jpg"
+          "https://i1.wp.com/gvnation.com/wp-content/uploads/2018/12/harley-quinn-birds-of-prey-800x450.jpg"
       }
     ]
   },
@@ -78,7 +78,7 @@ export default [
         content: [
           {
             contentType: "title",
-            content: "FOLLOW ESX TO STAY UP TO DATE"
+            content: "Linda Hamilton and Arnold Schwarzenegger"
           },
           {
             contentType: "paragraph",
@@ -101,7 +101,8 @@ export default [
               "Terminator: Dark Fate opens later this year, on November 1, 2019."
           }
         ],
-        sectionImage: ""
+        sectionImage:
+          "https://cdn1us.denofgeek.com/sites/denofgeekus/files/styles/main_wide/public/2019/07/terminator-dark-fate-arnold-schwarzenegger-linda-hamilton-sdcc-den-of-geek-cover.jpg?itok=I6okknqO"
       },
       {
         content: [
@@ -186,7 +187,8 @@ export default [
               "Howard thrives in the mayhem, as the opening minutes make clear, with cinematographer Darius Khondji’s camera swirling around the figure as he goes about his wild days; a remarkable percussive soundtrack by Daniel Lopatin (aka Oneohtrix Point Never) overwhelms the constant whir of action. If that’s all the movie had to offer, the endurance test would have its limits."
           }
         ],
-        sectionImage: ""
+        sectionImage:
+          "https://glamourfame.com/uploads/biography/2019/9/4/uncut%20gems-1567592388453.jpg"
       },
       {
         content: [
@@ -205,7 +207,8 @@ export default [
               "Yet Howard keeps moving because he sees potential just around the corner. As the movie settles into its rhythms, he’s on the verge of landing what he sees as his next big score. The year is 2012, if for no other reason than to allow former Celtics forward Kevin Garnett to play himself as an active player (Garnett retired in 2016)."
           }
         ],
-        sectionImage: ""
+        sectionImage:
+          "https://theplaylist.net/wp-content/uploads/2018/03/adam-sandler-uncut-gems-1200x520.jpg"
       }
     ]
   },
@@ -247,7 +250,7 @@ export default [
           }
         ],
         sectionImage:
-          "https://www.indiewire.com/wp-content/uploads/2019/07/Screen-Shot-2019-07-23-at-10.22.47-AM.png"
+          "https://www.movies4kids.co.uk/wp-content/uploads/2019/05/onward.jpg"
       },
       {
         content: [
@@ -270,7 +273,8 @@ export default [
             content: "“Onward” releases in theaters on March 6, 2020."
           }
         ],
-        sectionImage: ""
+        sectionImage:
+          "https://1.bp.blogspot.com/-RAgUzPOpfFg/XPCyWtmuDmI/AAAAAAAAXic/Bc7uJtnKTMIY8_TUi4hHdtfAV8-TUo1yQCLcBGAs/s1600/Onward-Trailer-Barley-in-Van.png"
       }
     ]
   }
