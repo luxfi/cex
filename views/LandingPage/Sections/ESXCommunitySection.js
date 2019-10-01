@@ -74,7 +74,7 @@ class ArticleView extends React.Component {
         {homePageArticles.map((d, i) => (
           <Link href={`article/${d.articleSlug}`}>
             <GridItem key={`picks_${i}`} xs={12} sm={12} md={3}>
-              <Card plain>
+              <Card plain style={{ cursor: "pointer" }}>
                 <GridItem xs={2} sm={2} md={2}>
                   <ImageAvatars alt={d.articleTitle} src={d.avatar} />
                   {/* <MyLoader /> */}
