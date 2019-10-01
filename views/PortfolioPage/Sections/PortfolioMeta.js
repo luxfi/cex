@@ -57,6 +57,15 @@ const dataStub = {
 
 export default props => {
   const classes = useStyles()
+  const {
+    holdings,
+    weeklyChange,
+    rank,
+    rankPercent,
+    benefits,
+    benefitsMonthly,
+    topCategories
+  } = props
   // const imageClasses = classNames(classes.imgCardTop)
 
   return (
@@ -68,8 +77,8 @@ export default props => {
               <GridItem xs={6} md={3}>
                 <GridContainer direction="column" justify={'space-around'} className={classNames(classes.earningsContainer, classes.fontBoost)}>
                   <Typography variant='h1' className={classes.earningsText} gutterBottom>Holdings</Typography>
-                  <Typography className={classes.earningsAmountText}><Typography component='span' variant='inherit' className={classes.currencySymbol}>{dataStub.currencySymbol}</Typography>{dataStub.earnings}</Typography>
-                  <Typography className={classes.earningsChangeText} gutterBottom>+{dataStub.weeklyChange} from last week</Typography>
+                  <Typography className={classes.earningsAmountText}><Typography component='span' variant='inherit' className={classes.currencySymbol}>{dataStub.currencySymbol}</Typography>{holdings}</Typography>
+                  <Typography className={classes.earningsChangeText} gutterBottom>{weeklyChange} from last week</Typography>
                   <GridItem xs={6}>
                     {
                       dataStub.earningsChips.map((c, i) => <Chip key={`earningsChip_${i}`} label={`${c.amount} ${c.ticker}`} className={classes.earningsChip} />)
@@ -78,7 +87,7 @@ export default props => {
                 </GridContainer>
               </GridItem>
               <GridItem xs={12} sm={9}>
-                <MyLoader />
+                <img src='/static/img/portfolio/portfolioChartTmp.png' alt="USER EARNINGS CHART" width='400' height='200' />
               </GridItem>
             </GridContainer>
           </CardBody>
@@ -92,16 +101,16 @@ export default props => {
                 <GridContainer>
                   <GridItem xs={6}>
                       <Typography variant='h1' className={classes.earningsText} gutterBottom>Rank</Typography>
-                      <Typography variant='inherit' className={classes.metaHighlightNumber}><Icon color='disabled' className={classes.metaIcon}>stars_rounded</Icon> {dataStub.rank}</Typography>
+                      <Typography variant='inherit' className={classes.metaHighlightNumber}><Icon color='disabled' className={classes.metaIcon}>stars_rounded</Icon> {rank}</Typography>
                       <Typography className={classes.earningsChangeText} gutterBottom>
-                        You're in the top <Typography component='span' variant='inherit' className={classes.darkSpan}>{dataStub.percentile}</Typography>
+                        You're in the top <Typography component='span' variant='inherit' className={classes.darkSpan}>{rankPercent}%</Typography>
                       </Typography>
                   </GridItem>
                   <GridItem xs={6}>
                     <Typography variant='h1' className={classes.earningsText} gutterBottom>Benefits</Typography>
-                    <Typography variant='inherit' className={classes.metaHighlightNumber}><Icon className={classNames(classes.codeIcon, classes.metaIcon)}>code_rounded</Icon> {dataStub.benefits}</Typography>
+                    <Typography variant='inherit' className={classes.metaHighlightNumber}><Icon className={classNames(classes.codeIcon, classes.metaIcon)}>code_rounded</Icon> {benefits}</Typography>
                     <Typography className={classes.earningsChangeText} gutterBottom>
-                      <Typography component='span' variant='inherit' className={classes.darkSpan}>{dataStub.benefitsThisMonth}</Typography> in this month
+                      <Typography component='span' variant='inherit' className={classes.darkSpan}>{benefitsMonthly}</Typography> in this month
                     </Typography>
                   </GridItem>
                 </GridContainer>
@@ -110,7 +119,9 @@ export default props => {
               <GridItem xs={12} className={classNames(classes.fontBoost, classes.metaFlex)}>
                 <Typography variant='h1' gutterBottom className={classes.topCategoriesTitle}>Top Categories</Typography>
                 {
-                  dataStub.topCategories.map((c, i) => <Chip key={`topCategoryChip_${i}`} label={c} className={classes.topCategoriesChip} />)
+                  topCategories.length > 0 ?
+                  topCategories.map((c, i) => <Chip key={`topCategoryChip_${i}`} label={c} className={classes.topCategoriesChip} />)
+                  : <Typography className={classes.earningsChangeText} gutterBottom>Start investing to see your top categories!</Typography>
                 }
               </GridItem>
             </GridContainer>
