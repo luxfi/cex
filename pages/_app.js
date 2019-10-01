@@ -18,7 +18,7 @@ import CssBaseline from "@material-ui/core/CssBaseline"
 // core components
 import Header from "../components/layout/header"
 import Footer from "../components/generic/Footer"
-import Snackbar from "../components/Snackbar"
+import Snackbar from "../components/SnackBar"
 
 import initializeStore from "../stores/stores"
 
