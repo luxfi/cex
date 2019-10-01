@@ -58,8 +58,6 @@ module.exports = withCSS(
           {}
         )
 
-        console.log('Built articles', articles)
-        
         const movies = moviesFromJson.reduce(
           (movies, movie) =>
             Object.assign({}, movies, {
@@ -71,8 +69,6 @@ module.exports = withCSS(
           {}
         )
 
-        console.log('Built movies', movies)
-    
         // combine the map of post pages with the home
         return Object.assign({}, articles, movies, {
           '/': { page: '/' },
