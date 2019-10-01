@@ -82,11 +82,11 @@ export default props => {
 class MoviesView extends React.Component {
   render() {
     const { store, classes } = this.props
-    const { movies } = store.movieStore
-    let topPicks = movies.slice(0, 3)
+    const { investorTopPicks } = store.movieStore
+    // let topPicks = movies.slice(0, 3)
     return (
       <GridContainer>
-        {topPicks.map((d, i) => (
+        {investorTopPicks.map((d, i) => (
           <GridItem key={`picks_${i}`} xs={12} sm={12} md={4}>
             <Card plain>
               <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>

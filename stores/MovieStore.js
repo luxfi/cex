@@ -58,6 +58,9 @@ export default class MovieStore {
   //     ? _.sortBy(this.movies, r => -r.percentChange).slice(0, 15)
   //     : this.movies
   // }
+  @computed get investorTopPicks() {
+    return this.movies.length > 0 ? this.movies.slice(0, 3) : this.movies
+  }
 }
 
 export class Movie {
