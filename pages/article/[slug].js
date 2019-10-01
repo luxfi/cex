@@ -11,6 +11,7 @@ import Container from "@material-ui/core/Container"
 import Breadcrumbs from "../../components/Breadcrumbs.js"
 import Button from "../../components/CustomButtons/Button"
 import ContentLoader from "react-content-loader"
+import ImageAvatars from "../../components/ImageAvatars"
 
 // import styles from "assets/jss/material-kit-react/views/landingPage.js"
 import styles from "../../assets/jss/views/articlePage.js"
@@ -141,18 +142,25 @@ class Index extends React.Component {
             </div>
             <ArtcleSections classes={classes} />
             <div style={{ height: "70px" }}></div>
-            <div style={{ display: "flex", justifyContent: "center" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: "70px"
+              }}
+            >
               <span style={{ width: "30px" }}>
-                <AvatarLoader />
+                <ImageAvatars alt={article.author} src={article.avatar} />
+                {/* <AvatarLoader /> */}
               </span>
               <span
                 style={{
                   marginLeft: "12px",
-                  fontWeight: "bold",
-                  marginBottom: "70px"
+                  fontWeight: "bold"
                 }}
               >
-                Author's Name
+                {article.author}
               </span>
             </div>
           </article>
