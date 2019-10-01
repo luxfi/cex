@@ -1,7 +1,13 @@
 import App, { Container } from "next/app"
-import Head from 'next/head'
+import Head from "next/head"
 import React from "react"
 import { Provider } from "mobx-react"
+
+// This ensures that the icon CSS is loaded immediately before attempting to render icons
+import "@fortawesome/fontawesome-svg-core/styles.css"
+import { config } from "@fortawesome/fontawesome-svg-core"
+// Prevent fontawesome from dynamically adding its css since we did it manually above
+config.autoAddCss = false
 
 // @material-ui/core components
 import { withStyles } from "@material-ui/core/styles"
@@ -12,6 +18,7 @@ import CssBaseline from "@material-ui/core/CssBaseline"
 // core components
 import Header from "../components/layout/header"
 import Footer from "../components/generic/Footer"
+import Snackbar from "../components/Snackbar"
 
 import initializeStore from "../stores/stores"
 
@@ -107,8 +114,14 @@ class MyMobxApp extends App {
       <>
         <Head>
           <title>ESX | Entertainment Stock Exchange</title>
-          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-          <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          />
         </Head>
         <CssBaseline />
         <Container>
@@ -121,6 +134,7 @@ class MyMobxApp extends App {
                       <Header onHomePage={onHomePage} />
                       <Component {...pageProps} />
                       {/* <Loader /> */}
+                      <Snackbar />
                     </div>
                     <div className={classes.stickyFooter}>
                       <Footer />

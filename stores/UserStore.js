@@ -191,7 +191,7 @@ export default class UserStore {
       // this.errors = (err.response && err.response.body && err.response.body.errors)
       //   ? err.response.body.errors : ''
       console.log("Error signing up", ex)
-      onError && onError(ex)
+      onError && onError(ex.toString())
     } finally {
       this.updating = false
     }
@@ -216,7 +216,7 @@ export default class UserStore {
       onSuccess && onSuccess()
     } catch (ex) {
       console.log("Error logging in", ex)
-      onError && onError()
+      onError && onError(ex.toString())
     } finally {
       this.updating = false
     }
@@ -232,7 +232,7 @@ export default class UserStore {
       onSuccess && onSuccess()
     } catch (ex) {
       console.log("Error logging out", ex)
-      onError && onError()
+      onError && onError(ex.toString())
     } finally {
       this.updating = false
     }

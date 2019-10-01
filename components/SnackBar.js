@@ -1,3 +1,6 @@
+import React from "react"
+import { inject, observer } from "mobx-react"
+import PropTypes from "prop-types"
 import clsx from "clsx"
 import Button from "@material-ui/core/Button"
 import CheckCircleIcon from "@material-ui/icons/CheckCircle"
@@ -74,16 +77,22 @@ function MySnackbarContentWrapper(props) {
   )
 }
 
-const useStyles = makeStyles(theme => ({
-  close: {
-    padding: theme.spacing(0.5)
+MySnackbarContentWrapper.propTypes = {
+  className: PropTypes.string,
+  message: PropTypes.string,
+  onClose: PropTypes.func,
+  variant: PropTypes.oneOf(["error", "info", "success", "warning"]).isRequired
+}
+
+const useStyles2 = makeStyles(theme => ({
+  margin: {
+    margin: theme.spacing(1)
   }
 }))
 
-export default function SimpleSnackbar(props) {
-  const { triggerSnackbar, message } = props
-  const classes = useStyles()
-  const [open, setOpen] = React.useState(false)
+function CustomizedSnackbars({ setOpen, open, errorMessage }) {
+  const classes = useStyles2()
+  // const [open, setOpen] = React.useState(false)
 
   const handleClick = () => {
     setOpen(true)
@@ -99,8 +108,14 @@ export default function SimpleSnackbar(props) {
 
   return (
     <div>
-      {/* <Button onClick={handleClick}>Open simple snackbar</Button> */}
-      <Snackbar
+      {/* <Button
+        variant="outlined"
+        className={classes.margin}
+        onClick={handleClick}
+      >
+        Open success snackbar
+      </Button> */}
+      {/* <Snackbar
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "left"
@@ -108,29 +123,68 @@ export default function SimpleSnackbar(props) {
         open={open}
         autoHideDuration={6000}
         onClose={handleClose}
-        variant="error"
+      >
+        <MySnackbarContentWrapper
+          onClose={handleClose}
+          variant="success"
+          message="This is a success message!"
+        />
+      </Snackbar> */}
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left"
+        }}
+        open={open}
+        autoHideDuration={5000}
+        onClose={handleClose}
+      >
+        <MySnackbarContentWrapper
+          onClose={handleClose}
+          variant="error"
+          className={classes.margin}
+          message={errorMessage || "Whoops, something went wrong"}
+        />
+      </Snackbar>
+      {/* <MySnackbarContentWrapper
+        variant="warning"
         className={classes.margin}
-        message="This is an error message!"
-        action={[
-          <Button
-            key="undo"
-            color="secondary"
-            size="small"
-            onClick={handleClose}
-          >
-            UNDO
-          </Button>,
-          <IconButton
-            key="close"
-            aria-label="close"
-            color="inherit"
-            className={classes.close}
-            onClick={handleClose}
-          >
-            <CloseIcon />
-          </IconButton>
-        ]}
-      />
+        message="This is a warning message!"
+      /> */}
+      {/* <MySnackbarContentWrapper
+        variant="info"
+        className={classes.margin}
+        message="This is an information message!"
+      /> */}
+      {/* <MySnackbarContentWrapper
+        variant="success"
+        className={classes.margin}
+        message="This is a success message!"
+      /> */}
     </div>
   )
+}
+
+@inject("store")
+@observer
+export default class MySnackBar extends React.Component {
+  render() {
+    const { store } = this.props
+    window.store = store
+    const setOpen = val => {
+      store.uiStore.snackBarOpen = val
+    }
+
+    const open = store.uiStore.snackBarOpen
+    const { errorMessage } = store.uiStore
+
+    return (
+      <CustomizedSnackbars
+        store={store}
+        setOpen={setOpen}
+        open={open}
+        errorMessage={errorMessage}
+      />
+    )
+  }
 }

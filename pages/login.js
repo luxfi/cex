@@ -20,6 +20,10 @@ class Login extends React.Component {
       validEmail,
       validPassword
     } = userStore
+    const setErrorMessage = message => {
+      store.uiStore.errorMessage = message
+      store.uiStore.snackBarOpen = true
+    }
     return (
       <LoginForm
         setValue={(key, val) => {
@@ -39,6 +43,7 @@ class Login extends React.Component {
         isValidLogin={isValidLogin}
         validEmail={validEmail}
         validPassword={validPassword}
+        setErrorMessage={setErrorMessage}
       />
     )
   }
