@@ -1,4 +1,5 @@
 import React from "react"
+import { inject, observer } from "mobx-react"
 // nodejs library that concatenates classes
 import classNames from "classnames"
 // @material-ui/core components
@@ -40,89 +41,7 @@ export default props => {
         <h2 className={classes.title} style={{ textAlign: "left" }}>
           ESX Community Backed Films in the News
         </h2>
-        <GridContainer
-          style={{
-            marginLeft: "-7px",
-            marginRight: "-7px"
-          }}
-        >
-          <GridItem xs={12} sm={12} md={3}>
-            <Card plain>
-              <GridItem xs={2} sm={2} md={2}>
-                {/* <img src={team1} alt="..." className={imageClasses} /> */}
-                <MyLoader />
-              </GridItem>
-              <h4 className={classes.cardTitle}>
-                Call of the Wild: A Space Odyssey
-              </h4>
-              <CardBody>
-                <p className={classes.description}>
-                  The following article covers a topic that has recently moved
-                  to center stage-at least it seems that way. If you've been
-                  thinking you need to know more about unconditional love,
-                  here's your opportunity.
-                </p>
-              </CardBody>
-            </Card>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={3}>
-            <Card plain>
-              <GridItem xs={2} sm={2} md={2}>
-                {/* <img src={team1} alt="..." className={imageClasses} /> */}
-                <MyLoader />
-              </GridItem>
-              <h4 className={classes.cardTitle}>
-                Call of the Wild: A Space Odyssey
-              </h4>
-              <CardBody>
-                <p className={classes.description}>
-                  The following article covers a topic that has recently moved
-                  to center stage-at least it seems that way. If you've been
-                  thinking you need to know more about unconditional love,
-                  here's your opportunity.
-                </p>
-              </CardBody>
-            </Card>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={3}>
-            <Card plain>
-              <GridItem xs={2} sm={2} md={2}>
-                {/* <img src={team1} alt="..." className={imageClasses} /> */}
-                <MyLoader />
-              </GridItem>
-              <h4 className={classes.cardTitle}>
-                Call of the Wild: A Space Odyssey
-              </h4>
-              <CardBody>
-                <p className={classes.description}>
-                  The following article covers a topic that has recently moved
-                  to center stage-at least it seems that way. If you've been
-                  thinking you need to know more about unconditional love,
-                  here's your opportunity.
-                </p>
-              </CardBody>
-            </Card>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={3}>
-            <Card plain>
-              <GridItem xs={2} sm={2} md={2}>
-                {/* <img src={team1} alt="..." className={imageClasses} /> */}
-                <MyLoader />
-              </GridItem>
-              <h4 className={classes.cardTitle}>
-                Call of the Wild: A Space Odyssey
-              </h4>
-              <CardBody>
-                <p className={classes.description}>
-                  The following article covers a topic that has recently moved
-                  to center stage-at least it seems that way. If you've been
-                  thinking you need to know more about unconditional love,
-                  here's your opportunity.
-                </p>
-              </CardBody>
-            </Card>
-          </GridItem>
-        </GridContainer>
+        <ArticleView classes={classes} />
       </div>
       <style jsx>{`
         .hero-container {
@@ -132,4 +51,32 @@ export default props => {
       `}</style>
     </>
   )
+}
+
+@inject("store")
+@observer
+class ArticleView extends React.Component {
+  render() {
+    const { store, classes } = this.props
+    const { investorTopPicks } = store.articleStore
+    // let topPicks = movies.slice(0, 3)
+    return (
+      <GridContainer>
+        {investorTopPicks.map((d, i) => (
+          <GridItem key={`picks_${i}`} xs={12} sm={12} md={3}>
+            <Card plain>
+              <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
+                {/* <img src={team1} alt="..." className={imageClasses} /> */}
+                <img src={d.heroImg} alt={d.name} className={classes.img} />
+              </GridItem>
+              <h4 className={classes.cardTitle}>{d.name}</h4>
+              <CardBody>
+                <p className={classes.description}>{d.shortDescription}</p>
+              </CardBody>
+            </Card>
+          </GridItem>
+        ))}
+      </GridContainer>
+    )
+  }
 }
