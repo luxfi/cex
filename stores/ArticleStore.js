@@ -61,6 +61,10 @@ export default class ArticleStore {
   @computed get homePageArticles() {
     return this.articles.length > 0 ? this.articles.slice(0, 4) : this.articles
   }
+
+  getArticle(slug) {
+    return this.articles.find(article => article.articleSlug === slug)
+  }
 }
 
 export class Article {
@@ -144,7 +148,7 @@ export class Article {
     this.date = json.date
     this.author = json.author
     this.avatar = json.avatar
-    this.articleSections = []
+    this.articleSections = json.articleSections
   }
 
   // dispose() {

@@ -1,33 +1,28 @@
-import React from 'react'
-import Router from 'next/router'
-import Button from '@material-ui/core/Button'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import Paper from '@material-ui/core/Paper'
-import Toolbar from '@material-ui/core/Toolbar'
-import YouTube from 'react-youtube'
-import BigNumber from 'bignumber.js'
+import React from "react"
+import Router from "next/router"
+import Button from "@material-ui/core/Button"
+import Card from "@material-ui/core/Card"
+import CardContent from "@material-ui/core/CardContent"
+import Paper from "@material-ui/core/Paper"
+import Toolbar from "@material-ui/core/Toolbar"
+import YouTube from "react-youtube"
+import BigNumber from "bignumber.js"
 
-import Add from '@material-ui/icons/Add'
-import Share from '@material-ui/icons/Share'
+import Add from "@material-ui/icons/Add"
+import Share from "@material-ui/icons/Share"
 
-import {
-  MuiText,
-} from 'react-referential-forms'
+import { MuiText } from "react-referential-forms"
 
-import { withStyles } from '@material-ui/core/styles'
-import { watch } from 'react-referential'
-import { loadable } from '../../components/app/loader'
-import {withRouter} from 'next/router'
+import { withStyles } from "@material-ui/core/styles"
+import { watch } from "react-referential"
+import { loadable } from "../../components/app/loader"
+import { withRouter } from "next/router"
 
-import {
-  getEncodedPrivateKey,
-  canDecodePrivateKey,
-} from '../../src/wallet'
+import { getEncodedPrivateKey, canDecodePrivateKey } from "../../src/wallet"
 
-import tokens from '../../tokens'
+import tokens from "../../tokens"
 
-@watch('sendPage')
+@watch("sendPage")
 @loadable
 class Deal extends React.Component {
   constructor(props) {
@@ -41,34 +36,39 @@ class Deal extends React.Component {
   }
 
   logout() {
-    this.props.rootData.ref('account').clear()
-    Router.push('/')
+    this.props.rootData.ref("account").clear()
+    Router.push("/")
   }
 
   render() {
     let { href, classes, router } = this.props
-    let token = tokens.filter((v) => v.slug == router.query.slug)[0]
+    let token = tokens.filter(v => v.slug == router.query.slug)[0]
 
     let opts = {
-      width:  '640',
-      height: '390',
-      playerVars: { // https://developers.google.com/youtube/player_parameters
+      width: "640",
+      height: "390",
+      playerVars: {
+        // https://developers.google.com/youtube/player_parameters
         modestbranding: 1,
-        controls:       0,
-        showinfo:       0,
-        rel:            0,
-        autoplay:       0,
+        controls: 0,
+        showinfo: 0,
+        rel: 0,
+        autoplay: 0
       }
     }
 
-    let count    = new BigNumber(token.count).toFormat(0)
-    let goal   = '$' + new BigNumber(token.shares).toFormat(0)
-    let funded   = '$' + new BigNumber(token.funded).toFormat(0)
-    let percent  = new BigNumber(token.funded / token.shares * 100).toFormat(0) + '% funded'
-    let value    = '$' + new BigNumber(token.count * token.price).toFormat(0)
-    let price    = '$' + new BigNumber(token.price).toFormat(2)
-    let minimum  = '$' + new BigNumber(token.minimum).toFormat(0)
-    let daysLeft = Math.round((token.closeDate - (new Date)) / (1000 * 60 * 60 * 24))
+    let count = new BigNumber(token.count).toFormat(0)
+    let goal = "$" + new BigNumber(token.shares).toFormat(0)
+    let funded = "$" + new BigNumber(token.funded).toFormat(0)
+    let percent =
+      new BigNumber((token.funded / token.shares) * 100).toFormat(0) +
+      "% funded"
+    let value = "$" + new BigNumber(token.count * token.price).toFormat(0)
+    let price = "$" + new BigNumber(token.price).toFormat(2)
+    let minimum = "$" + new BigNumber(token.minimum).toFormat(0)
+    let daysLeft = Math.round(
+      (token.closeDate - new Date()) / (1000 * 60 * 60 * 24)
+    )
 
     return pug`
       main#invest-deal.account
@@ -177,13 +177,13 @@ class Deal extends React.Component {
   }
 }
 
-const styles = (theme) => {
+const styles = theme => {
   return {
     rotated: {
-      transform: 'rotate(-45deg)',
-      position: 'relative',
-      left: '3px',
-    },
+      transform: "rotate(-45deg)",
+      position: "relative",
+      left: "3px"
+    }
   }
 }
 
