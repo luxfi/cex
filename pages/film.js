@@ -1,6 +1,7 @@
 import React from "react"
 import Link from "next/link"
 import { inject, observer } from "mobx-react"
+import { withRouter } from "next/router"
 
 import classNames from "classnames"
 
@@ -293,4 +294,4 @@ class Index extends React.Component {
   }
 }
 
-export default withStyles(styles)(Index)
+export default withRouter(withStyles(styles)(Index))
