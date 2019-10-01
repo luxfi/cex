@@ -2,6 +2,7 @@ import React from "react"
 import Link from "next/link"
 import { inject, observer } from "mobx-react"
 import { withRouter } from "next/router"
+import dynamic from "next/dynamic"
 
 // @material-ui/core components
 import { withStyles } from "@material-ui/core/styles"
@@ -78,6 +79,12 @@ const ButtonLink = React.forwardRef(
   )
 )
 
+// Todo: make dynamic loader
+// const DynamicComponentWithCustomLoading = dynamic(
+//   () => import('../components/hello2'),
+//   { loading: () => <p>...</p> }
+// )
+
 @inject("store")
 @observer
 class Index extends React.Component {
@@ -142,13 +149,12 @@ class Index extends React.Component {
                 alt={article.articleTitle}
                 style={{
                   minWidth: "100%",
-
                   minHeight: "100%"
                 }}
               />
               {/* <MyLoader /> */}
             </div>
-            <ArtcleSections classes={classes} />
+            <ArticleSections classes={classes} article={article} />
             <div style={{ height: "70px" }}></div>
             <div
               style={{
@@ -184,10 +190,100 @@ class Index extends React.Component {
   }
 }
 
-const ArtcleSections = ({ classes }) => {
+const ContentType = ({ contentType, classes, content }) => {
+  switch (contentType) {
+    case "paragraph":
+      return <p>{content}</p>
+      break
+    case "title":
+      return <h2 className={classes.sectionTitle}>{content}</h2>
+      break
+    case "aside":
+      // return <aside>{content}</aside>
+      return ""
+      break
+    default:
+      return { content }
+  }
+}
+
+const SectionContent = ({ content, classes }) => {
   return (
     <>
-      <section className={classes.articleSection}>
+      <ContentType
+        contentType={content.contentType}
+        content={content.content}
+        classes={classes}
+      />
+    </>
+  )
+}
+
+const ArticleSection = ({ section, classes }) => {
+  return (
+    <section className={classes.articleSection}>
+      <div className={classes.secondImage}>
+        <img
+          src={section.sectionImage}
+          alt="sectionImage"
+          style={{ maxHeight: "323px" }}
+        />
+      </div>
+
+      {section.content.map((content, i) => (
+        <SectionContent content={content} classes={classes} key={i} />
+      ))}
+    </section>
+  )
+}
+
+const ArticleSections = ({ classes, article }) => {
+  return (
+    <>
+      {article.articleSections.map((section, i) => (
+        <ArticleSection section={section} classes={classes} key={i} />
+      ))}
+      {/* <section className={classes.articleSection}>
+        <div className={classes.secondImage}>
+          <SecondImageLoader />
+        </div>
+        <h2 className={classes.sectionTitle}>Words To Live By</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer et
+          felis nulla. Suspendisse consectetur, dui in molestie molestie, leo
+          lacus tempor mi, in pretium sem arcu non tellus. Sed at felis
+          convallis, posuere lorem vitae, efficitur neque. Integer auctor odio
+          convallis lacus maximus, quis dictum dolor venenatis. Aliquam erat
+          volutpat. Sed non ipsum vel lorem dignissim volutpat eget id neque.
+          Maecenas sollicitudin ante felis. Sed at felis convallis, posuere
+          lorem vitae, efficitur neque. Integer auctor odio convallis lacus
+          maximus, quis dictum dolor venenatis. Aliquam erat volutpat.{" "}
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer et
+          felis nulla. Suspendisse consectetur, dui in molestie molestie, leo
+          lacus tempor mi, in pretium sem arcu non tellus. Sed non ipsum vel
+          lorem dignissim volutpat eget id neque. Maecenas sollicitudin ante
+          felis. Ut tincidunt mollis risus, ut tempor mi tempus vel. Donec sit
+          amet tellus sit amet nulla volutpat imperdiet non ac magna. Donec
+          tincidunt nisl non sapien venenatis, sit amet scelerisque purus
+          tincidunt. Ut tincidunt mollis risus, ut tempor mi tempus vel. Donec
+          sit amet tellus sit amet nulla volutpat imperdiet non ac magna. Donec
+          tincidunt nisl non sapien venenatis, sit amet scelerisque purus
+          tincidunt. Aenean orci quam, malesuada vitae tellus vitae, tristique
+          pellentesque turpis. Cras eget lectus hendrerit, dignissim risus non,
+          finibus arcu. Nullam blandit turpis sed nisi suscipit, eget
+          condimentum ante blandit. Integer aliquam metus non quam placerat, et
+          interdum elit aliquet. Aenean orci quam, malesuada vitae tellus vitae,
+          tristique pellentesque turpis. Cras eget lectus hendrerit, dignissim
+          risus non, finibus arcu. Nullam blandit turpis sed nisi suscipit, eget
+          condimentum ante blandit. Integer aliquam metus non quam placerat, et
+          interdum elit aliquet. Integer auctor odio convallis lacus maximus,
+          quis dictum dolor venenatis. Aliquam erat volutpat. Sed non ipsum vel
+          lorem dignissim volutpat eget id neque.{" "}
+        </p>
+      </section> */}
+      {/* <section className={classes.articleSection}>
         <h2>What people are saying</h2>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer et
@@ -297,7 +393,7 @@ const ArtcleSections = ({ classes }) => {
           non ac magna. Donec tincidunt nisl non sapien venenatis, sit amet
           scelerisque purus tincidunt.{" "}
         </p>
-      </section>
+      </section> */}
     </>
   )
 }
