@@ -216,7 +216,7 @@ export default class UserStore {
       onSuccess && onSuccess()
     } catch (ex) {
       console.log("Error logging in", ex)
-      onError && onError()
+      onError && onError(ex.toString())
     } finally {
       this.updating = false
     }
