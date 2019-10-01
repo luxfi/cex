@@ -1,13 +1,21 @@
-import { 
-  container, 
-  title, 
-  darkThemeBG, 
-  darkThemeText 
+import {
+  container,
+  title,
+  darkThemeBG,
+  darkThemeText,
+  flexCenteredRow,
+  flexCenteredColumn,
 } from "../esx.js"
 
 export default theme => ({
 
+  flexCenteredRow: {
+    ...flexCenteredRow
+  },
 
+  flexCenteredColumn: {
+    ...flexCenteredColumn
+  },
 
   container: {
     ...container,
@@ -16,6 +24,10 @@ export default theme => ({
     justifyContent: "flex-start",
     background: darkThemeBG,
     color: darkThemeText
+  },
+
+  outermost: {
+    padding: "0 32px 32px 32px"
   },
 
   leftAndRight: {
@@ -36,11 +48,8 @@ export default theme => ({
     marginBottom: "30px"
   },
   breadcrumbs: {
-    
     color: darkThemeText + " !important"
-
   },
-
 
   pageTabsOuter: {
     display: "flex",
@@ -59,8 +68,8 @@ export default theme => ({
     lineHeight: "1.1"
   },
   selectedTab: {
-      // better than textDecoration: underline, 
-      // which renders too close to the text 
+    // better than textDecoration: underline, 
+    // which renders too close to the text 
     borderBottom: "1px solid " + darkThemeText
   },
 
@@ -69,11 +78,6 @@ export default theme => ({
     marginBottom: "32px"
   },
 
-  flexCentered : {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center"  
-  },
 
   copyArea: {
     paddingTop: "30px"
@@ -100,22 +104,30 @@ export default theme => ({
     maxWidth: "70%",
     //margin: "10px auto 0"
   },
-  
+
 
   sectionTitle: {
-    marginTop: "70px",
-    display: "inline"
+    fontSize: "3rem",
+    margin: 0,
+    textTransform: "uppercase"
   },
+  sectionByline: {
+    fontSize: "1.5rem",
+    margin: 0,
+    textTransform: "uppercase",
+    marginBottom: "24px"
+  },
+
   mainImage: {
     display: "block",
     textAlign: "center",
     backgroundColor: "#f4f3f3",
     marginLeft: "70px",
   },
-  
+
   graphImage: {
     display: "block",
-    textAlign: "center",
+    margin: "0 auto",
     backgroundColor: "#f4f3f3",
   },
 
@@ -143,7 +155,7 @@ export default theme => ({
     alignItems: "flex-end"
   },
 
-  
+
   movieButtonsOuter: {
     width: "70%",
     maxWidth: "400px",
@@ -154,26 +166,115 @@ export default theme => ({
   },
 
   movieButton: {
-    marginLeft: 0,
     [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(1),
+      //marginLeft: theme.spacing(1),
       width: "auto",
     },
-    display: "block",
-    flexGrow: 1
+    display: "inline-block",
+    flexGrow: 1,
+    //    marginLeft: 0,
+    "&:first-child": {
+      marginRight: "12px"
+    },
+
   },
   faPlay: {
     paddingRight: "10px"
   },
 
-  seeMoreOuter : {
+  seeMoreOuter: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    borderBottom: "1px solid #999"
+    borderBottom: "1px solid #555"
   },
   seeMoreButton: {
-    display: "block"
+    ...flexCenteredColumn,
+    paddingBottom: "2px"
+  },
+  seeMoreCopy: {
+    display: "block",
+    fontSize: "8pt"
+  },
+
+  aboutMoreTitleArea: {
+    padding: "30px 0"
+  },
+  aboutMoreCopyArea: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "stretch",
+  },
+  aboutMoreStats: {
+    flexGrow: 1,
+    flexBasis: 0,
+    paddingRight: "24px",
+  },
+  aboutMoreText: {
+    flexGrow: 1,
+    flexBasis: 0
+  },
+  aboutMoreStatsTable: {
+    tableLayout: "fixed",
+    width: "80%",
+    borderSpacing: "0 1em"
+  },
+
+  investCompanyName: {
+    margin: "0 auto", 
+    marginTop: "32px"   
+  },
+  investCompanyDescription: {
+    margin: "0 auto"    
+  },
+  investPrice: {
+    margin: "0 auto",   
+    marginTop: "12px", 
+    marginTop: "8px" 
+  },
+  deltaRow: {
+    margin: "0 auto",    
+    marginBottom: "12px" 
+  },
+  statsButton: {
+    margin: "0 auto"    
+  },
+
+  dollarSign: {
+    fontSize: "2rem"
+  },
+  dollarValue: {
+    fontSize: "2.4rem"
+  },
+  centsValue: {
+    fontSize: "2rem"
+  },
+
+
+  investMoreOuter: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingTop: "32px"
+
+  },
+  investMoreTable: {
+    borderTop: "1px #444 solid",
+    width: "300px",
+    "&:first-child": {
+      marginRight: "60px"
+    },
+    "& td": {
+      borderBottom: "1px #444 solid",
+      fontSize: "1.3rem",
+      color: "#999",
+      textAlign: "right",
+      "&:first-child": {
+        textAlign: "left",
+      }
+    }
+
+
   }
 
 })

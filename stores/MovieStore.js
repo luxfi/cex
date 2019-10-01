@@ -13,8 +13,11 @@ export default class MovieStore {
     this.loadMovies()
     // this.movies = initialData
     this.api = hanzoApi
-    // TEMP
     this.currentMovie = this.movies[0]
+    // TEMP - remove in data update
+    this.currentMovie.shortDescription =
+      "Lorem ipsum dolor sit amet, \
+      consectetur adipiscing elit, sed do eiusmod tempor incididunt."
   }
 
   /**
@@ -29,8 +32,11 @@ export default class MovieStore {
     // console.log("We have movies", movies)
     moviesFromJson.forEach(m => this.updateMovieFromServer(m))
 
+    this.currentMovie = this.movies[0] // TEMP
+
     this.isLoading = false
   }
+
 
   /**
    * Update a movie with information from the server. Guarantees a movie
