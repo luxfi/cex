@@ -1,4 +1,4 @@
-export default [
+module.exports = [
   {
     movieName:
       "Name: Birds of Prey (And the Fantabulous Emancipation of One Harley Quinn)",
