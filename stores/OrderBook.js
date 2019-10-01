@@ -101,7 +101,7 @@ export default class OrderBook {
     return takeResult
   }
 
-  @action placeNewOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize, book = this.book) {
+  @action placeNewOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize, book = this.book, onExecute) {
     let currentOrder = new LimitOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize)
     let takeResult = book.add(currentOrder)
     // if (typeof window !== 'undefined') {
@@ -111,6 +111,8 @@ export default class OrderBook {
     if (currentOrderPrice < this.low) { this.low = currentOrderPrice } //set new low
     if (currentOrderPrice > this.high) { this.high = currentOrderPrice } //set new high
     this.updateOrders()
+
+    // TODO call onExecute to update the user's portfolio
     return takeResult
   }
 

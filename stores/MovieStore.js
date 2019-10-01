@@ -67,6 +67,11 @@ export default class MovieStore {
   @computed get investorTopPicks() {
     return this.movies.length > 0 ? this.movies.slice(0, 3) : this.movies
   }
+
+  // Public helper functions
+  getMovieByTicker (ticker) {
+    return this.movies.find(m => m.ticker === ticker)
+  }
 }
 
 export class Movie {
