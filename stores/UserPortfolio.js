@@ -71,7 +71,51 @@ export default class UserPortfolio {
     }
   }
 
+  @action async addToWatchlist (ticker, findMovie, onSuccess, onError) {
+    // ticker and findMovie are temp while we don't have an API
+    this.updating = true
+    
+    try {
+      // Using localStorage for now
 
+      
+      let holdings = 0.00
+      this.investments.map(h => {
+        holdings += (h.amount * h.price)
+      })
+      this.holdings = holdings
+
+      onSuccess && onSuccess()
+    } catch (ex) {
+      console.log('Error logging in', ex)
+      onError && onError()
+    } finally {
+      this.updating = false
+    }
+  }
+  
+  @action async removeFromWatchlist (ticker, onSuccess, onError) {
+    // ticker are temp while we don't have an API
+    this.updating = true
+    
+    try {
+      // Using localStorage for now
+
+      
+      let holdings = 0.00
+      this.investments.map(h => {
+        holdings += (h.amount * h.price)
+      })
+      this.holdings = holdings
+
+      onSuccess && onSuccess()
+    } catch (ex) {
+      console.log('Error logging in', ex)
+      onError && onError()
+    } finally {
+      this.updating = false
+    }
+  }
 
   @action async getInvestments (onSuccess, onError) {
     // ONLY CALL ON CLIENT
