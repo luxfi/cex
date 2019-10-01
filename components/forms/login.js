@@ -95,7 +95,7 @@ class LoginForm extends React.Component {
     window.removeEventListener("keypress", this.handleKeypress)
   }
 
-  handleSubmit(isValidLogin) {
+  handleSubmit(login, isValidLogin) {
     if (isValidLogin) {
       login(
         () => Router.push("/portfolio"),
@@ -183,7 +183,7 @@ class LoginForm extends React.Component {
             color="primary"
             className={classes.submit}
             // disabled={}
-            onClick={() => this.handleSubmit(isValidLogin)}
+            onClick={() => this.handleSubmit(login, isValidLogin)}
           >
             Sign In
           </Button>
