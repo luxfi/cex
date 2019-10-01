@@ -62,10 +62,14 @@ const SeeMoreButton = props => {
     expanded
   } = props
 
+  
+
   return (
     <div className={classes.seeMoreOuter}>
       <a className={classes.seeMoreButton} onClick={() => onToggle()} >
-        <FontAwesomeIcon icon={(expanded) ? faChevronUp : faChevronDown} />
+        {!expanded && <span className={classes.seeMoreCopy}>see more</span>}
+        <FontAwesomeIcon icon={(expanded) ? faChevronUp : faChevronDown} style={{ display: "block", width: "14px", color: "#ddd"}}/>
+        {expanded && <span className={classes.seeMoreCopy}>see less</span>}
       </a>
     </div>
   )
@@ -160,7 +164,7 @@ class Index extends React.Component {
 
   renderInvestMain(classes, movie) {
     return (
-      <div className={classNames(classes.flexCentered, classes.mainArea)}>
+      <div className={classNames(classes.flexCenteredRow, classes.mainArea)}>
         <img className={classes.graphImage} src={dummyFilmGraph} width="600" height="383" />
       </div>
     )
