@@ -90,7 +90,7 @@ const useStyles2 = makeStyles(theme => ({
   }
 }))
 
-function CustomizedSnackbars({ setOpen, open }) {
+function CustomizedSnackbars({ setOpen, open, errorMessage }) {
   const classes = useStyles2()
   // const [open, setOpen] = React.useState(false)
 
@@ -108,13 +108,13 @@ function CustomizedSnackbars({ setOpen, open }) {
 
   return (
     <div>
-      <Button
+      {/* <Button
         variant="outlined"
         className={classes.margin}
         onClick={handleClick}
       >
         Open success snackbar
-      </Button>
+      </Button> */}
       {/* <Snackbar
         anchorOrigin={{
           vertical: "bottom",
@@ -143,7 +143,7 @@ function CustomizedSnackbars({ setOpen, open }) {
           onClose={handleClose}
           variant="error"
           className={classes.margin}
-          message="This is an error message!"
+          message={errorMessage || "Whoops, something went wrong"}
         />
       </Snackbar>
       {/* <MySnackbarContentWrapper
@@ -174,8 +174,17 @@ export default class MySnackBar extends React.Component {
     const setOpen = val => {
       store.uiStore.snackBarOpen = val
     }
-    const open = store.uiStore.snackBarOpen
 
-    return <CustomizedSnackbars store={store} setOpen={setOpen} open={open} />
+    const open = store.uiStore.snackBarOpen
+    const { errorMessage } = store.uiStore
+
+    return (
+      <CustomizedSnackbars
+        store={store}
+        setOpen={setOpen}
+        open={open}
+        errorMessage={errorMessage}
+      />
+    )
   }
 }
