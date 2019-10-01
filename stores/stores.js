@@ -24,15 +24,12 @@ const _initialData = {
   userPortfolio: {}
 }
 
-import tempMovies from '../assets/tempData/movies.json';
-
-
 export default function initializeStore(initialData = _initialData) {
   const api = new Api(HANZO_KEY, HANZO_ENDPOINT)
   if (isServer) {
     // Server stuff
     store = {
-      movieStore: new MovieStore(tempMovies, api),
+      movieStore: new MovieStore(initialData.movieStore, api),
       orderBook: new OrderBook(initialData.orderBook, api),
       userStore: new UserStore(initialData.userStore, api),
       userPortfolio: new UserPortfolio(initialData.userPortfolio, api)
@@ -40,7 +37,7 @@ export default function initializeStore(initialData = _initialData) {
   } else if (store === null) {
     // Client stuff
     store = {
-      movieStore: new MovieStore(tempMovies, api),
+      movieStore: new MovieStore(initialData.movieStore, api),
       orderBook: new OrderBook(initialData.orderBook, api),
       userStore: new UserStore(initialData.userStore, api),
       userPortfolio: new UserPortfolio(initialData.userPortfolio, api)
