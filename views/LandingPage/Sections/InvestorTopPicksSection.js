@@ -1,4 +1,5 @@
 import React from "react"
+import { inject, observer } from "mobx-react"
 // nodejs library that concatenates classes
 import classNames from "classnames"
 // @material-ui/core components
@@ -32,21 +33,21 @@ const MyLoader = () => (
 
 const dataStub = [
   {
-    title: 'Call of the Wild: A Space Odyssey',
+    title: "Call of the Wild: A Space Odyssey",
     image: <MyLoader />,
     description: `Deep in the human unconscious is a pervasive need for a
     logical universe that makes sense. But the real universe is
     always one step beyond logic.`
   },
   {
-    title: 'Call of the Wild: A Space Odyssey',
+    title: "Call of the Wild: A Space Odyssey",
     image: <MyLoader />,
     description: `Deep in the human unconscious is a pervasive need for a
     logical universe that makes sense. But the real universe is
     always one step beyond logic.`
   },
   {
-    title: 'Call of the Wild: A Space Odyssey',
+    title: "Call of the Wild: A Space Odyssey",
     image: <MyLoader />,
     description: `Deep in the human unconscious is a pervasive need for a
     logical universe that makes sense. But the real universe is
@@ -64,28 +65,7 @@ export default props => {
         <h2 className={classes.title} style={{ textAlign: "left" }}>
           Investor Top Picks
         </h2>
-        <GridContainer>
-          {
-            dataStub.map((d, i) => 
-              <GridItem key={`picks_${i}`} xs={12} sm={12} md={4}>
-                <Card plain>
-                  <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
-                    {/* <img src={team1} alt="..." className={imageClasses} /> */}
-                    {d.image}
-                  </GridItem>
-                  <h4 className={classes.cardTitle}>
-                    {d.title}
-                  </h4>
-                  <CardBody>
-                    <p className={classes.description}>
-                      {d.description}
-                    </p>
-                  </CardBody>
-                </Card>
-              </GridItem>
-            )
-          }
-        </GridContainer>
+        <MoviesView classes={classes} />
       </div>
       <style jsx>{`
         .hero-container {
@@ -95,4 +75,32 @@ export default props => {
       `}</style>
     </>
   )
+}
+
+@inject("store")
+@observer
+class MoviesView extends React.Component {
+  render() {
+    const { store, classes } = this.props
+    const { movies } = store.movieStore
+    let topPicks = movies.slice(0, 3)
+    return (
+      <GridContainer>
+        {topPicks.map((d, i) => (
+          <GridItem key={`picks_${i}`} xs={12} sm={12} md={4}>
+            <Card plain>
+              <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
+                {/* <img src={team1} alt="..." className={imageClasses} /> */}
+                <img src={d.heroImg} alt={d.name} className={classes.img} />
+              </GridItem>
+              <h4 className={classes.cardTitle}>{d.name}</h4>
+              <CardBody>
+                <p className={classes.description}>{d.shortDescription}</p>
+              </CardBody>
+            </Card>
+          </GridItem>
+        ))}
+      </GridContainer>
+    )
+  }
 }

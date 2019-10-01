@@ -6,8 +6,10 @@ export default [
     genre: ["Action", "Adventure", "Sci-Fi"],
     trailer:
       '<iframe width="560" height="315" src="https://www.youtube.com/embed/jCyEX6u-Yhs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
-    poster:
+    posterImg:
       "https://m.media-amazon.com/images/M/MV5BMTUwNWI2ZDQtODRjNy00OGE1LThlNGEtYzU2NDU5ZGMzN2RmXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
+    heroImg:
+      "https://cdn1us.denofgeek.com/sites/denofgeekus/files/styles/main_wide/public/2019/07/terminator-dark-fate-arnold-schwarzenegger-linda-hamilton-sdcc-den-of-geek-cover.jpg?itok=I6okknqO",
     website: "https://www.facebook.com/Terminator/",
     rated: "R",
     imdbid: "tt6450804",
@@ -39,8 +41,10 @@ export default [
     genre: [" Comedy", "Crime", "Drama", "Mystery", "Thriller"],
     trailer:
       '<iframe width="560" height="315" src="https://www.youtube.com/embed/vTfJp2Ts9X8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
-    poster:
+    posterImg:
       "https://m.media-amazon.com/images/M/MV5BNmE5YWIwNGYtNDFkOS00OWY4LThhYzUtMWVlZTFjMzA3YWVjXkEyXkFqcGdeQXVyMTAzMDg4NzU0._V1_SX300.jpg",
+    heroImg:
+      "https://www.indiewire.com/wp-content/uploads/2019/07/Screen-Shot-2019-07-23-at-10.22.47-AM.png",
     website: "https://a24films.com/films/uncut-gems",
     rated: "R",
     imdbid: "tt5727208",
@@ -52,15 +56,16 @@ export default [
       "A jewelry dealer to the rich and famous must find a way to pay his debts when his merchandise is taken from one of his top sellers and girlfriend."
   },
   {
-    name:
-      "Birds of Prey (And the Fantabulous Emancipation of One Harley Quinn)",
+    name: "Birds of Prey",
     movieSlug: "birds-of-prey",
     articles: ["birds-of-prey-poster-harley-quinn"],
     genre: ["Action", "Adventure", "Crime"],
     trailer:
       '<iframe width="560" height="315" src="https://www.youtube.com/embed/Zk_LJzZr5i8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
-    poster:
+    posterImg:
       "https://m.media-amazon.com/images/M/MV5BNmRlZGNjNWYtZmQ4Yy00Yjg3LTkzZmYtYjZlYjczMzhlY2I1XkEyXkFqcGdeQXVyODQzNTE3ODc@._V1_SX300.jpg",
+    heroImg:
+      "https://cdn3.movieweb.com/i/article/HOA5mfuEbJpFv40wfnhibOtDWThlZb/1107:50/Birds-Of-Prey-Poster.jpg",
     website: "https://www.facebook.com/watch/?v=2197453547145355",
     rated: "R",
     imdbid: "tt7713068",
@@ -88,8 +93,10 @@ export default [
     genre: ["Animation", "Adventure", "Comedy", "Drama", "Family", "Fantasy"],
     trailer:
       '<iframe width="560" height="315" src="https://www.youtube.com/embed/x8DKg_fsacM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
-    poster:
-      " https://m.media-amazon.com/images/M/MV5BZTU3Y2RlYjAtMzAzOC00MjdiLWI2MjctYzhhMmI3MWRhODhhXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg",
+    posterImg:
+      "https://m.media-amazon.com/images/M/MV5BZTU3Y2RlYjAtMzAzOC00MjdiLWI2MjctYzhhMmI3MWRhODhhXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg",
+    heroImg:
+      "https://cdn3.movieweb.com/i/article/HOA5mfuEbJpFv40wfnhibOtDWThlZb/1107:50/Birds-Of-Prey-Poster.jpg",
     website: "https://movies.disney.com/onward",
     rated: "PG",
     imdbid: "tt7146812",
