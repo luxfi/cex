@@ -62,8 +62,6 @@ const SeeMoreButton = props => {
     expanded
   } = props
 
-  
-
   return (
     <div className={classes.seeMoreOuter}>
       <a className={classes.seeMoreButton} onClick={() => onToggle()} >
@@ -83,7 +81,7 @@ class Index extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedTab: "invest",
+      selectedTab: "about",
       expanded: false
     }
     this.onTab = this.onTab.bind(this)
@@ -157,7 +155,7 @@ class Index extends React.Component {
             </Button>
           </div>
         </div>
-        <img className={classes.mainImage} src={movie.Poster} width="300" height="444" />
+        <img className={classes.mainImage} src={movie.poster} width="300" height="444" />
       </div>
     )
   }
