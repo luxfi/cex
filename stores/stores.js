@@ -8,6 +8,7 @@ import { HANZO_KEY, HANZO_ENDPOINT } from "../src/settings.js"
 
 // Stores
 import MovieStore from "./MovieStore"
+import ArticleStore from "./ArticleStore"
 import OrderBook from "./OrderBook"
 import UserStore from "./UserStore"
 import UserPortfolio from "./UserPortfolio"
@@ -30,6 +31,7 @@ export default function initializeStore(initialData = _initialData) {
     // Server stuff
     store = {
       movieStore: new MovieStore(initialData.movieStore, api),
+      articleStore: new ArticleStore(initialData.articleStore, api),
       orderBook: new OrderBook(initialData.orderBook, api),
       userStore: new UserStore(initialData.userStore, api),
       userPortfolio: new UserPortfolio(initialData.userPortfolio, api)
@@ -38,6 +40,7 @@ export default function initializeStore(initialData = _initialData) {
     // Client stuff
     store = {
       movieStore: new MovieStore(initialData.movieStore, api),
+      articleStore: new ArticleStore(initialData.articleStore, api),
       orderBook: new OrderBook(initialData.orderBook, api),
       userStore: new UserStore(initialData.userStore, api),
       userPortfolio: new UserPortfolio(initialData.userPortfolio, api)
