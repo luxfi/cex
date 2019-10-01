@@ -35,6 +35,17 @@ const ButtonLink = React.forwardRef(
   )
 )
 
+const dummyFinancialStats = {
+  name: "TERMINATOR",
+  description: "Term Inc. - Class C Capital Stock",
+
+  value: 616.16,
+  valueDelta: 106.11,
+  percentDelta: 20.43,
+  deltaInterval: "Past Month",
+}
+
+
 const PageTabs = props => {
   const {
     classes,
@@ -82,7 +93,7 @@ class Index extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedTab: "about",
+      selectedTab: "invest",
       expanded: true
     }
     this.onTab = this.onTab.bind(this)
@@ -105,7 +116,7 @@ class Index extends React.Component {
     })
   }
 
-  renderInvestButton(classes, movie, text) {
+  renderInvestButton(className, movie, text) {
     return (
       <Button
         component={ButtonLink}
@@ -116,7 +127,7 @@ class Index extends React.Component {
           color: "black",
           height: "48px"
         }}
-        className={classes.movieButton}
+        className={className}
       >
         {text}
       </Button>
@@ -159,7 +170,7 @@ class Index extends React.Component {
               <FontAwesomeIcon icon={faPlay} style={{paddingRight: "2px"}}/>
               Watch Trailer
             </Button>
-            {this.renderInvestButton(classes, movie, "Invest")}
+            {this.renderInvestButton(classes.movieButton, movie, "Invest")}
           </div>
         </div>
         <img className={classes.mainImage} src={movie.poster} width="300" height="444" />
@@ -188,7 +199,7 @@ class Index extends React.Component {
         <div className={classes.aboutMoreTitleArea}>
           <h1 className={classes.sectionTitle}>About</h1>
           <h2 className={classes.sectionByline}>More about the film</h2>
-          {this.renderInvestButton(classes, movie, "Invest in this film")}
+          {this.renderInvestButton(classes.movieButton, movie, "Invest in this film")}
         </div>
         <div className={classes.aboutMoreCopyArea} >
           <div className={classes.aboutMoreStats}>
@@ -210,8 +221,28 @@ class Index extends React.Component {
   }
 
   renderInvestMain(classes, movie) {
+
+    const stats = dummyFinancialStats;
+
+    const dollars = Math.floor(stats.value);
+    const value = {
+      dollars: dollars,
+      cents: Math.round((stats.value - dollars) * 100)
+    }
+
+    const deltaString = ((stats.valueDelta > 0) ? "+ " : "- ") + stats.valueDelta + " (" + stats.percentDelta + "%) " + " PAST MONTH" 
+
     return (
-      <div className={classNames(classes.flexCenteredRow, classes.mainArea)}>
+      <div className={classNames(classes.flexCenteredColumn, classes.mainArea)}>
+        <h1 className={classes.investCompanyName}>{stats.name}</h1>
+        <h3 className={classes.investCompanyDescription}>{stats.description}</h3>
+        <div className={classes.investPrice}>
+          <span className={classes.dollarSign}>$</span>
+          <span className={classes.dollarValue}>{value.dollars}</span>
+          <span className={classes.centsValue}>.{value.cents}</span>
+        </div>
+        <div className={classes.deltaRow}>{deltaString}</div>
+        {this.renderInvestButton(classNames(classes.movieButton, classes.statsButton), movie, "Invest Now")}
         <img className={classes.graphImage} src={dummyFilmGraph} width="600" height="383" />
       </div>
     )
