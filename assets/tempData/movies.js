@@ -28,7 +28,9 @@ export default [
       "David S. Goyer (screenplay by)",
       "Justin Rhodes (screenplay by)",
       "Billy Ray (screenplay by)"
-    ]
+    ],
+    shortDescription:
+      "Sarah Connor and a hybrid cyborg human must protect a young girl from a newly modified liquid Terminator from the future."
   },
   {
     name: "Uncut Gems",
@@ -45,11 +47,13 @@ export default [
     actors: ["Adam Sandler", "Julia Fox", "Kevin Garnett", "The Weeknd"],
     director: ["Benny Safdie", "Josh Safdie"],
     releaseDate: "25 Dec 2019",
-    writer: ["Ronald Bronstein", "Benny Safdie", "Josh Safdie"]
+    writer: ["Ronald Bronstein", "Benny Safdie", "Josh Safdie"],
+    shortDescription:
+      "A jewelry dealer to the rich and famous must find a way to pay his debts when his merchandise is taken from one of his top sellers and girlfriend."
   },
   {
     name:
-      " Birds of Prey (And the Fantabulous Emancipation of One Harley Quinn)",
+      "Birds of Prey (And the Fantabulous Emancipation of One Harley Quinn)",
     movieSlug: "birds-of-prey",
     articles: ["birds-of-prey-poster-harley-quinn"],
     genre: ["Action", "Adventure", "Crime"],
@@ -73,7 +77,9 @@ export default [
       "Jordan B. Gorfinkel (Birds Of Prey Comics created by)",
       "Christina Hodson",
       "Greg Land (Birds Of Prey Comics created by)"
-    ]
+    ],
+    shortDescription:
+      "After splitting with the Joker, Harley Quinn joins superheroes Black Canary, Huntress and Renee Montoya to save a young girl from an evil crime lord, Black Mask in Gotham City."
   },
   {
     name: "Onward",
@@ -95,6 +101,8 @@ export default [
     ],
     director: ["Dan Scanlon"],
     releaseDate: "06 Mar 2020",
-    writer: ["Dan Scanlon"]
+    writer: ["Dan Scanlon"],
+    shortDescription:
+      "Two teenage elf brothers, Ian and Barley Lightfoot, go on an journey to discover if there is still a little magic left out there in order to spend one last day with their father, who died when they were too young to remember him."
   }
 ]
