@@ -88,7 +88,7 @@ class MoviesView extends React.Component {
       <GridContainer>
         {investorTopPicks.map((d, i) => (
           <GridItem key={`picks_${i}`} xs={12} sm={12} md={4}>
-            <Card plain>
+            <Card plain style={{ cursor: "pointer" }}>
               <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
                 {/* <img src={team1} alt="..." className={imageClasses} /> */}
                 <img src={d.heroImg} alt={d.name} className={classes.img} />
