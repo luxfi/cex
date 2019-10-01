@@ -2,12 +2,16 @@ import {
   container, 
   title, 
   darkThemeBG, 
-  darkThemeText 
+  darkThemeText,
+  flexCenteredRow,
+  flexCenteredColumn,
 } from "../esx.js"
 
 export default theme => ({
 
-
+  flexCenteredRow: {
+    ...flexCenteredRow
+  },
 
   container: {
     ...container,
@@ -36,11 +40,8 @@ export default theme => ({
     marginBottom: "30px"
   },
   breadcrumbs: {
-    
     color: darkThemeText + " !important"
-
   },
-
 
   pageTabsOuter: {
     display: "flex",
@@ -69,12 +70,7 @@ export default theme => ({
     marginBottom: "32px"
   },
 
-  flexCentered : {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center"  
-  },
-
+  
   copyArea: {
     paddingTop: "30px"
   },
@@ -173,8 +169,12 @@ export default theme => ({
     borderBottom: "1px solid #999"
   },
   seeMoreButton: {
-    display: "block"
+    ...flexCenteredColumn,
+    paddingBottom: "2px"
+  },
+  seeMoreCopy: {
+    display: "block",
+    fontSize: "8pt"
   }
-
 })
 

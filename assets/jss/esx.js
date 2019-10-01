@@ -187,6 +187,18 @@ const cardSubtitle = {
   marginTop: "-.375rem"
 }
 
+const flexCenteredRow = {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "center"
+}
+
+const flexCenteredColumn = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center"
+}
+
 export {
   //variables
   drawerWidth,
@@ -223,5 +235,7 @@ export {
   title,
   cardTitle,
   cardLink,
-  cardSubtitle
+  cardSubtitle,
+  flexCenteredRow,
+  flexCenteredColumn,
 }
