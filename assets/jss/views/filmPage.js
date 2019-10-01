@@ -1,7 +1,7 @@
-import { 
-  container, 
-  title, 
-  darkThemeBG, 
+import {
+  container,
+  title,
+  darkThemeBG,
   darkThemeText,
   flexCenteredRow,
   flexCenteredColumn,
@@ -20,6 +20,10 @@ export default theme => ({
     justifyContent: "flex-start",
     background: darkThemeBG,
     color: darkThemeText
+  },
+
+  outermost: {
+    padding: "0 32px 32px 32px"
   },
 
   leftAndRight: {
@@ -60,8 +64,8 @@ export default theme => ({
     lineHeight: "1.1"
   },
   selectedTab: {
-      // better than textDecoration: underline, 
-      // which renders too close to the text 
+    // better than textDecoration: underline, 
+    // which renders too close to the text 
     borderBottom: "1px solid " + darkThemeText
   },
 
@@ -70,7 +74,7 @@ export default theme => ({
     marginBottom: "32px"
   },
 
-  
+
   copyArea: {
     paddingTop: "30px"
   },
@@ -96,19 +100,27 @@ export default theme => ({
     maxWidth: "70%",
     //margin: "10px auto 0"
   },
-  
+
 
   sectionTitle: {
-    marginTop: "70px",
-    display: "inline"
+    fontSize: "3rem",
+    margin: 0,
+    textTransform: "uppercase"
   },
+  sectionByline: {
+    fontSize: "1.5rem",
+    margin: 0,
+    textTransform: "uppercase",
+    marginBottom: "24px"
+  },
+
   mainImage: {
     display: "block",
     textAlign: "center",
     backgroundColor: "#f4f3f3",
     marginLeft: "70px",
   },
-  
+
   graphImage: {
     display: "block",
     textAlign: "center",
@@ -139,7 +151,7 @@ export default theme => ({
     alignItems: "flex-end"
   },
 
-  
+
   movieButtonsOuter: {
     width: "70%",
     maxWidth: "400px",
@@ -150,23 +162,27 @@ export default theme => ({
   },
 
   movieButton: {
-    marginLeft: 0,
     [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(1),
+      //marginLeft: theme.spacing(1),
       width: "auto",
     },
-    display: "block",
-    flexGrow: 1
+    display: "inline-block",
+    flexGrow: 1,
+    //    marginLeft: 0,
+    "&:first-child": {
+      marginRight: "12px"
+    },
+
   },
   faPlay: {
     paddingRight: "10px"
   },
 
-  seeMoreOuter : {
+  seeMoreOuter: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    borderBottom: "1px solid #999"
+    borderBottom: "1px solid #555"
   },
   seeMoreButton: {
     ...flexCenteredColumn,
@@ -175,6 +191,30 @@ export default theme => ({
   seeMoreCopy: {
     display: "block",
     fontSize: "8pt"
+  },
+
+  aboutMoreTitleArea: {
+    padding: "30px 0"
+  },
+  aboutMoreCopyArea: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "stretch",
+  },
+  aboutMoreStats: {
+    flexGrow: 1,
+    flexBasis: 0,
+    paddingRight: "24px",
+  },
+  aboutMoreText: {
+    flexGrow: 1,
+    flexBasis: 0
+  },
+  aboutMoreStatsTable: {
+    tableLayout: "fixed",
+    width: "80%",
+    borderSpacing: "0 1em"
   }
+
 })
 
