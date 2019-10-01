@@ -21,6 +21,7 @@ import { faPlay, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-
 import styles from "../assets/jss/views/filmPage.js"
 
 import dummyFilmGraph from "../static/img/film-graph--dummy-600x383.png"
+import { isObservableArray } from "mobx"
 
 
 // Sections for this page
@@ -33,6 +34,17 @@ const ButtonLink = React.forwardRef(
     </Link>
   )
 )
+
+const dummyFinancialStats = {
+  name: "TERMINATOR",
+  description: "Term Inc. - Class C Capital Stock",
+
+  value: 616.16,
+  valueDelta: 106.11,
+  percentDelta: 20.43,
+  deltaInterval: "Past Month",
+}
+
 
 const PageTabs = props => {
   const {
@@ -65,7 +77,9 @@ const SeeMoreButton = props => {
   return (
     <div className={classes.seeMoreOuter}>
       <a className={classes.seeMoreButton} onClick={() => onToggle()} >
-        <FontAwesomeIcon icon={(expanded) ? faChevronUp : faChevronDown} />
+        {!expanded && <span className={classes.seeMoreCopy}>see more</span>}
+        <FontAwesomeIcon icon={(expanded) ? faChevronUp : faChevronDown} style={{ display: "block", width: "14px", color: "#ddd"}}/>
+        {expanded && <span className={classes.seeMoreCopy}>see less</span>}
       </a>
     </div>
   )
@@ -79,7 +93,7 @@ class Index extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedTab: "invest",
+      selectedTab: "about",
       expanded: false
     }
     this.onTab = this.onTab.bind(this)
@@ -101,6 +115,25 @@ class Index extends React.Component {
       expanded: !this.state.expanded
     })
   }
+
+  renderInvestButton(className, movie, text) {
+    return (
+      <Button
+        component={ButtonLink}
+        color="link"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          color: "black",
+          height: "48px"
+        }}
+        className={className}
+      >
+        {text}
+      </Button>
+    )
+  }
+
 
   renderUpperRow(classes, selectedTab, movie) {
     return (
@@ -137,41 +170,110 @@ class Index extends React.Component {
               <FontAwesomeIcon icon={faPlay} style={{paddingRight: "2px"}}/>
               Watch Trailer
             </Button>
-            <Button
-              component={ButtonLink}
-              color="link"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                color: "black",
-                marginLeft: "20px",
-                height: "48px"
-              }}
-              className={classes.movieButton}
-            >
-              Invest
-            </Button>
+            {this.renderInvestButton(classes.movieButton, movie, "Invest")}
           </div>
         </div>
-        <img className={classes.mainImage} src={movie.verticalImg} width="300" height="444" />
+        <img className={classes.mainImage} src={movie.poster} width="300" height="444" />
       </div>
     )
   }
 
-  renderInvestMain(classes, movie) {
+  renderTableRow(field, label, movie) {
+      // note that Array.isArray() will return false
+    const content = isObservableArray(movie[field]) ?
+      movie[field].join(", ")
+      :
+      movie[field]
+
+      
     return (
-      <div className={classNames(classes.flexCentered, classes.mainArea)}>
+      <tr style={{marginBottom: "12px"}}>
+        <td valign="top">{label}</td><td valign="top">{content}</td>
+      </tr>
+    )
+  }
+
+  renderAboutMore(classes, movie) {
+    return (
+      <>
+        <div className={classes.aboutMoreTitleArea}>
+          <h1 className={classes.sectionTitle}>About</h1>
+          <h2 className={classes.sectionByline}>More about the film</h2>
+          {this.renderInvestButton(classes.movieButton, movie, "Invest in this film")}
+        </div>
+        <div className={classes.aboutMoreCopyArea} >
+          <div className={classes.aboutMoreStats}>
+            <table className={classes.aboutMoreStatsTable}>
+              {this.renderTableRow("director", "Director", movie)}
+              {this.renderTableRow("actors", "Starring", movie)}
+              {this.renderTableRow("writer", "Writers", movie)}
+              {this.renderTableRow("genre", "Genres", movie)}
+              {this.renderTableRow("rated", "Rating", movie)}
+            </table>
+          </div>
+          <div className={classes.aboutMoreText} >
+            <p>Ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+        </div>
+      </>
+    )
+  }
+
+  renderInvestMain(classes, movie) {
+
+    const stats = dummyFinancialStats;
+
+    const dollars = Math.floor(stats.value);
+    const value = {
+      dollars: dollars,
+      cents: Math.round((stats.value - dollars) * 100)
+    }
+
+    const deltaString = ((stats.valueDelta > 0) ? "+ " : "- ") + stats.valueDelta + " (" + stats.percentDelta + "%) " + " PAST MONTH" 
+
+    return (
+      <div className={classNames(classes.flexCenteredColumn, classes.mainArea)}>
+        <h1 className={classes.investCompanyName}>{stats.name}</h1>
+        <h3 className={classes.investCompanyDescription}>{stats.description}</h3>
+        <div className={classes.investPrice}>
+          <span className={classes.dollarSign}>$</span>
+          <span className={classes.dollarValue}>{value.dollars}</span>
+          <span className={classes.centsValue}>.{value.cents}</span>
+        </div>
+        <div className={classes.deltaRow}>{deltaString}</div>
+        {this.renderInvestButton(classNames(classes.movieButton, classes.statsButton), movie, "Invest Now")}
         <img className={classes.graphImage} src={dummyFilmGraph} width="600" height="383" />
       </div>
     )
   }
 
+  renderInvestMore(classes, movie) {
+    return (
+      <div className={classes.investMoreOuter}>
+        <table className={classes.investMoreTable}>
+          <tr><td>OPEN</td><td>631.45</td></tr>
+          <tr><td>OPEN</td><td>631.45</td></tr>
+          <tr><td>OPEN</td><td>631.45</td></tr>
+          <tr><td>OPEN</td><td>631.45</td></tr>
+          <tr><td>OPEN</td><td>631.45</td></tr>
+        </table>
+        <table className={classes.investMoreTable}>
+          <tr><td>OPEN</td><td>631.45</td></tr>
+          <tr><td>OPEN</td><td>631.45</td></tr>
+          <tr><td>OPEN</td><td>631.45</td></tr>
+          <tr><td>OPEN</td><td>631.45</td></tr>
+          <tr><td>OPEN</td><td>631.45</td></tr>
+        </table>
+      </div>
+    )
+  }
 
   render() {
     const { classes, store } = this.props
     const movie  = store.movieStore.currentMovie
     return (
-      <article className={classes.container}>
+      <article className={classNames(classes.container, classes.outermost)}>
         {this.renderUpperRow(classes, this.state.selectedTab, movie)}
         {(this.state.selectedTab === "about") ? 
             this.renderAboutMain(classes, movie)
@@ -179,6 +281,13 @@ class Index extends React.Component {
             this.renderInvestMain(classes, movie)
         }
         <SeeMoreButton classes={classes} onToggle={this.toggleExpanded} expanded={this.state.expanded} />
+        {this.state.expanded && 
+          ((this.state.selectedTab === "about") ?
+            this.renderAboutMore(classes, movie)
+            :
+            this.renderInvestMore(classes, movie))
+        }
+
       </article>
     )
   }
