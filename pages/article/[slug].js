@@ -137,7 +137,15 @@ class Index extends React.Component {
             </div>
             <p className={classes.description}>{article.description}</p>
             <div className={classes.mainImage}>
-              <img src={article.heroImage} alt={article.articleTitle} />
+              <img
+                src={article.heroImage}
+                alt={article.articleTitle}
+                style={{
+                  minWidth: "100%",
+
+                  minHeight: "100%"
+                }}
+              />
               {/* <MyLoader /> */}
             </div>
             <ArtcleSections classes={classes} />

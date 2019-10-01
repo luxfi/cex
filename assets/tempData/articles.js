@@ -1,5 +1,66 @@
 export default [
   {
+    movieName:
+      "Name: Birds of Prey (And the Fantabulous Emancipation of One Harley Quinn)",
+    movieSlug: "birds-of-prey",
+    articleSlug: "birds-of-prey-poster-harley-quinn",
+    articleTitle: "BIRDS OF PREY Poster Puts Harley Quinn Front and Center",
+    heroImage:
+      "https://nerdist.com/wp-content/uploads/2019/09/BDPRY_INSTA_TSR_DOM_1936x1936_R01_master-rev-1-1200x676.jpg",
+    description:
+      "Moviegoers who recently saw It Chapter Two were in for a surprise treat, as the film kicked off with a special It-themed Birds of Prey teaser.",
+    date: "Sep 17 2019 • 11:11 AM",
+    author: "Eric Diaz",
+    avatar: "https://randomuser.me/api/portraits/men/43.jpg",
+    articleSections: [
+      {
+        content: [
+          {
+            contentType: "title",
+            content: "DC Films have released a new poster"
+          },
+          {
+            contentType: "paragraph",
+            content:
+              "Unfortunately, the extremely short clip didn’t show us too much though. But perhaps to make up for it, Warner Brothers and DC Films have released a new poster for Birds of Prey (And the Fantabulous Emancipation of One Harley Quinn)."
+          },
+          {
+            contentType: "paragraph",
+            content:
+              "The new poster depicts Margot Robbie as the former Dr. Harleen Quinzel, front and center and looming quite large over the rest of the cast. This positioning clears up any room for confusion as to the star of the movie—regardless of Birds of Prey‘s placement in the title. The rest of the cast make an appearance though, as little birds swirling around Harley’s head, no less. Probably a wise choice, given that the average moviegoer knows nothing about the Birds of Prey comic book series."
+          },
+          {
+            contentType: "aside",
+            content:
+              "Birds of Prey (And The Fantabulous Emancipation of One Harley Quinn) opens on February 7, 2020."
+          }
+        ],
+        sectionImage:
+          "https://nerdist.com/wp-content/uploads/2019/09/BDPRY_VERT_TSR_DOM_2764x4096_R01_master.jpg"
+      },
+      {
+        content: [
+          {
+            contentType: "title",
+            content: "No Characters Wear their Costumes"
+          },
+          {
+            contentType: "paragraph",
+            content:
+              "Interestingly, none of the other characters in the poster have anything resembling their comic book costumes on. Ewan McGregor not wearing his Black Mask costume makes sense, as you want to sell the movie on his recognizable face—at least in part. But it doesn’t seem like Huntress, Black Canary or Orphan (a.k.a. Cassandra Cain) will be in any kind of costume, either. Or at least not for the bulk of the movie. Maybe we’ll get a group shot at the end with everyone suited up though, if only to please all the DC Comics fans out there."
+          },
+          {
+            contentType: "paragraph",
+            content:
+              "In addition to Robbie as Harley, also stars Mary Elizabeth Winstead as the Huntress, Jurnee Smollett-Bell as Black Canary, Rosie Perez as Detective Renee Montoya, Chris Messina as Victor Zsasz, Ella Jay Basco as Cassandra Cain, and Ewan McGregor as Roman Sionis/Black Mask."
+          }
+        ],
+        sectionImage:
+          "https://nerdist.com/wp-content/uploads/2019/09/BDPRY_VERT_TSR_DOM_2764x4096_R01_master.jpg"
+      }
+    ]
+  },
+  {
     movieName: "Terminator: Dark Fate",
     movieSlug: "terminator-dark-fate",
     articleSlug: "edward-furlong-edward-furlong-terminator-dark-fate",
@@ -145,67 +206,6 @@ export default [
           }
         ],
         sectionImage: ""
-      }
-    ]
-  },
-  {
-    movieName:
-      "Name: Birds of Prey (And the Fantabulous Emancipation of One Harley Quinn)",
-    movieSlug: "birds-of-prey",
-    articleSlug: "birds-of-prey-poster-harley-quinn",
-    articleTitle: "BIRDS OF PREY Poster Puts Harley Quinn Front and Center",
-    heroImage:
-      "https://nerdist.com/wp-content/uploads/2019/09/BDPRY_INSTA_TSR_DOM_1936x1936_R01_master-rev-1-1200x676.jpg",
-    description:
-      "Moviegoers who recently saw It Chapter Two were in for a surprise treat, as the film kicked off with a special It-themed Birds of Prey teaser.",
-    date: "Sep 17 2019 • 11:11 AM",
-    author: "Eric Diaz",
-    avatar: "https://randomuser.me/api/portraits/men/43.jpg",
-    articleSections: [
-      {
-        content: [
-          {
-            contentType: "title",
-            content: "DC Films have released a new poster"
-          },
-          {
-            contentType: "paragraph",
-            content:
-              "Unfortunately, the extremely short clip didn’t show us too much though. But perhaps to make up for it, Warner Brothers and DC Films have released a new poster for Birds of Prey (And the Fantabulous Emancipation of One Harley Quinn)."
-          },
-          {
-            contentType: "paragraph",
-            content:
-              "The new poster depicts Margot Robbie as the former Dr. Harleen Quinzel, front and center and looming quite large over the rest of the cast. This positioning clears up any room for confusion as to the star of the movie—regardless of Birds of Prey‘s placement in the title. The rest of the cast make an appearance though, as little birds swirling around Harley’s head, no less. Probably a wise choice, given that the average moviegoer knows nothing about the Birds of Prey comic book series."
-          },
-          {
-            contentType: "aside",
-            content:
-              "Birds of Prey (And The Fantabulous Emancipation of One Harley Quinn) opens on February 7, 2020."
-          }
-        ],
-        sectionImage:
-          "https://nerdist.com/wp-content/uploads/2019/09/BDPRY_VERT_TSR_DOM_2764x4096_R01_master.jpg"
-      },
-      {
-        content: [
-          {
-            contentType: "title",
-            content: "No Characters Wear their Costumes"
-          },
-          {
-            contentType: "paragraph",
-            content:
-              "Interestingly, none of the other characters in the poster have anything resembling their comic book costumes on. Ewan McGregor not wearing his Black Mask costume makes sense, as you want to sell the movie on his recognizable face—at least in part. But it doesn’t seem like Huntress, Black Canary or Orphan (a.k.a. Cassandra Cain) will be in any kind of costume, either. Or at least not for the bulk of the movie. Maybe we’ll get a group shot at the end with everyone suited up though, if only to please all the DC Comics fans out there."
-          },
-          {
-            contentType: "paragraph",
-            content:
-              "In addition to Robbie as Harley, also stars Mary Elizabeth Winstead as the Huntress, Jurnee Smollett-Bell as Black Canary, Rosie Perez as Detective Renee Montoya, Chris Messina as Victor Zsasz, Ella Jay Basco as Cassandra Cain, and Ewan McGregor as Roman Sionis/Black Mask."
-          }
-        ],
-        sectionImage:
-          "https://nerdist.com/wp-content/uploads/2019/09/BDPRY_VERT_TSR_DOM_2764x4096_R01_master.jpg"
       }
     ]
   },
