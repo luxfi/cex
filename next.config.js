@@ -41,6 +41,42 @@ module.exports = withCSS(
         })
 
         return config
+      },
+      async exportPathMap () {
+        const articlesFromJson = require('./assets/tempData/articles')
+        const moviesFromJson = require('./assets/tempData/movies')
+
+        const articles = articlesFromJson.reduce(
+          (articles, article) => {
+            return Object.assign({}, articles, {
+              [`/article/${article.articleSlug}`]: {
+                page: '/article',
+                query: { slug: article.articleSlug }
+              }
+            })
+          },
+          {}
+        )
+
+        const movies = moviesFromJson.reduce(
+          (movies, movie) =>
+            Object.assign({}, movies, {
+              [`/film/${movie.movieSlug}`]: {
+                page: '/film',
+                query: { slug: movie.movieSlug }
+              }
+            }),
+          {}
+        )
+
+        // combine the map of post pages with the home
+        return Object.assign({}, articles, movies, {
+          '/': { page: '/' },
+          '/login': { page: '/login' },
+          '/signup': { page: '/signup' },
+          '/portfolio': { page: '/portfolio' },
+          '/account/kyc': { page: '/account/kyc' },
+        })
       }
     })
   )
