@@ -151,6 +151,7 @@ export class Movie {
     this.director = json.director
     this.releaseDate = json.releaseDate
     this.writer = json.writer
+    this.shortDescription = json.shortDescription
   }
 
   // dispose() {
