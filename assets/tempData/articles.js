@@ -76,13 +76,12 @@ export default [
     articleTitle:
       "‘Uncut Gems’ Review: Adam Sandler Runs Wild in the Safdie Brothers’ Delirious Thriller",
     heroImage:
-      "https://nerdist.com/wp-content/uploads/2019/07/57d67939d23f8e8e4ccb64325c2c91b1-1200x675.jpg",
+      "https://cdn1.thecomeback.com/wp-content/uploads/sites/94/2019/09/FrancesaMovie-832x447.png",
     description:
       "The Safdies add one more impetuous creation to their jittery New York City milieu, and it’s a hypnotic blast to watch him come to life.",
     date: "Aug 31, 2019 12: 00 pm",
     author: "Eric Kohn",
-    avatar:
-      "https: //tinyfac.es/data/avatars/B0298C36-9751-48EF-BE15-80FB9CD11143-500w.jpeg",
+    avatar: "https://randomuser.me/api/portraits/men/86.jpg",
     articleSections: [
       {
         content: [
@@ -161,7 +160,7 @@ export default [
       "Moviegoers who recently saw It Chapter Two were in for a surprise treat, as the film kicked off with a special It-themed Birds of Prey teaser.",
     date: "Sep 17 2019 • 11:11 AM",
     author: "Eric Diaz",
-    avatar: "https:\/\/randomuser.me\/api\/portraits\/men\/43.jpg"
+    avatar: "https://randomuser.me/api/portraits/men/43.jpg",
     articleSections: [
       {
         content: [
@@ -217,12 +216,13 @@ export default [
     articleTitle:
       "Pixar’s ONWARD Trailer Brings a Fantasy World to the Suburbs",
     heroImage:
-      "https://nerdist.com/wp-content/uploads/2019/07/57d67939d23f8e8e4ccb64325c2c91b1-1200x675.jpg",
+      "https://gamespot1.cbsistatic.com/uploads/screen_kubrick/1179/11799911/3540636-screen%20shot%202019-05-31%20at%2012.53.07%20pm.png",
     description:
       "Set in a suburban fantasy world, Disney and Pixar’s “Onward” introduces two teenage elf brothers who embark on an extraordinary quest to discover if there is still a little magic left out there.",
     date: "May 31 2019 • 7:01 AM",
     author: "Michael Walsh",
-    avatar: "https:\/\/images.unsplash.com\/photo-1507003211169-0a1dd7228f2d?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=a72ca28288878f8404a795f39642a46f"
+    avatar:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=a72ca28288878f8404a795f39642a46f",
     articleSections: [
       {
         content: [

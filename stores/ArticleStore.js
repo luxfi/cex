@@ -1,90 +1,85 @@
 import { action, observable, computed, autorun } from "mobx"
 import _ from "lodash"
 import uuid from "uuid"
-// const movies = []
-import moviesFromJson from "../assets/tempData/movies"
 
-export default class MovieStore {
-  @observable movies = []
+import articlesFromJson from "../assets/tempData/articles"
+
+export default class ArticleStore {
+  @observable articles = []
   @observable isLoading = true
-  @observable currentMovie = undefined
+  @observable currentArticle = undefined
 
   constructor(initialData, hanzoApi) {
-    this.loadMovies()
-    // this.movies = initialData
+    this.loadArticles()
+    // this.articles = initialData
     this.api = hanzoApi
     // TEMP
-    this.currentMovie = this.movies[0]
+    this.currentArticle = this.articles[0]
   }
 
   /**
-   * Fetches all Movies from the server
+   * Fetches all Articles from the server
    */
-  loadMovies() {
+  loadArticles() {
     this.isLoading = true
-    // this.fetchMovies().then(fetchedMovies => {
-    //   fetchedMovies.forEach(json => this.updateMovieFromServer(json))
+    // this.fetchArticles().then(fetchedArticles => {
+    //   fetchedArticles.forEach(json => this.updateArticleFromServer(json))
     //   this.isLoading = false
     // })
-    // console.log("We have movies", movies)
-    moviesFromJson.forEach(m => this.updateMovieFromServer(m))
+    // console.log("We have articles", articles)
+    articlesFromJson.forEach(m => this.updateArticleFromServer(m))
 
     this.isLoading = false
   }
 
   /**
-   * Update a movie with information from the server. Guarantees a movie
-   * only exists once. Might either construct a new movie, update an existing one,
-   * or remove a movie if it has been deleted on the server.
+   * Update a article with information from the server. Guarantees a article
+   * only exists once. Might either construct a new article, update an existing one,
+   * or remove a article if it has been deleted on the server.
    */
-  updateMovieFromServer(json) {
-    // const movie = this.movies.find(movie => movie.id === json.id)
-    // if (!movie) {
-    //   movie = new Movie(this, json.id)
-    //   this.movies.push(movie)
+  updateArticleFromServer(json) {
+    // const article = this.articles.find(article => article.id === json.id)
+    // if (!article) {
+    //   article = new Article(this, json.id)
+    //   this.articles.push(article)
     // }
     // if (json.isDeleted) {
-    //   this.removeMovie(movie)
+    //   this.removeArticle(article)
     // } else {
-    //   movie.updateFromJson(json)
+    //   article.updateFromJson(json)
     // }
-    const movie = new Movie(json.imbdid)
-    movie.updateFromJson(json)
-    this.movies.push(movie)
+    const article = new Article(json.articleSlug)
+    article.updateFromJson(json)
+    this.articles.push(article)
   }
 
-  // @computed get topMovies() {
-  //   return this.movies.length > 0
-  //     ? _.sortBy(this.movies, r => -r.percentChange).slice(0, 15)
-  //     : this.movies
+  // @computed get topArticles() {
+  //   return this.articles.length > 0
+  //     ? _.sortBy(this.articles, r => -r.percentChange).slice(0, 15)
+  //     : this.articles
   // }
-  @computed get investorTopPicks() {
-    return this.movies.length > 0 ? this.movies.slice(0, 3) : this.movies
+  @computed get homePageArticles() {
+    return this.articles.length > 0 ? this.articles.slice(0, 4) : this.articles
   }
 }
 
-export class Movie {
+export class Article {
   /**
-   * unique id of this Movie, immutable.
+   * unique id of this Article, immutable.
    */
   id = null
   // store = null
 
-  @observable name = ""
+  @observable movieName = ""
   @observable movieSlug = ""
-  @observable articles = []
-  @observable genre = []
-  @observable trailer = []
-  @observable website = ""
-  @observable rated = ""
-  @observable imdbid = ""
-  @observable actors = []
-  @observable director = []
-  @observable releaseDate = ""
-  @observable writer = []
-  @observable posterImg = ""
-  @observable heroImg = []
-  @observable shortDescription = ""
+  @observable articleSlug = ""
+  @observable articleTitle = ""
+  @observable heroImage = ""
+  @observable description = ""
+  @observable date = ""
+  @observable author = ""
+  @observable avatar = ""
+  @observable articleSections = []
 
   /**
    * Indicates whether changes in this object
@@ -94,7 +89,7 @@ export class Movie {
 
   /**
    * Disposer for the side effect that automatically
-   * stores this Movie, see @dispose.
+   * stores this Article, see @dispose.
    */
   // saveHandler = null
 
@@ -112,18 +107,18 @@ export class Movie {
   //     // if autoSave is on, send json to server
   //     json => {
   //       if (this.autoSave) {
-  //         this.store.transportLayer.saveMovie(json)
+  //         this.store.transportLayer.saveArticle(json)
   //       }
   //     }
   //   )
   // }
 
   /**
-   * Remove this Movie from the client and server
+   * Remove this Article from the client and server
    */
   // delete() {
-  //   this.store.transportLayer.deleteMovie(this.id)
-  //   this.store.removeMovie(this)
+  //   this.store.transportLayer.deleteArticle(this.id)
+  //   this.store.removeArticle(this)
   // }
 
   // @computed get asJson() {
@@ -136,26 +131,20 @@ export class Movie {
   // }
 
   /**
-   * Update this Movie with information from the server
+   * Update this Article with information from the server
    */
   updateFromJson(json) {
     // make sure our changes aren't sent back to the server
-    this.name = json.name
+    this.movieName = json.movieName
+    this.articleSlug = json.articleSlug
     this.movieSlug = json.movieSlug
-    this.articles = json.articles
-    this.genre = json.genre
-    this.trailer = json.trailer
-    this.poster = json.poster
-    this.website = json.website
-    this.rated = json.rated
-    this.imdbid = json.imdbid
-    this.actors = json.actors
-    this.director = json.director
-    this.releaseDate = json.releaseDate
-    this.writer = json.writer
-    this.shortDescription = json.shortDescription
-    this.posterImg = json.posterImg
-    this.heroImg = json.heroImg
+    this.articleTitle = json.articleTitle
+    this.heroImage = json.heroImage
+    this.description = json.description
+    this.date = json.date
+    this.author = json.author
+    this.avatar = json.avatar
+    this.articleSections = []
   }
 
   // dispose() {
