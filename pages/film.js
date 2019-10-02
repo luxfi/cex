@@ -10,7 +10,6 @@ import { formatTakeResults } from "../components/utils/formatOrderBookDataForCha
 
 // @material-ui/core components
 import { withStyles } from "@material-ui/core/styles"
-import Container from "@material-ui/core/Container"
 
 // core components
 import Breadcrumbs from "../components/Breadcrumbs.js"
@@ -27,8 +26,6 @@ import {
   faChevronUp,
   faChevronDown
 } from "@fortawesome/free-solid-svg-icons"
-
-//import ContentLoader from "react-content-loader"
 
 import styles from "../assets/jss/views/filmPage.js"
 
@@ -109,11 +106,11 @@ class Index extends React.Component {
       selectedTab: "about",
       expanded: false
     }
-    this.onTab = this.onTab.bind(this)
+    this.onTabSelected = this.onTabSelected.bind(this)
     this.toggleExpanded = this.toggleExpanded.bind(this)
   }
 
-  onTab(tab) {
+  onTabSelected(tab) {
     if (this.state.selectedTab !== tab) {
       // if going to a new tab, collapse the view as well.
       this.setState({
@@ -153,7 +150,7 @@ class Index extends React.Component {
         className={classNames(classes.leftAndRight, classes.breadcrumbRow)}
         style={{ marginTop: "20px" }}
       >
-        <Breadcrumbs className={classes.breadcrumbs}>{movie.name}</Breadcrumbs>
+        <Breadcrumbs>{movie.name}</Breadcrumbs>
         <PageTabs
           classes={classes}
           selectedTab={selectedTab}
@@ -431,5 +428,47 @@ class Index extends React.Component {
     )
   }
 }
+
+const PageTabs = props => {
+  const {
+    classes,
+    onTabSelected,
+    selectedTab
+  } = props
+
+  return (
+    <div className={classes.pageTabsOuter} >
+      <a
+        className={classNames(classes.pageTab, (selectedTab === "about") ? classes.selectedTab : '')}
+        onClick={() => onTabSelected("about")}
+      >About</a>
+      <a
+        className={classNames(classes.pageTab, (selectedTab === "invest") ? classes.selectedTab : '')}
+        onClick={() => onTabSelected("invest")}
+      >Invest</a>
+    </div>
+  )
+}
+
+const SeeMoreButton = props => {
+  const {
+    classes,
+    onToggle,
+    expanded
+  } = props
+
+  return (
+    <div className={classes.seeMoreOuter}>
+      <a className={classes.seeMoreButton} onClick={() => onToggle()} >
+        {!expanded && <span className={classes.seeMoreCopy}>see more</span>}
+        <FontAwesomeIcon icon={(expanded) ? faChevronUp : faChevronDown} style={{ display: "block", width: "14px", color: "#ddd" }} />
+        {expanded && <span className={classes.seeMoreCopy}>see less</span>}
+      </a>
+    </div>
+  )
+}
+
+
+
 
 export default withRouter(withStyles(styles)(Index))

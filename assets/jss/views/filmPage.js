@@ -1,8 +1,6 @@
 import {
   container,
   title,
-  darkThemeBG,
-  darkThemeText,
   flexCenteredRow,
   flexCenteredColumn,
 } from "../esx.js"
@@ -22,8 +20,8 @@ export default theme => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
-    background: darkThemeBG,
-    color: darkThemeText
+    background: theme.palette.background.default,
+    color: theme.palette.text.primary
   },
 
   outermost: {
@@ -47,10 +45,7 @@ export default theme => ({
   breadcrumbRow: {
     marginBottom: "30px"
   },
-  breadcrumbs: {
-    color: darkThemeText + " !important"
-  },
-
+  
   pageTabsOuter: {
     display: "flex",
     flexDirection: "row",
@@ -70,7 +65,7 @@ export default theme => ({
   selectedTab: {
     // better than textDecoration: underline, 
     // which renders too close to the text 
-    borderBottom: "1px solid " + darkThemeText
+    borderBottom: "1px solid " + theme.palette.text.primary
   },
 
   mainArea: {
@@ -278,4 +273,5 @@ export default theme => ({
   }
 
 })
+
 
