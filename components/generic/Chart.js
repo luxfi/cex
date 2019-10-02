@@ -69,6 +69,7 @@ export default props => {
         }
         .posts-container {
           margin-top: 20px;
+          fill: white;
         }
         .divider {
           width: 1px;

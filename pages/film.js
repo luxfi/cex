@@ -46,7 +46,6 @@ const ButtonLink = React.forwardRef(
 const dummyFinancialStats = {
   name: "TERMINATOR",
   description: "Term Inc. - Class C Capital Stock",
-
   value: 616.16,
   valueDelta: 106.11,
   percentDelta: 20.43,
@@ -74,36 +73,15 @@ const PageTabs = props => {
   )
 }
 
-const SeeMoreButton = props => {
-  const {
-    classes,
-    onToggle,
-    expanded,
-    selectedTab
-  } = props
-
-  return (
-    <div className={classes.seeMoreOuter}>
-      <a className={classes.seeMoreButton} onClick={() => onToggle()} >
-        {!expanded && <span className={classes.seeMoreCopy}>{selectedTab === "about" ? 'see more' : 'view order book'}</span>}
-        <FontAwesomeIcon icon={(expanded) ? faChevronUp : faChevronDown} style={{ display: "block", width: "14px", color: "#ddd" }} />
-        {expanded && <span className={classes.seeMoreCopy}>{selectedTab === "about" ? 'see less' : 'hide order book'}</span>}
-      </a>
-    </div>
-  )
-}
-
 @inject("store")
 @observer
 class Index extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedTab: "about",
-      expanded: false
+      selectedTab: "invest",
     }
     this.onTabSelected = this.onTabSelected.bind(this)
-    this.toggleExpanded = this.toggleExpanded.bind(this)
   }
 
   onTabSelected(tab) {
@@ -111,15 +89,8 @@ class Index extends React.Component {
       // if going to a new tab, collapse the view as well.
       this.setState({
         selectedTab: tab,
-        expanded: false
       })
     }
-  }
-
-  toggleExpanded() {
-    this.setState({
-      expanded: !this.state.expanded
-    })
   }
 
   renderInvestButton(className, movie, text, onClick) {
@@ -196,7 +167,6 @@ class Index extends React.Component {
         <img
           className={classes.mainImage}
           src={movie.posterImg}
-          width="301"
           height="444"
         />
       </div>
@@ -227,11 +197,13 @@ class Index extends React.Component {
         <div className={classes.aboutMoreCopyArea}>
           <div className={classes.aboutMoreStats}>
             <table className={classes.aboutMoreStatsTable}>
-              {this.renderTableRow("director", "Director", movie)}
-              {this.renderTableRow("actors", "Starring", movie)}
-              {this.renderTableRow("writer", "Writers", movie)}
-              {this.renderTableRow("genre", "Genres", movie)}
-              {this.renderTableRow("rated", "Rating", movie)}
+              <tbody>
+                {this.renderTableRow("director", "Director", movie)}
+                {this.renderTableRow("actors", "Starring", movie)}
+                {this.renderTableRow("writer", "Writers", movie)}
+                {this.renderTableRow("genre", "Genres", movie)}
+                {this.renderTableRow("rated", "Rating", movie)}
+              </tbody>
             </table>
           </div>
           <div className={classes.aboutMoreText}>
@@ -263,7 +235,8 @@ class Index extends React.Component {
     printInterval,
     buyOrders,
     sellOrders,
-    orderBook
+    orderBook,
+    loggedIn
   ) {
     const stats = dummyFinancialStats
 
@@ -294,7 +267,7 @@ class Index extends React.Component {
         </div>
         <div className={classes.deltaRow}>{deltaString}</div>
         {
-          !store.userStore.token ?
+          !loggedIn ?
           this.renderInvestButton(
             classNames(classes.movieButton, classes.statsButton),
             movie,
@@ -326,48 +299,52 @@ class Index extends React.Component {
     return (
       <div className={classes.investMoreOuter}>
         <table className={classes.investMoreTable}>
-          <tr>
-            <td>OPEN</td>
-            <td>631.45</td>
-          </tr>
-          <tr>
-            <td>OPEN</td>
-            <td>631.45</td>
-          </tr>
-          <tr>
-            <td>OPEN</td>
-            <td>631.45</td>
-          </tr>
-          <tr>
-            <td>OPEN</td>
-            <td>631.45</td>
-          </tr>
-          <tr>
-            <td>OPEN</td>
-            <td>631.45</td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>OPEN</td>
+              <td>631.45</td>
+            </tr>
+            <tr>
+              <td>OPEN</td>
+              <td>631.45</td>
+            </tr>
+            <tr>
+              <td>OPEN</td>
+              <td>631.45</td>
+            </tr>
+            <tr>
+              <td>OPEN</td>
+              <td>631.45</td>
+            </tr>
+            <tr>
+              <td>OPEN</td>
+              <td>631.45</td>
+            </tr>
+          </tbody>
         </table>
         <table className={classes.investMoreTable}>
-          <tr>
-            <td>OPEN</td>
-            <td>631.45</td>
-          </tr>
-          <tr>
-            <td>OPEN</td>
-            <td>631.45</td>
-          </tr>
-          <tr>
-            <td>OPEN</td>
-            <td>631.45</td>
-          </tr>
-          <tr>
-            <td>OPEN</td>
-            <td>631.45</td>
-          </tr>
-          <tr>
-            <td>OPEN</td>
-            <td>631.45</td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>OPEN</td>
+              <td>631.45</td>
+            </tr>
+            <tr>
+              <td>OPEN</td>
+              <td>631.45</td>
+            </tr>
+            <tr>
+              <td>OPEN</td>
+              <td>631.45</td>
+            </tr>
+            <tr>
+              <td>OPEN</td>
+              <td>631.45</td>
+            </tr>
+            <tr>
+              <td>OPEN</td>
+              <td>631.45</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     )
@@ -381,10 +358,10 @@ class Index extends React.Component {
     const { router } = this.props
     const { slug } =
       router.query || "edward-furlong-edward-furlong-terminator-dark-fate" // remove this when safe
-    const movie = store.movieStore.getMovieBySlug(slug)
+    const { movieStore, orderBook, userStore } = this.props.store
+    const movie = movieStore.getMovieBySlug(slug)
 
     // orderBook stuff
-    const { movieStore, orderBook } = this.props.store
     let takeResultsArray = orderBook.takeResults.slice(0)
     const { printInterval, buyOrders, sellOrders } = orderBook
     const data = formatTakeResults(takeResultsArray, printInterval)
@@ -408,24 +385,19 @@ class Index extends React.Component {
                 printInterval,
                 buyOrders,
                 sellOrders,
-                orderBook
-              )}
-          <SeeMoreButton
-            classes={classes}
-            onToggle={this.toggleExpanded}
-            expanded={this.state.expanded}
-            selectedTab={this.state.selectedTab}
-          />
-          {this.state.expanded &&
-            (this.state.selectedTab === "about"
+                orderBook,
+                userStore.token !== null
+            )
+          }
+          {this.state.selectedTab === "about"
               ? this.renderAboutMore(classes, movie)
-              : this.renderInvestMore(classes, movie))}
+              : this.renderInvestMore(classes, movie)}
         </article>
         <div
           className={classNames(classes.container)}
           style={{ paddingLeft: "0px", paddingRight: "0px" }}
         >
-          {this.state.expanded && !store.userStore.token ? <InvestNowSection /> : ""}
+          {!userStore.token ? <InvestNowSection /> : ""}
         </div>
       </>
     )
