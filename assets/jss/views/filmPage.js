@@ -189,7 +189,8 @@ export default theme => ({
   },
   seeMoreCopy: {
     display: "block",
-    fontSize: "8pt"
+    fontSize: "8pt",
+    cursor: 'pointer'
   },
 
   aboutMoreTitleArea: {

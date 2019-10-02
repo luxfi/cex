@@ -1,7 +1,7 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
-import Link from "next/link"
-import dynamic from "next/dynamic"
+import Router from 'next/router'
+import ContentLoader, { Facebook } from "react-content-loader"
 // nodejs library that concatenates classes
 import classNames from "classnames"
 // @material-ui/core components
@@ -14,7 +14,6 @@ import GridContainer from "../../../components/Grid/GridContainer.js"
 import GridItem from "../../../components/Grid/GridItem.js"
 import Card from "../../../components/Card/Card.js"
 import CardBody from "../../../components/Card/CardBody.js"
-import ContentLoader, { Facebook } from "react-content-loader"
 import ImageAvatars from "../../../components/ImageAvatars"
 
 import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
@@ -72,23 +71,21 @@ class ArticleView extends React.Component {
     return (
       <GridContainer>
         {homePageArticles.map((d, i) => (
-          <Link href={`article/${d.articleSlug}`}>
-            <GridItem key={`picks_${i}`} xs={12} sm={12} md={3}>
-              <Card plain style={{ cursor: "pointer" }}>
-                <GridItem xs={2} sm={2} md={2}>
-                  <ImageAvatars alt={d.articleTitle} src={d.avatar} />
-                  {/* <MyLoader /> */}
-                </GridItem>
-                {/* <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
-                <img src={d.heroImage} alt={d.name} className={classes.img} />
-              </GridItem> */}
-                <h4 className={classes.cardTitle}>{d.articleTitle}</h4>
-                <CardBody>
-                  <p className={classes.description}>{d.description}</p>
-                </CardBody>
-              </Card>
-            </GridItem>
-          </Link>
+          <GridItem key={`picks_${i}`} xs={12} sm={12} md={3}>
+            <Card plain style={{ cursor: "pointer" }} onClick={() => { Router.push(`/article/${d.articleSlug}`) }}>
+              <GridItem xs={2} sm={2} md={2}>
+                <ImageAvatars alt={d.articleTitle} src={d.avatar} />
+                {/* <MyLoader /> */}
+              </GridItem>
+              {/* <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
+              <img src={d.heroImage} alt={d.name} className={classes.img} />
+            </GridItem> */}
+              <h4 className={classes.cardTitle}>{d.articleTitle}</h4>
+              <CardBody>
+                <p className={classes.description}>{d.description}</p>
+              </CardBody>
+            </Card>
+          </GridItem>
         ))}
       </GridContainer>
     )
