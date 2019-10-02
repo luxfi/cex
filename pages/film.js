@@ -54,43 +54,38 @@ const dummyFinancialStats = {
 }
 
 const PageTabs = props => {
-  const { classes, onTab, selectedTab } = props
+  const {
+    classes,
+    onTabSelected,
+    selectedTab
+  } = props
 
   return (
-    <div className={classes.pageTabsOuter}>
+    <div className={classes.pageTabsOuter} >
       <a
-        className={classNames(
-          classes.pageTab,
-          selectedTab === "about" ? classes.selectedTab : ""
-        )}
-        onClick={() => onTab("about")}
-      >
-        About
-      </a>
+        className={classNames(classes.pageTab, (selectedTab === "about") ? classes.selectedTab : '')}
+        onClick={() => onTabSelected("about")}
+      >About</a>
       <a
-        className={classNames(
-          classes.pageTab,
-          selectedTab === "invest" ? classes.selectedTab : ""
-        )}
-        onClick={() => onTab("invest")}
-      >
-        Invest
-      </a>
+        className={classNames(classes.pageTab, (selectedTab === "invest") ? classes.selectedTab : '')}
+        onClick={() => onTabSelected("invest")}
+      >Invest</a>
     </div>
   )
 }
 
 const SeeMoreButton = props => {
-  const { classes, onToggle, expanded } = props
+  const {
+    classes,
+    onToggle,
+    expanded
+  } = props
 
   return (
     <div className={classes.seeMoreOuter}>
-      <a className={classes.seeMoreButton} onClick={() => onToggle()}>
+      <a className={classes.seeMoreButton} onClick={() => onToggle()} >
         {!expanded && <span className={classes.seeMoreCopy}>see more</span>}
-        <FontAwesomeIcon
-          icon={expanded ? faChevronUp : faChevronDown}
-          style={{ display: "block", width: "14px", color: "#ddd" }}
-        />
+        <FontAwesomeIcon icon={(expanded) ? faChevronUp : faChevronDown} style={{ display: "block", width: "14px", color: "#ddd" }} />
         {expanded && <span className={classes.seeMoreCopy}>see less</span>}
       </a>
     </div>
@@ -154,7 +149,7 @@ class Index extends React.Component {
         <PageTabs
           classes={classes}
           selectedTab={selectedTab}
-          onTab={this.onTab}
+          onTabSelected={this.onTabSelected}
         />
       </div>
     )
@@ -428,47 +423,5 @@ class Index extends React.Component {
     )
   }
 }
-
-const PageTabs = props => {
-  const {
-    classes,
-    onTabSelected,
-    selectedTab
-  } = props
-
-  return (
-    <div className={classes.pageTabsOuter} >
-      <a
-        className={classNames(classes.pageTab, (selectedTab === "about") ? classes.selectedTab : '')}
-        onClick={() => onTabSelected("about")}
-      >About</a>
-      <a
-        className={classNames(classes.pageTab, (selectedTab === "invest") ? classes.selectedTab : '')}
-        onClick={() => onTabSelected("invest")}
-      >Invest</a>
-    </div>
-  )
-}
-
-const SeeMoreButton = props => {
-  const {
-    classes,
-    onToggle,
-    expanded
-  } = props
-
-  return (
-    <div className={classes.seeMoreOuter}>
-      <a className={classes.seeMoreButton} onClick={() => onToggle()} >
-        {!expanded && <span className={classes.seeMoreCopy}>see more</span>}
-        <FontAwesomeIcon icon={(expanded) ? faChevronUp : faChevronDown} style={{ display: "block", width: "14px", color: "#ddd" }} />
-        {expanded && <span className={classes.seeMoreCopy}>see less</span>}
-      </a>
-    </div>
-  )
-}
-
-
-
 
 export default withRouter(withStyles(styles)(Index))
