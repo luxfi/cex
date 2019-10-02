@@ -175,7 +175,11 @@ class MyMobxApp extends App {
                         darkTheme={darkTheme}
                         lightTheme={lightTheme}
                       />
-                      <Component {...pageProps} />
+                      <Component
+                        {...pageProps}
+                        darkTheme={darkTheme}
+                        lightTheme={lightTheme}
+                      />
                       {/* <Loader /> */}
                       <Snackbar />
                     </div>
