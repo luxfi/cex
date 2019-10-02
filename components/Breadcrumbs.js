@@ -1,53 +1,34 @@
 import React from "react"
-import { makeStyles, withStyles } from "@material-ui/core/styles"
-import Paper from "@material-ui/core/Paper"
 import Breadcrumbs from "@material-ui/core/Breadcrumbs"
-import Typography from "@material-ui/core/Typography"
 import Link from "../components/link"
 import NavigateNextIcon from "@material-ui/icons/NavigateNext"
-
-const styles = theme => ({
-  root: {
-    justifyContent: "center",
-    flexWrap: "wrap"
-  },
-  paper: {
-      // :aa don't pad here! .. let the containing element do it.  
-    backgroundColor: "transparent"
-  },
-  crumbs: {
-    color: "grey"
-  }
-})
 
 
 const TEMP_LAMENESS = "Filming The Lone Wolf Dies"; // TODO
 
-class CustomSeparator extends React.Component  {
+class Index extends React.Component  {
 
   render() {
-    const {classes} = this.props
-
     const pageName = this.props.children ? this.props.children : TEMP_LAMENESS;
 
     return (
-      <div className={classes.root}>
-        <Paper elevation={0} className={classes.paper}>
-          <Breadcrumbs
-            separator={<NavigateNextIcon fontSize="small" />}
-            aria-label="breadcrumb"
-            className={classes.crumbs}
-          >
-            <Link color="inherit" href="/">Home</Link>
-            <Typography>{pageName}</Typography>
-          </Breadcrumbs>
-        </Paper>
-      </div>
+        <Breadcrumbs
+          separator={<NavigateNextIcon fontSize="small" />}
+          aria-label="breadcrumb"
+          style= {{
+            MuiBreadcrumbsRoot: {
+              
+            }
+          }}
+        >
+          <Link color="inherit" href="/">Home</Link>
+          <span>{pageName}</span>
+        </Breadcrumbs>
     )
   }
 }
-
-export default withStyles(styles)(CustomSeparator)
+  
+export default Index
 
 // import React from 'react';
 // import { emphasize, withStyles, makeStyles } from '@material-ui/core/styles';

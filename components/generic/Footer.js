@@ -213,11 +213,11 @@ const styles = theme => {
     root: {
       flexGrow: 1,
       paddingTop: "70px",
-      background: "rgb(29, 38, 50)"
+      //background: "rgb(29, 38, 50)"
     },
     menuButton: {
       marginRight: theme.spacing(2),
-      color: "#fff"
+      //color: "#fff"
     },
     grow: {
       flexGrow: 1,
@@ -233,13 +233,13 @@ const styles = theme => {
     transparent: {
       background: "transparent !important",
       boxShadow: "none",
-      color: "#fff"
+      //color: "#fff"
     },
     anchor: {
       margin: "3px",
       display: "inline-block",
       // color: "white",
-      color: "#fff",
+      //color: "#fff",
       padding: "7px",
       borderRadius: "2px",
       height: "18px"
@@ -248,11 +248,11 @@ const styles = theme => {
       height: "38.5px"
     },
     white: {
-      color: "#fff"
+      //color: "#fff"
     },
     signUpButton: {
-      color: "white !important",
-      border: "2px solid white !important"
+      //color: "white !important",
+      //border: "2px solid white !important"
     }
   }
 }

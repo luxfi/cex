@@ -163,9 +163,7 @@ class Header extends React.Component {
             <AppBar
               id="navbar"
               position="fixed"
-              className={
-                onHomePage ? classes.transparent : classes.whiteBackground
-              }
+              color="background.paper"
             >
               {" "}
               <Container maxWidth="lg">
