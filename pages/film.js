@@ -5,6 +5,9 @@ import { withRouter } from "next/router"
 
 import classNames from "classnames"
 
+// orderbook
+import { formatTakeResults } from "../components/utils/formatOrderBookDataForChart"
+
 // @material-ui/core components
 import { withStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
@@ -12,6 +15,7 @@ import Container from "@material-ui/core/Container"
 // core components
 import Breadcrumbs from "../components/Breadcrumbs.js"
 import Button from "../components/CustomButtons/Button"
+import Chart from "../components/generic/Chart"
 
 // section
 import InvestNowSection from "../views/LandingPage/Sections/InvestNowSection"
@@ -254,7 +258,17 @@ class Index extends React.Component {
     )
   }
 
-  renderInvestMain(classes, movie) {
+  renderInvestMain(
+    classes,
+    movie,
+    data,
+    yDomain,
+    updatePrintInterval,
+    printInterval,
+    buyOrders,
+    sellOrders,
+    orderBook
+  ) {
     const stats = dummyFinancialStats
 
     const dollars = Math.floor(stats.value)
@@ -288,12 +302,23 @@ class Index extends React.Component {
           movie,
           "Invest Now"
         )}
-        <img
+        {/* <img
           className={classes.graphImage}
           src={dummyFilmGraph}
           width="600"
           height="383"
-        />
+        /> */}
+        <div>
+          <Chart
+            data={data}
+            yDomain={yDomain}
+            updatePrintInterval={updatePrintInterval}
+            printInterval={printInterval}
+            buyOrders={buyOrders}
+            sellOrders={sellOrders}
+            orderBook={orderBook}
+          />
+        </div>
       </div>
     )
   }
@@ -359,13 +384,33 @@ class Index extends React.Component {
       router.query || "edward-furlong-edward-furlong-terminator-dark-fate" // remove this when safe
     const movie = store.movieStore.getMovieBySlug(slug)
 
+    // orderBook stuff
+    const { movieStore, orderBook } = this.props.store
+    let takeResultsArray = orderBook.takeResults.slice(0)
+    const { printInterval, buyOrders, sellOrders } = orderBook
+    const data = formatTakeResults(takeResultsArray, printInterval)
+    const yDomain = [orderBook.low * 0.94, orderBook.high * 1.06]
+    const updatePrintInterval = time => {
+      orderBook.updatePrintInterval(time)
+    }
+
     return (
       <>
         <article className={classNames(classes.container, classes.outermost)}>
           {this.renderUpperRow(classes, this.state.selectedTab, movie)}
           {this.state.selectedTab === "about"
             ? this.renderAboutMain(classes, movie)
-            : this.renderInvestMain(classes, movie)}
+            : this.renderInvestMain(
+                classes,
+                movie,
+                data,
+                yDomain,
+                updatePrintInterval,
+                printInterval,
+                buyOrders,
+                sellOrders,
+                orderBook
+              )}
           <SeeMoreButton
             classes={classes}
             onToggle={this.toggleExpanded}

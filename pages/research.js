@@ -1,20 +1,18 @@
-import React from 'react'
+import React from "react"
 import TickerStripLayout from "../components/generic/TickerStripLayout"
-import { inject, observer } from 'mobx-react'
-import HeaderInfo from '../components/research/HeaderInfo'
-import ShareIcons from '../components/research/ShareIcons'
-import StockInfo from '../components/research/StockInfo'
-import MoreLikeThis from '../components/research/MoreLikeThis'
-import RelatedPosts from '../components/research/RelatedPosts'
-import Forecasts from '../components/research/Forecasts'
-import Chart from '../components/generic/Chart'
-import Orders from '../components/generic/Orders'
-import { formatTakeResults } from '../components/utils/formatOrderBookDataForChart'
-import { faSortAmountDown } from '@fortawesome/free-solid-svg-icons'
+import { inject, observer } from "mobx-react"
+import HeaderInfo from "../components/research/HeaderInfo"
+import ShareIcons from "../components/research/ShareIcons"
+import StockInfo from "../components/research/StockInfo"
+import MoreLikeThis from "../components/research/MoreLikeThis"
+import RelatedPosts from "../components/research/RelatedPosts"
+import Forecasts from "../components/research/Forecasts"
+import Chart from "../components/generic/Chart"
+import Orders from "../components/generic/Orders"
+import { formatTakeResults } from "../components/utils/formatOrderBookDataForChart"
+import { faSortAmountDown } from "@fortawesome/free-solid-svg-icons"
 
-
-
-const sumDataByNumber = (array) => {
+const sumDataByNumber = array => {
   let hash = {}
   array.forEach(el => {
     let price = el[0]
@@ -22,29 +20,29 @@ const sumDataByNumber = (array) => {
     let amount = parseInt(el[2]) || 0
     let sum = !hash[price] ? 0 : amount + hash[price]["amount"]
     hash[price] = {
-      "size": size,
-      "amount": sum
+      size: size,
+      amount: sum
     }
-  });
-  return hash;
+  })
+  return hash
 }
 
-@inject('store')
+@inject("store")
 @observer
 export default class Research extends React.Component {
   state = {
-    whiteGutter: true,
+    whiteGutter: true
   }
   static async getInitialProps({ mobxStore }) {
     // await mobxStore.movieStore.fetch()
     return {
       movieStore: mobxStore.movieStore,
-      orderBook: mobxStore.orderBook,
+      orderBook: mobxStore.orderBook
     }
   }
 
   componentDidMount() {
-    console.log('index props componentDidMount', this.props.store.orderBook)
+    console.log("index props componentDidMount", this.props.store.orderBook)
     this.props.store.orderBook.initiateDataGenerator()
   }
 
@@ -54,11 +52,12 @@ export default class Research extends React.Component {
 
   render() {
     const { movieStore, orderBook } = this.props.store
+    debugger
     let takeResultsArray = orderBook.takeResults.slice(0)
     const { printInterval, buyOrders, sellOrders } = orderBook
     const data = formatTakeResults(takeResultsArray, printInterval)
-    const yDomain = [orderBook.low * .94, orderBook.high * 1.06]
-    const updatePrintInterval = (time) => {
+    const yDomain = [orderBook.low * 0.94, orderBook.high * 1.06]
+    const updatePrintInterval = time => {
       orderBook.updatePrintInterval(time)
     }
     // let currentPrice = takeResultsArray[takeResultsArray - 1].taker.price.toFixed(2)
@@ -75,7 +74,15 @@ export default class Research extends React.Component {
             <div className="wide-column">
               <HeaderInfo />
               <StockInfo movies={movieStore.movies} />
-              <iframe className="video" width="886" height="498" src="https://www.youtube.com/embed/hEJnMQG9ev8" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+              <iframe
+                className="video"
+                width="886"
+                height="498"
+                src="https://www.youtube.com/embed/hEJnMQG9ev8"
+                frameBorder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
             </div>
             <div className="thin-column">
               <ShareIcons />
@@ -97,7 +104,8 @@ export default class Research extends React.Component {
                 printInterval={printInterval}
                 buyOrders={buyOrders}
                 sellOrders={sellOrders}
-                orderBook={orderBook} />
+                orderBook={orderBook}
+              />
             </div>
           </div>
         </div>
@@ -140,4 +148,3 @@ export default class Research extends React.Component {
     )
   }
 }
-
