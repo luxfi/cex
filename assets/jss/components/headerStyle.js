@@ -12,7 +12,7 @@ import {
   transition,
   boxShadow,
   drawerWidth
-} from "assets/jss/material-kit-react.js";
+} from "assets/jss/material-kit-react.js"
 
 const headerStyle = {
   appBar: {
@@ -112,6 +112,12 @@ const headerStyle = {
     boxShadow:
       "0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 12px -5px rgba(33, 33, 33, 0.46)"
   },
+  transparent: {
+    backgroundColor: "transparent !important",
+    boxShadow: "none",
+    paddingTop: "25px",
+    color: "#FFFFFF"
+  },
   white: {
     border: "0",
     padding: "0.625rem 0",
@@ -143,6 +149,6 @@ const headerStyle = {
     paddingLeft: "0",
     ...transition
   }
-};
+}
 
-export default headerStyle;
+export default headerStyle
