@@ -33,7 +33,7 @@ module.exports = [
     ],
     shortDescription:
       "Sarah Connor and a hybrid cyborg human must protect a young girl from a newly modified liquid Terminator from the future.",
-    ticker: 'TERMDF',
+    ticker: "TERMDF",
     price: 125.15
   },
   {
@@ -44,7 +44,7 @@ module.exports = [
     trailer:
       '<iframe width="560" height="315" src="https://www.youtube.com/embed/vTfJp2Ts9X8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
     posterImg:
-      "https://m.media-amazon.com/images/M/MV5BNmE5YWIwNGYtNDFkOS00OWY4LThhYzUtMWVlZTFjMzA3YWVjXkEyXkFqcGdeQXVyMTAzMDg4NzU0._V1_SX300.jpg",
+      "https://m.media-amazon.com/images/M/MV5BZDhkMjUyYjItYWVkYi00YTM5LWE4MGEtY2FlMjA3OThlYmZhXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SY1000_CR0,0,640,1000_AL_.jpg",
     heroImg:
       "https://www.indiewire.com/wp-content/uploads/2019/07/Screen-Shot-2019-07-23-at-10.22.47-AM.png",
     website: "https://a24films.com/films/uncut-gems",
@@ -56,7 +56,7 @@ module.exports = [
     writer: ["Ronald Bronstein", "Benny Safdie", "Josh Safdie"],
     shortDescription:
       "A jewelry dealer to the rich and famous must find a way to pay his debts when his merchandise is taken from one of his top sellers and girlfriend.",
-    ticker: 'UNCTGM',
+    ticker: "UNCTGM",
     price: 44.21
   },
   {
@@ -89,7 +89,7 @@ module.exports = [
     ],
     shortDescription:
       "After splitting with the Joker, Harley Quinn joins superheroes Black Canary, Huntress and Renee Montoya to save a young girl from an evil crime lord, Black Mask in Gotham City.",
-    ticker: 'BRDOP',
+    ticker: "BRDOP",
     price: 78.22
   },
   {
@@ -117,7 +117,7 @@ module.exports = [
     writer: ["Dan Scanlon"],
     shortDescription:
       "Two teenage elf brothers, Ian and Barley Lightfoot, go on an journey to discover if there is still a little magic left out there in order to spend one last day with their father, who died when they were too young to remember him.",
-    ticker: 'ONWRD',
+    ticker: "ONWRD",
     price: 52.13
   }
 ]
