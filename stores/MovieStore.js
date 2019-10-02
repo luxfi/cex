@@ -13,11 +13,6 @@ export default class MovieStore {
     this.loadMovies()
     // this.movies = initialData
     this.api = hanzoApi
-    this.currentMovie = this.movies[0]
-    // TEMP - remove in data update
-    this.currentMovie.shortDescription =
-      "Lorem ipsum dolor sit amet, \
-      consectetur adipiscing elit, sed do eiusmod tempor incididunt."
   }
 
   /**
@@ -36,7 +31,6 @@ export default class MovieStore {
 
     this.isLoading = false
   }
-
 
   /**
    * Update a movie with information from the server. Guarantees a movie
@@ -69,8 +63,11 @@ export default class MovieStore {
   }
 
   // Public helper functions
-  getMovieByTicker (ticker) {
+  getMovieByTicker(ticker) {
     return this.movies.find(m => m.ticker === ticker)
+  }
+  getMovieBySlug(slug) {
+    return this.movies.find(m => m.movieSlug === slug)
   }
 }
 

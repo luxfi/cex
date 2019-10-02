@@ -187,8 +187,8 @@ class Index extends React.Component {
         </div>
         <img
           className={classes.mainImage}
-          src={movie.poster}
-          width="300"
+          src={movie.posterImg}
+          width="301"
           height="444"
         />
       </div>
@@ -348,13 +348,13 @@ class Index extends React.Component {
 
   render() {
     const { classes, store } = this.props
-    const movie = store.movieStore.currentMovie
+    // const movie = store.movieStore.currentMovie
 
     // get router slug and find article
     const { router } = this.props
     const { slug } =
       router.query || "edward-furlong-edward-furlong-terminator-dark-fate" // remove this when safe
-    const article = store.articleStore.getArticle(slug)
+    const movie = store.movieStore.getMovieBySlug(slug)
 
     return (
       <article className={classNames(classes.container, classes.outermost)}>
