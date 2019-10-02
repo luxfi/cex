@@ -41,6 +41,10 @@ export default class ChartIntervalControls extends React.Component {
               justify-content: flex-end;
               flex-wrap: nowrap;
             }
+            .MuiButton-root:hover {
+              text-decoration: none;
+              background-color: gray;
+            }
             .button {
               font-size: 11px;
               color: white;
