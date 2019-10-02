@@ -171,7 +171,7 @@ class MyMobxApp extends App {
                   <RefProvider>
                     <div className={classes.root}>
                       <div className={classes.main} component="main">
-                        <Header onHomePage={onHomePage} />
+                        <Header />
                         <Component {...pageProps} />
                         {/* <Loader /> */}
                         <Snackbar />
