@@ -129,7 +129,7 @@ class Header extends React.Component {
   }
 
   render() {
-    let { classes, onHomePage, store, ...props } = this.props
+    let { classes, store, ...props } = this.props
     let identity = getIdentity()
     // let accountLoaded = !!this.props.rootData.get("account.id") && identity
     let accountLoaded = store.userStore.loggedIn
@@ -211,7 +211,6 @@ class Header extends React.Component {
                       >
                         <AccountCircle
                           style={{ fontSize: "2rem" }}
-                          className={onHomePage ? classes.white : null}
                         />
                       </IconButton>
                       <Menu
