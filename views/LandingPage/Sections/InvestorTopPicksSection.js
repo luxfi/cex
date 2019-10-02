@@ -1,6 +1,6 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
-import Link from "next/link"
+import Router from 'next/router'
 // nodejs library that concatenates classes
 import classNames from "classnames"
 // @material-ui/core components
@@ -88,20 +88,18 @@ class MoviesView extends React.Component {
     return (
       <GridContainer>
         {investorTopPicks.map((d, i) => (
-          <Link href={`film/${d.movieSlug}`}>
-            <GridItem key={`picks_${i}`} xs={12} sm={12} md={4}>
-              <Card plain style={{ cursor: "pointer" }}>
-                <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
-                  {/* <img src={team1} alt="..." className={imageClasses} /> */}
-                  <img src={d.heroImg} alt={d.name} className={classes.img} />
-                </GridItem>
-                <h4 className={classes.cardTitle}>{d.name}</h4>
-                <CardBody>
-                  <p className={classes.description}>{d.shortDescription}</p>
-                </CardBody>
-              </Card>
-            </GridItem>
-          </Link>
+          <GridItem key={`picks_${i}`} xs={12} sm={12} md={4}>
+            <Card plain style={{ cursor: "pointer" }} onClick={() => { Router.push(`/film/${d.movieSlug}`) }}>
+              <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
+                {/* <img src={team1} alt="..." className={imageClasses} /> */}
+                <img src={d.heroImg} alt={d.name} className={classes.img} />
+              </GridItem>
+              <h4 className={classes.cardTitle}>{d.name}</h4>
+              <CardBody>
+                <p className={classes.description}>{d.shortDescription}</p>
+              </CardBody>
+            </Card>
+          </GridItem>
         ))}
       </GridContainer>
     )

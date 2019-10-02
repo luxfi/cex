@@ -154,24 +154,24 @@ class MyMobxApp extends App {
         <MuiThemeProvider theme={theme}>
           <React.Fragment>
             <CssBaseline />
-          <Head>
-            <title>ESX | Entertainment Stock Exchange</title>
-            <meta
-              name="viewport"
-              content="initial-scale=1.0, width=device-width"
-            />
-            <link
-              rel="stylesheet"
-              href="https://fonts.googleapis.com/icon?family=Material+Icons"
-            />
-          </Head>
+            <Head>
+              <title>ESX | Entertainment Stock Exchange</title>
+              <meta
+                name="viewport"
+                content="initial-scale=1.0, width=device-width"
+              />
+              <link
+                rel="stylesheet"
+                href="https://fonts.googleapis.com/icon?family=Material+Icons"
+              />
+            </Head>
             <Container>
               <Provider store={this.mobxStore}>
                 <MuiPickersUtilsProvider utils={MomentUtils}>
                   <RefProvider>
                     <div className={classes.root}>
                       <div className={classes.main} component="main">
-                        <Header />
+                        <Header onHomePage={onHomePage} />
                         <Component {...pageProps} />
                         {/* <Loader /> */}
                         <Snackbar />
@@ -184,8 +184,7 @@ class MyMobxApp extends App {
                 </MuiPickersUtilsProvider>
               </Provider>
             </Container>
-
-        </React.Fragment>
+          </React.Fragment>
         </MuiThemeProvider>
     )
   }
