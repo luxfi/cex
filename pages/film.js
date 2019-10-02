@@ -37,7 +37,7 @@ import { isObservableArray } from "mobx"
 
 const ButtonLink = React.forwardRef(
   ({ className, href, hrefAs, children, prefetch }, ref) => (
-    <Link ref={ref} href={href} as={hrefAs} prefetch>
+    <Link ref={ref} href={href || ""} as={hrefAs} prefetch>
       <a className={className}>{children}</a>
     </Link>
   )
@@ -78,15 +78,16 @@ const SeeMoreButton = props => {
   const {
     classes,
     onToggle,
-    expanded
+    expanded,
+    selectedTab
   } = props
 
   return (
     <div className={classes.seeMoreOuter}>
       <a className={classes.seeMoreButton} onClick={() => onToggle()} >
-        {!expanded && <span className={classes.seeMoreCopy}>see more</span>}
+        {!expanded && <span className={classes.seeMoreCopy}>{selectedTab === "about" ? 'see more' : 'view order book'}</span>}
         <FontAwesomeIcon icon={(expanded) ? faChevronUp : faChevronDown} style={{ display: "block", width: "14px", color: "#ddd" }} />
-        {expanded && <span className={classes.seeMoreCopy}>see less</span>}
+        {expanded && <span className={classes.seeMoreCopy}>{selectedTab === "about" ? 'see less' : 'hide order book'}</span>}
       </a>
     </div>
   )
@@ -121,11 +122,10 @@ class Index extends React.Component {
     })
   }
 
-  renderInvestButton(className, movie, text) {
+  renderInvestButton(className, movie, text, onClick) {
     return (
       <Button
         component={ButtonLink}
-        color="link"
         target="_blank"
         rel="noopener noreferrer"
         style={{
@@ -133,6 +133,7 @@ class Index extends React.Component {
           height: "48px"
         }}
         className={className}
+        onClick={onClick}
       >
         {text}
       </Button>
@@ -168,7 +169,6 @@ class Index extends React.Component {
           <div className={classes.movieButtonsOuter}>
             <Button
               component={ButtonLink}
-              color="link"
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -181,7 +181,16 @@ class Index extends React.Component {
               <FontAwesomeIcon icon={faPlay} style={{ paddingRight: "2px" }} />
               Watch Trailer
             </Button>
-            {this.renderInvestButton(classes.movieButton, movie, "Invest")}
+            <Button
+              rel="noopener noreferrer"
+              style={{
+                height: "48px"
+              }}
+              className={classes.movieButton}
+              onClick={() => { this.onTabSelected("invest") }}
+            >
+              Invest
+            </Button>
           </div>
         </div>
         <img
@@ -214,11 +223,6 @@ class Index extends React.Component {
         <div className={classes.aboutMoreTitleArea}>
           <h1 className={classes.sectionTitle}>About</h1>
           <h2 className={classes.sectionByline}>More about the film</h2>
-          {this.renderInvestButton(
-            classes.movieButton,
-            movie,
-            "Invest in this film"
-          )}
         </div>
         <div className={classes.aboutMoreCopyArea}>
           <div className={classes.aboutMoreStats}>
@@ -289,11 +293,14 @@ class Index extends React.Component {
           <span className={classes.centsValue}>.{value.cents}</span>
         </div>
         <div className={classes.deltaRow}>{deltaString}</div>
-        {this.renderInvestButton(
-          classNames(classes.movieButton, classes.statsButton),
-          movie,
-          "Invest Now"
-        )}
+        {
+          !store.userStore.token ?
+          this.renderInvestButton(
+            classNames(classes.movieButton, classes.statsButton),
+            movie,
+            "Invest Now"
+          ) : null
+        }
         {/* <img
           className={classes.graphImage}
           src={dummyFilmGraph}
@@ -407,6 +414,7 @@ class Index extends React.Component {
             classes={classes}
             onToggle={this.toggleExpanded}
             expanded={this.state.expanded}
+            selectedTab={this.state.selectedTab}
           />
           {this.state.expanded &&
             (this.state.selectedTab === "about"
@@ -417,7 +425,7 @@ class Index extends React.Component {
           className={classNames(classes.container)}
           style={{ paddingLeft: "0px", paddingRight: "0px" }}
         >
-          {this.state.expanded ? <InvestNowSection /> : ""}
+          {this.state.expanded && !store.userStore.token ? <InvestNowSection /> : ""}
         </div>
       </>
     )
