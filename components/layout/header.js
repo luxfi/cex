@@ -163,7 +163,7 @@ class Header extends React.Component {
             <AppBar
               id="navbar"
               position="fixed"
-              color="background.paper"
+              color="inherit"
             >
               {" "}
               <Container maxWidth="lg">
