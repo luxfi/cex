@@ -13,6 +13,9 @@ import Container from "@material-ui/core/Container"
 import Breadcrumbs from "../components/Breadcrumbs.js"
 import Button from "../components/CustomButtons/Button"
 
+// section
+import InvestNowSection from "../views/LandingPage/Sections/InvestNowSection"
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 // the nice looking double chevrons are part of the "pro" package that costs money
 import {
@@ -357,21 +360,29 @@ class Index extends React.Component {
     const movie = store.movieStore.getMovieBySlug(slug)
 
     return (
-      <article className={classNames(classes.container, classes.outermost)}>
-        {this.renderUpperRow(classes, this.state.selectedTab, movie)}
-        {this.state.selectedTab === "about"
-          ? this.renderAboutMain(classes, movie)
-          : this.renderInvestMain(classes, movie)}
-        <SeeMoreButton
-          classes={classes}
-          onToggle={this.toggleExpanded}
-          expanded={this.state.expanded}
-        />
-        {this.state.expanded &&
-          (this.state.selectedTab === "about"
-            ? this.renderAboutMore(classes, movie)
-            : this.renderInvestMore(classes, movie))}
-      </article>
+      <>
+        <article className={classNames(classes.container, classes.outermost)}>
+          {this.renderUpperRow(classes, this.state.selectedTab, movie)}
+          {this.state.selectedTab === "about"
+            ? this.renderAboutMain(classes, movie)
+            : this.renderInvestMain(classes, movie)}
+          <SeeMoreButton
+            classes={classes}
+            onToggle={this.toggleExpanded}
+            expanded={this.state.expanded}
+          />
+          {this.state.expanded &&
+            (this.state.selectedTab === "about"
+              ? this.renderAboutMore(classes, movie)
+              : this.renderInvestMore(classes, movie))}
+        </article>
+        <div
+          className={classNames(classes.container)}
+          style={{ paddingLeft: "0px", paddingRight: "0px" }}
+        >
+          {this.state.expanded ? <InvestNowSection /> : ""}
+        </div>
+      </>
     )
   }
 }
