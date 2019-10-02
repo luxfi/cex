@@ -1,3 +1,5 @@
+// TODO:  This file is unused!  :aa
+
 import {
   container,
   defaultFont,
@@ -103,12 +105,6 @@ const headerStyle = {
     color: "#FFFFFF",
     boxShadow:
       "0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 12px -5px rgba(233, 30, 99, 0.46)"
-  },
-  transparent: {
-    backgroundColor: "transparent !important",
-    boxShadow: "none",
-    paddingTop: "25px",
-    color: "#FFFFFF"
   },
   dark: {
     color: "#FFFFFF",

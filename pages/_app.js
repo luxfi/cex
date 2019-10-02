@@ -36,22 +36,54 @@ import styles from "../assets/jss/views/app.js"
 
 // ****************
 
-const theme = createMuiTheme({
+const lightTheme = createMuiTheme({
   palette: {
-    type: "light"
-    // primary: {
-    //   main: blue[500],
-    // },
-    // secondary: {
-    //   main: 'rgba(29,226,160,0.7)',
-    // },
-    // background: {
-    //   paper: '#1e2748',
-    // },
+    type: "light",
+    primary: {
+      main: "#0099ff", // logo blue
+    },
+    secondary: {
+      main: "#ff9e3e",  // logo yellow
+    }
   },
   typography: {
     fontFamily: "‘BWHaasGroteskTF-55Roman-Web, sans-serif’, sans-serif",
     useNextVariants: true
+  }
+})
+
+const darkTheme = createMuiTheme({
+  palette: {
+    type: "dark",
+    primary: {
+      main: "#0099ff", // logo blue
+    },
+    secondary: {
+      main: "#ff9e3e",  // logo yellow
+    },
+    
+    text: {
+      primary: "#f0f0f0",
+      secondary: "#f0f0f0" // breadcrumbs uses this
+    },
+    background: {
+      default: "#222",
+      paper: "#2f2f2f"
+    },
+    overrides: {
+      MuiCssBaseline: {
+        '@global': {
+          body: {
+            backgroundColor: '#222',
+          },
+        },
+      },
+    }    
+  },
+  typography: {
+    fontFamily: "‘BWHaasGroteskTF-55Roman-Web, sans-serif’, sans-serif",
+    useNextVariants: true,
+
   }
 })
 
@@ -106,46 +138,55 @@ class MyMobxApp extends App {
     }
   }
 
+  getThemeForPath(pathname) {
+    if (pathname.startsWith("/film")) {
+      return darkTheme
+    }
+    return lightTheme
+  }
+
   render() {
     const { Component, pageProps, classes, router } = this.props
     const onHomePage = router.pathname === "/" || router.pathname === "/#"
+    const theme = this.getThemeForPath(router.pathname)
 
     return (
-      <>
-        <Head>
-          <title>ESX | Entertainment Stock Exchange</title>
-          <meta
-            name="viewport"
-            content="initial-scale=1.0, width=device-width"
-          />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          />
-        </Head>
-        <CssBaseline />
-        <Container>
-          <Provider store={this.mobxStore}>
-            <MuiThemeProvider theme={theme}>
-              <MuiPickersUtilsProvider utils={MomentUtils}>
-                <RefProvider>
-                  <div className={classes.root}>
-                    <div className={classes.main} component="main">
-                      <Header onHomePage={onHomePage} />
-                      <Component {...pageProps} />
-                      {/* <Loader /> */}
-                      <Snackbar />
+        <MuiThemeProvider theme={theme}>
+          <React.Fragment>
+            <CssBaseline />
+          <Head>
+            <title>ESX | Entertainment Stock Exchange</title>
+            <meta
+              name="viewport"
+              content="initial-scale=1.0, width=device-width"
+            />
+            <link
+              rel="stylesheet"
+              href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            />
+          </Head>
+            <Container>
+              <Provider store={this.mobxStore}>
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                  <RefProvider>
+                    <div className={classes.root}>
+                      <div className={classes.main} component="main">
+                        <Header />
+                        <Component {...pageProps} />
+                        {/* <Loader /> */}
+                        <Snackbar />
+                      </div>
+                      <div className={classes.stickyFooter}>
+                        <Footer />
+                      </div>
                     </div>
-                    <div className={classes.stickyFooter}>
-                      <Footer />
-                    </div>
-                  </div>
-                </RefProvider>
-              </MuiPickersUtilsProvider>
-            </MuiThemeProvider>
-          </Provider>
-        </Container>
-      </>
+                  </RefProvider>
+                </MuiPickersUtilsProvider>
+              </Provider>
+            </Container>
+
+        </React.Fragment>
+        </MuiThemeProvider>
     )
   }
 

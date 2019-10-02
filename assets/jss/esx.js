@@ -24,7 +24,7 @@ const transition = {
   transition: "all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)"
 }
 
-const conatinerFluid = {
+const containerFluid = {
   paddingRight: "15px",
   paddingLeft: "15px",
   marginRight: "auto",
@@ -32,7 +32,7 @@ const conatinerFluid = {
   width: "100%"
 }
 const container = {
-  ...conatinerFluid,
+  ...containerFluid,
   "@media (min-width: 576px)": {
     maxWidth: "540px"
   },
@@ -76,9 +76,6 @@ const successColor = "#4caf50"
 const infoColor = "#00acc1"
 const roseColor = "#e91e63"
 const grayColor = "#999999"
-
-const darkThemeBG = "#1d2632"
-const darkThemeText = "#eee"
 
 const primaryBoxShadow = {
   boxShadow:
@@ -204,7 +201,7 @@ export {
   drawerWidth,
   transition,
   container,
-  conatinerFluid,
+  containerFluid,
   boxShadow,
   card,
   defaultFont,
@@ -215,8 +212,6 @@ export {
   infoColor,
   roseColor,
   grayColor,
-  darkThemeBG,
-  darkThemeText,
   primaryBoxShadow,
   infoBoxShadow,
   successBoxShadow,
