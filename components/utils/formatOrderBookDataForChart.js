@@ -1,5 +1,5 @@
 export function formatTakeResults(data, printInterval = 5) {
-  if (data.length === 0) return data
+  if (!data || data.length === 0) return []
   let amountOfArrays = 105 / printInterval
   let eachArrayLength = Math.floor(data.length / (amountOfArrays))
   const reducer = (accumulator, currentValue, currentIndex) => {
