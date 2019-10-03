@@ -7,8 +7,8 @@ import Toolbar from "@material-ui/core/Toolbar"
 import IconButton from "@material-ui/core/IconButton"
 import Button from "@material-ui/core/Button"
 import Menu from "@material-ui/core/Menu"
-import Input from "@material-ui/core/Input"
-import InputBase from "@material-ui/core/InputBase"
+// import Input from "@material-ui/core/Input"
+// import InputBase from "@material-ui/core/InputBase"
 import MenuItem from "@material-ui/core/MenuItem"
 import AccountCircle from "@material-ui/icons/AccountCircle"
 import Container from "@material-ui/core/Container"
@@ -23,6 +23,9 @@ import ExitToApp from "@material-ui/icons/ExitToApp"
 
 // Material styles
 import { fade, withStyles, MuiThemeProvider } from "@material-ui/core/styles"
+
+// Core components
+import AutoCompleteSearch from "../AutoCompleteSearch"
 
 import NextLink from "next/link"
 import Router from "next/router"
@@ -190,7 +193,7 @@ class Header extends React.Component {
                       Entertainment Stock Exchange
                     </Typography>
                     <div className={classes.grow} />
-                    <div className={classes.search}>
+                    {/* <div className={classes.search}>
                       <div className={classes.searchIcon}>
                         <SearchIcon />
                       </div>
@@ -201,6 +204,18 @@ class Header extends React.Component {
                           input: classes.inputInput
                         }}
                         inputProps={{ "aria-label": "search" }}
+                      />
+                    </div> */}
+                    <div className={classes.search}>
+                      <div className={classes.searchIcon}>
+                        <SearchIcon />
+                      </div>
+                      <AutoCompleteSearch
+                        placeholder="Search…"
+                        classes={{
+                          root: classes.inputRoot,
+                          input: classes.inputInput
+                        }}
                       />
                     </div>
                     {accountLoaded ? (
