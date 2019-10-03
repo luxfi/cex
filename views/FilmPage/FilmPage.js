@@ -256,7 +256,6 @@ class Index extends React.Component {
       chartPrice,
       (chartPrice - movie.price).toFixed(2)
     )
-    debugger
     return (
       <div className={classNames(classes.flexCenteredColumn, classes.mainArea)}>
         <h1 className={classes.investCompanyName}>{movie.name}</h1>

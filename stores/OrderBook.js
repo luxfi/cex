@@ -31,6 +31,11 @@ const firstTwentyKeys = (orders, orderType) => {
 }
 
 export default class OrderBook {
+  /**
+   * unique id of this todo, immutable.
+   */
+  id = null
+
   @observable ticker = ""
   @observable price = 13.37
   @observable book = new LimitOrderBook()
@@ -42,8 +47,6 @@ export default class OrderBook {
   @observable high = 13.37
   @observable low = 13.37
   @observable printInterval = 5
-  // @observable buys = []
-  // @observable sell = []
 
   constructor(
     initialData = {
@@ -54,7 +57,8 @@ export default class OrderBook {
       low: 13.37,
       printInterval: 5
     },
-    hanzoApi
+    hanzoApi,
+    id = uuid.v4()
   ) {
     // this.orderBookData = initialData.orderBookData
     this.ticker = initialData.ticker
@@ -63,10 +67,17 @@ export default class OrderBook {
     this.high = initialData.high || 13.37
     this.low = initialData.low || 13.37
     this.printInterval = initialData.printInterval || 5
-    // const size = generateOrderSize()
-    // this.generateOrders(this.ticker = 'MDMXFR', 1000, this.book, Date.now(), this.price, size)
     this.api = hanzoApi
-    this.book = this.book || new LimitOrderBook()
+    this.id = id
+  }
+
+  @action refreshData(ticker, price) {
+    this.ticker = ticker
+    this.price = price
+    this.book.clear()
+    this.buys.replace([])
+    this.sells.replace([])
+    this.takeResults.replace([])
   }
 
   // For DEMO
@@ -74,34 +85,13 @@ export default class OrderBook {
     if (this.dataGenerator) {
       this.terminateDataGenerator()
     }
-
-    this.ticker = ticker
-    this.price = price
-    this.book.clear()
-    this.book = this.book || new LimitOrderBook()
-    console.log("initiateDataGenerator book", this.book)
-    this.buys.replace([])
-    this.sells.replace([])
-    this.takeResults.replace([])
-
-    this.generateOrders(
-      this.ticker,
-      1000,
-      this.price,
-      generateOrderSize(),
-      this.book
-    )
+    this.refreshData(ticker, price)
+    this.generateOrders(this.ticker, 1000, this.price, generateOrderSize())
 
     this.dataGenerator = setInterval(() => {
       // order = new LimitOrder(`order${x}`, this.bidAsk(), this.newPrice(price), this.orderSize())
       // result = this.generateOrderAndAdd(book, id, price, size)
-      this.generateOrders(
-        this.ticker,
-        1,
-        this.price,
-        generateOrderSize(),
-        this.book
-      ) //TODO fix this so the ticker is pulled correctly
+      this.generateOrders(this.ticker, 1, this.price, generateOrderSize()) //TODO fix this so the ticker is pulled correctly
     }, 1000) // Some data generator
 
     this.connected = true
@@ -112,22 +102,19 @@ export default class OrderBook {
     this.connected = false
   }
 
-  @action generateOrders(ticker, numberOfOrders, price, size, book) {
-    console.log("generateOrders book", book)
+  @action generateOrders(ticker, numberOfOrders, price) {
     let n = 0
     let id
     while (n < numberOfOrders - 1) {
       id = `${ticker}${uuid.v4()}`
-      this.generateOrderAndAdd(id, price, generateOrderSize(), book)
+      this.generateOrderAndAdd(id, price, generateOrderSize())
       n++
     }
     id = `${ticker}${uuid.v4()}`
-    return this.generateOrderAndAdd(id, price, generateOrderSize(), book)
+    return this.generateOrderAndAdd(id, price, generateOrderSize())
   }
 
-  @action generateOrderAndAdd(id, price, size, book) {
-    console.log("generateOrders", book)
-
+  @action generateOrderAndAdd(id, price, size) {
     let currentOrderID = `order${id}`
     let currentOrderType = bidAsk()
     let currentOrderPrice = this.setNewPrice(price)
@@ -135,8 +122,7 @@ export default class OrderBook {
       currentOrderID,
       currentOrderType,
       currentOrderPrice,
-      size,
-      book
+      size
     )
     this.takeResults.push(takeResult)
     return takeResult
@@ -147,7 +133,6 @@ export default class OrderBook {
     currentOrderType,
     currentOrderPrice,
     currentOrderSize,
-    book,
     orderData,
     onExecute
   ) {
@@ -162,7 +147,7 @@ export default class OrderBook {
       currentOrderPrice,
       currentOrderSize
     )
-    let takeResult = book.add(currentOrder)
+    let takeResult = this.book.add(currentOrder)
     // if (typeof window !== 'undefined') {
     //   console.log("takeResult", takeResult)
     // }

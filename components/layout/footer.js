@@ -171,7 +171,7 @@ class Footer extends React.Component {
             <div className={classes.grow} />
             <span className={classes.socialLinks}>
               <Button
-                size="size"
+                size="small"
                 href="https://www.facebook.com/"
                 target="_blank"
                 title="Share on Facebook"
@@ -180,7 +180,7 @@ class Footer extends React.Component {
                 <FontAwesomeIcon icon={faFacebook} />
               </Button>
               <Button
-                size="size"
+                size="small"
                 href="https://twitter.com/"
                 target="_blank"
                 title="Tweet"
@@ -189,7 +189,7 @@ class Footer extends React.Component {
                 <FontAwesomeIcon icon={faTwitter} />
               </Button>
               <Button
-                size="size"
+                size="small"
                 href="mailto:?subject={PAGETITLE}&body={PAGEDESCRIPTION}:{PAGEURL}"
                 target="_blank"
                 title="Share via Email"

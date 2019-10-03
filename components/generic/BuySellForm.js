@@ -54,7 +54,6 @@ export default class BuySellForm extends React.Component {
       this.props.orderType,
       price,
       size,
-      this.book,
       orderData,
       this.props.onExecute
     )
