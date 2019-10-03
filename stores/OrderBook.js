@@ -1,6 +1,7 @@
 import { action, observable, computed } from 'mobx'
 import _ from 'lodash'
-import { arch } from 'os'
+import uuid from 'uuid'
+
 // import io from 'socket.io-client'
 const LimitOrder = require('limit-order-book').LimitOrder
 const LimitOrderBook = require('limit-order-book').LimitOrderBook
@@ -51,8 +52,8 @@ export default class OrderBook {
     this.high = initialData.high || 13.37
     this.low = initialData.low || 13.37
     this.printInterval = initialData.printInterval || 5
-    const size = generateOrderSize()
-    this.generateOrders(this.ticker = 'MDMXFR', 1000, this.book, Date.now(), this.price, size)
+    // const size = generateOrderSize()
+    // this.generateOrders(this.ticker = 'MDMXFR', 1000, this.book, Date.now(), this.price, size)
 
     this.api = hanzoApi
   }
@@ -60,18 +61,28 @@ export default class OrderBook {
   // For DEMO
   @action initiateDataGenerator(ticker = 'MDMXFR', price = 13.37) {
     this.ticker = ticker
-    this.connected = true
-    let size = generateOrderSize()
+    this.price = price
+    this.book = new LimitOrderBook()
+    this.buys.replace([])
+    this.sells.replace([])
+    this.takeResults.replace([])
+
+    if (this.dataGenerator) {
+      clearInterval(this.dataGenerator)
+    }
+
+    this.generateOrders(this.ticker, 1000, this.book, uuid.v4(), this.price, generateOrderSize())
 
     this.dataGenerator = setInterval(
       () => {
-        size = generateOrderSize()
         // order = new LimitOrder(`order${x}`, this.bidAsk(), this.newPrice(price), this.orderSize())
         // result = this.generateOrderAndAdd(book, id, price, size)
-        this.generateOrders(ticker = 'MDMXFR', 1, this.book, Date.now(), this.price, size) //TODO fix this so the ticker is pulled correctly
+        this.generateOrders(this.ticker, 1, this.book, uuid.v4(), this.price, generateOrderSize()) //TODO fix this so the ticker is pulled correctly
       },
-      2500
+      5000
     ) // Some data generator
+
+    this.connected = true
   }
 
   @action terminateDataGenerator() {
@@ -101,7 +112,12 @@ export default class OrderBook {
     return takeResult
   }
 
-  @action placeNewOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize, book = this.book, onExecute) {
+  @action placeNewOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize, book = this.book, orderData, onExecute) {
+    if (onExecute && !onExecute(orderData, currentOrderType)) {
+      // The user doesn't own any shares
+      return null
+    }
+
     let currentOrder = new LimitOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize)
     let takeResult = book.add(currentOrder)
     // if (typeof window !== 'undefined') {
@@ -143,7 +159,7 @@ export default class OrderBook {
     return this.generateOrderAndAdd(book, id, price, size)
   }
 
-  @action setNewPrice = (x, range) => {
+  @action setNewPrice = () => {
     let rnd = Math.random(); // generate number, 0 <= x < 1.0
     let volatility = .02 // 1%
     let changePercent = 2 * volatility * rnd;
@@ -155,11 +171,11 @@ export default class OrderBook {
     }
     let changeAmount = this.price * changePercent
     let newPrice = (this.price + changeAmount)
-    this.price = newPrice; // this price is only used to realistic data
+    this.price = newPrice // this price is only used to realistic data
     if (newPrice < this.low) { this.low = newPrice } //set new low
     if (newPrice > this.high) { this.high = newPrice } //set new high
-    newPrice = Math.floor(newPrice * 100) / 100
-    return newPrice // return a price that is fixed to 2 decimals 
+    // newPrice = Math.floor(newPrice * 100) / 100
+    return newPrice.toFixed(2) // return a price that is fixed to 2 decimals 
   }
 
   @computed get buyOrders() {

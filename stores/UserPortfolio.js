@@ -78,12 +78,11 @@ export default class UserPortfolio {
     try {
       // Using localStorage for now
 
-      
-      let holdings = 0.00
-      this.investments.map(h => {
-        holdings += (h.amount * h.price)
-      })
-      this.holdings = holdings
+      const _watchlist = localStorage.getItem('watchlist')
+
+      if (_watchlist !==  null) {
+        this.watchlist = JSON.parse(_investments)
+      }
 
       onSuccess && onSuccess()
     } catch (ex) {
@@ -101,13 +100,6 @@ export default class UserPortfolio {
     try {
       // Using localStorage for now
 
-      
-      let holdings = 0.00
-      this.investments.map(h => {
-        holdings += (h.amount * h.price)
-      })
-      this.holdings = holdings
-
       onSuccess && onSuccess()
     } catch (ex) {
       console.log('Error logging in', ex)
@@ -115,6 +107,14 @@ export default class UserPortfolio {
     } finally {
       this.updating = false
     }
+  }
+
+  updateHoldings () {
+    let holdings = 0.00
+    this.investments.map(h => {
+      holdings += (h.amount * h.price)
+    })
+    this.holdings = holdings
   }
 
   @action async getInvestments (onSuccess, onError) {
@@ -124,13 +124,12 @@ export default class UserPortfolio {
     
     try {
       // Using localStorage for now
+      const _investments = localStorage.getItem('investments')
 
-      
-      let holdings = 0.00
-      this.investments.map(h => {
-        holdings += (h.amount * h.price)
-      })
-      this.holdings = holdings
+      if (_investments !==  null) {
+        this.investments = JSON.parse(_investments)
+        updateHoldings()
+      }
 
       onSuccess && onSuccess()
     } catch (ex) {
@@ -141,10 +140,42 @@ export default class UserPortfolio {
     }
   }
 
-  @action onOrderExecute (order, orderType, quantity) {
+  @action onOrderExecute (order, orderType) {
     // order is the thing movie that was bought or sold
     // orderType is buy/sell
-    // quantity is how many
+
+    // order = {
+    //   ticker: string,
+    //   amount: number,
+    //   price: number,
+    //   categories: array[string]
+    // }
+
+    const holdingIndex = _.findIndex(this.investments, { 'ticker': order.ticker })
+
+    if (orderType === 'buy') {
+      // Add the order to the user portfolio, no need to check anything
+      if (holdingIndex > -1) {
+        // Then we have a holding
+        this.investments[holdingIndex].amount += order.amount
+        this.investments[holdingIndex].price = order.price
+      } else {
+        this.investments.push(order)
+      }
+    } else {
+      // Make sure the user owns enough shares to sell?
+      if (holdingIndex > -1) {
+        // Then we have a holding
+        this.investments[holdingIndex].amount -= order.amount
+        this.investments[holdingIndex].price = order.price
+      } else {
+        return false
+      }
+    }
+
+    updateHoldings()
+    localStorage.setItem('investments', JSON.stringify(toJS(this.investments)))
+    return true
   }
 
   @computed get userHoldings () {
