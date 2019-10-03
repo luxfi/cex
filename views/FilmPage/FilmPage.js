@@ -150,7 +150,7 @@ class Index extends React.Component {
             <p className={classes.description}>{movie.shortDescription}</p>
           </div>
           <div className={classes.movieButtonsOuter}>
-            <Button
+            {/* <Button
               href={movie.trailer}
               component={ButtonLink}
               target="_blank"
@@ -163,7 +163,7 @@ class Index extends React.Component {
             >
               <FontAwesomeIcon icon={faPlay} style={{ paddingRight: "2px" }} />
               Watch Trailer
-            </Button>
+            </Button> */}
             <Button
               rel="noopener noreferrer"
               style={{

@@ -66,6 +66,7 @@ export default class OrderBook {
     // const size = generateOrderSize()
     // this.generateOrders(this.ticker = 'MDMXFR', 1000, this.book, Date.now(), this.price, size)
     this.api = hanzoApi
+    this.book = this.book || new LimitOrderBook()
   }
 
   // For DEMO
@@ -76,7 +77,9 @@ export default class OrderBook {
 
     this.ticker = ticker
     this.price = price
-    this.book = new LimitOrderBook()
+    this.book.clear()
+    this.book = this.book || new LimitOrderBook()
+    console.log("initiateDataGenerator book", this.book)
     this.buys.replace([])
     this.sells.replace([])
     this.takeResults.replace([])
@@ -84,9 +87,9 @@ export default class OrderBook {
     this.generateOrders(
       this.ticker,
       1000,
-      uuid.v4(),
       this.price,
-      generateOrderSize()
+      generateOrderSize(),
+      this.book
     )
 
     this.dataGenerator = setInterval(() => {
@@ -95,9 +98,9 @@ export default class OrderBook {
       this.generateOrders(
         this.ticker,
         1,
-        uuid.v4(),
         this.price,
-        generateOrderSize()
+        generateOrderSize(),
+        this.book
       ) //TODO fix this so the ticker is pulled correctly
     }, 1000) // Some data generator
 
@@ -109,28 +112,31 @@ export default class OrderBook {
     this.connected = false
   }
 
-  @action setTicker(ticker) {
-    this.ticker = ticker
+  @action generateOrders(ticker, numberOfOrders, price, size, book) {
+    console.log("generateOrders book", book)
+    let n = 0
+    let id
+    while (n < numberOfOrders - 1) {
+      id = `${ticker}${uuid.v4()}`
+      this.generateOrderAndAdd(id, price, generateOrderSize(), book)
+      n++
+    }
+    id = `${ticker}${uuid.v4()}`
+    return this.generateOrderAndAdd(id, price, generateOrderSize(), book)
   }
 
-  @action updatePrintInterval(time) {
-    this.printInterval = time
-  }
+  @action generateOrderAndAdd(id, price, size, book) {
+    console.log("generateOrders", book)
 
-  @action generateOrderAndAdd(id, price) {
-    // const order = new LimitOrder(`order${id}`, bidAsk(), this.setNewPrice(price), size)
-    // // console.log(`order`, order)
-    // // console.log('this.takeresults', this.takeResults)
-    // let result = book.add(order)
     let currentOrderID = `order${id}`
     let currentOrderType = bidAsk()
     let currentOrderPrice = this.setNewPrice(price)
-    let currentOrderSize = generateOrderSize()
     let takeResult = this.placeNewOrder(
       currentOrderID,
       currentOrderType,
       currentOrderPrice,
-      currentOrderSize
+      size,
+      book
     )
     this.takeResults.push(takeResult)
     return takeResult
@@ -141,6 +147,7 @@ export default class OrderBook {
     currentOrderType,
     currentOrderPrice,
     currentOrderSize,
+    book,
     orderData,
     onExecute
   ) {
@@ -155,7 +162,7 @@ export default class OrderBook {
       currentOrderPrice,
       currentOrderSize
     )
-    let takeResult = this.book.add(currentOrder)
+    let takeResult = book.add(currentOrder)
     // if (typeof window !== 'undefined') {
     //   console.log("takeResult", takeResult)
     // }
@@ -170,6 +177,14 @@ export default class OrderBook {
 
     // TODO call onExecute to update the user's portfolio
     return takeResult
+  }
+
+  @action setTicker(ticker) {
+    this.ticker = ticker
+  }
+
+  @action updatePrintInterval(time) {
+    this.printInterval = time
   }
 
   @action updateOrders() {
@@ -194,18 +209,6 @@ export default class OrderBook {
         price: askMap[price].price
       }))
     )
-  }
-
-  @action generateOrders(ticker, numberOfOrders, price, size) {
-    let n = 0
-    let id
-    while (n < numberOfOrders - 1) {
-      id = `${ticker}${uuid.v4()}`
-      this.generateOrderAndAdd(id, price, generateOrderSize())
-      n++
-    }
-    id = `${ticker}${uuid.v4()}`
-    return this.generateOrderAndAdd(id, price, size)
   }
 
   @action setNewPrice = () => {
