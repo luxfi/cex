@@ -32,12 +32,20 @@ export default class BuySellForm extends React.Component {
   submitOrder(e) {
     e.preventDefault();
     const price = parseFloat(this.state.price)
-    const size = parseFloat(this.state.size)
+    const size = parseInt(this.state.size)
     if (!price || !size) return //still need to validate
     let id = Date.now() // unique id
     let currentOrderID = `${this.props.ticker}-${id}`
     // id type price size book
-    this.props.orderBook.placeNewOrder(currentOrderID, this.props.orderType, price, size)
+    const { ticker, movieCategories } = this.props
+    const orderData = {
+      ticker: ticker,
+      amount: size,
+      price: price.toFixed(2),
+      categories: movieCategories
+    }
+    
+    this.props.orderBook.placeNewOrder(currentOrderID, this.props.orderType, price, size, orderData, this.props.onExecute)
     this.setState({
       price: "",
       size: "",
@@ -84,11 +92,14 @@ export default class BuySellForm extends React.Component {
   }
 
   render() {
+    const { orders, buttonColor, buttonText, width, orderType, maxSell } = this.props
+    const amountPlaceholder = orderType === 'bid' ?
+      'Number of Shares' : `Number of Shares (max ${maxSell})`
     return (
-      <form onSubmit={this.submitOrder} style={{ width: this.props.width }}>
+      <form onSubmit={this.submitOrder} style={{ width: width }}>
         {/* <p className="dark">Your balance 0.0000 USDT D W</p>
         <p className="dark">Obtainable 0.0000 THETA</p> */}
-        <p>{this.props.buttonText}</p>
+        <p>{buttonText}</p>
         <div className="form-group">
           <input 
           type="number" name="price" 
@@ -98,7 +109,7 @@ export default class BuySellForm extends React.Component {
           value={this.state.price} />
         </div>
         <div className="form-group">
-          <input type="number" name="size" className="form-control" id="inputTheta" placeholder="Number of Shares" onChange={this.handleInputChange} value={this.state.size} />
+          <input type="number" name="size" className="form-control" id="inputTheta" placeholder={amountPlaceholder} onChange={this.handleInputChange} value={this.state.size} />
         </div>
         <div className="form-group">
           <input disabled type="string" 
@@ -108,8 +119,8 @@ export default class BuySellForm extends React.Component {
             value={this.state.total !== '' ? `$${this.state.total}` : ''} />
         </div>
         {/* <p className="dark">Fee 0 USDT (0.2%)</p> */}
-        <button type="submit" className={`btn btn-${this.props.buttonColor || "primary"}`} style={{ width: this.props.width }}>{this.props.buttonText}</button>
-        <Orders orders={this.props.orders} />
+        <button type="submit" className={`btn btn-${buttonColor || "primary"}`} style={{ width: width }}>{buttonText}</button>
+        <Orders orders={orders} />
         <style jsx>{`
                 form {
                     width: 100%;

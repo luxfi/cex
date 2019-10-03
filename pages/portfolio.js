@@ -27,21 +27,23 @@ class Portfolio extends React.Component {
     this.setState({ tabIdx: val })
   }
 
+  componentDidMount () {
+    this.props.store.userPortfolio.getInvestments()
+    // this.props.store.userPortfolio.getWatchlist() TODO
+  }
+
   render() {
     const { store, classes } = this.props
     const { movieStore, userPortfolio } = store
     const { tabIdx } = this.state
 
     // What functions do we need from the movie and user store?
-    const findMovieByTicker = t => {
-      movieStore.getMovieByTicker(t)
-    }
-    const addToWatchlist = t => {
-      userPortfolio.addToWatchlist(t, findMovieByTicker)
-    }
-    const removeFromWatchlist = t => {
-      userPortfolio.removeFromWatchlist(t)
-    }
+    const findMovieByTicker = t => movieStore.getMovieByTicker(t)
+    const addToWatchlist = t => { userPortfolio.addToWatchlist(t, findMovieByTicker) }
+    const removeFromWatchlist = t => { userPortfolio.removeFromWatchlist(t) }
+
+    const fakeRankPercent = 1 - (userPortfolio.holdings / 137000).toFixed(2)
+    const fakeRank = 28749 - Math.floor(fakeRankPercent * 28749)
 
     return (
       <div className={classes.container}>
@@ -53,14 +55,20 @@ class Portfolio extends React.Component {
           findMovie={findMovieByTicker}
           holdings={userPortfolio.userHoldings}
           weeklyChange={userPortfolio.earningsChangeWeek}
-          rank={userPortfolio.rank}
-          rankPercent={userPortfolio.rankPercent}
+          rank={fakeRank < 1 ? 1 : fakeRank}
+          rankPercent={fakeRankPercent < .001 ? 1 : fakeRankPercent * 100}
           benefits={userPortfolio.benefits}
           benefitsMonthly={userPortfolio.benefitsThisMonth}
           topCategories={userPortfolio.topPortfolioCategories}
           watchlist={userPortfolio.userTopWatchlist}
         />
-        <TradeView tabIdx={tabIdx} index={1} store={store} />
+        <TradeView 
+          tabIdx={tabIdx}
+          index={1}
+          investments={userPortfolio.topInvestments}
+          findMovieByTicker={findMovieByTicker}
+          store={store}
+        />
         <ProTraderCTA />
       </div>
     )

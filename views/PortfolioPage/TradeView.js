@@ -5,7 +5,7 @@ import TrendingInvestments from "./Sections/TrendingInvestments"
 import TopPicks from "./Sections/TopInvestmentPicks"
 
 const TradeView = props => {
-  const { tabIdx, index, store } = props
+  const { tabIdx, index, investments, findMovieByTicker, store } = props
 
   // Hide the tab
   if (tabIdx !== index) return null
@@ -13,7 +13,7 @@ const TradeView = props => {
   return (
     <div>
       <TopPicks store={store} />
-      <TrendingInvestments store={store} />
+      <TrendingInvestments investments={investments} findMovieByTicker={findMovieByTicker} />
     </div>
   )
 }
