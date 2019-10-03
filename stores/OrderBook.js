@@ -32,18 +32,18 @@ const firstTwentyKeys = (orders, orderType) => {
 
 export default class OrderBook {
   @observable ticker = ""
-  @observable connected = false
-  @observable takeResults = []
   @observable price = 13.37
+  @observable book = new LimitOrderBook()
+  @observable buys = []
+  @observable sells = []
+  @observable takeResults = []
+  @observable connected = false
   @observable currentPrice = 13.37
   @observable high = 13.37
   @observable low = 13.37
   @observable printInterval = 5
-  @observable buys = []
-  @observable sells = []
   // @observable buys = []
   // @observable sell = []
-  @observable book = new LimitOrderBook()
 
   constructor(
     initialData = {
@@ -65,22 +65,21 @@ export default class OrderBook {
     this.printInterval = initialData.printInterval || 5
     // const size = generateOrderSize()
     // this.generateOrders(this.ticker = 'MDMXFR', 1000, this.book, Date.now(), this.price, size)
-
     this.api = hanzoApi
   }
 
   // For DEMO
   @action initiateDataGenerator(ticker = "MDMXFR", price = 13.37) {
+    if (this.dataGenerator) {
+      clearInterval(this.dataGenerator)
+    }
+
     this.ticker = ticker
     this.price = price
     this.book = new LimitOrderBook()
     this.buys.replace([])
     this.sells.replace([])
     this.takeResults.replace([])
-
-    if (this.dataGenerator) {
-      clearInterval(this.dataGenerator)
-    }
 
     this.generateOrders(
       this.ticker,
