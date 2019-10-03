@@ -56,6 +56,7 @@ export default class BuySellForm extends React.Component {
   handleInputChange(event) {
     const newState = this.state
     let newVal = event.target.value
+    const { orderType, maxSell } = this.props
 
     // if (newVal.indexOf('$') > -1) newVal = parseFloat(newVal.split('$').slice(-1).pop())
     
@@ -75,6 +76,7 @@ export default class BuySellForm extends React.Component {
           newState.total = total.toFixed(2)
         }
       } else if (event.target.name === "size") {
+        if (orderType === 'ask' && newVal > maxSell) return
         if (newState.price) {
           const total = newVal * newState.price
           newState.total = total.toFixed(2)
