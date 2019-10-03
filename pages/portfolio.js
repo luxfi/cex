@@ -49,7 +49,7 @@ class Portfolio extends React.Component {
       <div className={classes.container}>
         <div style={{ height: "70px" }}></div>
         <PillsTabs tabIdx={tabIdx} handleChange={this.setTab} />
-        <PortfolioView 
+        <PortfolioView
           tabIdx={tabIdx}
           index={0}
           findMovie={findMovieByTicker}
@@ -67,6 +67,7 @@ class Portfolio extends React.Component {
           index={1}
           investments={userPortfolio.topInvestments}
           findMovieByTicker={findMovieByTicker}
+          store={store}
         />
         <ProTraderCTA />
       </div>

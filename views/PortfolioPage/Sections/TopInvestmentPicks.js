@@ -1,8 +1,15 @@
 import React from "react"
+import Router from "next/router"
 // nodejs library that concatenates classes
 import classNames from "classnames"
 // @material-ui/core components
-import { Avatar, CardHeader, Chip, Divider, Typography } from "@material-ui/core"
+import {
+  Avatar,
+  CardHeader,
+  Chip,
+  Divider,
+  Typography
+} from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
 // @material-ui/icons
@@ -34,44 +41,44 @@ const MyLoader = () => (
 
 const dataStub = [
   {
-    title: 'Call of the Wild: A Space Odyssey',
+    title: "Call of the Wild: A Space Odyssey",
     image: <MyLoader />,
     description: `Deep in the human unconscious is a pervasive need for a
     logical universe that makes sense. But the real universe is
     always one step beyond logic.`,
-    releaseDate: '2019',
-    category: 'indie',
-    currencySymbol: '$',
+    releaseDate: "2019",
+    category: "indie",
+    currencySymbol: "$",
     amount: 760
   },
   {
-    title: 'Call of the Wild: A Space Odyssey',
+    title: "Call of the Wild: A Space Odyssey",
     image: <MyLoader />,
     description: `Deep in the human unconscious is a pervasive need for a
     logical universe that makes sense. But the real universe is
     always one step beyond logic.`,
-    releaseDate: '2019',
-    category: 'indie',
-    currencySymbol: '$',
+    releaseDate: "2019",
+    category: "indie",
+    currencySymbol: "$",
     amount: 3360
   },
   {
-    title: 'Call of the Wild: A Space Odyssey',
+    title: "Call of the Wild: A Space Odyssey",
     image: <MyLoader />,
     description: `Deep in the human unconscious is a pervasive need for a
     logical universe that makes sense. But the real universe is
     always one step beyond logic.`,
-    releaseDate: '2019',
-    category: 'indie',
-    currencySymbol: '$',
+    releaseDate: "2019",
+    category: "indie",
+    currencySymbol: "$",
     amount: 620
   }
 ]
 
 export default props => {
   const classes = useStyles()
-  const { ...rest } = props
-
+  const { store, ...rest } = props
+  const { investorTopPicks } = store.movieStore
   return (
     <>
       <div className={classes.section}>
@@ -79,38 +86,46 @@ export default props => {
           Top Picks for You
         </h2>
         <GridContainer>
-          {
-            dataStub.map((d, i) => 
-              <GridItem key={`picks_${i}`} xs={12} sm={12} md={4}>
-                <Card className={classes.investmentCard}>
-                  <CardHeader
-                    avatar={
-                      <Avatar aria-label="avatar-image">
-                        {d.title[0]}
-                      </Avatar>
-                    }
-                    action={
-                      <Chip label={d.category} className={classes.categoryChip} />
-                    }
-                    title={d.title}
-                    subheader={d.releaseDate}
-                  />
-                  <CardBody>
-                    <p className={classes.description}>
-                      {d.description}
-                    </p>
-                    <Divider variant='middle' />
-                    <div className={classes.ctaDiv}>
-                      <Chip label="invest" className={classes.ctaChip} clickable />
-                      <Typography className={classes.earningsAmountText}>
-                        <Typography component='span' variant='inherit' className={classes.currencySymbol}>{d.currencySymbol}</Typography>{d.amount}
+          {investorTopPicks.map((d, i) => (
+            <GridItem key={`picks_${i}`} xs={12} sm={12} md={4}>
+              <Card className={classes.investmentCard}>
+                <CardHeader
+                  avatar={
+                    <Avatar src={d.posterImg} aria-label="avatar-image" />
+                  }
+                  action={
+                    <Chip label={d.genre[0]} className={classes.categoryChip} />
+                  }
+                  title={d.name}
+                  subheader={d.releaseDate}
+                />
+                <CardBody>
+                  <p className={classes.description}>{d.shortDescription}</p>
+                  <Divider variant="middle" />
+                  <div className={classes.ctaDiv}>
+                    <Chip
+                      label="invest"
+                      className={classes.ctaChip}
+                      clickable
+                      onClick={() => {
+                        Router.push(`/film/${d.movieSlug}`)
+                      }}
+                    />
+                    <Typography className={classes.earningsAmountText}>
+                      <Typography
+                        component="span"
+                        variant="inherit"
+                        className={classes.currencySymbol}
+                      >
+                        ${/* {d.currencySymbol} */}
                       </Typography>
-                    </div>
-                  </CardBody>
-                </Card>
-              </GridItem>
-            )
-          }
+                      {d.price}
+                    </Typography>
+                  </div>
+                </CardBody>
+              </Card>
+            </GridItem>
+          ))}
         </GridContainer>
       </div>
       <style jsx>{`
