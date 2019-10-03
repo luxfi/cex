@@ -132,6 +132,7 @@ export default class BuySellForm extends React.Component {
             onChange={this.handleInputChange}
             // value={this.state.price !== '' ? `$${this.state.price}` : ''} />
             value={this.state.price}
+            step="0.01"
           />
         </div>
         <div className="form-group">
