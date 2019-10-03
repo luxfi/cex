@@ -14,7 +14,9 @@ export default props => {
     sellOrders,
     orderBook,
     ticker,
-    onExecute
+    movieCategories,
+    onExecute,
+    maxSell
   } = props
 
   let labels = timelineLabels()
@@ -38,7 +40,8 @@ export default props => {
             ticker={ticker}
             orders={buyOrders}
             orderBook={orderBook}
-            onExecue={onExecute}
+            onExecute={onExecute}
+            movieCategories={movieCategories}
           />
           <div className="divider" />
           <BuySellForm
@@ -48,7 +51,9 @@ export default props => {
             ticker={ticker}
             orders={sellOrders}
             orderBook={orderBook}
-            onExecue={onExecute}
+            onExecute={onExecute}
+            movieCategories={movieCategories}
+            maxSell={maxSell}
           />
         </div>
       </div>

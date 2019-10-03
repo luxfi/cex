@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "next/link"
+import { toJS } from 'mobx'
 import { inject, observer } from "mobx-react"
 import { withRouter } from "next/router"
 
@@ -23,9 +24,7 @@ import { padDollarAmount } from '../../components/utils/generic'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 // the nice looking double chevrons are part of the "pro" package that costs money
 import {
-  faPlay,
-  faChevronUp,
-  faChevronDown
+  faPlay
 } from "@fortawesome/free-solid-svg-icons"
 
 import styles from "../../assets/jss/views/filmPage.js"
@@ -83,9 +82,10 @@ class Index extends React.Component {
     // Need to pass the order book the data to render
     const { router } = this.props
     const { slug } = router.query
-    const { movieStore, orderBook } = this.props.store
+    const { movieStore, orderBook, userPortfolio } = this.props.store
     const movie = movieStore.getMovieBySlug(slug)
     orderBook.initiateDataGenerator(movie.ticker, movie.price)
+    userPortfolio.getInvestments()
   }
 
   onTabSelected(tab) {
@@ -242,11 +242,12 @@ class Index extends React.Component {
     sellOrders,
     orderBook,
     loggedIn,
-    onExecue
+    onExecute,
+    maxSell
   ) {
     const price = padDollarAmount(chartPrice).split('.')
     const deltaString = formatMonthlyStats(chartPrice, (chartPrice - movie.price).toFixed(2))
-
+    
     return (
       <div className={classNames(classes.flexCenteredColumn, classes.mainArea)}>
         <h1 className={classes.investCompanyName}>{movie.name}</h1>
@@ -279,7 +280,9 @@ class Index extends React.Component {
               sellOrders={sellOrders}
               orderBook={orderBook}
               ticker={movie.ticker}
-              onExecue={onExecue}
+              onExecute={onExecute}
+              movieCategories={toJS(movie.genre)}
+              maxSell={maxSell}
             /> : <Typography>Loading chart...</Typography>
           }
         </div>
@@ -360,6 +363,9 @@ class Index extends React.Component {
       orderBook.updatePrintInterval(time)
     }
 
+    // Load necessary user data
+    const maxSell = userPortfolio.getMaxSell(movie.ticker)
+
     return (
       <>
         <article className={classNames(classes.container, classes.outermost)}>
@@ -378,7 +384,8 @@ class Index extends React.Component {
                 sellOrders,
                 orderBook,
                 userStore.token !== null,
-                (order, orderType) => { return userPortfolio.onOrderExecute(order, orderType) }
+                (order, orderType) => { return userPortfolio.onOrderExecute(order, orderType) },
+                maxSell
             )
           }
           {this.state.selectedTab === "about"
