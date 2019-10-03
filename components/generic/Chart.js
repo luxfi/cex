@@ -6,13 +6,17 @@ import { Element } from "react-scroll"
 
 export default props => {
   const {
-    data,
+    chartData,
     yDomain,
     updatePrintInterval,
     printInterval,
     buyOrders,
     sellOrders,
-    orderBook
+    orderBook,
+    ticker,
+    movieCategories,
+    onExecute,
+    maxSell
   } = props
 
   let labels = timelineLabels()
@@ -27,24 +31,29 @@ export default props => {
         printInterval={printInterval}
       />
       <div className="posts-container">
-        <FakeCandlestickChart data={data} yDomain={yDomain} labels={labels} />
+        <FakeCandlestickChart data={chartData} yDomain={yDomain} labels={labels} />
         <div className="container-row space-between">
           <BuySellForm
             buttonColor="green"
             buttonText="BUY"
             orderType="bid"
-            ticker={"MDMXFR"}
+            ticker={ticker}
             orders={buyOrders}
             orderBook={orderBook}
+            onExecute={onExecute}
+            movieCategories={movieCategories}
           />
           <div className="divider" />
           <BuySellForm
             buttonColor="red"
             buttonText="SELL"
             orderType="ask"
-            ticker={"MDMXFR"}
+            ticker={ticker}
             orders={sellOrders}
             orderBook={orderBook}
+            onExecute={onExecute}
+            movieCategories={movieCategories}
+            maxSell={maxSell}
           />
         </div>
       </div>

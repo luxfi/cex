@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "next/link"
+import { toJS } from 'mobx'
 import { inject, observer } from "mobx-react"
 import { withRouter } from "next/router"
 
@@ -23,9 +24,7 @@ import { padDollarAmount } from '../../components/utils/generic'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 // the nice looking double chevrons are part of the "pro" package that costs money
 import {
-  faPlay,
-  faChevronUp,
-  faChevronDown
+  faPlay
 } from "@fortawesome/free-solid-svg-icons"
 
 import styles from "../../assets/jss/views/filmPage.js"
@@ -40,10 +39,10 @@ const ButtonLink = React.forwardRef(
   )
 )
 
-const formatMonthlyStats = (m) => {
-  return (m.valueDelta > 0 ? "+ " : "- ") +
-    m.valueDelta +
-    " (" + (m.valueDelta / m.price).toFixed(4) * 100 + "%) " +
+const formatMonthlyStats = (price, valueDelta) => {
+  return (valueDelta > 0 ? "+ " : "- ") +
+    Math.abs(valueDelta) +
+    " (" + (valueDelta / price).toFixed(4) * 100 + "%) " +
     " PAST MONTH"
 }
 
@@ -74,14 +73,19 @@ class Index extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedTab: "invest",
+      selectedTab: "about",
     }
     this.onTabSelected = this.onTabSelected.bind(this)
   }
 
   componentDidMount () {
-    // Can we initialize the order book here?
-    console.log('film page mounted', this.props.store)
+    // Need to pass the order book the data to render
+    const { router } = this.props
+    const { slug } = router.query
+    const { movieStore, orderBook, userPortfolio } = this.props.store
+    const movie = movieStore.getMovieBySlug(slug)
+    orderBook.initiateDataGenerator(movie.ticker, movie.price)
+    userPortfolio.getInvestments()
   }
 
   onTabSelected(tab) {
@@ -229,18 +233,21 @@ class Index extends React.Component {
   renderInvestMain(
     classes,
     movie,
-    data,
+    chartPrice,
+    chartData,
     yDomain,
     updatePrintInterval,
     printInterval,
     buyOrders,
     sellOrders,
     orderBook,
-    loggedIn
+    loggedIn,
+    onExecute,
+    maxSell
   ) {
-    const price = padDollarAmount(movie.price).split('.')
-    const deltaString = formatMonthlyStats(movie)
-
+    const price = padDollarAmount(chartPrice).split('.')
+    const deltaString = formatMonthlyStats(chartPrice, (chartPrice - movie.price).toFixed(2))
+    
     return (
       <div className={classNames(classes.flexCenteredColumn, classes.mainArea)}>
         <h1 className={classes.investCompanyName}>{movie.name}</h1>
@@ -262,15 +269,22 @@ class Index extends React.Component {
           ) : null
         }
         <div>
-          <Chart
-            data={data}
-            yDomain={yDomain}
-            updatePrintInterval={updatePrintInterval}
-            printInterval={printInterval}
-            buyOrders={buyOrders}
-            sellOrders={sellOrders}
-            orderBook={orderBook}
-          />
+          {
+            orderBook.connected ?
+            <Chart
+              chartData={chartData}
+              yDomain={yDomain}
+              updatePrintInterval={updatePrintInterval}
+              printInterval={printInterval}
+              buyOrders={buyOrders}
+              sellOrders={sellOrders}
+              orderBook={orderBook}
+              ticker={movie.ticker}
+              onExecute={onExecute}
+              movieCategories={toJS(movie.genre)}
+              maxSell={maxSell}
+            /> : <Typography>Loading chart...</Typography>
+          }
         </div>
       </div>
     )
@@ -337,17 +351,20 @@ class Index extends React.Component {
     // get router slug and find article
     const { router } = this.props
     const { slug } = router.query
-    const { movieStore, orderBook, userStore } = this.props.store
+    const { movieStore, orderBook, userStore, userPortfolio } = this.props.store
     const movie = movieStore.getMovieBySlug(slug)
 
     // orderBook stuff
     let takeResultsArray = orderBook.takeResults.slice(0)
     const { printInterval, buyOrders, sellOrders } = orderBook
-    const data = formatTakeResults(takeResultsArray, printInterval)
+    const chartData = formatTakeResults(takeResultsArray, printInterval)
     const yDomain = [orderBook.low * 0.94, orderBook.high * 1.06]
     const updatePrintInterval = time => {
       orderBook.updatePrintInterval(time)
     }
+
+    // Load necessary user data
+    const maxSell = userPortfolio.getMaxSell(movie.ticker)
 
     return (
       <>
@@ -358,14 +375,17 @@ class Index extends React.Component {
             : this.renderInvestMain(
                 classes,
                 movie,
-                data,
+                orderBook.price,
+                chartData,
                 yDomain,
                 updatePrintInterval,
                 printInterval,
                 buyOrders,
                 sellOrders,
                 orderBook,
-                userStore.token !== null
+                userStore.token !== null,
+                (order, orderType) => { return userPortfolio.onOrderExecute(order, orderType) },
+                maxSell
             )
           }
           {this.state.selectedTab === "about"
