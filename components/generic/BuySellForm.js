@@ -37,7 +37,7 @@ export default class BuySellForm extends React.Component {
     let id = Date.now() // unique id
     let currentOrderID = `${this.props.ticker}-${id}`
     // id type price size book
-    this.props.orderBook.placeNewOrder(currentOrderID, this.props.orderType, price, size)
+    this.props.orderBook.placeNewOrder(currentOrderID, this.props.orderType, price, size, this.props.onExecute)
     this.setState({
       price: "",
       size: "",
@@ -84,11 +84,13 @@ export default class BuySellForm extends React.Component {
   }
 
   render() {
+    const { orders, buttonColor, buttonText, width } = this.props
+    
     return (
-      <form onSubmit={this.submitOrder} style={{ width: this.props.width }}>
+      <form onSubmit={this.submitOrder} style={{ width: width }}>
         {/* <p className="dark">Your balance 0.0000 USDT D W</p>
         <p className="dark">Obtainable 0.0000 THETA</p> */}
-        <p>{this.props.buttonText}</p>
+        <p>{buttonText}</p>
         <div className="form-group">
           <input 
           type="number" name="price" 
@@ -108,8 +110,8 @@ export default class BuySellForm extends React.Component {
             value={this.state.total !== '' ? `$${this.state.total}` : ''} />
         </div>
         {/* <p className="dark">Fee 0 USDT (0.2%)</p> */}
-        <button type="submit" className={`btn btn-${this.props.buttonColor || "primary"}`} style={{ width: this.props.width }}>{this.props.buttonText}</button>
-        <Orders orders={this.props.orders} />
+        <button type="submit" className={`btn btn-${buttonColor || "primary"}`} style={{ width: width }}>{buttonText}</button>
+        <Orders orders={orders} />
         <style jsx>{`
                 form {
                     width: 100%;
