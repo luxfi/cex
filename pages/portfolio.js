@@ -47,7 +47,7 @@ class Portfolio extends React.Component {
     let fakeRank = 28749 - Math.floor(fakeRankPercent * 28749)
     fakeRankPercent = fakeRankPercent < .001 ? 1 : fakeRankPercent * 100
     fakeRank = fakeRank < 1 ? 1 : fakeRank
-    if (userPortfolio.holdings = 0) {
+    if (userPortfolio.holdings === 0) {
       fakeRank = 0
       fakeRankPercent = 0
     }
