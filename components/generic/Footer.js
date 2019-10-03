@@ -239,8 +239,7 @@ const styles = theme => {
     anchor: {
       margin: "3px",
       display: "inline-block",
-      // color: "white",
-      //color: "#fff",
+      color: "#fff",
       padding: "7px",
       borderRadius: "2px",
       height: "18px"

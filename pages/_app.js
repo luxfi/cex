@@ -184,9 +184,7 @@ class MyMobxApp extends App {
                       <Snackbar />
                     </div>
                     <div className={classes.stickyFooter}>
-                      <MuiThemeProvider theme={darkTheme}>
-                        <Footer />
-                      </MuiThemeProvider>
+                      <Footer theme={darkTheme} />
                     </div>
                   </div>
                 </RefProvider>
