@@ -77,7 +77,7 @@ const dataStub = [
 export default props => {
   const classes = useStyles()
   const { store, ...rest } = props
-  debugger
+  const { investorTopPicks } = store.movieStore
   return (
     <>
       <div className={classes.section}>
@@ -85,21 +85,21 @@ export default props => {
           Top Picks for You
         </h2>
         <GridContainer>
-          {dataStub.map((d, i) => (
+          {investorTopPicks.map((d, i) => (
             <GridItem key={`picks_${i}`} xs={12} sm={12} md={4}>
               <Card className={classes.investmentCard}>
                 <CardHeader
                   avatar={
-                    <Avatar aria-label="avatar-image">{d.title[0]}</Avatar>
+                    <Avatar src={d.posterImg} aria-label="avatar-image" />
                   }
                   action={
-                    <Chip label={d.category} className={classes.categoryChip} />
+                    <Chip label={d.genre[0]} className={classes.categoryChip} />
                   }
-                  title={d.title}
+                  title={d.name}
                   subheader={d.releaseDate}
                 />
                 <CardBody>
-                  <p className={classes.description}>{d.description}</p>
+                  <p className={classes.description}>{d.shortDescription}</p>
                   <Divider variant="middle" />
                   <div className={classes.ctaDiv}>
                     <Chip
@@ -113,9 +113,9 @@ export default props => {
                         variant="inherit"
                         className={classes.currencySymbol}
                       >
-                        {d.currencySymbol}
+                        ${/* {d.currencySymbol} */}
                       </Typography>
-                      {d.amount}
+                      {d.price}
                     </Typography>
                   </div>
                 </CardBody>
