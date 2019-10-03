@@ -33,15 +33,21 @@ class Portfolio extends React.Component {
     const { tabIdx } = this.state
 
     // What functions do we need from the movie and user store?
-    const findMovieByTicker = t => { movieStore.getMovieByTicker(t) }
-    const addToWatchlist = t => { userPortfolio.addToWatchlist(t, findMovieByTicker) }
-    const removeFromWatchlist = t => { userPortfolio.removeFromWatchlist(t) }
+    const findMovieByTicker = t => {
+      movieStore.getMovieByTicker(t)
+    }
+    const addToWatchlist = t => {
+      userPortfolio.addToWatchlist(t, findMovieByTicker)
+    }
+    const removeFromWatchlist = t => {
+      userPortfolio.removeFromWatchlist(t)
+    }
 
     return (
       <div className={classes.container}>
         <div style={{ height: "70px" }}></div>
         <PillsTabs tabIdx={tabIdx} handleChange={this.setTab} />
-        <PortfolioView 
+        <PortfolioView
           tabIdx={tabIdx}
           index={0}
           findMovie={findMovieByTicker}
@@ -54,10 +60,7 @@ class Portfolio extends React.Component {
           topCategories={userPortfolio.topPortfolioCategories}
           watchlist={userPortfolio.userTopWatchlist}
         />
-        <TradeView 
-          tabIdx={tabIdx}
-          index={1}
-        />
+        <TradeView tabIdx={tabIdx} index={1} store={store} />
         <ProTraderCTA />
       </div>
     )
