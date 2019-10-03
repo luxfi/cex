@@ -11,13 +11,16 @@ const miniReset = {
 }
 
 const generalStyles = makeStyles(theme => ({
+
   root: {
     marginTop: "25px",
     marginBottom: "25px"
   },
-}));
+
+}))
 
 const cardStyles = makeStyles(theme => ({
+
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
@@ -38,8 +41,8 @@ const cardStyles = makeStyles(theme => ({
     fontSize: "1rem",
     fontWeight: 200,
     marginBottom: "12px"
-
   },
+
   cardIcon: {
     display: "block",
     fontSize: '5.5rem',
@@ -86,13 +89,10 @@ const cardStyles = makeStyles(theme => ({
     marginBottom: "12px"
   },
 
-}));
-
+}))
 
 const CardOuter = props => {
-
   const paperClasses = props.completed ? props.classes.paper : classNames(props.classes.paper, props.classes.disabledText)
-
   return (
     <Grid item xs={(props.double) ? 8 : 4}>
       <Paper className={paperClasses}>{props.children}</Paper>
@@ -109,7 +109,7 @@ const RewardCard = props => {
     double,
   } = props
 
-  const classes = cardStyles();
+  const classes = cardStyles()
 
   const pointsString = completed ? points + " points earned" : "earn " + points + " points"
   const iconClasses = completed ? classes.cardIcon : classNames(classes.cardIcon, classes.disabledIcon)
@@ -126,19 +126,13 @@ const RewardCard = props => {
   )
 }
 
-
 const TotalCard = props => {
 
-  const {
-    total,
-    monthTotal
-  } = props
-
-  const classes = cardStyles();
-
+  const { total, monthTotal } = props
+  const classes = cardStyles()
   return (
-      // completed = true sets the typogrpahy to be non-disabled
-    <CardOuter completed={true} classes={classes}>
+      // completed sets the correct typogrpahy (non-disabled)
+    <CardOuter completed classes={classes}>
       <h6 className={classes.totalTitle}>Rewards</h6>
       <p className={classes.totalString}><Icon className={classes.heartIcon}>favorite</Icon>{total}</p>
       <p className={classes.monthTotal} >{monthTotal}&nbsp;this month</p>
@@ -146,16 +140,13 @@ const TotalCard = props => {
   )
 }
 
-
-
 const RewardsView = (props) => {
   
   const { tabIdx, index } = props
-
-  // Hide the tab
+  // Not me! Don't render
   if (tabIdx !== index) return null
 
-  const classes = generalStyles();
+  const classes = generalStyles()
 
   return (
     <Grid container spacing={3} className={classes.root}>
