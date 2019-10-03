@@ -1,6 +1,6 @@
 import React from "react"
 import Link from "next/link"
-import { toJS } from 'mobx'
+import { toJS } from "mobx"
 import { inject, observer } from "mobx-react"
 import { withRouter } from "next/router"
 
@@ -19,13 +19,11 @@ import Chart from "../../components/generic/Chart"
 
 // section
 import InvestNowSection from "../../views/LandingPage/Sections/InvestNowSection"
-import { padDollarAmount } from '../../components/utils/generic'
+import { padDollarAmount } from "../../components/utils/generic"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 // the nice looking double chevrons are part of the "pro" package that costs money
-import {
-  faPlay
-} from "@fortawesome/free-solid-svg-icons"
+import { faPlay } from "@fortawesome/free-solid-svg-icons"
 
 import styles from "../../assets/jss/views/filmPage.js"
 
@@ -40,29 +38,39 @@ const ButtonLink = React.forwardRef(
 )
 
 const formatMonthlyStats = (price, valueDelta) => {
-  return (valueDelta > 0 ? "+ " : "- ") +
+  return (
+    (valueDelta > 0 ? "+ " : "- ") +
     Math.abs(valueDelta) +
-    " (" + (valueDelta / price).toFixed(4) * 100 + "%) " +
+    " (" +
+    ((valueDelta / price) * 100).toFixed(2) +
+    "%) " +
     " PAST MONTH"
+  )
 }
 
 const PageTabs = props => {
-  const {
-    classes,
-    onTabSelected,
-    selectedTab
-  } = props
+  const { classes, onTabSelected, selectedTab } = props
 
   return (
-    <div className={classes.pageTabsOuter} >
+    <div className={classes.pageTabsOuter}>
       <a
-        className={classNames(classes.pageTab, (selectedTab === "about") ? classes.selectedTab : '')}
+        className={classNames(
+          classes.pageTab,
+          selectedTab === "about" ? classes.selectedTab : ""
+        )}
         onClick={() => onTabSelected("about")}
-      >About</a>
+      >
+        About
+      </a>
       <a
-        className={classNames(classes.pageTab, (selectedTab === "invest") ? classes.selectedTab : '')}
+        className={classNames(
+          classes.pageTab,
+          selectedTab === "invest" ? classes.selectedTab : ""
+        )}
         onClick={() => onTabSelected("invest")}
-      >Invest</a>
+      >
+        Invest
+      </a>
     </div>
   )
 }
@@ -73,12 +81,12 @@ class Index extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedTab: "about",
+      selectedTab: "about"
     }
     this.onTabSelected = this.onTabSelected.bind(this)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     // Need to pass the order book the data to render
     const { router } = this.props
     const { slug } = router.query
@@ -92,7 +100,7 @@ class Index extends React.Component {
     if (this.state.selectedTab !== tab) {
       // if going to a new tab, collapse the view as well.
       this.setState({
-        selectedTab: tab,
+        selectedTab: tab
       })
     }
   }
@@ -142,7 +150,7 @@ class Index extends React.Component {
             <p className={classes.description}>{movie.shortDescription}</p>
           </div>
           <div className={classes.movieButtonsOuter}>
-            <Button
+            {/* <Button
               href={movie.trailer}
               component={ButtonLink}
               target="_blank"
@@ -155,24 +163,22 @@ class Index extends React.Component {
             >
               <FontAwesomeIcon icon={faPlay} style={{ paddingRight: "2px" }} />
               Watch Trailer
-            </Button>
+            </Button> */}
             <Button
               rel="noopener noreferrer"
               style={{
                 height: "48px"
               }}
               className={classes.movieButton}
-              onClick={() => { this.onTabSelected("invest") }}
+              onClick={() => {
+                this.onTabSelected("invest")
+              }}
             >
               Invest
             </Button>
           </div>
         </div>
-        <img
-          className={classes.mainImage}
-          src={movie.posterImg}
-          height="444"
-        />
+        <img className={classes.mainImage} src={movie.posterImg} height="444" />
       </div>
     )
   }
@@ -245,9 +251,11 @@ class Index extends React.Component {
     onExecute,
     maxSell
   ) {
-    const price = padDollarAmount(chartPrice).split('.')
-    const deltaString = formatMonthlyStats(chartPrice, (chartPrice - movie.price).toFixed(2))
-    
+    const price = padDollarAmount(chartPrice).split(".")
+    const deltaString = formatMonthlyStats(
+      chartPrice,
+      (chartPrice - movie.price).toFixed(2)
+    )
     return (
       <div className={classNames(classes.flexCenteredColumn, classes.mainArea)}>
         <h1 className={classes.investCompanyName}>{movie.name}</h1>
@@ -260,17 +268,15 @@ class Index extends React.Component {
           <span className={classes.centsValue}>.{price[1]}</span>
         </div>
         <div className={classes.deltaRow}>{deltaString}</div>
-        {
-          !loggedIn ?
-          this.renderInvestButton(
-            classNames(classes.movieButton, classes.statsButton),
-            movie,
-            "Invest Now"
-          ) : null
-        }
+        {!loggedIn
+          ? this.renderInvestButton(
+              classNames(classes.movieButton, classes.statsButton),
+              movie,
+              "Invest Now"
+            )
+          : null}
         <div>
-          {
-            orderBook.connected ?
+          {orderBook.connected ? (
             <Chart
               chartData={chartData}
               yDomain={yDomain}
@@ -283,8 +289,10 @@ class Index extends React.Component {
               onExecute={onExecute}
               movieCategories={toJS(movie.genre)}
               maxSell={maxSell}
-            /> : <Typography>Loading chart...</Typography>
-          }
+            />
+          ) : (
+            <Typography>Loading chart...</Typography>
+          )}
         </div>
       </div>
     )
@@ -384,13 +392,14 @@ class Index extends React.Component {
                 sellOrders,
                 orderBook,
                 userStore.token !== null,
-                (order, orderType) => { return userPortfolio.onOrderExecute(order, orderType) },
+                (order, orderType) => {
+                  return userPortfolio.onOrderExecute(order, orderType)
+                },
                 maxSell
-            )
-          }
+              )}
           {this.state.selectedTab === "about"
-              ? this.renderAboutMore(classes, movie)
-              : null}
+            ? this.renderAboutMore(classes, movie)
+            : null}
         </article>
         <div
           className={classNames(classes.container)}
