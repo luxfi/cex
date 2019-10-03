@@ -8,7 +8,7 @@ const padDollarAmount = (amount) => {
   if (splitAmount.length === 1) {
     return `${splitAmount[0]}.00`
   } else if (splitAmount[1].length === 2) {
-    return _amount
+    return `${_amount}`
   } else {
     return `${splitAmount[0]}.${splitAmount[1].padEnd(2, '0').slice(0, 2)}`
   }

@@ -4,8 +4,7 @@ module.exports = [
     movieSlug: "terminator-dark-fate",
     articles: ["edward-furlong-edward-furlong-terminator-dark-fate"],
     genre: ["Action", "Adventure", "Sci-Fi"],
-    trailer:
-      '<iframe width="560" height="315" src="https://www.youtube.com/embed/jCyEX6u-Yhs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+    trailer: "https://www.youtube.com/embed/jCyEX6u-Yhs",
     posterImg:
       "https://m.media-amazon.com/images/M/MV5BMTUwNWI2ZDQtODRjNy00OGE1LThlNGEtYzU2NDU5ZGMzN2RmXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
     heroImg:
@@ -34,15 +33,16 @@ module.exports = [
     shortDescription:
       "Sarah Connor and a hybrid cyborg human must protect a young girl from a newly modified liquid Terminator from the future.",
     ticker: "TERMDF",
-    price: 125.15
+    price: 125.15,
+    valueDelta: 3.78,
+    financialDescription: "Term Inc. - Class C Capital Stock"
   },
   {
     name: "Uncut Gems",
     movieSlug: "uncut-gems",
     articles: ["uncut-gems-review-adam-sandler"],
     genre: ["Comedy", "Crime", "Drama", "Mystery", "Thriller"],
-    trailer:
-      '<iframe width="560" height="315" src="https://www.youtube.com/embed/vTfJp2Ts9X8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+    trailer: "https://www.youtube.com/embed/vTfJp2Ts9X8",
     posterImg:
       "https://m.media-amazon.com/images/M/MV5BZDhkMjUyYjItYWVkYi00YTM5LWE4MGEtY2FlMjA3OThlYmZhXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SY1000_CR0,0,640,1000_AL_.jpg",
     heroImg:
@@ -57,15 +57,16 @@ module.exports = [
     shortDescription:
       "A jewelry dealer to the rich and famous must find a way to pay his debts when his merchandise is taken from one of his top sellers and girlfriend.",
     ticker: "UNCTGM",
-    price: 44.21
+    price: 44.21,
+    valueDelta: 1.81,
+    financialDescription: "Uncut Gems Inc. - Class C Capital Stock"
   },
   {
     name: "Birds of Prey",
     movieSlug: "birds-of-prey",
     articles: ["birds-of-prey-poster-harley-quinn"],
     genre: ["Action", "Adventure", "Crime"],
-    trailer:
-      '<iframe width="560" height="315" src="https://www.youtube.com/embed/Zk_LJzZr5i8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+    trailer: "https://www.youtube.com/embed/Zk_LJzZr5i8",
     posterImg:
       "https://m.media-amazon.com/images/M/MV5BNmRlZGNjNWYtZmQ4Yy00Yjg3LTkzZmYtYjZlYjczMzhlY2I1XkEyXkFqcGdeQXVyODQzNTE3ODc@._V1_SX300.jpg",
     heroImg:
@@ -90,15 +91,16 @@ module.exports = [
     shortDescription:
       "After splitting with the Joker, Harley Quinn joins superheroes Black Canary, Huntress and Renee Montoya to save a young girl from an evil crime lord, Black Mask in Gotham City.",
     ticker: "BRDOP",
-    price: 78.22
+    price: 78.22,
+    valueDelta: 1.11,
+    financialDescription: "Birds of Prey Inc. - Class C Capital Stock"
   },
   {
     name: "Onward",
     movieSlug: "onward",
     articles: ["pixar-onward-trailer"],
     genre: ["Animation", "Adventure", "Comedy", "Drama", "Family", "Fantasy"],
-    trailer:
-      '<iframe width="560" height="315" src="https://www.youtube.com/embed/x8DKg_fsacM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+    trailer: "https://www.youtube.com/embed/x8DKg_fsacM",
     posterImg:
       "https://m.media-amazon.com/images/M/MV5BZTU3Y2RlYjAtMzAzOC00MjdiLWI2MjctYzhhMmI3MWRhODhhXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg",
     heroImg:
@@ -118,6 +120,8 @@ module.exports = [
     shortDescription:
       "Two teenage elf brothers, Ian and Barley Lightfoot, go on an journey to discover if there is still a little magic left out there in order to spend one last day with their father, who died when they were too young to remember him.",
     ticker: "ONWRD",
-    price: 52.13
+    price: 52.13,
+    valueDelta: 4.02,
+    financialDescription: "Onward 2020 Inc. - Class C Capital Stock"
   }
 ]
