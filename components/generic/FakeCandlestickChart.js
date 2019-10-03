@@ -4,7 +4,7 @@ import Candlestick from "./Candlestick"
 import { observer } from "mobx-react"
 
 @observer
-export default class CandlestickExample extends React.Component {
+export default class FakeCandleStickChart extends React.Component {
   render() {
     const { data, yDomain, labels, marginLeft } = this.props
     let domain = yDomain || [13, 13.7]
@@ -15,14 +15,14 @@ export default class CandlestickExample extends React.Component {
     let intervals = 21.0
     let increments = range / intervals
     let array = []
+
     array.push(xPercent)
+
     while (xPercent < xPercentLast) {
       xPercent += increments
       array.push(xPercent)
     }
-    //     .rv-xy-plot__series--label {
-    //   fill: white;
-    // }
+
     return (
       <div className="candlestick-example">
         <div className="chart">
@@ -32,8 +32,8 @@ export default class CandlestickExample extends React.Component {
             height={450}
             style={{ marginLeft: "-12px" }}
           >
-            {/* <XAxis /> */}
-            <YAxis color="white" />
+            {/* <XAxis color="white" /> */}
+            <YAxis />
             <Candlestick
               colorType="literal"
               opacityType="literal"
@@ -45,19 +45,20 @@ export default class CandlestickExample extends React.Component {
                 <ChartLabel
                   key={i}
                   text={marker}
-                  className="alt-x-label"
+                  className="text"
                   includeMargin={false}
                   xPercent={array[i]}
                   yPercent={1.089}
-                  color="white"
+                  fill="white"
                 />
               )
             })}
           </FlexibleWidthXYPlot>
         </div>
-        <style>{`
-        .candlestick-example {
-          width: 100%;
+        <style jsx>{`
+          .candlestick-example {
+            width: 100%;
+          }
 
           .chart {
             width: 100%;
@@ -66,13 +67,19 @@ export default class CandlestickExample extends React.Component {
           .dashed-example-line {
             stroke-dasharray: 2, 2;
           }
+
           .rv-xy-plot__axis.rv-xy-plot__axis--vertical {
             fill: white;
           }
-          text {
+
+          .rv-xy-plot__series--label {
             fill: white;
           }
-        }
+
+          .text {
+            fill: white;
+            color: white;
+          }
         `}</style>
       </div>
     )
