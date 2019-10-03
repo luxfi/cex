@@ -37,11 +37,7 @@ const AboutESX = ({ classes }) => {
   }
   return (
     <>
-      <Button
-        className={classes.menuButton}
-        color="transparent"
-        onClick={handleOpen}
-      >
+      <Button className={classes.menuButton} onClick={handleOpen}>
         About ESX
       </Button>
       <Modal handleClose={handleClose} open={open} title="What is ESX?">
@@ -72,11 +68,7 @@ const Partnerships = ({ classes }) => {
   }
   return (
     <>
-      <Button
-        className={classes.menuButton}
-        color="transparent"
-        onClick={handleOpen}
-      >
+      <Button className={classes.menuButton} onClick={handleOpen}>
         Partnerships
       </Button>
       <Modal handleClose={handleClose} open={open} title="Partnerships">
@@ -111,7 +103,7 @@ const ContactUs = ({ classes }) => {
     <>
       <Button
         className={classes.menuButton}
-        color="transparent"
+        // color="transparent"
         onClick={handleOpen}
       >
         Contact Us
@@ -179,6 +171,7 @@ class Footer extends React.Component {
             <div className={classes.grow} />
             <span className={classes.socialLinks}>
               <Button
+                size="size"
                 href="https://www.facebook.com/"
                 target="_blank"
                 title="Share on Facebook"
@@ -187,6 +180,7 @@ class Footer extends React.Component {
                 <FontAwesomeIcon icon={faFacebook} />
               </Button>
               <Button
+                size="size"
                 href="https://twitter.com/"
                 target="_blank"
                 title="Tweet"
@@ -195,6 +189,7 @@ class Footer extends React.Component {
                 <FontAwesomeIcon icon={faTwitter} />
               </Button>
               <Button
+                size="size"
                 href="mailto:?subject={PAGETITLE}&body={PAGEDESCRIPTION}:{PAGEURL}"
                 target="_blank"
                 title="Share via Email"
@@ -212,7 +207,6 @@ class Footer extends React.Component {
 }
 
 const styles = theme => {
-  console.log(theme)
   return {
     root: {
       flexGrow: 1,
@@ -248,7 +242,7 @@ const styles = theme => {
       // height: "18px"
     },
     socialLinks: {
-      height: "38.5px"
+      // height: "38.5px"
     },
     white: {
       color: "#fff"
