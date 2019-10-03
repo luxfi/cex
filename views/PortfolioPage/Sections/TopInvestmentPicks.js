@@ -1,4 +1,5 @@
 import React from "react"
+import Router from "next/router"
 // nodejs library that concatenates classes
 import classNames from "classnames"
 // @material-ui/core components
@@ -106,6 +107,9 @@ export default props => {
                       label="invest"
                       className={classes.ctaChip}
                       clickable
+                      onClick={() => {
+                        Router.push(`/film/${d.movieSlug}`)
+                      }}
                     />
                     <Typography className={classes.earningsAmountText}>
                       <Typography
