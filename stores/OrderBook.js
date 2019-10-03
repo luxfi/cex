@@ -71,7 +71,7 @@ export default class OrderBook {
   // For DEMO
   @action initiateDataGenerator(ticker = "MDMXFR", price = 13.37) {
     if (this.dataGenerator) {
-      clearInterval(this.dataGenerator)
+      this.terminateDataGenerator()
     }
 
     this.ticker = ticker
@@ -196,22 +196,15 @@ export default class OrderBook {
     )
   }
 
-  @action generateOrders(
-    ticker,
-    numberOfOrders,
-    idNumber = Date.now(),
-    price,
-    size
-  ) {
+  @action generateOrders(ticker, numberOfOrders, price, size) {
     let n = 0
     let id
     while (n < numberOfOrders - 1) {
-      id = `${ticker}${idNumber}`
+      id = `${ticker}${uuid.v4()}`
       this.generateOrderAndAdd(id, price, generateOrderSize())
-      idNumber++
       n++
     }
-    id = `${ticker}${idNumber}`
+    id = `${ticker}${uuid.v4()}`
     return this.generateOrderAndAdd(id, price, size)
   }
 
