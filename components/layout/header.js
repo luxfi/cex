@@ -115,12 +115,7 @@ class Header extends React.Component {
   }
 
   logout = () => {
-    this.setState({
-      anchorEl: null
-    })
     this.props.store.userStore.logout()
-    // this.props.store.ref("account").clear()
-    // removeIdentity()
     Router.push("/")
   }
 
@@ -191,7 +186,7 @@ class Header extends React.Component {
                         height="60px"
                       />
                     </Link>
-                    <Typography variant="subtitle2" className={classes.white}>
+                    <Typography variant="subtitle2">
                       Entertainment Stock Exchange
                     </Typography>
                     <div className={classes.grow} />
@@ -231,7 +226,7 @@ class Header extends React.Component {
                           open={open}
                           onClose={handleClose}
                         >
-                          <MenuItem onClick={this.portfolio}>
+                          <MenuItem component={CustomLink} href={"/portfolio"}>
                             <AccountCircle />
                             <span style={{ padding: "15px" }}>Portfolio</span>
                           </MenuItem>
