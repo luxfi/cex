@@ -42,7 +42,7 @@ const formatMonthlyStats = (price, valueDelta) => {
     (valueDelta > 0 ? "+ " : "- ") +
     Math.abs(valueDelta) +
     " (" +
-    (valueDelta / price).toFixed(4) * 100 +
+    ((valueDelta / price) * 100).toFixed(2) +
     "%) " +
     " PAST MONTH"
   )
@@ -256,6 +256,7 @@ class Index extends React.Component {
       chartPrice,
       (chartPrice - movie.price).toFixed(2)
     )
+    debugger
     return (
       <div className={classNames(classes.flexCenteredColumn, classes.mainArea)}>
         <h1 className={classes.investCompanyName}>{movie.name}</h1>

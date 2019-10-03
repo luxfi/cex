@@ -99,7 +99,7 @@ export default class OrderBook {
         this.price,
         generateOrderSize()
       ) //TODO fix this so the ticker is pulled correctly
-    }, 5000) // Some data generator
+    }, 1000) // Some data generator
 
     this.connected = true
   }
