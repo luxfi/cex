@@ -1,31 +1,21 @@
-import React from 'react'
+import React from "react"
+import NextLink from "next/link"
 
-import MuiLink from '@material-ui/core/Link'
-import Link from 'next/link'
+// import Button from "@material-ui/core/Button"
+// import CustomLink from "../link"
+// <Button component={CustomLink} href={'/foo'}>bar</Button>
 
-import { withStyles } from '@material-ui/core/styles'
+const CustomLink = React.forwardRef(
+  ({ className, href, hrefAs, children, prefetch }, ref) => (
+    <NextLink ref={ref} href={href} as={hrefAs} prefetch>
+      <a className={className}>{children}</a>
+    </NextLink>
+  )
+)
 
-class MyLink extends React.Component {
-  render() {
-    const { style, className, classes, href, hrefAs, children, ...props } = this.props
-    return pug`
-      Link(
-        href=href
-        as=hrefAs
-      )
-        MuiLink(
-          ...props
-          className=classes.root + ' ' + className
-        )
-          =children
-    `
-  }
-}
+export default CustomLink
 
-let styles = theme => ({
-  root: {
-    cursor: 'pointer',
-  },
-})
+// https://material-ui.com/demos/buttons/#third-party-routing-library
 
-export default withStyles(styles)(MyLink)
+// https://gist.github.com/herr-vogel/0b5d4f3c28f08dc6cc4a2fd4f7b4a4df
+// Created in order to use Material-UI Button or Material-UI Link with Next.js Link

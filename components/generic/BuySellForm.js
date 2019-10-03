@@ -1,6 +1,15 @@
 import React, { useState } from "react"
 // import useForm from '../customHooks/useForm'
+
+import { padDollarAmount } from '../utils/generic'
 import Orders from './Orders'
+
+function precision(a) {
+  if (!isFinite(a)) return 0
+  let e = 1, p = 0
+  while (Math.round(a * e) / e !== a) { e *= 10; p++; }
+  return p
+}
 
 export default class BuySellForm extends React.Component {
   // const signup = () => alert(`
@@ -38,32 +47,39 @@ export default class BuySellForm extends React.Component {
 
   handleInputChange(event) {
     const newState = this.state
-    newState[event.target.name] = event.target.value
-    if (event.target.name === "price") {
-      if (event.target.value === "") { newState.total = 0 }
+    let newVal = event.target.value
+
+    // if (newVal.indexOf('$') > -1) newVal = parseFloat(newVal.split('$').slice(-1).pop())
+    
+    if (newVal === "" || newVal === 0) {
+      newState.total = ""
+    } else {
+      // Parse the number properly
+      if (event.target.name === 'size') newVal = parseInt(newVal)
       else {
+        newVal = parseFloat(newVal)
+      }
+
+      if (event.target.name === "price") {
+        if (precision(newVal) > 2) newVal = newVal.toFixed(2)
         if (newState.size) {
-          const total = parseFloat(event.target.value) * parseFloat(newState.size)
+          const total = newVal * newState.size
           newState.total = total.toFixed(2)
         }
-      }
-    } else if (event.target.name === "size") {
-      if (event.target.value === "") { newState.total = 0 }
-      else {
+      } else if (event.target.name === "size") {
         if (newState.price) {
-          const total = parseFloat(event.target.value) * parseFloat(newState.price)
+          const total = newVal * newState.price
           newState.total = total.toFixed(2)
         }
-      }
-    } else if (event.target.name === "total") {
-      if (event.target.value === "") { newState.total = 0 }
-      else {
+      } else if (event.target.name === "total") {
         if (newState.price) {
-          const size = parseFloat(event.target.value) / parseFloat(newState.price)
-          newState.size = size.toFixed(2)
+          const size = Math.ceil(newVal / newState.price)
+          newState.size = size
         }
       }
     }
+    
+    newState[event.target.name] = newVal
     this.setState(newState)
   }
 
@@ -74,15 +90,24 @@ export default class BuySellForm extends React.Component {
         <p className="dark">Obtainable 0.0000 THETA</p> */}
         <p>{this.props.buttonText}</p>
         <div className="form-group">
-          <input type="text" name="price" className="form-control" id="inputPrice" placeholder="Price USD" onChange={this.handleInputChange} value={this.state.price} />
+          <input 
+          type="number" name="price" 
+          className="form-control" id="inputPrice" 
+          placeholder="Price ($)" onChange={this.handleInputChange} 
+          // value={this.state.price !== '' ? `$${this.state.price}` : ''} />
+          value={this.state.price} />
         </div>
         <div className="form-group">
-          <input type="text" name="size" className="form-control" id="inputTheta" placeholder="Amount" onChange={this.handleInputChange} value={this.state.size} />
+          <input type="number" name="size" className="form-control" id="inputTheta" placeholder="Number of Shares" onChange={this.handleInputChange} value={this.state.size} />
         </div>
         <div className="form-group">
-          <input type="text" name="total" className="form-control" id="inputUSDT" placeholder="Total" onChange={this.handleInputChange} value={this.state.total} />
+          <input disabled type="string" 
+            name="total" className="form-control" 
+            id="inputUSD" placeholder="Total ($)" 
+            onChange={this.handleInputChange} 
+            value={this.state.total !== '' ? `$${this.state.total}` : ''} />
         </div>
-        <p className="dark">Fee 0 USDT (0.2%)</p>
+        {/* <p className="dark">Fee 0 USDT (0.2%)</p> */}
         <button type="submit" className={`btn btn-${this.props.buttonColor || "primary"}`} style={{ width: this.props.width }}>{this.props.buttonText}</button>
         <Orders orders={this.props.orders} />
         <style jsx>{`
