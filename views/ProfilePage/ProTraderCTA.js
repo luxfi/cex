@@ -116,8 +116,7 @@ export default props => {
         >
           <h2 className={classes.title}>Become a Pro Trader.</h2>
           <span>
-            Pro Traders make a lot more money and know a lot more things than
-            non pro traders.
+            Level up your trading game - use our pro tools to maximize your profits.
           </span>
         </div>
         <div style={{ display: "flex", width: "40%" }}>
