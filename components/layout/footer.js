@@ -3,7 +3,7 @@ import React from "react"
 import { MuiThemeProvider } from "@material-ui/core/styles"
 import Footer from "../generic/Footer"
 
-class Film extends React.Component {
+class FooterComponent extends React.Component {
   render() {
     const { theme } = this.props
     return (
@@ -14,4 +14,4 @@ class Film extends React.Component {
   }
 }
 
-export default Film
+export default FooterComponent
