@@ -1,5 +1,7 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
+
+// Material components
 import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 import IconButton from "@material-ui/core/IconButton"
@@ -13,17 +15,18 @@ import Container from "@material-ui/core/Container"
 import Typography from "@material-ui/core/Typography"
 import Slide from "@material-ui/core/Slide"
 import useScrollTrigger from "@material-ui/core/useScrollTrigger"
-import SearchIcon from "@material-ui/icons/Search"
-import Link from "../link"
-import Router from "next/router"
+import Link from "@material-ui/core/Link"
 
-import Send from "@material-ui/icons/Send"
-import ArrowUpward from "@material-ui/icons/ArrowUpward"
-import ArrowDownward from "@material-ui/icons/ArrowDownward"
+// Material icons
+import SearchIcon from "@material-ui/icons/Search"
 import ExitToApp from "@material-ui/icons/ExitToApp"
 
-import { fade, withStyles } from "@material-ui/core/styles"
-import { watch } from "react-referential"
+// Material styles
+import { fade, withStyles, MuiThemeProvider } from "@material-ui/core/styles"
+
+import NextLink from "next/link"
+import Router from "next/router"
+
 import { getIdentity, removeIdentity } from "../../src/wallet"
 import { classExpression } from "babel-types"
 
@@ -47,6 +50,15 @@ function HideOnScroll(props) {
     </Slide>
   )
 }
+
+const CustomLink = React.forwardRef(
+  ({ className, href, hrefAs, children, prefetch }, ref) => (
+    <NextLink ref={ref} href={href} as={hrefAs} prefetch>
+      <a className={className}>{children}</a>
+    </NextLink>
+  )
+)
+
 @inject("store")
 @observer
 class Header extends React.Component {
@@ -129,22 +141,13 @@ class Header extends React.Component {
   }
 
   render() {
-    let { classes, store, ...props } = this.props
+    let { classes, store, onHomePage, darkTheme, lightTheme } = this.props
     let identity = getIdentity()
     // let accountLoaded = !!this.props.rootData.get("account.id") && identity
     let accountLoaded = store.userStore.loggedIn
 
     let open = !!this.state.anchorEl
-
-    const LoggedInNavBar = () => {
-      return (
-        <AppBar
-          className={classes.root}
-          position="fixed"
-          color="default"
-        ></AppBar>
-      )
-    }
+    console.log("onHomePage", onHomePage)
 
     const GuestNavBar = () => {
       const [anchorEl, setAnchorEl] = React.useState(null)
@@ -159,72 +162,80 @@ class Header extends React.Component {
       }
       return (
         <>
-          <HideOnScroll>
-            <AppBar
-              id="navbar"
-              position="fixed"
-              color="inherit"
-            >
-              {" "}
-              <Container maxWidth="lg">
-                <Toolbar className={`${classes.noPadding} ${classes.toolBar}`}>
-                  <Link href="/" className={classes.flex}>
-                    {" "}
-                    {/* get rid of inline style */}
-                    <img
-                      id="logo"
-                      src="/static/img/logo.png"
-                      alt="ESX"
-                      height="60px"
-                    />
-                  </Link>
-                  <Typography variant="subtitle2" className={classes.white}>
-                    Entertainment Stock Exchange
-                  </Typography>
-                  <div className={classes.grow} />
-                  <div className={classes.search}>
-                    <div className={classes.searchIcon}>
-                      <SearchIcon />
+          <MuiThemeProvider theme={onHomePage ? darkTheme : lightTheme}>
+            <HideOnScroll>
+              <AppBar
+                id="navbar"
+                position="fixed"
+                color="inherit"
+                className={
+                  onHomePage ? classes.transparent : classes.whiteBackground
+                }
+              >
+                {" "}
+                <Container maxWidth="lg">
+                  <Toolbar
+                    className={`${classes.noPadding} ${classes.toolBar}`}
+                  >
+                    <Link
+                      href="/"
+                      className={classes.flex}
+                      component={CustomLink}
+                    >
+                      {" "}
+                      {/* get rid of inline style */}
+                      <img
+                        id="logo"
+                        src="/static/img/logo.png"
+                        alt="ESX"
+                        height="60px"
+                      />
+                    </Link>
+                    <Typography variant="subtitle2" className={classes.white}>
+                      Entertainment Stock Exchange
+                    </Typography>
+                    <div className={classes.grow} />
+                    <div className={classes.search}>
+                      <div className={classes.searchIcon}>
+                        <SearchIcon />
+                      </div>
+                      <InputBase
+                        placeholder="Search…"
+                        classes={{
+                          root: classes.inputRoot,
+                          input: classes.inputInput
+                        }}
+                        inputProps={{ "aria-label": "search" }}
+                      />
                     </div>
-                    <InputBase
-                      placeholder="Search…"
-                      classes={{
-                        root: classes.inputRoot,
-                        input: classes.inputInput
-                      }}
-                      inputProps={{ "aria-label": "search" }}
-                    />
-                  </div>
-                  {accountLoaded ? (
-                    <>
-                      {/* <MuiText
+                    {accountLoaded ? (
+                      <>
+                        {/* <MuiText
                         select
                         value="usd"
                         className={`${classes.menuButton} ${classes.select}`}
                         margin="normal"
                         options={currencies}
                       /> */}
-                      <IconButton
-                        aria-controls="menu"
-                        aria-haspopup="true"
-                        onClick={handleClick}
-                      >
-                        <AccountCircle
-                          style={{ fontSize: "2rem" }}
-                        />
-                      </IconButton>
-                      <Menu
-                        id="menu"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={open}
-                        onClose={handleClose}
-                      >
-                        <MenuItem onClick={this.portfolio}>
-                          <AccountCircle />
-                          <span style={{ padding: "15px" }}>Portfolio</span>
-                        </MenuItem>
-                        {/* <MenuItem onClick={this.deposit}>
+                        <IconButton
+                          aria-controls="menu"
+                          aria-haspopup="true"
+                          onClick={handleClick}
+                        >
+                          <AccountCircle style={{ fontSize: "2rem" }} />
+                        </IconButton>
+                        <Menu
+                          id="menu"
+                          anchorEl={anchorEl}
+                          keepMounted
+                          open={open}
+                          onClose={handleClose}
+                        >
+                          <MenuItem onClick={this.portfolio}>
+                            <AccountCircle />
+                            <span style={{ padding: "15px" }}>Portfolio</span>
+                          </MenuItem>
+                          {/* <MenuItem onClick={this.deposit}>
                           <ArrowUpward />
                           <span style={{ padding: "15px" }}>Deposit</span>
                         </MenuItem>
@@ -232,40 +243,45 @@ class Header extends React.Component {
                         <Send />
                         <span style={{ padding: "15px" }}>Send</span>
                       </MenuItem> */}
-                        {/* <MenuItem onClick={this.withdrawal}>
+                          {/* <MenuItem onClick={this.withdrawal}>
                           <ArrowDownward />
                           <span style={{ padding: "15px" }}>Withdrawal</span>
                         </MenuItem> */}
-                        <MenuItem onClick={this.logout}>
-                          <ExitToApp />
-                          <span style={{ padding: "15px" }}>Logout</span>
-                        </MenuItem>
-                      </Menu>
-                    </>
-                  ) : (
-                    <>
-                      <Button
-                        color="inherit"
-                        onClick={this.login}
-                        className={classes.menuButton}
-                      >
-                        Login
-                      </Button>
-                      <Button
-                        color="inherit"
-                        variant="outlined"
-                        onClick={this.signup}
-                        className={classes.menuButton}
-                      >
-                        Sign Up
-                      </Button>
-                    </>
-                  )}
-                </Toolbar>
-              </Container>
-            </AppBar>
-          </HideOnScroll>
-          <Toolbar />
+                          <MenuItem onClick={this.logout}>
+                            <ExitToApp />
+                            <span style={{ padding: "15px" }}>Logout</span>
+                          </MenuItem>
+                        </Menu>
+                      </>
+                    ) : (
+                      <>
+                        <Button
+                          component={CustomLink}
+                          href={"/login"}
+                          color="inherit"
+                          // onClick={this.login}
+                          className={classes.menuButton}
+                        >
+                          Login
+                        </Button>
+                        <Button
+                          component={CustomLink}
+                          color="inherit"
+                          variant="outlined"
+                          href={"/signup"}
+                          // onClick={this.signup}
+                          className={classes.menuButton}
+                        >
+                          Sign Up
+                        </Button>
+                      </>
+                    )}
+                  </Toolbar>
+                </Container>
+              </AppBar>
+            </HideOnScroll>
+            <Toolbar />
+          </MuiThemeProvider>
         </>
       )
     }
