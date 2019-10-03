@@ -71,13 +71,38 @@ export default class OrderBook {
     this.id = id
   }
 
-  @action refreshData(ticker, price) {
-    this.ticker = ticker
-    this.price = price
+  @action clearData() {
     this.book.clear()
     this.buys.replace([])
     this.sells.replace([])
     this.takeResults.replace([])
+  }
+
+  @action setConnected(bool) {
+    this.connected = bool
+  }
+
+  @action setTicker(ticker) {
+    this.ticker = ticker
+  }
+
+  @action setPrice(price) {
+    this.price = price
+  }
+
+  @action generateBatchOfInitialOrders(
+    ticker,
+    amount,
+    price,
+    size = generateOrderSize()
+  ) {
+    this.generateOrders(ticker, amount, price, size)
+  }
+
+  @action initiateGenerator(ticker, price) {
+    this.dataGenerator = setInterval(() => {
+      this.generateOrders(ticker, 1, price, generateOrderSize()) //TODO fix this so the ticker is pulled correctly
+    }, 1000) // Some data generator
   }
 
   // For DEMO
@@ -85,16 +110,12 @@ export default class OrderBook {
     if (this.dataGenerator) {
       this.terminateDataGenerator()
     }
-    this.refreshData(ticker, price)
-    this.generateOrders(this.ticker, 1000, this.price, generateOrderSize())
-
-    this.dataGenerator = setInterval(() => {
-      // order = new LimitOrder(`order${x}`, this.bidAsk(), this.newPrice(price), this.orderSize())
-      // result = this.generateOrderAndAdd(book, id, price, size)
-      this.generateOrders(this.ticker, 1, this.price, generateOrderSize()) //TODO fix this so the ticker is pulled correctly
-    }, 1000) // Some data generator
-
-    this.connected = true
+    this.clearData()
+    this.setTicker(ticker)
+    this.setPrice(price)
+    this.generateBatchOfInitialOrders(ticker, 1000, price)
+    this.initiateGenerator(ticker, price)
+    this.setConnected(true)
   }
 
   @action terminateDataGenerator() {
@@ -144,7 +165,7 @@ export default class OrderBook {
     let currentOrder = new LimitOrder(
       currentOrderID,
       currentOrderType,
-      currentOrderPrice,
+      parseFloat(currentOrderPrice),
       currentOrderSize
     )
     let takeResult = this.book.add(currentOrder)
