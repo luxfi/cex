@@ -38,13 +38,13 @@ import styles from "../assets/jss/views/app.js"
 
 const lightTheme = createMuiTheme({
   palette: {
-    type: "light",
-    primary: {
-      main: "#0099ff", // logo blue
-    },
-    secondary: {
-      main: "#ff9e3e",  // logo yellow
-    }
+    type: "light"
+    // primary: {
+    //   main: "#0099ff", // logo blue
+    // },
+    // secondary: {
+    //   main: "#ff9e3e",  // logo yellow
+    // }
   },
   typography: {
     fontFamily: "‘BWHaasGroteskTF-55Roman-Web, sans-serif’, sans-serif",
@@ -56,12 +56,12 @@ const darkTheme = createMuiTheme({
   palette: {
     type: "dark",
     primary: {
-      main: "#0099ff", // logo blue
+      main: "#0099ff" // logo blue
     },
     secondary: {
-      main: "#ff9e3e",  // logo yellow
+      main: "#ff9e3e" // logo yellow
     },
-    
+
     text: {
       primary: "#f0f0f0",
       secondary: "#f0f0f0" // breadcrumbs uses this
@@ -72,18 +72,17 @@ const darkTheme = createMuiTheme({
     },
     overrides: {
       MuiCssBaseline: {
-        '@global': {
+        "@global": {
           body: {
-            backgroundColor: '#222',
-          },
-        },
-      },
-    }    
+            backgroundColor: "#222"
+          }
+        }
+      }
+    }
   },
   typography: {
     fontFamily: "‘BWHaasGroteskTF-55Roman-Web, sans-serif’, sans-serif",
-    useNextVariants: true,
-
+    useNextVariants: true
   }
 })
 
@@ -138,54 +137,62 @@ class MyMobxApp extends App {
     }
   }
 
-  getThemeForPath(pathname) {
-    if (pathname.startsWith("/film")) {
-      return darkTheme
-    }
-    return lightTheme
-  }
+  // getThemeForPath(pathname) {
+  //   if (pathname.startsWith("/film")) {
+  //     return darkTheme
+  //   }
+  //   return lightTheme
+  // }
 
   render() {
     const { Component, pageProps, classes, router } = this.props
     const onHomePage = router.pathname === "/" || router.pathname === "/#"
-    const theme = this.getThemeForPath(router.pathname)
+    // const theme = this.getThemeForPath(router.pathname)
 
     return (
-        <MuiThemeProvider theme={theme}>
-          <React.Fragment>
-            <CssBaseline />
-            <Head>
-              <title>ESX | Entertainment Stock Exchange</title>
-              <meta
-                name="viewport"
-                content="initial-scale=1.0, width=device-width"
-              />
-              <link
-                rel="stylesheet"
-                href="https://fonts.googleapis.com/icon?family=Material+Icons"
-              />
-            </Head>
-            <Container>
-              <Provider store={this.mobxStore}>
-                <MuiPickersUtilsProvider utils={MomentUtils}>
-                  <RefProvider>
-                    <div className={classes.root}>
-                      <div className={classes.main} component="main">
-                        <Header onHomePage={onHomePage} />
-                        <Component {...pageProps} />
-                        {/* <Loader /> */}
-                        <Snackbar />
-                      </div>
-                      <div className={classes.stickyFooter}>
-                        <Footer />
-                      </div>
+      <MuiThemeProvider theme={lightTheme}>
+        <React.Fragment>
+          <CssBaseline />
+          <Head>
+            <title>ESX | Entertainment Stock Exchange</title>
+            <meta
+              name="viewport"
+              content="initial-scale=1.0, width=device-width"
+            />
+            <link
+              rel="stylesheet"
+              href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            />
+          </Head>
+          <Container>
+            <Provider store={this.mobxStore}>
+              <MuiPickersUtilsProvider utils={MomentUtils}>
+                <RefProvider>
+                  <div className={classes.root}>
+                    <div className={classes.main} component="main">
+                      <Header
+                        onHomePage={onHomePage}
+                        darkTheme={darkTheme}
+                        lightTheme={lightTheme}
+                      />
+                      <Component
+                        {...pageProps}
+                        darkTheme={darkTheme}
+                        lightTheme={lightTheme}
+                      />
+                      {/* <Loader /> */}
+                      <Snackbar />
                     </div>
-                  </RefProvider>
-                </MuiPickersUtilsProvider>
-              </Provider>
-            </Container>
-          </React.Fragment>
-        </MuiThemeProvider>
+                    <div className={classes.stickyFooter}>
+                      <Footer />
+                    </div>
+                  </div>
+                </RefProvider>
+              </MuiPickersUtilsProvider>
+            </Provider>
+          </Container>
+        </React.Fragment>
+      </MuiThemeProvider>
     )
   }
 
