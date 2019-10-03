@@ -5,9 +5,9 @@ import Footer from "../generic/Footer"
 
 class Film extends React.Component {
   render() {
-    const { darkTheme } = this.props
+    const { theme } = this.props
     return (
-      <MuiThemeProvider theme={darkTheme}>
+      <MuiThemeProvider theme={theme}>
         <Footer />
       </MuiThemeProvider>
     )
