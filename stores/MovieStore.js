@@ -92,7 +92,10 @@ export class Movie {
   @observable writer = []
   @observable posterImg = ""
   @observable heroImg = []
-  @observable shortDescription = ""
+  @observable ticker = ""
+  @observable financialDescription = ""
+  @observable price = 0.00
+  @observable valueDelta = 0.00
 
   /**
    * Indicates whether changes in this object
@@ -148,22 +151,9 @@ export class Movie {
    */
   updateFromJson(json) {
     // make sure our changes aren't sent back to the server
-    this.name = json.name
-    this.movieSlug = json.movieSlug
-    this.articles = json.articles
-    this.genre = json.genre
-    this.trailer = json.trailer
-    this.poster = json.poster
-    this.website = json.website
-    this.rated = json.rated
-    this.imdbid = json.imdbid
-    this.actors = json.actors
-    this.director = json.director
-    this.releaseDate = json.releaseDate
-    this.writer = json.writer
-    this.shortDescription = json.shortDescription
-    this.posterImg = json.posterImg
-    this.heroImg = json.heroImg
+    Object.keys(json).forEach(k => {
+      this[k] = json[k]
+    })
   }
 
   // dispose() {

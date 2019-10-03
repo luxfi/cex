@@ -18,6 +18,7 @@ import Chart from "../../components/generic/Chart"
 
 // section
 import InvestNowSection from "../../views/LandingPage/Sections/InvestNowSection"
+import { padDollarAmount } from '../../components/utils/generic'
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 // the nice looking double chevrons are part of the "pro" package that costs money
@@ -31,24 +32,19 @@ import styles from "../../assets/jss/views/filmPage.js"
 
 import { isObservableArray } from "mobx"
 
-// Sections for this page
-//import InvestNowSection from "../views/LandingPage/Sections/InvestNowSection"
-
 const ButtonLink = React.forwardRef(
-  ({ className, href, hrefAs, children, prefetch }, ref) => (
-    <Link ref={ref} href={href || ""} as={hrefAs} prefetch>
+  ({ className, href, hrefAs, children, prefetch, target }, ref) => (
+    <Link ref={ref} href={href || ""} as={hrefAs} target={target} prefetch>
       <a className={className}>{children}</a>
     </Link>
   )
 )
 
-const dummyFinancialStats = {
-  name: "TERMINATOR",
-  description: "Term Inc. - Class C Capital Stock",
-  value: 616.16,
-  valueDelta: 106.11,
-  percentDelta: 20.43,
-  deltaInterval: "Past Month"
+const formatMonthlyStats = (m) => {
+  return (m.valueDelta > 0 ? "+ " : "- ") +
+    m.valueDelta +
+    " (" + (m.valueDelta / m.price).toFixed(4) * 100 + "%) " +
+    " PAST MONTH"
 }
 
 const PageTabs = props => {
@@ -81,6 +77,11 @@ class Index extends React.Component {
       selectedTab: "invest",
     }
     this.onTabSelected = this.onTabSelected.bind(this)
+  }
+
+  componentDidMount () {
+    // Can we initialize the order book here?
+    console.log('film page mounted', this.props.store)
   }
 
   onTabSelected(tab) {
@@ -138,9 +139,9 @@ class Index extends React.Component {
           </div>
           <div className={classes.movieButtonsOuter}>
             <Button
+              href={movie.trailer}
               component={ButtonLink}
               target="_blank"
-              rel="noopener noreferrer"
               style={{
                 color: "black",
                 marginLeft: "20px",
@@ -237,32 +238,19 @@ class Index extends React.Component {
     orderBook,
     loggedIn
   ) {
-    const stats = dummyFinancialStats
-
-    const dollars = Math.floor(stats.value)
-    const value = {
-      dollars: dollars,
-      cents: Math.round((stats.value - dollars) * 100)
-    }
-
-    const deltaString =
-      (stats.valueDelta > 0 ? "+ " : "- ") +
-      stats.valueDelta +
-      " (" +
-      stats.percentDelta +
-      "%) " +
-      " PAST MONTH"
+    const price = padDollarAmount(movie.price).split('.')
+    const deltaString = formatMonthlyStats(movie)
 
     return (
       <div className={classNames(classes.flexCenteredColumn, classes.mainArea)}>
-        <h1 className={classes.investCompanyName}>{stats.name}</h1>
+        <h1 className={classes.investCompanyName}>{movie.name}</h1>
         <h3 className={classes.investCompanyDescription}>
-          {stats.description}
+          {movie.financialDescription}
         </h3>
         <div className={classes.investPrice}>
           <span className={classes.dollarSign}>$</span>
-          <span className={classes.dollarValue}>{value.dollars}</span>
-          <span className={classes.centsValue}>.{value.cents}</span>
+          <span className={classes.dollarValue}>{price[0]}</span>
+          <span className={classes.centsValue}>.{price[1]}</span>
         </div>
         <div className={classes.deltaRow}>{deltaString}</div>
         {
@@ -273,12 +261,6 @@ class Index extends React.Component {
             "Invest Now"
           ) : null
         }
-        {/* <img
-          className={classes.graphImage}
-          src={dummyFilmGraph}
-          width="600"
-          height="383"
-        /> */}
         <div>
           <Chart
             data={data}
@@ -351,12 +333,10 @@ class Index extends React.Component {
 
   render() {
     const { classes, store } = this.props
-    // const movie = store.movieStore.currentMovie
 
     // get router slug and find article
     const { router } = this.props
-    const { slug } =
-      router.query || "edward-furlong-edward-furlong-terminator-dark-fate" // remove this when safe
+    const { slug } = router.query
     const { movieStore, orderBook, userStore } = this.props.store
     const movie = movieStore.getMovieBySlug(slug)
 
@@ -390,7 +370,7 @@ class Index extends React.Component {
           }
           {this.state.selectedTab === "about"
               ? this.renderAboutMore(classes, movie)
-              : this.renderInvestMore(classes, movie)}
+              : null}
         </article>
         <div
           className={classNames(classes.container)}
