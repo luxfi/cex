@@ -16,7 +16,7 @@ import {
 import Toolbar from "@material-ui/core/Toolbar"
 import Container from "@material-ui/core/Container"
 import Typography from "@material-ui/core/Typography"
-import Link from "../link"
+import Link from "@material-ui/core/Link"
 import Button from "../CustomButtons/Button.js"
 import Modal from "../Modal.js"
 
@@ -212,11 +212,11 @@ const styles = theme => {
   return {
     root: {
       flexGrow: 1,
-      paddingTop: "70px",
+      paddingTop: "70px"
       //background: "rgb(29, 38, 50)"
     },
     menuButton: {
-      marginRight: theme.spacing(2),
+      marginRight: theme.spacing(2)
       //color: "#fff"
     },
     grow: {
@@ -232,7 +232,7 @@ const styles = theme => {
     },
     transparent: {
       background: "transparent !important",
-      boxShadow: "none",
+      boxShadow: "none"
       //color: "#fff"
     },
     anchor: {

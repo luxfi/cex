@@ -1,25 +1,26 @@
 import React from "react"
+import NextLink from "next/link"
+import Router from "next/router"
+
+// Material Components
 import Button from "@material-ui/core/Button"
 import CssBaseline from "@material-ui/core/CssBaseline"
 import TextField from "@material-ui/core/TextField"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Checkbox from "@material-ui/core/Checkbox"
-import Link from "../link"
+import Link from "@material-ui/core/Link"
 import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
-import Router from "next/router"
-import * as ethers from "ethers"
-import Api from "../../src/hanzo/api"
 
-import { watch } from "react-referential"
-import { HANZO_KEY, HANZO_ENDPOINT } from "../../src/settings.js"
-
-// import isRequired from '../../src/control-middlewares/isRequired'
-import isEmail from "../../src/control-middlewares/isEmail"
-import isPassword from "../../src/control-middlewares/isPassword"
-// import { renderDate } from 'react-referential-forms';
+const CustomLink = React.forwardRef(
+  ({ className, href, hrefAs, children, prefetch }, ref) => (
+    <NextLink ref={ref} href={href} as={hrefAs} prefetch>
+      <a className={className}>{children}</a>
+    </NextLink>
+  )
+)
 
 const styles = theme => ({
   "@global": {
@@ -197,7 +198,7 @@ class LoginForm extends React.Component {
               {/* </Link> */}
             </Grid>
             <Grid item>
-              <Link href="/signup" variant="body2">
+              <Link component={CustomLink} href="/signup" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
