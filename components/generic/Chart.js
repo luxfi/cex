@@ -1,4 +1,4 @@
-// import BuySellForm from './BuySellForm'
+import BuySellForm from './BuySellForm'
 import FakeCandlestickChart from "./FakeCandlestickChart"
 import { timelineLabels } from "../utils/dateRange"
 import ChartIntervalControl from "../generic/ChartIntervalControls"
@@ -28,7 +28,7 @@ export default props => {
       />
       <div className="posts-container">
         <FakeCandlestickChart data={data} yDomain={yDomain} labels={labels} />
-        {/* <div className="container-row space-between">
+        <div className="container-row space-between">
           <BuySellForm
             buttonColor="green"
             buttonText="BUY"
@@ -46,7 +46,7 @@ export default props => {
             orders={sellOrders}
             orderBook={orderBook}
           />
-        </div> */}
+        </div>
       </div>
 
       <style jsx>{`
