@@ -43,9 +43,14 @@ class Portfolio extends React.Component {
     const addToWatchlist = t => { userPortfolio.addToWatchlist(t, findMovieByTicker) }
     const removeFromWatchlist = t => { userPortfolio.removeFromWatchlist(t) }
 
-    const fakeRankPercent = 1 - (userPortfolio.holdings / 137000).toFixed(2)
-    const fakeRank = 28749 - Math.floor(fakeRankPercent * 28749)
-
+    let fakeRankPercent = 1 - (userPortfolio.holdings / 137000).toFixed(2)
+    let fakeRank = 28749 - Math.floor(fakeRankPercent * 28749)
+    fakeRankPercent = fakeRankPercent < .001 ? 1 : fakeRankPercent * 100
+    fakeRank = fakeRank < 1 ? 1 : fakeRank
+    if (userPortfolio.holdings = 0) {
+      fakeRank = 0
+      fakeRankPercent = 0
+    }
     return (
       <div className={classes.container}>
         <div style={{ height: "30px" }}></div>
@@ -56,8 +61,8 @@ class Portfolio extends React.Component {
           findMovie={findMovieByTicker}
           holdings={userPortfolio.userHoldings}
           weeklyChange={userPortfolio.earningsChangeWeek}
-          rank={fakeRank < 1 ? 1 : fakeRank}
-          rankPercent={fakeRankPercent < .001 ? 1 : fakeRankPercent * 100}
+          rank={fakeRank}
+          rankPercent={fakeRankPercent}
           benefits={userPortfolio.benefits}
           benefitsMonthly={userPortfolio.benefitsThisMonth}
           topCategories={userPortfolio.topPortfolioCategories}
