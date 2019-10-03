@@ -19,6 +19,7 @@ import Typography from "@material-ui/core/Typography"
 import Link from "@material-ui/core/Link"
 import Button from "../CustomButtons/Button.js"
 import Modal from "../Modal.js"
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles"
 
 import { withStyles } from "@material-ui/core/styles"
 
@@ -212,12 +213,12 @@ const styles = theme => {
   return {
     root: {
       flexGrow: 1,
-      paddingTop: "70px"
-      //background: "rgb(29, 38, 50)"
+      paddingTop: "70px",
+      background: "rgb(29, 38, 50)"
     },
     menuButton: {
-      marginRight: theme.spacing(2)
-      //color: "#fff"
+      marginRight: theme.spacing(2),
+      color: "#fff"
     },
     grow: {
       flexGrow: 1,
@@ -248,11 +249,11 @@ const styles = theme => {
       height: "38.5px"
     },
     white: {
-      //color: "#fff"
+      color: "#fff"
     },
     signUpButton: {
-      //color: "white !important",
-      //border: "2px solid white !important"
+      color: "white !important",
+      border: "2px solid white !important"
     }
   }
 }

@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const ToggleButtons = ({ updatePrintInterval }) => {
-  const [alignment, setAlignment] = React.useState("5min")
+  const [alignment, setAlignment] = React.useState("5 min")
   // const [formats, setFormats] = React.useState(() => ["5min"])
 
   // const handleFormat = (event, newFormats) => {
@@ -43,18 +43,20 @@ const ToggleButtons = ({ updatePrintInterval }) => {
         aria-label="text alignment"
       >
         <ToggleButton
-          value="1min"
+          value="1 min"
           aria-label="left aligned"
           onClick={e => updatePrintInterval(1)}
+          disableFocusRipple
         >
-          1min
+          1 min
         </ToggleButton>
         <ToggleButton
-          value="5min"
+          value="5 min"
           aria-label="centered"
           onClick={e => updatePrintInterval(5)}
+          disableFocusRipple
         >
-          5min
+          5 min
         </ToggleButton>
       </ToggleButtonGroup>
     </div>

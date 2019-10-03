@@ -12,9 +12,10 @@ import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
 import { withStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
+import Link from "@material-ui/core/Link"
 
 // Custom Link
-import Link from "../link"
+import CustomLink from "../link"
 
 const styles = theme => ({
   "@global": {
@@ -224,7 +225,7 @@ class SignupForm extends React.Component {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="/login" variant="body2">
+              <Link component={CustomLink} href="/login" variant="body2">
                 Sign in?
               </Link>
             </Grid>
