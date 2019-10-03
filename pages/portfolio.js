@@ -14,6 +14,7 @@ import styles from "../assets/jss/views/articlePage.js"
 // Sections for this page
 import PortfolioView from "../views/PortfolioPage/PortfolioView"
 import TradeView from "../views/PortfolioPage/TradeView"
+import RewardsView from "../views/PortfolioPage/RewardsView"
 import ProTraderCTA from "../views/ProfilePage/ProTraderCTA"
 
 @inject("store")
@@ -54,9 +55,13 @@ class Portfolio extends React.Component {
           topCategories={userPortfolio.topPortfolioCategories}
           watchlist={userPortfolio.userTopWatchlist}
         />
-        <TradeView 
+        <TradeView
           tabIdx={tabIdx}
           index={1}
+        />
+        <RewardsView
+          tabIdx={tabIdx}
+          index={2}
         />
         <ProTraderCTA />
       </div>
