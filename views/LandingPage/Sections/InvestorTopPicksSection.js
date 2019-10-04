@@ -94,7 +94,7 @@ class MoviesView extends React.Component {
 
     // What functions do we need from the movie and user store?
     const addToWatchlist = t => {
-      userPortfolio.addToWatchlist(t, findMovieByTicker)
+      userPortfolio.addToWatchlist(t)
     }
     return (
       <GridContainer>
