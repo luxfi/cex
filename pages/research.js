@@ -52,7 +52,6 @@ export default class Research extends React.Component {
 
   render() {
     const { movieStore, orderBook } = this.props.store
-    debugger
     let takeResultsArray = orderBook.takeResults.slice(0)
     const { printInterval, buyOrders, sellOrders } = orderBook
     const data = formatTakeResults(takeResultsArray, printInterval)
