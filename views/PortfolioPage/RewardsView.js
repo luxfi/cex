@@ -1,9 +1,36 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react"
 import classNames from "classnames"
-import { Grid, Paper, Icon } from "@material-ui/core"
+import { 
+  Grid, 
+  Paper, 
+  Icon, 
+  InputBase, 
+  Button,
+  Snackbar,
+  Slide,
+  Fade 
+} from "@material-ui/core"
+
 import { makeStyles } from "@material-ui/core/styles"
 import { green, red } from '@material-ui/core/colors'
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  LinkedinShareButton,
+  EmailShareButton,
+
+} from 'react-share';
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faEnvelope, faClipboard } from "@fortawesome/free-solid-svg-icons"
+import {
+  faFacebookF,
+  faTwitter,
+  faLinkedinIn
+} from "@fortawesome/free-brands-svg-icons"
 
 const miniReset = {
   margin: 0,
@@ -11,28 +38,28 @@ const miniReset = {
 }
 
 const generalStyles = makeStyles(theme => ({
-
   root: {
-    marginTop: "25px",
-    marginBottom: "25px"
-  },
-
+    margin: "0 25px",
+  }
 }))
 
 const cardStyles = makeStyles(theme => ({
 
   paper: {
     padding: theme.spacing(2),
-    textAlign: 'center',
     height: "216px",
     color: theme.palette.text.primary,
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "space-between"
   },
-  disabledText: {
+  disabledPaper: {
     color: theme.palette.text.secondary + " !important",
+  },
+  leftAlignedPaper: {
+    alignItems: "flex-start !important",
+    paddingLeft: "24px"
   },
 
   title: {
@@ -89,13 +116,73 @@ const cardStyles = makeStyles(theme => ({
     marginBottom: "12px"
   },
 
+  
+  urlCopyOuter: {
+    height: "2.2rem",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "stretch"
+  },
+  urlField: {
+    border: "1px " + theme.palette.text.secondary + " solid",
+    borderRadius: "3px",
+    marginRight: "12px",
+    padding: "6px 24px 6px 10px",
+  },
+
+  socialOuter : {
+    display: "flex",
+    flexDirection: "row",
+    marginBottom: "12px",
+
+    "& svg": {
+      display: "block",
+      width: "1.6rem !important",
+      height: "1.6rem !important",
+      cursor: "pointer",
+      marginRight: "10px"
+    }
+  },
+
+  facebookIcon: {
+    color: "#3b5998",
+    marginLeft: "-4px"
+  },
+  twitterIcon: {
+    color: "#00acee"
+  },
+  linkedinIcon: {
+    color: "#0e76a8"
+  },
+  emailIcon: {
+    // color: "#c71610" gmail red
+    color: red[900]
+  }
 }))
 
+const dummyRewardsURL = "esx.com/rewards/invite/zachk"
+
 const CardOuter = props => {
-  const paperClasses = props.completed ? props.classes.paper : classNames(props.classes.paper, props.classes.disabledText)
+
+  const {
+    classes,
+    disabled,
+    leftAligned
+  } = props
+
+  let names = []
+  names.push(classes.paper)
+  if (!!disabled) {
+    names.push(classes.disabledPaper)
+  }
+  if (!!leftAligned) {
+    names.push(classes.leftAlignedPaper)
+  }
+
   return (
     <Grid item xs={(props.double) ? 8 : 4}>
-      <Paper className={paperClasses}>{props.children}</Paper>
+      <Paper className={classNames(names)}>{props.children}</Paper>
     </Grid>
   )
 }
@@ -117,7 +204,7 @@ const RewardCard = props => {
   const completedStringStyle = completed ? { visibility: "visible" } : { visibility: "hidden" }
 
   return (
-    <CardOuter double={!!double} completed={!!completed} classes={classes}>
+    <CardOuter double={!!double} disabled={!completed} classes={classes}>
       <h6 className={classes.title}>{title}</h6>
       <Icon className={iconClasses}>stars_rounded</Icon>
       <p className={classes.pointsString}>{pointsString}</p>
@@ -131,12 +218,78 @@ const TotalCard = props => {
   const { total, monthTotal } = props
   const classes = cardStyles()
   return (
-      // completed sets the correct typogrpahy (non-disabled)
-    <CardOuter completed classes={classes}>
+    <CardOuter classes={classes}>
       <h6 className={classes.totalTitle}>Rewards</h6>
       <p className={classes.totalString}><Icon className={classes.heartIcon}>favorite</Icon>{total}</p>
       <p className={classes.monthTotal} >{monthTotal}&nbsp;this month</p>
     </CardOuter>
+  )
+}
+
+
+const SocialIcons = props => {
+  const {
+    classes,
+    shareUrl,
+    shareQuote
+  } = props
+  return (
+    <div className={classes.socialOuter} >
+      <FacebookShareButton url={shareUrl} quote={shareQuote}>
+        <FontAwesomeIcon className={classes.facebookIcon} icon={faFacebookF} />
+      </FacebookShareButton>
+      <TwitterShareButton url={shareUrl} quote={shareQuote}>
+        <FontAwesomeIcon className={classes.twitterIcon} icon={faTwitter} />
+      </TwitterShareButton>
+      <LinkedinShareButton url={shareUrl} quote={shareQuote}>
+        <FontAwesomeIcon className={classes.linkedinIcon} icon={faLinkedinIn} />
+      </LinkedinShareButton>
+      <EmailShareButton url={shareUrl} quote={shareQuote}>
+        <FontAwesomeIcon className={classes.emailIcon} icon={faEnvelope} />
+      </EmailShareButton>
+    </div>
+  )
+}
+
+const ReferalCard = props => {
+
+  const { rewardsURL, rewardsShareMessage, onCopied } = props
+  const classes = cardStyles()
+
+  return (
+    <CardOuter double leftAligned classes={classes} >
+      <h6 className={classes.totalTitle}>Earn 15 points for each friend you invite</h6>
+      <div className={classes.urlCopyOuter}>
+        <InputBase
+          value={rewardsURL}
+          className={classes.urlField}
+          readOnly
+        />
+        <CopyToClipboard text={rewardsURL} onCopy={onCopied}>
+          <Button variant="outlined" color="inherit">
+            <FontAwesomeIcon className={classes.clipboardIcon} icon={faClipboard} />&nbsp;Copy
+          </Button>
+        </CopyToClipboard>
+      </div>
+      <SocialIcons classes={classes} shareUrl={rewardsURL} shareQuote={rewardsShareMessage}/>
+    </CardOuter>
+  )
+}
+
+const UrlWasCopiedSnackbar = props => {
+
+  return (
+    <Snackbar
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center',
+      }}
+      open={props.open}
+      autoHideDuration={1000}
+      TransitionComponent={Fade}
+      message={<span>copied</span>}
+      onClose={props.handleSnackbarClose} // this must be supplied, or the autohide won't work.
+    />
   )
 }
 
@@ -148,10 +301,20 @@ const RewardsView = (props) => {
 
   const classes = generalStyles()
 
+  const [shareUrlWasCopied, setShareUrlWasCopied] = React.useState(false)
+
+  const rewardsURL = dummyRewardsURL;
+  const rewardsShareMessage = "I'm supporting this project.  Check it out!"
+
   return (
+    <>
     <Grid container spacing={3} className={classes.root}>
       <TotalCard total={45} monthTotal={30} />
-      <CardOuter double complete classes={cardStyles()}/>
+      <ReferalCard 
+        rewardsURL={rewardsURL} 
+        message={rewardsShareMessage} 
+        onCopied={(ignore) => {setShareUrlWasCopied(true)}}
+      />
       <RewardCard title={"complete your profile"} points={5} completed/>
       <RewardCard title={"invite a friend"} completed points={15} completed />
       <RewardCard title={"add a payment option"} points={10} completed />
@@ -162,6 +325,16 @@ const RewardsView = (props) => {
       <RewardCard title={"make 20 investments"} points={10} />
       <RewardCard title={"make 30 investments"} points={10} />
     </Grid>
+      <UrlWasCopiedSnackbar open={shareUrlWasCopied} handleSnackbarClose={
+        (evt, reason) => {
+          if (reason === 'clickaway') {
+            return
+          }
+          setShareUrlWasCopied(false)
+        }
+      }
+      />
+    </>
   )
 }
 
