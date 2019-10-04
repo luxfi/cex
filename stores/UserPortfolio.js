@@ -95,7 +95,7 @@ export default class UserPortfolio {
           localStorage.setItem("watchlist", JSON.stringify(toJS(this.watchlist)))
         }
       } else {
-        this.watchlist = [ticker]
+        this.watchlist.push(ticker)
         localStorage.setItem("watchlist", JSON.stringify(toJS(this.watchlist)))
       }
       onSuccess && onSuccess()
