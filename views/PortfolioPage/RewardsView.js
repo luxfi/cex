@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from "react"
+import React from "react"
 import classNames from "classnames"
 import { 
   Grid, 
@@ -8,7 +8,6 @@ import {
   InputBase, 
   Button,
   Snackbar,
-  Slide,
   Fade 
 } from "@material-ui/core"
 
@@ -27,7 +26,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEnvelope, faClipboard } from "@fortawesome/free-solid-svg-icons"
 import {
-  faFacebookF,
+  faFacebook,
   faTwitter,
   faLinkedinIn
 } from "@fortawesome/free-brands-svg-icons"
@@ -286,7 +285,7 @@ const SocialIcons = props => {
     <div className={classes.socialOuter} >
       <span className={classes.shareLabel}>Share:&nbsp;</span>
       <FacebookShareButton url={shareUrl} quote={shareQuote}>
-        <FontAwesomeIcon className={classes.facebookIcon} icon={faFacebookF} />
+        <FontAwesomeIcon className={classes.facebookIcon} icon={faFacebook} />
       </FacebookShareButton>
       <TwitterShareButton url={shareUrl} quote={shareQuote}>
         <FontAwesomeIcon className={classes.twitterIcon} icon={faTwitter} />
