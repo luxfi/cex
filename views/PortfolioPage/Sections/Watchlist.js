@@ -14,6 +14,7 @@ import Card from "../../../components/Card/Card.js"
 import CardBody from "../../../components/Card/CardBody.js"
 import ContentLoader, { Facebook } from "react-content-loader"
 import Button from "@material-ui/core/Button"
+import CardActions from '@material-ui/core/CardActions'
 
 import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
 
@@ -32,24 +33,6 @@ const MyLoader = () => (
   </ContentLoader>
 )
 
-const dataStub = [
-  {
-    title: `Call of the Wild: A Space Odyssey`,
-    body: `Deep in the human unconscious is a pervasive need for a logical universe that makes sense. But the real universe is always one step beyond logic.`,
-    image: (<MyLoader />)
-  },
-  {
-    title: `Call of the Wild: A Space Odyssey`,
-    body: `Deep in the human unconscious is a pervasive need for a logical universe that makes sense. But the real universe is always one step beyond logic.`,
-    image: (<MyLoader />)
-  },
-  {
-    title: `Call of the Wild: A Space Odyssey`,
-    body: `Deep in the human unconscious is a pervasive need for a logical universe that makes sense. But the real universe is always one step beyond logic.`,
-    image: (<MyLoader />)
-  }
-]
-
 export default props => {
   const classes = useStyles()
   // const imageClasses = classNames(classes.imgCardTop)
@@ -59,7 +42,7 @@ export default props => {
     findMovie
   } = props
   const watchlistMovies = watchlist.map((t) => findMovie(t))
-  remove
+
   return (
     <>
       <div className={classes.section}>
@@ -72,12 +55,6 @@ export default props => {
             watchlistMovies.map((d, i) => 
               <GridItem key={i} xs={12} sm={12} md={4}>
                 <Card plain>
-                  <Button
-                    size="small"
-                    onClick={e => {
-                        remove(d.ticker)
-                    }}
-                  >Remove from Watchlist</Button>
                   <GridItem
                     style={{ cursor: "pointer" }}
                     onClick={() => {
@@ -108,6 +85,17 @@ export default props => {
                   >
                     <p className={classes.description}>{d.shortDescription}</p>
                   </CardBody>
+                  <CardActions>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      onClick={e => {
+                        remove(d.ticker)
+                      }}
+                    >
+                      Remove from Watchlist
+                    </Button>
+                  </CardActions>
                 </Card>
               </GridItem>
             )
