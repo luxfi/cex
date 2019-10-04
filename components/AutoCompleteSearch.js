@@ -6,6 +6,7 @@ import parse from "autosuggest-highlight/parse"
 import TextField from "@material-ui/core/TextField"
 import Paper from "@material-ui/core/Paper"
 import MenuItem from "@material-ui/core/MenuItem"
+import CustomLink from "./link"
 import Popper from "@material-ui/core/Popper"
 import InputBase from "@material-ui/core/InputBase"
 import { makeStyles } from "@material-ui/core/styles"
@@ -182,15 +183,15 @@ function renderInputComponent(inputProps) {
         root: classes.inputRoot,
         input: classes.inputInput
       }}
-      InputProps={{
-        inputRef: node => {
-          ref(node)
-          inputRef(node)
-        },
-        classes: {
-          input: classes.input
-        }
-      }}
+      // InputProps={{
+      //   inputRef: node => {
+      //     ref(node)
+      //     inputRef(node)
+      //   },
+      //   classes: {
+      //     input: classes.input
+      //   }
+      // }}
       {...other}
     />
   )
@@ -206,21 +207,22 @@ const getMovieSlugByString = (text) => {
 function renderSuggestion(suggestion, { query, isHighlighted }) {
   const matches = match(suggestion.name, query)
   const parts = parse(suggestion.name, matches)
-  const handleClick = () => { Router.push(`/film/${getMovieSlugByString(parts.map(t => t.text).join('')) }`)}
+  const href = `/film/${getMovieSlugByString(parts.map(t => t.text).join(''))}`
+  const handleClick = () => { Router.push(href)}
   return (
-    <MenuItem selected={isHighlighted} component="div">
-      <div>
-        {parts.map(part => (
-          <span
-            onClick={() => handleClick(part)}
-            key={part.text}
-            style={{ fontWeight: part.highlight ? 500 : 400, cursor: "pointer" }}
-          >
-            {part.text}
-          </span>
-        ))}
-      </div>
-    </MenuItem>
+    <MenuItem selected={isHighlighted} component={CustomLink} href={href}>
+        <div>
+          {parts.map(part => (
+            <span
+              // onClick={() => handleClick()}
+              key={part.text}
+              style={{ fontWeight: part.highlight ? 500 : 400 }}
+            >
+              {part.text}
+            </span>
+          ))}
+        </div>
+      </MenuItem>
   )
 }
 
