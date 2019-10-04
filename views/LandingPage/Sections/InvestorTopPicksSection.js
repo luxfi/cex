@@ -1,9 +1,15 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
-import Router from 'next/router'
+import Router from "next/router"
+
 // nodejs library that concatenates classes
 import classNames from "classnames"
+
 // @material-ui/core components
+import Button from "@material-ui/core/Button"
+import CardActions from "@material-ui/core/CardActions"
+
+// @material-ui styles
 import { makeStyles } from "@material-ui/core/styles"
 
 // @material-ui/icons
@@ -89,13 +95,45 @@ class MoviesView extends React.Component {
       <GridContainer>
         {investorTopPicks.map((d, i) => (
           <GridItem key={`picks_${i}`} xs={12} sm={12} md={4}>
-            <Card plain style={{ cursor: "pointer" }} onClick={() => { Router.push(`/film/${d.movieSlug}`) }}>
-              <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
+            <Card plain>
+              <CardActions>
+                <Button
+                  size="small"
+                  onClick={e => {
+                    e.preventDefault()
+                  }}
+                >
+                  Add to WatchList
+                </Button>
+              </CardActions>
+              <GridItem
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  Router.push(`/film/${d.movieSlug}`)
+                }}
+                xs={12}
+                sm={12}
+                md={12}
+                className={classes.itemGrid}
+              >
                 {/* <img src={team1} alt="..." className={imageClasses} /> */}
                 <img src={d.heroImg} alt={d.name} className={classes.img} />
               </GridItem>
-              <h4 className={classes.cardTitle}>{d.name}</h4>
-              <CardBody>
+              <h4
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  Router.push(`/film/${d.movieSlug}`)
+                }}
+                className={classes.cardTitle}
+              >
+                {d.name}
+              </h4>
+              <CardBody
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  Router.push(`/film/${d.movieSlug}`)
+                }}
+              >
                 <p className={classes.description}>{d.shortDescription}</p>
               </CardBody>
             </Card>
