@@ -29,7 +29,7 @@ const ButtonLink = React.forwardRef(
 export default props => {
   const classes = useStyles()
   const { ...rest } = props
-  const hrefLink = props.loggedIn ? "/portfolio" : "/signup"
+  const hrefLink = '/film/terminator-dark-fate'
   return (
     <div className="hero-container">
       <HeroImg {...rest}>

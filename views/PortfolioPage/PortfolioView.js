@@ -36,6 +36,7 @@ const PortfolioView = (props) => {
       />
       <Watchlist
         watchlist={watchlist}
+        findMovie={findMovie}
         remove={removeFromWatchlist}
       />
     </div>

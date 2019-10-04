@@ -27,10 +27,9 @@ class Index extends React.Component {
   //   }
   // }
 
-  // componentDidMount() {
-  //   console.log("index props componentDidMount", this.props.store.orderBook)
-  //   this.props.store.orderBook.initiateDataGenerator()
-  // }
+  componentDidMount() {
+    this.props.store.userPortfolio.getWatchlist()
+  }
 
   // componentWillUnmount() {
   //   this.props.store.orderBook.terminateDataGenerator()
