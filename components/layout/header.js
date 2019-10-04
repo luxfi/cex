@@ -7,8 +7,7 @@ import Toolbar from "@material-ui/core/Toolbar"
 import IconButton from "@material-ui/core/IconButton"
 import Button from "@material-ui/core/Button"
 import Menu from "@material-ui/core/Menu"
-// import Input from "@material-ui/core/Input"
-// import InputBase from "@material-ui/core/InputBase"
+import InputBase from "@material-ui/core/InputBase"
 import MenuItem from "@material-ui/core/MenuItem"
 import AccountCircle from "@material-ui/icons/AccountCircle"
 import Container from "@material-ui/core/Container"
@@ -29,9 +28,6 @@ import AutoCompleteSearch from "../AutoCompleteSearch"
 
 import NextLink from "next/link"
 import Router from "next/router"
-
-import { getIdentity, removeIdentity } from "../../src/wallet"
-import { classExpression } from "babel-types"
 
 let currencies = {
   usd: "USD",
@@ -140,12 +136,10 @@ class Header extends React.Component {
 
   render() {
     let { classes, store, onHomePage, darkTheme, lightTheme } = this.props
-    let identity = getIdentity()
     // let accountLoaded = !!this.props.rootData.get("account.id") && identity
     let accountLoaded = store.userStore.loggedIn
 
     let open = !!this.state.anchorEl
-    console.log("onHomePage", onHomePage)
 
     const GuestNavBar = () => {
       const [anchorEl, setAnchorEl] = React.useState(null)

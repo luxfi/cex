@@ -79,6 +79,18 @@ export default props => {
   const classes = useStyles()
   const { store, ...rest } = props
   const { investorTopPicks } = store.movieStore
+  const truncate = input =>
+    input
+      .split(" ")
+      .slice(0, 23)
+      .join(" ") + "..."
+
+  const { userPortfolio } = store
+
+  // What functions do we need from the movie and user store?
+  const addToWatchlist = t => {
+    userPortfolio.addToWatchlist(t, findMovieByTicker)
+  }
   return (
     <>
       <div className={classes.section}>
@@ -100,7 +112,9 @@ export default props => {
                   subheader={d.releaseDate}
                 />
                 <CardBody>
-                  <p className={classes.description}>{d.shortDescription}</p>
+                  <p className={classes.description}>
+                    {truncate(d.shortDescription)}
+                  </p>
                   <Divider variant="middle" />
                   <div className={classes.ctaDiv}>
                     <Chip
