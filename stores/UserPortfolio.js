@@ -7,6 +7,13 @@ import { padDollarAmount } from "../components/utils/generic"
  * Later we'll wrap the fetch stuff up a bit more cleanly and / or use a helper library
  */
 
+const removeElement = (array, elem) => {
+  var index = array.indexOf(elem);
+  if (index > -1) {
+    array.splice(index, 1);
+  }
+}
+
 export default class UserPortfolio {
   // ** GENERIC HELPERS **
   // use for wait states in UI
@@ -77,7 +84,6 @@ export default class UserPortfolio {
   @action async addToWatchlist(ticker, onSuccess, onError) {
     // ticker is temp while we don't have an API
     this.updating = true
-    console.log("ticker", ticker)
     try {
       // Using localStorage for now
       const _watchlist = localStorage.getItem("watchlist")
@@ -107,7 +113,15 @@ export default class UserPortfolio {
 
     try {
       // Using localStorage for now
-
+    const _watchlist = localStorage.getItem("watchlist")
+    if (_watchlist !== null) {
+      this.watchlist = JSON.parse(_watchlist)
+      if (this.watchlist.indexOf(ticker) > -1) {
+        this.watchlist.remove(ticker)
+        // add to watchlist both local storage and mobx store observable
+        localStorage.setItem("watchlist", JSON.stringify(toJS(this.watchlist)))
+      }
+    }
       onSuccess && onSuccess()
     } catch (ex) {
       console.log("Error logging in", ex)
