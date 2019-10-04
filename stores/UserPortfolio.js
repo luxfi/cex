@@ -51,6 +51,7 @@ export default class UserPortfolio {
   constructor(initialData = {}, hanzoApi) {
     // Pass down the Hanzo API through a central point
     this.api = hanzoApi
+    this.getWatchlist()
   }
 
   @action async getWatchlist(onSuccess, onError) {
@@ -60,7 +61,10 @@ export default class UserPortfolio {
 
     try {
       // Using localStorage for now
-
+      const _watchlist = localStorage.getItem("watchlist")
+      if (_watchlist !== null) {
+        this.watchlist = JSON.parse(_watchlist)
+      } 
       onSuccess && onSuccess()
     } catch (ex) {
       console.log("Error logging in", ex)
