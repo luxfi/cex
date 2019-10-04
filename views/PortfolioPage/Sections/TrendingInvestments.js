@@ -64,9 +64,25 @@ export default props => {
   return (
     <>
       <h2 className={classes.title} style={{ textAlign: "left" }}>
-        Trending Investments
+        Your Investments
       </h2>
       <List>
+        <ListItem>
+          <GridContainer style={{ width: '100%' }} alignItems='center' >
+            <GridItem xs={2}>
+              <Typography>Movie Ticker</Typography>
+            </GridItem>
+            <GridItem xs={4}>
+              <Typography style={{ marginLeft: '82px' }}>Chart</Typography>
+            </GridItem>
+            <GridItem xs={2} style={{ textAlign: 'right' }}>
+              <Typography>Shares Owned</Typography>
+            </GridItem>
+            <GridItem xs={4} style={{ textAlign: 'right' }}>
+              <Typography>Total Value</Typography>
+            </GridItem>
+          </GridContainer>
+        </ListItem>
         {
           investments && investments.length > 0 ?
           investments.map((trendingItem, i) => {
@@ -78,10 +94,13 @@ export default props => {
                     <GridItem xs={2}>
                       <Link href={`/film/${movie.movieSlug}`}>{trendingItem.ticker}</Link>
                     </GridItem>
-                    <GridItem xs={6}>
+                    <GridItem xs={4}>
                       <div style={{ width: '200px', height: '100px' }}>
                         {trendingItem.chart || <MyLoader w={200} h={100} />}
                       </div>
+                    </GridItem>
+                    <GridItem xs={2} style={{ textAlign: 'right' }}>
+                      {trendingItem.amount}
                     </GridItem>
                     <GridItem xs={4} style={{ textAlign: 'right' }}>
                       ${trendingItem.amount * parseFloat(trendingItem.price).toFixed(2)}

@@ -67,6 +67,7 @@ class Portfolio extends React.Component {
           benefitsMonthly={userPortfolio.benefitsThisMonth}
           topCategories={userPortfolio.topPortfolioCategories}
           watchlist={userPortfolio.userTopWatchlist}
+          removeFromWatchlist={removeFromWatchlist}
         />
         <TradeView
           tabIdx={tabIdx}
