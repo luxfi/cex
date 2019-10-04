@@ -13,6 +13,7 @@ import GridItem from "../../../components/Grid/GridItem.js"
 import Card from "../../../components/Card/Card.js"
 import CardBody from "../../../components/Card/CardBody.js"
 import ContentLoader, { Facebook } from "react-content-loader"
+import Button from "@material-ui/core/Button"
 
 import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
 
@@ -58,6 +59,7 @@ export default props => {
     findMovie
   } = props
   const watchlistMovies = watchlist.map((t) => findMovie(t))
+  remove
   return (
     <>
       <div className={classes.section}>
@@ -70,6 +72,12 @@ export default props => {
             watchlistMovies.map((d, i) => 
               <GridItem key={i} xs={12} sm={12} md={4}>
                 <Card plain>
+                  <Button
+                    size="small"
+                    onClick={e => {
+                        remove(d.ticker)
+                    }}
+                  >Remove from Watchlist</Button>
                   <GridItem
                     style={{ cursor: "pointer" }}
                     onClick={() => {
