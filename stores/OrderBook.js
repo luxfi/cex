@@ -1,12 +1,13 @@
-import { action, observable, computed } from 'mobx'
-import _ from 'lodash'
-import { arch } from 'os'
+import { action, observable, computed } from "mobx"
+import _ from "lodash"
+import uuid from "uuid"
+
 // import io from 'socket.io-client'
-const LimitOrder = require('limit-order-book').LimitOrder
-const LimitOrderBook = require('limit-order-book').LimitOrderBook
+const LimitOrder = require("limit-order-book").LimitOrder
+const LimitOrderBook = require("limit-order-book").LimitOrderBook
 
 const bidAsk = () => {
-  return (Math.floor(Math.random() * 2) == 0) ? 'bid' : 'ask' // 50/50 chance of "bid" or "ask"
+  return Math.floor(Math.random() * 2) == 0 ? "bid" : "ask" // 50/50 chance of "bid" or "ask"
 }
 
 const generateOrderSize = () => {
@@ -14,36 +15,51 @@ const generateOrderSize = () => {
 }
 
 const firstTwentyKeys = (orders, orderType) => {
-  // list orders for buys('bid') at highest price first 
-  // list orders for sells('ask') at lowest price first 
-  const sortFn = orderType === "bid" ? function (a, b) { return b - a } : function (a, b) { return a - b }
-  return Object.keys(orders).sort(sortFn).slice(0, 20) // take first 20
+  // list orders for buys('bid') at highest price first
+  // list orders for sells('ask') at lowest price first
+  const sortFn =
+    orderType === "bid"
+      ? function(a, b) {
+          return b - a
+        }
+      : function(a, b) {
+          return a - b
+        }
+  return Object.keys(orders)
+    .sort(sortFn)
+    .slice(0, 20) // take first 20
 }
 
 export default class OrderBook {
-  @observable ticker = ''
-  @observable connected = false
-  takeResults = observable([])
+  /**
+   * unique id of this todo, immutable.
+   */
+  id = null
+
+  @observable ticker = ""
   @observable price = 13.37
+  @observable book = new LimitOrderBook()
+  @observable buys = []
+  @observable sells = []
+  @observable takeResults = []
+  @observable connected = false
   @observable currentPrice = 13.37
   @observable high = 13.37
   @observable low = 13.37
   @observable printInterval = 5
-  buys = observable([])
-  sells = observable([])
-  // @observable buys = []
-  // @observable sell = []
-  book = new LimitOrderBook()
 
-
-  constructor(initialData = {
-    ticker: '',
-    connected: false,
-    price: 13.37,
-    high: 13.37,
-    low: 13.37,
-    printInterval: 5,
-  }, hanzoApi) {
+  constructor(
+    initialData = {
+      ticker: "",
+      connected: false,
+      price: 13.37,
+      high: 13.37,
+      low: 13.37,
+      printInterval: 5
+    },
+    hanzoApi,
+    id = uuid.v4()
+  ) {
     // this.orderBookData = initialData.orderBookData
     this.ticker = initialData.ticker
     this.connected = initialData.connected
@@ -51,27 +67,55 @@ export default class OrderBook {
     this.high = initialData.high || 13.37
     this.low = initialData.low || 13.37
     this.printInterval = initialData.printInterval || 5
-    const size = generateOrderSize()
-    this.generateOrders(this.ticker = 'MDMXFR', 1000, this.book, Date.now(), this.price, size)
-
     this.api = hanzoApi
+    this.id = id
+  }
+
+  @action clearData() {
+    this.book.clear()
+    this.buys.replace([])
+    this.sells.replace([])
+    this.takeResults.replace([])
+  }
+
+  @action setConnected(bool) {
+    this.connected = bool
+  }
+
+  @action setTicker(ticker) {
+    this.ticker = ticker
+  }
+
+  @action setPrice(price) {
+    this.price = price
+  }
+
+  @action generateBatchOfInitialOrders(
+    ticker,
+    amount,
+    price,
+    size = generateOrderSize()
+  ) {
+    this.generateOrders(ticker, amount, price, size)
+  }
+
+  @action initiateGenerator(ticker, price) {
+    this.dataGenerator = setInterval(() => {
+      this.generateOrders(ticker, 1, price, generateOrderSize()) //TODO fix this so the ticker is pulled correctly
+    }, 1000) // Some data generator
   }
 
   // For DEMO
-  @action initiateDataGenerator(ticker = 'MDMXFR', price = 13.37) {
-    this.ticker = ticker
-    this.connected = true
-    let size = generateOrderSize()
-
-    this.dataGenerator = setInterval(
-      () => {
-        size = generateOrderSize()
-        // order = new LimitOrder(`order${x}`, this.bidAsk(), this.newPrice(price), this.orderSize())
-        // result = this.generateOrderAndAdd(book, id, price, size)
-        this.generateOrders(ticker = 'MDMXFR', 1, this.book, Date.now(), this.price, size) //TODO fix this so the ticker is pulled correctly
-      },
-      2500
-    ) // Some data generator
+  @action initiateDataGenerator(ticker = "MDMXFR", price = 13.37) {
+    if (this.dataGenerator) {
+      this.terminateDataGenerator()
+    }
+    this.clearData()
+    this.setTicker(ticker)
+    this.setPrice(price)
+    this.generateBatchOfInitialOrders(ticker, 1000, price)
+    this.initiateGenerator(ticker, price)
+    this.setConnected(true)
   }
 
   @action terminateDataGenerator() {
@@ -79,41 +123,74 @@ export default class OrderBook {
     this.connected = false
   }
 
-  @action setTicker(ticker) {
-    this.ticker = ticker;
+  @action generateOrders(ticker, numberOfOrders, price) {
+    let n = 0
+    let id
+    while (n < numberOfOrders - 1) {
+      id = `${ticker}${uuid.v4()}`
+      this.generateOrderAndAdd(id, price, generateOrderSize())
+      n++
+    }
+    id = `${ticker}${uuid.v4()}`
+    return this.generateOrderAndAdd(id, price, generateOrderSize())
   }
 
-  @action updatePrintInterval(time) {
-    this.printInterval = time;
-  }
-
-  @action generateOrderAndAdd(book, id, price, size) {
-    // const order = new LimitOrder(`order${id}`, bidAsk(), this.setNewPrice(price), size)
-    // // console.log(`order`, order)
-    // // console.log('this.takeresults', this.takeResults)
-    // let result = book.add(order)
+  @action generateOrderAndAdd(id, price, size) {
     let currentOrderID = `order${id}`
     let currentOrderType = bidAsk()
     let currentOrderPrice = this.setNewPrice(price)
-    let currentOrderSize = generateOrderSize()
-    let takeResult = this.placeNewOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize, book)
+    let takeResult = this.placeNewOrder(
+      currentOrderID,
+      currentOrderType,
+      currentOrderPrice,
+      size
+    )
     this.takeResults.push(takeResult)
     return takeResult
   }
 
-  @action placeNewOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize, book = this.book, onExecute) {
-    let currentOrder = new LimitOrder(currentOrderID, currentOrderType, currentOrderPrice, currentOrderSize)
-    let takeResult = book.add(currentOrder)
+  @action placeNewOrder(
+    currentOrderID,
+    currentOrderType,
+    currentOrderPrice,
+    currentOrderSize,
+    orderData,
+    onExecute
+  ) {
+    if (onExecute && !onExecute(orderData, currentOrderType)) {
+      // The user doesn't own any shares
+      return null
+    }
+
+    let currentOrder = new LimitOrder(
+      currentOrderID,
+      currentOrderType,
+      parseFloat(currentOrderPrice),
+      currentOrderSize
+    )
+    let takeResult = this.book.add(currentOrder)
     // if (typeof window !== 'undefined') {
     //   console.log("takeResult", takeResult)
     // }
     this.takeResults.push(takeResult)
-    if (currentOrderPrice < this.low) { this.low = currentOrderPrice } //set new low
-    if (currentOrderPrice > this.high) { this.high = currentOrderPrice } //set new high
+    if (currentOrderPrice < this.low) {
+      this.low = currentOrderPrice
+    } //set new low
+    if (currentOrderPrice > this.high) {
+      this.high = currentOrderPrice
+    } //set new high
     this.updateOrders()
 
     // TODO call onExecute to update the user's portfolio
     return takeResult
+  }
+
+  @action setTicker(ticker) {
+    this.ticker = ticker
+  }
+
+  @action updatePrintInterval(time) {
+    this.printInterval = time
   }
 
   @action updateOrders() {
@@ -121,45 +198,46 @@ export default class OrderBook {
     const bidMap = this.book.bidLimits.map
     const arrayOfBidPrices = firstTwentyKeys(bidMap, "bid")
     // this.buys = arrayOfBidPrices.map(k => ({ size: bidMap[k].volume, price: bidMap[k].price }))
-    this.buys.replace(arrayOfBidPrices.map(price => ({ size: bidMap[price].volume, price: bidMap[price].price })))
+    this.buys.replace(
+      arrayOfBidPrices.map(price => ({
+        size: bidMap[price].volume,
+        price: bidMap[price].price
+      }))
+    )
 
     //update sellOrders
     const askMap = this.book.askLimits.map
     const arrayOfAskPrices = firstTwentyKeys(askMap, "ask")
     // this.sells = arrayOfAskPrices.map(k => ({ size: askMap[k].volume, price: askMap[k].price }))
-    this.sells.replace(arrayOfAskPrices.map(price => ({ size: askMap[price].volume, price: askMap[price].price })))
+    this.sells.replace(
+      arrayOfAskPrices.map(price => ({
+        size: askMap[price].volume,
+        price: askMap[price].price
+      }))
+    )
   }
 
-  @action generateOrders(ticker, numberOfOrders, book, idNumber = Date.now(), price, size) {
-    let n = 0;
-    let id;
-    while (n < numberOfOrders - 1) {
-      id = `${ticker}${idNumber}`
-      this.generateOrderAndAdd(book, id, price, generateOrderSize())
-      idNumber++
-      n++
-    }
-    id = `${ticker}${idNumber}`
-    return this.generateOrderAndAdd(book, id, price, size)
-  }
-
-  @action setNewPrice = (x, range) => {
-    let rnd = Math.random(); // generate number, 0 <= x < 1.0
-    let volatility = .02 // 1%
-    let changePercent = 2 * volatility * rnd;
+  @action setNewPrice = () => {
+    let rnd = Math.random() // generate number, 0 <= x < 1.0
+    let volatility = 0.02 // 1%
+    let changePercent = 2 * volatility * rnd
     if (changePercent > volatility) {
-      changePercent -= (2 * volatility)
+      changePercent -= 2 * volatility
     }
     if (Math.abs(changePercent) === changePercent) {
-      changePercent = changePercent * 1.10
+      changePercent = changePercent * 1.1
     }
     let changeAmount = this.price * changePercent
-    let newPrice = (this.price + changeAmount)
-    this.price = newPrice; // this price is only used to realistic data
-    if (newPrice < this.low) { this.low = newPrice } //set new low
-    if (newPrice > this.high) { this.high = newPrice } //set new high
-    newPrice = Math.floor(newPrice * 100) / 100
-    return newPrice // return a price that is fixed to 2 decimals 
+    let newPrice = this.price + changeAmount
+    this.price = newPrice // this price is only used to realistic data
+    if (newPrice < this.low) {
+      this.low = newPrice
+    } //set new low
+    if (newPrice > this.high) {
+      this.high = newPrice
+    } //set new high
+    // newPrice = Math.floor(newPrice * 100) / 100
+    return newPrice.toFixed(2) // return a price that is fixed to 2 decimals
   }
 
   @computed get buyOrders() {
@@ -178,9 +256,7 @@ export default class OrderBook {
     //
   }
 
-  generatefullMonth(book) {
-
-  }
+  generatefullMonth(book) {}
 
   // For later
   // @action setupSocket () {
@@ -202,5 +278,4 @@ export default class OrderBook {
   // @computed get isConnected () {
   //   return this.connected
   // }
-
 }
