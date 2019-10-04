@@ -96,6 +96,7 @@ class MoviesView extends React.Component {
     const addToWatchlist = t => {
       userPortfolio.addToWatchlist(t)
     }
+    const loggedIn = store.userStore.loggedIn
     return (
       <GridContainer>
         {investorTopPicks.map((d, i) => (
@@ -105,7 +106,9 @@ class MoviesView extends React.Component {
                 <Button
                   size="small"
                   onClick={e => {
-                    addToWatchlist(d.ticker)
+                    loggedIn ?
+                    addToWatchlist(d.ticker) :
+                      Router.push('/signup')
                   }}
                 >
                   Add to WatchList

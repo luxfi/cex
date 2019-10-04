@@ -54,9 +54,10 @@ export default props => {
   // const imageClasses = classNames(classes.imgCardTop)
   const {
     watchlist,
-    remove
+    remove,
+    findMovie
   } = props
-
+  const watchlistMovies = watchlist.map((t) => findMovie(t))
   return (
     <>
       <div className={classes.section}>
@@ -65,8 +66,8 @@ export default props => {
         </h2>
         <GridContainer justify={'center'}>
           {
-            watchlist.length > 0 ?
-            watchlist.map((watchlistItem, i) => 
+            watchlistMovies.length > 0 ?
+            watchlistMovies.map((watchlistItem, i) => 
               <GridItem key={i} xs={12} sm={12} md={4}>
                 <Card plain>
                   <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
