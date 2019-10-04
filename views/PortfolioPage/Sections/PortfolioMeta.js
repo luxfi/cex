@@ -120,7 +120,7 @@ export default props => {
                 <Typography variant='h1' gutterBottom className={classes.topCategoriesTitle}>Top Categories</Typography>
                 {
                   topCategories.length > 0 ?
-                  topCategories.map((c, i) => <Chip key={`topCategoryChip_${i}`} label={c} className={classes.topCategoriesChip} />)
+                  topCategories.map((c, i) => <Chip key={`topCategoryChip_${i}`} label={c.key} className={classes.topCategoriesChip} />)
                   : <Typography className={classes.earningsChangeText} gutterBottom>Start investing to see your top categories!</Typography>
                 }
               </GridItem>

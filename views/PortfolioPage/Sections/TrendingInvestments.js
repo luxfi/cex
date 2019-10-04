@@ -1,8 +1,10 @@
 import React from "react"
+import Link from 'next/link'
 // nodejs library that concatenates classes
 import classNames from "classnames"
 import ContentLoader from "react-content-loader"
 // @material-ui/core components
+import { Typography } from '@material-ui/core'
 import { makeStyles } from "@material-ui/core/styles"
 
 // @material-ui/icons
@@ -56,6 +58,7 @@ const dataStub = [
 
 export default props => {
   const classes = useStyles()
+  const { investments, findMovieByTicker } = props
   // const imageClasses = classNames(classes.imgCardTop)
 
   return (
@@ -65,29 +68,34 @@ export default props => {
       </h2>
       <List>
         {
-          dataStub.map((trendingItem, i) =>
-            (<div key={`listKey_${i}`}>
-              <ListItem>
-                <GridContainer style={{ width: '100%' }} alignItems='center' >
-                  <GridItem xs={2}>
-                    {trendingItem.ticker}
-                  </GridItem>
-                  <GridItem xs={6}>
-                    <div style={{ width: '200px', height: '100px' }}>
-                      {trendingItem.chart}
-                    </div>
-                  </GridItem>
-                  <GridItem xs={4} style={{ textAlign: 'right' }}>
-                    ${trendingItem.price}
-                  </GridItem>
-                </GridContainer>
-              </ListItem>
-              {
-                i === dataStub.length - 1 ?
-                null : <Divider />
-              }
-            </div>)
-          )
+          investments && investments.length > 0 ?
+          investments.map((trendingItem, i) => {
+            const movie = findMovieByTicker(trendingItem.ticker)
+            return (
+              <div key={`listKey_${i}`}>
+                <ListItem>
+                  <GridContainer style={{ width: '100%' }} alignItems='center' >
+                    <GridItem xs={2}>
+                      <Link href={`/film/${movie.movieSlug}`}>{trendingItem.ticker}</Link>
+                    </GridItem>
+                    <GridItem xs={6}>
+                      <div style={{ width: '200px', height: '100px' }}>
+                        {trendingItem.chart || <MyLoader w={200} h={100} />}
+                      </div>
+                    </GridItem>
+                    <GridItem xs={4} style={{ textAlign: 'right' }}>
+                      ${trendingItem.amount * parseFloat(trendingItem.price).toFixed(2)}
+                    </GridItem>
+                  </GridContainer>
+                </ListItem>
+                {
+                  i === investments.length - 1 ?
+                  null : <Divider />
+                }
+              </div>
+            )
+          }
+          ) : <Typography style={{ textAlign: 'center' }}>You don't have any investments yet! Go to the <Link href="/">home page</Link> to start investing.</Typography>
         }
       </List>
     </>
