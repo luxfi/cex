@@ -38,30 +38,6 @@ const MyLoader = () => (
   </ContentLoader>
 )
 
-const dataStub = [
-  {
-    title: "Call of the Wild: A Space Odyssey",
-    image: <MyLoader />,
-    description: `Deep in the human unconscious is a pervasive need for a
-    logical universe that makes sense. But the real universe is
-    always one step beyond logic.`
-  },
-  {
-    title: "Call of the Wild: A Space Odyssey",
-    image: <MyLoader />,
-    description: `Deep in the human unconscious is a pervasive need for a
-    logical universe that makes sense. But the real universe is
-    always one step beyond logic.`
-  },
-  {
-    title: "Call of the Wild: A Space Odyssey",
-    image: <MyLoader />,
-    description: `Deep in the human unconscious is a pervasive need for a
-    logical universe that makes sense. But the real universe is
-    always one step beyond logic.`
-  }
-]
-
 export default props => {
   const classes = useStyles()
   const { ...rest } = props
@@ -93,60 +69,66 @@ class MoviesView extends React.Component {
     const { userPortfolio } = store
 
     // What functions do we need from the movie and user store?
-    const addToWatchlist = t => {
-      userPortfolio.addToWatchlist(t)
-    }
+    console.log('watchlist', userPortfolio.watchlist)
     const loggedIn = store.userStore.loggedIn
     return (
       <GridContainer>
-        {investorTopPicks.map((d, i) => (
-          <GridItem key={`picks_${i}`} xs={12} sm={12} md={4}>
-            <Card plain>
-              <CardActions>
-                <Button
-                  size="small"
-                  onClick={e => {
-                    loggedIn ?
-                    addToWatchlist(d.ticker) :
-                      Router.push('/signup')
+        {investorTopPicks.map((d, i) => {
+          const inWatchlist = userPortfolio.watchlist.indexOf(d.ticker) > -1
+          return (
+            <GridItem key={`picks_${i}`} xs={12} sm={12} md={4}>
+              <Card plain>
+                <GridItem
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    Router.push(`/film/${d.movieSlug}`)
+                  }}
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  className={classes.itemGrid}
+                >
+                  {/* <img src={team1} alt="..." className={imageClasses} /> */}
+                  <img src={d.heroImg} alt={d.name} className={classes.img} />
+                </GridItem>
+                <h4
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    Router.push(`/film/${d.movieSlug}`)
+                  }}
+                  className={classes.cardTitle}
+                >
+                  {d.name}
+                </h4>
+                <CardBody
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    Router.push(`/film/${d.movieSlug}`)
                   }}
                 >
-                  Add to WatchList
-                </Button>
-              </CardActions>
-              <GridItem
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  Router.push(`/film/${d.movieSlug}`)
-                }}
-                xs={12}
-                sm={12}
-                md={12}
-                className={classes.itemGrid}
-              >
-                {/* <img src={team1} alt="..." className={imageClasses} /> */}
-                <img src={d.heroImg} alt={d.name} className={classes.img} />
-              </GridItem>
-              <h4
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  Router.push(`/film/${d.movieSlug}`)
-                }}
-                className={classes.cardTitle}
-              >
-                {d.name}
-              </h4>
-              <CardBody
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  Router.push(`/film/${d.movieSlug}`)
-                }}
-              >
-                <p className={classes.description}>{d.shortDescription}</p>
-              </CardBody>
-            </Card>
-          </GridItem>
-        ))}
+                  <p className={classes.description}>{d.shortDescription}</p>
+                </CardBody>
+                {
+                  loggedIn ?
+                  <CardActions>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      onClick={e => {
+                        inWatchlist ?
+                          userPortfolio.removeFromWatchlist(d.ticker)
+                          : userPortfolio.addToWatchlist(d.ticker)
+                      }}
+                    >
+                      {inWatchlist ? 'Remove from Watchlist'  : 'Add to WatchList'}
+                    </Button>
+                  </CardActions>
+                  : null
+                }
+              </Card>
+            </GridItem>
+          )
+        })}
       </GridContainer>
     )
   }
