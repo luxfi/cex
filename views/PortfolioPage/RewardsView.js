@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core"
 
 import { makeStyles } from "@material-ui/core/styles"
-import { green, red } from '@material-ui/core/colors'
+import { green, red, blue } from '@material-ui/core/colors'
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import {
@@ -72,8 +72,8 @@ const cardStyles = makeStyles(theme => ({
 
   cardIcon: {
     display: "block",
-    fontSize: '5.5rem',
-    color: green[500],
+    fontSize: '4.2rem',
+    color: blue[500],
     marginBottom: "6px"
   },
   disabledIcon: {
@@ -85,8 +85,8 @@ const cardStyles = makeStyles(theme => ({
     marginBottom: "0.4rem",
   },
   completedIcon: {
-    fontSize: '0.8rem',
-    color: green[500],
+    fontSize: '1rem',
+    color: green[600],
     marginBottom: "-0.2rem",
     marginRight: "0.1rem"
   },
@@ -103,15 +103,27 @@ const cardStyles = makeStyles(theme => ({
     marginBottom: "12px",
     textAlign: "baseline"
   },
-  heartIcon: {
-    display: "inline",
-    fontSize: '2.5rem',
-    color: red[800],
-    paddingRight: "0.2rem",
+
+  totalOuter: {
+    ...miniReset,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center"
   },
   totalString: {
     ...miniReset,
-    fontSize: "2.3rem",
+    display: "block",
+    fontSize: '3.5rem',
+  },
+  totalIcon: {
+    fontSize: '5.5rem',
+    display: "block",
+    color: blue[600],
+    paddingRight: "0.2rem",
+  },
+  
+  monthTotalString: {
+    ...miniReset,
     fontWeight: 300,
     marginBottom: "12px"
   },
@@ -134,30 +146,64 @@ const cardStyles = makeStyles(theme => ({
   socialOuter : {
     display: "flex",
     flexDirection: "row",
+    alignItems: "center",
     marginBottom: "12px",
+    height: "2rem",
 
-    "& svg": {
+    "& div.SocialMediaShareButton": {
       display: "block",
-      width: "1.6rem !important",
-      height: "1.6rem !important",
+      width: "1.5rem !important",
+      height: "1.5rem !important",
       cursor: "pointer",
-      marginRight: "10px"
+      marginRight: "0.7rem",
+
+      "&:hover": {
+        width: "1.6rem !important",
+        height: "1.6rem !important",
+        filter: "drop-shadow(1px 1px 0.6rem #bbb)",
+        marginRight: "0.6rem",
+      },
+
+      "& svg": {
+        width: "100%",
+        height: "100%"
+      }
     }
   },
 
+  shareLabel: {
+    display: "block",
+    cursor: "pointer",
+    fontSize: "1.4rem",
+    marginRight: "0.7rem",
+  },
   facebookIcon: {
     color: "#3b5998",
-    marginLeft: "-4px"
+    marginLeft: "-4px",
+      "&:hover": {
+//        color: "#3b5998",
+        // use LinkedIn color [sic], so it 
+        // pops during the hover state against white
+        //color: "#0e76a8",
+      },
   },
   twitterIcon: {
-    color: "#00acee"
+    color: "#00acee",
+    "&:hover": {
+//      color: "#00acee",
+    },
   },
   linkedinIcon: {
-    color: "#0e76a8"
+    color: "#0e76a8",
+    "&:hover": {
+//      color: "#0e76a8",
+    },
   },
   emailIcon: {
-    // color: "#c71610" gmail red
-    color: red[900]
+    color: blue[600],
+    "&:hover": {
+//      color: blue[600],
+    },
   }
 }))
 
@@ -220,8 +266,11 @@ const TotalCard = props => {
   return (
     <CardOuter classes={classes}>
       <h6 className={classes.totalTitle}>Rewards</h6>
-      <p className={classes.totalString}><Icon className={classes.heartIcon}>favorite</Icon>{total}</p>
-      <p className={classes.monthTotal} >{monthTotal}&nbsp;this month</p>
+      <p className={classes.totalOuter}>
+        <Icon className={classes.totalIcon}>stars_rounded</Icon>
+        <span className={classes.totalString}>{total}</span>
+      </p>
+      <p className={classes.monthTotalString} >{monthTotal}&nbsp;this month</p>
     </CardOuter>
   )
 }
@@ -235,6 +284,7 @@ const SocialIcons = props => {
   } = props
   return (
     <div className={classes.socialOuter} >
+      <span className={classes.shareLabel}>Share:&nbsp;</span>
       <FacebookShareButton url={shareUrl} quote={shareQuote}>
         <FontAwesomeIcon className={classes.facebookIcon} icon={faFacebookF} />
       </FacebookShareButton>
