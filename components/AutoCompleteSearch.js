@@ -9,8 +9,9 @@ import MenuItem from "@material-ui/core/MenuItem"
 import Popper from "@material-ui/core/Popper"
 import InputBase from "@material-ui/core/InputBase"
 import { makeStyles } from "@material-ui/core/styles"
+import Router from "next/router"
 
-const suggestions = [
+const movies = [
   {
     name: "Terminator: Dark Fate",
     movieSlug: "terminator-dark-fate",
@@ -138,6 +139,9 @@ const suggestions = [
   }
 ]
 
+const suggestions = movies.map(movie => ({ name: `${movie.name} - ${movie.ticker}` }))
+
+
 function renderInputComponent(inputProps) {
   const { classes, inputRef = () => {}, ref, ...other } = inputProps
 
@@ -175,17 +179,25 @@ function renderInputComponent(inputProps) {
   )
 }
 
+const getMovieSlugByString = (text) => {
+  let ary = text.split('-')
+  if (ary.length < 2) return
+  let ticker = ary[ary.length - 1].trim()
+  return movies.find(m => m.ticker === ticker).movieSlug
+}
+
 function renderSuggestion(suggestion, { query, isHighlighted }) {
   const matches = match(suggestion.name, query)
   const parts = parse(suggestion.name, matches)
-
+  const handleClick = () => { Router.push(`/film/${getMovieSlugByString(parts.map(t => t.text).join('')) }`)}
   return (
     <MenuItem selected={isHighlighted} component="div">
       <div>
         {parts.map(part => (
           <span
+            onClick={() => handleClick(part)}
             key={part.text}
-            style={{ fontWeight: part.highlight ? 500 : 400 }}
+            style={{ fontWeight: part.highlight ? 500 : 400, cursor: "pointer" }}
           >
             {part.text}
           </span>
@@ -230,7 +242,7 @@ const useStyles = makeStyles(theme => ({
   suggestionsContainerOpen: {
     position: "absolute",
     zIndex: 1,
-    marginTop: theme.spacing(1),
+    // marginTop: theme.spacing(1),
     left: 0,
     right: 0
   },
