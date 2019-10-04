@@ -67,20 +67,38 @@ export default props => {
         <GridContainer justify={'center'}>
           {
             watchlistMovies.length > 0 ?
-            watchlistMovies.map((watchlistItem, i) => 
+            watchlistMovies.map((d, i) => 
               <GridItem key={i} xs={12} sm={12} md={4}>
                 <Card plain>
-                  <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
+                  <GridItem
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      Router.push(`/film/${d.movieSlug}`)
+                    }}
+                    xs={12}
+                    sm={12}
+                    md={12}
+                    className={classes.itemGrid}
+                  >
                     {/* <img src={team1} alt="..." className={imageClasses} /> */}
-                    {watchlistItem.image}
+                    <img src={d.heroImg} alt={d.name} className={classes.img} />
                   </GridItem>
-                  <h4 className={classes.cardTitle}>
-                    {watchlistItem.title}
+                  <h4
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      Router.push(`/film/${d.movieSlug}`)
+                    }}
+                    className={classes.cardTitle}
+                  >
+                    {d.name}
                   </h4>
-                  <CardBody>
-                    <p className={classes.description}>
-                      {watchlistItem.body}
-                    </p>
+                  <CardBody
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      Router.push(`/film/${d.movieSlug}`)
+                    }}
+                  >
+                    <p className={classes.description}>{d.shortDescription}</p>
                   </CardBody>
                 </Card>
               </GridItem>
