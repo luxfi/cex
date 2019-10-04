@@ -90,7 +90,12 @@ class MoviesView extends React.Component {
   render() {
     const { store, classes } = this.props
     const { investorTopPicks } = store.movieStore
-    // let topPicks = movies.slice(0, 3)
+    const { userPortfolio } = store
+
+    // What functions do we need from the movie and user store?
+    const addToWatchlist = t => {
+      userPortfolio.addToWatchlist(t, findMovieByTicker)
+    }
     return (
       <GridContainer>
         {investorTopPicks.map((d, i) => (
@@ -100,7 +105,7 @@ class MoviesView extends React.Component {
                 <Button
                   size="small"
                   onClick={e => {
-                    e.preventDefault()
+                    addToWatchlist(d.ticker)
                   }}
                 >
                   Add to WatchList
