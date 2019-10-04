@@ -10,6 +10,23 @@ import Popper from "@material-ui/core/Popper"
 import InputBase from "@material-ui/core/InputBase"
 import { makeStyles } from "@material-ui/core/styles"
 import Router from "next/router"
+import _ from "lodash"
+
+// will optimize - good for now
+// function fuzzyMatch(str, pattern) {
+//   pattern = pattern.split("").reduce(function (a, b) { return a + ".*" + b; });
+//   return (new RegExp(pattern)).test(str);
+// }
+
+const fuzzyMatch = (str, pattern) => {
+  const cache = _.memoize(function (str) {
+    return new RegExp("^" + str.replace(/./g, function (x) {
+      return /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/.test(x) ? "\\" + x + "?" : x + "?"
+    }) + "$")
+  })
+  return cache(str.toLowerCase()).test(pattern.toLowerCase())
+}
+
 
 const movies = [
   {
@@ -284,7 +301,8 @@ export default function IntegrationAutosuggest() {
   const [stateSuggestions, setSuggestions] = React.useState([])
 
   const handleSuggestionsFetchRequested = ({ value }) => {
-    setSuggestions(getSuggestions(value))
+    setSuggestions(suggestions.filter(str => fuzzyMatch(str.name, value)))
+    // setSuggestions(getSuggestions(value))
   }
 
   const handleSuggestionsClearRequested = () => {
