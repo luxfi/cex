@@ -23,6 +23,9 @@ import ExitToApp from "@material-ui/icons/ExitToApp"
 // Material styles
 import { fade, withStyles, MuiThemeProvider } from "@material-ui/core/styles"
 
+// Core components
+import AutoCompleteSearch from "../AutoCompleteSearch"
+
 import NextLink from "next/link"
 import Router from "next/router"
 
@@ -184,7 +187,7 @@ class Header extends React.Component {
                       Entertainment Stock Exchange
                     </Typography>
                     <div className={classes.grow} />
-                    <div className={classes.search}>
+                    {/* <div className={classes.search}>
                       <div className={classes.searchIcon}>
                         <SearchIcon />
                       </div>
@@ -195,6 +198,18 @@ class Header extends React.Component {
                           input: classes.inputInput
                         }}
                         inputProps={{ "aria-label": "search" }}
+                      />
+                    </div> */}
+                    <div className={classes.search}>
+                      <div className={classes.searchIcon}>
+                        <SearchIcon />
+                      </div>
+                      <AutoCompleteSearch
+                        placeholder="Search…"
+                        classes={{
+                          root: classes.inputRoot,
+                          input: classes.inputInput
+                        }}
                       />
                     </div>
                     {accountLoaded ? (
