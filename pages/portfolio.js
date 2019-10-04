@@ -30,7 +30,7 @@ class Portfolio extends React.Component {
 
   componentDidMount () {
     this.props.store.userPortfolio.getInvestments()
-    // this.props.store.userPortfolio.getWatchlist() TODO
+    this.props.store.userPortfolio.getWatchlist()
   }
 
   render() {
