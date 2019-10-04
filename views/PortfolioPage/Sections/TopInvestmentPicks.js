@@ -84,6 +84,13 @@ export default props => {
       .split(" ")
       .slice(0, 23)
       .join(" ") + "..."
+
+  const { userPortfolio } = store
+
+  // What functions do we need from the movie and user store?
+  const addToWatchlist = t => {
+    userPortfolio.addToWatchlist(t, findMovieByTicker)
+  }
   return (
     <>
       <div className={classes.section}>
