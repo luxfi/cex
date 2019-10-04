@@ -63,7 +63,7 @@ export default props => {
                 size="lg"
                 target="_blank"
                 rel="noopener noreferrer"
-              >
+            >
                 <i className="fas fa-play" />
                 Invest in this Film
               </Button>
