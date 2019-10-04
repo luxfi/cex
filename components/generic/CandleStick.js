@@ -8,8 +8,8 @@ const predefinedClassName =
 class Candlestick extends AbstractSeries {
   render() {
     const { className, data, marginLeft, marginTop } = this.props;
-    if (!data) {
-      return null;
+    if (!data || data.length === 0) {
+      return null
     }
 
     const xFunctor = this._getAttributeFunctor('x');

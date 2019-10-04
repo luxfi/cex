@@ -67,7 +67,7 @@ const darkTheme = createMuiTheme({
       secondary: "#f0f0f0" // breadcrumbs uses this
     },
     background: {
-      default: "#222",
+      default: "rgb(29, 38, 50)",
       paper: "#2f2f2f"
     },
     overrides: {

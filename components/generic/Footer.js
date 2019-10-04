@@ -1,6 +1,7 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
 import NextLink from "next/link"
+import darkTheme from "../../components/theme"
 
 //font awesome share icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -17,7 +18,8 @@ import Toolbar from "@material-ui/core/Toolbar"
 import Container from "@material-ui/core/Container"
 import Typography from "@material-ui/core/Typography"
 import Link from "@material-ui/core/Link"
-import Button from "../CustomButtons/Button.js"
+// import Button from "../CustomButtons/Button.js"
+import Button from "@material-ui/core/Button"
 import Modal from "../Modal.js"
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles"
 
@@ -210,6 +212,7 @@ class Footer extends React.Component {
 }
 
 const styles = theme => {
+  console.log(theme)
   return {
     root: {
       flexGrow: 1,
@@ -239,8 +242,7 @@ const styles = theme => {
     anchor: {
       margin: "3px",
       display: "inline-block",
-      // color: "white",
-      //color: "#fff",
+      color: "#fff",
       padding: "7px",
       borderRadius: "2px",
       height: "18px"

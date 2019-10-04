@@ -1,5 +1,5 @@
 // Generic Libraries
-import { action, observable, computed } from 'mobx'
+import { action, observable, computed, toJS } from 'mobx'
 import _ from 'lodash'
 
 import { padDollarAmount } from '../components/utils/generic'
@@ -78,12 +78,11 @@ export default class UserPortfolio {
     try {
       // Using localStorage for now
 
-      
-      let holdings = 0.00
-      this.investments.map(h => {
-        holdings += (h.amount * h.price)
-      })
-      this.holdings = holdings
+      const _watchlist = localStorage.getItem('watchlist')
+
+      if (_watchlist !==  null) {
+        this.watchlist = JSON.parse(_investments)
+      }
 
       onSuccess && onSuccess()
     } catch (ex) {
@@ -101,13 +100,6 @@ export default class UserPortfolio {
     try {
       // Using localStorage for now
 
-      
-      let holdings = 0.00
-      this.investments.map(h => {
-        holdings += (h.amount * h.price)
-      })
-      this.holdings = holdings
-
       onSuccess && onSuccess()
     } catch (ex) {
       console.log('Error logging in', ex)
@@ -115,6 +107,14 @@ export default class UserPortfolio {
     } finally {
       this.updating = false
     }
+  }
+
+  updateHoldings () {
+    let holdings = 0.00
+    this.investments.map(h => {
+      holdings += (h.amount * parseFloat(h.price).toFixed(2))
+    })
+    this.holdings = holdings
   }
 
   @action async getInvestments (onSuccess, onError) {
@@ -124,13 +124,12 @@ export default class UserPortfolio {
     
     try {
       // Using localStorage for now
+      const _investments = localStorage.getItem('investments')
 
-      
-      let holdings = 0.00
-      this.investments.map(h => {
-        holdings += (h.amount * h.price)
-      })
-      this.holdings = holdings
+      if (_investments !==  null) {
+        this.investments = JSON.parse(_investments)
+        this.updateHoldings()
+      }
 
       onSuccess && onSuccess()
     } catch (ex) {
@@ -141,10 +140,50 @@ export default class UserPortfolio {
     }
   }
 
-  @action onOrderExecute (order, orderType, quantity) {
+  @action onOrderExecute (order, orderType) {
     // order is the thing movie that was bought or sold
     // orderType is buy/sell
-    // quantity is how many
+
+    // order = {
+    //   ticker: string,
+    //   amount: number,
+    //   price: number,
+    //   categories: array[string]
+    // }
+
+    const _investments = localStorage.getItem('investments')
+
+    if (_investments !==  null) {
+      this.investments = JSON.parse(_investments)
+    }
+
+    const holdingIndex = _.findIndex(this.investments, { 'ticker': order.ticker })
+
+    if (orderType === 'bid') {
+      // Add the order to the user portfolio, no need to check anything
+      if (holdingIndex > -1) {
+        // Then we have a holding
+        this.investments[holdingIndex].amount += order.amount
+        this.investments[holdingIndex].price = order.price
+      } else {
+        this.investments.push(order)
+      }
+    } else {
+      // Make sure the user owns enough shares to sell?
+      if (holdingIndex > -1 && this.investments[holdingIndex].amount >= order.amount) {
+        // Then we have a holding
+        this.investments[holdingIndex].amount -= order.amount
+        this.investments[holdingIndex].price = order.price
+
+        if (this.investments[holdingIndex].amount <= 0) this.investments.splice(holdingIndex, 1)
+      } else {
+        return false
+      }
+    }
+
+    this.updateHoldings()
+    localStorage.setItem('investments', JSON.stringify(toJS(this.investments)))
+    return true
   }
 
   @computed get userHoldings () {
@@ -180,5 +219,14 @@ export default class UserPortfolio {
     })
 
     return _.sortBy(toSort, 'count').reverse().slice(0, 3)
+  }
+
+  @computed get topInvestments () {
+    return _.sortBy(this.investments, i => i.amount * i.price).reverse()
+  }
+
+  getMaxSell (ticker) {
+    const investment = _.find(this.investments, i => i.ticker === ticker)
+    return investment ? investment.amount : 0
   }
 }
