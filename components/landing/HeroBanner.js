@@ -1,39 +1,38 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
+import TradeLink from './TradeLink'
 
 export default props => {
-    return (
-        <div className="container">
-            <header>
-                <div className="info-container">
-                    <h2 className="title" style={{ fontSize: "40px", margin: "0px 0px 4px 0px" }}>
-                        Mad Max: Fury Road
+  return (
+    <div className="container">
+      <header>
+        <div className="info-container">
+          <h2 className="title" style={{ fontSize: "40px", margin: "0px 0px 4px 0px" }}>
+            Mad Max: Fury Road
                     </h2>
-                    <p className="price" style={{ fontSize: "18px", margin: "0px 0px 4px 0px" }}>
-                        $12.50
+          <p className="price" style={{ fontSize: "18px", margin: "0px 0px 4px 0px" }}>
+            $12.50
                     </p>
-                    <p className="change" style={{ fontSize: "27px", margin: "0px" }}>
-                        <FontAwesomeIcon icon={faArrowUp} style={{ width: '18px', paddingRight: "8px" }} />
-                        $1 (8.7%)
+          <p className="change" style={{ fontSize: "27px", margin: "0px" }}>
+            <FontAwesomeIcon icon={faArrowUp} style={{ width: '18px', paddingRight: "8px" }} />
+            $1 (8.7%)
                     </p>
-                </div>
-                <div className="links">
-                    <ul className="nav">
-                        <li className="navlink"><a href="#">Trailer 1</a></li>
-                        <div className="divider"/>
-                        <li className="navlink"><a href="#">Trailer 2</a></li>
-                        <div className="divider"/>
-                        <li className="navlink"><a href="#">Official Website</a></li>
-                        <div className="break"/>
-                        <a href="#" className="btn invert">Start Trading Now</a>
-                        <div className="break"/>
-                        <li className="navlink"><a href="#">View Demo</a></li>
-
-                    </ul>
-
-                </div>
-            </header>
-            <style jsx>{`
+        </div>
+        <div className="links">
+          <ul className="nav">
+            <li className="navlink"><a href="#">Trailer 1</a></li>
+            <div className="divider" />
+            <li className="navlink"><a href="#">Trailer 2</a></li>
+            <div className="divider" />
+            <li className="navlink"><a href="#">Official Website</a></li>
+            <div className="break" />
+            <TradeLink title={"Start Trading Now"} ticker={"MDMXFR"} />
+            <div className="break" />
+            <li className="navlink"><a href="#">View Demo</a></li>
+          </ul>
+        </div>
+      </header>
+      <style jsx>{`
                 .container {
                     // width: 100%;
                     display: flex;
@@ -103,32 +102,8 @@ export default props => {
                     flex-basis: 100%;
                     height: 0;
                 }
-                .btn.invert {
-                    margin: 0;
-                    padding: 0 48px;
-                    height: 48px;
-                    line-height: 48px;
-                    border-radius: 7px;
-                    background-color: #ff911e;
-                    box-shadow: 0 4px 14px 0 rgba(255, 145, 30, 0.39);
-                    color: white;
-                }
-                .btn {
-                    display: inline-block;
-                    cursor: pointer;
-                    text-decoration: none;
-                    padding: 0.25rem 0.5rem;
-                    margin: -0.25rem -0.5rem;
-                    border-radius: 7px;
-                    color: #ff911e;
-                    background-color: transparent;
-                    border: none;
-                    font-size: inherit;
-                    line-height: inherit;
-                    transition: background 0.2s ease,color 0.2s ease,box-shadow 0.2s ease;
-                }
                 
             `}</style>
-        </div>
-    )
+    </div>
+  )
 }

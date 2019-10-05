@@ -1,0 +1,54 @@
+#account-index
+  .simple-balances
+    .simple-balance
+      flex: 0
+
+      .simple-balance-logo
+        min-width: 16px
+
+        img
+          height: 1rem
+          position: relative
+          top: 2px
+
+      .columns > *
+        flex: 0
+        width: auto
+        margin: 0
+
+  .token-cards
+    flex-wrap: wrap
+
+  .token-cards > *
+    flex: 1 25%
+
+    @media (max-width: 900px)
+      flex: 1 33%
+
+    @media (max-width: 600px)
+      flex: 1 50%
+
+    @media (max-width: 450px)
+      flex: 1 100%
+
+    & > *
+      background: linear-gradient(to bottom, $tokenCardGradient1Color 0%, $tokenCardGradient2Color 100%)
+
+      .token-type
+        color: $textDarkColor
+        background-color: $backgroundDarkColor
+        padding: .5rem
+        display: inline-block
+        margin-bottom: .5rem
+
+      .token-count
+        margin-bottom: .5rem
+        color: $ustColor
+
+      .token-name
+        padding-bottom: 2rem
+        border-bottom: 1px solid #485270
+
+      .token-value
+        color: $textDarkColor
+

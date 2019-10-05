@@ -1,10 +1,11 @@
-export default () => {
-    return (
-      <div className="non-row">
-        <a href="#" className="btn invert">Start Trading Now</a>
-        <a href="#" className="demo">View Demo</a>
+import TradeLink from './TradeLink'
 
-        <style jsx>{`
+export default (props) => {
+  return (
+    <div className="non-row">
+      <TradeLink title={"Start Trading Now"} ticker={"MDMXFR"} />
+      <a href="#" className="demo">View Demo</a>
+      <style jsx>{`
           .btn {
             cursor: pointer;
             text-decoration: none;
@@ -40,6 +41,6 @@ export default () => {
             align-items: center;
           }
         `}</style>
-      </div>
-    )
+    </div>
+  )
 }

@@ -1,16 +1,16 @@
-export default ({ title = "Missing Title", symbol = "XXX", price = 11.11, change = 1, percentChange = .1111, id }) => {
-    const direction = change >= 0 ? "positive" : "negative";
-    return (
-        <li className="navi-data-strip__ticker">
-            <a href="#" className="navi-data-strip__ticker-link">
-                <div className="navi-data-strip__ticker-label">{title}</div>
-                <div className="navi-data-strip__ticker-symbol">({symbol})</div>
-                <div className="navi-data-strip__ticker-market-price">{price}</div>
-                <div className={`navi-data-strip__ticker-direction navi-data-strip__ticker-direction--${direction}`} />
-                <div className={`navi-data-strip__ticker-value navi-data-strip__ticker-value--${direction}`}>{change}</div>
-                <div className={`navi-data-strip__ticker-value navi-data-strip__ticker-value--${direction}`}>{percentChange}</div>
-            </a>
-            <style jsx>{`
+export default ({ title = "Missing Title", ticker = "XXX", price = 11.11, change = 1, percentChange = .1111, id }) => {
+  const direction = change >= 0 ? "positive" : "negative";
+  return (
+    <span className="navi-data-strip__ticker">
+      <a href="#" className="navi-data-strip__ticker-link">
+        <span className="navi-data-strip__ticker-label">{title}</span>
+        <span className="navi-data-strip__ticker-symbol">({ticker})</span>
+        <span className="navi-data-strip__ticker-market-price">{price}</span>
+        <span className={`navi-data-strip__ticker-direction navi-data-strip__ticker-direction--${direction}`} />
+        <span className={`navi-data-strip__ticker-value navi-data-strip__ticker-value--${direction}`}>{change}</span>
+        <span className={`navi-data-strip__ticker-value navi-data-strip__ticker-value--${direction}`}>{percentChange}</span>
+      </a>
+      <style jsx>{`
                 .navi-data-strip__ticker {
                     display: inline-block;
                     line-height: 30px;
@@ -85,9 +85,9 @@ export default ({ title = "Missing Title", symbol = "XXX", price = 11.11, change
                     color: #ff433d;
                 }
         `}</style>
-        </li>
+    </span>
 
 
 
-    )
+  )
 }

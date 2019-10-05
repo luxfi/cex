@@ -1,74 +1,58 @@
-import React from 'react'
-import Head from 'next/head'
-import { inject, observer } from 'mobx-react'
-import TickerStrip from '../components/generic/TickerStrip'
-import PageRow from '../components/generic/PageRow'
-import Slider from '../components/generic/Slider'
-import Footer from '../components/generic/Footer'
-import Hero from '../components/landing/Hero'
-import Chart from '../components/landing/Chart'
-import PartnerGrid from '../components/landing/PartnerGrid'
-import SecuredByGrid from '../components/landing/SecuredByGrid'
-import WhatPanel from '../components/landing/WhatPanel'
-import HowToTradePanel from '../components/landing/HowToTradePanel'
-import TrendingNowSliderItem from "../components/landing/TrendingNowSliderItem"
-import PopularGenres from '../components/landing/PopularGenres'
-import StartCTA from '../components/landing/StartTrading'
+import React from "react"
+// @material-ui/core components
+import { withStyles } from "@material-ui/core/styles"
 
-@inject('store')
+import { inject, observer } from "mobx-react"
+
+// core components
+import Hero from "../components/landing/Hero"
+
+// import styles from "assets/jss/material-kit-react/views/landingPage.js"
+import styles from "../assets/jss/views/landingPage.js"
+
+// Sections for this page
+import InvestorTopPicksSection from "../views/LandingPage/Sections/InvestorTopPicksSection"
+import InvestNowSection from "../views/LandingPage/Sections/InvestNowSection"
+import OurPartnersSection from "../views/LandingPage/Sections/OurPartnersSection"
+import ESXCommunitySection from "../views/LandingPage/Sections/ESXCommunitySection"
+
+@inject("store")
 @observer
-export default class Index extends React.Component {
-  state = {
-    whiteGutter: true
+class Index extends React.Component {
+  // static async getInitialProps({ mobxStore }) {
+  //   await mobxStore.movieStore.fetch()
+  //   return {
+  //     movieStore: mobxStore.movieStore,
+  //     orderBook: mobxStore.orderBook
+  //   }
+  // }
+
+  componentDidMount() {
+    this.props.store.userPortfolio.getWatchlist()
   }
 
+  // componentWillUnmount() {
+  //   this.props.store.orderBook.terminateDataGenerator()
+  // }
+
   render() {
-    const trendingSliderItems = this.props.store.topMovies.slice(0, 14)
-            .filter(item => item.verticalImg !== "N/A")
-            .map((sliderItem, key) => {
-                const { title, Imdbid, verticalImg } = sliderItem;
-                return <TrendingNowSliderItem
-                    key={Imdbid}
-                    title={title}
-                    imgSrc={verticalImg}
-                    width="166px" />
-            })
-
+    // const { movieStore } = this.props.store
+    const { classes, store } = this.props
+    const loggedIn = store.userStore.loggedIn
     return (
-      <div>
-        <Head>
-          <link href="https://fonts.googleapis.com/css?family=Hind&display=swap" rel="stylesheet" />
-        </Head>
-        <TickerStrip movieStore={this.props.store} />
-        <Hero />
-        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Trending Now"} hideInnerPadding>
-          <Slider movieStore={this.props.store} sliderItems={trendingSliderItems} />
-        </PageRow>
-        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Top Gainers"}>
-          <Chart topMovies={this.props.store.topMovies} />
-        </PageRow>
-        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Popular Genres"}>
-          <PopularGenres/>
-        </PageRow>
-        <StartCTA />
-        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"What is ESX?"}>
-          <WhatPanel/>
-        </PageRow>
-        <StartCTA />
-        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"How To Trade"}>
-          <HowToTradePanel/>
-        </PageRow>
-        <StartCTA />
-        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Our Partners"}>
-          <PartnerGrid/>
-        </PageRow>
-        <PageRow whiteGutter={this.state.whiteGutter} rowTitle={"Secured By"}>
-          <SecuredByGrid/>
-        </PageRow>
-
-        <Footer />
-      </div >
-
+      <>
+        <Hero loggedIn={loggedIn} />
+        <div className={`${classes.main}`}>
+          <div className={classes.container}>
+            <InvestorTopPicksSection />
+            <InvestNowSection loggedIn={loggedIn} />
+            <OurPartnersSection />
+            <ESXCommunitySection />
+          </div>
+        </div>
+      </>
     )
   }
 }
+
+export default withStyles(styles)(Index)

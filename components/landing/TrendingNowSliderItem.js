@@ -1,21 +1,22 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
+import TradeButton from "../generic/TradeButton"
 
 export default props => {
-    const width = props.width || "166px"
-    return (
-        <div className="container">
-            <img src={props.imgSrc} alt="slider-item" style={{ width: props.width }} />
-            <div className="price">$5.55</div>
-            <div className="info">
-                <span className="change">
-                    <FontAwesomeIcon icon={faArrowUp} style={{ width: '12px', paddingRight: "5px" }} />
-                    $1 (8.7%)
-                </span>
-                <a href="#" className="btn invert">Trade</a>
-            </div>
-            <style jsx>{`
+  const width = props.width || "166px"
+  return (
+    <div className="container">
+      <img src={props.imgSrc} alt="slider-item" style={{ width: props.width, height: "266px" }} />
+      <div className="price">${props.price}</div>
+      <div className="info">
+        <span className="change">
+          <FontAwesomeIcon icon={faArrowUp} style={{ width: '12px', paddingRight: "5px" }} />
+          ${(props.change * props.price).toFixed(2)} ({props.change}%)
+        </span>
+        <TradeButton ticker={props.ticker} />
+      </div>
+      <style jsx>{`
                 .container {
                     display: flex;
                     flex-direction: column;
@@ -23,13 +24,14 @@ export default props => {
                 }
                 img {
                     display: flex;
-                    height: 93px;
                     object-fit: cover;
+                    pointer-events: none;
                 }
                 .info {
                     display: flex;
                     justify-content: space-between;
                     margin-top: 2px;
+                    font-size: 13px;
                 }
                 .price {
                     font-size: 12px;
@@ -42,6 +44,8 @@ export default props => {
                 .arrow-up {
                     height: 14px;
                     padding: 0px 4px;
+                    height: 32px;
+                    width: 32px;
                 }
                 .btn.invert {
                     margin: 0;
@@ -72,6 +76,6 @@ export default props => {
                     font-size: 9px;
                 }
             `}</style>
-        </div>
-    )
+    </div>
+  )
 }
