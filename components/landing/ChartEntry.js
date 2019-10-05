@@ -1,18 +1,18 @@
 export default props => {
-    
-    const fillHeight = Math.round(props.barHeight * props.fillPercent)
 
-    return (
-        <div className="chart-entry">
-            <div style={{flexGrow: 1}} />
-            <div className="chart-entry-label">
-                +{(props.percentChange * 100).toFixed(2)}%
+  const fillHeight = Math.round(props.barHeight * props.fillPercent)
+
+  return (
+    <div className="chart-entry">
+      <div style={{ flexGrow: 1 }} />
+      <div className="chart-entry-label">
+        +{(props.percentChange * 100).toFixed(2)}%
             </div>
-            <div className="chart-entry-bar"/>
-            <div className="chart-entry-image">
-                <img src={props.imgSrc} style={{width: "45px", height: "60px"}}/>
-            </div>
-            <style jsx>{`
+      <div className="chart-entry-bar" />
+      <div className="chart-entry-image">
+        <img src={props.imgSrc} style={{ width: "45px", height: "60px" }} />
+      </div>
+      <style jsx>{`
                 .chart-entry {
                     display: flex;
                     width: 45px;
@@ -35,6 +35,6 @@ export default props => {
                     margin-bottom: 5px;
                 }
             `}</style>
-        </div>
-    )
+    </div>
+  )
 }
