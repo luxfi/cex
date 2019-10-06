@@ -144,7 +144,7 @@ class Trade extends React.Component {
                     td {
                         padding-right: 30px;
                         padding-bottom: 4px;
-                    }  
+                    }
                     .white {
                         color: white;
                         padding-right: 0px;

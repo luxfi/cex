@@ -2,10 +2,13 @@ import { container, title } from "../esx"
 
 const heroStyle = {
   container: {
-    marginTop: "300px",
+    marginTop: '30vh',
     zIndex: "12",
     color: "#FFFFFF",
-    ...container
+    ...container,
+    "@media (max-width: 573px)": {
+      marginTop: 320,
+    },
   },
   title: {
     ...title,

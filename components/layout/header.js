@@ -51,8 +51,8 @@ function HideOnScroll(props) {
 }
 
 const CustomLink = React.forwardRef(
-  ({ className, href, hrefAs, children, prefetch }, ref) => (
-    <NextLink ref={ref} href={href} as={hrefAs} prefetch>
+  ({ className, href, hrefAs, children, }, ref) => (
+    <NextLink ref={ref} href={href} as={hrefAs}>
       <a className={className}>{children}</a>
     </NextLink>
   )
@@ -180,12 +180,12 @@ class Header extends React.Component {
                         id="logo"
                         src="/static/img/logo.png"
                         alt="ESX"
-                        height="60px"
+                        height="80px"
                       />
                     </Link>
-                    <Typography variant="subtitle2">
+                    { /*<Typography variant="subtitle2">
                       Entertainment Stock Exchange
-                    </Typography>
+                    </Typography>*/ }
                     <div className={classes.grow} />
                     {/* <div className={classes.search}>
                       <div className={classes.searchIcon}>
