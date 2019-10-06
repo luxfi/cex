@@ -8,7 +8,9 @@ export default props => {
       <div className={`hero-image-container ${className}`}>
         <Parallax strength={600}>
           <Background>
-            <img className='hero-image' src={img} alt='Terminator Dark Fate'/>
+            <div className='hero-image'>
+              { img }
+            </div>
           </Background>
           <div className='hero-image-content'>
             {children}
@@ -33,7 +35,7 @@ export default props => {
           height: 100%;
         }
 
-        .hero-image {
+        .hero-image :global(img) {
           min-height: 800px;
           height: 120vh;
           margin-left: 50vw;
