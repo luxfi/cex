@@ -10,7 +10,7 @@ export default props => {
       <InfoPanel imgSrc={secureImg} headerTxt="Secure" bodyTxt="Entertainment Stock X uses industry-leading security practices and tools to keep your account safe." />
       <InfoPanel imgSrc={investmentToolImg} headerTxt="Investment Tool" bodyTxt="ESX is a unified, global trading platform that bridges the worlds of entertainment and finance." />
       <style jsx>{`
-            .why-panel { 
+            .why-panel {
                 display: flex;
                 justify-content: center;
                 width: 100%;
