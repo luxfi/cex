@@ -24,11 +24,12 @@ import {
 } from 'react-share';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faEnvelope, faClipboard } from "@fortawesome/free-solid-svg-icons"
 import {
   faFacebook,
   faTwitter,
-  faLinkedinIn
+  faLinkedinIn,
+  faEnvelope,
+  faClipboard
 } from "@fortawesome/free-brands-svg-icons"
 
 const miniReset = {
@@ -179,30 +180,15 @@ const cardStyles = makeStyles(theme => ({
   facebookIcon: {
     color: "#3b5998",
     marginLeft: "-4px",
-      "&:hover": {
-//        color: "#3b5998",
-        // use LinkedIn color [sic], so it 
-        // pops during the hover state against white
-        //color: "#0e76a8",
-      },
   },
   twitterIcon: {
     color: "#00acee",
-    "&:hover": {
-//      color: "#00acee",
-    },
   },
   linkedinIcon: {
     color: "#0e76a8",
-    "&:hover": {
-//      color: "#0e76a8",
-    },
   },
   emailIcon: {
     color: blue[600],
-    "&:hover": {
-//      color: blue[600],
-    },
   }
 }))
 
