@@ -72,7 +72,7 @@ class Hero extends React.Component {
     return (
       <>
         <div className="hero-container">
-          <Carousel showThumbs={false} infiniteLoop={true}>
+          <Carousel showThumbs={false} infiniteLoop={true} showStatus={false}>
             { this.props.store.movieStore.movies.map((movie) => {
               return <HeroImg {...rest} img={ movieExtendedMap[movie.movieSlug].img }>
                 <div className={classes.container}>
@@ -173,7 +173,7 @@ class Hero extends React.Component {
             top: 1px;
           }
 
-          .hero-container p {
+          .hero-container :global(p) {
             color: #FFF !important;
           }
 
@@ -183,7 +183,7 @@ class Hero extends React.Component {
             padding: 11px 24px;
           }
 
-          .hero-container :global(.invest-button) p {
+          .hero-container :global(.invest-button p) {
             color: #000 !important;
           }
 
