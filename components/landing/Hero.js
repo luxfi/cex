@@ -173,10 +173,18 @@ class Hero extends React.Component {
             top: 1px;
           }
 
+          .hero-container p {
+            color: #FFF;
+          }
+
           .hero-container :global(.watch-trailer-button) {
             color: #FFF;
             border: 1px solid #FFF;
             padding: 11px 24px;
+          }
+
+          .hero-container :global(.invest-button) p {
+            color: #000;
           }
 
           .hero-container :global(.invest-button) {
