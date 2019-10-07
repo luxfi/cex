@@ -53,6 +53,7 @@
     "react-content-loader": "^4.3.0",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.10.2",
+    "react-film": "1.2.0",
     "react-multi-carousel": "^2.2.9",
     "react-parallax": "2.2.3",
     "react-referential": "1.0.4",
