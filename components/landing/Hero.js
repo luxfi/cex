@@ -110,7 +110,7 @@ class Hero extends React.Component {
                       </h4> */}
                       <br />
                       <Button
-                        className="watch-trailer-button"
+                        className="watch-trailer-button button"
                         variant="outlined"
                         size="large"
                         startIcon={<PlayArrowIcon />}
@@ -126,7 +126,7 @@ class Hero extends React.Component {
                         </a>
                       </Button>
                       <Button
-                        className="invest-button"
+                        className="invest-button button"
                         size="large"
                         startIcon={<MonetizationOnIcon />}
                       >
@@ -184,6 +184,17 @@ class Hero extends React.Component {
             background-color: #FBC43E;
             margin-left: 16px;
             padding: 12px 24px;
+          }
+
+          @media (max-width: 768px) {
+            .hero-container :global(.button) {
+              margin: 0 0;
+              width: 100%;
+            }
+
+            .hero-container :global(.watch-trailer-button) {
+              margin: 0 0 16px;
+            }
           }
 
           a {
