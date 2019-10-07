@@ -24,13 +24,17 @@ import {
 } from 'react-share';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { 
+  faEnvelope, 
+  faClipboard 
+} from "@fortawesome/free-solid-svg-icons"
 import {
   faFacebook,
   faTwitter,
-  faLinkedinIn,
-  faEnvelope,
-  faClipboard
+  faLinkedinIn
 } from "@fortawesome/free-brands-svg-icons"
+
+// ~~~~~~~~~~~~~~~
 
 const miniReset = {
   margin: 0,
@@ -39,7 +43,7 @@ const miniReset = {
 
 const generalStyles = makeStyles(theme => ({
   root: {
-    margin: "0 25px",
+    margin: theme.spacing(0, 4),
   }
 }))
 
@@ -59,7 +63,7 @@ const cardStyles = makeStyles(theme => ({
   },
   leftAlignedPaper: {
     alignItems: "flex-start !important",
-    paddingLeft: "24px"
+    paddingLeft: theme.spacing(4)
   },
 
   title: {
@@ -67,14 +71,14 @@ const cardStyles = makeStyles(theme => ({
     textTransform: "uppercase",
     fontSize: "1rem",
     fontWeight: 200,
-    marginBottom: "12px"
+    marginBottom: theme.spacing(2)
   },
 
   cardIcon: {
     display: "block",
     fontSize: '4.2rem',
     color: blue[500],
-    marginBottom: "6px"
+    marginBottom: theme.spacing(1)
   },
   disabledIcon: {
     color: theme.palette.grey[300] + " !important",
@@ -100,7 +104,7 @@ const cardStyles = makeStyles(theme => ({
     textTransform: "uppercase",
     fontSize: "1.2rem",
     fontWeight: 300,
-    marginBottom: "12px",
+    marginBottom: theme.spacing(1),
     textAlign: "baseline"
   },
 
@@ -125,7 +129,7 @@ const cardStyles = makeStyles(theme => ({
   monthTotalString: {
     ...miniReset,
     fontWeight: 300,
-    marginBottom: "12px"
+    marginBottom: theme.spacing(1)
   },
 
   
@@ -139,7 +143,7 @@ const cardStyles = makeStyles(theme => ({
   urlField: {
     border: "1px " + theme.palette.text.secondary + " solid",
     borderRadius: "3px",
-    marginRight: "12px",
+    marginRight: theme.spacing(1),
     padding: "6px 24px 6px 10px",
   },
 
@@ -147,7 +151,7 @@ const cardStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: "12px",
+    marginBottom: theme.spacing(1),
     height: "2rem",
 
     "& div.SocialMediaShareButton": {
@@ -351,7 +355,7 @@ const RewardsView = (props) => {
         onCopied={(ignore) => {setShareUrlWasCopied(true)}}
       />
       <RewardCard title={"complete your profile"} points={5} completed/>
-      <RewardCard title={"invite a friend"} completed points={15} completed />
+      <RewardCard title={"invite a friend"} points={15} completed />
       <RewardCard title={"add a payment option"} points={10} completed />
       <RewardCard title={"make 1 investment"} points={15} completed />
       <RewardCard title={"make 2 investments"} points={10} />
@@ -360,7 +364,9 @@ const RewardsView = (props) => {
       <RewardCard title={"make 20 investments"} points={10} />
       <RewardCard title={"make 30 investments"} points={10} />
     </Grid>
-      <UrlWasCopiedSnackbar open={shareUrlWasCopied} handleSnackbarClose={
+    <UrlWasCopiedSnackbar 
+      open={shareUrlWasCopied} 
+      handleSnackbarClose={
         (evt, reason) => {
           if (reason === 'clickaway') {
             return
@@ -368,7 +374,7 @@ const RewardsView = (props) => {
           setShareUrlWasCopied(false)
         }
       }
-      />
+    />
     </>
   )
 }
