@@ -43,7 +43,7 @@ const ButtonLink = React.forwardRef(
 const movieExtendedMap = {
   'terminator-dark-fate': {
     logo: <img className="logo" src={terminatorLogo} />,
-    img:  <img src={terminatorHero} style={{ marginLeft: "40vw", height: "110vh" }} />,
+    img:  <img src={terminatorHero} style={{ height: "110vh" }} />,
   },
   'uncut-gems': {
     logo: <h1 className="logo">Uncut Gems</h1>,
@@ -51,7 +51,7 @@ const movieExtendedMap = {
   },
   'birds-of-prey': {
     logo: <img className="logo" src={birdsOfPreyLogo} />,
-    img:  <img src={birdsOfPreyHero} style={{ marginTop: "30vh", height: "120vh" }} />,
+    img:  <img src={birdsOfPreyHero} style={{ height: "120vh" }} />,
   },
   'onward': {
     logo: <h1 className="logo">Onward</h1>,
