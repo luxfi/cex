@@ -43,7 +43,7 @@ const ButtonLink = React.forwardRef(
 const movieExtendedMap = {
   'terminator-dark-fate': {
     logo: <img className="logo" src={terminatorLogo} />,
-    img:  <img src={terminatorHero} style={{ marginLeft: "40vw", height: "100vh" }} />,
+    img:  <img src={terminatorHero} style={{ marginLeft: "40vw", height: "110vh" }} />,
   },
   'uncut-gems': {
     logo: <h1 className="logo">Uncut Gems</h1>,
@@ -51,7 +51,7 @@ const movieExtendedMap = {
   },
   'birds-of-prey': {
     logo: <img className="logo" src={birdsOfPreyLogo} />,
-    img:  <img src={birdsOfPreyHero} style={{ marginTop: "30vh", height: "110vh" }} />,
+    img:  <img src={birdsOfPreyHero} style={{ marginTop: "30vh", height: "120vh" }} />,
   },
   'onward': {
     logo: <h1 className="logo">Onward</h1>,
@@ -174,24 +174,28 @@ class Hero extends React.Component {
           }
 
           .hero-container p {
-            color: #FFF;
+            color: #FFF !important;
           }
 
           .hero-container :global(.watch-trailer-button) {
-            color: #FFF;
+            color: #FFF !important;
             border: 1px solid #FFF;
             padding: 11px 24px;
           }
 
           .hero-container :global(.invest-button) p {
-            color: #000;
+            color: #000 !important;
           }
 
           .hero-container :global(.invest-button) {
-            color: #000;
+            color: #000 !important;
             background-color: #FBC43E;
             margin-left: 16px;
             padding: 12px 24px;
+          }
+
+          .hero-container :global(.control-dots) {
+            bottom: 10vh;
           }
 
           @media (max-width: 768px) {

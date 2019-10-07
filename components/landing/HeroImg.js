@@ -21,7 +21,7 @@ export default props => {
         .hero-image-container {
           overflow: hidden;
           background-color: #000;
-          height: 95vh;
+          height: 110vh;
           min-height: 600px;
           max-height: 1000px;
           margin: 0px;
@@ -37,7 +37,7 @@ export default props => {
 
         .hero-image :global(img) {
           min-height: 800px;
-          height: 120vh;
+          height: 130vh;
           margin-left: 50vw;
           margin-top: 35vh;
           width: auto !important;
