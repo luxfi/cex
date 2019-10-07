@@ -23,7 +23,6 @@ export default props => {
           background-color: #000;
           height: 110vh;
           min-height: 600px;
-          max-height: 1000px;
           margin: 0px;
           padding: 0px;
           border: 0px;
@@ -39,7 +38,7 @@ export default props => {
           min-height: 800px;
           height: 130vh;
           margin-left: 50vw;
-          margin-top: 10vh;
+          margin-top: 5vh;
           width: auto !important;
         }
 
