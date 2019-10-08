@@ -104,7 +104,7 @@ const PillsTabs = (props) => {
         <Tab label="Portfolio" disableFocusRipple />
         <Tab label="Trade" disableFocusRipple />
         <Tab label="Rewards" disableFocusRipple />
-        <Tab label="Newsfeed" disabled />
+        <Tab label="Newsfeed" disableFocusRipple />
       </Tabs>
     </MuiThemeProvider>
   )
