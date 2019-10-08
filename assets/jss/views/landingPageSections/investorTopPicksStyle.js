@@ -11,7 +11,8 @@ const investorTopPicksStyle = {
     marginBottom: "1rem",
     marginTop: "30px",
     minHeight: "32px",
-    textDecoration: "none"
+    textDecoration: "none",
+    color: "#FFF",
   },
   ...imagesStyle,
   itemGrid: {
@@ -22,12 +23,15 @@ const investorTopPicksStyle = {
     maxWidth: "100%",
     height: '210px'
   },
-  cardTitle,
+  cardTitle: {
+    ...cardTitle,
+    color: "#FFF",
+  },
   smallTitle: {
-    color: "#6c757d"
+    color: "#FFF",
   },
   description: {
-    color: "#999",
+    color: "#FFF",
     marginTop: "-6px" // find a cleaner way later
   },
   justifyCenter: {

@@ -4,14 +4,15 @@ import imagesStyle from "../../imagesStyles.js"
 const ourPartnersStyle = {
   section: {
     padding: "70px 0",
-    textAlign: "center"
+    textAlign: "center",
   },
   title: {
     ...title,
     marginBottom: "1rem",
     marginTop: "30px",
     minHeight: "32px",
-    textDecoration: "none"
+    textDecoration: "none",
+    color: "#FFF",
   },
   ...imagesStyle,
   itemGrid: {
@@ -20,10 +21,10 @@ const ourPartnersStyle = {
   },
   cardTitle,
   smallTitle: {
-    color: "#6c757d"
+    color: "#FFF",
   },
   description: {
-    color: "#999",
+    color: "#FFF",
     marginTop: "-6px" // find a cleaner way later
   },
   justifyCenter: {
