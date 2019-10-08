@@ -131,7 +131,7 @@ export default class NewestPicksSection extends React.Component {
         </GridContainer>
         <style jsx>{`
           #newest-picks {
-            transform: translate(0, -20vh);
+            transform: translate(0, -15vh);
           }
 
           #newest-picks :global(.MuiCard-root) {
