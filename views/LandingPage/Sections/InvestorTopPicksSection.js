@@ -8,6 +8,7 @@ import classNames from "classnames"
 // @material-ui/core components
 import Button from "@material-ui/core/Button"
 import CardActions from "@material-ui/core/CardActions"
+import Typography from "@material-ui/core/Typography"
 
 // @material-ui styles
 import { makeStyles } from "@material-ui/core/styles"
@@ -45,9 +46,9 @@ export default props => {
   return (
     <>
       <div className={classes.section}>
-        <h2 className={classes.title} style={{ textAlign: "left" }}>
+        <Typography variant="h5" className={classes.title} style={{ textAlign: "left" }}>
           Investor Top Picks
-        </h2>
+        </Typography>
         <MoviesView classes={classes} />
       </div>
       <style jsx>{`
