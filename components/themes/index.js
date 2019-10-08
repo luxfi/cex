@@ -50,6 +50,9 @@ export const lightTheme = createMuiTheme({
   }
 })
 
+
+export { lightTheme, darkTheme }
+
 // example of page film.js
 // import React from "react"
 
@@ -58,6 +61,7 @@ export const lightTheme = createMuiTheme({
 // import { withStyles } from "@material-ui/core/styles"
 // import FilmPage from "../views/FilmPage/FilmPage"
 // import { inject, observer } from "mobx-react"
+// import { darkTheme } from "../themes"
 
 //import styles from "../../assets/jss/views/filmPage.js"
 
