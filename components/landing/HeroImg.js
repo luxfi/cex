@@ -6,7 +6,7 @@ export default props => {
   return (
     <>
       <div className={`hero-image-container ${className}`}>
-        <Parallax strength={200}>
+        <Parallax strength={300}>
           <Background>
             <div className='hero-image'>
               { img }
@@ -21,7 +21,7 @@ export default props => {
         .hero-image-container {
           overflow: hidden;
           background-color: #000;
-          height: 110vh;
+          height: 120vh;
           min-height: 600px;
           margin: 0px;
           padding: 0px;
@@ -36,7 +36,7 @@ export default props => {
 
         .hero-image :global(img) {
           min-height: 800px;
-          height: 130vh;
+          height: 140vh;
           margin-left: 50vw;
           margin-top: 5vh;
           width: auto !important;
