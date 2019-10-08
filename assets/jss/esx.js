@@ -29,7 +29,7 @@ const containerFluid = {
   paddingLeft: "15px",
   marginRight: "auto",
   marginLeft: "auto",
-  width: "100%"
+  width: "100vw"
 }
 const container = {
   ...containerFluid,
@@ -160,7 +160,7 @@ const title = {
   margin: "1.75rem 0 0.875rem",
   textDecoration: "none",
   fontWeight: "700",
-  fontFamily: `"Roboto Slab", "Times New Roman", serif`,
+  fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
   textAlign: "left"
   // paddingLeft: "7px",
   // paddingRight: "7px"
