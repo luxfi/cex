@@ -43,7 +43,7 @@ const ButtonLink = React.forwardRef(
 const movieExtendedMap = {
   'terminator-dark-fate': {
     logo: <img className="logo" src={terminatorLogo} />,
-    img:  <img src={terminatorHero} style={{ height: "125vh", marginTop: "10vh", marginLeft: "40vw" }} />,
+    img:  <img src={terminatorHero} style={{ height: "120vh", marginTop: "10vh", marginLeft: "40vw" }} />,
   },
   'uncut-gems': {
     logo: <h1 className="logo">Uncut Gems</h1>,
@@ -51,7 +51,7 @@ const movieExtendedMap = {
   },
   'birds-of-prey': {
     logo: <img className="logo" src={birdsOfPreyLogo} />,
-    img:  <img src={birdsOfPreyHero} style={{ height: "140vh" }} />,
+    img:  <img src={birdsOfPreyHero} style={{ height: "135vh" }} />,
   },
   'onward': {
     logo: <h1 className="logo">Onward</h1>,
@@ -195,7 +195,7 @@ class Hero extends React.Component {
           }
 
           .hero-container :global(.control-dots) {
-            bottom: 10vh;
+            bottom: 15vh;
           }
 
           @media (max-width: 768px) {
