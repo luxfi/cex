@@ -48,7 +48,7 @@ const lightTheme = createMuiTheme({
   },
   typography: {
     fontFamily: "‘BWHaasGroteskTF-55Roman-Web, sans-serif’, sans-serif",
-    useNextVariants: true
+    fontSize: 18,
   }
 })
 
@@ -164,35 +164,33 @@ class MyMobxApp extends App {
               href="https://fonts.googleapis.com/icon?family=Material+Icons"
             />
           </Head>
-          <Container>
-            <Provider store={this.mobxStore}>
-              <MuiPickersUtilsProvider utils={MomentUtils}>
-                <RefProvider>
-                  <div className={classes.root}>
-                    <div className={classes.main} component="main">
-                      <Header
-                        onHomePage={onHomePage}
-                        darkTheme={darkTheme}
-                        lightTheme={lightTheme}
-                      />
-                      <Component
-                        {...pageProps}
-                        darkTheme={darkTheme}
-                        lightTheme={lightTheme}
-                      />
-                      {/* <Loader /> */}
-                      <Snackbar />
-                    </div>
-                    <div className={classes.stickyFooter}>
-                      <MuiThemeProvider theme={darkTheme}>
-                        <Footer />
-                      </MuiThemeProvider>
-                    </div>
+          <Provider store={this.mobxStore}>
+            <MuiPickersUtilsProvider utils={MomentUtils}>
+              <RefProvider>
+                <div className={classes.root}>
+                  <div className={classes.main} component="main">
+                    <Header
+                      onHomePage={onHomePage}
+                      darkTheme={darkTheme}
+                      lightTheme={lightTheme}
+                    />
+                    <Component
+                      {...pageProps}
+                      darkTheme={darkTheme}
+                      lightTheme={lightTheme}
+                    />
+                    {/* <Loader /> */}
+                    <Snackbar />
                   </div>
-                </RefProvider>
-              </MuiPickersUtilsProvider>
-            </Provider>
-          </Container>
+                  <div className={classes.stickyFooter}>
+                    <MuiThemeProvider theme={darkTheme}>
+                      <Footer />
+                    </MuiThemeProvider>
+                  </div>
+                </div>
+              </RefProvider>
+            </MuiPickersUtilsProvider>
+          </Provider>
         </React.Fragment>
       </MuiThemeProvider>
     )

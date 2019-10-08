@@ -11,6 +11,7 @@ import Hero from "../components/landing/Hero"
 import styles from "../assets/jss/views/landingPage.js"
 
 // Sections for this page
+import NewestPicksSection from "../views/LandingPage/Sections/NewestPicksSection"
 import InvestorTopPicksSection from "../views/LandingPage/Sections/InvestorTopPicksSection"
 import InvestNowSection from "../views/LandingPage/Sections/InvestNowSection"
 import OurPartnersSection from "../views/LandingPage/Sections/OurPartnersSection"
@@ -44,7 +45,8 @@ class Index extends React.Component {
         <Hero loggedIn={loggedIn} />
         <div className={`${classes.main}`}>
           <div className={classes.container}>
-            <InvestorTopPicksSection />
+            <NewestPicksSection />
+            { /*<InvestorTopPicksSection />*/ }
             <InvestNowSection loggedIn={loggedIn} />
             <OurPartnersSection />
             <ESXCommunitySection />
