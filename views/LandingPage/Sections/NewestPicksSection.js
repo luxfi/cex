@@ -63,7 +63,7 @@ export default class NewestPicksSection extends React.Component {
           {investorTopPicks.map((d, i) => {
             const inWatchlist = userPortfolio.watchlist.indexOf(d.ticker) > -1
             return (
-              <GridItem key={`picks_${i}`} xs={12} sm={6} md={4}>
+              <GridItem key={`picks_${i}`} xs={12} sm={6} md={4} ld={3}>
                 <GridItem
                   style={{
                     cursor: "pointer",
