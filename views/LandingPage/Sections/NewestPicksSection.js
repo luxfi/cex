@@ -91,7 +91,7 @@ export default class NewestPicksSection extends React.Component {
                           }}
                         >
                           <Typography variant="body1">
-                            {d.name}
+                            <strong>{d.name}</strong>
                           </Typography>
                           <Typography variant="body2">
                             {d.shortDescription}
