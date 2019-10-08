@@ -15,6 +15,7 @@ import styles from "../assets/jss/views/articlePage.js"
 import PortfolioView from "../views/PortfolioPage/PortfolioView"
 import TradeView from "../views/PortfolioPage/TradeView"
 import RewardsView from "../views/PortfolioPage/RewardsView"
+import NewsFeedView from "../views/PortfolioPage/NewsFeedView"
 import ProTraderCTA from "../views/ProfilePage/ProTraderCTA"
 
 @inject("store")
@@ -76,10 +77,8 @@ class Portfolio extends React.Component {
           findMovieByTicker={findMovieByTicker}
           store={store}
         />
-        <RewardsView
-          tabIdx={tabIdx}
-          index={2}
-        />
+        <RewardsView tabIdx={tabIdx} index={2} />
+        <NewsFeedView tabIdx={tabIdx} index={3} />
         <ProTraderCTA />
       </div>
     )
