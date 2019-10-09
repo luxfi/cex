@@ -7,12 +7,12 @@ import ContentLoader from "react-content-loader"
 
 // @material-ui/core components
 import { withStyles } from "@material-ui/core/styles"
-import Container from "@material-ui/core/Container"
+import { Button, Avatar, Grid } from "@material-ui/core"
 
 // core components
 import Breadcrumbs from "../components/Breadcrumbs.js"
-import Button from "../components/CustomButtons/Button"
-import ImageAvatars from "../components/ImageAvatars"
+// import Button from "../components/CustomButtons/Button"
+// import ImageAvatars from "../components/ImageAvatars"
 
 // import styles from "assets/jss/material-kit-react/views/landingPage.js"
 import styles from "../assets/jss/views/articlePage.js"
@@ -167,8 +167,9 @@ class Article extends React.Component {
               }}
             >
               <span style={{ width: "30px" }}>
-                <ImageAvatars alt={article.author} src={article.avatar} />
-                {/* <AvatarLoader /> */}
+                <Grid container justify="center" alignItems="center">
+                  <Avatar alt={article.author} src={article.avatar} />
+                </Grid>
               </span>
               <span
                 style={{

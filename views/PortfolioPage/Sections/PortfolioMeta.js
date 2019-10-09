@@ -3,17 +3,17 @@ import React from "react"
 // nodejs library that concatenates classes
 import classNames from "classnames"
 // @material-ui/core components
-import { Chip, Divider, Typography, Icon } from "@material-ui/core"
+import { Chip, Divider, Typography, Icon, Grid, Card, CardContent } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
 // @material-ui/icons
 
 // core components
-import GridContainer from "../../../components/Grid/GridContainer.js"
-import GridItem from "../../../components/Grid/GridItem.js"
-import Card from "../../../components/Card/Card.js"
-import CardBody from "../../../components/Card/CardBody.js"
-import ContentLoader, { Facebook } from "react-content-loader"
+// import GridContainer from "../../../components/Grid/GridContainer.js"
+// import GridItem from "../../../components/Grid/GridItem.js"
+// import Card from "../../../components/Card/Card.js"
+// import CardBody from "../../../components/Card/CardBody.js"
+import ContentLoader from "react-content-loader"
 
 import styles from "../../../assets/jss/views/portfolioPageSections/portfolioMetaStyle.js"
 
@@ -68,13 +68,13 @@ export default props => {
   // const imageClasses = classNames(classes.imgCardTop)
 
   return (
-    <GridContainer>
-      <GridItem xs={12} md={8}>
+    <Grid container>
+      <Grid item xs={12} md={8}>
         <Card className={classes.card}>
-          <CardBody>
-            <GridContainer>
-              <GridItem xs={6} md={3}>
-                <GridContainer
+          <CardContent>
+            <Grid container>
+              <Grid item xs={6} md={3}>
+                <Grid container
                   direction="column"
                   justify={"space-around"}
                   className={classNames(
@@ -105,7 +105,7 @@ export default props => {
                   >
                     {weeklyChange} from last week
                   </Typography>
-                  <GridItem xs={6}>
+                  <Grid item xs={6}>
                     {dataStub.earningsChips.map((c, i) => (
                       <Chip
                         key={`earningsChip_${i}`}
@@ -113,35 +113,35 @@ export default props => {
                         className={classes.earningsChip}
                       />
                     ))}
-                  </GridItem>
-                </GridContainer>
-              </GridItem>
-              <GridItem xs={12} sm={9}>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={12} sm={9}>
                 <img
                   src="/static/img/portfolio/portfolioChartTmp.png"
                   alt="USER EARNINGS CHART"
                   width="400"
                   height="200"
                 />
-              </GridItem>
-            </GridContainer>
-          </CardBody>
+              </Grid>
+            </Grid>
+          </CardContent>
         </Card>
-      </GridItem>
-      <GridItem xs={6} md={4}>
+      </Grid>
+      <Grid item xs={6} md={4}>
         <Card className={classes.card} style={{ minHeight: "221px" }}>
-          <CardBody>
-            <GridContainer
+          <CardContent>
+            <Grid container
               direction="column"
               justify={"space-around"}
               className={classes.earningsContainer}
             >
-              <GridItem
+              <Grid item
                 xs={12}
                 className={classNames(classes.fontBoost, classes.metaFlex)}
               >
-                <GridContainer>
-                  <GridItem xs={6}>
+                <Grid container>
+                  <Grid item xs={6}>
                     <Typography
                       variant="h1"
                       className={classes.earningsText}
@@ -171,8 +171,8 @@ export default props => {
                         {rankPercent.toFixed(2)}%
                       </Typography>
                     </Typography>
-                  </GridItem>
-                  <GridItem xs={6}>
+                  </Grid>
+                  <Grid item xs={6}>
                     <Typography
                       variant="h1"
                       className={classes.earningsText}
@@ -207,11 +207,11 @@ export default props => {
                       </Typography>{" "}
                       in this month
                     </Typography>
-                  </GridItem>
-                </GridContainer>
-              </GridItem>
+                  </Grid>
+                </Grid>
+              </Grid>
               <Divider variant="middle" />
-              <GridItem
+              <Grid item
                 xs={12}
                 className={classNames(classes.fontBoost, classes.metaFlex)}
               >
@@ -238,11 +238,11 @@ export default props => {
                     Start investing to see your top categories!
                   </Typography>
                 )}
-              </GridItem>
-            </GridContainer>
-          </CardBody>
+              </Grid>
+            </Grid>
+          </CardContent>
         </Card>
-      </GridItem>
-    </GridContainer>
+      </Grid>
+    </Grid>
   )
 }

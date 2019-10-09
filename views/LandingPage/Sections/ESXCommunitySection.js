@@ -14,7 +14,7 @@ import { makeStyles } from "@material-ui/core/styles"
 // import GridItem from "../../../components/Grid/GridItem.js"
 // import Card from "../../../components/Card/Card.js"
 // import CardBody from "../../../components/Card/CardBody.js"
-import ImageAvatars from "../../../components/ImageAvatars"
+// import ImageAvatars from "../../../components/ImageAvatars"
 import { Grid, Card, CardContent, Avatar } from '@material-ui/core'
 
 import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"

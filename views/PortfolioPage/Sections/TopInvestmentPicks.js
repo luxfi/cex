@@ -9,7 +9,9 @@ import {
   Chip,
   Divider,
   Typography,
-  Card
+  Card,
+  Grid,
+  CardContent
 } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
