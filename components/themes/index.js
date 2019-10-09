@@ -1,6 +1,6 @@
 import { createMuiTheme } from "@material-ui/core/styles"
 
-const darkTheme = createMuiTheme({
+export const darkTheme = createMuiTheme({
   palette: {
     type: "dark",
     primary: {
@@ -34,7 +34,7 @@ const darkTheme = createMuiTheme({
   }
 })
 
-const lightTheme = createMuiTheme({
+export const lightTheme = createMuiTheme({
   palette: {
     type: "light",
     primary: {
@@ -49,9 +49,6 @@ const lightTheme = createMuiTheme({
     useNextVariants: true
   }
 })
-
-
-export { lightTheme, darkTheme }
 
 // example of page film.js
 // import React from "react"

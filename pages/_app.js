@@ -11,13 +11,12 @@ config.autoAddCss = false
 
 // @material-ui/core components
 import { withStyles } from "@material-ui/core/styles"
-import blue from "@material-ui/core/colors/blue"
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles"
 import CssBaseline from "@material-ui/core/CssBaseline"
 
 // core components
-import Header from "../components/layout/header"
-import Footer from "../components/layout/footer"
+import Header from "../components/header"
+import Footer from "../components/footer"
 import Snackbar from "../components/SnackBar"
 
 import initializeStore from "../stores/stores"

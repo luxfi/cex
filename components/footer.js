@@ -1,7 +1,7 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
 import NextLink from "next/link"
-import darkTheme from "../../components/theme"
+import darkTheme from "./themes"
 
 //font awesome share icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -20,7 +20,7 @@ import Typography from "@material-ui/core/Typography"
 import Link from "@material-ui/core/Link"
 // import Button from "../CustomButtons/Button.js"
 import Button from "@material-ui/core/Button"
-import Modal from "../Modal.js"
+import Modal from "./Modal.js"
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles"
 
 import { withStyles } from "@material-ui/core/styles"

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 // import useForm from '../customHooks/useForm'
 
-import { padDollarAmount } from "../utils/generic"
+import { padDollarAmount } from "./utils/generic"
 import Orders from "./Orders"
 
 function precision(a) {
