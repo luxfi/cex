@@ -10,11 +10,12 @@ import { makeStyles } from "@material-ui/core/styles"
 // @material-ui/icons
 
 // core components
-import GridContainer from "../../../components/Grid/GridContainer.js"
-import GridItem from "../../../components/Grid/GridItem.js"
-import Card from "../../../components/Card/Card.js"
-import CardBody from "../../../components/Card/CardBody.js"
+// import GridContainer from "../../../components/Grid/GridContainer.js"
+// import GridItem from "../../../components/Grid/GridItem.js"
+// import Card from "../../../components/Card/Card.js"
+// import CardBody from "../../../components/Card/CardBody.js"
 import ImageAvatars from "../../../components/ImageAvatars"
+import { Grid, Card, CardContent, Avatar } from '@material-ui/core'
 
 import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
 
@@ -51,7 +52,7 @@ export default props => {
         </h2>
         <ArticleView classes={classes} />
       </div>
-      <style jsx>{`
+      <style jsx>{`i
         .hero-container {
           position: relative;
           overflow: hidden;
@@ -69,25 +70,27 @@ class ArticleView extends React.Component {
     const { homePageArticles } = store.articleStore
     // let topPicks = movies.slice(0, 3)
     return (
-      <GridContainer>
+      <Grid container>
         {homePageArticles.map((d, i) => (
-          <GridItem key={`picks_${i}`} xs={12} sm={12} md={3}>
+          <Grid item key={`picks_${i}`} xs={12} sm={12} md={3}>
             <Card plain style={{ cursor: "pointer" }} onClick={() => { Router.push(`/article/${d.articleSlug}`) }}>
-              <GridItem xs={2} sm={2} md={2}>
-                <ImageAvatars alt={d.articleTitle} src={d.avatar} />
+              <Grid item xs={2} sm={2} md={2}>
+                <Grid container justify="center" alignItems="center">
+                  <Avatar alt={d.articleTitle} src={d.avatar} />
+                </Grid>
                 {/* <MyLoader /> */}
-              </GridItem>
-              {/* <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
+              </Grid >
+              {/* <Grid item xs={12} sm={12} md={12} className={classes.itemGrid}>
               <img src={d.heroImage} alt={d.name} className={classes.img} />
-            </GridItem> */}
+            </Grid > */}
               <h4 className={classes.cardTitle}>{d.articleTitle}</h4>
-              <CardBody>
+              <CardContent>
                 <p className={classes.description}>{d.description}</p>
-              </CardBody>
+              </CardContent>
             </Card>
-          </GridItem>
+          </Grid >
         ))}
-      </GridContainer>
+      </Grid >
     )
   }
 }

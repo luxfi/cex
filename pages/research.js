@@ -1,3 +1,5 @@
+// FOR DELETE
+
 import React from "react"
 import TickerStripLayout from "../components/generic/TickerStripLayout"
 import { inject, observer } from "mobx-react"

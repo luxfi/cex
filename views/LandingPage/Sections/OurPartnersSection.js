@@ -5,13 +5,14 @@ import classNames from "classnames"
 import { makeStyles } from "@material-ui/core/styles"
 
 // @material-ui/icons
+import { Grid, Card, CardContent } from '@material-ui/core'
 
 // core components
 import ContentLoader from "react-content-loader"
-import GridContainer from "../../../components/Grid/GridContainer.js"
-import GridItem from "../../../components/Grid/GridItem.js"
-import Card from "../../../components/Card/Card.js"
-import CardBody from "../../../components/Card/CardBody.js"
+// import GridContainer from "../../../components/Grid/GridContainer.js"
+// import GridItem from "../../../components/Grid/GridItem.js"
+// import Card from "../../../components/Card/Card.js"
+// import CardBody from "../../../components/Card/CardBody.js"
 
 import styles from "../../../assets/jss/views/landingPageSections/ourPartnersStyle.js"
 
@@ -48,9 +49,9 @@ export default props => {
         <h2 className={classes.title} style={{ textAlign: "left" }}>
           Our Partners
         </h2>
-        <GridContainer style={{ justifyContent: "center", paddingTop: "36px" }}>
+        <Grid container style={{ justifyContent: "center", paddingTop: "36px" }}>
           {partners.map((imgSrc, i) => (
-            <GridItem
+            <Grid item
               xs={12}
               sm={12}
               md={2}
@@ -58,7 +59,7 @@ export default props => {
               style={{ display: "flex" }}
             >
               <Card plain>
-                <GridItem
+                <Grid item
                   xs={12}
                   sm={12}
                   md={12}
@@ -74,46 +75,11 @@ export default props => {
                     alt=""
                     style={{ width: "75%", maxHeight: "64px" }}
                   />
-                </GridItem>
+                </Grid>
               </Card>
-            </GridItem>
+            </Grid>
           ))}
-          {/* <GridItem xs={12} sm={12} md={2}>
-            <Card plain>
-              <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
-                <MyLoader />
-              </GridItem>
-            </Card>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={2}>
-            <Card plain>
-              <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
-                <MyLoader />
-              </GridItem>
-            </Card>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={2}>
-            <Card plain>
-              <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
-                <MyLoader />
-              </GridItem>
-            </Card>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={2}>
-            <Card plain>
-              <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
-                <MyLoader />
-              </GridItem>
-            </Card>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={2}>
-            <Card plain>
-              <GridItem xs={12} sm={12} md={12} className={classes.itemGrid}>
-                <MyLoader />
-              </GridItem>
-            </Card>
-          </GridItem> */}
-        </GridContainer>
+        </Grid>
       </div>
       <style jsx>{`
         .hero-container {

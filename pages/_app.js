@@ -27,7 +27,7 @@ import { withRouter } from "next/router"
 import { MuiPickersUtilsProvider } from "react-referential-forms"
 import RefProvider from "react-referential"
 import BalanceProvider from "../src/balances"
-import Loader, { startLoading, stopLoading } from "../components/app/loader"
+// import Loader, { startLoading, stopLoading } from "../components/app_old/loader"
 
 import MomentUtils from "@date-io/moment"
 

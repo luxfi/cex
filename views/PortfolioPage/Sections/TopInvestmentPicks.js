@@ -8,7 +8,8 @@ import {
   CardHeader,
   Chip,
   Divider,
-  Typography
+  Typography,
+  Card
 } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
@@ -16,11 +17,11 @@ import { makeStyles } from "@material-ui/core/styles"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
 
 // core components
-import GridContainer from "../../../components/Grid/GridContainer.js"
-import GridItem from "../../../components/Grid/GridItem.js"
-import Card from "../../../components/Card/Card.js"
-import CardBody from "../../../components/Card/CardBody.js"
-import ContentLoader, { Facebook } from "react-content-loader"
+// import GridContainer from "../../../components/Grid/GridContainer.js"
+// import GridItem from "../../../components/Grid/GridItem.js"
+// import Card from "../../../components/Card/Card.js"
+// import CardBody from "../../../components/Card/CardBody.js"
+import ContentLoader from "react-content-loader"
 
 import styles from "../../../assets/jss/views/portfolioPageSections/portfolioTradeStyle.js"
 
@@ -97,9 +98,9 @@ export default props => {
         <h2 className={classes.title} style={{ textAlign: "left" }}>
           Top Picks for You
         </h2>
-        <GridContainer>
+        <Grid container>
           {investorTopPicks.map((d, i) => (
-            <GridItem key={`picks_${i}`} xs={12} sm={12} md={4}>
+            <Grid item key={`picks_${i}`} xs={12} sm={12} md={4}>
               <Card className={classes.investmentCard}>
                 <CardHeader
                   avatar={
@@ -111,7 +112,7 @@ export default props => {
                   title={d.name}
                   subheader={d.releaseDate}
                 />
-                <CardBody>
+                <CardContent>
                   <p className={classes.description}>
                     {truncate(d.shortDescription)}
                   </p>
@@ -136,11 +137,11 @@ export default props => {
                       {d.price}
                     </Typography>
                   </div>
-                </CardBody>
+                </CardContent>
               </Card>
-            </GridItem>
+            </Grid>
           ))}
-        </GridContainer>
+        </Grid>
       </div>
       <style jsx>{`
         .hero-container {
