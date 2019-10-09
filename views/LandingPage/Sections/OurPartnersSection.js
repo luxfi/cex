@@ -56,27 +56,25 @@ export default props => {
               sm={12}
               md={2}
               key={i}
-              style={{ display: "flex" }}
+              style={{ display: "flex", justifyContent: "center" }}
             >
-              <Card plain>
-                <Grid item
-                  xs={12}
-                  sm={12}
-                  md={12}
-                  className={classes.itemGrid}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    height: "100%"
-                  }}
-                >
-                  <img
-                    src={imgSrc}
-                    alt=""
-                    style={{ width: "75%", maxHeight: "64px" }}
-                  />
-                </Grid>
-              </Card>
+              <Grid item
+                xs={12}
+                sm={12}
+                md={12}
+                className={classes.itemGrid}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  height: "100%"
+                }}
+              >
+                <img
+                  src={imgSrc}
+                  alt=""
+                  style={{ width: "75%", maxHeight: "64px" }}
+                />
+              </Grid>
             </Grid>
           ))}
         </Grid>
