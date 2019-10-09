@@ -1,11 +1,11 @@
 import React from "react"
 // nodejs library that concatenates classes
 import classNames from "classnames"
+
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles"
+import { Grid } from '@material-ui/core'
 
 // @material-ui/icons
-import { Grid, Card, CardContent } from '@material-ui/core'
 
 // core components
 import ContentLoader from "react-content-loader"
@@ -14,8 +14,9 @@ import ContentLoader from "react-content-loader"
 // import Card from "../../../components/Card/Card.js"
 // import CardBody from "../../../components/Card/CardBody.js"
 
+// styles
+import { makeStyles } from "@material-ui/core/styles"
 import styles from "../../../assets/jss/views/landingPageSections/ourPartnersStyle.js"
-
 const useStyles = makeStyles(styles)
 
 const MyLoader = () => (
@@ -40,8 +41,6 @@ const partners = [
 
 export default props => {
   const classes = useStyles()
-  const { ...rest } = props
-  const imageClasses = classNames(classes.imgCardTop)
 
   return (
     <>

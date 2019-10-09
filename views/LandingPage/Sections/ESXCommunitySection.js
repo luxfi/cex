@@ -73,16 +73,12 @@ class ArticleView extends React.Component {
       <Grid container>
         {homePageArticles.map((d, i) => (
           <Grid item key={`picks_${i}`} xs={12} sm={12} md={3}>
-            <Card plain style={{ cursor: "pointer" }} onClick={() => { Router.push(`/article/${d.articleSlug}`) }}>
+            <Card elevation={0} style={{ cursor: "pointer", backgroundColor: "transparent" }} onClick={() => { Router.push(`/article/${d.articleSlug}`) }}>
               <Grid item xs={2} sm={2} md={2}>
                 <Grid container justify="center" alignItems="center">
                   <Avatar alt={d.articleTitle} src={d.avatar} />
                 </Grid>
-                {/* <MyLoader /> */}
               </Grid >
-              {/* <Grid item xs={12} sm={12} md={12} className={classes.itemGrid}>
-              <img src={d.heroImage} alt={d.name} className={classes.img} />
-            </Grid > */}
               <h4 className={classes.cardTitle}>{d.articleTitle}</h4>
               <CardContent>
                 <p className={classes.description}>{d.description}</p>
