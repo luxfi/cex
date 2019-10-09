@@ -4,14 +4,14 @@ import Link from 'next/link'
 import classNames from "classnames"
 import ContentLoader from "react-content-loader"
 // @material-ui/core components
-import { Typography } from '@material-ui/core'
+import { Typography, Grid } from '@material-ui/core'
 import { makeStyles } from "@material-ui/core/styles"
 
 // @material-ui/icons
 
 // core components
-import GridContainer from "../../../components/Grid/GridContainer.js"
-import GridItem from "../../../components/Grid/GridItem.js"
+// import GridContainer from "../../../components/Grid/GridContainer.js"
+// import GridItem from "../../../components/Grid/GridItem.js"
 
 import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
 import { List, ListItem, Divider } from "@material-ui/core"
@@ -68,20 +68,20 @@ export default props => {
       </h2>
       <List>
         <ListItem>
-          <GridContainer style={{ width: '100%' }} alignItems='center' >
-            <GridItem xs={2}>
+          <Grid container style={{ width: '100%' }} alignItems='center' >
+            <Grid item xs={2}>
               <Typography>Movie Ticker</Typography>
-            </GridItem>
-            <GridItem xs={4}>
+            </Grid>
+            <Grid item xs={4}>
               <Typography style={{ marginLeft: '82px' }}>Chart</Typography>
-            </GridItem>
-            <GridItem xs={2} style={{ textAlign: 'right' }}>
+            </Grid>
+            <Grid item xs={2} style={{ textAlign: 'right' }}>
               <Typography>Shares Owned</Typography>
-            </GridItem>
-            <GridItem xs={4} style={{ textAlign: 'right' }}>
+            </Grid>
+            <Grid item xs={4} style={{ textAlign: 'right' }}>
               <Typography>Total Value</Typography>
-            </GridItem>
-          </GridContainer>
+            </Grid>
+          </Grid>
         </ListItem>
         {
           investments && investments.length > 0 ?
@@ -90,22 +90,22 @@ export default props => {
             return (
               <div key={`listKey_${i}`}>
                 <ListItem>
-                  <GridContainer style={{ width: '100%' }} alignItems='center' >
-                    <GridItem xs={2}>
+                  <Grid container style={{ width: '100%' }} alignItems='center' >
+                    <Grid item xs={2}>
                       <Link href={`/film/${movie.movieSlug}`}>{trendingItem.ticker}</Link>
-                    </GridItem>
-                    <GridItem xs={4}>
+                    </Grid>
+                    <Grid item xs={4}>
                       <div style={{ width: '200px', height: '100px' }}>
                         {trendingItem.chart || <MyLoader w={200} h={100} />}
                       </div>
-                    </GridItem>
-                    <GridItem xs={2} style={{ textAlign: 'right' }}>
+                    </Grid>
+                    <Grid item xs={2} style={{ textAlign: 'right' }}>
                       {trendingItem.amount}
-                    </GridItem>
-                    <GridItem xs={4} style={{ textAlign: 'right' }}>
+                    </Grid>
+                    <Grid item xs={4} style={{ textAlign: 'right' }}>
                       ${trendingItem.amount * parseFloat(trendingItem.price).toFixed(2)}
-                    </GridItem>
-                  </GridContainer>
+                    </Grid>
+                  </Grid>
                 </ListItem>
                 {
                   i === investments.length - 1 ?
