@@ -1,4 +1,5 @@
 
+// FOR DELETE!!!
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import TradeButton from "../generic/TradeButton"

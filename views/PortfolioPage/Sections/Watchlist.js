@@ -6,15 +6,16 @@ import { Typography, Link } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
 // @material-ui/icons
-
-// core components
-import GridContainer from "../../../components/Grid/GridContainer.js"
-import GridItem from "../../../components/Grid/GridItem.js"
-import Card from "../../../components/Card/Card.js"
-import CardBody from "../../../components/Card/CardBody.js"
-import ContentLoader, { Facebook } from "react-content-loader"
 import Button from "@material-ui/core/Button"
 import CardActions from '@material-ui/core/CardActions'
+import { Grid, Card, CardContent } from '@material-ui/core'
+
+// core components
+// import GridContainer from "../../../components/Grid/GridContainer.js"
+// import GridItem from "../../../components/Grid/GridItem.js"
+// import Card from "../../../components/Card/Card.js"
+// import CardBody from "../../../components/Card/CardBody.js"
+import ContentLoader from "react-content-loader"
 
 import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
 
@@ -49,13 +50,13 @@ export default props => {
         <h2 className={classes.title} style={{ textAlign: "left" }}>
           Your Watchlist
         </h2>
-        <GridContainer justify={'center'}>
+        <Grid container justify={'center'}>
           {
             watchlistMovies.length > 0 ?
             watchlistMovies.map((d, i) => 
-              <GridItem key={i} xs={12} sm={12} md={4}>
+              <Grid item key={i} xs={12} sm={12} md={4}>
                 <Card plain>
-                  <GridItem
+                  <Grid item
                     style={{ cursor: "pointer" }}
                     onClick={() => {
                       Router.push(`/film/${d.movieSlug}`)
@@ -67,7 +68,7 @@ export default props => {
                   >
                     {/* <img src={team1} alt="..." className={imageClasses} /> */}
                     <img src={d.heroImg} alt={d.name} className={classes.img} />
-                  </GridItem>
+                  </Grid>
                   <h4
                     style={{ cursor: "pointer" }}
                     onClick={() => {
@@ -77,14 +78,14 @@ export default props => {
                   >
                     {d.name}
                   </h4>
-                  <CardBody
+                  <CardContent
                     style={{ cursor: "pointer" }}
                     onClick={() => {
                       Router.push(`/film/${d.movieSlug}`)
                     }}
                   >
                     <p className={classes.description}>{d.shortDescription}</p>
-                  </CardBody>
+                  </CardContent>
                   <CardActions>
                     <Button
                       size="small"
@@ -97,11 +98,11 @@ export default props => {
                     </Button>
                   </CardActions>
                 </Card>
-              </GridItem>
+              </Grid>
             )
             : <Typography>You aren't watching any movies yet! Try adding some from the <Link href="/">home page</Link>.</Typography>
           }
-        </GridContainer>
+        </Grid>
       </div>
       <style jsx>{`
         .hero-container {

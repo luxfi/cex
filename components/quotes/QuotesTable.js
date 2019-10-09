@@ -1,3 +1,5 @@
+// FOR DELETE
+
 import TradeButton from '../generic/TradeButton.js'
 import Pagination from "../generic/Pagination"
 import React, { useState } from 'react';

@@ -1,3 +1,5 @@
+// FOR DELETE
+
 import Link from 'next/link'
 import React from 'react'
 import TickerStripLayout from "../components/generic/TickerStripLayout"

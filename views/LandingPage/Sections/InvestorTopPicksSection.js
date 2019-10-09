@@ -9,6 +9,7 @@ import classNames from "classnames"
 import Button from "@material-ui/core/Button"
 import CardActions from "@material-ui/core/CardActions"
 import Typography from "@material-ui/core/Typography"
+import { Grid, Card, CardContent } from '@material-ui/core'
 
 // @material-ui styles
 import { makeStyles } from "@material-ui/core/styles"
@@ -16,11 +17,11 @@ import { makeStyles } from "@material-ui/core/styles"
 // @material-ui/icons
 
 // core components
-import GridContainer from "../../../components/Grid/GridContainer.js"
-import GridItem from "../../../components/Grid/GridItem.js"
-import Card from "../../../components/Card/Card.js"
-import CardBody from "../../../components/Card/CardBody.js"
-import ContentLoader, { Facebook } from "react-content-loader"
+// import GridContainer from "../../../components/Grid/GridContainer.js"
+// import GridItem from "../../../components/Grid/GridItem.js"
+// import Card from "../../../components/Card/Card.js"
+// import CardBody from "../../../components/Card/CardBody.js"
+import ContentLoader from "react-content-loader"
 
 import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
 
@@ -73,13 +74,13 @@ class MoviesView extends React.Component {
     console.log('watchlist', userPortfolio.watchlist)
     const loggedIn = store.userStore.loggedIn
     return (
-      <GridContainer>
+      <Grid container>
         {investorTopPicks.map((d, i) => {
           const inWatchlist = userPortfolio.watchlist.indexOf(d.ticker) > -1
           return (
-            <GridItem key={`picks_${i}`} xs={12} sm={12} md={4}>
+            <Grid item key={`picks_${i}`} xs={12} sm={12} md={4}>
               <Card plain>
-                <GridItem
+                <Grid item
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     Router.push(`/film/${d.movieSlug}`)
@@ -91,7 +92,7 @@ class MoviesView extends React.Component {
                 >
                   {/* <img src={team1} alt="..." className={imageClasses} /> */}
                   <img src={d.heroImg} alt={d.name} className={classes.img} />
-                </GridItem>
+                </Grid>
                 <h4
                   style={{ cursor: "pointer" }}
                   onClick={() => {
@@ -101,14 +102,14 @@ class MoviesView extends React.Component {
                 >
                   {d.name}
                 </h4>
-                <CardBody
+                <CardContent
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     Router.push(`/film/${d.movieSlug}`)
                   }}
                 >
                   <p className={classes.description}>{d.shortDescription}</p>
-                </CardBody>
+                </CardContent>
                 {
                   loggedIn ?
                   <CardActions>
@@ -127,10 +128,10 @@ class MoviesView extends React.Component {
                   : null
                 }
               </Card>
-            </GridItem>
+            </Grid>
           )
         })}
-      </GridContainer>
+      </Grid>
     )
   }
 }

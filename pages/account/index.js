@@ -8,7 +8,7 @@ import Link from "../../components/link"
 
 import { watch } from "react-referential"
 import { withBalance } from "../../src/balances"
-import { loadable } from "../../components/app/loader"
+import { loadable } from "../../components/app_old/loader"
 import Api from "../../src/hanzo/api"
 import EOSApi from "../../src/eos/api"
 import BigNumber from "bignumber.js"

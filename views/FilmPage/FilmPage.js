@@ -15,7 +15,7 @@ import { withStyles } from "@material-ui/core/styles"
 // core components
 import Breadcrumbs from "../../components/Breadcrumbs.js"
 import Button from "../../components/CustomButtons/Button"
-import Chart from "../../components/generic/Chart"
+import Chart from "../../components/generic_old/Chart"
 
 // section
 import InvestNowSection from "../../views/LandingPage/Sections/InvestNowSection"
