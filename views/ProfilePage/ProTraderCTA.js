@@ -3,9 +3,10 @@ import React from "react"
 import classNames from "classnames"
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles"
+import { Button } from "@material-ui/core"
 
 // core components
-import Button from "../../components/CustomButtons/Button.js"
+// import Button from "../../components/CustomButtons/Button.js"
 import ContentLoader from "react-content-loader"
 import Modal from "../../components/Modal.js"
 

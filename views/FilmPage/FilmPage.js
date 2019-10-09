@@ -10,11 +10,12 @@ import classNames from "classnames"
 import { formatTakeResults } from "../../components/utils/formatOrderBookDataForChart"
 
 // @material-ui/core components
+import Button from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
 
 // core components
 import Breadcrumbs from "../../components/Breadcrumbs.js"
-import Button from "../../components/CustomButtons/Button"
+// import Button from "../../components/CustomButtons/Button"
 import Chart from "../../components/generic_old/Chart"
 
 // section

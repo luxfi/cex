@@ -5,12 +5,13 @@ import Link from "next/link"
 import classNames from "classnames"
 
 // @material-ui/core components
+import { Button } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
 // @material-ui/icons
 
-// core components
-import Button from "../../../components/CustomButtons/Button.js"
+// core componentsCustomButton
+// import Button from "../../../components/s/Button.js"
 import ContentLoader from "react-content-loader"
 import Modal from "../../../components/Modal.js"
 
