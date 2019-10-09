@@ -13,6 +13,7 @@ import Box from "@material-ui/core/Box"
 import Card from "@material-ui/core/Card"
 import CardActionArea from "@material-ui/core/CardActionArea"
 import CardContent from "@material-ui/core/CardContent"
+import Grid from "@material-ui/core/Grid"
 
 // @material-ui styles
 
@@ -21,9 +22,9 @@ import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
 
 // core components
-import GridContainer from "../../../components/Grid/GridContainer.js"
-import GridItem from "../../../components/Grid/GridItem.js"
-import ContentLoader, { Facebook } from "react-content-loader"
+// import GridContainer from "../../../components/Grid/GridContainer.js"
+// import GridItem from "../../../components/Grid/GridItem.js"
+import ContentLoader from "react-content-loader"
 
 const MyLoader = () => (
   <ContentLoader
@@ -59,12 +60,13 @@ export default class NewestPicksSection extends React.Component {
           </Box>
         </Typography>
         <br />
-        <GridContainer>
+        <Grid container>
           {investorTopPicks.map((d, i) => {
             const inWatchlist = userPortfolio.watchlist.indexOf(d.ticker) > -1
             return (
-              <GridItem key={`picks_${i}`} xs={12} sm={6} md={4} ld={3}>
-                <GridItem
+              <Grid item key={`picks_${i}`} xs={12} sm={6} md={4} ld={3}>
+                <Grid
+                  item
                   style={{
                     cursor: "pointer",
                   }}
@@ -124,11 +126,11 @@ export default class NewestPicksSection extends React.Component {
                       </CardContent>
                     </CardActionArea>
                   </Card>
-                </GridItem>
-              </GridItem>
+                </Grid>
+              </Grid>
             )
           })}
-        </GridContainer>
+        </Grid>
         <style jsx>{`
           #newest-picks {
             transform: translate(0, -15vh);
