@@ -131,10 +131,7 @@ class Hero extends React.Component {
                         size="large"
                         startIcon={<MonetizationOnIcon />}
                       >
-                        <Link href={hrefLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
+                        <Link href={hrefLink}>
                           <Typography variant="body2">
                             <i className="fas fa-play" />
                             INVEST IN { movie.ticker }

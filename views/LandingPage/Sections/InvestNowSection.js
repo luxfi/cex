@@ -68,7 +68,7 @@ export default props => {
         </Button>
 
         <Button
-          color="outlined"
+          variant="outlined"
           style={{
             color: "black",
             marginLeft: "20px"

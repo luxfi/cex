@@ -1,6 +1,6 @@
 import React from "react"
-// nodejs library that concatenates classes
-import classNames from "classnames"
+import Router from 'next/router'
+
 // @material-ui/core components
 import { Typography, Link } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
@@ -36,7 +36,7 @@ const MyLoader = () => (
 
 export default props => {
   const classes = useStyles()
-  // const imageClasses = classNames(classes.imgCardTop)
+
   const {
     watchlist,
     remove,

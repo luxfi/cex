@@ -157,7 +157,7 @@ class Footer extends React.Component {
               <Button
                 className={classes.signUpButton}
                 component={ButtonLink}
-                color="outlined"
+                variant="outlined"
                 href={"/signup"}
                 style={{
                   color: "white"

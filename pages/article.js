@@ -130,7 +130,7 @@ class Article extends React.Component {
               <div className={classes.grow} />
               <Button
                 component={ButtonLink}
-                color="outlined"
+                variant="outlined"
                 href={hrefLink}
                 target="_blank"
                 rel="noopener noreferrer"

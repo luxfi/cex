@@ -31,10 +31,18 @@ import styles from "../../assets/jss/views/filmPage.js"
 import { isObservableArray } from "mobx"
 
 const ButtonLink = React.forwardRef(
-  ({ className, href, hrefAs, children, prefetch }, ref) => (
+  ({ className, href, hrefAs, children }, ref) => (
     <Link ref={ref} href={href || ""} as={hrefAs} prefetch>
       <a className={className}>{children}</a>
     </Link>
+  )
+)
+
+const ExternalLink = React.forwardRef(
+  ({ className, href, hrefAs, children }, ref) => (
+    <a className={className} ref={ref} href={href || ""} as={hrefAs} target="_blank">
+      {children}
+    </a>
   )
 )
 
@@ -153,7 +161,7 @@ class Index extends React.Component {
           <div className={classes.movieButtonsOuter}>
             <Button
               href={movie.trailer}
-              component={ButtonLink}
+              component={ExternalLink}
               target="_blank"
               style={{
                 color: "black",

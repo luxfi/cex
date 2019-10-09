@@ -71,7 +71,7 @@ const JoinNow = ({ classes }) => {
   return (
     <>
       <Button
-        color="outlined"
+        variant="outlined"
         style={{
           color: "black",
           marginLeft: "20px"
@@ -124,25 +124,6 @@ export default props => {
           <RemindLater />
           <JoinNow />
         </div>
-        {/* <Button
-          style={{
-            marginLeft: "20px"
-          }}
-        >
-          Remind Later
-        </Button>
-        <Button
-          color="outlined"
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            color: "black",
-            marginLeft: "20px"
-          }}
-        >
-          Join Now
-        </Button> */}
       </div>
       <style jsx>{`
         .hero-container {
