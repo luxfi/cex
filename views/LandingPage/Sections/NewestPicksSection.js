@@ -74,33 +74,33 @@ export default class NewestPicksSection extends React.Component {
                   sm={12}
                   md={12}
                 >
-                  <Card>
-                    <CardActionArea>
-                      <CardContent>
-                        <div
-                          className="pick"
-                          style={{
-                            backgroundImage: `url(${d.posterImg})`,
-                          }}
-                          onClick={() => {
-                            Router.push(`/film/${d.movieSlug}`)
-                          }}
-                        />
-                        <div
-                          className="pick-text"
-                          onClick={() => {
-                            Router.push(`/film/${d.movieSlug}`)
-                          }}
-                        >
-                          <Typography variant="body1">
-                            <strong>{d.name}</strong>
-                          </Typography>
-                          <Typography variant="body2">
-                            {d.shortDescription}
-                          </Typography>
-                          <br />
-                          {
-                            loggedIn ?
+                  <Card
+                    onClick={() => {
+                      Router.push(`/film/${d.movieSlug}`)
+                    }}
+                  >
+                    <CardContent
+                      style={{ 
+                        display: 'block',
+                        position: 'relative',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundImage: `url(${d.posterImg})`,
+                        maxHeight: '1200px',
+                        minHeight: '500px',
+                        backgroundSize: 'cover'
+                      }}
+                    >
+                      <div className="pick-text">
+                        <Typography variant="body1">
+                          <strong>{d.name}</strong>
+                        </Typography>
+                        <Typography variant="body2">
+                          {d.shortDescription}
+                        </Typography>
+                        <br />
+                        {
+                          loggedIn ?
                             <Button
                               size="small"
                               variant="outlined"
@@ -108,23 +108,20 @@ export default class NewestPicksSection extends React.Component {
                                 inWatchlist ?
                                   userPortfolio.removeFromWatchlist(d.ticker)
                                   : userPortfolio.addToWatchlist(d.ticker)
-                                e.stopPropagation()
-                                e.preventDefault()
                               }}
                               startIcon={inWatchlist ? <RemoveIcon/> : <AddIcon/>}
                             >
                               {inWatchlist ? 'Remove from Watchlist'  : 'Add to Watchlist'}
                             </Button>
-                            : null
-                          }
-                        </div>
-                        <div className="pick-indicator">
-                          <Typography variant="body2">
-                            <strong>{parseInt(Math.random()*100,10)}%</strong><span> Funded</span>
-                          </Typography>
-                        </div>
-                      </CardContent>
-                    </CardActionArea>
+                          : null
+                        }
+                      </div>
+                      <div className="pick-indicator">
+                        <Typography variant="body2">
+                          <strong>{parseInt(Math.random()*100,10)}%</strong><span> Funded</span>
+                        </Typography>
+                      </div>
+                    </CardContent>
                   </Card>
                 </Grid>
               </Grid>
