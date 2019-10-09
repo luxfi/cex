@@ -1,3 +1,5 @@
+// TODO Delete
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link';

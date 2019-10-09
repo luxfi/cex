@@ -7,8 +7,8 @@ import Step from "@material-ui/core/Step"
 import StepLabel from "@material-ui/core/StepLabel"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
-import PickBank from "../../components/forms/pick-bank"
-import PickAmount from "../../components/forms/pick-amount"
+// import PickBank from "../../components/forms/pick-bank"
+// import PickAmount from "../../components/forms/pick-amount"
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -52,9 +52,9 @@ const steps = ["Linked Accounts", "Deposit Amount"]
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <PickBank />
+      return <div>PICK BANK PLACEHOLDER</div>
     case 1:
-      return <PickAmount />
+      return <div>PICK AMOUNT PLACEHOLDER</div>
     default:
       throw new Error("Unknown step")
   }
