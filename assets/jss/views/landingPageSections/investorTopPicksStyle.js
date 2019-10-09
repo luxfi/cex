@@ -50,7 +50,7 @@ const investorTopPicksStyle = {
   },
   margin5: {
     margin: "5px"
-  }
+  },
 }
 
 export default investorTopPicksStyle
