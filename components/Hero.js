@@ -6,31 +6,32 @@ import { Carousel } from 'react-responsive-carousel'
 
 // @material-ui/core components
 import { withStyles } from "@material-ui/core/styles"
+import { Grid } from "@material-ui/core"
 
 // @material-ui/icons
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 
 // core components
-import HeroImg from "./HeroImg"
-import GridContainer from "../Grid/GridContainer.js"
-import GridItem from "../Grid/GridItem.js"
+import HeroImg from "./landing_old/HeroImg"
+// import GridContainer from "../Grid/GridContainer.js"
+// import GridItem from "../Grid/GridItem.js"
 import Button from "@material-ui/core/Button"
 import Box from "@material-ui/core/Box"
 
 //material
 import Typography from "@material-ui/core/Typography"
 
-import styles from "../../assets/jss/views/hero"
+import styles from "../assets/jss/views/hero"
 
-import esxWhiteLogoImg from "../../assets/images/esx/esx-white-logo.png"
+import esxWhiteLogoImg from "../assets/images/esx/esx-white-logo.png"
 
-import terminatorHero from "../../assets/images/terminator-hero.jpg"
-import uncutGemsHero from "../../assets/images/uncut-gems-hero.jpg"
-import birdsOfPreyHero from "../../assets/images/birds-of-prey-hero.jpg"
-import onwardHero from "../../assets/images/onward-hero.jpg"
-import terminatorLogo from "../../assets/images/terminator-logo.svg"
-import birdsOfPreyLogo from "../../assets/images/birds-of-prey-logo.png"
+import terminatorHero from "../assets/images/terminator-hero.jpg"
+import uncutGemsHero from "../assets/images/uncut-gems-hero.jpg"
+import birdsOfPreyHero from "../assets/images/birds-of-prey-hero.jpg"
+import onwardHero from "../assets/images/onward-hero.jpg"
+import terminatorLogo from "../assets/images/terminator-logo.svg"
+import birdsOfPreyLogo from "../assets/images/birds-of-prey-logo.png"
 
 const ButtonLink = React.forwardRef(
   ({ className, href, hrefAs, children, prefetch }, ref) => (
@@ -76,8 +77,8 @@ class Hero extends React.Component {
             { this.props.store.movieStore.movies.map((movie) => {
               return <HeroImg {...rest} img={ movieExtendedMap[movie.movieSlug].img }>
                 <div className={classes.container}>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={6} style={{ textAlign: 'left' }}>
+                  <Grid container>
+                    <Grid item xs={12} sm={12} md={6} style={{ textAlign: 'left' }}>
                       <Box lineHeight={1} letterSpacing={2}>
                         <Typography className="esx-initial-offering" variant="h5">
                           <Box fontWeight='bold' fontSize={24}>
@@ -145,10 +146,10 @@ class Hero extends React.Component {
                       <Typography variant="caption">
                         { movie.financialDescription }
                       </Typography>
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={6}>
-                    </GridItem>
-                  </GridContainer>
+                    </Grid>
+                    {/* <Grid item xs={12} sm={12} md={6}>
+                    </Grid> */}
+                  </Grid>
                 </div>
               </HeroImg>
             })}

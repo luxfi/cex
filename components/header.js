@@ -11,7 +11,6 @@ import InputBase from "@material-ui/core/InputBase"
 import MenuItem from "@material-ui/core/MenuItem"
 import AccountCircle from "@material-ui/icons/AccountCircle"
 import Container from "@material-ui/core/Container"
-import Typography from "@material-ui/core/Typography"
 import Slide from "@material-ui/core/Slide"
 import useScrollTrigger from "@material-ui/core/useScrollTrigger"
 import Link from "@material-ui/core/Link"
@@ -24,7 +23,7 @@ import ExitToApp from "@material-ui/icons/ExitToApp"
 import { fade, withStyles, MuiThemeProvider } from "@material-ui/core/styles"
 
 // Core components
-import AutoCompleteSearch from "../AutoCompleteSearch"
+import AutoCompleteSearch from "./AutoCompleteSearch"
 
 import NextLink from "next/link"
 import Router from "next/router"
@@ -183,9 +182,6 @@ class Header extends React.Component {
                         height="80px"
                       />
                     </Link>
-                    { /*<Typography variant="subtitle2">
-                      Entertainment Stock Exchange
-                    </Typography>*/ }
                     <div className={classes.grow} />
                     {/* <div className={classes.search}>
                       <div className={classes.searchIcon}>
