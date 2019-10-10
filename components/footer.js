@@ -18,7 +18,6 @@ import Modal from "./CustomModal"
 import CustomLink from "./CustomLink"
 
 // styles
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles"
 import { withStyles } from "@material-ui/core/styles"
 
 const AboutESX = ({ classes }) => {
