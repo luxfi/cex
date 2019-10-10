@@ -1,28 +1,24 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
-import NextLink from "next/link"
-import darkTheme from "./themes"
 
 //font awesome share icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
-import {
-  faFacebook,
-  faTwitter,
-  faGoogle,
-  faPinterest
-} from "@fortawesome/free-brands-svg-icons"
+import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons"
 
-// core components
+// material components
 import Toolbar from "@material-ui/core/Toolbar"
 import Container from "@material-ui/core/Container"
 import Typography from "@material-ui/core/Typography"
 import Link from "@material-ui/core/Link"
-// import Button from "../CustomButtons/Button.js"
 import Button from "@material-ui/core/Button"
-import Modal from "./Modal.js"
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles"
 
+// core components
+import Modal from "./CustomModal"
+import CustomLink from "./CustomLink"
+
+// styles
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles"
 import { withStyles } from "@material-ui/core/styles"
 
 const AboutESX = ({ classes }) => {
@@ -115,14 +111,6 @@ const ContactUs = ({ classes }) => {
   )
 }
 
-const ButtonLink = React.forwardRef(
-  ({ className, href, hrefAs, children, prefetch }, ref) => (
-    <NextLink ref={ref} href={href} as={hrefAs} prefetch>
-      <a className={className}>{children}</a>
-    </NextLink>
-  )
-)
-
 @inject("store")
 @observer
 class Footer extends React.Component {
@@ -156,7 +144,7 @@ class Footer extends React.Component {
             {!loggedIn && (
               <Button
                 className={classes.signUpButton}
-                component={ButtonLink}
+                component={CustomLink}
                 variant="outlined"
                 href={"/signup"}
                 style={{
