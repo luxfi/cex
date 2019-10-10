@@ -12,11 +12,11 @@ import PillsTabs from "../components/PillsTabs.js"
 import styles from "../pagesStyles/portfolioPageStyle.js"
 
 // Sections for this page
-import PortfolioView from "../components/PortfolioView"
-import TradeView from "../components/TradeView"
-import RewardsView from "../components/RewardsView"
-import NewsFeedView from "../components/NewsFeedView"
-import ProTraderCTA from "../components/ProTraderCTA"
+import PortfolioView from "../components/PortfolioPagePortfolioView"
+import TradeView from "../components/PortfolioPageTradeView"
+import RewardsView from "../components/PortfolioPageRewardsView"
+import NewsFeedView from "../components/PortfolioPageNewsFeedView"
+import ProTraderCTA from "../components/PortfolioPageProTraderCTA"
 
 @inject("store")
 @observer

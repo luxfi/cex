@@ -1,7 +1,9 @@
 import React from "react"
 import Router from "next/router"
+
 // nodejs library that concatenates classes
 import classNames from "classnames"
+
 // @material-ui/core components
 import {
   Avatar,
@@ -13,18 +15,10 @@ import {
   Grid,
   CardContent
 } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
-
-// @material-ui/icons
-import MoreVertIcon from "@material-ui/icons/MoreVert"
-
-// core components
-// import GridContainer from "./Grid/GridContainer.js"
-// import GridItem from "./Grid/GridItem.js"
-// import Card from "./Card/Card.js"
-// import CardBody from "./Card/CardBody.js"
 import ContentLoader from "react-content-loader"
 
+// styles
+import { makeStyles } from "@material-ui/core/styles"
 import styles from "./portfolioPageTradeStyle.js"
 
 const useStyles = makeStyles(styles)

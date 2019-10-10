@@ -6,13 +6,7 @@ import classNames from "classnames"
 import { Chip, Divider, Typography, Icon, Grid, Card, CardContent } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
-// @material-ui/icons
-
 // core components
-// import GridContainer from "./Grid/GridContainer.js"
-// import GridItem from "./Grid/GridItem.js"
-// import Card from "./Card/Card.js"
-// import CardBody from "./Card/CardBody.js"
 import ContentLoader from "react-content-loader"
 
 import styles from "./portfolioPageMetaStyle.js"

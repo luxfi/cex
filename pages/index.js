@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles"
 import { inject, observer } from "mobx-react"
 
 // core components
-import Hero from "../components/Hero"
+import Hero from "../components/LandingPageHero"
 
 // import styles from "assets/jss/material-kit-react/views/landingPage.js"
 import styles from "../pagesStyles/landingPageStyle.js"
