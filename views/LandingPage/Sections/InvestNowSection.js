@@ -1,5 +1,4 @@
 import React from "react"
-import Link from "next/link"
 
 // nodejs library that concatenates classes
 import classNames from "classnames"
@@ -8,12 +7,10 @@ import classNames from "classnames"
 import { Button } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
-// @material-ui/icons
-
-// core componentsCustomButton
-// import Button from "../../../components/s/Button.js"
+// core components
 import ContentLoader from "react-content-loader"
-import Modal from "../../../components/Modal.js"
+import Modal from "../../../components/CustomModal"
+import CustomLink from "../../../components/CustomLink"
 
 // import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
 import styles from "../../../assets/jss/views/landingPageSections/investNowStyle.js"
@@ -31,14 +28,6 @@ const MyLoader = () => (
     {/* Only SVG shapes */}
     <rect x="0" y="0" rx="5" ry="5" width="388" height="217" />
   </ContentLoader>
-)
-
-const ButtonLink = React.forwardRef(
-  ({ className, href, hrefAs, children, prefetch }, ref) => (
-    <Link ref={ref} href={href} as={hrefAs} prefetch>
-      <a className={className}>{children}</a>
-    </Link>
-  )
 )
 
 export default props => {
@@ -63,7 +52,7 @@ export default props => {
         <h2 className={classes.title}>
           Invest more than screen time in your favorite films.
         </h2>
-        <Button component={ButtonLink} href={hrefLink}>
+        <Button component={CustomLink} href={hrefLink}>
           Invest Now
         </Button>
 

@@ -1,18 +1,18 @@
 import React from "react"
+
 // nodejs library that concatenates classes
 import classNames from "classnames"
+
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles"
 import { Button } from "@material-ui/core"
 
 // core components
-// import Button from "../../components/CustomButtons/Button.js"
 import ContentLoader from "react-content-loader"
-import Modal from "../../components/Modal.js"
+import Modal from "../../components/CustomModal"
 
 // import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
 import styles from "../../assets/jss/views/portfolioPageSections/proTraderCTAStyle.js"
-
 const useStyles = makeStyles(styles)
 
 const MyLoader = () => (

@@ -15,9 +15,9 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles"
 import CssBaseline from "@material-ui/core/CssBaseline"
 
 // core components
-import Header from "../components/header"
-import Footer from "../components/footer"
-import Snackbar from "../components/SnackBar"
+import Header from "../components/Header"
+import Footer from "../components/Footer"
+import CustomSnackbar from "../components/CustomSnackbar"
 
 import initializeStore from "../stores/stores"
 
@@ -130,7 +130,7 @@ class MyMobxApp extends App {
                       lightTheme={lightTheme}
                     />
                     {/* <Loader /> */}
-                    <Snackbar />
+                    <CustomSnackbar />
                   </div>
                   <div className={classes.stickyFooter}>
                     <MuiThemeProvider theme={darkTheme}>
