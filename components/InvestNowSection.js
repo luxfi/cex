@@ -9,12 +9,11 @@ import { makeStyles } from "@material-ui/core/styles"
 
 // core components
 import ContentLoader from "react-content-loader"
-import Modal from "../../../components/CustomModal"
-import CustomLink from "../../../components/CustomLink"
+import Modal from "./CustomModal"
+import CustomLink from "./CustomLink"
 
 // import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
-import styles from "../../../assets/jss/views/landingPageSections/investNowStyle.js"
-
+import styles from "./investNowStyle.js/index.js"
 const useStyles = makeStyles(styles)
 
 const MyLoader = () => (

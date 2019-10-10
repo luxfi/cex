@@ -11,11 +11,11 @@ import Hero from "../components/Hero"
 import styles from "../assets/jss/views/landingPage.js"
 
 // Sections for this page
-import NewestPicksSection from "../views/LandingPage/Sections/NewestPicksSection"
-import InvestorTopPicksSection from "../views/LandingPage/Sections/InvestorTopPicksSection"
-import InvestNowSection from "../views/LandingPage/Sections/InvestNowSection"
-import OurPartnersSection from "../views/LandingPage/Sections/OurPartnersSection"
-import ESXCommunitySection from "../views/LandingPage/Sections/ESXCommunitySection"
+import NewestPicksSection from "../components/LandingPageNewestPicksSection"
+import InvestorTopPicksSection from "../components/LandingPageInvestorTopPicksSection"
+import InvestNowSection from "../components/InvestNowSection"
+import OurPartnersSection from "../components/LandingPageOurPartnersSection"
+import ESXCommunitySection from "../components/LandingPageESXCommunitySection"
 
 @inject("store")
 @observer

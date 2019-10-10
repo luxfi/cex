@@ -1,13 +1,10 @@
-import { cardTitle, title } from "../../esx.js"
-import imagesStyle from "../../imagesStyles.js"
+import { cardTitle, title } from "../../esxStyles.js"
+import imagesStyle from "../assets/jss/imagesStyles.js"
 
-const investNowStyle = {
+const investorTopPicksStyle = {
   section: {
-    // padding: "70px 0",
-    padding: "106px 0",
-    textAlign: "center",
-    backgroundColor: "#f4f3f3",
-    height: "400px"
+    padding: "70px 0",
+    textAlign: "center"
   },
   title: {
     ...title,
@@ -15,19 +12,27 @@ const investNowStyle = {
     marginTop: "30px",
     minHeight: "32px",
     textDecoration: "none",
-    textAlign: "center"
+    color: "#FFF",
   },
   ...imagesStyle,
   itemGrid: {
     marginLeft: "auto",
     marginRight: "auto"
   },
-  cardTitle,
+  img: {
+    maxWidth: "100%",
+    height: '210px'
+  },
+  cardTitle: {
+    ...cardTitle,
+    color: "#FFF",
+  },
   smallTitle: {
-    color: "#6c757d"
+    color: "#FFF",
   },
   description: {
-    color: "#999"
+    color: "#FFF",
+    marginTop: "-6px" // find a cleaner way later
   },
   justifyCenter: {
     justifyContent: "center !important"
@@ -45,7 +50,7 @@ const investNowStyle = {
   },
   margin5: {
     margin: "5px"
-  }
+  },
 }
 
-export default investNowStyle
+export default investorTopPicksStyle

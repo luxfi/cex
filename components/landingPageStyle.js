@@ -1,4 +1,4 @@
-import { container, title } from "../esx.js"
+import { container, title } from "../../../components/esxStyles.js/index.js"
 
 const landingPageStyle = {
   container: {

@@ -18,7 +18,7 @@ import Breadcrumbs from "../components/Breadcrumbs.js"
 import styles from "../assets/jss/views/articlePage.js"
 
 // Sections for this page
-import InvestNowSection from "../views/LandingPage/Sections/InvestNowSection"
+import InvestNowSection from "../components/InvestNowSection"
 
 const MyLoader = () => (
   <ContentLoader
