@@ -1,16 +1,6 @@
 import React from "react"
-import Router from "next/router"
-import { watch } from "react-referential"
 import SignupForm from "../components/SignUpForm"
-import Emitter from "../src/emitter"
-import { setIdentity } from "../src/wallet"
 import { inject, observer } from "mobx-react"
-
-import Tabs from "@material-ui/core/Tabs"
-import Tab from "@material-ui/core/Tab"
-
-import Link from "../components/link"
-import { getEncodedPrivateKey } from "../src/wallet"
 
 @inject("store")
 @observer
