@@ -8,9 +8,9 @@ import StepLabel from "@material-ui/core/StepLabel"
 import Button from "@material-ui/core/Button"
 import Link from "next/link"
 import Typography from "@material-ui/core/Typography"
-import PersonalDetails from "./PersonalDetails"
-import PrimaryAddress from "./PrimaryAddress"
-import PhotoIDs from "./PhotoIDs"
+import PersonalDetails from "./forms/PersonalDetails"
+import PrimaryAddress from "./forms/PrimaryAddress"
+import PhotoIDs from "./forms/PhotoIDs"
 
 const useStyles = makeStyles(theme => ({
   appBar: {
