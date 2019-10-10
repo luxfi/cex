@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react"
 
-import PortfolioMeta from './Sections/PortfolioMeta'
-import Watchlist from './Sections/Watchlist'
+import PortfolioMeta from './PortfolioMeta'
+import Watchlist from './Watchlist'
 
 const PortfolioView = (props) => {
   const { 

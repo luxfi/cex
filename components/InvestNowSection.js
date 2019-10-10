@@ -12,7 +12,7 @@ import ContentLoader from "react-content-loader"
 import Modal from "./CustomModal"
 import CustomLink from "./CustomLink"
 
-// import styles from "../.././landingPageSections/investorTopPicksStyle.js"
+// styles
 import styles from "./investNowStyle.js"
 const useStyles = makeStyles(styles)
 

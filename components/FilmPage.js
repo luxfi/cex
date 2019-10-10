@@ -7,26 +7,26 @@ import { withRouter } from "next/router"
 import classNames from "classnames"
 
 // orderbook
-import { formatTakeResults } from "../../components/utils/formatOrderBookDataForChart"
+import { formatTakeResults } from "./utils/formatOrderBookDataForChart"
 
 // @material-ui/core components
 import Button from "@material-ui/core/Button"
 import { withStyles } from "@material-ui/core/styles"
 
 // core components
-import Breadcrumbs from "../../components/Breadcrumbs.js"
+import Breadcrumbs from "./Breadcrumbs.js"
 // import Button from "../../components/CustomButtons/Button"
-import Chart from "../../components/Chart"
+import Chart from "./Chart"
 
 // section
-import InvestNowSection from "../../components/InvestNowSection"
-import { padDollarAmount } from "../../components/utils/generic"
+import InvestNowSection from "./InvestNowSection"
+import { padDollarAmount } from "./utils/generic"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 // the nice looking double chevrons are part of the "pro" package that costs money
 import { faPlay } from "@fortawesome/free-solid-svg-icons"
 
-import styles from "../../components/filmPageStyle.js"
+import styles from "../../pagesStyles/filmPageStyle.js/index.js"
 
 import { isObservableArray } from "mobx"
 

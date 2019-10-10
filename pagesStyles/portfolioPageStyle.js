@@ -1,6 +1,6 @@
-import { container, title } from "./esxStyles.js"
+import { container, title } from "../components/esxStyles.js"
 
-const articlePageStyle = theme => ({
+const portfolioPageStyle = theme => ({
   container: {
     zIndex: "12",
     ...container,

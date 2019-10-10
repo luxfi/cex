@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react"
 
-import TrendingInvestments from "./Sections/TrendingInvestments"
-import TopPicks from "./Sections/TopInvestmentPicks"
+import TrendingInvestments from "./TrendingInvestments"
+import TopPicks from "./TopInvestmentPicks"
 
 const TradeView = props => {
   const { tabIdx, index, investments, findMovieByTicker, store } = props

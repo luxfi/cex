@@ -25,7 +25,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert"
 // import CardBody from "./Card/CardBody.js"
 import ContentLoader from "react-content-loader"
 
-import styles from "../.././portfolioPageSections/portfolioTradeStyle.js"
+import styles from "./portfolioPageTradeStyle.js"
 
 const useStyles = makeStyles(styles)
 

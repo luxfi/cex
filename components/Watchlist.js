@@ -17,7 +17,7 @@ import { Grid, Card, CardContent } from '@material-ui/core'
 // import CardBody from "./Card/CardBody.js"
 import ContentLoader from "react-content-loader"
 
-import styles from "../.././landingPageSections/investorTopPicksStyle.js"
+import styles from "./landingPageInvestorTopPicksStyle.js"
 
 const useStyles = makeStyles(styles)
 

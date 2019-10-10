@@ -9,10 +9,10 @@ import { Button } from "@material-ui/core"
 
 // core components
 import ContentLoader from "react-content-loader"
-import Modal from "../../components/CustomModal"
+import Modal from "./CustomModal"
 
-// import styles from "../.././landingPageSections/investorTopPicksStyle.js"
-import styles from ".././portfolioPageSections/proTraderCTAStyle.js"
+// style
+import styles from "./portfolioPageProTraderCTAStyle"
 const useStyles = makeStyles(styles)
 
 const MyLoader = () => (
