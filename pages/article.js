@@ -11,11 +11,9 @@ import { Button, Avatar, Grid } from "@material-ui/core"
 
 // core components
 import Breadcrumbs from "../components/Breadcrumbs.js"
-// import Button from "../components/CustomButtons/Button"
-// import ImageAvatars from "../components/ImageAvatars"
 
 // import styles from "assets/jss/material-kit-react/views/landingPage.js"
-import styles from "../assets/jss/views/articlePage.js"
+import styles from "../pagesStyles/articlePageStyle.js"
 
 // Sections for this page
 import InvestNowSection from "../components/InvestNowSection"

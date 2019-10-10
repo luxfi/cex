@@ -9,7 +9,7 @@ import { inject, observer } from "mobx-react"
 import PillsTabs from "../components/PillsTabs.js"
 
 // import styles from "assets/jss/material-kit-react/views/portfolioPage.js"
-import styles from "../assets/jss/views/articlePage.js"
+import styles from "../pagesStyles/portfolioPageStyle.js"
 
 // Sections for this page
 import PortfolioView from "../views/PortfolioPage/PortfolioView"

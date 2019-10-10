@@ -22,7 +22,7 @@ import Box from "@material-ui/core/Box"
 //material
 import Typography from "@material-ui/core/Typography"
 
-import styles from "../assets/jss/views/hero"
+import styles from "./heroStyle"
 
 import esxWhiteLogoImg from "../assets/images/esx/esx-white-logo.png"
 
