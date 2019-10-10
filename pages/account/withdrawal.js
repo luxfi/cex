@@ -7,8 +7,6 @@ import Step from "@material-ui/core/Step"
 import StepLabel from "@material-ui/core/StepLabel"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
-// import PickBank from "../../components/forms/pick-bank"
-// import PickAmount from "../../components/forms/pick-amount"
 
 const useStyles = makeStyles(theme => ({
   appBar: {

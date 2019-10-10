@@ -1,7 +1,7 @@
 import React from "react"
 import Router from "next/router"
 import { watch } from "react-referential"
-import SignupForm from "../components/forms/signup"
+import SignupForm from "../components/SignUpForm"
 import Emitter from "../src/emitter"
 import { setIdentity } from "../src/wallet"
 import { inject, observer } from "mobx-react"
