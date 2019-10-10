@@ -1,4 +1,4 @@
-import { container, title } from "../esx"
+import { container, title } from "../../../components/esxStyles.js/index.js"
 
 const heroStyle = {
   container: {

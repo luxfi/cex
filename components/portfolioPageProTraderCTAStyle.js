@@ -1,18 +1,22 @@
-import { cardTitle, title } from "../../esx.js"
-import imagesStyle from "../../imagesStyles.js"
+import { cardTitle, title } from "../../../../components/esxStyles.js/index.js"
+import imagesStyle from "../assets/jss/imagesStyles.js"
 
-const ourPartnersStyle = {
+const portfolioPageStyle = {
   section: {
-    padding: "70px 0",
+    // padding: "70px 0",
+    padding: "48px 0",
     textAlign: "center",
+    backgroundColor: "#f4f3f3",
+    borderRadius: "32px"
   },
   title: {
     ...title,
-    marginBottom: "1rem",
-    marginTop: "30px",
-    minHeight: "32px",
+    // marginBottom: "1rem",
+    // minHeight: "32px",
+    marginTop: "0.875rem",
     textDecoration: "none",
-    color: "#FFF",
+    textAlign: "left",
+    marginLeft: "24px"
   },
   ...imagesStyle,
   itemGrid: {
@@ -21,11 +25,11 @@ const ourPartnersStyle = {
   },
   cardTitle,
   smallTitle: {
-    color: "#FFF",
+    color: "#6c757d"
   },
   description: {
-    color: "#FFF",
-    marginTop: "-6px" // find a cleaner way later
+    color: "#999",
+    padding: "16px"
   },
   justifyCenter: {
     justifyContent: "center !important"
@@ -46,4 +50,4 @@ const ourPartnersStyle = {
   }
 }
 
-export default ourPartnersStyle
+export default portfolioPageStyle

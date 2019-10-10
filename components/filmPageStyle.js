@@ -3,7 +3,7 @@ import {
   title,
   flexCenteredRow,
   flexCenteredColumn,
-} from "../esx.js"
+} from "../../../components/esxStyles.js/index.js"
 
 export default theme => ({
 

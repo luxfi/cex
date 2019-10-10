@@ -22,8 +22,6 @@ import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
 
 // core components
-// import GridContainer from "../../../components/Grid/GridContainer.js"
-// import GridItem from "../../../components/Grid/GridItem.js"
 import ContentLoader from "react-content-loader"
 
 const MyLoader = () => (

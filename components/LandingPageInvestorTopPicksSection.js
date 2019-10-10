@@ -14,16 +14,10 @@ import { Grid, Card, CardContent } from '@material-ui/core'
 // @material-ui styles
 import { makeStyles } from "@material-ui/core/styles"
 
-// @material-ui/icons
-
 // core components
-// import GridContainer from "../../../components/Grid/GridContainer.js"
-// import GridItem from "../../../components/Grid/GridItem.js"
-// import Card from "../../../components/Card/Card.js"
-// import CardBody from "../../../components/Card/CardBody.js"
 import ContentLoader from "react-content-loader"
 
-import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
+import styles from "./landingPageInvestorTopPicksStyle.js"
 
 const useStyles = makeStyles(styles)
 

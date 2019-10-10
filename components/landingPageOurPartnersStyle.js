@@ -1,17 +1,18 @@
-import { cardTitle, title } from "../../esx.js"
-import imagesStyle from "../../imagesStyles.js"
+import { cardTitle, title } from "../../esxStyles.js"
+import imagesStyle from "../assets/jss/imagesStyles.js"
 
-const teamStyle = {
+const ourPartnersStyle = {
   section: {
     padding: "70px 0",
-    textAlign: "center"
+    textAlign: "center",
   },
   title: {
     ...title,
     marginBottom: "1rem",
     marginTop: "30px",
     minHeight: "32px",
-    textDecoration: "none"
+    textDecoration: "none",
+    color: "#FFF",
   },
   ...imagesStyle,
   itemGrid: {
@@ -20,10 +21,10 @@ const teamStyle = {
   },
   cardTitle,
   smallTitle: {
-    color: "#6c757d"
+    color: "#FFF",
   },
   description: {
-    color: "#999",
+    color: "#FFF",
     marginTop: "-6px" // find a cleaner way later
   },
   justifyCenter: {
@@ -45,4 +46,4 @@ const teamStyle = {
   }
 }
 
-export default teamStyle
+export default ourPartnersStyle

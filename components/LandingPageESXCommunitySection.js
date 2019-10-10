@@ -1,24 +1,19 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
 import Router from 'next/router'
-import ContentLoader, { Facebook } from "react-content-loader"
+
 // nodejs library that concatenates classes
 import classNames from "classnames"
+
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles"
-
-// @material-ui/icons
-
-// core components
-// import GridContainer from "../../../components/Grid/GridContainer.js"
-// import GridItem from "../../../components/Grid/GridItem.js"
-// import Card from "../../../components/Card/Card.js"
-// import CardBody from "../../../components/Card/CardBody.js"
-// import ImageAvatars from "../../../components/ImageAvatars"
 import { Grid, Card, CardContent, Avatar } from '@material-ui/core'
 
-import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
+// core components
+import ContentLoader from "react-content-loader"
 
+//styles
+import styles from "./landingPageInvestorTopPicksStyle.js/index.js.js"
 const useStyles = makeStyles(styles)
 
 // Todo: make new loader that matches avatar, image and description, and waits until all have loader to render

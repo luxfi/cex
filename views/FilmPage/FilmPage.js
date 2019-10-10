@@ -19,7 +19,7 @@ import Breadcrumbs from "../../components/Breadcrumbs.js"
 import Chart from "../../components/Chart"
 
 // section
-import InvestNowSection from "../../views/LandingPage/Sections/InvestNowSection"
+import InvestNowSection from "../../components/InvestNowSection"
 import { padDollarAmount } from "../../components/utils/generic"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
