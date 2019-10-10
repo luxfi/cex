@@ -4,7 +4,7 @@
 
 import React from "react"
 import Container from "@material-ui/core/Container"
-import Link from "../../components/link"
+import Link from "../../components/Link"
 
 class Account extends React.Component {
   render() {
