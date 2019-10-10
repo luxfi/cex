@@ -4,7 +4,8 @@
 
 import React from "react"
 import Container from "@material-ui/core/Container"
-import Link from "../../components/Link"
+import Link from "@material-ui/core/Link"
+import CustomLink from "../../components/CustomLink"
 
 class Account extends React.Component {
   render() {
@@ -12,7 +13,7 @@ class Account extends React.Component {
       <main className="account" id="account-index">
         <Container maxWidth="md">
           <h1>{`Hello USER`}</h1>
-          <Link href="/account/kyc">
+          <Link component={CustomLink} href="/account/kyc">
             Check your identify verification status
           </Link>
           <br />

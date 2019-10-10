@@ -2,7 +2,7 @@ import React, { useState } from "react"
 // import useForm from '../customHooks/useForm'
 
 import { padDollarAmount } from "./utils/generic"
-import Orders from "./Orders"
+import LimitOrders from "./LimitOrders"
 
 function precision(a) {
   if (!isFinite(a)) return 0
@@ -166,7 +166,7 @@ export default class BuySellForm extends React.Component {
         >
           {buttonText}
         </button>
-        <Orders orders={orders} />
+        <LimitOrders orders={orders} />
         <style jsx>{`
           form {
             width: 100%;
