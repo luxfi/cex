@@ -15,7 +15,7 @@ import { makeStyles } from "@material-ui/core/styles"
 // import CardBody from "./Card/CardBody.js"
 import ContentLoader from "react-content-loader"
 
-import styles from "../.././portfolioPageSections/portfolioMetaStyle.js"
+import styles from "./portfolioPageMetaStyle.js"
 
 const useStyles = makeStyles(styles)
 

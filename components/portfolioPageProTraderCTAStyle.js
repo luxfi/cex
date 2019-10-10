@@ -1,4 +1,4 @@
-import { cardTitle, title } from ".esxStyles.js"
+import { cardTitle, title } from "./esxStyles.js"
 import imagesStyle from "./imagesStyles.js"
 
 const portfolioPageStyle = {

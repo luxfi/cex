@@ -13,7 +13,7 @@ import { makeStyles } from "@material-ui/core/styles"
 // import GridContainer from "./Grid/GridContainer.js"
 // import GridItem from "./Grid/GridItem.js"
 
-import styles from "../.././landingPageSections/investorTopPicksStyle.js"
+import styles from "./landingPageInvestorTopPicksStyle.js"
 import { List, ListItem, Divider } from "@material-ui/core"
 
 const useStyles = makeStyles(styles)
