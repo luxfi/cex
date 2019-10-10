@@ -13,7 +13,7 @@ import { Grid, Card, CardContent, Avatar } from '@material-ui/core'
 import ContentLoader from "react-content-loader"
 
 //styles
-import styles from "./landingPageInvestorTopPicksStyle.js/index.js.js"
+import styles from "./landingPageInvestorTopPicksStyle.js"
 const useStyles = makeStyles(styles)
 
 // Todo: make new loader that matches avatar, image and description, and waits until all have loader to render

@@ -39,7 +39,7 @@ In this example we are going to display a digital clock that updates every secon
 
 ![](http://i.imgur.com/JCxtWSj.gif)
 
-Our page is located at `pages/index.js` so it will map the route `/`. To get the initial data for rendering we are implementing the static method `getInitialProps`, initializing the mobx store and returning the initial timestamp to be rendered. The root component for the render method is the `mobx-react Provider` that allows us to send the store down to children components so they can access to the state when required.
+Our page is located at `pages` so it will map the route `/`. To get the initial data for rendering we are implementing the static method `getInitialProps`, initializing the mobx store and returning the initial timestamp to be rendered. The root component for the render method is the `mobx-react Provider` that allows us to send the store down to children components so they can access to the state when required.
 
 To pass the initial timestamp from the server to the client we pass it as a prop called `lastUpdate` so then it's available when the client takes over.
 

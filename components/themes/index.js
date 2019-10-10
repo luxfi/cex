@@ -60,7 +60,7 @@ export const lightTheme = createMuiTheme({
 // import { inject, observer } from "mobx-react"
 // import { darkTheme } from "../themes"
 
-//import styles from "../../assets/jss/views/filmPage.js"
+//import styles from ".././filmPage.js"
 
 //const FilmPage = () => (
 //<MuiThemeProvider theme={darkTheme}>

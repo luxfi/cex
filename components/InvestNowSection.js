@@ -12,8 +12,8 @@ import ContentLoader from "react-content-loader"
 import Modal from "./CustomModal"
 import CustomLink from "./CustomLink"
 
-// import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
-import styles from "./investNowStyle.js/index.js"
+// import styles from "../.././landingPageSections/investorTopPicksStyle.js"
+import styles from "./investNowStyle.js"
 const useStyles = makeStyles(styles)
 
 const MyLoader = () => (

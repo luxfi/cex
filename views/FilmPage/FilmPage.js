@@ -26,7 +26,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 // the nice looking double chevrons are part of the "pro" package that costs money
 import { faPlay } from "@fortawesome/free-solid-svg-icons"
 
-import styles from "../../assets/jss/views/filmPage.js"
+import styles from "../../components/filmPageStyle.js"
 
 import { isObservableArray } from "mobx"
 

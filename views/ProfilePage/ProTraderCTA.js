@@ -11,8 +11,8 @@ import { Button } from "@material-ui/core"
 import ContentLoader from "react-content-loader"
 import Modal from "../../components/CustomModal"
 
-// import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
-import styles from "../../assets/jss/views/portfolioPageSections/proTraderCTAStyle.js"
+// import styles from "../.././landingPageSections/investorTopPicksStyle.js"
+import styles from ".././portfolioPageSections/proTraderCTAStyle.js"
 const useStyles = makeStyles(styles)
 
 const MyLoader = () => (

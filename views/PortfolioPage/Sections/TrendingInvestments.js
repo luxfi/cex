@@ -10,10 +10,10 @@ import { makeStyles } from "@material-ui/core/styles"
 // @material-ui/icons
 
 // core components
-// import GridContainer from "../../../components/Grid/GridContainer.js"
-// import GridItem from "../../../components/Grid/GridItem.js"
+// import GridContainer from "./Grid/GridContainer.js"
+// import GridItem from "./Grid/GridItem.js"
 
-import styles from "../../../assets/jss/views/landingPageSections/investorTopPicksStyle.js"
+import styles from "../.././landingPageSections/investorTopPicksStyle.js"
 import { List, ListItem, Divider } from "@material-ui/core"
 
 const useStyles = makeStyles(styles)

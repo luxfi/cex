@@ -1,5 +1,5 @@
-import { cardTitle, title } from "../../../../components/esxStyles.js/index.js"
-import imagesStyle from "../assets/jss/imagesStyles.js"
+import { cardTitle, title } from ".esxStyles.js"
+import imagesStyle from "./imagesStyles.js"
 
 const portfolioPageStyle = {
   section: {
