@@ -23,7 +23,7 @@ import ExitToApp from "@material-ui/icons/ExitToApp"
 import { fade, withStyles, MuiThemeProvider } from "@material-ui/core/styles"
 
 // Core components
-import AutoCompleteSearch from "./AutoCompleteSearch"
+import { AutoCompleteSearch } from "./app"
 
 import NextLink from "next/link"
 import Router from "next/router"

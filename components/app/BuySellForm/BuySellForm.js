@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 // import useForm from '../customHooks/useForm'
 
-import { padDollarAmount } from "./utils/generic"
-import LimitOrders from "./LimitOrders"
+import { padDollarAmount } from "../../utils/generic"
+import LimitOrders from "../../LimitOrders"
 
 function precision(a) {
   if (!isFinite(a)) return 0

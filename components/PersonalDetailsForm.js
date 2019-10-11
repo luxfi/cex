@@ -7,7 +7,7 @@ import MenuItem from "@material-ui/core/MenuItem"
 import Select from "@material-ui/core/Select"
 import { makeStyles } from "@material-ui/core/styles"
 import FormControl from "@material-ui/core/FormControl"
-import BirthdayPicker from "./BirthdayPicker"
+import { BirthdayPicker } from "./app"
 
 const useStyles = makeStyles(theme => ({
   root: {

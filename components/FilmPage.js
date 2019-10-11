@@ -14,8 +14,7 @@ import Button from "@material-ui/core/Button"
 import { withStyles } from "@material-ui/core/styles"
 
 // core components
-import Breadcrumbs from "./Breadcrumbs.js"
-// import Button from "../../components/CustomButtons/Button"
+import { CustomBreadcrumbs } from "./app"
 import Chart from "./Chart"
 
 // section
@@ -138,7 +137,7 @@ class Index extends React.Component {
         className={classNames(classes.leftAndRight, classes.breadcrumbRow)}
         style={{ marginTop: "20px" }}
       >
-        <Breadcrumbs>{movie.name}</Breadcrumbs>
+        <CustomBreadcrumbs>{movie.name}</CustomBreadcrumbs>
         <PageTabs
           classes={classes}
           selectedTab={selectedTab}
