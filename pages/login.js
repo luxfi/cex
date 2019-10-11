@@ -2,7 +2,7 @@ import React from "react"
 import Router from "next/router"
 import { inject, observer } from "mobx-react"
 
-import LoginForm from "../components/LoginForm"
+import LoginForm from "../components/login/LoginForm"
 
 @inject("store")
 @observer

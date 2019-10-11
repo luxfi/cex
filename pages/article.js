@@ -16,7 +16,7 @@ import { CustomBreadcrumbs } from "../components/app"
 import styles from "../pageStyles/articlePageStyle"
 
 // Sections for this page
-import InvestNowSection from "../components/InvestNowSection"
+import { InvestNowSection } from "../components/app"
 
 const MyLoader = () => (
   <ContentLoader

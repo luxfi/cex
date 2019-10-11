@@ -11,7 +11,7 @@ import Router from "next/router"
 import _ from "lodash"
 
 // core components
-import { CustomLink } from "./app"
+import { CustomLink } from ".."
 
 
 const fuzzyMatch = (str, pattern) => {

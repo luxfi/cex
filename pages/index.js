@@ -5,17 +5,14 @@ import { withStyles } from "@material-ui/core/styles"
 import { inject, observer } from "mobx-react"
 
 // core components
-import Hero from "../components/LandingPageHero"
+import Hero from "../components/landing/LandingPageHero"
 
 // styles
 import styles from "../pageStyles/landingPageStyle"
 
 // Sections for this page
-import NewestPicksSection from "../components/LandingPageNewestPicksSection"
-import InvestorTopPicksSection from "../components/LandingPageInvestorTopPicksSection"
-import InvestNowSection from "../components/InvestNowSection"
-import OurPartnersSection from "../components/LandingPageOurPartnersSection"
-import ESXCommunitySection from "../components/LandingPageESXCommunitySection"
+import { InvestNowSection } from "../components/app"
+import { OurPartnersSection, ESXCommunitySection, NewestPicksSection } from "../components/landing"
 
 @inject("store")
 @observer
