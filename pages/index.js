@@ -7,8 +7,8 @@ import { inject, observer } from "mobx-react"
 // core components
 import Hero from "../components/LandingPageHero"
 
-// import styles from "assets/jss/material-kit-react/views/landingPage.js"
-import styles from "../pagesStyles/landingPageStyle.js"
+// styles
+import styles from "../pageStyles/landingPageStyle"
 
 // Sections for this page
 import NewestPicksSection from "../components/LandingPageNewestPicksSection"

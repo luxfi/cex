@@ -13,9 +13,7 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 
 // core components
-import HeroImg from "./landing_old/HeroImg"
-// import GridContainer from "../Grid/GridContainer.js"
-// import GridItem from "../Grid/GridItem.js"
+import HeroImg from "./HeroImg"
 import Button from "@material-ui/core/Button"
 import Box from "@material-ui/core/Box"
 
