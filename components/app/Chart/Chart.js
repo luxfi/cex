@@ -1,4 +1,4 @@
-import { BuySellForm, FakeCandlestickChart, ChartIntervalControl } from '../'
+import { BuySellForm, ChartIntervalControls } from '../'
 import { timelineLabels } from "../../utils/dateRange"
 import { Element } from "react-scroll"
 
@@ -24,7 +24,7 @@ export default props => {
       <div className="title" name="section1">
         Trade This Stock
       </div>
-      <ChartIntervalControl
+      <ChartIntervalControls
         updatePrintInterval={updatePrintInterval}
         printInterval={printInterval}
       />

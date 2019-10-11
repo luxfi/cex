@@ -1,6 +1,6 @@
 import React from "react"
 import Breadcrumbs from "@material-ui/core/Breadcrumbs"
-import Link from "../../CustomLink"
+import Link from "../CustomLink/CustomLink"
 import NavigateNextIcon from "@material-ui/icons/NavigateNext"
 
 
