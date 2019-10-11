@@ -1,7 +1,6 @@
 import React from 'react'
 import Router from 'next/router'
-import Emitter from '../../src/emitter'
-import KYCForm from '../../components/forms/kyc'
+import { KYCForm } from '../../components/account'
 
 import { watch } from 'react-referential'
 import {

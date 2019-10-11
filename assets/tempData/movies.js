@@ -4,7 +4,7 @@ module.exports = [
     movieSlug: "terminator-dark-fate",
     articles: ["edward-furlong-edward-furlong-terminator-dark-fate"],
     genre: ["Action", "Adventure", "Sci-Fi"],
-    trailer: "https://www.youtube.com/embed/jCyEX6u-Yhs",
+    trailer: "https://www.youtube.com/watch?v=jCyEX6u-Yhs",
     posterImg:
       "https://m.media-amazon.com/images/M/MV5BMTUwNWI2ZDQtODRjNy00OGE1LThlNGEtYzU2NDU5ZGMzN2RmXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
     heroImg:
@@ -42,7 +42,7 @@ module.exports = [
     movieSlug: "uncut-gems",
     articles: ["uncut-gems-review-adam-sandler"],
     genre: ["Comedy", "Crime", "Drama", "Mystery", "Thriller"],
-    trailer: "https://www.youtube.com/embed/vTfJp2Ts9X8",
+    trailer: "https://www.youtube.com/watch?v=vTfJp2Ts9X8",
     posterImg:
       "https://m.media-amazon.com/images/M/MV5BZDhkMjUyYjItYWVkYi00YTM5LWE4MGEtY2FlMjA3OThlYmZhXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SY1000_CR0,0,640,1000_AL_.jpg",
     heroImg:
@@ -66,7 +66,7 @@ module.exports = [
     movieSlug: "birds-of-prey",
     articles: ["birds-of-prey-poster-harley-quinn"],
     genre: ["Action", "Adventure", "Crime"],
-    trailer: "https://www.youtube.com/embed/Zk_LJzZr5i8",
+    trailer: "https://www.youtube.com/watch?v=Zk_LJzZr5i8",
     posterImg:
       "https://m.media-amazon.com/images/M/MV5BNmRlZGNjNWYtZmQ4Yy00Yjg3LTkzZmYtYjZlYjczMzhlY2I1XkEyXkFqcGdeQXVyODQzNTE3ODc@._V1_SX300.jpg",
     heroImg:
@@ -100,7 +100,7 @@ module.exports = [
     movieSlug: "onward",
     articles: ["pixar-onward-trailer"],
     genre: ["Animation", "Adventure", "Comedy", "Drama", "Family", "Fantasy"],
-    trailer: "https://www.youtube.com/embed/x8DKg_fsacM",
+    trailer: "https://www.youtube.com/watch?v=x8DKg_fsacM",
     posterImg:
       "https://m.media-amazon.com/images/M/MV5BZTU3Y2RlYjAtMzAzOC00MjdiLWI2MjctYzhhMmI3MWRhODhhXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg",
     heroImg:

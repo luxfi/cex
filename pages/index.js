@@ -5,17 +5,14 @@ import { withStyles } from "@material-ui/core/styles"
 import { inject, observer } from "mobx-react"
 
 // core components
-import Hero from "../components/landing/Hero"
+import Hero from "../components/landing/Hero/Hero"
 
-// import styles from "assets/jss/material-kit-react/views/landingPage.js"
-import styles from "../assets/jss/views/landingPage.js"
+// styles
+import styles from "../pageStyles/landing.style"
 
 // Sections for this page
-import NewestPicksSection from "../views/LandingPage/Sections/NewestPicksSection"
-import InvestorTopPicksSection from "../views/LandingPage/Sections/InvestorTopPicksSection"
-import InvestNowSection from "../views/LandingPage/Sections/InvestNowSection"
-import OurPartnersSection from "../views/LandingPage/Sections/OurPartnersSection"
-import ESXCommunitySection from "../views/LandingPage/Sections/ESXCommunitySection"
+import { InvestNow } from "../components/app"
+import { OurPartners, ESXCommunity, NewestPicks } from "../components/landing"
 
 @inject("store")
 @observer
@@ -45,11 +42,11 @@ class Index extends React.Component {
         <Hero loggedIn={loggedIn} />
         <div className={`${classes.main}`}>
           <div className={classes.container}>
-            <NewestPicksSection />
+            <NewestPicks />
             { /*<InvestorTopPicksSection />*/ }
-            <InvestNowSection loggedIn={loggedIn} />
-            <OurPartnersSection />
-            <ESXCommunitySection />
+            <InvestNow loggedIn={loggedIn} />
+            <OurPartners />
+            <ESXCommunity />
           </div>
         </div>
       </>
