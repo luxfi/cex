@@ -10,7 +10,7 @@ import { withStyles } from "@material-ui/core/styles"
 import { Button, Avatar, Grid } from "@material-ui/core"
 
 // core components
-import Breadcrumbs from "../components/Breadcrumbs.js"
+import { CustomBreadcrumbs } from "../components/app"
 
 // import styles from "assets/jss/material-kit-react/views/landingPage.js"
 import styles from "../pageStyles/articlePageStyle"
@@ -119,7 +119,7 @@ class Article extends React.Component {
     return (
       <>
         <div className={classes.container}>
-          <Breadcrumbs />
+          <CustomBreadcrumbs />
           <article>
             <div className={classes.flex}>
               <h1 className={classes.title} style={{ textAlign: "left" }}>

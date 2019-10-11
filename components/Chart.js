@@ -1,4 +1,4 @@
-import BuySellForm from './BuySellForm'
+import BuySellForm from './app/BuySellForm/BuySellForm'
 import FakeCandlestickChart from "./FakeCandlestickChart"
 import { timelineLabels } from "./utils/dateRange"
 import ChartIntervalControl from "./ChartIntervalControls"
