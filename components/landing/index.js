@@ -1,0 +1,6 @@
+export { default as ESXCommunity } from './ESXCommunity'
+export { default as Hero } from './Hero'
+export { default as HeroImg } from './HeroImg'
+export { default as InvestorTopPicks } from './InvestorTopPicks'
+export { default as NewestPicks } from './NewestPicks'
+export { default as OurPartners } from './OurPartners'

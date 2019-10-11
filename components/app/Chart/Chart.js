@@ -1,4 +1,4 @@
-import { BuySellForm, ChartIntervalControls } from '../'
+import { BuySellForm, ChartIntervalControls, ChartCandlestickFake } from '../'
 import { timelineLabels } from "../../utils/dateRange"
 import { Element } from "react-scroll"
 
@@ -29,7 +29,7 @@ export default props => {
         printInterval={printInterval}
       />
       <div className="posts-container">
-        <FakeCandlestickChart data={chartData} yDomain={yDomain} labels={labels} />
+        <ChartCandlestickFake data={chartData} yDomain={yDomain} labels={labels} />
         <div className="container-row space-between">
           <BuySellForm
             buttonColor="green"

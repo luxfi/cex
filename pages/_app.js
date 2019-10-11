@@ -27,7 +27,7 @@ import RefProvider from "react-referential"
 import MomentUtils from "@date-io/moment"
 
 // styles
-import styles from "../pageStyles/appStyle"
+import styles from "../pageStyles/app.style"
 import {darkTheme, lightTheme} from "../components/themes"
 
 // ****************

@@ -9,7 +9,7 @@ import ContentLoader from "react-content-loader"
 import { Typography, Grid } from '@material-ui/core'
 import { makeStyles } from "@material-ui/core/styles"
 
-import styles from "./landing/landingPageInvestorTopPicksStyle.js/index.js"
+import styles from "../../landing/InvestorTopPicks/InvestorTopPicks.style.js"
 import { List, ListItem, Divider } from "@material-ui/core"
 
 const useStyles = makeStyles(styles)
