@@ -2,7 +2,6 @@ import React from "react"
 import NextLink from "next/link"
 
 // import Button from "@material-ui/core/Button"
-// import CustomLink from "../CustomLink"
 // <Button component={CustomLink} href={'/foo'}>bar</Button>
 
 const CustomLink = React.forwardRef(

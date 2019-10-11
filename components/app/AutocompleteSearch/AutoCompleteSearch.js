@@ -5,11 +5,14 @@ import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
 import Paper from "@material-ui/core/Paper"
 import MenuItem from "@material-ui/core/MenuItem"
-import CustomLink from "../../CustomLink"
 import InputBase from "@material-ui/core/InputBase"
 import { makeStyles } from "@material-ui/core/styles"
 import Router from "next/router"
 import _ from "lodash"
+
+// core components
+import { CustomLink } from "./app"
+
 
 const fuzzyMatch = (str, pattern) => {
   const cache = _.memoize(function (str) {

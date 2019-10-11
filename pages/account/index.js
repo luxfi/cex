@@ -5,7 +5,7 @@
 import React from "react"
 import Container from "@material-ui/core/Container"
 import Link from "@material-ui/core/Link"
-import CustomLink from "../../components/CustomLink"
+import { CustomLink } from "../../components/app"
 
 class Account extends React.Component {
   render() {
