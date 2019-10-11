@@ -9,7 +9,7 @@ import { Button } from "@material-ui/core"
 
 // core components
 import ContentLoader from "react-content-loader"
-import Modal from "./CustomModal"
+import { CustomModal } from "./app"
 
 // style
 import styles from "./portfolioPageProTraderCTAStyle"
@@ -48,12 +48,12 @@ const RemindLater = ({ classes }) => {
       >
         Remind Later
       </Button>
-      <Modal handleClose={handleClose} open={open} title="Remind Later">
+      <CustomModal handleClose={handleClose} open={open} title="Remind Later">
         <p>We will set a reminder for you to sign up to a pro trader account</p>{" "}
         <p>
           Research and trade film stocks from our intuitive streaming platform.
         </p>{" "}
-      </Modal>
+      </CustomModal>
     </>
   )
 }

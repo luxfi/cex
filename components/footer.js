@@ -14,8 +14,7 @@ import Link from "@material-ui/core/Link"
 import Button from "@material-ui/core/Button"
 
 // core components
-import Modal from "./CustomModal"
-import CustomLink from "./CustomLink"
+import { CustomLink, CustomModal } from "./app"
 
 // styles
 import { withStyles } from "@material-ui/core/styles"
@@ -35,7 +34,7 @@ const AboutESX = ({ classes }) => {
       <Button className={classes.menuButton} onClick={handleOpen}>
         About ESX
       </Button>
-      <Modal handleClose={handleClose} open={open} title="What is ESX?">
+      <CustomModal handleClose={handleClose} open={open} title="What is ESX?">
         <p>ESX is a film investing platform for everyone.</p>{" "}
         <p>
           We allow regular people — not just wealthy film producers — to invest
@@ -46,7 +45,7 @@ const AboutESX = ({ classes }) => {
           ESX was created to democratize fundraising for film while giving
           anyone the chance to back the next greatest film.
         </p>
-      </Modal>
+      </CustomModal>
     </>
   )
 }
@@ -66,7 +65,7 @@ const Partnerships = ({ classes }) => {
       <Button className={classes.menuButton} onClick={handleOpen}>
         Partnerships
       </Button>
-      <Modal handleClose={handleClose} open={open} title="Partnerships">
+      <CustomModal handleClose={handleClose} open={open} title="Partnerships">
         <p>
           Proxicoin - $750 million in capacity 8-10 films per year at scale 1-4
           television properties per year
@@ -79,7 +78,7 @@ const Partnerships = ({ classes }) => {
           Centauri Media - $250mm film production fund with potential of up to 5
           studio released films a year
         </p>
-      </Modal>
+      </CustomModal>
     </>
   )
 }
@@ -103,9 +102,9 @@ const ContactUs = ({ classes }) => {
       >
         Contact Us
       </Button>
-      <Modal handleClose={handleClose} open={open} title="Contact Us">
+      <CustomModal handleClose={handleClose} open={open} title="Contact Us">
         <p>Put Contact Infomation Here</p>{" "}
-      </Modal>
+      </CustomModal>
     </>
   )
 }

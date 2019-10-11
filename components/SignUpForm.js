@@ -15,7 +15,7 @@ import Container from "@material-ui/core/Container"
 import Link from "@material-ui/core/Link"
 
 // Custom Link
-import CustomLink from "./CustomLink"
+import { CustomLink } from "./app"
 
 const styles = theme => ({
   "@global": {

@@ -9,8 +9,7 @@ import { makeStyles } from "@material-ui/core/styles"
 
 // core components
 import ContentLoader from "react-content-loader"
-import Modal from "./CustomModal"
-import CustomLink from "./CustomLink"
+import { CustomLink, CustomModal } from "./app"
 
 // styles
 import styles from "./investNowStyle.js"
@@ -65,7 +64,7 @@ export default props => {
         >
           What is ESX?
         </Button>
-        <Modal handleClose={handleClose} open={open} title="What is ESX?">
+        <CustomModal handleClose={handleClose} open={open} title="What is ESX?">
           <p>ESX is a film investing platform for everyone.</p>{" "}
           <p>
             We allow regular people — not just wealthy film producers — to
@@ -76,7 +75,7 @@ export default props => {
             ESX was created to democratize fundraising for film while giving
             anyone the chance to back the next greatest film.
           </p>
-        </Modal>
+        </CustomModal>
       </div>
       <style jsx>{`
         .hero-container {
