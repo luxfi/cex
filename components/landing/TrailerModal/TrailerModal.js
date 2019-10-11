@@ -28,7 +28,7 @@ export default ({ movie }) => {
       <div style={{ display: "none" }}> // 
         <TransitionsModal handleClose={handleClose} open={open}>
           <div className="videoWrapper">
-            <iframe width="560" height="349" src="https://www.youtube.com/embed/o-3_aTo8sTM?autoplay=1&amp;modestbranding=1&amp;showinfo=0" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+            <iframe width="560" height="349" src={movie.trailer + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0"} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
           </div>
         </TransitionsModal>
       </div>
@@ -101,11 +101,6 @@ const TransitionsModal = ({
               <div className={classes.modalTitle}>{title}</div>
             </div>
             <div className={classes.modalBody}>{children}</div>
-            {/* {children} */}
-            {/* <h2 id="transition-modal-title">Transition modal</h2>
-            <p id="transition-modal-description">
-              react-transiton-group animates me.
-            </p> */}
           </div>
         </Fade>
       </Modal>
