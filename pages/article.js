@@ -13,7 +13,7 @@ import { Button, Avatar, Grid } from "@material-ui/core"
 import Breadcrumbs from "../components/Breadcrumbs.js"
 
 // import styles from "assets/jss/material-kit-react/views/landingPage.js"
-import styles from "../pagesStyles/articlePageStyle.js"
+import styles from "../pageStyles/articlePageStyle"
 
 // Sections for this page
 import InvestNowSection from "../components/InvestNowSection"

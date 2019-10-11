@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react"
 
-import PortolioPagePortfolioMeta from './PortolioPagePortfolioMeta'
+import PortfolioPagePortfolioMeta from './PortfolioPagePortfolioMeta'
 import Watchlist from './Watchlist'
 
 const PortfolioView = (props) => {
@@ -25,7 +25,7 @@ const PortfolioView = (props) => {
 
   return (
     <div>
-      <PortolioPagePortfolioMeta
+      <PortfolioPagePortfolioMeta
         holdings={holdings}
         weeklyChange={weeklyChange}
         rank={rank}

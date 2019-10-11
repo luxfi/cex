@@ -25,12 +25,11 @@ import initializeStore from "../stores/stores"
 import { withRouter } from "next/router"
 import { MuiPickersUtilsProvider } from "react-referential-forms"
 import RefProvider from "react-referential"
-// import Loader, { startLoading, stopLoading } from "../components/app_old/loader"
 
 import MomentUtils from "@date-io/moment"
 
 // styles
-import styles from "../pagesStyles/appStyle.js"
+import styles from "../pageStyles/appStyle"
 import {darkTheme, lightTheme} from "../components/themes"
 
 // ****************
