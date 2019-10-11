@@ -1,7 +1,5 @@
-import BuySellForm from './app/BuySellForm/BuySellForm'
-import FakeCandlestickChart from "./FakeCandlestickChart"
-import { timelineLabels } from "./utils/dateRange"
-import ChartIntervalControl from "./ChartIntervalControls"
+import { BuySellForm, FakeCandlestickChart, ChartIntervalControl } from '../'
+import { timelineLabels } from "../../utils/dateRange"
 import { Element } from "react-scroll"
 
 export default props => {
