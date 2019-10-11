@@ -6,17 +6,17 @@ import { withStyles } from "@material-ui/core/styles"
 import { inject, observer } from "mobx-react"
 
 // core components
-import PillsTabs from "../components/PillsTabs.js"
+import { PillsTabs } from "../components/portfolio"
 
 // import styles from "assets/jss/material-kit-react/views/portfolioPage.js"
-import styles from "../assets/jss/views/articlePage.js"
+import styles from "../pageStyles/portfolio.style"
 
 // Sections for this page
-import PortfolioView from "../views/PortfolioPage/PortfolioView"
-import TradeView from "../views/PortfolioPage/TradeView"
-import RewardsView from "../views/PortfolioPage/RewardsView"
-import NewsFeedView from "../views/PortfolioPage/NewsFeedView"
-import ProTraderCTA from "../views/ProfilePage/ProTraderCTA"
+import PortfolioView from "../components/portfolio/PortfolioView/PortfolioView"
+import TradeView from "../components/portfolio/TradeView/TradeView"
+import RewardsView from "../components/portfolio/RewardsView/RewardsView"
+import NewsFeedView from "../components/portfolio/NewsFeedView"
+import ProTraderCTA from "../components/portfolio/ProTraderCTA/ProTraderCTA"
 
 @inject("store")
 @observer

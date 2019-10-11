@@ -7,18 +7,16 @@ import ContentLoader from "react-content-loader"
 
 // @material-ui/core components
 import { withStyles } from "@material-ui/core/styles"
-import Container from "@material-ui/core/Container"
+import { Button, Avatar, Grid } from "@material-ui/core"
 
 // core components
-import Breadcrumbs from "../components/Breadcrumbs.js"
-import Button from "../components/CustomButtons/Button"
-import ImageAvatars from "../components/ImageAvatars"
+import { CustomBreadcrumbs } from "../components/app"
 
 // import styles from "assets/jss/material-kit-react/views/landingPage.js"
-import styles from "../assets/jss/views/articlePage.js"
+import styles from "../pageStyles/article.style"
 
 // Sections for this page
-import InvestNowSection from "../views/LandingPage/Sections/InvestNowSection"
+import { InvestNow } from "../components/app"
 
 const MyLoader = () => (
   <ContentLoader
@@ -121,7 +119,7 @@ class Article extends React.Component {
     return (
       <>
         <div className={classes.container}>
-          <Breadcrumbs />
+          <CustomBreadcrumbs />
           <article>
             <div className={classes.flex}>
               <h1 className={classes.title} style={{ textAlign: "left" }}>
@@ -130,7 +128,7 @@ class Article extends React.Component {
               <div className={classes.grow} />
               <Button
                 component={ButtonLink}
-                color="outlined"
+                variant="outlined"
                 href={hrefLink}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -167,8 +165,9 @@ class Article extends React.Component {
               }}
             >
               <span style={{ width: "30px" }}>
-                <ImageAvatars alt={article.author} src={article.avatar} />
-                {/* <AvatarLoader /> */}
+                <Grid container justify="center" alignItems="center">
+                  <Avatar alt={article.author} src={article.avatar} />
+                </Grid>
               </span>
               <span
                 style={{
@@ -180,7 +179,7 @@ class Article extends React.Component {
               </span>
             </div>
           </article>
-          <InvestNowSection loggedIn={loggedIn} />
+          <InvestNow loggedIn={loggedIn} />
           <div
             style={{
               height: "70px"
