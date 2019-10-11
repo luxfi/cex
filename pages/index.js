@@ -5,14 +5,14 @@ import { withStyles } from "@material-ui/core/styles"
 import { inject, observer } from "mobx-react"
 
 // core components
-import Hero from "../components/landing/LandingPageHero"
+import Hero from "../components/landing/Hero/Hero"
 
 // styles
-import styles from "../pageStyles/landingPageStyle"
+import styles from "../pageStyles/landing.style"
 
 // Sections for this page
-import { InvestNowSection } from "../components/app"
-import { OurPartnersSection, ESXCommunitySection, NewestPicksSection } from "../components/landing"
+import { InvestNow } from "../components/app"
+import { OurPartners, ESXCommunity, NewestPicks } from "../components/landing"
 
 @inject("store")
 @observer
@@ -42,11 +42,11 @@ class Index extends React.Component {
         <Hero loggedIn={loggedIn} />
         <div className={`${classes.main}`}>
           <div className={classes.container}>
-            <NewestPicksSection />
+            <NewestPicks />
             { /*<InvestorTopPicksSection />*/ }
-            <InvestNowSection loggedIn={loggedIn} />
-            <OurPartnersSection />
-            <ESXCommunitySection />
+            <InvestNow loggedIn={loggedIn} />
+            <OurPartners />
+            <ESXCommunity />
           </div>
         </div>
       </>

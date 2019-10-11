@@ -13,10 +13,10 @@ import { Button, Avatar, Grid } from "@material-ui/core"
 import { CustomBreadcrumbs } from "../components/app"
 
 // import styles from "assets/jss/material-kit-react/views/landingPage.js"
-import styles from "../pageStyles/articlePageStyle"
+import styles from "../pageStyles/article.style"
 
 // Sections for this page
-import { InvestNowSection } from "../components/app"
+import { InvestNow } from "../components/app"
 
 const MyLoader = () => (
   <ContentLoader
@@ -179,7 +179,7 @@ class Article extends React.Component {
               </span>
             </div>
           </article>
-          <InvestNowSection loggedIn={loggedIn} />
+          <InvestNow loggedIn={loggedIn} />
           <div
             style={{
               height: "70px"

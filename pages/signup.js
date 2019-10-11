@@ -1,5 +1,5 @@
 import React from "react"
-import SignupForm from "../components/signup/FormSignUp"
+import { SignUpForm } from "../components/signup"
 import { inject, observer } from "mobx-react"
 
 @inject("store")
@@ -26,7 +26,7 @@ class SignUp extends React.Component {
       store.uiStore.snackBarOpen = true
     }
     return (
-      <SignupForm
+      <SignUpForm
         setValue={(key, val) => {
           userStore.setValue(key, val)
         }}

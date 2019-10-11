@@ -19,7 +19,7 @@ import ContentLoader from "react-content-loader"
 
 // styles
 import { makeStyles } from "@material-ui/core/styles"
-import styles from "./portfolio/portfolioPageTradeStyle.js/index.js"
+import styles from "../../portfolio/TradeView/TradeView.style.js"
 
 const useStyles = makeStyles(styles)
 
