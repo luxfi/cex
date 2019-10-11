@@ -14,8 +14,7 @@ import Button from "@material-ui/core/Button"
 import { withStyles } from "@material-ui/core/styles"
 
 // core components
-import { CustomBreadcrumbs } from "./app"
-import Chart from "./Chart"
+import { CustomBreadcrumbs, Chart } from "./app"
 
 // section
 import InvestNowSection from "./InvestNowSection"
