@@ -1,6 +1,15 @@
 import { BuySellForm, ChartIntervalControls, ChartCandlestickFake } from '../'
 import { timelineLabels } from "../../utils/dateRange"
 import { Element } from "react-scroll"
+import dynamic from 'next/dynamic'
+
+const TVChartContainer = dynamic(
+	async () => {
+    const mod = await import('../TVChartContainer')
+    return mod.TVChartContainer
+  },
+	{ ssr: false, loading: () => <div style={{ color: 'red' }}>This is loading</div> },
+)
 
 export default props => {
   const {
@@ -24,12 +33,13 @@ export default props => {
       <div className="title" name="section1">
         Trade This Stock
       </div>
-      <ChartIntervalControls
+      {/* <ChartIntervalControls
         updatePrintInterval={updatePrintInterval}
         printInterval={printInterval}
-      />
+      /> */}
+      <TVChartContainer />
       <div className="posts-container">
-        <ChartCandlestickFake data={chartData} yDomain={yDomain} labels={labels} />
+        {/* <ChartCandlestickFake data={chartData} yDomain={yDomain} labels={labels} /> */}
         <div className="container-row space-between">
           <BuySellForm
             buttonColor="green"

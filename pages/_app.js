@@ -109,6 +109,8 @@ class MyMobxApp extends App {
               rel="stylesheet"
               href="https://fonts.googleapis.com/icon?family=Material+Icons"
             />
+            <script src="/static/datafeeds/udf/dist/polyfills.js" />
+            <script src="/static/datafeeds/udf/dist/bundle.js" />
           </Head>
           <Provider store={this.mobxStore}>
             <MuiPickersUtilsProvider utils={MomentUtils}>
