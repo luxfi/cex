@@ -198,7 +198,7 @@ const styles = theme => {
       flexGrow: 1,
       paddingTop: "70px",
       // backgroundImage: 'linear-gradient(180deg, #000000 0%, #151515 100%)',
-      background: "rgb(29, 38, 50)",
+      background: "#141414",
     },
     menuButton: {
       marginRight: theme.spacing(2),
