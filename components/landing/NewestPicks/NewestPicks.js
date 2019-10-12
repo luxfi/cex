@@ -67,6 +67,7 @@ export default class NewestPicksSection extends React.Component {
                   item
                   style={{
                     cursor: "pointer",
+                    paddingRight: "16px"
                   }}
                   xs={12}
                   sm={12}
@@ -86,9 +87,9 @@ export default class NewestPicksSection extends React.Component {
                         backgroundImage: `url(${d.posterImg})`,
                         maxHeight: '1200px',
                         minHeight: '500px',
-                        backgroundSize: 'cover'
-                      }}
-                    >
+                        backgroundSize: 'cover',
+                  }}
+                >
                       <div className="pick-text">
                         <Typography variant="body1">
                           <strong>{d.name}</strong>

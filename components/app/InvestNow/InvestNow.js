@@ -4,7 +4,7 @@ import React from "react"
 import classNames from "classnames"
 
 // @material-ui/core components
-import { Button } from "@material-ui/core"
+import { Button, Grid, Typography, Box } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
 // core components
@@ -46,14 +46,25 @@ export default props => {
 
   return (
     <>
-      <div className={classes.section}>
-        <h2 className={classes.title}>
-          Invest more than screen time in your favorite films.
-        </h2>
+      <Grid
+        container
+        className={classes.section}
+        direction="column"
+        justify="center"
+        alignItems="center"
+      >
+        <Typography align="center" color="textPrimary" variant="h5" component="h2" gutterBottom>
+          <Box>
+            Invest more than screen time in your favorite films.
+          </Box>
+        </Typography>
+        <Grid
+          container
+          justify="center"
+        >
         <Button component={CustomLink} href={hrefLink}>
           Invest Now
         </Button>
-
         <Button
           variant="outlined"
           style={{
@@ -63,20 +74,22 @@ export default props => {
           onClick={handleOpen}
         >
           What is ESX?
-        </Button>
+              </Button>
+
         <CustomModal handleClose={handleClose} open={open} title="What is ESX?">
           <p>ESX is a film investing platform for everyone.</p>{" "}
           <p>
             We allow regular people — not just wealthy film producers — to
             invest in promising films, with as little as $10 or as much as
             $100,000 per investment.
-          </p>{" "}
+              </p>{" "}
           <p>
             ESX was created to democratize fundraising for film while giving
             anyone the chance to back the next greatest film.
-          </p>
+              </p>
         </CustomModal>
-      </div>
+        </Grid>
+      </Grid>
       <style jsx>{`
         .hero-container {
           position: relative;
