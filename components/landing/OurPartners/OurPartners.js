@@ -43,7 +43,7 @@ export default props => {
         <h2 className={classes.title} style={{ textAlign: "left" }}>
           Our Partners
         </h2>
-        <Grid container style={{ justifyContent: "center", paddingTop: "52px", paddingBottom: "52px", background: "#f4f3f3" }}>
+        <Grid container style={{ justifyContent: "center", paddingTop: "52px", paddingBottom: "52px" }}>
           {partners.map((imgSrc, i) => (
             <Grid item
               xs={12}
@@ -66,8 +66,8 @@ export default props => {
                 <img
                   src={imgSrc}
                   alt=""
-                  style={{ width: "75%", maxHeight: "64px" }}
-                />
+                  style={{ width: "75%", maxHeight: "104px", background: "white", padding: "16px 16px", borderRadius: "4px" }}
+              />
               </Grid>
             </Grid>
           ))}
