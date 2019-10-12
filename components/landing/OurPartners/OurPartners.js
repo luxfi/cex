@@ -43,7 +43,7 @@ export default props => {
         <h2 className={classes.title} style={{ textAlign: "left" }}>
           Our Partners
         </h2>
-        <Grid container style={{ justifyContent: "center", paddingTop: "36px" }}>
+        <Grid container style={{ justifyContent: "center", paddingTop: "52px", paddingBottom: "52px", background: "#f4f3f3" }}>
           {partners.map((imgSrc, i) => (
             <Grid item
               xs={12}
