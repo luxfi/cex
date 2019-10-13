@@ -51,7 +51,7 @@ export default class NewestPicksSection extends React.Component {
     console.log('watchlist', userPortfolio.watchlist)
     const loggedIn = store.userStore.loggedIn
     return (
-      <div id="newest-picks">
+      <div id="newest-picks" style={{ padding: "48px 0px"}} >
         <Typography variant="h5">
           <Box fontWeight={100} fontSize={20}>
             NOW FUNDRAISING
@@ -129,9 +129,9 @@ export default class NewestPicksSection extends React.Component {
         </Grid>
         <style jsx>{`
 
-          #newest-picks :global(.MuiCard-root) {
-            margin-bottom: 32px;
-          }
+          // #newest-picks :global(.MuiCard-root) {
+          //   margin-bottom: 32px;
+          // }
 
           #newest-picks :global(.MuiCardContent-root) {
             padding: 0;

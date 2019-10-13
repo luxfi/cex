@@ -7,7 +7,7 @@ import classNames from "classnames"
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles"
-import { Grid, Card, CardContent, Avatar } from '@material-ui/core'
+import { Grid, Card, CardContent, Avatar, Box, Typography, CardHeader } from '@material-ui/core'
 
 // core components
 import ContentLoader from "react-content-loader"
@@ -40,20 +40,15 @@ export default props => {
   const { ...rest } = props
   const imageClasses = classNames(classes.imgCardTop)
   return (
-    <>
-      <div className={classes.section}>
-        <h2 className={classes.title} style={{ textAlign: "left" }}>
-          ESX Community Backed Films in the News
-        </h2>
-        <ArticleView classes={classes} />
-      </div>
-      <style jsx>{`i
-        .hero-container {
-          position: relative;
-          overflow: hidden;
-        }
-      `}</style>
-    </>
+    <div id="esx-community" style={{ padding: "48px 0px" }} >
+      <Typography variant="h5">
+        <Box fontWeight={100} fontSize={20}>
+          COMMUNITY BACKED FILMS IN THE NEWS
+        </Box>
+      </Typography>
+      <br />
+      <ArticleView classes={classes} />
+    </div>
   )
 }
 
@@ -65,18 +60,22 @@ class ArticleView extends React.Component {
     const { homePageArticles } = store.articleStore
     // let topPicks = movies.slice(0, 3)
     return (
-      <Grid container>
+      <Grid container spacing={2}>
         {homePageArticles.map((d, i) => (
-          <Grid item key={`picks_${i}`} xs={12} sm={12} md={3}>
+          <Grid item key={`picks_${i}`} xs={3} sm={12} md={3}>
             <Card elevation={0} style={{ cursor: "pointer", backgroundColor: "transparent" }} onClick={() => { Router.push(`/article/${d.articleSlug}`) }}>
-              <Grid item xs={2} sm={2} md={2}>
-                <Grid container justify="center" alignItems="center">
+              <CardHeader
+                avatar={
                   <Avatar alt={d.articleTitle} src={d.avatar} />
-                </Grid>
-              </Grid >
-              <h4 className={classes.cardTitle}>{d.articleTitle}</h4>
+                }
+              />
               <CardContent>
-                <p className={classes.description}>{d.description}</p>
+                <Typography variant="h6" component="h2" noWrap>
+                  {d.articleTitle}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {d.description}
+                </Typography>
               </CardContent>
             </Card>
           </Grid >

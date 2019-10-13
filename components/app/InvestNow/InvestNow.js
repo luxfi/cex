@@ -44,7 +44,7 @@ export default props => {
   }
 
   return (
-    <>
+    <div style={{ padding: "48px 0px"}}>
       <Box clone pt={2} pr={1} pb={1} pl={2}>
         <Paper elevation={0}>
           <Grid
@@ -98,6 +98,6 @@ export default props => {
           overflow: hidden;
         }
       `}</style>
-    </>
+    </div>
   )
 }
