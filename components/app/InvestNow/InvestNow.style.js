@@ -1,11 +1,11 @@
-import { cardTitle, title } from "../../esxStyles.js"
+import { makeStyles } from '@material-ui/core/styles';
 
-const investNowStyle = {
+const useStyles = makeStyles(theme => ({
   section: {
-    backgroundColor: "#f4f3f3",
     height: "400px",
     borderRadius: "16px"
   }
-}
+}));
 
-export default investNowStyle
+
+export default useStyles

@@ -28,7 +28,7 @@ import MomentUtils from "@date-io/moment"
 
 // styles
 import styles from "../pageStyles/app.style"
-import {darkTheme, lightTheme} from "../components/themes"
+import { darkTheme, lightTheme } from "../components/themes"
 
 // ****************
 
@@ -76,27 +76,12 @@ class MyMobxApp extends App {
       : initializeStore(props.initialMobxState)
   }
 
-  componentDidMount() {
-    if (!this.props.isServer) {
-      // debugger
-      // this.props.initialMobxState.userStore.loadSession()
-    }
-  }
-
-  // getThemeForPath(pathname) {
-  //   if (pathname.startsWith("/film")) {
-  //     return darkTheme
-  //   }
-  //   return lightTheme
-  // }
-
   render() {
     const { Component, pageProps, classes, router } = this.props
     const onHomePage = router.pathname === "/" || router.pathname === "/#"
-    // const theme = this.getThemeForPath(router.pathname)
 
     return (
-      <MuiThemeProvider theme={lightTheme}>
+      <MuiThemeProvider theme={darkTheme}>
         <React.Fragment>
           <CssBaseline />
           <Head>
