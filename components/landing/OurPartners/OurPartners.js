@@ -38,7 +38,7 @@ export default props => {
   const classes = useStyles()
 
   return (
-    <div style={{ marginTop: "72px" }}>
+    <div style={{ padding: "48px 0px" }}>
       <Typography variant="h5">
         <Box fontWeight={100} fontSize={20}>
           OUR PARTNERS
