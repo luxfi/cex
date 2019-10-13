@@ -34,6 +34,7 @@ const MyLoader = () => (
 )
 
 const partners = [ Paramount, Disney, Lionsgate, Warner_Bros, Sony ]
+// const partners = [<Paramount />, <Disney />, <Lionsgate />, <Warner_Bros />, <Sony />]
 
 export default props => {
   const classes = useStyles()
@@ -49,29 +50,27 @@ export default props => {
       <Box clone pt={2} pr={1} pb={1} pl={2}>
         <Paper elevation={0}>
           <Grid container justify="space-around" style={{ paddingTop: "52px", paddingBottom: "52px" }}>
-            {partners.map((imgSrc, i) => (
+            {partners.map((SVGComponent, i) => (
               <Grid container item
                 xs={2}
                 key={i}
                 alignItems="center"
-              // style={{ display: "flex", justifyContent: "center" }}
+                justify="center"
               >
-                <img
-                  src={imgSrc}
-                  alt=""
-                  style={{
-                    margin: 'auto',
-                    display: 'block',
-                    maxWidth: '60%',
-                    maxHeight: '60%',
-                  }}
-                />
-                {/* style={{ width: "75%", maxHeight: "104px", background: "white", padding: "16px 16px", borderRadius: "4px" }} */}
+                <SVGComponent style={{
+                  width: "60%",
+                  height: "60%"
+                }}/>
               </Grid>
             ))}
           </Grid>
         </Paper >
       </Box>
+      <style jsx>{`
+        svg {
+          fill: white;
+        }
+      `}</style>
     </div>
   )
 }
