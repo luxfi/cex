@@ -57,7 +57,7 @@ export default props => {
             <Typography align="center" color="textPrimary" variant="h5" component="h2" gutterBottom>
               <Box>
                 Invest more than screen time in your favorite films.
-          </Box>
+             </Box>
             </Typography>
             <Grid
               container

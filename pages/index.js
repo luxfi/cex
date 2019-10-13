@@ -1,5 +1,6 @@
 import React from "react"
 // @material-ui/core components
+import { Container } from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
 
 import { inject, observer } from "mobx-react"
@@ -40,15 +41,19 @@ class Index extends React.Component {
     return (
       <>
         <Hero loggedIn={loggedIn} />
-        <div className={`${classes.main}`}>
-          <div className={classes.container}>
-            <NewestPicks />
-            { /*<InvestorTopPicksSection />*/ }
-            <InvestNow loggedIn={loggedIn} />
-            <OurPartners />
-            <ESXCommunity />
-          </div>
-        </div>
+        {/* <div className={`${classes.main}`}>
+          <div className={classes.container} */}
+        <Container maxWidth="lg"
+          style={{
+            transform: "translate(0, -15vh)"
+          }}
+        >
+          <NewestPicks />
+          { /*<InvestorTopPicksSection />*/}
+          <InvestNow loggedIn={loggedIn} />
+          <OurPartners />
+          <ESXCommunity />
+        </Container>
       </>
     )
   }

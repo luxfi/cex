@@ -86,7 +86,7 @@ export default class NewestPicksSection extends React.Component {
                         justifyContent: 'center',
                         backgroundImage: `url(${d.posterImg})`,
                         maxHeight: '1200px',
-                        minHeight: '500px',
+                        minHeight: '600px',
                         backgroundSize: 'cover',
                   }}
                 >
@@ -128,9 +128,6 @@ export default class NewestPicksSection extends React.Component {
           })}
         </Grid>
         <style jsx>{`
-          #newest-picks {
-            transform: translate(0, -15vh);
-          }
 
           #newest-picks :global(.MuiCard-root) {
             margin-bottom: 32px;
