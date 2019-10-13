@@ -1,4 +1,5 @@
 import { createMuiTheme } from "@material-ui/core/styles"
+import { red } from '@material-ui/core/colors'
 
 const baseTheme = {
   palette: {
@@ -7,7 +8,13 @@ const baseTheme = {
     },
     secondary: {
       main: "#ff9e3e",  // logo yellow
-    }
+    },
+    error: {
+      main: red.A400,
+    },
+    background: {
+      default: '#fff',
+    },
   },
   typography: {
     fontFamily: "‘BWHaasGroteskTF-55Roman-Web, sans-serif’, sans-serif",
@@ -26,7 +33,7 @@ export const darkTheme = createMuiTheme({
     background: {
       default: "rgb(29, 38, 50)",
       paper: "#2f2f2f"
-    },
+    }
   },
 })
 
@@ -34,6 +41,10 @@ export const lightTheme = createMuiTheme({
   ...baseTheme,
   palette: {
     type: "light",
+    background: {
+      default: "#f0f0f0",
+      paper: "#f0f0f0"
+    }
   },
 })
 
@@ -63,3 +74,4 @@ export const lightTheme = createMuiTheme({
 // https://css-tricks.com/a-dark-mode-toggle-with-react-and-themeprovider/
 // switch theme based on local storage
 // https://markoskon.com/dark-mode-in-react/
+// https://github.com/4nubhav/Todo/blob/8c18e32769d8dc4a34c9fef41fe93a1294ac10ce/src/components/contexts/ThemeContext.js
