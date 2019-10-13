@@ -47,7 +47,7 @@ export default props => {
       <br />
       <Box clone pt={2} pr={1} pb={1} pl={2}>
         <Paper elevation={0}>
-          <Grid container justify="center" style={{ paddingTop: "52px", paddingBottom: "52px" }}>
+          <Grid container justify="space-around" style={{ paddingTop: "52px", paddingBottom: "52px" }}>
             {partners.map((imgSrc, i) => (
               <Grid container item
                 xs={2}
