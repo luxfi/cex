@@ -52,7 +52,9 @@ class Index extends React.Component {
           { /*<InvestorTopPicksSection />*/}
           <InvestNow loggedIn={loggedIn} />
           <OurPartners />
-          <ESXCommunity />
+          <div style={{ marginBottom: "-15vh" }}>
+            <ESXCommunity />
+          </div>
         </Container>
       </>
     )

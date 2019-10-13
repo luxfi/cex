@@ -186,7 +186,6 @@ class Footer extends React.Component {
             </span>
           </Toolbar>
         </Container>
-        <Toolbar />
       </div>
     )
   }
@@ -196,13 +195,12 @@ const styles = theme => {
   return {
     root: {
       flexGrow: 1,
-      paddingTop: "70px",
+      padding: "48px 0px",
       // backgroundImage: 'linear-gradient(180deg, #000000 0%, #151515 100%)',
       background: "#000",
     },
     menuButton: {
       marginRight: theme.spacing(2),
-      color: "#fff"
     },
     grow: {
       flexGrow: 1,
@@ -212,32 +210,32 @@ const styles = theme => {
       // },
       display: "block"
     },
-    flex: {
-      display: "flex"
-    },
-    transparent: {
-      background: "transparent !important",
-      boxShadow: "none"
-      //color: "#fff"
-    },
-    anchor: {
-      // margin: "3px",
-      // display: "inline-block",
-      color: "#fff"
-      // padding: "7px",
-      // borderRadius: "2px",
-      // height: "18px"
-    },
-    socialLinks: {
-      // height: "38.5px"
-    },
-    white: {
-      color: "#fff"
-    },
-    signUpButton: {
-      color: "white !important",
-      border: "2px solid white !important"
-    }
+    // flex: {
+    //   display: "flex"
+    // },
+    // transparent: {
+    //   background: "transparent !important",
+    //   boxShadow: "none"
+    //   //color: "#fff"
+    // },
+    // anchor: {
+    //   // margin: "3px",
+    //   // display: "inline-block",
+    //   color: "#fff"
+    //   // padding: "7px",
+    //   // borderRadius: "2px",
+    //   // height: "18px"
+    // },
+    // socialLinks: {
+    //   // height: "38.5px"
+    // },
+    // white: {
+    //   color: "#fff"
+    // },
+    // signUpButton: {
+    //   color: "white !important",
+    //   border: "2px solid white !important"
+    // }
   }
 }
 
