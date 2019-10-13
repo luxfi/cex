@@ -1,6 +1,6 @@
 import { cardTitle, title } from "../../esxStyles.js"
 
-const ourPartnersStyle = {
+const ourPartnersStyle = theme => ({
   section: {
     marginTop: "40px",
     marginBottom: "40px",
@@ -24,7 +24,10 @@ const ourPartnersStyle = {
   },
   margin5: {
     margin: "5px"
-  }
-}
+  },
+  svg: {
+    fill: theme.defaultSVGColor
+  },
+})
 
 export default ourPartnersStyle

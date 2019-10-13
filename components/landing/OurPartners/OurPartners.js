@@ -57,7 +57,7 @@ export default props => {
                 alignItems="center"
                 justify="center"
               >
-                <SVGComponent style={{
+                <SVGComponent className={classes.svg} style={{
                   width: "60%",
                   height: "60%"
                 }}/>
@@ -67,9 +67,9 @@ export default props => {
         </Paper >
       </Box>
       <style jsx>{`
-        svg {
-          fill: white;
-        }
+        // svg {
+        //   fill: white;
+        // }
       `}</style>
     </div>
   )

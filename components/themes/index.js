@@ -33,8 +33,9 @@ export const darkTheme = createMuiTheme({
     background: {
       default: "rgb(15, 15, 15)",
       paper: "#2f2f2f"
-    }
+    },
   },
+  defaultSVGColor: "white"
 })
 
 export const lightTheme = createMuiTheme({
@@ -44,8 +45,9 @@ export const lightTheme = createMuiTheme({
     background: {
       default: "white",
       paper: "#f0f0f0"
-    }
+    },
   },
+  defaultSVGColor: "black"
 })
 
 // example of page film.js
