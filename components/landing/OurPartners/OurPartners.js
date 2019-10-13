@@ -9,6 +9,13 @@ import { Grid, Box, Paper, Typography } from '@material-ui/core'
 // core components
 import ContentLoader from "react-content-loader"
 
+// icons
+import Paramount from '../../../assets/svg/Paramount.svg'
+import Disney from '../../../assets/svg/Disney.svg'
+import Lionsgate from '../../../assets/svg/Lionsgate.svg'
+import Warner_Bros from '../../../assets/svg/Warner_Bros.svg'
+import Sony from '../../../assets/svg/Sony.svg'
+
 // styles
 import { makeStyles } from "@material-ui/core/styles"
 import styles from "./OurPartners.style.js"
@@ -26,13 +33,7 @@ const MyLoader = () => (
   </ContentLoader>
 )
 
-const partners = [
-  "https://upload.wikimedia.org/wikipedia/en/4/4d/Paramount_Pictures_2010.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/6/65/TWDC_Logo.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/6/65/Lionsgate_Logo.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/6/64/Warner_Bros_logo.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/c/ca/Sony_logo.svg"
-]
+const partners = [ Paramount, Disney, Lionsgate, Warner_Bros, Sony ]
 
 export default props => {
   const classes = useStyles()
