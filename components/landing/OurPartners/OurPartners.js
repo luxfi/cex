@@ -4,7 +4,7 @@ import React from "react"
 import classNames from "classnames"
 
 // @material-ui/core components
-import { Grid } from '@material-ui/core'
+import { Grid, Box, Paper, Typography } from '@material-ui/core'
 
 // core components
 import ContentLoader from "react-content-loader"
@@ -38,47 +38,41 @@ export default props => {
   const classes = useStyles()
 
   return (
-    <>
-      <div className={classes.section}>
-        <h2 className={classes.title} style={{ textAlign: "left" }}>
-          Our Partners
-        </h2>
-        <Grid container style={{ justifyContent: "center", paddingTop: "52px", paddingBottom: "52px" }}>
-          {partners.map((imgSrc, i) => (
-            <Grid item
-              xs={12}
-              sm={12}
-              md={2}
-              key={i}
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              <Grid item
-                xs={12}
-                sm={12}
-                md={12}
-                className={classes.itemGrid}
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  height: "100%"
-                }}
+    <div style={{ marginTop: "72px" }}>
+      <Typography variant="h5">
+        <Box fontWeight={100} fontSize={20}>
+          OUR PARTNERS
+        </Box>
+      </Typography>
+      <br />
+      <Box clone pt={2} pr={1} pb={1} pl={2}>
+        <Paper elevation={0}>
+          <Grid container justify="center" style={{ paddingTop: "52px", paddingBottom: "52px" }}>
+            {partners.map((imgSrc, i) => (
+              <Grid container item
+                xs={2}
+                key={i}
+                alignItems="center"
+              // style={{ display: "flex", justifyContent: "center" }}
               >
                 <img
                   src={imgSrc}
                   alt=""
-                  style={{ width: "75%", maxHeight: "104px", background: "white", padding: "16px 16px", borderRadius: "4px" }}
-              />
+                  style={{
+                    margin: 'auto',
+                    display: 'block',
+                    maxWidth: '60%',
+                    maxHeight: '60%',
+                  }}
+                />
+                {/* style={{ width: "75%", maxHeight: "104px", background: "white", padding: "16px 16px", borderRadius: "4px" }} */}
               </Grid>
-            </Grid>
-          ))}
-        </Grid>
-      </div>
-      <style jsx>{`
-        .hero-container {
-          position: relative;
-          overflow: hidden;
-        }
-      `}</style>
-    </>
+            ))}
+          </Grid>
+        </Paper >
+      </Box>
+    </div>
   )
 }
+
+

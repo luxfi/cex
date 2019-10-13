@@ -31,7 +31,7 @@ export const darkTheme = createMuiTheme({
       secondary: "#f0f0f0" // breadcrumbs uses this
     },
     background: {
-      default: "rgb(29, 38, 50)",
+      default: "rgb(15, 15, 15)",
       paper: "#2f2f2f"
     }
   },
@@ -42,7 +42,7 @@ export const lightTheme = createMuiTheme({
   palette: {
     type: "light",
     background: {
-      default: "#f0f0f0",
+      default: "white",
       paper: "#f0f0f0"
     }
   },
