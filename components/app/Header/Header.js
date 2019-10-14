@@ -238,7 +238,7 @@ const styles = theme => {
     },
     toolBar: {
       minHeight: "80px"
-    },i
+    },
   }
 }
 
