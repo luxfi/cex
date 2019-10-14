@@ -25,28 +25,6 @@ import { fade, withStyles, MuiThemeProvider } from "@material-ui/core/styles"
 import { AutoCompleteSearch } from "../"
 
 import NextLink from "next/link"
-import Router from "next/router"
-
-let currencies = {
-  usd: "USD",
-  eur: "EUR",
-  jpy: "JPY"
-}
-
-// replace custom code to use material native hideonscroll
-function HideOnScroll(props) {
-  const { children, window } = props
-  // Note that you normally won't need to set the window ref as useScrollTrigger
-  // will default to window.
-  // This is only being set here because the demo is in an iframe.
-  const trigger = useScrollTrigger({ target: window ? window() : undefined })
-
-  return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      {children}
-    </Slide>
-  )
-}
 
 const CustomLink = React.forwardRef(
   ({ className, href, hrefAs, children, }, ref) => (
@@ -75,18 +53,19 @@ class Header extends React.Component {
       function handleClose() {
         setAnchorEl(null)
       }
+
+      const trigger = useScrollTrigger({ threshold: 0, disableHysteresis: true,});
       return (
         <>
-          {/* <MuiThemeProvider theme={onHomePage ? darkTheme : lightTheme}> */}
           <MuiThemeProvider theme={darkTheme}>
-            {/* <HideOnScroll> */}
               <AppBar
                 id="navbar"
                 position="fixed"
                 color="inherit"
                 className={
-                  // onHomePage ? classes.transparent : classes.whiteBackground
-                  classes.transparent
+                  `${classes.appBar} ${
+                  !trigger ? classes.transparent : classes.translucent
+                  }`
                 }
               >
                 {" "}
@@ -169,7 +148,6 @@ class Header extends React.Component {
                   </Toolbar>
                 </Container>
               </AppBar>
-            {/* </HideOnScroll> */}
             <Toolbar />
           </MuiThemeProvider>
         </>
@@ -239,12 +217,15 @@ const styles = theme => {
     flex: {
       display: "flex"
     },
-    transparent: {
-      // background: "transparent !important",
-      background: "rgba(17, 17, 17, 0.847)",
+    appBar: {
+      height: "80px",
       boxShadow: "none",
-      color: "#FFFFFF",
-      height: "80px"
+    },
+    transparent: {
+      background: "transparent !important",
+    },
+    translucent: {
+      background: "rgba(17, 17, 17, 0.847)",
     },
     select: {
       [theme.breakpoints.up("sm")]: {
@@ -257,13 +238,7 @@ const styles = theme => {
     },
     toolBar: {
       minHeight: "80px"
-    },
-    // white: {
-    //   color: "white"
-    // },
-    // whiteBackground: {
-    //   backgroundColor: "white"
-    // }
+    },i
   }
 }
 
