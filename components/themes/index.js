@@ -25,6 +25,12 @@ const baseTheme = {
 export const darkTheme = createMuiTheme({
   ...baseTheme,
   palette: {
+    primary: {
+      main: "#5fb8ff", // desaturaed logo blue per material recommendations for dark mod
+    },
+    secondary: {
+      main: "#ffbb66",  // logo yellow
+    },
     type: "dark",
     text: {
       primary: "#f0f0f0",
