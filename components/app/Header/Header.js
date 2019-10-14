@@ -7,7 +7,6 @@ import Toolbar from "@material-ui/core/Toolbar"
 import IconButton from "@material-ui/core/IconButton"
 import Button from "@material-ui/core/Button"
 import Menu from "@material-ui/core/Menu"
-import InputBase from "@material-ui/core/InputBase"
 import MenuItem from "@material-ui/core/MenuItem"
 import AccountCircle from "@material-ui/icons/AccountCircle"
 import Container from "@material-ui/core/Container"
@@ -60,85 +59,10 @@ const CustomLink = React.forwardRef(
 @inject("store")
 @observer
 class Header extends React.Component {
-  // static async getInitialProps({ mobxStore }) {
-  //   return { ...mobxStore }
-  // }
-
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      anchorEl: null
-    }
-  }
-
-  handleMenu = event => {
-    this.setState({
-      anchorEl: event.currentTarget
-    })
-  }
-
-  handleClose = () => {
-    this.setState({
-      anchorEl: null
-    })
-  }
-
-  portfolio = () => {
-    this.setState({
-      anchorEl: null
-    })
-    Router.push("/portfolio")
-  }
-
-  send = () => {
-    this.setState({
-      anchorEl: null
-    })
-    Router.push("/account/send")
-  }
-
-  deposit = () => {
-    this.setState({
-      anchorEl: null
-    })
-    Router.push("/account/deposit")
-  }
-
-  withdrawal = () => {
-    this.setState({
-      anchorEl: null
-    })
-    Router.push("/account/withdrawal")
-  }
-
-  logout = () => {
-    this.props.store.userStore.logout()
-    Router.push("/")
-  }
-
-  login = () => {
-    this.setState({
-      anchorEl: null
-    })
-
-    Router.push("/login")
-  }
-
-  signup = () => {
-    this.setState({
-      anchorEl: null
-    })
-
-    Router.push("/signup")
-  }
 
   render() {
     let { classes, store, onHomePage, darkTheme, lightTheme } = this.props
-    // let accountLoaded = !!this.props.rootData.get("account.id") && identity
     let accountLoaded = store.userStore.loggedIn
-
-    let open = !!this.state.anchorEl
 
     const GuestNavBar = () => {
       const [anchorEl, setAnchorEl] = React.useState(null)
@@ -155,7 +79,7 @@ class Header extends React.Component {
         <>
           {/* <MuiThemeProvider theme={onHomePage ? darkTheme : lightTheme}> */}
           <MuiThemeProvider theme={darkTheme}>
-            <HideOnScroll>
+            {/* <HideOnScroll> */}
               <AppBar
                 id="navbar"
                 position="fixed"
@@ -175,29 +99,14 @@ class Header extends React.Component {
                       className={classes.flex}
                       component={CustomLink}
                     >
-                      {" "}
-                      {/* get rid of inline style */}
                       <img
                         id="logo"
                         src="/static/img/logo.png"
                         alt="ESX"
-                        height="80px"
+                        height="52px"
                       />
                     </Link>
                     <div className={classes.grow} />
-                    {/* <div className={classes.search}>
-                      <div className={classes.searchIcon}>
-                        <SearchIcon />
-                      </div>
-                      <InputBase
-                        placeholder="Search…"
-                        classes={{
-                          root: classes.inputRoot,
-                          input: classes.inputInput
-                        }}
-                        inputProps={{ "aria-label": "search" }}
-                      />
-                    </div> */}
                     <div className={classes.search}>
                       <div className={classes.searchIcon}>
                         <SearchIcon />
@@ -212,13 +121,6 @@ class Header extends React.Component {
                     </div>
                     {accountLoaded ? (
                       <>
-                        {/* <MuiText
-                        select
-                        value="usd"
-                        className={`${classes.menuButton} ${classes.select}`}
-                        margin="normal"
-                        options={currencies}
-                      /> */}
                         <IconButton
                           aria-controls="menu"
                           aria-haspopup="true"
@@ -237,18 +139,6 @@ class Header extends React.Component {
                             <AccountCircle />
                             <span style={{ padding: "15px" }}>Portfolio</span>
                           </MenuItem>
-                          {/* <MenuItem onClick={this.deposit}>
-                          <ArrowUpward />
-                          <span style={{ padding: "15px" }}>Deposit</span>
-                        </MenuItem>
-                        {/* <MenuItem onClick={this.send}> // propbably won't need this, decide later (tyler)
-                        <Send />
-                        <span style={{ padding: "15px" }}>Send</span>
-                      </MenuItem> */}
-                          {/* <MenuItem onClick={this.withdrawal}>
-                          <ArrowDownward />
-                          <span style={{ padding: "15px" }}>Withdrawal</span>
-                        </MenuItem> */}
                           <MenuItem onClick={this.logout}>
                             <ExitToApp />
                             <span style={{ padding: "15px" }}>Logout</span>
@@ -261,7 +151,6 @@ class Header extends React.Component {
                           component={CustomLink}
                           href={"/login"}
                           color="inherit"
-                          // onClick={this.login}
                           className={classes.menuButton}
                         >
                           Login
@@ -271,7 +160,6 @@ class Header extends React.Component {
                           color="inherit"
                           variant="outlined"
                           href={"/signup"}
-                          // onClick={this.signup}
                           className={classes.menuButton}
                         >
                           Sign Up
@@ -281,7 +169,7 @@ class Header extends React.Component {
                   </Toolbar>
                 </Container>
               </AppBar>
-            </HideOnScroll>
+            {/* </HideOnScroll> */}
             <Toolbar />
           </MuiThemeProvider>
         </>
@@ -352,10 +240,11 @@ const styles = theme => {
       display: "flex"
     },
     transparent: {
-      background: "transparent !important",
+      // background: "transparent !important",
+      background: "rgba(17, 17, 17, 0.847)",
       boxShadow: "none",
       color: "#FFFFFF",
-      paddingTop: "25px"
+      height: "80px"
     },
     select: {
       [theme.breakpoints.up("sm")]: {
@@ -366,13 +255,15 @@ const styles = theme => {
       marginRight: theme.spacing(2),
       display: "none"
     },
-    toolBar: {},
-    white: {
-      color: "white"
+    toolBar: {
+      minHeight: "80px"
     },
-    whiteBackground: {
-      backgroundColor: "white"
-    }
+    // white: {
+    //   color: "white"
+    // },
+    // whiteBackground: {
+    //   backgroundColor: "white"
+    // }
   }
 }
 
