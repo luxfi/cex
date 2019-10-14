@@ -69,7 +69,7 @@ class Header extends React.Component {
                 }
               >
                 {" "}
-                <Container maxWidth="lg">
+                <Container maxWidth="xl">
                   <Toolbar
                     className={`${classes.noPadding} ${classes.toolBar}`}
                   >

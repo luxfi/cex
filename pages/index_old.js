@@ -13,15 +13,26 @@ import styles from "../pageStyles/landing.style"
 
 // Sections for this page
 import { InvestNow } from "../components/app"
-import { OurPartners, ESXCommunity, TrailerSlider } from "../components/landing"
+import { OurPartners, ESXCommunity, NewestPicks } from "../components/landing"
 
 @inject("store")
 @observer
 class Index extends React.Component {
+  // static async getInitialProps({ mobxStore }) {
+  //   await mobxStore.movieStore.fetch()
+  //   return {
+  //     movieStore: mobxStore.movieStore,
+  //     orderBook: mobxStore.orderBook
+  //   }
+  // }
 
   componentDidMount() {
     this.props.store.userPortfolio.getWatchlist()
   }
+
+  // componentWillUnmount() {
+  //   this.props.store.orderBook.terminateDataGenerator()
+  // }
 
   render() {
     // const { movieStore } = this.props.store
@@ -30,12 +41,15 @@ class Index extends React.Component {
     return (
       <>
         <Hero loggedIn={loggedIn} />
-        <Container maxWidth="xl"
+        {/* <div className={`${classes.main}`}>
+          <div className={classes.container} */}
+        <Container maxWidth="lg"
           style={{
             transform: "translate(0, -15vh)"
           }}
         >
-          <TrailerSlider />
+          <NewestPicks />
+          { /*<InvestorTopPicksSection />*/}
           <InvestNow loggedIn={loggedIn} />
           <OurPartners />
           <div style={{ marginBottom: "-15vh" }}>
