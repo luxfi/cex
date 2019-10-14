@@ -153,14 +153,16 @@ class Header extends React.Component {
       }
       return (
         <>
-          <MuiThemeProvider theme={onHomePage ? darkTheme : lightTheme}>
+          {/* <MuiThemeProvider theme={onHomePage ? darkTheme : lightTheme}> */}
+          <MuiThemeProvider theme={darkTheme}>
             <HideOnScroll>
               <AppBar
                 id="navbar"
                 position="fixed"
                 color="inherit"
                 className={
-                  onHomePage ? classes.transparent : classes.whiteBackground
+                  // onHomePage ? classes.transparent : classes.whiteBackground
+                  classes.transparent
                 }
               >
                 {" "}
