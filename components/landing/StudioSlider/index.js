@@ -1,1 +1,1 @@
-export { default } from "./StudioSlider
+export { default } from "./StudioSlider"

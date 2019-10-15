@@ -12,8 +12,7 @@ import Hero from "../components/landing/Hero/Hero"
 import styles from "../pageStyles/landing.style"
 
 // Sections for this page
-import { InvestNow } from "../components/app"
-import { OurPartners, ESXCommunity, TrailerSlider } from "../components/landing"
+import { TrailerSlider, StudioSlider } from "../components/landing"
 
 @inject("store")
 @observer
@@ -24,7 +23,7 @@ class Index extends React.Component {
   }
 
   render() {
-    // const { movieStore } = this.props.store
+    const { movieStore } = this.props.store
     const { classes, store } = this.props
     const loggedIn = store.userStore.loggedIn
     return (
@@ -36,6 +35,7 @@ class Index extends React.Component {
           }}
         >
           <TrailerSlider />
+          <StudioSlider />
           <div style={{ marginBottom: "-15vh" }}>
             <TrailerSlider />
           </div>

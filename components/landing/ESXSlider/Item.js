@@ -10,7 +10,6 @@ const { forwardRef, useRef, useImperativeHandle } = React
 
 const Item = ({ movie }) => {
   const childRef = useRef()
-
   return (
       <SliderContext.Consumer>
         {({ onSelectSlide, currentSlide, elementRef }) => {
@@ -30,7 +29,6 @@ const Item = ({ movie }) => {
               <Card
                 onClick={() => childRef.current.handleOpen()}
               >
-
                 <CardContent
                   style={{
                     display: 'block',
