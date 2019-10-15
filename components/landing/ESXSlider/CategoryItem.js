@@ -28,7 +28,7 @@ const Item = ({ imgSrc }) => {
             }}
           >
             <Card
-              onClick={() => childRef.current.handleOpen()}
+              // onClick={() => childRef.current.handleOpen()}
             >
               <CardContent
                 style={{
