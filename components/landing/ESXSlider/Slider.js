@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import cx from 'classnames';
 import SliderContext from './context'
 import Content from './Content'
@@ -36,11 +36,19 @@ const Slider = ({ children, activeSlide }) => {
     currentSlide,
   };
 
+
+  // better way would be to listen to transitionend event
   const pauseHover = (cb) => {
     setNoHover(true);
     cb()
-    setTimeout(() => { 
-      setNoHover(false)
+    setTimeout(() => {
+      // waits for mouse event to prevent stale hover position
+      window.addEventListener("mousemove", 
+      () => { 
+        setNoHover(false) 
+        window.removeEventListener("mousemove", {})
+      }
+      )
     }, 1000);
   }
 
