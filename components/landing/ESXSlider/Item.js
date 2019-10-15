@@ -5,58 +5,65 @@ import ShowDetailsButton from './ShowDetailsButton'
 import Mark from './Mark'
 import './Item.css'
 import { Card, CardContent } from "@material-ui/core"
+import { TrailerSliderModal } from "../"
+const { forwardRef, useRef, useImperativeHandle } = React
 
-const Item = ({ movie }) => (
-  <SliderContext.Consumer>
-    {({ onSelectSlide, currentSlide, elementRef }) => {
-      const isActive = currentSlide && currentSlide.id === movie.id;
-
-      return (
-        // <div
-        //   ref={elementRef}
-        //   className={cx('item', {
-        //     'item--open': isActive,
-        //   })}
-        // >
-        //   <img src={movie.image} alt="" />
-        //   <ShowDetailsButton onClick={() => onSelectSlide(movie)} />
-        //   {isActive && <Mark />}
-        // </div>
-        <div
-          ref={elementRef}
-          className="item"
-          style={{
-            flex: "0 0 19.7%",
-            textAlign: "center",
-            marginRight: "16px",
-            transition: "transform 300ms ease 100ms",
-            position: "relative"
-          }}
-        >
-          <Card
-            onClick={() => {
-              Router.push(`/film/${movie.movieSlug}`)
+const Item = ({ movie }) => {
+  const childRef = useRef()
+  return (
+    <SliderContext.Consumer>
+      {({ onSelectSlide, currentSlide, elementRef }) => {
+        const isActive = currentSlide && currentSlide.id === movie.id;
+        return (
+          // <div
+          //   ref={elementRef}
+          //   className={cx('item', {
+          //     'item--open': isActive,
+          //   })}
+          // >
+          //   <img src={movie.image} alt="" />
+          //   <ShowDetailsButton onClick={() => onSelectSlide(movie)} />
+          //   {isActive && <Mark />}
+          // </div>
+          <div
+            ref={elementRef}
+            className="item"
+            style={{
+              flex: "0 0 19.7%",
+              textAlign: "center",
+              marginRight: "16px",
+              transition: "transform 300ms ease 100ms",
+              position: "relative"
             }}
           >
-            <CardContent
-              style={{
-                display: 'block',
-                position: 'relative',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundImage: `url(${movie.posterImg})`,
-                maxHeight: '1200px',
-                minHeight: '487px',
-                minWidth: '287px',
-                backgroundSize: 'cover',
-              }}
+            <Card
+              // onClick={() => {
+              //   Router.push(`/film/${movie.movieSlug}`)
+              // }}
+              onClick={() => childRef.current.handleOpen()}
             >
-            </CardContent>
-          </Card>
-        </div>
-      );
-    }}
-  </SliderContext.Consumer>
-);
+
+              <CardContent
+                style={{
+                  display: 'block',
+                  position: 'relative',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundImage: `url(${movie.posterImg})`,
+                  maxHeight: '1200px',
+                  minHeight: '487px',
+                  minWidth: '287px',
+                  backgroundSize: 'cover',
+                }}
+              >
+                <TrailerSliderModal movie={movie} ref={childRef} />
+              </CardContent>
+            </Card>
+          </div>
+        );
+      }}
+    </SliderContext.Consumer>
+  )
+};
 
 export default Item;
