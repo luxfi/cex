@@ -67,12 +67,12 @@ class Hero extends React.Component {
 
   render() {
     const { classes, ...rest } = this.props
-    const hrefLink = '/film/terminator-dark-fate'
     return (
       <>
         <div className="hero-container">
           <Carousel showThumbs={false} infiniteLoop={true} showStatus={false}>
             {this.props.store.movieStore.movies.map((movie, i) => {
+              const hrefLink = '/film/' + movie.movieSlug
               return <HeroImg key={i} {...rest} img={movieExtendedMap[movie.movieSlug].img}>
                 <div className={classes.container}>
                   <Grid container>
@@ -94,36 +94,8 @@ class Hero extends React.Component {
                           {movie.shortDescription}
                         </Typography>
                         <br />
-                        { /*<Typography variant="body2">
-                          Own equity in next summer's biggest blockbuster now!
-                        </Typography>*/ }
                       </Box>
-                      {/* <h1>
-                        TERMINATOR: DARK FATE New Trailer Reunites Sarah Connor and The
-                        Terminator
-                      </h1>
-                      <h4>
-                        It will feel no pity. No remorse. No pain. No fear. It will have
-                        only one purpose: to return to the present and prevent the
-                        future. This weapon will be called...The Terminator.
-                      </h4> */}
                       <br />
-                      {/* <Button
-                        className="watch-trailer-button button"
-                        variant="outlined"
-                        size="large"
-                        startIcon={<PlayArrowIcon />}
-                      >
-                        <a href={ movie.trailer }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Typography variant="body2">
-                            <i className="fas fa-play" />
-                            Play Trailer
-                          </Typography>
-                        </a>
-                      </Button> */}
                       <TrailerModal movie={movie} />
                       <Button
                         className="invest-button button"
