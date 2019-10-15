@@ -12,7 +12,7 @@ import Hero from "../components/landing/Hero/Hero"
 import styles from "../pageStyles/landing.style"
 
 // Sections for this page
-import { TrailerSlider, StudioSlider } from "../components/landing"
+import { TrailerSlider, StudioSlider, CategorySlider } from "../components/landing"
 
 @inject("store")
 @observer
@@ -37,7 +37,7 @@ class Index extends React.Component {
           <TrailerSlider />
           <StudioSlider />
           <div style={{ marginBottom: "-15vh" }}>
-            <TrailerSlider />
+            <CategorySlider />
           </div>
         </Container>
       </>
