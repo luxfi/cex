@@ -37,7 +37,6 @@ const useStyles = makeStyles(theme => ({
     margin: "0"
   },
   modalBody: {
-    color: "rgba(0,0,0,.54)",
     fontSize: "13px",
     lineHeight: "18px",
     overflow: "hidden",
