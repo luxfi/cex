@@ -23,20 +23,14 @@ import RemoveIcon from '@material-ui/icons/Remove'
 
 // core components
 import ContentLoader from "react-content-loader"
+import Slider from '../ESXSlider'
 
 @inject("store")
 @observer
-export default class NewestPicksSection extends React.Component {
+export default class TrailerSlider extends React.Component {
   render() {
     const { store } = this.props
     const { movies } = store.movieStore
-    const { userPortfolio } = store
-
-    console.log('movie', store.movieStore)
-
-    // What functions do we need from the movie and user store?
-    console.log('watchlist', userPortfolio.watchlist)
-    const loggedIn = store.userStore.loggedIn
     return (
       <div id="trailer-slider" style={{ padding: "48px 0px" }} >
         <Typography variant="h5">
@@ -49,72 +43,13 @@ export default class NewestPicksSection extends React.Component {
           display: "flex",
           // padding: "0 55px"
         }}>
-          {movies.map((d, i) => {
-            const inWatchlist = userPortfolio.watchlist.indexOf(d.ticker) > -1
+          <Slider>
+          {movies.map((movie, i) => {
             return (
-              <div 
-                className="item"
-                style={{
-                  flex: "0 0 19.7%",
-                  textAlign: "center",
-                  marginRight: "16px",
-                  transition: "transform 300ms ease 100ms"
-                }}
-                key={`trailer_${i}`}
-              >
-                  <Card
-                    onClick={() => {
-                      Router.push(`/film/${d.movieSlug}`)
-                    }}
-                  >
-                    <CardContent
-                      style={{
-                        display: 'block',
-                        position: 'relative',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        backgroundImage: `url(${d.posterImg})`,
-                        maxHeight: '1200px',
-                        minHeight: '487px',
-                        minWidth: '287px',
-                        backgroundSize: 'cover',
-                      }}
-                    >
-                      {/* <div className="pick-text">
-                        <Typography variant="body1">
-                          <strong>{d.name}</strong>
-                        </Typography>
-                        <Typography variant="body2">
-                          {d.shortDescription}
-                        </Typography>
-                        <br />
-                        {
-                          loggedIn ?
-                            <Button
-                              size="small"
-                              variant="outlined"
-                              onClick={e => {
-                                inWatchlist ?
-                                  userPortfolio.removeFromWatchlist(d.ticker)
-                                  : userPortfolio.addToWatchlist(d.ticker)
-                              }}
-                              startIcon={inWatchlist ? <RemoveIcon/> : <AddIcon/>}
-                            >
-                              {inWatchlist ? 'Remove from Watchlist'  : 'Add to Watchlist'}
-                            </Button>
-                          : null
-                        }
-                      </div>
-                      <div className="pick-indicator">
-                        <Typography variant="body2">
-                          <strong>{parseInt(Math.random()*100,10)}%</strong><span> Funded</span>
-                        </Typography>
-                      </div> */}
-                    </CardContent>
-                  </Card>
-              </div>
+              <Slider.Item movie={movie} key={i}>item1</Slider.Item>
             )
           })}
+          </Slider>
         </div>
         <style jsx>{`
 
