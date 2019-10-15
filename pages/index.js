@@ -36,10 +36,8 @@ class Index extends React.Component {
           }}
         >
           <TrailerSlider />
-          <InvestNow loggedIn={loggedIn} />
-          <OurPartners />
           <div style={{ marginBottom: "-15vh" }}>
-            <ESXCommunity />
+            <TrailerSlider />
           </div>
         </Container>
       </>
