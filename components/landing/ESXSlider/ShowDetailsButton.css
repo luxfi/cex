@@ -9,11 +9,11 @@
   border: 0;
   outline: none;
   width: 100%;
+}
 
-  span {
-    display: block;
-    width: 14px;
-    margin: 0 auto;
-    color: white;
-  }
+.show-details-button span {
+  display: block;
+  width: 14px;
+  margin: 0 auto;
+  color: white;
 }
