@@ -39,7 +39,9 @@ const Slider = ({ children, activeSlide }) => {
   const pauseHover = (cb) => {
     setNoHover(true);
     cb()
-    setTimeout(setNoHover(false), 1000);
+    setTimeout(() => { 
+      setNoHover(false)
+    }, 1000);
   }
 
   return (

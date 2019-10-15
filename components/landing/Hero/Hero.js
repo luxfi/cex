@@ -71,8 +71,8 @@ class Hero extends React.Component {
       <>
         <div className="hero-container">
           <Carousel showThumbs={false} infiniteLoop={true} showStatus={false}>
-            {this.props.store.movieStore.movies.map((movie) => {
-              return <HeroImg {...rest} img={movieExtendedMap[movie.movieSlug].img}>
+            {this.props.store.movieStore.movies.map((movie, i) => {
+              return <HeroImg key={i} {...rest} img={movieExtendedMap[movie.movieSlug].img}>
                 <div className={classes.container}>
                   <Grid container>
                     <Grid item xs={12} sm={12} md={6} style={{ textAlign: 'left' }}>
