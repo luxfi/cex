@@ -6,12 +6,12 @@ const SliderModal = React.forwardRef((props, ref) => {
   const { movie } = props
   const [open, setOpen] = React.useState(false)
 
-  window.open = open
-  window.setOpen = setOpen
+  // window.open = open
+  // window.setOpen = setOpen
   const handleClose = () => {
     // not sure why setOpen was getting lost in event loop, hack fix
     // todo: clean this up
-    setTimeout(() => { window.setOpen(false) }, 1)
+    setTimeout(() => { setOpen(false) }, 1)
     // alert("getAlert from Child")
   }
 
