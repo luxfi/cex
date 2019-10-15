@@ -154,7 +154,8 @@ class Hero extends React.Component {
           .hero-container {
             position: relative;
             overflow: hidden;
-            margin-top: -64px;
+            // margin-top: -64px;
+            margin-top: -233px // -64px + -169px from slider
           }
 
           .hero-container :global(.logo) {

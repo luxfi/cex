@@ -10,6 +10,7 @@ import './Slider.css'
 
 const Slider = ({ children, activeSlide }) => {
   const [currentSlide, setCurrentSlide] = useState(activeSlide);
+  const [noHover, setNoHover] = useState(false);
   const { width, elementRef } = useSizeElement();
   const {
     handlePrev,
@@ -35,16 +36,22 @@ const Slider = ({ children, activeSlide }) => {
     currentSlide,
   };
 
+  const pauseHover = (cb) => {
+    setNoHover(true);
+    cb()
+    setTimeout(setNoHover(false), 1000);
+  }
+
   return (
     <SliderContext.Provider value={contextValue}>
       <SliderWrapper>
         <div
-          className={cx('slider', { 'slider--open': currentSlide != null })}
+          className={cx('slider', { 'slider--open': currentSlide != null }, { 'no-hover': noHover })}
         >
           <div ref={containerRef} className="slider__container" {...slideProps}>{children}</div>
         </div>
-        {hasPrev && <SlideButton onClick={handlePrev} type="prev" />}
-        {hasNext && <SlideButton onClick={handleNext} type="next" />}
+        {hasPrev && <SlideButton onClick={() => pauseHover(handlePrev)} type="prev" />}
+        {hasNext && <SlideButton onClick={() => pauseHover(handleNext)} type="next" />}
       </SliderWrapper>
       {currentSlide && <Content movie={currentSlide} onClose={handleClose} />}
     </SliderContext.Provider>
