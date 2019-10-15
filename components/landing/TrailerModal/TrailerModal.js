@@ -61,7 +61,7 @@ const useStyles = makeStyles(theme => ({
 
   },
   paper: {
-    maxWidth: "800px",
+    maxWidth: "70vw",
     margin: "30px auto",
     width: "100%",
     // removes blue border on chrome
@@ -70,6 +70,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   modalBody: {
+    width: "70vw"
   }
 }))
 

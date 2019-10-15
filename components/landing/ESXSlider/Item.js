@@ -6,7 +6,6 @@ import Mark from './Mark'
 import './Item.css'
 import { Card, CardContent } from "@material-ui/core"
 import { TrailerSliderModal } from "../"
-import { ClickAwayListener } from '@material-ui/core';
 const { forwardRef, useRef, useImperativeHandle } = React
 
 const Item = ({ movie }) => {
