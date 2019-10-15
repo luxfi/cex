@@ -27,7 +27,7 @@ import terminatorHero from "../../../assets/images/terminator-hero.jpg"
 import uncutGemsHero from "../../../assets/images/uncut-gems-hero.jpg"
 import birdsOfPreyHero from "../../../assets/images/birds-of-prey-hero.jpg"
 import onwardHero from "../../../assets/images/onward-hero.jpg"
-import terminatorLogo from "../../../assets/images/terminator-logo.svg"
+import TerminatorLogo from "../../../assets/images/terminator-logo.svg"
 import birdsOfPreyLogo from "../../../assets/images/birds-of-prey-logo.png"
 
 const ButtonLink = React.forwardRef(
@@ -40,7 +40,8 @@ const ButtonLink = React.forwardRef(
 
 const movieExtendedMap = {
   'terminator-dark-fate': {
-    logo: <img className="logo" src={terminatorLogo} />,
+    // logo: <img className="logo" src={terminatorLogo} />,
+    logo: <TerminatorLogo/>,
     img: <img src={terminatorHero} style={{ height: "120vh", marginTop: "10vh", marginLeft: "40vw" }} />,
   },
   'uncut-gems': {
