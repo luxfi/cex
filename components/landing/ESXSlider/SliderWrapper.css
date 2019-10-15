@@ -1,6 +1,7 @@
 .slider-wrapper {
   /* padding: 40px 0; */
-  /* padding: 169px 0; */
+  padding: 169px 0;
+  margin: -169px 0;
   overflow: hidden;
   position: relative;
 }

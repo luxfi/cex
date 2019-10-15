@@ -26,3 +26,19 @@
 .slider:not(.slider--open) .item:hover~.item {
   transform: translateX(25%);
 }
+
+.slider:not(.no-hover) .item:hover .show-details-button {
+  opacity: 1;
+}
+
+.slider:not(.no-hover) .item:hover {
+  transform: scale(1.5) !important;
+}
+
+.slider:not(.no-hover):hover .item {
+  transform: translateX(-25%);
+}
+
+.slider:not(.no-hover) .item:hover~.item {
+  transform: translateX(25%);
+}
