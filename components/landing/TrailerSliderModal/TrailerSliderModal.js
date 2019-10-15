@@ -1,17 +1,18 @@
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
-import { Button, Modal, Fade, Backdrop, Typography } from "@material-ui/core/"
-const { forwardRef, useRef, useImperativeHandle } = React
+import { Modal, Fade, Backdrop } from "@material-ui/core/"
+const { useImperativeHandle } = React
 
 const SliderModal = React.forwardRef((props, ref) => {
   const { movie } = props
   const [open, setOpen] = React.useState(false)
 
-  // const handleOpen = () => {
-  //   setOpen(true)
-  // }
-
+  window.open = open
+  window.setOpen = setOpen
   const handleClose = () => {
-    setOpen(false)
+    // not sure why setOpen was getting lost in event loop, hack fix
+    // todo: clean this up
+    setTimeout(() => { window.setOpen(false) }, 1)
+    // alert("getAlert from Child")
   }
 
   // https://stackoverflow.com/questions/37949981/call-child-method-from-parent
@@ -19,14 +20,9 @@ const SliderModal = React.forwardRef((props, ref) => {
   // with whatever you return from the callback passed
   // as the second argument
   useImperativeHandle(ref, () => ({
-
-    // getAlert() {
-    //   alert("getAlert from Child");
-    // }
     handleOpen() {
       setOpen(true)
     }
-
   }));
 
   return (
