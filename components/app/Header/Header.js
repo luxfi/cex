@@ -1,28 +1,33 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
 
-// Material components
-import AppBar from "@material-ui/core/AppBar"
-import Toolbar from "@material-ui/core/Toolbar"
-import IconButton from "@material-ui/core/IconButton"
-import Button from "@material-ui/core/Button"
-import Menu from "@material-ui/core/Menu"
-import InputBase from "@material-ui/core/InputBase"
-import MenuItem from "@material-ui/core/MenuItem"
-import AccountCircle from "@material-ui/icons/AccountCircle"
-import Container from "@material-ui/core/Container"
-import Slide from "@material-ui/core/Slide"
-import useScrollTrigger from "@material-ui/core/useScrollTrigger"
-import Link from "@material-ui/core/Link"
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Button,
+  Menu,
+  MenuItem,
+  Container,
+  Slide,
+  useScrollTrigger,
+  Link,
+}
+from "@material-ui/core"
 
-// Material icons
-import SearchIcon from "@material-ui/icons/Search"
-import ExitToApp from "@material-ui/icons/ExitToApp"
+import {
+  AccountCircle,
+  ExitToApp,
+  PieChart,
+  Search,
+} from "@material-ui/icons"
 
-// Material styles
-import { fade, withStyles, MuiThemeProvider } from "@material-ui/core/styles"
+import { 
+  fade, 
+  withStyles, 
+  MuiThemeProvider 
+} from "@material-ui/core/styles"
 
-// Core components
 import { AutoCompleteSearch } from "../"
 
 import NextLink from "next/link"
@@ -185,7 +190,7 @@ class Header extends React.Component {
                     <div className={classes.grow} />
                     {/* <div className={classes.search}>
                       <div className={classes.searchIcon}>
-                        <SearchIcon />
+                        <Search />
                       </div>
                       <InputBase
                         placeholder="Search…"
@@ -198,7 +203,7 @@ class Header extends React.Component {
                     </div> */}
                     <div className={classes.search}>
                       <div className={classes.searchIcon}>
-                        <SearchIcon />
+                        <Search />
                       </div>
                       <AutoCompleteSearch
                         placeholder="Search…"
@@ -231,8 +236,12 @@ class Header extends React.Component {
                           open={open}
                           onClose={handleClose}
                         >
-                          <MenuItem component={CustomLink} href={"/portfolio"}>
+                          <MenuItem component={CustomLink} href={"/account"}>
                             <AccountCircle />
+                            <span style={{ padding: "15px" }}>Account</span>
+                          </MenuItem>
+                          <MenuItem component={CustomLink} href={"/portfolio"}>
+                            <PieChart />
                             <span style={{ padding: "15px" }}>Portfolio</span>
                           </MenuItem>
                           {/* <MenuItem onClick={this.deposit}>
