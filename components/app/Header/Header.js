@@ -34,6 +34,27 @@ const CustomLink = React.forwardRef(
   )
 )
 
+
+const StyledMenu = withStyles({
+  paper: {
+    backgroundColor: "#0000009e",
+  },
+})(props => (
+  <Menu
+    // elevation={0}
+    // getContentAnchorEl={null}
+    // anchorOrigin={{
+    //   vertical: 'bottom',
+    //   horizontal: 'center',
+    // }}
+    // transformOrigin={{
+    //   vertical: 'top',
+    //   horizontal: 'center',
+    // }}
+    {...props}
+  />
+));
+
 @inject("store")
 @observer
 class Header extends React.Component {
@@ -44,7 +65,9 @@ class Header extends React.Component {
 
     const GuestNavBar = () => {
       const [anchorEl, setAnchorEl] = React.useState(null)
+      const [anchorEl2, setAnchorEl2] = React.useState(null)
       const open = Boolean(anchorEl)
+      const open2 = Boolean(anchorEl2)
 
       function handleClick(event) {
         setAnchorEl(event.currentTarget)
@@ -54,77 +77,149 @@ class Header extends React.Component {
         setAnchorEl(null)
       }
 
-      const trigger = useScrollTrigger({ threshold: 0, disableHysteresis: true,});
+      function handleClick2(event) {
+        setAnchorEl2(event.currentTarget)
+      }
+
+      function handleClose2() {
+        setAnchorEl2(null)
+      }
+
+      const trigger = useScrollTrigger({ threshold: 0, disableHysteresis: true, });
       return (
         <>
           <MuiThemeProvider theme={darkTheme}>
-              <AppBar
-                id="navbar"
-                position="fixed"
-                color="inherit"
-                className={
-                  `${classes.appBar} ${
-                  !trigger ? classes.transparent : classes.translucent
-                  }`
-                }
-              >
-                {" "}
-                <Container maxWidth="xl">
-                  <Toolbar
-                    className={`${classes.noPadding} ${classes.toolBar}`}
+            <AppBar
+              id="navbar"
+              position="fixed"
+              color="inherit"
+              className={
+                `${classes.appBar} ${
+                !trigger ? classes.transparent : classes.translucent
+                }`
+              }
+            >
+              {" "}
+              <Container maxWidth="xl">
+                <Toolbar
+                  className={`${classes.noPadding} ${classes.toolBar}`}
+                >
+                  <Link
+                    href="/"
+                    className={classes.flex}
+                    component={CustomLink}
                   >
-                    <Link
-                      href="/"
-                      className={classes.flex}
-                      component={CustomLink}
+                    <img
+                      id="logo"
+                      src="/static/img/logo.png"
+                      alt="ESX"
+                      height="52px"
+                    />
+                  </Link>
+                  <Container maxWidth="lg" style={{marginLeft: "64px"}}>
+                    <Button
+                      aria-controls="menu"
+                      aria-haspopup="true"
+                      onClick={handleClick2}
+                      color="inherit"
+                      className={classes.menuButton}
                     >
-                      <img
-                        id="logo"
-                        src="/static/img/logo.png"
-                        alt="ESX"
-                        height="52px"
-                      />
-                    </Link>
-                    <div className={classes.grow} />
-                    <div className={classes.search}>
-                      <div className={classes.searchIcon}>
-                        <SearchIcon />
-                      </div>
-                      <AutoCompleteSearch
-                        placeholder="Search…"
-                        classes={{
-                          root: classes.inputRoot,
-                          input: classes.inputInput
-                        }}
-                      />
+                      Discover
+                    </Button>
+                    <StyledMenu
+                      id="menu"
+                      anchorEl={anchorEl2}
+                      keepMounted
+                      open={open2}
+                      onClose={handleClose2}
+                      style={{ marginTop: "54px", transform: "translate(-22px, 0px)"}}
+                  >
+                      <MenuItem component={CustomLink} href={"/"}>
+                        <span style={{ padding: "16px" }}>Movies</span>
+                      </MenuItem>
+                      <MenuItem component={CustomLink} href={"/"}>
+                        <span style={{ padding: "16px" }}>TV Series</span>
+                      </MenuItem>
+                      <MenuItem component={CustomLink} href={"/"}>
+                        <span style={{ padding: "16px" }}>Music</span>
+                      </MenuItem>
+                      <MenuItem component={CustomLink} href={"/"}>
+                        <span style={{ padding: "16px" }}>Gaming</span>
+                      </MenuItem>
+                    </StyledMenu>
+                    <Button
+                      component={CustomLink}
+                      href={"/"}
+                      color="inherit"
+                      className={classes.menuButton}
+                    >
+                      Shop
+                    </Button>
+                    <Button
+                      component={CustomLink}
+                      href={"/"}
+                      color="inherit"
+                      className={classes.menuButton}
+                    >
+                      Investors
+                    </Button>
+                    <Button
+                      component={CustomLink}
+                      href={"/"}
+                      color="inherit"
+                      className={classes.menuButton}
+                    >
+                      Communities
+                    </Button>
+                    <Button
+                      component={CustomLink}
+                      href={"/"}
+                      color="inherit"
+                      className={classes.menuButton}
+                    >
+                      Loyalty
+                    </Button>
+                  </Container>
+                  <div className={classes.grow} />
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <SearchIcon />
                     </div>
-                    {accountLoaded ? (
-                      <>
-                        <IconButton
-                          aria-controls="menu"
-                          aria-haspopup="true"
-                          onClick={handleClick}
-                        >
-                          <AccountCircle style={{ fontSize: "2rem" }} />
-                        </IconButton>
-                        <Menu
-                          id="menu"
-                          anchorEl={anchorEl}
-                          keepMounted
-                          open={open}
-                          onClose={handleClose}
-                        >
-                          <MenuItem component={CustomLink} href={"/portfolio"}>
-                            <AccountCircle />
-                            <span style={{ padding: "15px" }}>Portfolio</span>
-                          </MenuItem>
-                          <MenuItem onClick={this.logout}>
-                            <ExitToApp />
-                            <span style={{ padding: "15px" }}>Logout</span>
-                          </MenuItem>
-                        </Menu>
-                      </>
-                    ) : (
+                    <AutoCompleteSearch
+                      placeholder="Search…"
+                      classes={{
+                        root: classes.inputRoot,
+                        input: classes.inputInput
+                      }}
+                    />
+                  </div>
+                  {accountLoaded ? (
+                    <>
+                      <IconButton
+                        aria-controls="menu"
+                        aria-haspopup="true"
+                        onClick={handleClick}
+                      >
+                        <AccountCircle style={{ fontSize: "2rem" }} />
+                      </IconButton>
+                      <StyledMenu
+                        id="menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={open}
+                        onClose={handleClose}
+                      >
+                        <MenuItem component={CustomLink} href={"/portfolio"}>
+                          <AccountCircle />
+                          <span style={{ padding: "15px" }}>Portfolio</span>
+                        </MenuItem>
+                        <MenuItem onClick={this.logout}>
+                          <ExitToApp />
+                          <span style={{ padding: "15px" }}>Logout</span>
+                        </MenuItem>
+                      </StyledMenu>
+                    </>
+                  ) : (
                       <>
                         <Button
                           component={CustomLink}
@@ -145,9 +240,9 @@ class Header extends React.Component {
                         </Button>
                       </>
                     )}
-                  </Toolbar>
-                </Container>
-              </AppBar>
+                </Toolbar>
+              </Container>
+            </AppBar>
             <Toolbar />
           </MuiThemeProvider>
         </>
@@ -223,7 +318,7 @@ const styles = theme => {
     },
     transparent: {
       background: "transparent !important",
-      transition: "background 0.25s ease-in-out" 
+      transition: "background 0.25s ease-in-out"
     },
     translucent: {
       background: "rgba(17, 17, 17, 0.847)",
