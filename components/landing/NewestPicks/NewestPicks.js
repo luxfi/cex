@@ -52,7 +52,7 @@ export default class NewestPicksSection extends React.Component {
     const loggedIn = store.userStore.loggedIn
     return (
       <div id="newest-picks" style={{ padding: "48px 0px"}} >
-        <Typography variant="h5">
+        <Typography variant="h5" style={{ marginLeft: "56px" }} gutterBottom> 
           <Box fontWeight={100} fontSize={20}>
             NOW FUNDRAISING
           </Box>
