@@ -132,7 +132,7 @@ class Header extends React.Component {
                       keepMounted
                       open={open2}
                       onClose={handleClose2}
-                      style={{ marginTop: "54px", transform: "translate(-22px, 0px)"}}
+                      style={{ marginTop: "50px", transform: "translate(-22px, 0px)"}}
                   >
                       <MenuItem component={CustomLink} href={"/"}>
                         <span style={{ padding: "16px" }}>Movies</span>
@@ -208,6 +208,7 @@ class Header extends React.Component {
                         keepMounted
                         open={open}
                         onClose={handleClose}
+                        style={{ marginTop: "50px" }}
                       >
                         <MenuItem component={CustomLink} href={"/portfolio"}>
                           <AccountCircle />
