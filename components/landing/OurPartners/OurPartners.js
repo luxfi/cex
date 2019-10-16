@@ -40,9 +40,9 @@ export default props => {
   const classes = useStyles()
 
   return (
-    <div style={{ padding: "48px 0px" }}>
-      <Typography variant="h5">
-        <Box fontWeight={100} fontSize={20}>
+    <div id="our-partners" style={{ padding: "48px 0px"}}>
+      <Typography variant="h5" gutterBottom>
+        <Box fontWeight={100} fontSize={20} style={{ marginLeft: "56px" }} >
           OUR PARTNERS
         </Box>
       </Typography>

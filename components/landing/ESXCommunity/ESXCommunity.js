@@ -40,8 +40,8 @@ export default props => {
   const { ...rest } = props
   const imageClasses = classNames(classes.imgCardTop)
   return (
-    <div id="esx-community" style={{ padding: "48px 0px" }} >
-      <Typography variant="h5">
+    <div id="esx-community" style={{ padding: "48px 0px" }}>
+      <Typography variant="h5" style={{ marginLeft: "56px" }} gutterBottom>
         <Box fontWeight={100} fontSize={20}>
           COMMUNITY BACKED FILMS IN THE NEWS
         </Box>

@@ -30,8 +30,8 @@ export default class TrailerSlider extends React.Component {
   render() {
     const { store } = this.props
     return (
-      <div id="trailer-slider" style={{ padding: "48px 0px" }} >
-        <Typography variant="h5">
+      <div id="trailer-slider" style={{ padding: "48px 0px"}} >
+        <Typography variant="h5" style={{ marginLeft: "56px" }} gutterBottom>
           <Box fontWeight={100} fontSize={20}>
             PICK BY CATEGORY
           </Box>
