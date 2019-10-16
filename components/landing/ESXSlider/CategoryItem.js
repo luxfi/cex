@@ -4,11 +4,12 @@ import SliderContext from './context'
 import ShowDetailsButton from './ShowDetailsButton'
 import Mark from './Mark'
 import './Item.css'
-import { Card, CardContent } from "@material-ui/core"
+import { Card, CardContent, Typography, Box, Grid } from "@material-ui/core"
+import IconArrowDown from '../Icons/IconArrowDown'
 import { TrailerSliderModal } from ".."
 const { forwardRef, useRef, useImperativeHandle } = React
 
-const Item = ({ imgSrc }) => {
+const Item = ({ category }) => {
   const childRef = useRef()
 
   return (
@@ -28,22 +29,32 @@ const Item = ({ imgSrc }) => {
             }}
           >
             <Card
-              // onClick={() => childRef.current.handleOpen()}
+            // onClick={() => childRef.current.handleOpen()}
             >
               <CardContent
                 style={{
-                  display: 'block',
+                  display: 'flex',
                   position: 'relative',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  backgroundImage: `url(${imgSrc})`,
+                  background: `${category.background}`,
                   maxHeight: '1200px',
                   minHeight: '125px',
                   minWidth: '207px',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center'
-                }}
-              >
+                  flexDirection: "column",
+                  paddingTop: "39px"
+              // backgroundSize: 'cover',
+              // backgroundPosition: 'center'
+            }}
+          >
+                <Typography variant="h5">
+                <Box fontWeight={100} fontSize={20}>
+                    {category.title}
+                  </Box>
+                </Typography>
+                <Grid item style={{width: "10%"}}>
+                  <IconArrowDown />
+                </Grid>
                 {/* <TrailerSliderModal movie={movie} ref={childRef} /> */}
               </CardContent>
             </Card>
