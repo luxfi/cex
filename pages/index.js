@@ -31,12 +31,12 @@ class Index extends React.Component {
         <Hero loggedIn={loggedIn} />
         <Container maxWidth="xl"
           style={{
-            transform: "translate(0, -15vh)"
+            transform: "translate(0, -32vh)"
           }}
         >
           <TrailerSlider />
           <StudioSlider />
-          <div style={{ marginBottom: "-15vh" }}>
+          <div style={{ marginBottom: "-32vh" }}>
             <CategorySlider />
           </div>
         </Container>

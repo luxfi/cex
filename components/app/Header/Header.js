@@ -111,10 +111,11 @@ class Header extends React.Component {
                   >
                     <img
                       id="logo"
-                      src="/static/img/logo.png"
+                      src="/static/images/esx/esx-white-logo.png"
                       alt="ESX"
-                      height="52px"
-                    />
+                      style={{ marginTop: "-15px"}}
+                    height="52px"
+                  />
                   </Link>
                   <Container maxWidth="lg" style={{marginLeft: "64px"}}>
                     <Button

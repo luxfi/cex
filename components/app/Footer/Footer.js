@@ -127,9 +127,10 @@ class Footer extends React.Component {
               {/* get rid of inline style */}
               <img
                 id="logo"
-                src="/static/img/logo.png"
+                src="/static/images/esx/esx-white-logo.png"
                 alt="ESX"
-                height="60px"
+                style={{ marginTop: "-22px" }}
+                height="52px"
               />
             </Link>
             <Typography variant="subtitle2" className={classes.white}>
