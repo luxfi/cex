@@ -105,9 +105,7 @@ class MyMobxApp extends App {
                   <CustomSnackbar />
                 </div>
                 <div className={classes.stickyFooter}>
-                  <MuiThemeProvider theme={darkTheme}>
-                    <Footer openModal={(title, body) => this.mobxStore.uiStore.openModal(title, body)}/>
-                  </MuiThemeProvider>
+                  <Footer openModal={(title, body) => this.mobxStore.uiStore.openModal(title, body)}/>
                 </div>
               </div>
             {/* </RefProvider> */}
