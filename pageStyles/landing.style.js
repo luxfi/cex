@@ -22,7 +22,7 @@ const landingPageStyle = {
   },
   main: {
     // background: "#282828",
-    background: "#202b35",
+    background: "#141414",
     position: "relative",
     zIndex: "3"
   },

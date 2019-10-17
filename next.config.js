@@ -13,7 +13,7 @@ module.exports = withCSS(
         use: [
           rupture(),
           postcss([
-            autoprefixer({ browsers: "> 1%" }),
+            autoprefixer(),
             "rucksack-css",
             comments({ removeAll: true })
           ])

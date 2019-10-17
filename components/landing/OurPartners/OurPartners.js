@@ -4,10 +4,17 @@ import React from "react"
 import classNames from "classnames"
 
 // @material-ui/core components
-import { Grid } from '@material-ui/core'
+import { Grid, Box, Paper, Typography } from '@material-ui/core'
 
 // core components
 import ContentLoader from "react-content-loader"
+
+// icons
+import Paramount from '../../../assets/svg/Paramount.svg'
+import Disney from '../../../assets/svg/Disney.svg'
+import Lionsgate from '../../../assets/svg/Lionsgate.svg'
+import Warner_Bros from '../../../assets/svg/Warner_Bros.svg'
+import Sony from '../../../assets/svg/Sony.svg'
 
 // styles
 import { makeStyles } from "@material-ui/core/styles"
@@ -26,59 +33,46 @@ const MyLoader = () => (
   </ContentLoader>
 )
 
-const partners = [
-  "https://upload.wikimedia.org/wikipedia/en/4/4d/Paramount_Pictures_2010.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/6/65/TWDC_Logo.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/6/65/Lionsgate_Logo.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/6/64/Warner_Bros_logo.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/c/ca/Sony_logo.svg"
-]
+const partners = [ Paramount, Disney, Lionsgate, Warner_Bros, Sony ]
+// const partners = [<Paramount />, <Disney />, <Lionsgate />, <Warner_Bros />, <Sony />]
 
 export default props => {
   const classes = useStyles()
 
   return (
-    <>
-      <div className={classes.section}>
-        <h2 className={classes.title} style={{ textAlign: "left" }}>
-          Our Partners
-        </h2>
-        <Grid container style={{ justifyContent: "center", paddingTop: "36px" }}>
-          {partners.map((imgSrc, i) => (
-            <Grid item
-              xs={12}
-              sm={12}
-              md={2}
-              key={i}
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              <Grid item
-                xs={12}
-                sm={12}
-                md={12}
-                className={classes.itemGrid}
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  height: "100%"
-                }}
+    <div id="our-partners" style={{ padding: "48px 0px"}}>
+      <Typography variant="h5" gutterBottom>
+        <Box fontWeight={100} fontSize={20} style={{ marginLeft: "56px" }} >
+          OUR PARTNERS
+        </Box>
+      </Typography>
+      <br />
+      <Box clone pt={2} pr={1} pb={1} pl={2}>
+        <Paper elevation={0}>
+          <Grid container justify="space-around" style={{ paddingTop: "52px", paddingBottom: "52px" }}>
+            {partners.map((SVGComponent, i) => (
+              <Grid container item
+                xs={2}
+                key={i}
+                alignItems="center"
+                justify="center"
               >
-                <img
-                  src={imgSrc}
-                  alt=""
-                  style={{ width: "75%", maxHeight: "64px" }}
-                />
+                <SVGComponent className={classes.svg} style={{
+                  width: "60%",
+                  height: "60%"
+                }}/>
               </Grid>
-            </Grid>
-          ))}
-        </Grid>
-      </div>
+            ))}
+          </Grid>
+        </Paper >
+      </Box>
       <style jsx>{`
-        .hero-container {
-          position: relative;
-          overflow: hidden;
-        }
+        // svg {
+        //   fill: white;
+        // }
       `}</style>
-    </>
+    </div>
   )
 }
+
+

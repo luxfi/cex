@@ -172,7 +172,7 @@ export default props => {
                       className={classes.earningsText}
                       gutterBottom
                     >
-                      Benefits
+                      Rewards
                     </Typography>
                     <Typography
                       variant="inherit"

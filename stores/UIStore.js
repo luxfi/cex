@@ -3,20 +3,33 @@ import { action, observable, computed } from "mobx"
 export default class UIStore {
   @observable snackBarOpen = false
   @observable error = ""
-
-  constructor(initialData, hanzoApi) {
-    this.api = hanzoApi
+  @observable modal = {
+    open: false,
+    title: null,
+    body: null
   }
 
+  // constructor(initialData, hanzoApi) {
+  //   this.api = hanzoApi
+  // }
+
   @computed get open() {
-    return this.snackBarOpen
+    return this.snackBarOpenc
   }
 
   @computed get error() {
     return this.snackBarOpen
   }
 
-  // @action setSnackBarOpen(bool) {
-  //   this.snackBarOpen = bool
-  // }
+  @action openModal(title, body) {
+    this.modal.open = true
+    this.modal.title = title
+    this.modal.body = body
+  }
+
+  @action closeModal() {
+    this.modal.open = false
+    this.modal.title = null
+    this.modal.body = null
+  }
 }

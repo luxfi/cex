@@ -13,7 +13,7 @@ import {
   Typography,
   Card,
   Grid,
-  CardContent
+  CardContent,
 } from "@material-ui/core"
 import ContentLoader from "react-content-loader"
 
@@ -109,9 +109,9 @@ export default props => {
                   subheader={d.releaseDate}
                 />
                 <CardContent>
-                  <p className={classes.description}>
+                  <Typography variant="body1"  paragraph>
                     {truncate(d.shortDescription)}
-                  </p>
+                  </Typography>
                   <Divider variant="middle" />
                   <div className={classes.ctaDiv}>
                     <Chip
