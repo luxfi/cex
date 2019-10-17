@@ -1,7 +1,7 @@
 import App, { Container } from "next/app"
 import Head from "next/head"
 import React from "react"
-import { Provider } from "mobx-react"
+import { Provider, inject, observer } from "mobx-react"
 
 // This ensures that the icon CSS is loaded immediately before attempting to render icons
 import "@fortawesome/fontawesome-svg-core/styles.css"
@@ -15,7 +15,7 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles"
 import CssBaseline from "@material-ui/core/CssBaseline"
 
 // core components
-import { CustomSnackbar, Header, Footer } from "../components/app"
+import { CustomSnackbar, Header, Footer, CustomModal } from "../components/app"
 
 import initializeStore from "../stores/stores"
 
@@ -28,20 +28,10 @@ import MomentUtils from "@date-io/moment"
 
 // styles
 import styles from "../pageStyles/app.style"
-import {darkTheme, lightTheme} from "../components/themes"
+import { darkTheme, lightTheme } from "../components/themes"
 
 // ****************
-
-const HANZO_PAGES = ["signup", "login", "account", "invest", "portfolio2"]
-
-const checkHanzoPage = page => {
-  let hanzoPage = false
-  HANZO_PAGES.forEach(p => {
-    if (page.toLowerCase().indexOf(p) > -1) hanzoPage = true
-  })
-  return hanzoPage
-}
-
+@observer
 class MyMobxApp extends App {
   static async getInitialProps(appContext) {
     //
@@ -55,7 +45,6 @@ class MyMobxApp extends App {
     appContext.ctx.mobxStore = mobxStore
 
     let pageProps = {}
-    const hanzoPage = checkHanzoPage(route)
 
     const appProps = await App.getInitialProps(appContext)
     pageProps = appProps.pageProps
@@ -64,7 +53,6 @@ class MyMobxApp extends App {
       pageProps,
       isServer,
       initialMobxState: mobxStore,
-      hanzoPage
     }
   }
 
@@ -76,27 +64,12 @@ class MyMobxApp extends App {
       : initializeStore(props.initialMobxState)
   }
 
-  componentDidMount() {
-    if (!this.props.isServer) {
-      // debugger
-      // this.props.initialMobxState.userStore.loadSession()
-    }
-  }
-
-  // getThemeForPath(pathname) {
-  //   if (pathname.startsWith("/film")) {
-  //     return darkTheme
-  //   }
-  //   return lightTheme
-  // }
-
   render() {
     const { Component, pageProps, classes, router } = this.props
     const onHomePage = router.pathname === "/" || router.pathname === "/#"
-    // const theme = this.getThemeForPath(router.pathname)
 
     return (
-      <MuiThemeProvider theme={lightTheme}>
+      <MuiThemeProvider theme={darkTheme}>
         <React.Fragment>
           <CssBaseline />
           <Head>
@@ -121,6 +94,7 @@ class MyMobxApp extends App {
                       onHomePage={onHomePage}
                       darkTheme={darkTheme}
                       lightTheme={lightTheme}
+                      openModal={(title, body) => this.mobxStore.uiStore.openModal(title, body)}
                     />
                     <Component
                       {...pageProps}
@@ -128,11 +102,17 @@ class MyMobxApp extends App {
                       lightTheme={lightTheme}
                     />
                     {/* <Loader /> */}
+                    <CustomModal 
+                      open={this.mobxStore.uiStore.modal.open}
+                      handleClose={() => this.mobxStore.uiStore.closeModal()}
+                      body={this.mobxStore.uiStore.modal.body}
+                      title={this.mobxStore.uiStore.modal.title}
+                    />
                     <CustomSnackbar />
                   </div>
                   <div className={classes.stickyFooter}>
                     <MuiThemeProvider theme={darkTheme}>
-                      <Footer />
+                      <Footer openModal={(title, body) => this.mobxStore.uiStore.openModal(title, body)}/>
                     </MuiThemeProvider>
                   </div>
                 </div>

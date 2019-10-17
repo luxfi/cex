@@ -41,7 +41,7 @@ export default props => {
   return (
     <>
       <div className={classes.section}>
-        <Typography variant="h5" className={classes.title} style={{ textAlign: "left" }}>
+        <Typography variant="h5" className={classes.title} style={{ textAlign: "left" }} gutterBottom>
           Investor Top Picks
         </Typography>
         <MoviesView classes={classes} />
