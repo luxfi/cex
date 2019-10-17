@@ -58,7 +58,13 @@ export default class TrailerSlider extends React.Component {
           <Slider>
             {studioImages.map((imgSrc, i) => {
               return (
-                <Slider.StudioItem imgSrc={imgSrc} key={i}>item1</Slider.StudioItem>
+                <Slider.StudioItem
+                  imgSrc={imgSrc}
+                  key={i}
+                  openModal={(title, body) => store.uiStore.openModal(title, body)}
+                >
+                  item1
+                </Slider.StudioItem>
               )
             })}
           </Slider>
