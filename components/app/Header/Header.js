@@ -117,7 +117,7 @@ class Header extends React.Component {
                       height="52px"
                     />
                   </Link>
-                  <div maxWidth="lg" style={{ marginLeft: "128px" }}>
+                  <div style={{ marginLeft: "128px" }}>
                     <Button
                       aria-controls="menu"
                       aria-haspopup="true"
