@@ -1,10 +1,11 @@
 import React from "react"
-import { makeStyles } from "@material-ui/core/styles"
+import { observer } from "mobx-react"
+import { withStyles } from "@material-ui/core/styles"
 import Modal from "@material-ui/core/Modal"
 import Backdrop from "@material-ui/core/Backdrop"
 import Fade from "@material-ui/core/Fade"
 
-const useStyles = makeStyles(theme => ({
+const styles = (theme => ({
   modal: {
     display: "flex",
     alignItems: "center",
@@ -45,42 +46,42 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function TransitionsModal({
-  open,
-  handleClose,
-  children,
-  title
-}) {
-  const classes = useStyles()
+@observer
+class CustomModal extends React.Component {
 
-  return (
-    <div>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500
-        }}
-      >
-        <Fade in={open}>
-          <div className={classes.paper}>
-            <div className={classes.modalHeader}>
-              <div className={classes.modalTitle}>{title}</div>
-            </div>
-            <div className={classes.modalBody}>{children}</div>
-            {/* {children} */}
-            {/* <h2 id="transition-modal-title">Transition modal</h2>
+  render() {
+    const { open, handleClose, title, body, classes } = this.props
+    return (
+      <div>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          className={classes.modal}
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500
+          }}
+        >
+          <Fade in={open}>
+            <div className={classes.paper}>
+              <div className={classes.modalHeader}>
+                <div className={classes.modalTitle}>{title}</div>
+              </div>
+              <div className={classes.modalBody}>{body}</div>
+              {/* {children} */}
+              {/* <h2 id="transition-modal-title">Transition modal</h2>
             <p id="transition-modal-description">
               react-transiton-group animates me.
             </p> */}
-          </div>
-        </Fade>
-      </Modal>
-    </div>
-  )
+            </div>
+          </Fade>
+        </Modal>
+      </div>
+    )
+  }
 }
+
+export default withStyles(styles)(CustomModal)

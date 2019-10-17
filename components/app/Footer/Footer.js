@@ -19,22 +19,35 @@ import { CustomLink, CustomModal } from "../"
 // styles
 import { withStyles } from "@material-ui/core/styles"
 
-const AboutESX = ({ classes }) => {
-  const [open, setOpen] = React.useState(false)
+const AboutESX = ({ classes, openModal }) => {
+  const body = (<>
+    <p>ESX is a film investing platform for everyone.</p>{" "}
+    <p>
+      We allow regular people — not just wealthy film producers — to invest
+      in promising films, with as little as $10 or as much as $100,000 per
+      investment.
+        </p>{" "}
+    <p>
+      ESX was created to democratize fundraising for film while giving
+      anyone the chance to back the next greatest film.
+        </p>
+  </>)
+
+  const title ="What is ESX?"
 
   const handleOpen = () => {
-    setOpen(true)
+    openModal(title, body)
   }
 
-  const handleClose = () => {
-    setOpen(false)
-  }
+  // const handleClose = () => {
+  //   setOpen(false)
+  // }
   return (
     <>
       <Button className={classes.menuButton} onClick={handleOpen}>
         About ESX
       </Button>
-      <CustomModal handleClose={handleClose} open={open} title="What is ESX?">
+      {/* <CustomModal handleClose={handleClose} open={open} title="What is ESX?">
         <p>ESX is a film investing platform for everyone.</p>{" "}
         <p>
           We allow regular people — not just wealthy film producers — to invest
@@ -45,7 +58,7 @@ const AboutESX = ({ classes }) => {
           ESX was created to democratize fundraising for film while giving
           anyone the chance to back the next greatest film.
         </p>
-      </CustomModal>
+      </CustomModal> */}
     </>
   )
 }
@@ -116,7 +129,7 @@ class Footer extends React.Component {
     return { ...mobxStore }
   }
   render() {
-    const { classes, store } = this.props
+    const { classes, store, openModal } = this.props
     const loggedIn = store.userStore.loggedIn
     return (
       <div className={classes.root}>
@@ -137,7 +150,7 @@ class Footer extends React.Component {
               Entertainment Stock Exchange
             </Typography>
             <div className={classes.grow} />
-            <AboutESX classes={classes} />
+            <AboutESX classes={classes} openModal={openModal} />
             <Partnerships classes={classes} />
             <ContactUs classes={classes} />
             {!loggedIn && (
@@ -146,9 +159,6 @@ class Footer extends React.Component {
                 component={CustomLink}
                 variant="outlined"
                 href={"/signup"}
-                style={{
-                  color: "white"
-                }}
               >
                 Sign Up
               </Button>
