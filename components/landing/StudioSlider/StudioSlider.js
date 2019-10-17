@@ -27,7 +27,8 @@ const studioImages =
   '/static/images/studio/Lionsgate.png',
   '/static/images/studio/Netflix.png',
   '/static/images/studio/Paramount.png',
-  '/static/images/studio/STX.png']
+  '/static/images/studio/STX.png',
+    '/static/images/studio/Universal.jpg']
 
 
 // @material-ui/core components
@@ -48,7 +49,7 @@ export default class TrailerSlider extends React.Component {
       <div id="studio-slider" style={{ padding: "48px 0px" }} >
         <Typography variant="h5" style={{ marginLeft: "56px" }} gutterBottom>
           <Box fontWeight={100} fontSize={20}>
-            PICK BY STUDIO
+            BROWSE BY STUDIO
           </Box>
         </Typography>
         <br />

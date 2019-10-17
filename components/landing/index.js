@@ -1,4 +1,5 @@
 export { default as ESXCommunity } from './ESXCommunity'
+export { default as ForYouSlider } from './ForYouSlider'
 export { default as Hero } from './Hero'
 export { default as HeroImg } from './HeroImg'
 export { default as InvestorTopPicks } from './InvestorTopPicks'
