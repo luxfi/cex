@@ -169,7 +169,6 @@ function CustomizedSnackbars({ setOpen, open, errorMessage }) {
 export default class MySnackBar extends React.Component {
   render() {
     const { store } = this.props
-    window.store = store
     const setOpen = val => {
       store.uiStore.snackBarOpen = val
     }
