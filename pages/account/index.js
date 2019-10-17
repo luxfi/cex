@@ -13,9 +13,9 @@ class Account extends React.Component {
       <main className="account" id="account-index">
         <Container maxWidth="md">
           <h1>{`Hello USER`}</h1>
-          <Link component={CustomLink} href="/account/kyc">
+          {/* <Link component={CustomLink} href="/account/kyc">
             Check your identify verification status
-          </Link>
+          </Link> */}
           <br />
           <h3>PORTFOLIO BALANCE</h3>
           <h2>$0.00</h2>
