@@ -12,6 +12,7 @@ import Container from "@material-ui/core/Container"
 import Typography from "@material-ui/core/Typography"
 import Link from "@material-ui/core/Link"
 import Button from "@material-ui/core/Button"
+import Grid from "@material-ui/core/Grid"
 
 // core components
 import { CustomLink, CustomModal } from "../"
@@ -81,6 +82,19 @@ const ContactUs = ({ classes, openModal }) => {
   )
 }
 
+const Copyright = () => {
+  return (
+    <Grid>
+      <Typography variant="body2" color="textSecondary" align="left">
+        {'Privacy Policy / Terms of Use'}
+      </Typography>
+      <Typography variant="body2" color="textSecondary" align="left">
+        {'Copyright © 2019 ESX. All rights reserved.'}
+      </Typography>
+    </ Grid>
+  )
+}
+
 
 @inject("store")
 @observer
@@ -125,6 +139,7 @@ class Footer extends React.Component {
             )}
           </Toolbar>
           <Toolbar className={classes.noPadding}>
+            <Copyright />
             <div className={classes.grow} />
             <span className={classes.socialLinks}>
               <Button
