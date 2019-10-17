@@ -28,9 +28,6 @@ class Account extends React.Component {
       <main className="account" id="account-index">
         <Container maxWidth="md">
           <h1>{`Hello USER`}</h1>
-          <Link component={CustomLink} href="/account/kyc">
-            Check your identify verification status
-          </Link>
           <PlaidLink 
             className={classes.plaidLink}
             clientName="ESX"

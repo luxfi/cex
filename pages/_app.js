@@ -1,7 +1,7 @@
-import App, { Container } from "next/app"
+import App from "next/app"
 import Head from "next/head"
 import React from "react"
-import { Provider, inject, observer } from "mobx-react"
+import { Provider, observer } from "mobx-react"
 
 // This ensures that the icon CSS is loaded immediately before attempting to render icons
 import "@fortawesome/fontawesome-svg-core/styles.css"
@@ -10,8 +10,8 @@ import { config } from "@fortawesome/fontawesome-svg-core"
 config.autoAddCss = false
 
 // @material-ui/core components
-import { withStyles } from "@material-ui/core/styles"
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles"
+import { withStyles, MuiThemeProvider } from "@material-ui/core/styles"
+import NoSsr from '@material-ui/core/NoSsr'
 import CssBaseline from "@material-ui/core/CssBaseline"
 
 // core components
@@ -21,10 +21,6 @@ import initializeStore from "../stores/stores"
 
 // NEW ***********
 import { withRouter } from "next/router"
-import { MuiPickersUtilsProvider } from "react-referential-forms"
-import RefProvider from "react-referential"
-
-import MomentUtils from "@date-io/moment"
 
 // styles
 import styles from "../pageStyles/app.style"
@@ -39,7 +35,6 @@ class MyMobxApp extends App {
     // we can initialize our store (nextJS DOCS)
     //
 
-    const { route } = appContext.router
     const isServer = typeof window === "undefined"
     const mobxStore = initializeStore()
     appContext.ctx.mobxStore = mobxStore
@@ -69,8 +64,7 @@ class MyMobxApp extends App {
     const onHomePage = router.pathname === "/" || router.pathname === "/#"
 
     return (
-      <MuiThemeProvider theme={darkTheme}>
-        <React.Fragment>
+        <MuiThemeProvider theme={darkTheme}>
           <CssBaseline />
           <Head>
             <title>ESX | Entertainment Stock Exchange</title>
@@ -85,41 +79,36 @@ class MyMobxApp extends App {
             <script src="/static/datafeeds/udf/dist/polyfills.js" />
             <script src="/static/datafeeds/udf/dist/bundle.js" />
           </Head>
-          <Provider store={this.mobxStore}>
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-              <RefProvider>
-                <div className={classes.root}>
-                  <div className={classes.main} component="main">
-                    <Header
-                      onHomePage={onHomePage}
-                      darkTheme={darkTheme}
-                      lightTheme={lightTheme}
-                      openModal={(title, body) => this.mobxStore.uiStore.openModal(title, body)}
-                    />
-                    <Component
-                      {...pageProps}
-                      darkTheme={darkTheme}
-                      lightTheme={lightTheme}
-                    />
-                    {/* <Loader /> */}
-                    <CustomModal 
-                      open={this.mobxStore.uiStore.modal.open}
-                      handleClose={() => this.mobxStore.uiStore.closeModal()}
-                      body={this.mobxStore.uiStore.modal.body}
-                      title={this.mobxStore.uiStore.modal.title}
-                    />
-                    <CustomSnackbar />
-                  </div>
-                  <div className={classes.stickyFooter}>
-                    <MuiThemeProvider theme={darkTheme}>
-                      <Footer openModal={(title, body) => this.mobxStore.uiStore.openModal(title, body)}/>
-                    </MuiThemeProvider>
-                  </div>
+          <NoSsr>
+            <Provider store={this.mobxStore}>
+              <div className={classes.root}>
+                <div className={classes.main} component="main">
+                  <Header
+                    onHomePage={onHomePage}
+                    darkTheme={darkTheme}
+                    lightTheme={lightTheme}
+                    openModal={(title, body) => this.mobxStore.uiStore.openModal(title, body)}
+                  />
+                  <Component
+                    {...pageProps}
+                    darkTheme={darkTheme}
+                    lightTheme={lightTheme}
+                  />
+                  {/* <Loader /> */}
+                  <CustomModal 
+                    open={this.mobxStore.uiStore.modal.open}
+                    handleClose={() => this.mobxStore.uiStore.closeModal()}
+                    body={this.mobxStore.uiStore.modal.body}
+                    title={this.mobxStore.uiStore.modal.title}
+                  />
+                  <CustomSnackbar />
                 </div>
-              </RefProvider>
-            </MuiPickersUtilsProvider>
-          </Provider>
-        </React.Fragment>
+                <div className={classes.stickyFooter}>
+                  <Footer openModal={(title, body) => this.mobxStore.uiStore.openModal(title, body)}/>
+                </div>
+              </div>
+            </Provider>
+          </NoSsr>
       </MuiThemeProvider>
     )
   }
