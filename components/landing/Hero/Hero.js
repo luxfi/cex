@@ -31,8 +31,8 @@ import TerminatorLogo from "../../../assets/images/terminator-logo.svg"
 import birdsOfPreyLogo from "../../../assets/images/birds-of-prey-logo.png"
 
 const ButtonLink = React.forwardRef(
-  ({ className, href, hrefAs, children, prefetch }, ref) => (
-    <Link ref={ref} href={href} as={hrefAs} prefetch>
+  ({ className, href, hrefAs, children }, ref) => (
+    <Link ref={ref} href={href} as={hrefAs}>
       <a className={className}>{children}</a>
     </Link>
   )

@@ -14,7 +14,7 @@ import Link from "@material-ui/core/Link"
 import Button from "@material-ui/core/Button"
 
 // core components
-import { CustomLink, CustomModal } from "../"
+import { CustomLink } from "../"
 
 // styles
 import { withStyles } from "@material-ui/core/styles"
