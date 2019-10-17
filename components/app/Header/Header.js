@@ -117,7 +117,7 @@ class Header extends React.Component {
                     height="52px"
                   />
                   </Link>
-                  <Container maxWidth="lg" style={{marginLeft: "64px"}}>
+                  <div maxWidth="lg" style={{marginLeft: "128px"}}>
                     <Button
                       aria-controls="menu"
                       aria-haspopup="true"
@@ -180,7 +180,7 @@ class Header extends React.Component {
                     >
                       Loyalty
                     </Button>
-                  </Container>
+                  </div>
                   <div className={classes.grow} />
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
