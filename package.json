@@ -86,5 +86,11 @@
     "rucksack-css": "1.0.2",
     "rupture": "0.7.1",
     "stylus": "0.54.7"
-  }
+  },
+  "browserslist": [
+    "last 1 version",
+    "> 1%",
+    "maintained node versions",
+    "not dead"
+  ]
 }
