@@ -19,95 +19,68 @@ import { CustomLink, CustomModal } from "../"
 // styles
 import { withStyles } from "@material-ui/core/styles"
 
-const AboutESX = ({ classes }) => {
-  const [open, setOpen] = React.useState(false)
-
-  const handleOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-  return (
-    <>
-      <Button className={classes.menuButton} onClick={handleOpen}>
-        About ESX
-      </Button>
-      <CustomModal handleClose={handleClose} open={open} title="What is ESX?">
-        <p>ESX is a film investing platform for everyone.</p>{" "}
-        <p>
-          We allow regular people — not just wealthy film producers — to invest
-          in promising films, with as little as $10 or as much as $100,000 per
-          investment.
+const AboutESX = ({ classes, openModal }) => {
+  const body = (<>
+    <p>ESX is a film investing platform for everyone.</p>{" "}
+    <p>
+      We allow regular people — not just wealthy film producers — to invest
+      in promising films, with as little as $10 or as much as $100,000 per
+      investment.
         </p>{" "}
-        <p>
-          ESX was created to democratize fundraising for film while giving
-          anyone the chance to back the next greatest film.
+    <p>
+      ESX was created to democratize fundraising for film while giving
+      anyone the chance to back the next greatest film.
         </p>
-      </CustomModal>
-    </>
+  </>)
+  const title = "What is ESX?"
+  return (
+    <Button className={classes.menuButton} onClick={() => {
+      openModal(title, body)
+    }}>
+      About ESX
+      </Button>
   )
 }
 
-const Partnerships = ({ classes }) => {
-  const [open, setOpen] = React.useState(false)
-
-  const handleOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-  return (
-    <>
-      <Button className={classes.menuButton} onClick={handleOpen}>
-        Partnerships
-      </Button>
-      <CustomModal handleClose={handleClose} open={open} title="Partnerships">
-        <p>
-          Proxicoin - $750 million in capacity 8-10 films per year at scale 1-4
-          television properties per year
+const Partnerships = ({ classes, openModal }) => {
+  const body = (<>
+    <p>
+      Proxicoin - $750 million in capacity 8-10 films per year at scale 1-4
+      television properties per year
         </p>{" "}
-        <p>
-          Twisted Pictures - Horror / Urban production company led by Mark Burg,
-          producer of the Saw franchise
+    <p>
+      Twisted Pictures - Horror / Urban production company led by Mark Burg,
+      producer of the Saw franchise
         </p>{" "}
-        <p>
-          Centauri Media - $250mm film production fund with potential of up to 5
-          studio released films a year
+    <p>
+      Centauri Media - $250mm film production fund with potential of up to 5
+      studio released films a year
         </p>
-      </CustomModal>
-    </>
-  )
-}
-
-const ContactUs = ({ classes }) => {
-  const [open, setOpen] = React.useState(false)
-
-  const handleOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
+  </>)
+  const title = "Partnerships"
   return (
-    <>
-      <Button
-        className={classes.menuButton}
-        // color="transparent"
-        onClick={handleOpen}
-      >
-        Contact Us
+    <Button className={classes.menuButton} onClick={() => {
+      openModal(title, body)
+    }}>
+      Partnerships
       </Button>
-      <CustomModal handleClose={handleClose} open={open} title="Contact Us">
-        <p>Put Contact Infomation Here</p>{" "}
-      </CustomModal>
-    </>
   )
 }
+
+const ContactUs = ({ classes, openModal }) => {
+  const body = (<>
+    <p>Put Contact Infomation Here</p>{" "}
+  </>)
+  const title = "Contact Us"
+  return (
+    <Button className={classes.menuButton} onClick={() => {
+      openModal(title, body)
+    }}>
+      Contact Us
+      </Button>
+  )
+}
+
 
 @inject("store")
 @observer
@@ -116,7 +89,7 @@ class Footer extends React.Component {
     return { ...mobxStore }
   }
   render() {
-    const { classes, store } = this.props
+    const { classes, store, openModal } = this.props
     const loggedIn = store.userStore.loggedIn
     return (
       <div className={classes.root}>
@@ -127,27 +100,25 @@ class Footer extends React.Component {
               {/* get rid of inline style */}
               <img
                 id="logo"
-                src="/static/img/logo.png"
+                src="/static/images/esx/esx-white-logo.png"
                 alt="ESX"
-                height="60px"
+                style={{ marginTop: "-22px" }}
+                height="52px"
               />
             </Link>
             <Typography variant="subtitle2" className={classes.white}>
               Entertainment Stock Exchange
             </Typography>
             <div className={classes.grow} />
-            <AboutESX classes={classes} />
-            <Partnerships classes={classes} />
-            <ContactUs classes={classes} />
+            <AboutESX classes={classes} openModal={openModal} />
+            <Partnerships classes={classes} openModal={openModal} />
+            <ContactUs classes={classes} openModal={openModal} />
             {!loggedIn && (
               <Button
                 className={classes.signUpButton}
                 component={CustomLink}
                 variant="outlined"
                 href={"/signup"}
-                style={{
-                  color: "white"
-                }}
               >
                 Sign Up
               </Button>
@@ -186,7 +157,6 @@ class Footer extends React.Component {
             </span>
           </Toolbar>
         </Container>
-        <Toolbar />
       </div>
     )
   }
@@ -196,13 +166,12 @@ const styles = theme => {
   return {
     root: {
       flexGrow: 1,
-      paddingTop: "70px",
+      padding: "48px 0px",
       // backgroundImage: 'linear-gradient(180deg, #000000 0%, #151515 100%)',
-      background: "rgb(29, 38, 50)",
+      background: "#000",
     },
     menuButton: {
       marginRight: theme.spacing(2),
-      color: "#fff"
     },
     grow: {
       flexGrow: 1,
@@ -212,32 +181,32 @@ const styles = theme => {
       // },
       display: "block"
     },
-    flex: {
-      display: "flex"
-    },
-    transparent: {
-      background: "transparent !important",
-      boxShadow: "none"
-      //color: "#fff"
-    },
-    anchor: {
-      // margin: "3px",
-      // display: "inline-block",
-      color: "#fff"
-      // padding: "7px",
-      // borderRadius: "2px",
-      // height: "18px"
-    },
-    socialLinks: {
-      // height: "38.5px"
-    },
-    white: {
-      color: "#fff"
-    },
-    signUpButton: {
-      color: "white !important",
-      border: "2px solid white !important"
-    }
+    // flex: {
+    //   display: "flex"
+    // },
+    // transparent: {
+    //   background: "transparent !important",
+    //   boxShadow: "none"
+    //   //color: "#fff"
+    // },
+    // anchor: {
+    //   // margin: "3px",
+    //   // display: "inline-block",
+    //   color: "#fff"
+    //   // padding: "7px",
+    //   // borderRadius: "2px",
+    //   // height: "18px"
+    // },
+    // socialLinks: {
+    //   // height: "38.5px"
+    // },
+    // white: {
+    //   color: "#fff"
+    // },
+    // signUpButton: {
+    //   color: "white !important",
+    //   border: "2px solid white !important"
+    // }
   }
 }
 
