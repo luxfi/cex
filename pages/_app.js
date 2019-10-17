@@ -10,8 +10,8 @@ import { config } from "@fortawesome/fontawesome-svg-core"
 config.autoAddCss = false
 
 // @material-ui/core components
-import { withStyles } from "@material-ui/core/styles"
-import { MuiThemeProvider } from "@material-ui/core/styles"
+import { withStyles, MuiThemeProvider } from "@material-ui/core/styles"
+import NoSsr from '@material-ui/core/NoSsr'
 import CssBaseline from "@material-ui/core/CssBaseline"
 
 // core components
@@ -21,7 +21,6 @@ import initializeStore from "../stores/stores"
 
 // NEW ***********
 import { withRouter } from "next/router"
-import RefProvider from "react-referential"
 
 // styles
 import styles from "../pageStyles/app.style"
@@ -80,8 +79,8 @@ class MyMobxApp extends App {
             <script src="/static/datafeeds/udf/dist/polyfills.js" />
             <script src="/static/datafeeds/udf/dist/bundle.js" />
           </Head>
-          <Provider store={this.mobxStore}>
-            {/* <RefProvider> */}
+          <NoSsr>
+            <Provider store={this.mobxStore}>
               <div className={classes.root}>
                 <div className={classes.main} component="main">
                   <Header
@@ -108,8 +107,8 @@ class MyMobxApp extends App {
                   <Footer openModal={(title, body) => this.mobxStore.uiStore.openModal(title, body)}/>
                 </div>
               </div>
-            {/* </RefProvider> */}
-          </Provider>
+            </Provider>
+          </NoSsr>
       </MuiThemeProvider>
     )
   }
