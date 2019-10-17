@@ -7,12 +7,16 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons"
 
 // material components
-import Toolbar from "@material-ui/core/Toolbar"
-import Container from "@material-ui/core/Container"
-import Typography from "@material-ui/core/Typography"
-import Link from "@material-ui/core/Link"
-import Button from "@material-ui/core/Button"
-import Grid from "@material-ui/core/Grid"
+import {
+  Toolbar,
+  Container,
+  Typography,
+  Link,
+  Button,
+  Grid,
+  Box
+} from "@material-ui/core"
+
 
 // core components
 import { CustomLink, CustomModal } from "../"
@@ -84,16 +88,35 @@ const ContactUs = ({ classes, openModal }) => {
 
 const Copyright = () => {
   return (
-    <Grid>
+    <Box mt={5}>
       <Typography variant="body2" color="textSecondary" align="left">
         {'Privacy Policy / Terms of Use'}
       </Typography>
       <Typography variant="body2" color="textSecondary" align="left">
         {'Copyright © 2019 ESX. All rights reserved.'}
       </Typography>
-    </ Grid>
+    </ Box>
   )
 }
+
+const footers = [
+  {
+    title: 'Company',
+    description: ['About', 'Careers', 'Press', 'Blog'],
+  },
+  {
+    title: 'Projects',
+    description: ['Movies', 'TV Series', 'Music', 'Gaming'],
+  },
+  {
+    title: 'Support',
+    description: ['Investory FAQ', 'Project FAQ', 'Risks', 'Contact'],
+  },
+  {
+    title: 'Account',
+    description: ['Sign In', 'Create Account', 'Orders', 'My Portfolio'],
+  },
+];
 
 
 @inject("store")
@@ -107,38 +130,74 @@ class Footer extends React.Component {
     const loggedIn = store.userStore.loggedIn
     return (
       <div className={classes.root}>
-        <Container maxWidth="lg">
-          <Toolbar className={classes.noPadding}>
-            <Link href="/" className={classes.flex}>
-              {" "}
-              {/* get rid of inline style */}
-              <img
-                id="logo"
-                src="/static/images/esx/esx-white-logo.png"
-                alt="ESX"
-                style={{ marginTop: "-22px" }}
-                height="52px"
-              />
-            </Link>
-            <Typography variant="subtitle2" className={classes.white}>
-              Entertainment Stock Exchange
-            </Typography>
-            <div className={classes.grow} />
-            <AboutESX classes={classes} openModal={openModal} />
-            <Partnerships classes={classes} openModal={openModal} />
-            <ContactUs classes={classes} openModal={openModal} />
-            {!loggedIn && (
-              <Button
-                className={classes.signUpButton}
-                component={CustomLink}
-                variant="outlined"
-                href={"/signup"}
-              >
-                Sign Up
-              </Button>
-            )}
-          </Toolbar>
-          <Toolbar className={classes.noPadding}>
+        <Container maxWidth="lg" component="footer" className={classes.footer}>
+          <Box mb={5}>
+            <Grid container>
+              <Link href="/" className={classes.flex}>
+                {" "}
+                {/* get rid of inline style */}
+                <img
+                  id="logo"
+                  src="/static/images/esx/esx-white-logo.png"
+                  alt="ESX"
+                  style={{ marginTop: "-22px" }}
+                  height="52px"
+                />
+              </Link>
+              <div className={classes.grow} />
+              <span className={classes.socialLinks}>
+                <Button
+                  size="small"
+                  href="https://www.facebook.com/"
+                  target="_blank"
+                  title="Share on Facebook"
+                  className={`${classes.anchor} fa-facebook`}
+                >
+                  <FontAwesomeIcon icon={faFacebook} />
+                </Button>
+                <Button
+                  size="small"
+                  href="https://twitter.com/"
+                  target="_blank"
+                  title="Tweet"
+                  className={`${classes.anchor} fa-twitter`}
+                >
+                  <FontAwesomeIcon icon={faTwitter} />
+                </Button>
+                <Button
+                  size="small"
+                  href="mailto:?subject={PAGETITLE}&body={PAGEDESCRIPTION}:{PAGEURL}"
+                  target="_blank"
+                  title="Share via Email"
+                  className={`${classes.anchor} fa-envelope`}
+                >
+                  <FontAwesomeIcon icon={faEnvelope} />
+                </Button>
+              </span>
+            </Grid>
+          </Box>
+          <Grid container justify="space-evenly">
+            {footers.map(footer => (
+              <Grid item xs={6} sm={3} key={footer.title}>
+                <Typography variant="h6" color="textPrimary" gutterBottom>
+                  {footer.title}
+                </Typography>
+                <ul>
+                  {footer.description.map(item => (
+                    <li key={item}>
+                      <Link href="#" variant="subtitle1" color="textSecondary">
+                        {item}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </Grid>
+            ))}
+          </Grid>
+          <Box mt={5}>
+            <Copyright />
+          </Box>
+          {/* <Toolbar className={classes.noPadding}>
             <Copyright />
             <div className={classes.grow} />
             <span className={classes.socialLinks}>
@@ -170,7 +229,7 @@ class Footer extends React.Component {
                 <FontAwesomeIcon icon={faEnvelope} />
               </Button>
             </span>
-          </Toolbar>
+          </Toolbar> */}
         </Container>
       </div>
     )
@@ -179,6 +238,15 @@ class Footer extends React.Component {
 
 const styles = theme => {
   return {
+    '@global': {
+      ul: {
+        margin: 0,
+        padding: 0,
+      },
+      li: {
+        listStyle: 'none',
+      },
+    },
     root: {
       flexGrow: 1,
       padding: "48px 0px",
@@ -196,6 +264,14 @@ const styles = theme => {
       // },
       display: "block"
     },
+    footer: {
+      paddingTop: theme.spacing(3),
+      paddingBottom: theme.spacing(3),
+      [theme.breakpoints.up('sm')]: {
+        paddingTop: theme.spacing(6),
+        paddingBottom: theme.spacing(6),
+      },
+    }
     // flex: {
     //   display: "flex"
     // },
