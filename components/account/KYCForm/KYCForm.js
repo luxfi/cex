@@ -55,7 +55,7 @@ const steps = ["Personal Details", "Primary Address", "Photo IDs"]
 
 const ButtonLink = React.forwardRef(
   ({ className, href, hrefAs, children }, ref) => (
-    <Link ref={ref} href={href} as={hrefAs} prefetch>
+    <Link ref={ref} href={href} as={hrefAs}>
       <a className={className}>{children}</a>
     </Link>
   )
