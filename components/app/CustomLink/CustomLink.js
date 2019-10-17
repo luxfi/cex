@@ -5,8 +5,8 @@ import NextLink from "next/link"
 // <Button component={CustomLink} href={'/foo'}>bar</Button>
 
 const CustomLink = React.forwardRef(
-  ({ className, href, hrefAs, children, prefetch }, ref) => (
-    <NextLink ref={ref} href={href} as={hrefAs} prefetch>
+  ({ className, href, hrefAs, children }, ref) => (
+    <NextLink ref={ref} href={href} as={hrefAs}>
       <a className={className}>{children}</a>
     </NextLink>
   )
