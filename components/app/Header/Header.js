@@ -31,28 +31,6 @@ import {
 import { AutoCompleteSearch } from "../"
 
 import NextLink from "next/link"
-import Router from "next/router"
-
-let currencies = {
-  usd: "USD",
-  eur: "EUR",
-  jpy: "JPY"
-}
-
-// replace custom code to use material native hideonscroll
-function HideOnScroll(props) {
-  const { children, window } = props
-  // Note that you normally won't need to set the window ref as useScrollTrigger
-  // will default to window.
-  // This is only being set here because the demo is in an iframe.
-  const trigger = useScrollTrigger({ target: window ? window() : undefined })
-
-  return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      {children}
-    </Slide>
-  )
-}
 
 const CustomLink = React.forwardRef(
   ({ className, href, hrefAs, children, }, ref) => (
@@ -62,92 +40,40 @@ const CustomLink = React.forwardRef(
   )
 )
 
+
+const StyledMenu = withStyles({
+  paper: {
+    backgroundColor: "#0000009e",
+  },
+})(props => (
+  <Menu
+    // elevation={0}
+    // getContentAnchorEl={null}
+    // anchorOrigin={{
+    //   vertical: 'bottom',
+    //   horizontal: 'center',
+    // }}
+    // transformOrigin={{
+    //   vertical: 'top',
+    //   horizontal: 'center',
+    // }}
+    {...props}
+  />
+));
+
 @inject("store")
 @observer
 class Header extends React.Component {
-  // static async getInitialProps({ mobxStore }) {
-  //   return { ...mobxStore }
-  // }
-
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      anchorEl: null
-    }
-  }
-
-  handleMenu = event => {
-    this.setState({
-      anchorEl: event.currentTarget
-    })
-  }
-
-  handleClose = () => {
-    this.setState({
-      anchorEl: null
-    })
-  }
-
-  portfolio = () => {
-    this.setState({
-      anchorEl: null
-    })
-    Router.push("/portfolio")
-  }
-
-  send = () => {
-    this.setState({
-      anchorEl: null
-    })
-    Router.push("/account/send")
-  }
-
-  deposit = () => {
-    this.setState({
-      anchorEl: null
-    })
-    Router.push("/account/deposit")
-  }
-
-  withdrawal = () => {
-    this.setState({
-      anchorEl: null
-    })
-    Router.push("/account/withdrawal")
-  }
-
-  logout = () => {
-    this.props.store.userStore.logout()
-    Router.push("/")
-  }
-
-  login = () => {
-    this.setState({
-      anchorEl: null
-    })
-
-    Router.push("/login")
-  }
-
-  signup = () => {
-    this.setState({
-      anchorEl: null
-    })
-
-    Router.push("/signup")
-  }
 
   render() {
-    let { classes, store, onHomePage, darkTheme, lightTheme } = this.props
-    // let accountLoaded = !!this.props.rootData.get("account.id") && identity
+    let { classes, store, onHomePage, darkTheme, lightTheme, openModal } = this.props
     let accountLoaded = store.userStore.loggedIn
-
-    let open = !!this.state.anchorEl
 
     const GuestNavBar = () => {
       const [anchorEl, setAnchorEl] = React.useState(null)
+      const [anchorEl2, setAnchorEl2] = React.useState(null)
       const open = Boolean(anchorEl)
+      const open2 = Boolean(anchorEl2)
 
       function handleClick(event) {
         setAnchorEl(event.currentTarget)
@@ -156,119 +82,169 @@ class Header extends React.Component {
       function handleClose() {
         setAnchorEl(null)
       }
+
+      function handleClick2(event) {
+        setAnchorEl2(event.currentTarget)
+      }
+
+      function handleClose2() {
+        setAnchorEl2(null)
+      }
+
+      const trigger = useScrollTrigger({ threshold: 0, disableHysteresis: true, });
       return (
         <>
-          <MuiThemeProvider theme={onHomePage ? darkTheme : lightTheme}>
-            <HideOnScroll>
-              <AppBar
-                id="navbar"
-                position="fixed"
-                color="inherit"
-                className={
-                  onHomePage ? classes.transparent : classes.whiteBackground
-                }
-              >
-                {" "}
-                <Container maxWidth="lg">
-                  <Toolbar
-                    className={`${classes.noPadding} ${classes.toolBar}`}
+          <MuiThemeProvider theme={darkTheme}>
+            <AppBar
+              id="navbar"
+              position="fixed"
+              color="inherit"
+              className={
+                `${classes.appBar} ${
+                !trigger ? classes.transparent : classes.translucent
+                }`
+              }
+            >
+              {" "}
+              <Container maxWidth="xl">
+                <Toolbar
+                  className={`${classes.noPadding} ${classes.toolBar}`}
+                >
+                  <Link
+                    href="/"
+                    className={classes.flex}
+                    component={CustomLink}
                   >
-                    <Link
-                      href="/"
-                      className={classes.flex}
-                      component={CustomLink}
+                    <img
+                      id="logo"
+                      src="/static/images/esx/esx-white-logo.png"
+                      alt="ESX"
+                      style={{ marginTop: "-15px" }}
+                      height="52px"
+                    />
+                  </Link>
+                  <div maxWidth="lg" style={{ marginLeft: "128px" }}>
+                    <Button
+                      aria-controls="menu"
+                      aria-haspopup="true"
+                      onClick={handleClick2}
+                      color="inherit"
+                      className={classes.menuButton}
                     >
-                      {" "}
-                      {/* get rid of inline style */}
-                      <img
-                        id="logo"
-                        src="/static/img/logo.png"
-                        alt="ESX"
-                        height="80px"
-                      />
-                    </Link>
-                    <div className={classes.grow} />
-                    {/* <div className={classes.search}>
-                      <div className={classes.searchIcon}>
-                        <Search />
-                      </div>
-                      <InputBase
-                        placeholder="Search…"
-                        classes={{
-                          root: classes.inputRoot,
-                          input: classes.inputInput
-                        }}
-                        inputProps={{ "aria-label": "search" }}
-                      />
-                    </div> */}
-                    <div className={classes.search}>
-                      <div className={classes.searchIcon}>
-                        <Search />
-                      </div>
-                      <AutoCompleteSearch
-                        placeholder="Search…"
-                        classes={{
-                          root: classes.inputRoot,
-                          input: classes.inputInput
-                        }}
-                      />
+                      Discover
+                    </Button>
+                    <StyledMenu
+                      id="menu"
+                      anchorEl={anchorEl2}
+                      keepMounted
+                      open={open2}
+                      onClose={handleClose2}
+                      style={{ marginTop: "50px", transform: "translate(-22px, 0px)" }}
+                    >
+                      <MenuItem onClick={() => {
+                        openModal("Movies")
+                      }}>
+                        <span style={{ padding: "16px" }}>Movies</span>
+                      </MenuItem>
+                      <MenuItem onClick={() => {
+                        openModal("TV Series")
+                      }}>
+                        <span style={{ padding: "16px" }}>TV Series</span>
+                      </MenuItem>
+                      <MenuItem onClick={() => {
+                        openModal("Music")
+                      }}>
+                        <span style={{ padding: "16px" }}>Music</span>
+                      </MenuItem>
+                      <MenuItem onClick={() => {
+                        openModal("Gaming")
+                      }}>
+                        <span style={{ padding: "16px" }}>Gaming</span>
+                      </MenuItem>
+                    </StyledMenu>
+                    <Button
+                      onClick={() => {
+                        openModal("Shop")
+                      }}
+                      color="inherit"
+                      className={classes.menuButton}
+                    >
+                      Shop
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        openModal("Investors")
+                      }}
+                      color="inherit"
+                      className={classes.menuButton}
+                    >
+                      Investors
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        openModal("Communities")
+                      }}
+                      color="inherit"
+                      className={classes.menuButton}
+                    >
+                      Communities
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        openModal("Loyalty")
+                      }}
+                      color="inherit"
+                      className={classes.menuButton}
+                    >
+                      Loyalty
+                    </Button>
+                  </div>
+                  <div className={classes.grow} />
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <SearchIcon />
                     </div>
-                    {accountLoaded ? (
-                      <>
-                        {/* <MuiText
-                        select
-                        value="usd"
-                        className={`${classes.menuButton} ${classes.select}`}
-                        margin="normal"
-                        options={currencies}
-                      /> */}
-                        <IconButton
-                          aria-controls="menu"
-                          aria-haspopup="true"
-                          onClick={handleClick}
-                        >
-                          <AccountCircle style={{ fontSize: "2rem" }} />
-                        </IconButton>
-                        <Menu
-                          id="menu"
-                          anchorEl={anchorEl}
-                          keepMounted
-                          open={open}
-                          onClose={handleClose}
-                        >
-                          <MenuItem component={CustomLink} href={"/account"}>
-                            <AccountCircle />
-                            <span style={{ padding: "15px" }}>Account</span>
-                          </MenuItem>
-                          <MenuItem component={CustomLink} href={"/portfolio"}>
-                            <PieChart />
-                            <span style={{ padding: "15px" }}>Portfolio</span>
-                          </MenuItem>
-                          {/* <MenuItem onClick={this.deposit}>
-                          <ArrowUpward />
-                          <span style={{ padding: "15px" }}>Deposit</span>
+                    <AutoCompleteSearch
+                      placeholder="Search…"
+                      classes={{
+                        root: classes.inputRoot,
+                        input: classes.inputInput
+                      }}
+                    />
+                  </div>
+                  {accountLoaded ? (
+                    <>
+                      <IconButton
+                        aria-controls="menu"
+                        aria-haspopup="true"
+                        onClick={handleClick}
+                      >
+                        <AccountCircle style={{ fontSize: "2rem" }} />
+                      </IconButton>
+                      <StyledMenu
+                        id="menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={open}
+                        onClose={handleClose}
+                        style={{ marginTop: "50px" }}
+                      >
+                        <MenuItem component={CustomLink} href={"/portfolio"}>
+                          <AccountCircle />
+                          <span style={{ padding: "15px" }}>Portfolio</span>
                         </MenuItem>
-                        {/* <MenuItem onClick={this.send}> // propbably won't need this, decide later (tyler)
-                        <Send />
-                        <span style={{ padding: "15px" }}>Send</span>
-                      </MenuItem> */}
-                          {/* <MenuItem onClick={this.withdrawal}>
-                          <ArrowDownward />
-                          <span style={{ padding: "15px" }}>Withdrawal</span>
-                        </MenuItem> */}
-                          <MenuItem onClick={this.logout}>
-                            <ExitToApp />
-                            <span style={{ padding: "15px" }}>Logout</span>
-                          </MenuItem>
-                        </Menu>
-                      </>
-                    ) : (
+                        <MenuItem onClick={this.logout}>
+                          <ExitToApp />
+                          <span style={{ padding: "15px" }}>Logout</span>
+                        </MenuItem>
+                      </StyledMenu>
+                    </>
+                  ) : (
                       <>
                         <Button
                           component={CustomLink}
                           href={"/login"}
                           color="inherit"
-                          // onClick={this.login}
                           className={classes.menuButton}
                         >
                           Login
@@ -278,17 +254,15 @@ class Header extends React.Component {
                           color="inherit"
                           variant="outlined"
                           href={"/signup"}
-                          // onClick={this.signup}
                           className={classes.menuButton}
                         >
                           Sign Up
                         </Button>
                       </>
                     )}
-                  </Toolbar>
-                </Container>
-              </AppBar>
-            </HideOnScroll>
+                </Toolbar>
+              </Container>
+            </AppBar>
             <Toolbar />
           </MuiThemeProvider>
         </>
@@ -358,11 +332,17 @@ const styles = theme => {
     flex: {
       display: "flex"
     },
+    appBar: {
+      height: "80px",
+      boxShadow: "none",
+    },
     transparent: {
       background: "transparent !important",
-      boxShadow: "none",
-      color: "#FFFFFF",
-      paddingTop: "25px"
+      transition: "background 0.25s ease-in-out"
+    },
+    translucent: {
+      background: "rgba(17, 17, 17, 0.847)",
+      transition: "background 0.25s ease-in-out"
     },
     select: {
       [theme.breakpoints.up("sm")]: {
@@ -373,13 +353,9 @@ const styles = theme => {
       marginRight: theme.spacing(2),
       display: "none"
     },
-    toolBar: {},
-    white: {
-      color: "white"
+    toolBar: {
+      minHeight: "80px"
     },
-    whiteBackground: {
-      backgroundColor: "white"
-    }
   }
 }
 

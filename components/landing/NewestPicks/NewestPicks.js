@@ -51,8 +51,8 @@ export default class NewestPicksSection extends React.Component {
     console.log('watchlist', userPortfolio.watchlist)
     const loggedIn = store.userStore.loggedIn
     return (
-      <div id="newest-picks">
-        <Typography variant="h5">
+      <div id="newest-picks" style={{ padding: "48px 0px"}} >
+        <Typography variant="h5" style={{ marginLeft: "56px" }} gutterBottom> 
           <Box fontWeight={100} fontSize={20}>
             NOW FUNDRAISING
           </Box>
@@ -67,6 +67,7 @@ export default class NewestPicksSection extends React.Component {
                   item
                   style={{
                     cursor: "pointer",
+                    paddingRight: "16px"
                   }}
                   xs={12}
                   sm={12}
@@ -85,10 +86,10 @@ export default class NewestPicksSection extends React.Component {
                         justifyContent: 'center',
                         backgroundImage: `url(${d.posterImg})`,
                         maxHeight: '1200px',
-                        minHeight: '500px',
-                        backgroundSize: 'cover'
-                      }}
-                    >
+                        minHeight: '600px',
+                        backgroundSize: 'cover',
+                  }}
+                >
                       <div className="pick-text">
                         <Typography variant="body1">
                           <strong>{d.name}</strong>
@@ -127,13 +128,10 @@ export default class NewestPicksSection extends React.Component {
           })}
         </Grid>
         <style jsx>{`
-          #newest-picks {
-            transform: translate(0, -15vh);
-          }
 
-          #newest-picks :global(.MuiCard-root) {
-            margin-bottom: 32px;
-          }
+          // #newest-picks :global(.MuiCard-root) {
+          //   margin-bottom: 32px;
+          // }
 
           #newest-picks :global(.MuiCardContent-root) {
             padding: 0;

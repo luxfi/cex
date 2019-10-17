@@ -1,53 +1,59 @@
 import { createMuiTheme } from "@material-ui/core/styles"
+import { red } from '@material-ui/core/colors'
 
-export const darkTheme = createMuiTheme({
+const baseTheme = {
   palette: {
-    type: "dark",
-    primary: {
-      main: "#0099ff" // logo blue
-    },
-    secondary: {
-      main: "#ff9e3e" // logo yellow
-    },
-
-    text: {
-      primary: "#f0f0f0",
-      secondary: "#f0f0f0" // breadcrumbs uses this
-    },
-    background: {
-      default: "rgb(29, 38, 50)",
-      paper: "#2f2f2f"
-    },
-    overrides: {
-      MuiCssBaseline: {
-        "@global": {
-          body: {
-            backgroundColor: "rgb(29, 38, 50)"
-          }
-        }
-      }
-    }
-  },
-  typography: {
-    fontFamily: "‘BWHaasGroteskTF-55Roman-Web, sans-serif’, sans-serif",
-    useNextVariants: true
-  }
-})
-
-export const lightTheme = createMuiTheme({
-  palette: {
-    type: "light",
     primary: {
       main: "#0099ff", // logo blue
     },
     secondary: {
       main: "#ff9e3e",  // logo yellow
-    }
+    },
+    error: {
+      main: red.A400,
+    },
+    background: {
+      default: '#fff',
+    },
   },
   typography: {
     fontFamily: "‘BWHaasGroteskTF-55Roman-Web, sans-serif’, sans-serif",
     useNextVariants: true
   }
+}
+
+export const darkTheme = createMuiTheme({
+  ...baseTheme,
+  palette: {
+    primary: {
+      main: "#5fb8ff", // desaturaed logo blue per material recommendations for dark mod
+    },
+    secondary: {
+      main: "#ffbb66",  // logo yellow
+    },
+    type: "dark",
+    text: {
+      primary: "#f0f0f0",
+      secondary: "#f0f0f0" // breadcrumbs uses this
+    },
+    background: {
+      default: "rgb(15, 15, 15)",
+      paper: "#2f2f2f"
+    },
+  },
+  defaultSVGColor: "white"
+})
+
+export const lightTheme = createMuiTheme({
+  ...baseTheme,
+  palette: {
+    type: "light",
+    background: {
+      default: "white",
+      paper: "#f0f0f0"
+    },
+  },
+  defaultSVGColor: "black"
 })
 
 // example of page film.js
@@ -76,3 +82,4 @@ export const lightTheme = createMuiTheme({
 // https://css-tricks.com/a-dark-mode-toggle-with-react-and-themeprovider/
 // switch theme based on local storage
 // https://markoskon.com/dark-mode-in-react/
+// https://github.com/4nubhav/Todo/blob/8c18e32769d8dc4a34c9fef41fe93a1294ac10ce/src/components/contexts/ThemeContext.js

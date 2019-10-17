@@ -21,6 +21,7 @@
     "@zeit/next-sass": "^1.0.1",
     "akasha": "0.1.13",
     "autosuggest-highlight": "^3.1.1",
+    "babel-plugin-inline-react-svg": "^1.1.0",
     "bignumber.js": "9.0.0",
     "bip39": "3.0.2",
     "classnames": "2.2.6",
@@ -87,5 +88,11 @@
     "rucksack-css": "1.0.2",
     "rupture": "0.7.1",
     "stylus": "0.54.7"
-  }
+  },
+  "browserslist": [
+    "last 1 version",
+    "> 1%",
+    "maintained node versions",
+    "not dead"
+  ]
 }
