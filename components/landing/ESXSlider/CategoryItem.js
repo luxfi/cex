@@ -9,12 +9,12 @@ import IconArrowDown from '../Icons/IconArrowDown'
 import { TrailerSliderModal } from ".."
 const { forwardRef, useRef, useImperativeHandle } = React
 
-const Item = ({ category }) => {
+const Item = ({ category, openModal }) => {
   const childRef = useRef()
 
   return (
     <SliderContext.Consumer>
-      {({ onSelectSlide, currentSlide, elementRef }) => {
+      {({ onSelectSlide, currentSlide, elementRef}) => {
         // const isActive = currentSlide && currentSlide.id === movie.id;
         return (
           <div
@@ -29,7 +29,9 @@ const Item = ({ category }) => {
             }}
           >
             <Card
-            // onClick={() => childRef.current.handleOpen()}
+              onClick={() => {
+                openModal(category.title)
+              }}
             >
               <CardContent
                 style={{

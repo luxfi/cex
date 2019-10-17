@@ -70,7 +70,7 @@ class CustomModal extends React.Component {
               <div className={classes.modalHeader}>
                 <div className={classes.modalTitle}>{title}</div>
               </div>
-              <div className={classes.modalBody}>{body}</div>
+              <div className={classes.modalBody}>{body ? body : "Put " + title + " information here"}</div>
               {/* {children} */}
               {/* <h2 id="transition-modal-title">Transition modal</h2>
             <p id="transition-modal-description">

@@ -32,95 +32,55 @@ const AboutESX = ({ classes, openModal }) => {
       anyone the chance to back the next greatest film.
         </p>
   </>)
-
-  const title ="What is ESX?"
-
-  const handleOpen = () => {
-    openModal(title, body)
-  }
-
-  // const handleClose = () => {
-  //   setOpen(false)
-  // }
+  const title = "What is ESX?"
   return (
-    <>
-      <Button className={classes.menuButton} onClick={handleOpen}>
-        About ESX
+    <Button className={classes.menuButton} onClick={() => {
+      openModal(title, body)
+    }}>
+      About ESX
       </Button>
-      {/* <CustomModal handleClose={handleClose} open={open} title="What is ESX?">
-        <p>ESX is a film investing platform for everyone.</p>{" "}
-        <p>
-          We allow regular people — not just wealthy film producers — to invest
-          in promising films, with as little as $10 or as much as $100,000 per
-          investment.
+  )
+}
+
+const Partnerships = ({ classes, openModal }) => {
+  const body = (<>
+    <p>
+      Proxicoin - $750 million in capacity 8-10 films per year at scale 1-4
+      television properties per year
         </p>{" "}
-        <p>
-          ESX was created to democratize fundraising for film while giving
-          anyone the chance to back the next greatest film.
+    <p>
+      Twisted Pictures - Horror / Urban production company led by Mark Burg,
+      producer of the Saw franchise
+        </p>{" "}
+    <p>
+      Centauri Media - $250mm film production fund with potential of up to 5
+      studio released films a year
         </p>
-      </CustomModal> */}
-    </>
-  )
-}
-
-const Partnerships = ({ classes }) => {
-  const [open, setOpen] = React.useState(false)
-
-  const handleOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
+  </>)
+  const title = "Partnerships"
   return (
-    <>
-      <Button className={classes.menuButton} onClick={handleOpen}>
-        Partnerships
+    <Button className={classes.menuButton} onClick={() => {
+      openModal(title, body)
+    }}>
+      Partnerships
       </Button>
-      <CustomModal handleClose={handleClose} open={open} title="Partnerships">
-        <p>
-          Proxicoin - $750 million in capacity 8-10 films per year at scale 1-4
-          television properties per year
-        </p>{" "}
-        <p>
-          Twisted Pictures - Horror / Urban production company led by Mark Burg,
-          producer of the Saw franchise
-        </p>{" "}
-        <p>
-          Centauri Media - $250mm film production fund with potential of up to 5
-          studio released films a year
-        </p>
-      </CustomModal>
-    </>
   )
 }
 
-const ContactUs = ({ classes }) => {
-  const [open, setOpen] = React.useState(false)
-
-  const handleOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
+const ContactUs = ({ classes, openModal }) => {
+  const body = (<>
+    <p>Put Contact Infomation Here</p>{" "}
+  </>)
+  const title = "Contact Us"
   return (
-    <>
-      <Button
-        className={classes.menuButton}
-        // color="transparent"
-        onClick={handleOpen}
-      >
-        Contact Us
+    <Button className={classes.menuButton} onClick={() => {
+      openModal(title, body)
+    }}>
+      Contact Us
       </Button>
-      <CustomModal handleClose={handleClose} open={open} title="Contact Us">
-        <p>Put Contact Infomation Here</p>{" "}
-      </CustomModal>
-    </>
   )
 }
+
 
 @inject("store")
 @observer
@@ -151,8 +111,8 @@ class Footer extends React.Component {
             </Typography>
             <div className={classes.grow} />
             <AboutESX classes={classes} openModal={openModal} />
-            <Partnerships classes={classes} />
-            <ContactUs classes={classes} />
+            <Partnerships classes={classes} openModal={openModal} />
+            <ContactUs classes={classes} openModal={openModal} />
             {!loggedIn && (
               <Button
                 className={classes.signUpButton}

@@ -60,7 +60,7 @@ const StyledMenu = withStyles({
 class Header extends React.Component {
 
   render() {
-    let { classes, store, onHomePage, darkTheme, lightTheme } = this.props
+    let { classes, store, onHomePage, darkTheme, lightTheme, openModal } = this.props
     let accountLoaded = store.userStore.loggedIn
 
     const GuestNavBar = () => {
@@ -113,11 +113,11 @@ class Header extends React.Component {
                       id="logo"
                       src="/static/images/esx/esx-white-logo.png"
                       alt="ESX"
-                      style={{ marginTop: "-15px"}}
-                    height="52px"
-                  />
+                      style={{ marginTop: "-15px" }}
+                      height="52px"
+                    />
                   </Link>
-                  <div maxWidth="lg" style={{marginLeft: "128px"}}>
+                  <div maxWidth="lg" style={{ marginLeft: "128px" }}>
                     <Button
                       aria-controls="menu"
                       aria-haspopup="true"
@@ -133,48 +133,60 @@ class Header extends React.Component {
                       keepMounted
                       open={open2}
                       onClose={handleClose2}
-                      style={{ marginTop: "50px", transform: "translate(-22px, 0px)"}}
-                  >
-                      <MenuItem component={CustomLink} href={"/"}>
+                      style={{ marginTop: "50px", transform: "translate(-22px, 0px)" }}
+                    >
+                      <MenuItem onClick={() => {
+                        openModal("Movies")
+                      }}>
                         <span style={{ padding: "16px" }}>Movies</span>
                       </MenuItem>
-                      <MenuItem component={CustomLink} href={"/"}>
+                      <MenuItem onClick={() => {
+                        openModal("TV Series")
+                      }}>
                         <span style={{ padding: "16px" }}>TV Series</span>
                       </MenuItem>
-                      <MenuItem component={CustomLink} href={"/"}>
+                      <MenuItem onClick={() => {
+                        openModal("Music")
+                      }}>
                         <span style={{ padding: "16px" }}>Music</span>
                       </MenuItem>
-                      <MenuItem component={CustomLink} href={"/"}>
+                      <MenuItem onClick={() => {
+                        openModal("Gaming")
+                      }}>
                         <span style={{ padding: "16px" }}>Gaming</span>
                       </MenuItem>
                     </StyledMenu>
                     <Button
-                      component={CustomLink}
-                      href={"/"}
+                      onClick={() => {
+                        openModal("Shop")
+                      }}
                       color="inherit"
                       className={classes.menuButton}
                     >
                       Shop
                     </Button>
                     <Button
-                      component={CustomLink}
-                      href={"/"}
+                      onClick={() => {
+                        openModal("Investors")
+                      }}
                       color="inherit"
                       className={classes.menuButton}
                     >
                       Investors
                     </Button>
                     <Button
-                      component={CustomLink}
-                      href={"/"}
+                      onClick={() => {
+                        openModal("Communities")
+                      }}
                       color="inherit"
                       className={classes.menuButton}
                     >
                       Communities
                     </Button>
                     <Button
-                      component={CustomLink}
-                      href={"/"}
+                      onClick={() => {
+                        openModal("Loyalty")
+                      }}
                       color="inherit"
                       className={classes.menuButton}
                     >

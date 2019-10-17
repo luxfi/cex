@@ -94,6 +94,7 @@ class MyMobxApp extends App {
                       onHomePage={onHomePage}
                       darkTheme={darkTheme}
                       lightTheme={lightTheme}
+                      openModal={(title, body) => this.mobxStore.uiStore.openModal(title, body)}
                     />
                     <Component
                       {...pageProps}

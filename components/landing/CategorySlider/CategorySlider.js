@@ -43,7 +43,13 @@ export default class TrailerSlider extends React.Component {
           <Slider>
             {studioImages.map((category, i) => {
               return (
-                <Slider.CategoryItem category={category} key={i}>item1</Slider.CategoryItem>
+                <Slider.CategoryItem 
+                  category={category} 
+                  key={i}
+                  openModal={(title, body) => store.uiStore.openModal(title, body)}
+                >
+                  item1
+                </Slider.CategoryItem>
               )
             })}
           </Slider>
