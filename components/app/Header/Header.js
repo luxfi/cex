@@ -202,7 +202,7 @@ class Header extends React.Component {
                   <div className={classes.grow} />
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
-                      <SearchIcon />
+                      <Search />
                     </div>
                     <AutoCompleteSearch
                       placeholder="Search…"
