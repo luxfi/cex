@@ -8,9 +8,11 @@ import { Card, CardContent } from "@material-ui/core"
 import { TrailerSliderModal } from "../"
 const { forwardRef, useRef, useImperativeHandle } = React
 
-const Item = ({ imgSrc }) => {
+const Item = ({ imgSrc, openModal }) => {
   const childRef = useRef()
-
+  const split = imgSrc.split('/')
+  const lastElement = split[split.length - 1]
+  const name = lastElement.substring(0, lastElement.length - 4).toUpperCase()
   return (
     <SliderContext.Consumer>
       {({ onSelectSlide, currentSlide, elementRef }) => {
@@ -28,6 +30,9 @@ const Item = ({ imgSrc }) => {
             }}
           >
             <Card
+              onClick={() => {
+                openModal(name)
+              }}
               // onClick={() => childRef.current.handleOpen()}
             >
               <CardContent
