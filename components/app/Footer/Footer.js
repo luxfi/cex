@@ -223,7 +223,7 @@ const FooterMiddleRow = ( {classes, openModal} ) => (
         </Grid>
         <Grid item>
           <Link target="_blank" rel="noopener noreferrer" href="https://play.google.com/">
-            <img style={{ height: '60px' }} alt="Download on Google Play" src="images/footer/GoogleStoreBadge.png" />
+            <img style={{ height: '60px', paddingLeft: "8px" }} alt="Download on Google Play" src="images/footer/GoogleStoreBadge.png" />
           </Link>
         </Grid>
       </Grid>
