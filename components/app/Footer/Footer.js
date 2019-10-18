@@ -3,8 +3,7 @@ import { inject, observer } from "mobx-react"
 
 //font awesome share icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
-import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons"
+import { faFacebook, faTwitter, faPinterest, faInstagram, faYoutube, faMedium } from "@fortawesome/free-brands-svg-icons"
 
 // material components
 import {
@@ -133,32 +132,44 @@ const FooterTopRow = ({classes}) => (
         />
       </Link>
       <div className={classes.grow} />
-      <span className={classes.socialLinks}>
-        <Button
-          // size="small"
-          href="https://www.facebook.com/"
-          target="_blank"
-          title="Share on Facebook"
-        >
-          <FontAwesomeIcon icon={faFacebook} />
-        </Button>
-        <Button
-          // size="small"
-          href="https://twitter.com/"
-          target="_blank"
-          title="Tweet"
-        >
-          <FontAwesomeIcon icon={faTwitter} />
-        </Button>
-        <Button
-          // size="small"
-          href="mailto:?subject={PAGETITLE}&body={PAGEDESCRIPTION}:{PAGEURL}"
-          target="_blank"
-          title="Share via Email"
-        >
-          <FontAwesomeIcon icon={faEnvelope} />
-        </Button>
-      </span>
+
+      <Button
+        href="https://twitter.com/"
+        target="_blank"
+        title="Tweet"
+      >
+        <FontAwesomeIcon icon={faTwitter} size="2x" />
+      </Button>
+      <Button
+        href="https://www.facebook.com/"
+        target="_blank"
+      >
+        <FontAwesomeIcon icon={faFacebook} size="2x" />
+      </Button>
+      <Button
+        href="https://www.pinterest.com/"
+        target="_blank"
+      >
+        <FontAwesomeIcon icon={faPinterest} size="2x" />
+      </Button>
+      <Button
+        href="https://www.instagram.com/"
+        target="_blank"
+      >
+        <FontAwesomeIcon icon={faInstagram} size="2x" />
+      </Button>
+      <Button
+        href="https://www.youtube.com/"
+        target="_blank"
+      >
+        <FontAwesomeIcon icon={faYoutube} size="2x" />
+      </Button>
+      <Button
+        href="https://www.medium.com/"
+        target="_blank"
+      >
+        <FontAwesomeIcon icon={faMedium} size="2x" />
+      </Button>
     </Grid>
   </Box>
 )
@@ -231,39 +242,6 @@ class Footer extends React.Component {
           <Box mt={5}>
             <Copyright />
           </Box>
-          {/* <Toolbar className={classes.noPadding}>
-            <Copyright />
-            <div className={classes.grow} />
-            <span className={classes.socialLinks}>
-              <Button
-                size="small"
-                href="https://www.facebook.com/"
-                target="_blank"
-                title="Share on Facebook"
-                className={`${classes.anchor} fa-facebook`}
-              >
-                <FontAwesomeIcon icon={faFacebook} />
-              </Button>
-              <Button
-                size="small"
-                href="https://twitter.com/"
-                target="_blank"
-                title="Tweet"
-                className={`${classes.anchor} fa-twitter`}
-              >
-                <FontAwesomeIcon icon={faTwitter} />
-              </Button>
-              <Button
-                size="small"
-                href="mailto:?subject={PAGETITLE}&body={PAGEDESCRIPTION}:{PAGEURL}"
-                target="_blank"
-                title="Share via Email"
-                className={`${classes.anchor} fa-envelope`}
-              >
-                <FontAwesomeIcon icon={faEnvelope} />
-              </Button>
-            </span>
-          </Toolbar> */}
         </Container>
       </div>
     )
@@ -284,7 +262,6 @@ const styles = theme => {
     root: {
       flexGrow: 1,
       padding: "48px 0px",
-      // backgroundImage: 'linear-gradient(180deg, #000000 0%, #151515 100%)',
       background: "#000",
     },
     menuButton: {
@@ -293,9 +270,6 @@ const styles = theme => {
     grow: {
       flexGrow: 1,
       display: "none",
-      // [theme.breakpoints.up("sm")]: {
-      //   display: "block"
-      // },
       display: "block"
     },
     footer: {
@@ -306,32 +280,6 @@ const styles = theme => {
         paddingBottom: theme.spacing(6),
       },
     },
-    // flex: {
-    //   display: "flex"
-    // },
-    // transparent: {
-    //   background: "transparent !important",
-    //   boxShadow: "none"
-    //   //color: "#fff"
-    // },
-    anchor: {
-      // margin: "3px",
-      // display: "inline-block",
-      // color: "#fff"
-      // padding: "7px",
-      // borderRadius: "2px",
-      height: "1.8125rem"
-    },
-    // socialLinks: {
-    //   // height: "38.5px"
-    // },
-    // white: {
-    //   color: "#fff"
-    // },
-    // signUpButton: {
-    //   color: "white !important",
-    //   border: "2px solid white !important"
-    // }
   }
 }
 
