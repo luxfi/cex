@@ -1,17 +1,13 @@
 import React from "react"
 
-// @material-ui/core components
 import { withStyles } from "@material-ui/core/styles"
 
 import { inject, observer } from "mobx-react"
 
-// core components
 import { PillsTabs } from "../components/portfolio"
 
-// import styles from "assets/jss/material-kit-react/views/portfolioPage.js"
-import styles from "../pageStyles/portfolio.style"
+import styles from "../pageStyles/portfolio.style.js"
 
-// Sections for this page
 import PortfolioView from "../components/portfolio/PortfolioView/PortfolioView"
 import TradeView from "../components/portfolio/TradeView/TradeView"
 import RewardsView from "../components/portfolio/RewardsView/RewardsView"
