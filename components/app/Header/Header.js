@@ -10,16 +10,14 @@ import Menu from "@material-ui/core/Menu"
 import MenuItem from "@material-ui/core/MenuItem"
 import AccountCircle from "@material-ui/icons/AccountCircle"
 import Container from "@material-ui/core/Container"
-import Slide from "@material-ui/core/Slide"
 import useScrollTrigger from "@material-ui/core/useScrollTrigger"
 import Link from "@material-ui/core/Link"
 
-// Material icons
 import SearchIcon from "@material-ui/icons/Search"
 import ExitToApp from "@material-ui/icons/ExitToApp"
 
-// Material styles
-import { fade, withStyles, MuiThemeProvider } from "@material-ui/core/styles"
+import { fade, withStyles } from "@material-ui/core/styles"
+
 
 // Core components
 import { AutoCompleteSearch } from "../"
