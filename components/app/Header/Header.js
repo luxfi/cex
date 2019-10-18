@@ -1,29 +1,26 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
 
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Button,
-  Menu,
-  MenuItem,
-  Container,
-  Slide,
-  useScrollTrigger,
-  Link,
-}
-from "@material-ui/core"
+// Material components
+import AppBar from "@material-ui/core/AppBar"
+import Toolbar from "@material-ui/core/Toolbar"
+import IconButton from "@material-ui/core/IconButton"
+import Button from "@material-ui/core/Button"
+import Menu from "@material-ui/core/Menu"
+import MenuItem from "@material-ui/core/MenuItem"
+import AccountCircle from "@material-ui/icons/AccountCircle"
+import Container from "@material-ui/core/Container"
+import useScrollTrigger from "@material-ui/core/useScrollTrigger"
+import Link from "@material-ui/core/Link"
 
-import {
-  AccountCircle,
-  ExitToApp,
-  PieChart,
-  Search,
-} from "@material-ui/icons"
+// Material icons
+import SearchIcon from "@material-ui/icons/Search"
+import ExitToApp from "@material-ui/icons/ExitToApp"
 
+// Material styles
 import { fade, withStyles } from "@material-ui/core/styles"
 
+// Core components
 import { AutoCompleteSearch } from "../"
 
 import NextLink from "next/link"
@@ -233,57 +230,8 @@ class Header extends React.Component {
                         <span style={{ padding: "15px" }}>Logout</span>
                       </MenuItem>
                     </StyledMenu>
-                    <Button
-                      onClick={() => {
-                        openModal("Shop")
-                      }}
-                      color="inherit"
-                      className={classes.menuButton}
-                    >
-                      Shop
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        openModal("Investors")
-                      }}
-                      color="inherit"
-                      className={classes.menuButton}
-                    >
-                      Investors
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        openModal("Communities")
-                      }}
-                      color="inherit"
-                      className={classes.menuButton}
-                    >
-                      Communities
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        openModal("Loyalty")
-                      }}
-                      color="inherit"
-                      className={classes.menuButton}
-                    >
-                      Loyalty
-                    </Button>
-                  </div>
-                  <div className={classes.grow} />
-                  <div className={classes.search}>
-                    <div className={classes.searchIcon}>
-                      <Search />
-                    </div>
-                    <AutoCompleteSearch
-                      placeholder="Search…"
-                      classes={{
-                        root: classes.inputRoot,
-                        input: classes.inputInput
-                      }}
-                    />
-                  </div>
-                  {accountLoaded ? (
+                  </>
+                ) : (
                     <>
                       <Button
                         component={CustomLink}
