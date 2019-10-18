@@ -113,7 +113,7 @@ const footers = [
   },
   {
     title: 'Account',
-    description: ['Sign In', 'Create Account', 'Orders', 'My Portfolio'],
+    description: ['Sign In', 'Create Account', 'Orders', 'Portfolio'],
   },
 ];
 
@@ -174,7 +174,7 @@ const FooterTopRow = ({classes}) => (
   </Box>
 )
 
-const FooterMiddleRow = ( {classes} ) => (
+const FooterMiddleRow = ( {classes, openModal} ) => (
   <Grid container direction="row">
     <Grid xs={8} item container justify="space-evenly">
       {footers.map(footer => (
@@ -185,7 +185,15 @@ const FooterMiddleRow = ( {classes} ) => (
           <ul>
             {footer.description.map(item => (
               <li key={item}>
-                <Link href="#" variant="subtitle1" color="textSecondary">
+               
+                <Link 
+                  href="#" 
+                  variant="subtitle1" 
+                  color="textSecondary"
+                  onClick={() => {
+                    openModal(item)
+                  }}
+                  >
                   {item}
                 </Link>
               </li>
@@ -238,7 +246,7 @@ class Footer extends React.Component {
       <div className={classes.root}>
         <Container maxWidth="lg" component="footer" className={classes.footer}>
           <FooterTopRow classes={classes}/>
-          <FooterMiddleRow/>
+          <FooterMiddleRow openModal={openModal}/>
           <Box mt={5}>
             <Copyright />
           </Box>
@@ -261,7 +269,7 @@ const styles = theme => {
     },
     root: {
       flexGrow: 1,
-      padding: "48px 0px",
+      padding: "32px 0px",
       background: "#000",
     },
     menuButton: {
