@@ -218,12 +218,12 @@ const FooterMiddleRow = ( {classes, openModal} ) => (
       <Grid item container justify="center">
         <Grid item>
           <Link target="_blank" rel="noopener noreferrer" href="https://itunes.apple.com">
-            <img style={{ height: '60px', padding: "10px 0px" }} alt="Available on the App Store" src="images/footer/app-store-badge.svg" />
+            <img style={{ height: '60px', padding: "10px 0px" }} alt="Available on the App Store" src="/static/images/footer/app-store-badge.svg" />
           </Link>
         </Grid>
         <Grid item>
           <Link target="_blank" rel="noopener noreferrer" href="https://play.google.com/">
-            <img style={{ height: '60px', paddingLeft: "8px" }} alt="Download on Google Play" src="images/footer/GoogleStoreBadge.png" />
+            <img style={{ height: '60px', paddingLeft: "8px" }} alt="Download on Google Play" src="/static/images/footer/GoogleStoreBadge.png" />
           </Link>
         </Grid>
       </Grid>
