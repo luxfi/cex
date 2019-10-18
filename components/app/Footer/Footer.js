@@ -244,7 +244,7 @@ class Footer extends React.Component {
     const loggedIn = store.userStore.loggedIn
     return (
       <div className={classes.root}>
-        <Container maxWidth="lg" component="footer" className={classes.footer}>
+        <Container maxWidth="xl" component="footer" className={classes.footer}>
           <FooterTopRow classes={classes}/>
           <FooterMiddleRow openModal={openModal}/>
           <Box mt={5}>
@@ -283,6 +283,8 @@ const styles = theme => {
     footer: {
       paddingTop: theme.spacing(3),
       paddingBottom: theme.spacing(3),
+      paddingLeft: theme.spacing(9),
+      paddingRight: theme.spacing(9),
       [theme.breakpoints.up('sm')]: {
         paddingTop: theme.spacing(6),
         paddingBottom: theme.spacing(6),

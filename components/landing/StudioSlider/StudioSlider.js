@@ -28,7 +28,8 @@ const studioImages =
   '/static/images/studio/Netflix.png',
   '/static/images/studio/Paramount.png',
   '/static/images/studio/STX.png',
-    '/static/images/studio/Universal.jpg']
+    '/static/images/studio/Universal.jpg',
+    '/static/images/studio/Amazon.jpg']
 
 
 // @material-ui/core components
