@@ -118,6 +118,87 @@ const footers = [
   },
 ];
 
+const FooterTopRow = ({classes}) => (
+  <Box mb={5}>
+    <Grid container>
+      <Link href="/" className={classes.flex}>
+        {" "}
+        {/* get rid of inline style */}
+        <img
+          id="logo"
+          src="/static/images/esx/esx-white-logo.png"
+          alt="ESX"
+          style={{ marginTop: "-22px" }}
+          height="52px"
+        />
+      </Link>
+      <div className={classes.grow} />
+      <span className={classes.socialLinks}>
+        <Button
+          // size="small"
+          href="https://www.facebook.com/"
+          target="_blank"
+          title="Share on Facebook"
+        >
+          <FontAwesomeIcon icon={faFacebook} />
+        </Button>
+        <Button
+          // size="small"
+          href="https://twitter.com/"
+          target="_blank"
+          title="Tweet"
+        >
+          <FontAwesomeIcon icon={faTwitter} />
+        </Button>
+        <Button
+          // size="small"
+          href="mailto:?subject={PAGETITLE}&body={PAGEDESCRIPTION}:{PAGEURL}"
+          target="_blank"
+          title="Share via Email"
+        >
+          <FontAwesomeIcon icon={faEnvelope} />
+        </Button>
+      </span>
+    </Grid>
+  </Box>
+)
+
+const FooterMiddleRow = ( {classes} ) => (
+  <Grid container direction="row">
+    <Grid xs={8} item container justify="space-evenly">
+      {footers.map(footer => (
+        <Grid item xs={6} sm={3} key={footer.title}>
+          <Typography variant="h6" color="textPrimary" gutterBottom>
+            {footer.title}
+          </Typography>
+          <ul>
+            {footer.description.map(item => (
+              <li key={item}>
+                <Link href="#" variant="subtitle1" color="textSecondary">
+                  {item}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Grid>
+      ))}
+    </Grid>
+    <Grid xs={4} item container>
+      <Grid item>
+        <Link target="_blank" rel="noopener noreferrer" href="https://itunes.apple.com">
+          <img style={{ height: '60px', padding: "10px 0px" }} alt="Available on the App Store" src="/images/footer/app-store-badge.svg" />
+        </Link>
+      </Grid>
+      <Grid item>
+        <Link target="_blank" rel="noopener noreferrer" href="https://play.google.com/">
+          <img style={{ height: '60px' }} alt="Download on Google Play" src="/images/footer/GoogleStoreBadge.png" />
+        </Link>
+      </Grid>
+    </Grid>
+  </Grid>
+
+)
+
 
 @inject("store")
 @observer
@@ -130,70 +211,9 @@ class Footer extends React.Component {
     const loggedIn = store.userStore.loggedIn
     return (
       <div className={classes.root}>
-        <Container maxWidth="lg" component="footer" className={classes.footer}>
-          <Box mb={5}>
-            <Grid container>
-              <Link href="/" className={classes.flex}>
-                {" "}
-                {/* get rid of inline style */}
-                <img
-                  id="logo"
-                  src="/static/images/esx/esx-white-logo.png"
-                  alt="ESX"
-                  style={{ marginTop: "-22px" }}
-                  height="52px"
-                />
-              </Link>
-              <div className={classes.grow} />
-              <span className={classes.socialLinks}>
-                <Button
-                  size="small"
-                  href="https://www.facebook.com/"
-                  target="_blank"
-                  title="Share on Facebook"
-                  className={`${classes.anchor} fa-facebook`}
-                >
-                  <FontAwesomeIcon icon={faFacebook} />
-                </Button>
-                <Button
-                  size="small"
-                  href="https://twitter.com/"
-                  target="_blank"
-                  title="Tweet"
-                  className={`${classes.anchor} fa-twitter`}
-                >
-                  <FontAwesomeIcon icon={faTwitter} />
-                </Button>
-                <Button
-                  size="small"
-                  href="mailto:?subject={PAGETITLE}&body={PAGEDESCRIPTION}:{PAGEURL}"
-                  target="_blank"
-                  title="Share via Email"
-                  className={`${classes.anchor} fa-envelope`}
-                >
-                  <FontAwesomeIcon icon={faEnvelope} />
-                </Button>
-              </span>
-            </Grid>
-          </Box>
-          <Grid container justify="space-evenly">
-            {footers.map(footer => (
-              <Grid item xs={6} sm={3} key={footer.title}>
-                <Typography variant="h6" color="textPrimary" gutterBottom>
-                  {footer.title}
-                </Typography>
-                <ul>
-                  {footer.description.map(item => (
-                    <li key={item}>
-                      <Link href="#" variant="subtitle1" color="textSecondary">
-                        {item}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </Grid>
-            ))}
-          </Grid>
+        <Container component="footer" className={classes.footer}>
+          <FooterTopRow classes={classes}/>
+          <FooterMiddleRow/>
           <Box mt={5}>
             <Copyright />
           </Box>
@@ -271,7 +291,7 @@ const styles = theme => {
         paddingTop: theme.spacing(6),
         paddingBottom: theme.spacing(6),
       },
-    }
+    },
     // flex: {
     //   display: "flex"
     // },
@@ -280,14 +300,14 @@ const styles = theme => {
     //   boxShadow: "none"
     //   //color: "#fff"
     // },
-    // anchor: {
-    //   // margin: "3px",
-    //   // display: "inline-block",
-    //   color: "#fff"
-    //   // padding: "7px",
-    //   // borderRadius: "2px",
-    //   // height: "18px"
-    // },
+    anchor: {
+      // margin: "3px",
+      // display: "inline-block",
+      // color: "#fff"
+      // padding: "7px",
+      // borderRadius: "2px",
+      height: "1.8125rem"
+    },
     // socialLinks: {
     //   // height: "38.5px"
     // },
