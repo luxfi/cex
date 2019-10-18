@@ -90,7 +90,7 @@ class Header extends React.Component {
               }
             >
               {" "}
-              <Container maxWidth="xl">
+              <Container maxWidth="xl" style={{ paddingLeft: "72px", paddingRight: "72px"}}>
                 <Toolbar
                   className={`${classes.noPadding} ${classes.toolBar}`}
                 >
@@ -319,6 +319,8 @@ const styles = theme => {
     appBar: {
       height: "80px",
       boxShadow: "none",
+      paddingLeft: "15px",
+      paddingRight: "15px"
     },
     transparent: {
       background: "transparent !important",
@@ -338,7 +340,9 @@ const styles = theme => {
       display: "none"
     },
     toolBar: {
-      minHeight: "80px"
+      minHeight: "80px",
+      paddingLeft: "0px",
+      paddingRight: "0px"
     },
   }
 }
