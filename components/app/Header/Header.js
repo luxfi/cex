@@ -13,12 +13,11 @@ import Container from "@material-ui/core/Container"
 import useScrollTrigger from "@material-ui/core/useScrollTrigger"
 import Link from "@material-ui/core/Link"
 
-// Material icons
 import SearchIcon from "@material-ui/icons/Search"
 import ExitToApp from "@material-ui/icons/ExitToApp"
 
-// Material styles
 import { fade, withStyles } from "@material-ui/core/styles"
+
 
 // Core components
 import { AutoCompleteSearch } from "../"
@@ -40,16 +39,6 @@ const StyledMenu = withStyles({
   },
 })(props => (
   <Menu
-    // elevation={0}
-    // getContentAnchorEl={null}
-    // anchorOrigin={{
-    //   vertical: 'bottom',
-    //   horizontal: 'center',
-    // }}
-    // transformOrigin={{
-    //   vertical: 'top',
-    //   horizontal: 'center',
-    // }}
     {...props}
   />
 ));
@@ -87,175 +76,177 @@ class Header extends React.Component {
       const trigger = useScrollTrigger({ threshold: 0, disableHysteresis: true, });
       return (
         <>
-          <AppBar
-            id="navbar"
-            position="fixed"
-            color="inherit"
-            className={
-              `${classes.appBar} ${
-              !trigger ? classes.transparent : classes.translucent
-              }`
-            }
-          >
-            {" "}
-            <Container maxWidth="xl">
-              <Toolbar
-                className={`${classes.noPadding} ${classes.toolBar}`}
-              >
-                <Link
-                  href="/"
-                  className={classes.flex}
-                  component={CustomLink}
+          <MuiThemeProvider theme={darkTheme}>
+            <AppBar
+              id="navbar"
+              position="fixed"
+              color="inherit"
+              className={
+                `${classes.appBar} ${
+                !trigger ? classes.transparent : classes.translucent
+                }`
+              }
+            >
+              {" "}
+              <Container maxWidth="xl">
+                <Toolbar
+                  className={`${classes.noPadding} ${classes.toolBar}`}
                 >
-                  <img
-                    id="logo"
-                    src="/static/images/esx/esx-white-logo.png"
-                    alt="ESX"
-                    style={{ marginTop: "-15px" }}
-                    height="52px"
-                  />
-                </Link>
-                <div style={{ marginLeft: "128px" }}>
-                  <Button
-                    aria-controls="menu"
-                    aria-haspopup="true"
-                    onClick={handleClick2}
-                    color="inherit"
-                    className={classes.menuButton}
+                  <Link
+                    href="/"
+                    className={classes.flex}
+                    component={CustomLink}
                   >
-                    Discover
-                  </Button>
-                  <StyledMenu
-                    id="menu"
-                    anchorEl={anchorEl2}
-                    keepMounted
-                    open={open2}
-                    onClose={handleClose2}
-                    style={{ marginTop: "50px", transform: "translate(-22px, 0px)" }}
-                  >
-                    <MenuItem onClick={() => {
-                      openModal("Movies")
-                    }}>
-                      <span style={{ padding: "16px" }}>Movies</span>
-                    </MenuItem>
-                    <MenuItem onClick={() => {
-                      openModal("TV Series")
-                    }}>
-                      <span style={{ padding: "16px" }}>TV Series</span>
-                    </MenuItem>
-                    <MenuItem onClick={() => {
-                      openModal("Music")
-                    }}>
-                      <span style={{ padding: "16px" }}>Music</span>
-                    </MenuItem>
-                    <MenuItem onClick={() => {
-                      openModal("Gaming")
-                    }}>
-                      <span style={{ padding: "16px" }}>Gaming</span>
-                    </MenuItem>
-                  </StyledMenu>
-                  <Button
-                    onClick={() => {
-                      openModal("Shop")
-                    }}
-                    color="inherit"
-                    className={classes.menuButton}
-                  >
-                    Shop
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      openModal("Investors")
-                    }}
-                    color="inherit"
-                    className={classes.menuButton}
-                  >
-                    Investors
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      openModal("Communities")
-                    }}
-                    color="inherit"
-                    className={classes.menuButton}
-                  >
-                    Communities
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      openModal("Loyalty")
-                    }}
-                    color="inherit"
-                    className={classes.menuButton}
-                  >
-                    Loyalty
-                  </Button>
-                </div>
-                <div className={classes.grow} />
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <SearchIcon />
-                  </div>
-                  <AutoCompleteSearch
-                    placeholder="Search…"
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput
-                    }}
-                  />
-                </div>
-                {accountLoaded ? (
-                  <>
-                    <IconButton
+                    <img
+                      id="logo"
+                      src="/static/images/esx/esx-white-logo.png"
+                      alt="ESX"
+                      style={{ marginTop: "-15px" }}
+                      height="52px"
+                    />
+                  </Link>
+                  <div style={{ marginLeft: "128px" }}>
+                    <Button
                       aria-controls="menu"
                       aria-haspopup="true"
-                      onClick={handleClick}
+                      onClick={handleClick2}
+                      color="inherit"
+                      className={classes.menuButton}
                     >
-                      <AccountCircle style={{ fontSize: "2rem" }} />
-                    </IconButton>
+                      Discover
+                    </Button>
                     <StyledMenu
                       id="menu"
-                      anchorEl={anchorEl}
+                      anchorEl={anchorEl2}
                       keepMounted
-                      open={open}
-                      onClose={handleClose}
-                      style={{ marginTop: "50px" }}
+                      open={open2}
+                      onClose={handleClose2}
+                      style={{ marginTop: "50px", transform: "translate(-22px, 0px)" }}
                     >
-                      <MenuItem component={CustomLink} href={"/portfolio"}>
-                        <AccountCircle />
-                        <span style={{ padding: "15px" }}>Portfolio</span>
+                      <MenuItem onClick={() => {
+                        openModal("Movies")
+                      }}>
+                        <span style={{ padding: "16px" }}>Movies</span>
                       </MenuItem>
-                      <MenuItem onClick={this.logout}>
-                        <ExitToApp />
-                        <span style={{ padding: "15px" }}>Logout</span>
+                      <MenuItem onClick={() => {
+                        openModal("TV Series")
+                      }}>
+                        <span style={{ padding: "16px" }}>TV Series</span>
+                      </MenuItem>
+                      <MenuItem onClick={() => {
+                        openModal("Music")
+                      }}>
+                        <span style={{ padding: "16px" }}>Music</span>
+                      </MenuItem>
+                      <MenuItem onClick={() => {
+                        openModal("Gaming")
+                      }}>
+                        <span style={{ padding: "16px" }}>Gaming</span>
                       </MenuItem>
                     </StyledMenu>
-                  </>
-                ) : (
+                    <Button
+                      onClick={() => {
+                        openModal("Shop")
+                      }}
+                      color="inherit"
+                      className={classes.menuButton}
+                    >
+                      Shop
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        openModal("Investors")
+                      }}
+                      color="inherit"
+                      className={classes.menuButton}
+                    >
+                      Investors
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        openModal("Communities")
+                      }}
+                      color="inherit"
+                      className={classes.menuButton}
+                    >
+                      Communities
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        openModal("Loyalty")
+                      }}
+                      color="inherit"
+                      className={classes.menuButton}
+                    >
+                      Loyalty
+                    </Button>
+                  </div>
+                  <div className={classes.grow} />
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <SearchIcon />
+                    </div>
+                    <AutoCompleteSearch
+                      placeholder="Search…"
+                      classes={{
+                        root: classes.inputRoot,
+                        input: classes.inputInput
+                      }}
+                    />
+                  </div>
+                  {accountLoaded ? (
                     <>
-                      <Button
-                        component={CustomLink}
-                        href={"/login"}
-                        color="inherit"
-                        className={classes.menuButton}
+                      <IconButton
+                        aria-controls="menu"
+                        aria-haspopup="true"
+                        onClick={handleClick}
                       >
-                        Login
-                      </Button>
-                      <Button
-                        component={CustomLink}
-                        color="inherit"
-                        variant="outlined"
-                        href={"/signup"}
-                        className={classes.menuButton}
+                        <AccountCircle style={{ fontSize: "2rem" }} />
+                      </IconButton>
+                      <StyledMenu
+                        id="menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={open}
+                        onClose={handleClose}
+                        style={{ marginTop: "50px" }}
                       >
-                        Sign Up
-                      </Button>
+                        <MenuItem component={CustomLink} href={"/portfolio"}>
+                          <AccountCircle />
+                          <span style={{ padding: "15px" }}>Portfolio</span>
+                        </MenuItem>
+                        <MenuItem onClick={this.logout}>
+                          <ExitToApp />
+                          <span style={{ padding: "15px" }}>Logout</span>
+                        </MenuItem>
+                      </StyledMenu>
                     </>
-                  )}
-              </Toolbar>
-            </Container>
-          </AppBar>
-          <Toolbar />
+                  ) : (
+                      <>
+                        <Button
+                          component={CustomLink}
+                          href={"/login"}
+                          color="inherit"
+                          className={classes.menuButton}
+                        >
+                          Login
+                        </Button>
+                        <Button
+                          component={CustomLink}
+                          color="inherit"
+                          variant="outlined"
+                          href={"/signup"}
+                          className={classes.menuButton}
+                        >
+                          Sign Up
+                        </Button>
+                      </>
+                    )}
+                </Toolbar>
+              </Container>
+            </AppBar>
+            <Toolbar />
+          </MuiThemeProvider>
         </>
       )
     }
