@@ -16,7 +16,7 @@ import Link from "@material-ui/core/Link"
 import SearchIcon from "@material-ui/icons/Search"
 import ExitToApp from "@material-ui/icons/ExitToApp"
 
-import { fade, withStyles } from "@material-ui/core/styles"
+import { fade, withStyles, MuiThemeProvider } from "@material-ui/core/styles"
 
 
 // Core components
@@ -31,6 +31,8 @@ const CustomLink = React.forwardRef(
     </NextLink>
   )
 )
+
+
 
 
 const StyledMenu = withStyles({
