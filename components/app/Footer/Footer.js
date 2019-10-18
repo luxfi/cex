@@ -183,16 +183,30 @@ const FooterMiddleRow = ( {classes} ) => (
         </Grid>
       ))}
     </Grid>
-    <Grid xs={4} item container>
+    <Grid 
+      xs={4} 
+      item 
+      container 
+      justify="center"
+      alignItems="center"
+      direction="column"
+    >  
       <Grid item>
-        <Link target="_blank" rel="noopener noreferrer" href="https://itunes.apple.com">
-          <img style={{ height: '60px', padding: "10px 0px" }} alt="Available on the App Store" src="/images/footer/app-store-badge.svg" />
-        </Link>
+        <Typography variant="h6" align="center">
+          {'Download the ESX app'}
+        </Typography>
       </Grid>
-      <Grid item>
-        <Link target="_blank" rel="noopener noreferrer" href="https://play.google.com/">
-          <img style={{ height: '60px' }} alt="Download on Google Play" src="/images/footer/GoogleStoreBadge.png" />
-        </Link>
+      <Grid item container justify="center">
+        <Grid item>
+          <Link target="_blank" rel="noopener noreferrer" href="https://itunes.apple.com">
+            <img style={{ height: '60px', padding: "10px 0px" }} alt="Available on the App Store" src="/images/footer/app-store-badge.svg" />
+          </Link>
+        </Grid>
+        <Grid item>
+          <Link target="_blank" rel="noopener noreferrer" href="https://play.google.com/">
+            <img style={{ height: '60px' }} alt="Download on Google Play" src="/images/footer/GoogleStoreBadge.png" />
+          </Link>
+        </Grid>
       </Grid>
     </Grid>
   </Grid>
@@ -211,7 +225,7 @@ class Footer extends React.Component {
     const loggedIn = store.userStore.loggedIn
     return (
       <div className={classes.root}>
-        <Container component="footer" className={classes.footer}>
+        <Container maxWidth="lg" component="footer" className={classes.footer}>
           <FooterTopRow classes={classes}/>
           <FooterMiddleRow/>
           <Box mt={5}>
