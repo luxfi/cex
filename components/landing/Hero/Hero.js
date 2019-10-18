@@ -164,6 +164,7 @@ class Hero extends React.Component {
 
           .hero-container :global(.control-dots) {
             bottom: 15vh;
+            display: none:
           }
 
           @media (max-width: 768px) {
