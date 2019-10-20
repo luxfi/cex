@@ -12,6 +12,7 @@ import Container from "@material-ui/core/Container"
 import Typography from "@material-ui/core/Typography"
 import Link from "@material-ui/core/Link"
 import Button from "@material-ui/core/Button"
+import IconButton from "@material-ui/core/IconButton"
 
 // core components
 import { CustomLink } from "../"
@@ -127,33 +128,33 @@ class Footer extends React.Component {
           <Toolbar className={classes.noPadding}>
             <div className={classes.grow} />
             <span className={classes.socialLinks}>
-              <Button
+              <IconButton
                 size="small"
                 href="https://www.facebook.com/"
                 target="_blank"
                 title="Share on Facebook"
                 className={`${classes.anchor} fa-facebook`}
               >
-                <FontAwesomeIcon icon={faFacebook} />
-              </Button>
-              <Button
+                <FontAwesomeIcon icon={faFacebook} size="lg"/>
+              </IconButton>
+              <IconButton
                 size="small"
                 href="https://twitter.com/"
                 target="_blank"
                 title="Tweet"
                 className={`${classes.anchor} fa-twitter`}
               >
-                <FontAwesomeIcon icon={faTwitter} />
-              </Button>
-              <Button
+                <FontAwesomeIcon icon={faTwitter} size="lg"/>
+              </IconButton>
+              <IconButton
                 size="small"
                 href="mailto:?subject={PAGETITLE}&body={PAGEDESCRIPTION}:{PAGEURL}"
                 target="_blank"
                 title="Share via Email"
                 className={`${classes.anchor} fa-envelope`}
               >
-                <FontAwesomeIcon icon={faEnvelope} />
-              </Button>
+                <FontAwesomeIcon icon={faEnvelope} size="lg"/>
+              </IconButton>
             </span>
           </Toolbar>
         </Container>
