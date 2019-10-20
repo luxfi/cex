@@ -214,6 +214,10 @@ class Header extends React.Component {
                         onClose={handleClose}
                         style={{ marginTop: "50px" }}
                       >
+                        <MenuItem component={CustomLink} href={"/account"}>
+                          <AccountCircle />
+                          <span style={{ padding: "15px" }}>Account</span>
+                        </MenuItem>
                         <MenuItem component={CustomLink} href={"/portfolio"}>
                           <AccountCircle />
                           <span style={{ padding: "15px" }}>Portfolio</span>
