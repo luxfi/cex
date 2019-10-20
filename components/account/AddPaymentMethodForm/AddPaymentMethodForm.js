@@ -9,9 +9,6 @@ import Container from "@material-ui/core/Container"
 import TextField from "@material-ui/core/TextField"
 import Typography from "@material-ui/core/Typography"
 
-import { withStyles } from "@material-ui/core/styles"
-import myStyles from "../../../pageStyles/account.style.js"
-
 import { PLAID_PUBLIC_KEY } from "../../../src/settings.js"
 
 class AddPaymentMethodForm extends React.Component {
@@ -88,7 +85,6 @@ class AddPaymentMethodForm extends React.Component {
         <br />
         <br />
         <PlaidLink
-          className={classes.plaidLink}
           clientName="ESX"
           env="sandbox"
           product={["auth", "transactions"]}
@@ -109,7 +105,6 @@ class AddPaymentMethodForm extends React.Component {
           fullWidth
           variant="contained"
           color="primary"
-          className={classes.submit}
           // disabled={}
           onClick={() =>
             this.handleSubmit(addPaymentMethod, isValidNewPaymentMethod, setErrorMessage)
@@ -122,5 +117,5 @@ class AddPaymentMethodForm extends React.Component {
   }
 }
 
-export default withStyles(myStyles)(AddPaymentMethodForm)
+export default AddPaymentMethodForm
 
