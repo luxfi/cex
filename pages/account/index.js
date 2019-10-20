@@ -1,49 +1,86 @@
 import React from "react"
-import { withStyles } from "@material-ui/core"
+import Router from "next/router"
+import { inject, observer } from "mobx-react"
 
-import {Container, Link} from "@material-ui/core"
-import PlaidLink from 'react-plaid-link'
+import {
+  Grid,
+  Card,
+  CardContent,
+  Container,
+  Box,
+} from "@material-ui/core"
+import Typography from "@material-ui/core/Typography"
 
-import { CustomLink } from "../../components/app"
-import { classExpression } from "babel-types"
+import { AddPaymentMethodForm } from "../../components/account"
 
-
-import myStyles from "../../pageStyles/account.style.js"
-
-const onPlaidExit = (foo) => {
-
-}
-
-const onPlaidSuccess = (token, metadata) => {
-
-}
-
-
+@inject("store")
+@observer
 class Account extends React.Component {
+  static async getInitialProps({ mobxStore }) {
+    return { ...mobxStore }
+  }
 
   render() {
-    
-    const {classes} = this.props
+    const store = this.props.store
+    const { userStore } = store
+    const {
+      setValue,
+
+      account,
+      addPaymentMethod,
+
+      isValidNewPaymentMethod,
+      validNewPaymentMethodName,
+      validNewPaymentMethodPublicToken,
+      validateNewPaymentMethodName,
+      validateNewPaymentMethodPublicToken,
+      validateNewPaymentMethodMetadata,
+    } = userStore
+    const setErrorMessage = message => {
+      store.uiStore.errorMessage = message
+      store.uiStore.snackBarOpen = true
+    }
     return (
-      <main className="account" id="account-index">
-        <Container maxWidth="md">
-          <h1>{`Hello USER`}</h1>
-          <PlaidLink 
-            className={classes.plaidLink}
-            clientName="ESX"
-            env="sandbox"
-            product={["auth", "transactions"]}
-            publicKey="PLAID_PUBLIC_KEY"
-            onExit={onPlaidExit}
-            onSuccess={onPlaidSuccess}
-          >Open an account and connect your bank</PlaidLink>
-          <br />
-          <h3>PORTFOLIO BALANCE</h3>
-          <h2>$0.00</h2>
-        </Container>
-      </main>
+      <Container maxWidth="lg" style={{ marginTop: 30 }}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={4}>
+            <Card>
+              <CardContent>
+                <AddPaymentMethodForm
+                  addPaymentMethod                    = {addPaymentMethod.bind(userStore)}
+                  validateNewPaymentMethodName        = {validateNewPaymentMethodName.bind(userStore)}
+                  validateNewPaymentMethodPublicToken = {validateNewPaymentMethodPublicToken.bind(userStore)}
+                  validateNewPaymentMethodMetadata    = {validateNewPaymentMethodMetadata.bind(userStore)}
+                  isValidNewPaymentMethod             = {isValidNewPaymentMethod}
+                  validNewPaymentMethodName           = {validNewPaymentMethodName}
+                  validNewPaymentMethodPublicToken    = {validNewPaymentMethodPublicToken}
+
+                  setValue        = {setValue.bind(userStore)}
+                  setErrorMessage = {setErrorMessage}
+                />
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={8}>
+            { (!!account && !!account.paymentMethods && !!account.paymentMethods.map ) ? (
+              account.paymentMethods.map( (method, i) => (
+                <Card key={i} style={{ marginBottom: 20 }}>
+                  <CardContent>
+                    <Typography variant="body1">
+                      { method.name }
+                    </Typography>
+                    <Typography variant="body2">
+                      { (method.metadata && method.metadata.institution) ? method.metadata.institution.name : ""}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              ))
+            ) : null }
+          </Grid>
+        </Grid>
+      </Container>
     )
   }
 }
 
-export default withStyles(myStyles)(Account)
+export default Account

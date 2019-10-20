@@ -1,14 +1,14 @@
 /* eslint-disable react/prop-types */
 import React from "react"
 import classNames from "classnames"
-import { 
-  Grid, 
-  Paper, 
-  Icon, 
-  InputBase, 
+import {
+  Grid,
+  Paper,
+  Icon,
+  InputBase,
   Button,
   Snackbar,
-  Fade 
+  Fade
 } from "@material-ui/core"
 
 import { makeStyles } from "@material-ui/core/styles"
@@ -23,9 +23,9 @@ import {
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-import { 
-  faEnvelope, 
-  faClipboard 
+import {
+  faEnvelope,
+  faClipboard
 } from "@fortawesome/free-solid-svg-icons"
 
 import {
@@ -87,7 +87,7 @@ const RewardCard = props => {
       <Icon className={iconClasses}>stars_rounded</Icon>
       <p className={classes.pointsString}>{pointsString}</p>
       <p className={classes.completedString} style={completedStringStyle}><Icon className={classes.completedIcon}>check_circle</Icon>Completed</p>
-    </CardOuter>  
+    </CardOuter>
   )
 }
 
@@ -176,7 +176,7 @@ const UrlWasCopiedSnackbar = props => {
 }
 
 const RewardsView = (props) => {
-  
+
   const { tabIdx, index } = props
   // Not me! Don't render
   if (tabIdx !== index) return null
@@ -192,9 +192,9 @@ const RewardsView = (props) => {
     <>
     <Grid container spacing={3} className={classes.root}>
       <TotalCard total={45} monthTotal={30} />
-      <ReferalCard 
-        rewardsURL={rewardsURL} 
-        message={rewardsShareMessage} 
+      <ReferalCard
+        rewardsURL={rewardsURL}
+        message={rewardsShareMessage}
         onCopied={(ignore) => {setShareUrlWasCopied(true)}}
       />
       <RewardCard title={"complete your profile"} points={5} completed/>
@@ -207,8 +207,8 @@ const RewardsView = (props) => {
       <RewardCard title={"make 20 investments"} points={10} />
       <RewardCard title={"make 30 investments"} points={10} />
     </Grid>
-    <UrlWasCopiedSnackbar 
-      open={shareUrlWasCopied} 
+    <UrlWasCopiedSnackbar
+      open={shareUrlWasCopied}
       handleSnackbarClose={
         (evt, reason) => {
           if (reason === 'clickaway') {
