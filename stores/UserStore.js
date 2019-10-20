@@ -1,5 +1,7 @@
 // Generic Libraries
 import { action, observable, computed } from "mobx"
+import Router from "next/router"
+
 import * as ethers from "ethers"
 // import _ from 'lodash'
 
@@ -264,6 +266,7 @@ export default class UserStore {
       // TODO Not sure what this is? This needs to go in the password update function
       // this.inputs.password.val(this.inputs.password.val().replace(/./g, '•'))
       onSuccess && onSuccess()
+      Router.push('/login')
     } catch (ex) {
       console.log("Error logging out", ex)
       onError && onError(ex.toString())
@@ -365,7 +368,7 @@ export default class UserStore {
   }
 
   @computed get loggedIn() {
-    return !!this.account
+    return !!this.token
   }
 
   @computed get isValidKYC() {
