@@ -12,8 +12,8 @@ class Login extends React.Component {
   }
 
   render() {
-    const store = this.props.store
-    const { userStore } = store
+    const { store } = this.props
+    const { userStore } = this.props.store
     const {
       email,
       password,

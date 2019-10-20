@@ -43,7 +43,7 @@ class Index extends React.Component {
         <Hero loggedIn={loggedIn} />
         {/* <div className={`${classes.main}`}>
           <div className={classes.container} */}
-        <Container maxWidth="lg"
+        <Container maxWidth="xl"
           style={{
             transform: "translate(0, -15vh)"
           }}

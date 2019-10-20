@@ -10,16 +10,14 @@ import Menu from "@material-ui/core/Menu"
 import MenuItem from "@material-ui/core/MenuItem"
 import AccountCircle from "@material-ui/icons/AccountCircle"
 import Container from "@material-ui/core/Container"
-import Slide from "@material-ui/core/Slide"
 import useScrollTrigger from "@material-ui/core/useScrollTrigger"
 import Link from "@material-ui/core/Link"
 
-// Material icons
 import SearchIcon from "@material-ui/icons/Search"
 import ExitToApp from "@material-ui/icons/ExitToApp"
 
-// Material styles
 import { fade, withStyles, MuiThemeProvider } from "@material-ui/core/styles"
+
 
 // Core components
 import { AutoCompleteSearch } from "../"
@@ -33,6 +31,8 @@ const CustomLink = React.forwardRef(
     </NextLink>
   )
 )
+
+
 
 
 const StyledMenu = withStyles({
@@ -90,7 +90,7 @@ class Header extends React.Component {
               }
             >
               {" "}
-              <Container maxWidth="xl">
+              <Container maxWidth="xl" style={{ paddingLeft: "72px", paddingRight: "72px"}}>
                 <Toolbar
                   className={`${classes.noPadding} ${classes.toolBar}`}
                 >
@@ -319,6 +319,8 @@ const styles = theme => {
     appBar: {
       height: "80px",
       boxShadow: "none",
+      paddingLeft: "15px",
+      paddingRight: "15px"
     },
     transparent: {
       background: "transparent !important",
@@ -338,7 +340,9 @@ const styles = theme => {
       display: "none"
     },
     toolBar: {
-      minHeight: "80px"
+      minHeight: "80px",
+      paddingLeft: "0px",
+      paddingRight: "0px"
     },
   }
 }
