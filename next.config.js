@@ -75,7 +75,7 @@ module.exports = withCSS(
           '/login': { page: '/login' },
           '/signup': { page: '/signup' },
           '/portfolio': { page: '/portfolio' },
-          // '/account/kyc': { page: '/account/kyc' },
+          '/account': { page: '/account' },
         })
       }
     })
