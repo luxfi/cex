@@ -23,6 +23,9 @@ export default class UserStore {
   // (not sure of type)
   @observable errors = null
 
+  // Application Level Settings
+  @observable appSettings = null
+
   /*
   ** USER INFO **
   Works for both signup and login
@@ -110,6 +113,12 @@ export default class UserStore {
    * Fetches all todos from the server
    */
   @action async loadSession() {
+    let p = undefined
+
+    if (this.api.client.library && this.api.client.library.shopjs) {
+      p = this.api.client.library.shopjs()
+    }
+
     this.isLoading = true
     if (this.api.client.getCustomerToken) {
       this.token = this.api.client.getCustomerToken()
@@ -122,6 +131,15 @@ export default class UserStore {
         }
       }
     }
+
+    try {
+      let appSettings = await p
+      this.appSettings = appSettings
+      console.log('app settings', appSettings)
+    } catch (e) {
+      console.log('could not get app settings')
+    }
+
     this.isLoading = false
   }
 
