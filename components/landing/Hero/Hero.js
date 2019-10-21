@@ -111,9 +111,7 @@ class Hero extends React.Component {
                       </Button>
                       <br />
                       <br />
-                      <Typography variant="caption">
-                        {movie.financialDescription}
-                      </Typography>
+                      <br />
                     </Grid>
                     {/* <Grid item xs={12} sm={12} md={6}>
                     </Grid> */}
@@ -166,6 +164,7 @@ class Hero extends React.Component {
 
           .hero-container :global(.control-dots) {
             bottom: 15vh;
+            display: none:
           }
 
           @media (max-width: 768px) {

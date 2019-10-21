@@ -2,10 +2,11 @@ import { container, title } from "../../esxStyles.js"
 
 export default {
   container: {
+    ...container,
     marginTop: '30vh',
     zIndex: "12",
     color: "#FFFFFF",
-    ...container,
+    marginLeft: '72px',
     "@media (max-width: 573px)": {
       marginTop: 320,
     },
