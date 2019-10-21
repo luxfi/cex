@@ -28,6 +28,7 @@
     "es6-event-emitter": "1.10.2",
     "ethers": "4.0.38",
     "file-loader": "4.2.0",
+    "hanzo.js": "2.5.11",
     "hdkey": "1.1.1",
     "limit-order-book": "^0.3.0",
     "lodash": "4.17.15",

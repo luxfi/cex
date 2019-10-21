@@ -1,5 +1,7 @@
 // Generic Libraries
 import { action, observable, computed } from "mobx"
+import Router from "next/router"
+
 import * as ethers from "ethers"
 // import _ from 'lodash'
 
@@ -7,6 +9,7 @@ import * as ethers from "ethers"
 import isEmail from "../src/control-middlewares/isEmail"
 import isPassword from "../src/control-middlewares/isPassword"
 import isPhone from "../src/control-middlewares/isPhone"
+import isRequired from "../src/control-middlewares/isRequired"
 
 /**
  * Later we'll wrap the fetch stuff up a bit more cleanly and / or use a helper library
@@ -30,8 +33,9 @@ export default class UserStore {
   @observable password = ""
   // logged in user object returned by API
   @observable currentUser = ""
-  // Token comes from the Hanzo API
+  // Account comes from the Hanzo API
   @observable token = null
+  @observable account = null
 
   // ** SIGNUP INFO **
   @observable validEmail = false
@@ -81,6 +85,17 @@ export default class UserStore {
 
   // ... Etc
 
+  // ** Payment Method **
+  @observable newPaymentMethodPublicToken = undefined
+  @observable newPaymentMethodName        = undefined
+  // Set to plaid for now
+  @observable newPaymentMethodType        = "plaid"
+  @observable newPaymentMethodMetadata    = undefined
+
+  @observable validNewPaymentMethodPublicToken = false
+  @observable validNewPaymentMethodName        = false
+  @observable validNewPaymentMethodMetadata    = false
+
   constructor(initialData = {}, hanzoApi) {
     // TODO Do we still need this?
     // :aa I don't think so.... why would we?
@@ -94,10 +109,18 @@ export default class UserStore {
   /**
    * Fetches all todos from the server
    */
-  @action loadSession() {
+  @action async loadSession() {
     this.isLoading = true
     if (this.api.client.getCustomerToken) {
       this.token = this.api.client.getCustomerToken()
+      if (!!this.token) {
+        try {
+          this.account = await this.api.client.account.get()
+        } catch (e) {
+          console.log('account token expired')
+          this.logout()
+        }
+      }
     }
     this.isLoading = false
   }
@@ -168,6 +191,18 @@ export default class UserStore {
     this.validPostalCode = regex(c)
   }
 
+  @action validateNewPaymentMethodPublicToken() {
+    this.validNewPaymentMethodPublicToken = isRequired(this.newPaymentMethodPublicToken)
+  }
+
+  @action validateNewPaymentMethodName() {
+    this.validNewPaymentMethodName = isRequired(this.newPaymentMethodName)
+  }
+
+  @action validateNewPaymentMethodMetadata() {
+    this.validNewPaymentMethodMetadata = isRequired(this.newPaymentMethodMetadata)
+  }
+
   @action async signUp(onSuccess, onError) {
     // ** ONLY CALL WHEN @computed isValidSignup IS TRUE **
     this.updating = true
@@ -212,6 +247,7 @@ export default class UserStore {
       const i = this.email + this.password
 
       this.identity = ethers.utils.sha256(ethers.utils.toUtf8Bytes(i))
+      this.account = await this.api.client.account.get()
       this.setToken(res.token)
       onSuccess && onSuccess()
     } catch (ex) {
@@ -230,6 +266,27 @@ export default class UserStore {
       // TODO Not sure what this is? This needs to go in the password update function
       // this.inputs.password.val(this.inputs.password.val().replace(/./g, '•'))
       onSuccess && onSuccess()
+      Router.push('/login')
+    } catch (ex) {
+      console.log("Error logging out", ex)
+      onError && onError(ex.toString())
+    } finally {
+      this.updating = false
+    }
+  }
+
+  @action async addPaymentMethod(onSuccess, onError) {
+    try {
+      const opts = {
+        publicToken: this.newPaymentMethodPublicToken,
+        accountId: this.newPaymentMethodMetadata.account_id,
+        type: this.newPaymentMethodType,
+        name: this.newPaymentMethodName,
+        metadata: this.newPaymentMethodMetadata,
+      }
+
+      const res = await this.api.client.account.paymentMethod.create(opts)
+
     } catch (ex) {
       console.log("Error logging out", ex)
       onError && onError(ex.toString())
@@ -258,7 +315,7 @@ export default class UserStore {
     } = this)
 
     try {
-      const res = await this.api.client.account.update({ opts })
+      this.account = await this.api.client.account.update({ opts })
       onSuccess && onSuccess()
     } catch (ex) {
       console.log("Error saving KYC options", ex)
@@ -272,6 +329,7 @@ export default class UserStore {
     if (this.api.client.deleteCustomerToken) {
       this.token = this.api.client.deleteCustomerToken()
     }
+    this.account = undefined
     this.currentUser = undefined
     this.setToken(undefined)
   }
@@ -325,6 +383,15 @@ export default class UserStore {
     )
     // country is dropdown (noted above)
   }
+
+  @computed get isValidNewPaymentMethod() {
+    return (
+      this.validNewPaymentMethodPublicToken &&
+      this.validNewPaymentMethodName &&
+      this.validNewPaymentMethodMetadata
+    )
+  }
+
 
   @computed get passwordsMatch() {
     return this.password === this.passwordConfirm

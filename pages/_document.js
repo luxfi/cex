@@ -1,0 +1,37 @@
+import Document, { Html, Head, Main, NextScript } from 'next/document'
+
+export default class MyDocument extends Document {
+
+  getChildContext() {
+    return {
+      _documentProps: this.props,
+      _devOnlyInvalidateCacheQueryString: '',
+    }
+  }
+
+  render() {
+    const { pageContext } = this.props
+
+    return (
+      <Html>
+        <Head>
+          <title>ESX | Entertainment Stock Exchange</title>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          />
+          <script src="/static/datafeeds/udf/dist/polyfills.js" />
+          <script src="/static/datafeeds/udf/dist/bundle.js" />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    )
+  }
+}

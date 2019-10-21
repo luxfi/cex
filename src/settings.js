@@ -1,8 +1,10 @@
 export let ETH_ENDPOINT           = 'http://127.0.0.1:8545' //'wss://ropsten.infura.io/ws'
 export let ETH_NODE               = 'https://ropsten.infura.io/v3/958e65c93beb4e90abf0e627f2079d7b'
 
-export let HANZO_KEY              = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJiaXQiOjQ1MDM2MTcwNzU2NzUxNzIsImp0aSI6IjRZT21jMUp6bUZRIiwic3ViIjoibk9URU5ZMVB0NCJ9.dK61nNnzS9uO3sfZ0mu7z2CNuc1NBThWMh9XexuGfd4P6VMl0uscxFyHIfWEEzYUshr_yNRoZ4z2b7HwPLyQdg'
-export let HANZO_ENDPOINT         = 'https://api.hanzo.ai'
+export let HANZO_KEY              = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NzE1OTg4MDQsInN1YiI6InlKVDN3dlBsZjUiLCJqdGkiOiJiVUx4NWpLZXJXOCIsIm5hbWUiOiJ0ZXN0LXB1Ymxpc2hlZC1rZXkiLCJiaXQiOjQ1MDM2MTcwNzU2NzUxNzZ9.3tVGGZKhp-eyn-QSNqEszmO4M0yuteXRpoB9fKLypgQ'
+export let HANZO_ENDPOINT         = 'https://api-dot-hanzo-staging-249116.appspot.com/'
+
+export let PLAID_PUBLIC_KEY       = '5767a07e0e9a39ddc5cf2436648b03'
 
 export let TOKEN_SYMBOL           = 'UST'
 export let EOS_TOKEN_ACCOUNT      = 'hanzoooooooo'

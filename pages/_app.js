@@ -1,5 +1,4 @@
 import App from "next/app"
-import Head from "next/head"
 import React from "react"
 import { Provider, observer } from "mobx-react"
 
@@ -66,19 +65,6 @@ class MyMobxApp extends App {
     return (
         <MuiThemeProvider theme={darkTheme}>
           <CssBaseline />
-          <Head>
-            <title>ESX | Entertainment Stock Exchange</title>
-            <meta
-              name="viewport"
-              content="initial-scale=1.0, width=device-width"
-            />
-            <link
-              rel="stylesheet"
-              href="https://fonts.googleapis.com/icon?family=Material+Icons"
-            />
-            <script src="/static/datafeeds/udf/dist/polyfills.js" />
-            <script src="/static/datafeeds/udf/dist/bundle.js" />
-          </Head>
           <NoSsr>
             <Provider store={this.mobxStore}>
               <div className={classes.root}>
@@ -95,7 +81,7 @@ class MyMobxApp extends App {
                     lightTheme={lightTheme}
                   />
                   {/* <Loader /> */}
-                  <CustomModal 
+                  <CustomModal
                     open={this.mobxStore.uiStore.modal.open}
                     handleClose={() => this.mobxStore.uiStore.closeModal()}
                     body={this.mobxStore.uiStore.modal.body}

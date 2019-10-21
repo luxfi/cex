@@ -1,9 +1,5 @@
 let isRequired = (value) => {
-  if (value && value != '') {
-    return value
-  }
-
-  throw new Error('Required')
+  return !!value
 }
 
 export default isRequired

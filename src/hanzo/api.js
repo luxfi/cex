@@ -1,4 +1,4 @@
-import Hanzo from '../mjs-fix/hanzo'
+import Hanzo from 'hanzo.js'
 
 export default class Api {
   constructor(key, endpoint) {
