@@ -5,24 +5,19 @@
 import React from "react"
 import Container from "@material-ui/core/Container"
 import Link from "@material-ui/core/Link"
-import { CustomLink } from "../../components/app"
 
-class Account extends React.Component {
+import { KYCForm } from "../../components/account"
+
+class KYC extends React.Component {
   render() {
     return (
       <main className="account" id="account-index">
         <Container maxWidth="md">
-          <h1>{`Hello USER`}</h1>
-          <Link component={CustomLink} href="/account/kyc">
-            Check your identify verification status
-          </Link>
-          <br />
-          <h3>PORTFOLIO BALANCE</h3>
-          <h2>$0.00</h2>
+          <KYCForm />
         </Container>
       </main>
     )
   }
 }
 
-export default Account
+export default KYC
