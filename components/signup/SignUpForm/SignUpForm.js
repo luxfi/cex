@@ -18,11 +18,6 @@ import Link from "@material-ui/core/Link"
 import { CustomLink } from "../../app"
 
 const styles = theme => ({
-  // "@global": {
-  //   body: {
-  //     backgroundColor: theme.palette.common.white
-  //   }
-  // },
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -82,7 +77,7 @@ class SignupForm extends React.Component {
       validEmail,
       validPassword,
       store,
-      setErrorMessage
+      setErrorMessage,
     } = this.props
 
     const { passwordsMatch } = store.userStore

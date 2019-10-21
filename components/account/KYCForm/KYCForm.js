@@ -8,7 +8,7 @@ import StepLabel from "@material-ui/core/StepLabel"
 import Button from "@material-ui/core/Button"
 import Link from "next/link"
 import Typography from "@material-ui/core/Typography"
-import {PersonalDetailsForm, PrimaryAddressForm, PhotoIDsForm } from "../"
+import { PersonalDetailsForm, PrimaryAddressForm, PhotoIDsForm } from "../"
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -61,10 +61,45 @@ const ButtonLink = React.forwardRef(
   )
 )
 
-function getStepContent(step) {
+function getStepContent(
+  step,
+  { phone,
+    taxId,
+    birthdate,
+    gender,
+    address1,
+    address2,
+    city,
+    postalCode,
+    country,
+    state,
+    documents0,
+    documents1,
+    documents2,
+    setValue,
+    isValidKYC,
+    updateKYC,
+    firstName,
+    lastName,
+    validatePhone,
+    validateTaxId,
+    validateBirthdate,
+    setErrorMessage,
+    validateFirstName,
+    validateLastName
+  }
+) {
   switch (step) {
     case 0:
-      return <PersonalDetailsForm />
+      return <PersonalDetailsForm
+        setValue={setValue}
+        gender={gender}
+        firstName={firstName}
+        lastName={lastName}
+        validatePhone={validatePhone}
+        validateTaxId={validateTaxId}
+        validateBirthdate={validateBirthdate}
+      />
     case 1:
       return <PrimaryAddressForm />
     case 2:
@@ -74,7 +109,32 @@ function getStepContent(step) {
   }
 }
 
-export default function Checkout() {
+export default function KYCForm(
+  { phone,
+    taxId,
+    birthdate,
+    gender,
+    address1,
+    address2,
+    city,
+    postalCode,
+    country,
+    state,
+    documents0,
+    documents1,
+    documents2,
+    setValue,
+    isValidKYC,
+    updateKYC,
+    firstName,
+    lastName,
+    validatePhone,
+    validateTaxId,
+    validateBirthdate,
+    validateFirstName,
+    validateLastName,
+    setErrorMessage }
+) {
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
 
@@ -129,30 +189,59 @@ export default function Checkout() {
                   component={ButtonLink}
                   href={"/portfolio"}
                   className={classes.finalButton}
+                //put on click handler to sumbit info here
                 >
                   Go To Your Portfolio
                 </Button>
               </>
             ) : (
-              <>
-                {getStepContent(activeStep)}
-                <div className={classes.buttons}>
-                  {activeStep !== 0 && (
-                    <Button onClick={handleBack} className={classes.button}>
-                      Back
-                    </Button>
+                <>
+                  {getStepContent(activeStep,
+                    {
+                      phone,
+                      taxId,
+                      birthdate,
+                      gender,
+                      address1,
+                      address2,
+                      city,
+                      postalCode,
+                      country,
+                      state,
+                      documents0,
+                      documents1,
+                      documents2,
+                      setValue,
+                      isValidKYC,
+                      updateKYC,
+                      firstName,
+                      lastName,
+                      validatePhone,
+                      validateTaxId,
+                      validateBirthdate,
+                      setErrorMessage,
+                      validateFirstName,
+                      validateLastName,
+                      setErrorMessage 
+                    }
                   )}
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? "Continue" : "Next"}
-                  </Button>
-                </div>
-              </>
-            )}
+                  <div className={classes.buttons}>
+                    {activeStep !== 0 && (
+                      <Button onClick={handleBack} className={classes.button}>
+                        Back
+                    </Button>
+                    )}
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.button}
+                    >
+                      {activeStep === steps.length - 1 ? "Continue" : "Next"}
+                    </Button>
+                  </div>
+                </>
+              )}
           </>
         </Paper>
       </main>

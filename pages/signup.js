@@ -8,7 +8,7 @@ class SignUp extends React.Component {
   static async getInitialProps({ mobxStore }) {
     return { ...mobxStore }
   }
-
+  
   render() {
     const { userStore } = this.props.store
     const {

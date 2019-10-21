@@ -5,46 +5,69 @@ import TextField from "@material-ui/core/TextField"
 import InputLabel from "@material-ui/core/InputLabel"
 import MenuItem from "@material-ui/core/MenuItem"
 import Select from "@material-ui/core/Select"
-import { makeStyles } from "@material-ui/core/styles"
+import { withStyles } from "@material-ui/core/styles"
 import FormControl from "@material-ui/core/FormControl"
 import { BirthdayPicker } from "../../app"
+import { observer } from 'mobx-react'
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     display: "flex",
     flexWrap: "wrap"
   },
   formControl: {
-    // margin: theme.spacing(1),
-    // minWidth: 120,
     width: "100%"
   },
   selectEmpty: {
     marginTop: theme.spacing(2)
   }
-}))
+})
 
-export default function PersonalDetails() {
-  const classes = useStyles()
-  const [values, setValues] = React.useState({
-    gender: ""
-  })
+@observer
+class PersonalDetails extends React.Component {
+  // const [values, setValues] = React.useState({
+  //   gender: ""
+  // })
 
-  // const inputLabel = React.useRef(null);
-  // const [labelWidth, setLabelWidth] = React.useState(0);
-  // React.useEffect(() => {
-  //   setLabelWidth(inputLabel.current.offsetWidth);
-  // }, [])
+  // function handleChange(event) {
+  //   setValues(oldValues => ({
+  //     ...oldValues,
+  //     [event.target.name]: event.target.value
+  //   }))
+  // }
 
-  function handleChange(event) {
-    setValues(oldValues => ({
-      ...oldValues,
-      [event.target.name]: event.target.value
-    }))
+  constructor(props) {
+    super(props)
+    this.updateProperty = this.updateProperty.bind(this)
+    this.onChange = this.onChange.bind(this)
   }
 
-  return (
-    <>
+  updateProperty(key, value) {
+    this.props.person[key] = value
+  }
+
+  onChange(event) {
+    this.updateProperty(event.target.name, event.target.value)
+  }
+
+  render() {
+    const {
+      classes,
+      firstName,
+      lastName,
+      phone,
+      taxId,
+      birthdate,
+      gender,
+      validatePhone,
+      validateTaxId,
+      validateBirthdate,
+      validateFirstName,
+      validateLastName,
+      setValue
+    } = this.props
+    return (
+      <>
       <Typography variant="h6" gutterBottom>
         Personal Details
       </Typography>
@@ -54,9 +77,15 @@ export default function PersonalDetails() {
             required
             id="firstName"
             name="firstName"
+            type="firstName"
             label="First name"
             fullWidth
             autoComplete="fname"
+            onBlur={validateFirstName}
+            // error={!validfirstName}
+            // helperText={this.state.firstNameError && this.state.firstNameError}
+            value={firstName}
+            onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -65,8 +94,15 @@ export default function PersonalDetails() {
             id="lastName"
             name="lastName"
             label="Last name"
+            type="lastName"
             fullWidth
             autoComplete="lname"
+            onBlur={validateLastName}
+            // autoComplete="current-lastName"
+            // error={!validlastName}
+            // helperText={this.state.lastNameError && this.state.lastNameError}
+            value={lastName}
+            onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -77,6 +113,9 @@ export default function PersonalDetails() {
             label="Phone"
             fullWidth
             autoComplete="phone"
+            onBlur={validatePhone}
+            value={lastName}
+            onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -87,25 +126,21 @@ export default function PersonalDetails() {
             label="SSN"
             fullWidth
             autoComplete="ssn"
+            autoComplete="ssn"
+            onBlur={validateTaxId}
+            value={taxId}
+            onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          {/* <TextField
-            required
-            id="birthday"
-            name="birthday"
-            label="Birthday"
-            fullWidth
-            autoComplete="bday"
-          /> */}
-          <BirthdayPicker />
+          <BirthdayPicker setValue={setValue} birthdate={birthdate}/>
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="gender">Gender</InputLabel>
             <Select
-              value={values.gender}
-              onChange={handleChange}
+              value={gender}
+              onChange={evt => setValue(evt.target.name, evt.target.value)}
               inputProps={{
                 name: "gender",
                 id: "gender"
@@ -119,6 +154,9 @@ export default function PersonalDetails() {
           </FormControl>
         </Grid>
       </Grid>
-    </>
-  )
+  </>
+    )
+  }
 }
+
+export default withStyles(styles)(PersonalDetails)
