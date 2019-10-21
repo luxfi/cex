@@ -34,7 +34,7 @@ import {
   faLinkedinIn
 } from "@fortawesome/free-brands-svg-icons"
 
-import myStyles from "./RewardsView.style.js"
+import myStyles from "./RewardsView.styles.js"
 
 const styles = makeStyles(myStyles)
 
