@@ -51,7 +51,8 @@ class Header extends React.Component {
 
   render() {
     let { classes, store, onHomePage, darkTheme, lightTheme, openModal } = this.props
-    let accountLoaded = store.userStore.loggedIn
+    let { userStore } = store
+    let accountLoaded = userStore.loggedIn
 
     const GuestNavBar = () => {
       const [anchorEl, setAnchorEl] = React.useState(null)
@@ -213,11 +214,15 @@ class Header extends React.Component {
                         onClose={handleClose}
                         style={{ marginTop: "50px" }}
                       >
+                        <MenuItem component={CustomLink} href={"/account"}>
+                          <AccountCircle />
+                          <span style={{ padding: "15px" }}>Account</span>
+                        </MenuItem>
                         <MenuItem component={CustomLink} href={"/portfolio"}>
                           <AccountCircle />
                           <span style={{ padding: "15px" }}>Portfolio</span>
                         </MenuItem>
-                        <MenuItem onClick={this.logout}>
+                        <MenuItem onClick={ () => userStore.logout() }>
                           <ExitToApp />
                           <span style={{ padding: "15px" }}>Logout</span>
                         </MenuItem>

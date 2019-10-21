@@ -12,10 +12,10 @@ import {
   Typography,
   Link,
   Button,
+  IconButton,
   Grid,
-  Box
+  Box,
 } from "@material-ui/core"
-
 
 // core components
 import { CustomLink } from "../"
@@ -120,56 +120,59 @@ const footers = [
 const FooterTopRow = ({classes}) => (
   <Box mb={5}>
     <Grid container>
-      <Link href="/" className={classes.flex}>
-        {" "}
-        {/* get rid of inline style */}
-        <img
-          id="logo"
-          src="/static/images/esx/esx-white-logo.png"
-          alt="ESX"
-          style={{ marginTop: "-22px" }}
-          height="52px"
-        />
-      </Link>
-      <div className={classes.grow} />
-
-      <Button
-        href="https://twitter.com/"
-        target="_blank"
-        title="Tweet"
-      >
-        <FontAwesomeIcon icon={faTwitter} size="2x" />
-      </Button>
-      <Button
-        href="https://www.facebook.com/"
-        target="_blank"
-      >
-        <FontAwesomeIcon icon={faFacebook} size="2x" />
-      </Button>
-      <Button
-        href="https://www.pinterest.com/"
-        target="_blank"
-      >
-        <FontAwesomeIcon icon={faPinterest} size="2x" />
-      </Button>
-      <Button
-        href="https://www.instagram.com/"
-        target="_blank"
-      >
-        <FontAwesomeIcon icon={faInstagram} size="2x" />
-      </Button>
-      <Button
-        href="https://www.youtube.com/"
-        target="_blank"
-      >
-        <FontAwesomeIcon icon={faYoutube} size="2x" />
-      </Button>
-      <Button
-        href="https://www.medium.com/"
-        target="_blank"
-      >
-        <FontAwesomeIcon icon={faMedium} size="2x" />
-      </Button>
+      <Grid item xs={6} sm={8}>
+        <Link href="/" className={classes.flex}>
+          {" "}
+          {/* get rid of inline style */}
+          <img
+            id="logo"
+            src="/static/images/esx/esx-white-logo.png"
+            alt="ESX"
+            style={{ marginTop: "-22px" }}
+            height="52px"
+          />
+        </Link>
+        <div className={classes.grow} />
+      </Grid>
+      <Grid item xs={6} sm={4} className={classes.center}>
+        <IconButton
+          href="https://twitter.com/"
+          target="_blank"
+          title="Tweet"
+        >
+          <FontAwesomeIcon icon={faTwitter} size="1x" />
+        </IconButton>
+        <IconButton
+          href="https://www.facebook.com/"
+          target="_blank"
+        >
+          <FontAwesomeIcon icon={faFacebook} size="1x" />
+        </IconButton>
+        <IconButton
+          href="https://www.pinterest.com/"
+          target="_blank"
+        >
+          <FontAwesomeIcon icon={faPinterest} size="1x" />
+        </IconButton>
+        <IconButton
+          href="https://www.instagram.com/"
+          target="_blank"
+        >
+          <FontAwesomeIcon icon={faInstagram} size="1x" />
+        </IconButton>
+        <IconButton
+          href="https://www.youtube.com/"
+          target="_blank"
+        >
+          <FontAwesomeIcon icon={faYoutube} size="1x" />
+        </IconButton>
+        <IconButton
+          href="https://www.medium.com/"
+          target="_blank"
+        >
+          <FontAwesomeIcon icon={faMedium} size="1x" />
+        </IconButton>
+      </Grid>
     </Grid>
   </Box>
 )
@@ -185,10 +188,10 @@ const FooterMiddleRow = ( {classes, openModal} ) => (
           <ul>
             {footer.description.map(item => (
               <li key={item}>
-               
-                <Link 
-                  href="#" 
-                  variant="subtitle1" 
+
+                <Link
+                  href="#"
+                  variant="subtitle1"
                   color="textSecondary"
                   onClick={() => {
                     openModal(item)
@@ -202,14 +205,14 @@ const FooterMiddleRow = ( {classes, openModal} ) => (
         </Grid>
       ))}
     </Grid>
-    <Grid 
-      xs={4} 
-      item 
-      container 
+    <Grid
+      xs={4}
+      item
+      container
       justify="center"
       alignItems="center"
       direction="column"
-    >  
+    >
       <Grid item>
         <Typography variant="h6" align="center">
           {'Download the ESX app'}
@@ -266,6 +269,9 @@ const styles = theme => {
       li: {
         listStyle: 'none',
       },
+    },
+    center: {
+      textAlign: 'center',
     },
     root: {
       flexGrow: 1,
