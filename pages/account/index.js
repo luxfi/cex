@@ -6,11 +6,12 @@ import {
   Card,
   CardContent,
   Container,
-  Box,
+  Link,
 } from "@material-ui/core"
 import Typography from "@material-ui/core/Typography"
 
 import { AddPaymentMethodForm } from "../../components/account"
+import { CustomLink } from '../../components/app'
 
 @inject("store")
 @observer
