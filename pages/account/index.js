@@ -76,6 +76,11 @@ class Account extends React.Component {
               ))
             ) : null }
           </Grid>
+          <Grid item xs={12}>
+            <Link component={CustomLink} href="/account/kyc">
+              Check your identify verification status
+            </Link>
+          </Grid>
         </Grid>
       </Container>
     )
