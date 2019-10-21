@@ -299,6 +299,8 @@ export default class UserStore {
     // ** ONLY CALL WHEN @computed isValidKYC IS TRUE **
     this.updating = true
     let opts = ({
+      firstName,
+      lastName,
       phone,
       taxId,
       birthdate,
@@ -373,7 +375,7 @@ export default class UserStore {
 
   @computed get isValidKYC() {
     return (
-      this.isValidName() &&
+      this.isValidName &&
       this.validPhone &&
       this.validTaxId &&
       this.validBirthdate &&
