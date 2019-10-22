@@ -25,17 +25,6 @@ const styles = theme => ({
 
 @observer
 class PersonalDetails extends React.Component {
-  // const [values, setValues] = React.useState({
-  //   gender: ""
-  // })
-
-  // function handleChange(event) {
-  //   setValues(oldValues => ({
-  //     ...oldValues,
-  //     [event.target.name]: event.target.value
-  //   }))
-  // }
-
   constructor(props) {
     super(props)
     this.updateProperty = this.updateProperty.bind(this)
@@ -114,7 +103,7 @@ class PersonalDetails extends React.Component {
             fullWidth
             autoComplete="phone"
             onBlur={validatePhone}
-            value={lastName}
+            value={phone}
             onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
         </Grid>
