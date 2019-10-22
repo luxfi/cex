@@ -82,8 +82,8 @@ function getStepContent(
     firstName,
     lastName,
     setErrorMessage,
-    validateFirstName,
-    validateLastName
+    validFirstName,
+    validLastName
   }
 ) {
   switch (step) {
@@ -94,6 +94,9 @@ function getStepContent(
         firstName={firstName}
         lastName={lastName}
         birthdate={birthdate}
+        validFirstName={validFirstName}
+        validLastName={validLastName}
+        setErrorMessage={setErrorMessage}
       />
     case 1:
       return <PrimaryAddressForm />
@@ -123,8 +126,8 @@ export default function KYCForm(
     updateKYC,
     firstName,
     lastName,
-    validateFirstName,
-    validateLastName,
+    validFirstName,
+    validLastName,
     isValidPersonalDetails,
     setErrorMessage,
   }
@@ -157,7 +160,6 @@ export default function KYCForm(
   React.useEffect(() => {
     checkActiveStep(activeStep)
   }, [isValidPersonalDetails])
-
 
   return (
     <>
@@ -230,8 +232,8 @@ export default function KYCForm(
                       firstName,
                       lastName,
                       setErrorMessage,
-                      validateFirstName,
-                      validateLastName,
+                      validFirstName,
+                      validLastName,
                       setErrorMessage 
                     }
                   )}

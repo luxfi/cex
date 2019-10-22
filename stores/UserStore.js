@@ -39,30 +39,26 @@ export default class UserStore {
   @observable account = null
 
   // ** SIGNUP INFO **
-  @observable validEmail = false
-  @observable validPassword = false
-  @observable validFirstName = false
-  @observable validLastName = false
-  @observable over18 = false
-  @observable firstName = undefined
-  @observable middleName = undefined
-  @observable lastName = undefined
-  @observable passwordConfirm = undefined
+  // must initialize to empty string for controlled inputs
+  // https://reactjs.org/docs/forms.html#controlled-components
+  @observable firstName = ""
+  @observable lastName = ""
+  @observable passwordConfirm = ""
 
   // ** KYC **
-  @observable phone = undefined
-  @observable taxId = undefined
+  @observable phone = ""
+  @observable taxId = ""
   @observable birthdate = null
   @observable gender = "unspecified"
-  @observable address1 = undefined
-  @observable address2 = undefined
-  @observable city = undefined
-  @observable postalCode = undefined
-  @observable country = undefined
-  @observable state = undefined
-  @observable documents0 = undefined
-  @observable documents1 = undefined
-  @observable documents2 = undefined
+  @observable address1 = ""
+  @observable address2 = ""
+  @observable city = ""
+  @observable postalCode = ""
+  @observable country = ""
+  @observable state = ""
+  @observable documents0 = ""
+  @observable documents1 = ""
+  @observable documents2 = ""
 
   // @observable validPhone = false
   // @observable validTaxId = false
@@ -141,22 +137,22 @@ export default class UserStore {
     this[key] = val
   }
 
-  @action validateEmail() {
-    this.validEmail = isEmail(this.email)
+  @computed get validFirstName() {
+    return stringPresentAndValid(this.firstName)
   }
 
-  @action validatePassword() {
-    this.validPassword = isPassword(this.password)
+  @computed get validLastName() {
+    return stringPresentAndValid(this.lastName)
   }
 
-  @action validateFirstName() {
-    this.validFirstName = stringPresentAndValid(this.firstName)
+  @computed get validEmail() {
+    const regex = /^\S+@\S+\.\S+$/
+    return regex.test(this.email)
   }
 
-  @action validateLastName() {
-    this.validLastName = stringPresentAndValid(this.lastName)
+  @computed get validPassword() {
+    return typeof this.password === 'string' && this.password.length > 6
   }
-
 
   @computed get validPhone() {
     // https://stackoverflow.com/questions/4338267/validate-phone-number-with-javascript
@@ -170,12 +166,6 @@ export default class UserStore {
     // https://howtodoinjava.com/regex/java-regex-validate-social-security-numbers-ssn/
     const regex = /^(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$/
     return regex.test(this.taxId)
-  }
-
-
-  @computed get validBirthdate() {
-  // TODO valid date and range (this could be unnecessary if a date control is used)
-    return stringPresentAndValid(this.birthdate)
   }
 
   @action validateAddress1(a) {
@@ -208,7 +198,7 @@ export default class UserStore {
   }
 
   @action async signUp(onSuccess, onError) {
-    // ** ONLY CALL WHEN @computed isValidSignup IS TRUE **
+    // ** ONLY CALL WHEN @computed isValidSignUp IS TRUE **
     this.updating = true
 
     try {
@@ -340,36 +330,17 @@ export default class UserStore {
     this.setToken(undefined)
   }
 
-  @computed get isValidName() {
-    return (
-      stringPresentAndValid(this.firstName) &&
-      stringPresentAndValid(this.lastName)
-    )
-    // middle name is not checked
-  }
-
-  @computed get isValidSignup() {
-    console.log("validEmail", this.validEmail)
-    console.log("validPassword", this.validPassword)
-    console.log(
-      "password === passwordConfirm",
-      this.password === this.passwordConfirm
-    )
-    console.log("over18", this.over18)
-    console.log("isValidName", this.isValidName)
-
+  @computed get isValidSignUp() {
     return (
       this.validEmail &&
+      this.validFirstName &&
+      this.validLastName &&
       this.validPassword &&
-      this.passwordsMatch &&
-      this.over18 &&
-      this.isValidName
+      this.passwordsMatch
     )
   }
 
   @computed get isValidLogin() {
-    console.log("this.validEmail", this.validEmail)
-    console.log("this.validPassword", this.validPassword)
     return this.validEmail && this.validPassword
   }
 
@@ -412,7 +383,10 @@ export default class UserStore {
 }
 
 function stringPresentAndValid(s) {
-  return typeof s === "string" && s.length >= 2
+  // support international names
+  // https://stackoverflow.com/questions/2385701/regular-expression-for-first-and-last-name
+  const regex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
+  return typeof s === "string" && s.length >= 2 && regex.test(s)
 }
 
 export async function fetchUserSession() {
