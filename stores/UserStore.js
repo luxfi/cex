@@ -362,9 +362,11 @@ export default class UserStore {
 
   @computed get isValidPersonalDetails() {
     return (
-      this.isValidName &&
+      this.validFirstName &&
+      this.validLastName &&
       this.validPhone &&
-      this.validTaxId 
+      this.validTaxId &&
+      !!this.birthdate
     )
   }
 
