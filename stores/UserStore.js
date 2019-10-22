@@ -138,6 +138,7 @@ export default class UserStore {
 
   @action setValue(key, val) {
     // console.log("key, val", [key, val])
+    debugger
     this[key] = val
   }
 

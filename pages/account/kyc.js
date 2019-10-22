@@ -13,6 +13,7 @@ import { KYCForm } from "../../components/account"
 class KYC extends React.Component {
   render() {
     const { store } = this.props
+    window.store = store
     const { userStore } = this.props.store
     const {
       phone,
@@ -28,7 +29,6 @@ class KYC extends React.Component {
       documents0,
       documents1,
       documents2,
-      setValue,
       isValidKYC,
       updateKYC,
       firstName,
@@ -60,7 +60,9 @@ class KYC extends React.Component {
             documents0={documents0}
             documents1={documents1}
             documents2={documents2}
-            setValue={setValue}
+            setValue={(key, val) => {
+              userStore.setValue(key, val)
+            }}
             isValidKYC={isValidKYC}
             updateKYC={updateKYC}
             firstName={firstName}
