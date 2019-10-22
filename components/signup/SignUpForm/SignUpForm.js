@@ -68,12 +68,10 @@ class SignupForm extends React.Component {
       password,
       passwordConfirm,
       over18,
-      isValidSignup,
+      isValidSignUp,
       signUp,
-      validateEmail,
-      validatePassword,
-      validateFirstName,
-      validateLastName,
+      validFirstName,
+      validLastName,
       validEmail,
       validPassword,
       store,
@@ -81,7 +79,6 @@ class SignupForm extends React.Component {
     } = this.props
 
     const { passwordsMatch } = store.userStore
-
     // TODO Remove form)
     return (
       <Container component="main" maxWidth="xs">
@@ -95,14 +92,14 @@ class SignupForm extends React.Component {
             margin="normal"
             required
             fullWidth
-            name="firstName"
-            label="First Name"
-            type="firstName"
             id="firstName"
-            onBlur={validateFirstName}
-            // autoComplete="current-firstName"
-            // error={!validfirstName}
-            // helperText={this.state.firstNameError && this.state.firstNameError}
+            name="firstName"
+            type="firstName"
+            label="First name"
+            fullWidth
+            autoComplete="fname"
+            error={firstName.length >= 2 && !validFirstName}
+            helperText={firstName.length >= 2 && !validFirstName && "Please enter valid first name"}
             value={firstName}
             onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
@@ -111,14 +108,14 @@ class SignupForm extends React.Component {
             margin="normal"
             required
             fullWidth
-            name="lastName"
-            label="Last Name"
-            type="lastName"
             id="lastName"
-            onBlur={validateLastName}
-            // autoComplete="current-lastName"
-            // error={!validlastName}
-            // helperText={this.state.lastNameError && this.state.lastNameError}
+            name="lastName"
+            label="Last name"
+            type="lastName"
+            fullWidth
+            autoComplete="lname"
+            error={lastName.length >= 2 && !validLastName}
+            helperText={lastName.length >= 2 && !validLastName && "Please enter valid last name"}
             value={lastName}
             onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
@@ -130,8 +127,6 @@ class SignupForm extends React.Component {
             id="email"
             label="Email Address"
             name="email"
-            onBlur={validateEmail}
-            // autoComplete="email"
             autoFocus
             error={this.state.checkedOver18 && !validEmail}
             helperText={
@@ -151,12 +146,10 @@ class SignupForm extends React.Component {
             label="Password"
             type="password"
             id="password"
-            onBlur={validatePassword}
-            // autoComplete="current-password"
             error={this.state.checkedOver18 && !validPassword}
             helperText={
               this.state.checkedOver18 &&
-              !validEmail &&
+              !validPassword &&
               "please make sure password is long enough"
             }
             value={password}
@@ -171,8 +164,6 @@ class SignupForm extends React.Component {
             label="Password"
             type="password"
             id="passwordConfirm"
-            // onBlur={validateConfirmedPassword}
-            // autoComplete="current-passwordConfirm"
             error={
               this.state.checkedOver18 && passwordConfirm && !passwordsMatch
             }
@@ -205,7 +196,7 @@ class SignupForm extends React.Component {
             variant="contained"
             color="primary"
             className={classes.submit}
-            disabled={!isValidSignup}
+            disabled={!this.state.checkedOver18 || !isValidSignUp}
             onClick={() => {
               signUp(
                 () => Router.push("/account/kyc"),

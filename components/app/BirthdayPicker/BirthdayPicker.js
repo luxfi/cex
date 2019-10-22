@@ -35,7 +35,6 @@ const BirthdatePicker = ({ setValue, birthdate }) => {
           maxDateMessage="Must be 18 years or older"
           initialFocusedDate={EighteenYearsAgo}
           // onError="TODO"
-          strictCompareDates
         />
      
     </MuiPickersUtilsProvider>

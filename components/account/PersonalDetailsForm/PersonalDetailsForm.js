@@ -48,7 +48,9 @@ class PersonalDetails extends React.Component {
       taxId,
       birthdate,
       gender,
-      setValue
+      setValue,
+      validLastName,
+      validFirstName
     } = this.props
     return (
       <>
@@ -65,9 +67,8 @@ class PersonalDetails extends React.Component {
             label="First name"
             fullWidth
             autoComplete="fname"
-            // onKeyPress={validateFirstName}
-            // error={!validfirstName}
-            // helperText={this.state.firstNameError && this.state.firstNameError}
+            error={firstName.length >= 2 && !validFirstName}
+            helperText={firstName.length >= 2 && !validFirstName && "Please enter valid first name"}
             value={firstName}
             onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
@@ -81,10 +82,8 @@ class PersonalDetails extends React.Component {
             type="lastName"
             fullWidth
             autoComplete="lname"
-            // onKeyPress={validateLastName}
-            // autoComplete="current-lastName"
-            // error={!validlastName}
-            // helperText={this.state.lastNameError && this.state.lastNameError}
+            error={lastName.length >= 2 && !validLastName}
+            helperText={lastName.length >= 2 && !validLastName && "Please enter valid last name"}
             value={lastName}
             onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
