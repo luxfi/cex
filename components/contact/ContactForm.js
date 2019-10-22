@@ -1,179 +1,155 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react'
+import { withStyles } from '@material-ui/core/styles'
 
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import { TextField, Button } from '@material-ui/core'
 
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-
-import {
-  Formik, Form, Field, ErrorMessage,
-} from 'formik';
-
+import { Formik } from 'formik';
 import * as yup from 'yup';
 
 import styles from "./contactForm.style.js"
 
+class ContactForm extends React.Component {
 
-
-function Contact(props) {
-  const classes  = makeStyles(styles);
-  const [open, setOpen] = useState(false);
-  const [isSubmitionCompleted, setSubmitionCompleted] = useState(false);
-
-  function handleClose() {
-    setOpen(false);
+  constructor(props) {
+    super(props)
+    this.state = {
+      submitting: false,
+      submitted: false
+    }
   }
 
-  function handleClickOpen() {
-    setSubmitionCompleted(false);
-    setOpen(true);
+  setSubmitting(b) {
+    this.setState({
+      submitting: b
+    })
   }
 
-  return (
-    <React.Fragment>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Contact us!
-      </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-        {!isSubmitionCompleted &&
-          <React.Fragment>
-            <DialogTitle id="form-dialog-title">Contact</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                Send us a comment!
-              </DialogContentText>
-              <Formik
-                initialValues={{ email: '', name: '', comment: '' }}
-                onSubmit={(values, { setSubmitting }) => {
+  setSubmitted(b) {
+    this.setState({
+      submitted: b
+    })
+  }
 
-                  setSubmitting(true);
+    // a renderprops function for Formik
+  renderForm = (props) => {
 
-                    /*  FOR EXAMPLE
-                  axios.post(contactFormEndpoint,
-                      values,
-                      {
-                        headers: {
-                          'Access-Control-Allow-Origin': '*',
-                          'Content-Type': 'application/json',
-                        }
-                      },
-                    ).then((resp) => {
-                      setSubmitionCompleted(true);
-                    }
-                    );
-                    */
+      // Formik stuff
+    const {
+      values,
+      touched,
+      errors,
+      dirty,
+      isSubmitting,
+      handleChange,
+      handleBlur,
+      handleSubmit,
+      handleReset,
+    } = props;
 
-                }}
+    const classes = this.props.classes
 
-                validationSchema={yup.object().shape({
-                  email: yup.string()
-                    .email()
-                    .required('Required'),
-                  name: yup.string()
-                    .required('Required'),
-                  comment: yup.string()
-                    .required('Required'),
-                })}
-              >
-                {(props) => {
-                  const {
-                    values,
-                    touched,
-                    errors,
-                    dirty,
-                    isSubmitting,
-                    handleChange,
-                    handleBlur,
-                    handleSubmit,
-                    handleReset,
-                  } = props;
-                  return (
-                    <form onSubmit={handleSubmit}>
-                      <TextField
-                        label="name"
-                        name="name"
-                        className={classes.textField}
-                        value={values.name}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        helperText={(errors.name && touched.name) && errors.name}
-                        margin="normal"
-                      />
+    if (this.state.submitted) {
+      return (
+        <p>Thanks for your inquiry.  We'll respond shortly.</p>
+      )
+    }
 
-                      <TextField
-                        error={errors.email && touched.email}
-                        label="email"
-                        name="email"
-                        className={classes.textField}
-                        value={values.email}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        helperText={(errors.email && touched.email) && errors.email}
-                        margin="normal"
-                      />
+    return (
+      <form onSubmit={handleSubmit}>
+        <div className={classes.fieldsOuter}>
+          <TextField
+            label="name"
+            name="name"
+            className={classes.textField}
+            value={values.name}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            helperText={(errors.name && touched.name) && errors.name}
+            margin="normal"
+          />
+          <TextField
+            error={errors.email && touched.email}
+            label="email"
+            name="email"
+            className={classes.textField}
+            value={values.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            helperText={(errors.email && touched.email) && errors.email}
+            margin="normal"
+          />
+          <TextField
+            label="comment"
+            name="comment"
+            multiline={true}
+            rows={2}
+            maxRows={6}
+            className={classes.commentTextField}
+            value={values.comment}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            helperText={(errors.comment && touched.comment) && errors.comment}
+            margin="normal"
+          />
+        </div>
+        <div className={classes.buttonsOuter} >
+          <Button
+            type="button"
+            className="outline"
+            onClick={handleReset}
+            disabled={!dirty || isSubmitting}
+          >Reset</Button>
+          <Button type="submit" disabled={isSubmitting}>Submit</Button>
+        </div>
+      </form>
+    )
+  }
 
-                      <TextField
-                        label="comment"
-                        name="comment"
-                        className={classes.textField}
-                        value={values.comment}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        helperText={(errors.comment && touched.comment) && errors.comment}
-                        margin="normal"
-                      />
-                      <DialogActions>
-                        <Button
-                          type="button"
-                          className="outline"
-                          onClick={handleReset}
-                          disabled={!dirty || isSubmitting}
-                        >
-                          Reset
-                        </Button>
-                        <Button type="submit" disabled={isSubmitting}>
-                          Submit
-                        </Button>
-                        {/* <DisplayFormikState {...props} /> */}
-                      </DialogActions>
-                    </form>
-                  );
-                }}
-              </Formik>
-            </DialogContent>
-          </React.Fragment>
-        }
-        {isSubmitionCompleted &&
-          <React.Fragment>
-            <DialogTitle id="form-dialog-title">Thanks!</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                Thanks
-              </DialogContentText>
-              <DialogActions>
-                <Button
-                  type="button"
-                  className="outline"
-                  onClick={handleClose}
-                >
-                  Back to app
-                  </Button>
-                {/* <DisplayFormikState {...props} /> */}
-              </DialogActions>
-            </DialogContent>
-          </React.Fragment>}
-      </Dialog>
-    </React.Fragment >
-  );
+  render = () => {
+    return (
+      <div className={this.props.classes.contactOuter}>
+        <h3>Contact</h3>
+        <Formik
+          initialValues={{ email: '', name: '', comment: '' }}
+          onSubmit={(values) => {
+
+            this.setSubmitting(true); // wait state
+
+              /*  FOR EXAMPLE ...something like
+            fetch.post(contactFormEndpoint,
+              values,
+              {
+                headers: {
+                  'Access-Control-Allow-Origin': '*',
+                  'Content-Type': 'application/json',
+                }
+              },
+            ).then((resp) => {
+              this.setSubmitted(true)
+              this.setSubmitting(false)
+            }
+            )
+            */
+
+            // TEMP
+            this.setSubmitted(true)
+          }}
+
+          validationSchema={yup.object().shape({
+            email: yup.string()
+              .email()
+              .required('Required'),
+            name: yup.string()
+              .required('Required'),
+            comment: yup.string()
+              .required('Required'),
+          })}
+
+          render={this.renderForm /* reference the renderProps function, don't call it! */}
+        />
+      </div>
+    )
+  }
 }
 
-export default Contact;
+export default withStyles(styles)(ContactForm)
