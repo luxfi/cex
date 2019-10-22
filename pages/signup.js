@@ -7,7 +7,6 @@ import { inject, observer } from "mobx-react"
 class SignUp extends React.Component {
   render() {
     const { userStore } = this.props.store
-    window.userStore = userStore
     const {
       email,
       password,
