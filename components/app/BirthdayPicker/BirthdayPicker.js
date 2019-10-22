@@ -11,18 +11,20 @@ const useStyles = makeStyles(theme => ({
     width: "100%"
   }
 }))
-import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 import MomentUtils from '@date-io/moment'
 import moment from 'moment/moment.js'
 
 const BirthdatePicker = ({ setValue, birthdate }) => {
   const classes = useStyles()
   const EighteenYearsAgo = moment().subtract(18, 'years')
+  const AWhileAgo = moment().subtract(120, 'years')
   // setValue("birthdate", EighteenYearsAgo)
   // initialize store with max valid birthdate
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
-        <DatePicker 
+      <KeyboardDatePicker
+        clearable 
           value={birthdate}
           onChange={date => setValue("birthdate", date)}
           className={classes.textField}
@@ -34,6 +36,8 @@ const BirthdatePicker = ({ setValue, birthdate }) => {
           maxDate={EighteenYearsAgo}
           maxDateMessage="Must be 18 years or older"
           initialFocusedDate={EighteenYearsAgo}
+          minDate={AWhileAgo}
+          minDateMessage="Please choose an appropriate date of birth"
           // onError="TODO"
         />
      
