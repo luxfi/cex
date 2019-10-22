@@ -93,6 +93,7 @@ function getStepContent(
         gender={gender}
         firstName={firstName}
         lastName={lastName}
+        birthdate={birthdate}
       />
     case 1:
       return <PrimaryAddressForm />

@@ -1,6 +1,6 @@
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
-import TextField from "@material-ui/core/TextField"
+// import TextField from "@material-ui/core/TextField"
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -11,24 +11,35 @@ const useStyles = makeStyles(theme => ({
     width: "100%"
   }
 }))
+import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
+import MomentUtils from '@date-io/moment'
+import moment from 'moment/moment.js'
 
-export default function DatePickers({ setValue, birthdate }) {
+const BirthdatePicker = ({ setValue, birthdate }) => {
   const classes = useStyles()
+  const EighteenYearsAgo = moment().subtract(18, 'years')
+  // setValue("birthdate", EighteenYearsAgo)
+  // initialize store with max valid birthdate
   return (
-    <form className={classes.container} noValidate>
-      <TextField
-        id="date"
-        label="Birthday"
-        type="date"
-        defaultValue="2017-05-24"
-        className={classes.textField}
-        InputLabelProps={{
-          shrink: true
-        }}
-        value={birthdate}
-        name="birthdate"
-        onChange={evt => setValue(evt.target.name, evt.target.value)}
-      />
-    </form>
+    <MuiPickersUtilsProvider utils={MomentUtils}>
+        <DatePicker 
+          value={birthdate}
+          onChange={date => setValue("birthdate", date)}
+          className={classes.textField}
+          disableFuture
+          openTo="month"
+          format="MM/DD/YYYY"
+          label="Date of birth"
+          views={["month", "date", "year"]}
+          maxDate={EighteenYearsAgo}
+          maxDateMessage="Must be 18 years or older"
+          initialFocusedDate={EighteenYearsAgo}
+          // onError="TODO"
+          strictCompareDates
+        />
+     
+    </MuiPickersUtilsProvider>
   )
 }
+
+export default BirthdatePicker

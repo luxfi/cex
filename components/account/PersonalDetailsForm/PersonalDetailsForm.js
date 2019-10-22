@@ -48,8 +48,6 @@ class PersonalDetails extends React.Component {
       taxId,
       birthdate,
       gender,
-      validateFirstName,
-      validateLastName,
       setValue
     } = this.props
     return (

@@ -1,6 +1,7 @@
 // Generic Libraries
 import { action, observable, computed } from "mobx"
 import Router from "next/router"
+import moment from 'moment/moment.js'
 
 import * as ethers from "ethers"
 // import _ from 'lodash'
@@ -51,7 +52,7 @@ export default class UserStore {
   // ** KYC **
   @observable phone = undefined
   @observable taxId = undefined
-  @observable birthdate = undefined
+  @observable birthdate = null
   @observable gender = "unspecified"
   @observable address1 = undefined
   @observable address2 = undefined
@@ -381,7 +382,6 @@ export default class UserStore {
       this.isValidName &&
       this.validPhone &&
       this.validTaxId &&
-      this.validBirthdate &&
       this.validAddress1 &&
       this.validCity &&
       this.postalCode
@@ -393,8 +393,7 @@ export default class UserStore {
     return (
       this.isValidName &&
       this.validPhone &&
-      this.validTaxId &&
-      this.validBirthdate
+      this.validTaxId 
     )
   }
 
