@@ -12,9 +12,8 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function DatePickers() {
+export default function DatePickers({ setValue, birthdate }) {
   const classes = useStyles()
-
   return (
     <form className={classes.container} noValidate>
       <TextField
@@ -26,6 +25,9 @@ export default function DatePickers() {
         InputLabelProps={{
           shrink: true
         }}
+        value={birthdate}
+        name="birthdate"
+        onChange={evt => setValue(evt.target.name, evt.target.value)}
       />
     </form>
   )

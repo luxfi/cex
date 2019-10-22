@@ -33,11 +33,7 @@ class KYC extends React.Component {
       updateKYC,
       firstName,
       lastName,
-      validatePhone,
-      validateTaxId,
-      validateBirthdate,
-      validateFirstName,
-      validateLastName
+      isValidPersonalDetails,
     } = userStore
     const setErrorMessage = message => {
       store.uiStore.errorMessage = message
@@ -67,13 +63,15 @@ class KYC extends React.Component {
             updateKYC={updateKYC}
             firstName={firstName}
             lastName={lastName}
-            validatePhone={validatePhone}
-            validateTaxId={validateTaxId}
-            validateBirthdate={validateBirthdate}
             setErrorMessage={setErrorMessage}
-            validateFirstName={validateFirstName}
-            validateLastName={validateLastName}
             setErrorMessage={setErrorMessage}
+            validateFirstName={() => {
+              userStore.validateFirstName()
+            }}
+            validateLastName={() => {
+              userStore.validateLastName()
+            }}
+            isValidPersonalDetails={isValidPersonalDetails}
               />
         </Container>
       </main>

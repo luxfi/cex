@@ -63,9 +63,9 @@ export default class UserStore {
   @observable documents1 = undefined
   @observable documents2 = undefined
 
-  @observable validPhone = false
-  @observable validTaxId = false
-  @observable validBirthdate = false
+  // @observable validPhone = false
+  // @observable validTaxId = false
+  // @observable validBirthdate = false
   // gender is a dropdown and defaults to 'unspecified' -- no need to track
   @observable validAddress1 = false
   @observable validCity = false
@@ -137,13 +137,10 @@ export default class UserStore {
   }
 
   @action setValue(key, val) {
-    // console.log("key, val", [key, val])
-    debugger
     this[key] = val
   }
 
   @action validateEmail() {
-    console.log("Validating email", isEmail(this.email))
     this.validEmail = isEmail(this.email)
   }
 
@@ -159,20 +156,25 @@ export default class UserStore {
     this.validLastName = stringPresentAndValid(this.lastName)
   }
 
-  @action validatePhone(phone) {
-    this.validPhone = isPhone(phone)
+
+  @computed get validPhone() {
+    // https://stackoverflow.com/questions/4338267/validate-phone-number-with-javascript
+    const regex = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/
+    return regex.test(this.phone)
   }
 
-  @action validateTaxId(id) {
+
+  @computed get validTaxId() {
     // 9 digits etc
     // https://howtodoinjava.com/regex/java-regex-validate-social-security-numbers-ssn/
     const regex = /^(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$/
-    this.validTaxId = regex.test(id)
+    return regex.test(this.taxId)
   }
 
-  @action validateBirthdate(d) {
-    // TODO valid date and range (this could be unnecessary if a date control is used)
-    this.validBirthdate = stringPresentAndValid(d)
+
+  @computed get validBirthdate() {
+  // TODO valid date and range (this could be unnecessary if a date control is used)
+    return stringPresentAndValid(this.birthdate)
   }
 
   @action validateAddress1(a) {
@@ -385,6 +387,15 @@ export default class UserStore {
       this.postalCode
     )
     // country is dropdown (noted above)
+  }
+
+  @computed get isValidPersonalDetails() {
+    return (
+      this.isValidName &&
+      this.validPhone &&
+      this.validTaxId &&
+      this.validBirthdate
+    )
   }
 
   @computed get isValidNewPaymentMethod() {

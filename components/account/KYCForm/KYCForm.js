@@ -81,9 +81,6 @@ function getStepContent(
     updateKYC,
     firstName,
     lastName,
-    validatePhone,
-    validateTaxId,
-    validateBirthdate,
     setErrorMessage,
     validateFirstName,
     validateLastName
@@ -96,9 +93,6 @@ function getStepContent(
         gender={gender}
         firstName={firstName}
         lastName={lastName}
-        validatePhone={validatePhone}
-        validateTaxId={validateTaxId}
-        validateBirthdate={validateBirthdate}
       />
     case 1:
       return <PrimaryAddressForm />
@@ -128,15 +122,15 @@ export default function KYCForm(
     updateKYC,
     firstName,
     lastName,
-    validatePhone,
-    validateTaxId,
-    validateBirthdate,
     validateFirstName,
     validateLastName,
-    setErrorMessage }
+    isValidPersonalDetails,
+    setErrorMessage,
+  }
 ) {
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
+  const [currentStepDisabled, setCurrentStepDisabled] = React.useState(false)
 
   const handleNext = () => {
     setActiveStep(activeStep + 1)
@@ -145,6 +139,24 @@ export default function KYCForm(
   const handleBack = () => {
     setActiveStep(activeStep - 1)
   }
+
+  const checkActiveStep = (step) => {
+    switch (step) {
+      case 0:
+        return setCurrentStepDisabled(!isValidPersonalDetails)
+      case 1:
+        return <PrimaryAddressForm />
+      case 2:
+        return <PhotoIDsForm />
+      default:
+        throw new Error("Unknown step")
+    }
+  }
+
+  React.useEffect(() => {
+    checkActiveStep(activeStep)
+  }, [isValidPersonalDetails])
+
 
   return (
     <>
@@ -216,9 +228,6 @@ export default function KYCForm(
                       updateKYC,
                       firstName,
                       lastName,
-                      validatePhone,
-                      validateTaxId,
-                      validateBirthdate,
                       setErrorMessage,
                       validateFirstName,
                       validateLastName,
@@ -236,6 +245,7 @@ export default function KYCForm(
                       color="primary"
                       onClick={handleNext}
                       className={classes.button}
+                      disabled={currentStepDisabled}
                     >
                       {activeStep === steps.length - 1 ? "Continue" : "Next"}
                     </Button>

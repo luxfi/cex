@@ -48,9 +48,6 @@ class PersonalDetails extends React.Component {
       taxId,
       birthdate,
       gender,
-      validatePhone,
-      validateTaxId,
-      validateBirthdate,
       validateFirstName,
       validateLastName,
       setValue
@@ -70,7 +67,7 @@ class PersonalDetails extends React.Component {
             label="First name"
             fullWidth
             autoComplete="fname"
-            onBlur={validateFirstName}
+            // onKeyPress={validateFirstName}
             // error={!validfirstName}
             // helperText={this.state.firstNameError && this.state.firstNameError}
             value={firstName}
@@ -86,7 +83,7 @@ class PersonalDetails extends React.Component {
             type="lastName"
             fullWidth
             autoComplete="lname"
-            onBlur={validateLastName}
+            // onKeyPress={validateLastName}
             // autoComplete="current-lastName"
             // error={!validlastName}
             // helperText={this.state.lastNameError && this.state.lastNameError}
@@ -102,7 +99,6 @@ class PersonalDetails extends React.Component {
             label="Phone"
             fullWidth
             autoComplete="phone"
-            onBlur={validatePhone}
             value={phone}
             onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
@@ -110,13 +106,11 @@ class PersonalDetails extends React.Component {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="ssn"
-            name="ssn"
+            id="taxId"
+            name="taxId"
             label="SSN"
             fullWidth
-            autoComplete="ssn"
-            autoComplete="ssn"
-            onBlur={validateTaxId}
+            autoComplete="taxId"
             value={taxId}
             onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
