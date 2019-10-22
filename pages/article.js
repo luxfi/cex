@@ -5,17 +5,13 @@ import { withRouter } from "next/router"
 import dynamic from "next/dynamic"
 import ContentLoader from "react-content-loader"
 
-// @material-ui/core components
 import { withStyles } from "@material-ui/core/styles"
 import { Button, Avatar, Grid } from "@material-ui/core"
 
-// core components
 import { CustomBreadcrumbs } from "../components/app"
 
-// import styles from "assets/jss/material-kit-react/views/landingPage.js"
-import styles from "../pageStyles/article.style"
+import styles from "../pageStyles/article.style.js"
 
-// Sections for this page
 import { InvestNow } from "../components/app"
 
 const MyLoader = () => (
