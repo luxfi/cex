@@ -113,31 +113,20 @@ export default class UserStore {
    * Fetches all todos from the server
    */
   @action async loadSession() {
-    let p = undefined
-
-    if (this.api.client.library && this.api.client.library.shopjs) {
-      p = this.api.client.library.shopjs()
-    }
-
     this.isLoading = true
-    if (this.api.client.getCustomerToken) {
-      this.token = this.api.client.getCustomerToken()
-      if (!!this.token) {
-        try {
-          this.account = await this.api.client.account.get()
-        } catch (e) {
-          console.log('account token expired')
-          this.logout()
-        }
-      }
-    }
 
     try {
-      let appSettings = await p
+      const ps = [
+        this.api.client.library.shopjs(),
+        this.account = await this.api.client.account.get()
+      ]
+
+      [appSettings, account] = await Promise.all(ps)
       this.appSettings = appSettings
-      console.log('app settings', appSettings)
+      this.account = account
     } catch (e) {
-      console.log('could not get app settings')
+      console.log('account token expired')
+      this.logout()
     }
 
     this.isLoading = false
