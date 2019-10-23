@@ -6,6 +6,7 @@ import Api from "../src/hanzo/api"
 // Constants
 import { HANZO_KEY, HANZO_ENDPOINT } from "../src/settings.js"
 
+
 // Stores
 import MovieStore from "./MovieStore"
 import ArticleStore from "./ArticleStore"
@@ -13,6 +14,7 @@ import OrderBook from "./OrderBook"
 import UserStore from "./UserStore"
 import UserPortfolio from "./UserPortfolio"
 import UIStore from "./UIStore"
+import CMSStore from "./CMSStore"
 
 const isServer = typeof window === "undefined"
 useStaticRendering(isServer)
@@ -24,8 +26,12 @@ const _initialData = {
   orderBook: {},
   userStore: {},
   userPortfolio: {},
-  uiStore: {}
+  uiStore: {},
+  cmsStore: {}
 }
+
+
+const CMS_URL = 'http://localhost:3001'
 
 export default function initializeStore(initialData = _initialData) {
   const api = new Api(HANZO_KEY, HANZO_ENDPOINT)
@@ -37,7 +43,8 @@ export default function initializeStore(initialData = _initialData) {
       orderBook: new OrderBook(initialData.orderBook, api),
       userStore: new UserStore(initialData.userStore, api),
       userPortfolio: new UserPortfolio(initialData.userPortfolio, api),
-      uiStore: new UIStore(initialData.uiStore, api)
+      uiStore: new UIStore(initialData.uiStore, api),
+      cmsStore: new CMSStore(initialData.cmsStore, CMS_URL) // won't work on the server  ;)
     }
   } else if (store === null) {
     // Client stuff
@@ -47,7 +54,8 @@ export default function initializeStore(initialData = _initialData) {
       orderBook: new OrderBook(initialData.orderBook, api),
       userStore: new UserStore(initialData.userStore, api),
       userPortfolio: new UserPortfolio(initialData.userPortfolio, api),
-      uiStore: new UIStore(initialData.uiStore, api)
+      uiStore: new UIStore(initialData.uiStore, api),
+      cmsStore: new CMSStore(initialData.cmsStore, CMS_URL)
     }
   }
   // Otherwise we don't need to re-initialize the store

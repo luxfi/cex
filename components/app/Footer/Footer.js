@@ -109,7 +109,24 @@ const footers = [
   },
   {
     title: 'Support',
-    description: ['Investory FAQ', 'Project FAQ', 'Risks', 'Contact'],
+    description: [
+      {
+        title: 'Investor FAQ',
+        link: 'investorFaq'
+      },
+      {
+        title: 'Project FAQ',
+        link: 'projectFaq'
+      },
+      {
+        title: 'Risks',
+        link: 'risks'
+      },
+      {
+        title: 'Contact Us',
+        link: 'contact'
+      },
+    ],
   },
   {
     title: 'Account',
@@ -186,21 +203,22 @@ const FooterMiddleRow = ( {classes, openModal} ) => (
             {footer.title}
           </Typography>
           <ul>
-            {footer.description.map(item => (
-              <li key={item}>
-
-                <Link
-                  href="#"
-                  variant="subtitle1"
-                  color="textSecondary"
-                  onClick={() => {
-                    openModal(item)
-                  }}
-                  >
-                  {item}
-                </Link>
-              </li>
-            ))}
+            {footer.description.map(item => {
+                const isRealLink = (typeof item === 'object')
+                return (
+                  <li key={(isRealLink) ? item.link : item}>
+                    <Link
+                      href={(isRealLink) ? item.link : null}
+                      variant="subtitle1"
+                      color="textSecondary"
+                      onClick={(isRealLink) ? null : () => {openModal(item)}}
+                    >
+                      {(isRealLink) ? item.title : item}
+                    </Link>
+                  </li>
+                )            
+              })
+            }
           </ul>
         </Grid>
       ))}
