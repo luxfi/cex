@@ -57,7 +57,7 @@ export default class UserStore {
   @observable address2 = ""
   @observable city = ""
   @observable postalCode = ""
-  @observable country = ""
+  @observable country = "US"
   @observable state = ""
   @observable documents0 = ""
   @observable documents1 = ""
@@ -361,6 +361,7 @@ export default class UserStore {
     // returns array of objects, countries with code
     // [{ "name": "Afghanistan", "code": "AF" },
     // { "name": "Albania", "code": "AL" }]
+    if (!this.appSettings) return {}
     return this.appSettings.countries.reduce((acc, memo) => {
       acc.push({"name": memo.name, "code": memo.code})
       return acc
@@ -371,9 +372,8 @@ export default class UserStore {
     // returns array of objects, states with code
     // [{ name: "Florida", code: "FL" },
     // { name: "Michigan", code: "MI" }]
-    this.appSettings.countries
-    const countryCode = this.countryCode || "US"
-    const countryObj = this.appSettings.countries.find(country => country.code === countryCode)
+    if (!this.appSettings) return {}
+    const countryObj = this.appSettings.countries.find(country => country.code === this.country)
     const statesArray = countryObj.subdivisions
     return statesArray.reduce((acc, memo) => {
       acc.push({ "name": memo.name, "code": memo.code })

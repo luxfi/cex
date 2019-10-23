@@ -28,6 +28,8 @@ class KYC extends React.Component {
       postalCode,
       country,
       state,
+      countries,
+      states,
       documents0,
       documents1,
       documents2,
@@ -63,6 +65,8 @@ class KYC extends React.Component {
             postalCode={postalCode}
             country={country}
             state={state}
+            countries={countries}
+            states={states}
             documents0={documents0}
             documents1={documents1}
             documents2={documents2}
