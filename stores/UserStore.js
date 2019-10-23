@@ -102,17 +102,23 @@ export default class UserStore {
   @action async loadSession() {
     this.isLoading = true
 
-    try {
-      const ps = [
-        this.api.client.library.shopjs(),
-        this.account = await this.api.client.account.get()
-      ]
+    this.token = this.api.client.getCustomerToken()
 
-      [appSettings, account] = await Promise.all(ps)
-      this.appSettings = appSettings
-      this.account = account
+    try {
+      if (this.token) {
+        const ps = [
+          this.api.client.library.shopjs(),
+          this.api.client.account.get(),
+        ]
+
+        let [appSettings, account] = await Promise.all(ps)
+        this.appSettings = appSettings
+        this.account = account
+      } else {
+        this.appSettings = await this.api.client.library.shopjs()
+      }
     } catch (e) {
-      console.log('account token expired')
+      console.log('account token expired', e)
       this.logout()
     }
 
