@@ -50,7 +50,9 @@ class PersonalDetails extends React.Component {
       gender,
       setValue,
       validLastName,
-      validFirstName
+      validFirstName,
+      validPhone,
+      validTaxId
     } = this.props
     return (
       <>
@@ -96,6 +98,8 @@ class PersonalDetails extends React.Component {
             label="Phone"
             fullWidth
             autoComplete="phone"
+            error={phone.length >= 2 && !validPhone}
+            helperText={phone.length >= 2 && !validPhone && "Please enter a 10 digit phone number"}
             value={phone}
             onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
@@ -108,6 +112,8 @@ class PersonalDetails extends React.Component {
             label="SSN"
             fullWidth
             autoComplete="taxId"
+            error={taxId.length >= 2 && !validTaxId}
+            helperText={taxId.length >= 2 && !validTaxId && `Please enter valid last ssn "nn-nn-nnnn"`}
             value={taxId}
             onChange={evt => setValue(evt.target.name, evt.target.value)}
           />

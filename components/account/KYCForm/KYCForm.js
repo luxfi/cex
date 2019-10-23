@@ -65,6 +65,8 @@ function getStepContent(
   step,
   { phone,
     taxId,
+    validPhone,
+    validTaxId,
     birthdate,
     gender,
     address1,
@@ -77,13 +79,15 @@ function getStepContent(
     documents1,
     documents2,
     setValue,
-    isValidKYC,
     updateKYC,
     firstName,
     lastName,
     setErrorMessage,
     validFirstName,
-    validLastName
+    validLastName,
+    validAddress1,
+    validCity,
+    validPostalCode,
   }
 ) {
   switch (step) {
@@ -97,9 +101,25 @@ function getStepContent(
         validFirstName={validFirstName}
         validLastName={validLastName}
         setErrorMessage={setErrorMessage}
+        phone={phone}
+        taxId={taxId}
+        validPhone={validPhone}
+        validTaxId={validTaxId}
       />
     case 1:
-      return <PrimaryAddressForm />
+      return <PrimaryAddressForm 
+        setValue={setValue}
+        validAddress1={validAddress1}
+        validCity={validCity}
+        validPostalCode={validPostalCode}
+        address1={address1}
+        address2={address2}
+        city={city}
+        postalCode={postalCode}
+        country={country}
+        state={state}
+        setErrorMessage={setErrorMessage}
+      />
     case 2:
       return <PhotoIDsForm />
     default:
@@ -110,6 +130,8 @@ function getStepContent(
 export default function KYCForm(
   { phone,
     taxId,
+    validPhone,
+    validTaxId,
     birthdate,
     gender,
     address1,
@@ -122,13 +144,16 @@ export default function KYCForm(
     documents1,
     documents2,
     setValue,
-    isValidKYC,
     updateKYC,
     firstName,
     lastName,
     validFirstName,
     validLastName,
     isValidPersonalDetails,
+    validAddress1,
+    validCity,
+    validPostalCode,
+    isValidAddress,
     setErrorMessage,
   }
 ) {
@@ -147,9 +172,12 @@ export default function KYCForm(
   const checkActiveStep = (step) => {
     switch (step) {
       case 0:
-        return setCurrentStepDisabled(!isValidPersonalDetails)
+        return false
+        // temp while i work on next step
+        // return setCurrentStepDisabled(!isValidPersonalDetails)
       case 1:
-        return <PrimaryAddressForm />
+        return false
+        // return setCurrentStepDisabled(!isValidAddress)
       case 2:
         return <PhotoIDsForm />
       default:
@@ -215,6 +243,8 @@ export default function KYCForm(
                     {
                       phone,
                       taxId,
+                      validPhone,
+                      validTaxId,
                       birthdate,
                       gender,
                       address1,
@@ -227,13 +257,16 @@ export default function KYCForm(
                       documents1,
                       documents2,
                       setValue,
-                      isValidKYC,
                       updateKYC,
                       firstName,
                       lastName,
                       setErrorMessage,
                       validFirstName,
                       validLastName,
+                      validAddress1,
+                      validCity,
+                      validPostalCode,
+                      isValidAddress,
                       setErrorMessage 
                     }
                   )}

@@ -17,6 +17,8 @@ class KYC extends React.Component {
     const {
       phone,
       taxId,
+      validPhone,
+      validTaxId,
       birthdate,
       gender,
       address1,
@@ -35,6 +37,10 @@ class KYC extends React.Component {
       validFirstName,
       validLastName,
       isValidPersonalDetails,
+      validAddress1,
+      validCity,
+      validPostalCode,
+      isValidAddress
     } = userStore
     const setErrorMessage = message => {
       store.uiStore.errorMessage = message
@@ -46,6 +52,8 @@ class KYC extends React.Component {
           <KYCForm
             phone={phone}
             taxId={taxId}
+            validPhone={validPhone}
+            validTaxId={validTaxId}
             birthdate={birthdate}
             gender={gender}
             address1={address1}
@@ -68,7 +76,11 @@ class KYC extends React.Component {
             validLastName={validLastName}
             setErrorMessage={setErrorMessage}
             isValidPersonalDetails={isValidPersonalDetails}
-              />
+            validAddress1={validAddress1}
+            validCity={validCity}
+            validPostalCode={validPostalCode}
+            isValidAddress={isValidAddress}
+                  />
         </Container>
       </main>
     )
