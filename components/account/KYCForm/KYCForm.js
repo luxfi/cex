@@ -178,12 +178,12 @@ export default function KYCForm(
   const checkActiveStep = (step) => {
     switch (step) {
       case 0:
-        return false
+        // return false
         // temp while i work on next step
-        // return setCurrentStepDisabled(!isValidPersonalDetails)
+        return setCurrentStepDisabled(!isValidPersonalDetails)
       case 1:
-        return false
-        // return setCurrentStepDisabled(!isValidAddress)
+        // return false
+        return setCurrentStepDisabled(!isValidAddress)
       case 2:
         return <PhotoIDsForm />
       default:
@@ -193,7 +193,7 @@ export default function KYCForm(
 
   React.useEffect(() => {
     checkActiveStep(activeStep)
-  }, [isValidPersonalDetails])
+  }, [isValidPersonalDetails, isValidAddress, activeStep])
 
   return (
     <>

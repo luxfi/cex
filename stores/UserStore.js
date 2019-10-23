@@ -353,7 +353,7 @@ export default class UserStore {
     return (
       this.validAddress1 &&
       this.validCity &&
-      this.postalCode
+      this.validPostalCode
     )
   }
 
