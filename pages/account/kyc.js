@@ -14,7 +14,6 @@ class KYC extends React.Component {
   render() {
     const { store } = this.props
     const { userStore } = this.props.store
-    window.u = userStore
     const {
       phone,
       taxId,
