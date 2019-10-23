@@ -24,6 +24,9 @@ export default class UserStore {
   // (not sure of type)
   @observable errors = null
 
+  // Application Level Settings
+  @observable appSettings = null
+
   /*
   ** USER INFO **
   Works for both signup and login
@@ -98,17 +101,21 @@ export default class UserStore {
    */
   @action async loadSession() {
     this.isLoading = true
-    if (this.api.client.getCustomerToken) {
-      this.token = this.api.client.getCustomerToken()
-      if (!!this.token) {
-        try {
-          this.account = await this.api.client.account.get()
-        } catch (e) {
-          console.log('account token expired')
-          this.logout()
-        }
-      }
+
+    try {
+      const ps = [
+        this.api.client.library.shopjs(),
+        this.account = await this.api.client.account.get()
+      ]
+
+      [appSettings, account] = await Promise.all(ps)
+      this.appSettings = appSettings
+      this.account = account
+    } catch (e) {
+      console.log('account token expired')
+      this.logout()
     }
+
     this.isLoading = false
   }
 
