@@ -75,6 +75,8 @@ function getStepContent(
     postalCode,
     country,
     state,
+    countries,
+    states,
     documents0,
     documents1,
     documents2,
@@ -118,6 +120,8 @@ function getStepContent(
         postalCode={postalCode}
         country={country}
         state={state}
+        countries={countries}
+        states={states}
         setErrorMessage={setErrorMessage}
       />
     case 2:
@@ -140,6 +144,8 @@ export default function KYCForm(
     postalCode,
     country,
     state,
+    countries,
+    states,
     documents0,
     documents1,
     documents2,
@@ -253,6 +259,8 @@ export default function KYCForm(
                       postalCode,
                       country,
                       state,
+                      countries,
+                      states,
                       documents0,
                       documents1,
                       documents2,
