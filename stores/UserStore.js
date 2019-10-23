@@ -60,16 +60,6 @@ export default class UserStore {
   @observable documents1 = ""
   @observable documents2 = ""
 
-  // @observable validPhone = false
-  // @observable validTaxId = false
-  // @observable validBirthdate = false
-  // gender is a dropdown and defaults to 'unspecified' -- no need to track
-  @observable validAddress1 = false
-  @observable validCity = false
-  @observable validPostalCode = false
-  // country is a dropdown
-  // state is a dropdown
-
   /* what to do with ... TODO
     opts.kyc.ethereumAddress = this.props.ethKey.address
     opts.kyc.eosPublicKey = this.props.eosKey.publicKey
@@ -166,23 +156,6 @@ export default class UserStore {
     // https://howtodoinjava.com/regex/java-regex-validate-social-security-numbers-ssn/
     const regex = /^(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$/
     return regex.test(this.taxId)
-  }
-
-  @action validateAddress1(a) {
-    // TODO call API for street addresses in the US and make this unnecessary :)
-    // in the meantime check for a valid date
-    this.validAddress1 = stringPresentAndValid(a)
-  }
-
-  @action validateCity(c) {
-    // TODO call API for street addresses in the US and make this unnecessary :)
-    // in the meantime check for a valid date
-    this.validCity = stringPresentAndValid(c)
-  }
-
-  @action validatePostalCode(c) {
-    const regex = /^\d{ 5}$/
-    this.validPostalCode = regex(c)
   }
 
   @action validateNewPaymentMethodPublicToken() {
@@ -348,16 +321,27 @@ export default class UserStore {
     return !!this.token
   }
 
-  @computed get isValidKYC() {
+  @computed get validAddress1() {
+    const regex = /^\s*\S+(?:\s+\S+){2}/
+    return regex.test(this.address1)
+  }
+
+  @computed get validCity() {
+    const regex = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/
+    return regex.test(this.city)
+  }
+
+  @computed get validPostalCode() {
+    const regex = /(^\d{5}$)|(^\d{5}-\d{4}$)/
+    return regex.test(this.postalCode)
+  }
+
+  @computed get isValidAddress() {
     return (
-      this.isValidName &&
-      this.validPhone &&
-      this.validTaxId &&
       this.validAddress1 &&
       this.validCity &&
       this.postalCode
     )
-    // country is dropdown (noted above)
   }
 
   @computed get isValidPersonalDetails() {
