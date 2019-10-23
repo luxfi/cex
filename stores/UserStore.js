@@ -357,6 +357,30 @@ export default class UserStore {
     )
   }
 
+  @computed get countries() {
+    // returns array of objects, countries with code
+    // [{ "name": "Afghanistan", "code": "AF" },
+    // { "name": "Albania", "code": "AL" }]
+    return this.appSettings.countries.reduce((acc, memo) => {
+      acc.push({"name": memo.name, "code": memo.code})
+      return acc
+    }, [])
+  }
+
+  @computed get states() {
+    // returns array of objects, states with code
+    // [{ name: "Florida", code: "FL" },
+    // { name: "Michigan", code: "MI" }]
+    this.appSettings.countries
+    const countryCode = this.countryCode || "US"
+    const countryObj = this.appSettings.countries.find(country => country.code === countryCode)
+    const statesArray = countryObj.subdivisions
+    return statesArray.reduce((acc, memo) => {
+      acc.push({ "name": memo.name, "code": memo.code })
+      return acc
+    }, [])
+  }
+
   @computed get isValidPersonalDetails() {
     return (
       this.validFirstName &&
