@@ -13,6 +13,7 @@ import { KYCForm } from "../../components/account"
 class KYC extends React.Component {
   render() {
     const { store } = this.props
+    window.store = store
     const { userStore } = this.props.store
     const {
       phone,
@@ -69,11 +70,8 @@ class KYC extends React.Component {
             documents0={documents0}
             documents1={documents1}
             documents2={documents2}
-            setValue={(key, val) => {
-              userStore.setValue(key, val)
-            }}
             isValidKYC={isValidKYC}
-            updateKYC={updateKYC}
+            updateKYC={(onSuccess, onError) => userStore.updateKYC(onSuccess, onError)}
             firstName={firstName}
             lastName={lastName}
             validFirstName={validFirstName}
@@ -84,6 +82,9 @@ class KYC extends React.Component {
             validCity={validCity}
             validPostalCode={validPostalCode}
             isValidAddress={isValidAddress}
+            setValue={(key, val) => {
+              userStore.setValue(key, val)
+            }}
                   />
         </Container>
       </main>

@@ -1,5 +1,5 @@
 // Generic Libraries
-import { action, observable, computed } from "mobx"
+import { action, observable, computed, toJS } from "mobx"
 import Router from "next/router"
 import moment from 'moment/moment.js'
 
@@ -77,14 +77,14 @@ export default class UserStore {
 
   // ** Payment Method **
   @observable newPaymentMethodPublicToken = undefined
-  @observable newPaymentMethodName        = undefined
+  @observable newPaymentMethodName = undefined
   // Set to plaid for now
-  @observable newPaymentMethodType        = "plaid"
-  @observable newPaymentMethodMetadata    = undefined
+  @observable newPaymentMethodType = "plaid"
+  @observable newPaymentMethodMetadata = undefined
 
   @observable validNewPaymentMethodPublicToken = false
-  @observable validNewPaymentMethodName        = false
-  @observable validNewPaymentMethodMetadata    = false
+  @observable validNewPaymentMethodName = false
+  @observable validNewPaymentMethodMetadata = false
 
   constructor(initialData = {}, hanzoApi) {
     // TODO Do we still need this?
@@ -103,7 +103,6 @@ export default class UserStore {
     this.isLoading = true
 
     this.token = this.api.client.getCustomerToken()
-
     try {
       if (this.token) {
         const ps = [
@@ -200,7 +199,8 @@ export default class UserStore {
 
       this.identity = ethers.utils.sha256(ethers.utils.toUtf8Bytes(i))
 
-      this.setToken(res.token)
+      // this.setToken(res.token)
+      this.loadSession()
       onSuccess && onSuccess()
     } catch (ex) {
       // this.errors = (err.response && err.response.body && err.response.body.errors)
@@ -227,7 +227,8 @@ export default class UserStore {
       const i = this.email + this.password
 
       this.identity = ethers.utils.sha256(ethers.utils.toUtf8Bytes(i))
-      this.account = await this.api.client.account.get()
+      // this.account = await this.api.client.account.get()
+      this.loadSession()
       this.setToken(res.token)
       onSuccess && onSuccess()
     } catch (ex) {
@@ -278,26 +279,37 @@ export default class UserStore {
   @action async updateKYC(onSuccess, onError) {
     // ** ONLY CALL WHEN @computed isValidKYC IS TRUE **
     this.updating = true
-    let opts = ({
-      firstName,
-      lastName,
-      phone,
-      taxId,
-      birthdate,
-      gender,
-      address1,
-      address2,
-      city,
-      postalCode,
-      country,
-      state,
-      documents0,
-      documents1,
-      documents2
-    } = this)
+    const addressObj =
+    {
+      name: `${this.firstName} ${this.lastName}`,
+      line1: this.address1,
+      line2: this.address2,
+      city: this.city,
+      postalCode: this.postalCode,
+      state: this.state,
+      country: this.country,
+    }
 
+    const kycObj =
+    {
+      address: addressObj,
+      taxId: this.taxId,
+      phone: this.phone,
+      birthdate: this.birthdate.format(),
+      gender: this.gender,
+      documents: this.documents
+    }
     try {
-      this.account = await this.api.client.account.update({ opts })
+      const newAcc = Object.assign(
+        this.account,
+        {
+          kyc: kycObj,
+          firstName: this.firstName,
+          lastName: this.lastName
+        })
+      await this.api.client.account.update(newAcc)
+      // On success
+      this.account = newAcc
       onSuccess && onSuccess()
     } catch (ex) {
       console.log("Error saving KYC options", ex)
@@ -363,7 +375,7 @@ export default class UserStore {
     // { "name": "Albania", "code": "AL" }]
     if (!this.appSettings) return {}
     return this.appSettings.countries.reduce((acc, memo) => {
-      acc.push({"name": memo.name, "code": memo.code})
+      acc.push({ "name": memo.name, "code": memo.code })
       return acc
     }, [])
   }

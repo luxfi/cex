@@ -169,6 +169,11 @@ export default function KYCForm(
 
   const handleNext = () => {
     setActiveStep(activeStep + 1)
+    updateKYC(
+      () => null,
+      ex => {
+        setErrorMessage(ex)
+      })
   }
 
   const handleBack = () => {
@@ -178,11 +183,8 @@ export default function KYCForm(
   const checkActiveStep = (step) => {
     switch (step) {
       case 0:
-        // return false
-        // temp while i work on next step
         return setCurrentStepDisabled(!isValidPersonalDetails)
       case 1:
-        // return false
         return setCurrentStepDisabled(!isValidAddress)
       case 2:
         return <PhotoIDsForm />
@@ -282,7 +284,7 @@ export default function KYCForm(
                     {activeStep !== 0 && (
                       <Button onClick={handleBack} className={classes.button}>
                         Back
-                    </Button>
+                      </Button>
                     )}
                     <Button
                       variant="contained"
