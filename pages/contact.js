@@ -1,5 +1,4 @@
 import React from "react"
-import { withRouter } from "next/router"
 import { withStyles } from '@material-ui/core/styles'
 
 import { ContactForm } from "../components/contact"
@@ -26,4 +25,4 @@ const Contact = (props) => {
   )
 }
 
-export default withRouter(withStyles(styles)(Contact))
+export default withStyles(styles)(Contact)
