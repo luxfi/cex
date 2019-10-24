@@ -161,10 +161,11 @@ export default function KYCForm(
     validPostalCode,
     isValidAddress,
     setErrorMessage,
+    activeStep,
+    setActiveStep
   }
 ) {
   const classes = useStyles()
-  const [activeStep, setActiveStep] = React.useState(0)
   const [currentStepDisabled, setCurrentStepDisabled] = React.useState(false)
 
   const handleNext = () => {
