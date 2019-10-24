@@ -1,6 +1,8 @@
-import App from "next/app"
 import React from "react"
+import App from "next/app"
 import { Provider, observer } from "mobx-react"
+import { withRouter } from "next/router"
+import { withContentful } from "next-contentful"
 
 // This ensures that the icon CSS is loaded immediately before attempting to render icons
 import "@fortawesome/fontawesome-svg-core/styles.css"
@@ -18,12 +20,15 @@ import { CustomSnackbar, Header, Footer, CustomModal } from "../components/app"
 
 import initializeStore from "../stores/stores"
 
-// NEW ***********
-import { withRouter } from "next/router"
-
 // styles
 import styles from "../pageStyles/app.style"
 import { darkTheme, lightTheme } from "../components/themes"
+
+const CONTENTFUL_API = {
+  accessToken: '1ulGLoKXVO2wTcEODgrGo0W-GzCk8m8ZZCZ_GGfLP9Y',
+  host: 'cdn.contentful.com',
+  space: 'au6d8n3ji32v'
+}
 
 // ****************
 @observer
@@ -106,4 +111,10 @@ class MyMobxApp extends App {
   }
 }
 
-export default withRouter(withStyles(styles)(MyMobxApp))
+export default 
+  withContentful(
+    {
+      ...CONTENTFUL_API
+    },  
+    withRouter(withStyles(styles)(MyMobxApp))
+  )
