@@ -26,7 +26,7 @@ const BirthdatePicker = ({ setValue, birthdate }) => {
       <KeyboardDatePicker
         clearable 
           value={birthdate}
-          onChange={date => setValue("birthdate", date)}
+          onChange={date => setValue("birthdate", date.format())}
           className={classes.textField}
           disableFuture
           openTo="month"

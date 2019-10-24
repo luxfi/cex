@@ -112,7 +112,9 @@ export default class UserStore {
 
         let [appSettings, account] = await Promise.all(ps)
         this.appSettings = appSettings
+        console.log(account)
         this.account = account
+        this.hydrateStore(account)
       } else {
         this.appSettings = await this.api.client.library.shopjs()
       }
@@ -122,6 +124,38 @@ export default class UserStore {
     }
 
     this.isLoading = false
+  }
+
+  hydrateStore(account) {
+    const userFields = ["firstName", "lastName", "email"]
+    const kycFields = ["birthdate", "gender", "phone", "taxId" ]
+    const addressFields = 
+      ["name", 
+      "country", 
+      "postalCode",
+      "state",
+      "city" ,
+      [ "address1", "line1" ],
+      [ "address2", "line2" ],
+    ]
+    const user = account
+    const { kyc } = account
+    const { address } = kyc
+    this.updateFromJson(user, userFields)
+    this.updateFromJson(kyc, kycFields)
+    this.updateFromJson(address, addressFields)
+}
+
+  updateFromJson(json, keys) {
+    // make sure our changes aren't sent back to the server
+    keys.forEach(k => {
+      // only update if available
+      if (typeof k === 'string' && json[k]) {
+        this[k] = json[k]
+      } else if(Array.isArray(k) && json[k[1]]) {
+        this[k[0]] = json[k[1]]
+      }
+    })
   }
 
   // TODO store this w httpOnly in a cookie w all the proper security precautions.
@@ -238,6 +272,7 @@ export default class UserStore {
       this.updating = false
     }
   }
+
   @action async logout(onSuccess, onError) {
     this.updating = true
 
@@ -295,7 +330,7 @@ export default class UserStore {
       address: addressObj,
       taxId: this.taxId,
       phone: this.phone,
-      birthdate: this.birthdate.format(),
+      birthdate: this.birthdate,
       gender: this.gender,
       documents: this.documents
     }
@@ -307,6 +342,7 @@ export default class UserStore {
           firstName: this.firstName,
           lastName: this.lastName
         })
+      console.log('newAcc', toJS(newAcc))
       await this.api.client.account.update(newAcc)
       // On success
       this.account = newAcc
