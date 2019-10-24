@@ -168,8 +168,7 @@ export default class UserStore {
       "postalCode",
       "state",
       "city",
-      "address1",
-      "address2"]
+      "address1"]
     if (this.anyMissingData(personalDetails)) {
       this.setActiveStep(0)
     } else if (this.anyMissingData(personalDetails)) {
