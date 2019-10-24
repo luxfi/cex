@@ -123,6 +123,7 @@ function getStepContent(
         countries={countries}
         states={states}
         setErrorMessage={setErrorMessage}
+        countries={countries}
       />
     case 2:
       return <PhotoIDsForm />
@@ -284,7 +285,7 @@ export default function KYCForm(
                       validCity,
                       validPostalCode,
                       isValidAddress,
-                      setErrorMessage 
+                      setErrorMessage,
                     }
                   )}
                   <div className={classes.buttons}>
