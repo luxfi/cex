@@ -4,7 +4,7 @@ import Router from "next/router"
 import moment from 'moment/moment.js'
 
 import * as ethers from "ethers"
-// import _ from 'lodash'
+import _ from 'lodash'
 
 // Utilities
 import isEmail from "../src/control-middlewares/isEmail"
@@ -114,7 +114,6 @@ export default class UserStore {
 
         let [appSettings, account] = await Promise.all(ps)
         this.appSettings = appSettings
-        console.log(account)
         this.account = account
         this.hydrateStore(account)
       } else {
@@ -146,7 +145,8 @@ export default class UserStore {
     this.updateFromJson(user, userFields)
     this.updateFromJson(kyc, kycFields)
     this.updateFromJson(address, addressFields)
-}
+    this.checkCurrentStatus()
+  }
 
   updateFromJson(json, keys) {
     // make sure our changes aren't sent back to the server
@@ -158,6 +158,29 @@ export default class UserStore {
         this[k[0]] = json[k[1]]
       }
     })
+  }
+
+  checkCurrentStatus() {
+    const personalDetails = ["birthdate", "gender", "phone", "taxId"]
+    const personalAddress = 
+    ["name",
+      "country",
+      "postalCode",
+      "state",
+      "city",
+      "address1",
+      "address2"]
+    if (this.anyMissingData(personalDetails)) {
+      this.setActiveStep(0)
+    } else if (this.anyMissingData(personalDetails)) {
+      this.setActiveStep(1)
+    } else {
+      this.setActiveStep(2)
+    }
+  }
+
+  anyMissingData(keys) {
+    keys.some(k => _.isEmpty(this[k]) )
   }
 
   // TODO store this w httpOnly in a cookie w all the proper security precautions.
@@ -349,7 +372,6 @@ export default class UserStore {
           firstName: this.firstName,
           lastName: this.lastName
         })
-      console.log('newAcc', toJS(newAcc))
       await this.api.client.account.update(newAcc)
       // On success
       this.account = newAcc
