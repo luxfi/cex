@@ -43,7 +43,8 @@ class KYC extends React.Component {
       validAddress1,
       validCity,
       validPostalCode,
-      isValidAddress
+      isValidAddress,
+      activeStep
     } = userStore
     const setErrorMessage = message => {
       store.uiStore.errorMessage = message
@@ -85,7 +86,9 @@ class KYC extends React.Component {
             setValue={(key, val) => {
               userStore.setValue(key, val)
             }}
-                  />
+            activeStep={activeStep}
+            setActiveStep={(step) => userStore.setActiveStep(step)}
+              />
         </Container>
       </main>
     )

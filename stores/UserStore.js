@@ -62,6 +62,8 @@ export default class UserStore {
   @observable documents0 = ""
   @observable documents1 = ""
   @observable documents2 = ""
+  // start kyc on first step
+  @observable activeStep = 0
 
   /* what to do with ... TODO
     opts.kyc.ethereumAddress = this.props.ethKey.address
@@ -171,6 +173,11 @@ export default class UserStore {
 
   @action setValue(key, val) {
     this[key] = val
+  }
+
+  @action setActiveStep(step) {
+    // sets current step in KYC
+    this.activeStep = step
   }
 
   @computed get validFirstName() {
