@@ -190,7 +190,8 @@ export default function KYCForm(
       case 2:
         return <PhotoIDsForm />
       default:
-        throw new Error("Unknown step")
+        // Todo - I did not need to comment this out before..., not sure why I have to now
+        // throw new Error("Unknown step")
     }
   }
 
@@ -235,16 +236,21 @@ export default function KYCForm(
                   We are verifying your account and will send you an update when
                   completed.
                 </Typography>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  component={ButtonLink}
-                  href={"/portfolio"}
-                  className={classes.finalButton}
-                //put on click handler to sumbit info here
-                >
-                  Go To Your Portfolio
-                </Button>
+                <div className={classes.buttons}>
+                  <Button onClick={handleBack} className={classes.button}>
+                    Back
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    component={ButtonLink}
+                    href={"/portfolio"}
+                    className={classes.finalButton}
+                  //put on click handler to sumbit info here
+                  >
+                    Go To Your Portfolio
+                  </Button>
+                </div>
               </>
             ) : (
                 <>
@@ -287,19 +293,15 @@ export default function KYCForm(
                         Back
                       </Button>
                     )}
-
-                    {activeStep === steps.length - 1 ? null : 
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleNext}
-                        className={classes.button}
-                        disabled={currentStepDisabled}
-                      >
-                        Next
-                      </Button>
-                    }
-                   
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.button}
+                      disabled={currentStepDisabled}
+                    >
+                    {activeStep === steps.length - 1 ? "Continue" : "Next"}
+                    </Button>
                   </div>
                 </>
               )}
