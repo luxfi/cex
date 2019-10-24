@@ -4,11 +4,13 @@ import Typography from '@material-ui/core/Typography'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import WebCamModal from "./"
 import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Backup'
 import CameraIcon from '@material-ui/icons/CameraAlt'
 import DeleteIcon from '@material-ui/icons/Delete'
+import { CustomModal } from "../../app"
+import 'react-html5-camera-photo/build/css/index.css'
+import Camera from 'react-html5-camera-photo'
 
 const products = [
   { name: 'Face', desc: 'Required', price: 'photo here' },
@@ -33,13 +35,24 @@ const useStyles = makeStyles(theme => ({
 export default function PhotoIDs() {
   const classes = useStyles()
 
-  const onTakePhoto = (dataUri) => {
-    // Do stuff with the dataUri photo...
-    console.log('takePhoto', dataUri)
-  }
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <>
+      <CustomModal 
+      handleClose={handleClose} 
+      open={open}
+      >
+        <Camera onTakePhoto={(dataUri) => { console.log(dataUri) }} />
+      </CustomModal>
       <Typography variant="h6" gutterBottom>
         PhotoIDs
       </Typography>
@@ -51,7 +64,7 @@ export default function PhotoIDs() {
               <AddIcon />
             </Fab>
             <Fab aria-label="camera" className={classes.fab}>
-              <CameraIcon />
+              <CameraIcon onClick={handleOpen}/>
             </Fab>
             <Fab disabled aria-label="delete" className={classes.fab}>
               <DeleteIcon />

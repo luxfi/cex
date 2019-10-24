@@ -8,11 +8,7 @@ export default class UIStore {
     title: null,
     body: null
   }
-
-  // constructor(initialData, hanzoApi) {
-  //   this.api = hanzoApi
-  // }
-
+  
   @computed get open() {
     return this.snackBarOpen
   }
