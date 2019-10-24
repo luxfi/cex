@@ -287,15 +287,19 @@ export default function KYCForm(
                         Back
                       </Button>
                     )}
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                      className={classes.button}
-                      disabled={currentStepDisabled}
-                    >
-                      {activeStep === steps.length - 1 ? "Continue" : "Next"}
-                    </Button>
+
+                    {activeStep === steps.length - 1 ? null : 
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleNext}
+                        className={classes.button}
+                        disabled={currentStepDisabled}
+                      >
+                        Next
+                      </Button>
+                    }
+                   
                   </div>
                 </>
               )}
