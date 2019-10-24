@@ -14,7 +14,7 @@ export default class UIStore {
   // }
 
   @computed get open() {
-    return this.snackBarOpenc
+    return this.snackBarOpen
   }
 
   @computed get error() {
