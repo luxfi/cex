@@ -104,7 +104,6 @@ export default class UserStore {
   @action async loadSession() {
     this.isLoading = true
     if (this.api.client.getCustomerToken) {
-      console.log('yes')
       this.token = this.api.client.getCustomerToken()
     }
 
