@@ -66,7 +66,7 @@ export default function PhotoIDs({ documents0, documents1, documents2, setValue 
           idealResolution={{ width: 640, height: 480 }}
           imageType={IMAGE_TYPES.JPG}
           imageCompression={0.97}
-          isMaxResolution={true}
+          // isMaxResolution={true}
           isImageMirror={false} 
         />
       </CustomModal>
