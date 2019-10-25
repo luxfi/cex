@@ -34,12 +34,37 @@ export default function PhotoIDs({ documents0, documents1, documents2, setValue 
   const classes = useStyles()
 
   const [openCam, setOpenCam] = React.useState(false)
-  // const [openDrop, setOpenDrop] = React.useState(false)
   const [currentDocument, setCurrentDocument] = React.useState(false)
+  const [files, setFiles] = React.useState([])
+
+  const { getRootProps, getInputProps, open } = useDropzone({
+    accept: 'image/*',
+    onDrop: acceptedFiles => {
+      setFiles(acceptedFiles.map(file => Object.assign(file, {
+        preview: URL.createObjectURL(file)
+      })));
+    }
+  })
+
+  const thumbs = files.map(file => (
+    <div style={thumb} key={file.name}>
+      <div style={thumbInner}>
+        <img
+          src={file.preview}
+          style={img}
+        />
+      </div>
+    </div>
+  ));
 
   const onDrop = useCallback(acceptedFiles => {
     console.log(acceptedFiles)
   }, [])
+
+  React.useEffect(() => () => {
+    // Make sure to revoke the data uris to avoid memory leaks
+    files.forEach(file => URL.revokeObjectURL(file.preview));
+  }, [files]);
 
   const handleOpenCam = (currentDoc) => {
     setCurrentDocument(currentDoc)
@@ -54,17 +79,36 @@ export default function PhotoIDs({ documents0, documents1, documents2, setValue 
     setValue(currentDocument, dataUri)
   }
 
-  const { getRootProps, getInputProps, open, acceptedFiles } = useDropzone({
-    // Disable click and keydown behavior
-    noClick: true,
-    noKeyboard: true
-  })
+  const thumbsContainer = {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 16
+  };
 
-  const files = acceptedFiles.map(file => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
+  const thumb = {
+    display: 'inline-flex',
+    borderRadius: 2,
+    border: '1px solid #eaeaea',
+    marginBottom: 8,
+    marginRight: 8,
+    width: 100,
+    height: 100,
+    padding: 4,
+    boxSizing: 'border-box'
+  };
+
+  const thumbInner = {
+    display: 'flex',
+    minWidth: 0,
+    overflow: 'hidden'
+  };
+
+  const img = {
+    display: 'block',
+    width: 'auto',
+    height: '100%'
+  };
 
 
   const photos = [
@@ -90,6 +134,9 @@ export default function PhotoIDs({ documents0, documents1, documents2, setValue 
           isImageMirror={false}
         />
       </CustomModal>
+      <aside style={thumbsContainer}>
+        {thumbs}
+      </aside>
       <Typography variant="h6" gutterBottom>
         PhotoIDs
       </Typography>
@@ -102,11 +149,11 @@ export default function PhotoIDs({ documents0, documents1, documents2, setValue 
                 <Box mr={2}>
                   <Paper {...getRootProps({ className: 'dropzone' })}>
                       <input {...getInputProps()} />
-                      <p style={{ padding: "32px" }}>Drag 'n' drop file here</p>
+                      <p style={{ padding: "32px" }}>Drag 'n' drop image here</p>
                   </Paper>
                 </Box>
                 <Fab aria-label="add" className={classes.fab}>
-                  <AddIcon onClick={() => handleOpenDrop(open)} />
+                  <AddIcon onClick={open} />
                 </Fab>
                 <Fab aria-label="camera" className={classes.fab}>
                   <CameraIcon onClick={() => handleOpenCam(photo.currentDoc)} />
