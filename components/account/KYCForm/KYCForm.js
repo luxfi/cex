@@ -126,7 +126,12 @@ function getStepContent(
         countries={countries}
       />
     case 2:
-      return <PhotoIDsForm />
+      return <PhotoIDsForm 
+        documents0={documents0}
+        documents1={documents1}
+        documents2={documents2}
+        setValue={setValue}
+      />
     default:
       throw new Error("Unknown step")
   }
