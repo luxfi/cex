@@ -172,7 +172,7 @@ export default function PhotoIDs({ documents0, documents1, documents2, setValue 
                   disabled={photo.dataUri ? false : true}
                   aria-label="delete"
                   className={classes.fab}
-                  onClick={() => setValue(currentDocument, "")}
+                  onClick={() => setValue(photo.currentDoc, "")}
                 >
                   <DeleteIcon />
                 </Fab>
