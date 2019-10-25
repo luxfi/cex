@@ -1,34 +1,32 @@
 import React, { useCallback, createRef } from "react"
-import { makeStyles } from "@material-ui/core/styles"
 import Typography from "@material-ui/core/Typography"
 import List from "@material-ui/core/List"
-import ListItem from "@material-ui/core/ListItem"
-import ListItemText from "@material-ui/core/ListItemText"
-import Box from "@material-ui/core/Box"
-import Paper from "@material-ui/core/Paper"
-import Fab from "@material-ui/core/Fab"
-import AddIcon from "@material-ui/icons/Backup"
-import CameraIcon from "@material-ui/icons/CameraAlt"
-import DeleteIcon from "@material-ui/icons/Delete"
 import { CustomModal } from "../../app"
 import "react-html5-camera-photo/build/css/index.css"
 import Camera, { FACING_MODES, IMAGE_TYPES } from "react-html5-camera-photo"
-import { useDropzone } from "react-dropzone"
+import { PhotoIDRow } from "../"
 
-const useStyles = makeStyles(theme => ({
-  fab: {
-    margin: theme.spacing(1)
-  },
-  listItem: {
-    padding: theme.spacing(1, 0)
-  },
-  total: {
-    fontWeight: "700"
-  },
-  title: {
-    marginTop: theme.spacing(2)
-  }
-}))
+const MyModal = ({ handleCloseCam, openCam, onTakePhoto }) => {
+  return (
+    <CustomModal handleClose={handleCloseCam} open={openCam}>
+      <Camera
+        idealFacingMode={FACING_MODES.USER}
+        onTakePhoto={dataUri => {
+          onTakePhoto(dataUri)
+        }}
+        onTakePhotoAnimationDone={handleCloseCam}
+        onCameraError={error => {
+          console.log(error)
+        }}
+        idealResolution={{ width: 640, height: 480 }}
+        imageType={IMAGE_TYPES.JPG}
+        imageCompression={0.97}
+        // isMaxResolution={true}
+        isImageMirror={false}
+      />
+    </CustomModal>
+  )
+}
 
 export default function PhotoIDs({
   documents0,
@@ -36,42 +34,17 @@ export default function PhotoIDs({
   documents2,
   setValue
 }) {
-  const classes = useStyles()
+  // Todo: Check for memory leaks....
+  // React.useEffect(
+  //   () => () => {
+  //     // Make sure to revoke the data uris to avoid memory leaks
+  //     files.forEach(file => URL.revokeObjectURL(file.preview))
+  //   },
+  //   [files]
+  // )
 
   const [openCam, setOpenCam] = React.useState(false)
   const [currentDocument, setCurrentDocument] = React.useState(false)
-  const [files, setFiles] = React.useState([])
-
-  
-  
-  
-  
-  
-  const { getRootProps, getInputProps, open, inputRef } = useDropzone({
-    accept: "image/*",
-    onDrop: acceptedFiles => {
-      setFiles(
-        acceptedFiles.map(file =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file)
-          })
-        )
-      )
-      console.log(inputRef, acceptedFiles)
-      setValue(inputRef.current.name, acceptedFiles[0].preview)
-    },
-    onDragEnter: (event) => {
-      console.log(inputRef.current.name)
-    }
-  })
-
-  React.useEffect(
-    () => () => {
-      // Make sure to revoke the data uris to avoid memory leaks
-      files.forEach(file => URL.revokeObjectURL(file.preview))
-    },
-    [files]
-  )
 
   const handleOpenCam = currentDoc => {
     setCurrentDocument(currentDoc)
@@ -109,64 +82,20 @@ export default function PhotoIDs({
       currentDoc: "documents2"
     }
   ]
+
   return (
     <>
-      <CustomModal handleClose={handleCloseCam} open={openCam}>
-        <Camera
-          idealFacingMode={FACING_MODES.USER}
-          onTakePhoto={dataUri => {
-            onTakePhoto(dataUri)
-          }}
-          onTakePhotoAnimationDone={handleCloseCam}
-          onCameraError={error => {
-            console.log(error)
-          }}
-          idealResolution={{ width: 640, height: 480 }}
-          imageType={IMAGE_TYPES.JPG}
-          imageCompression={0.97}
-          // isMaxResolution={true}
-          isImageMirror={false}
-        />
-      </CustomModal>
+      <MyModal
+        openCam={openCam}
+        handleCloseCam={handleCloseCam}
+        onTakePhoto={onTakePhoto}
+      />
       <Typography variant="h6" gutterBottom>
         PhotoIDs
       </Typography>
       <List disablePadding>
         {photos.map(photo => (
-          <ListItem className={classes.listItem} key={photo.name}>
-            <ListItemText primary={photo.name} secondary={photo.desc} />
-            {!photo.dataUri ? (
-              <>
-                <Box mr={2}>
-                  <Paper {...getRootProps({ className: "dropzone" })}>
-                    <input {...getInputProps()} name={photo.currentDoc} />
-                    <p style={{ padding: "32px" }}>Drag 'n' drop image here</p>
-                  </Paper>
-                </Box>
-                <Fab aria-label="add" className={classes.fab}>
-                  <AddIcon onClick={open} />
-                </Fab>
-                <Fab aria-label="camera" className={classes.fab}>
-                  <CameraIcon onClick={() => handleOpenCam(photo.currentDoc)} />
-                </Fab>
-              </>
-            ) : (
-              <img
-                src={photo.dataUri}
-                style={{
-                  maxWidth: "300px"
-                }}
-              />
-            )}
-            <Fab
-              disabled={photo.dataUri ? false : true}
-              aria-label="delete"
-              className={classes.fab}
-              onClick={() => setValue(photo.currentDoc, "")}
-            >
-              <DeleteIcon />
-            </Fab>
-          </ListItem>
+          <PhotoIDRow photo={photo} handleOpenCam={handleOpenCam} />
         ))}
       </List>
     </>
