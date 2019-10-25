@@ -47,7 +47,7 @@ export default function PhotoIDs({
   
   
   
-  const { getRootProps, getInputProps, open } = useDropzone({
+  const { getRootProps, getInputProps, open, inputRef } = useDropzone({
     accept: "image/*",
     onDrop: acceptedFiles => {
       setFiles(
@@ -57,51 +57,13 @@ export default function PhotoIDs({
           })
         )
       )
+      console.log(inputRef, acceptedFiles)
+      setValue(inputRef.current.name, acceptedFiles[0].preview)
+    },
+    onDragEnter: (event) => {
+      console.log(inputRef.current.name)
     }
   })
-
-    const thumbsContainer = {
-      display: "flex",
-      flexDirection: "row",
-      flexWrap: "wrap",
-      marginTop: 16
-    }
-
-    const thumb = {
-      display: "inline-flex",
-      borderRadius: 2,
-      border: "1px solid #eaeaea",
-      marginBottom: 8,
-      marginRight: 8,
-      width: 100,
-      height: 100,
-      padding: 4,
-      boxSizing: "border-box"
-    }
-
-    const thumbInner = {
-      display: "flex",
-      minWidth: 0,
-      overflow: "hidden"
-    }
-
-    const img = {
-      display: "block",
-      width: "auto",
-      height: "100%"
-    }
-
-  const thumbs = files.map(file => (
-    <div style={thumb} key={file.name}>
-      <div style={thumbInner}>
-        <img src={file.preview} style={img} />
-      </div>
-    </div>
-  ))
-
-  const onDrop = useCallback(acceptedFiles => {
-    console.log(acceptedFiles)
-  }, [])
 
   React.useEffect(
     () => () => {
@@ -166,7 +128,6 @@ export default function PhotoIDs({
           isImageMirror={false}
         />
       </CustomModal>
-      <aside style={thumbsContainer}>{thumbs}</aside>
       <Typography variant="h6" gutterBottom>
         PhotoIDs
       </Typography>
@@ -178,7 +139,7 @@ export default function PhotoIDs({
               <>
                 <Box mr={2}>
                   <Paper {...getRootProps({ className: "dropzone" })}>
-                    <input {...getInputProps()} />
+                    <input {...getInputProps()} name={photo.currentDoc} />
                     <p style={{ padding: "32px" }}>Drag 'n' drop image here</p>
                   </Paper>
                 </Box>
