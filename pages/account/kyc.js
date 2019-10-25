@@ -13,6 +13,7 @@ import { KYCForm } from "../../components/account"
 class KYC extends React.Component {
   render() {
     const { store } = this.props
+    window.store = store
     const { userStore } = this.props.store
     const {
       phone,

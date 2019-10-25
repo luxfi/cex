@@ -10,13 +10,8 @@ import CameraIcon from '@material-ui/icons/CameraAlt'
 import DeleteIcon from '@material-ui/icons/Delete'
 import { CustomModal } from "../../app"
 import 'react-html5-camera-photo/build/css/index.css'
-import Camera from 'react-html5-camera-photo'
+import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo'
 
-const photos = [
-  { name: 'Face', desc: 'Required', price: 'photo here', id: "face" },
-  { name: 'ID Front', desc: 'Required', price: 'photo here', id: "id-front" },
-  { name: 'ID Back', desc: 'Required', price: 'photo here', id: "id-back" },
-]
 const useStyles = makeStyles(theme => ({
   fab: {
     margin: theme.spacing(1),
@@ -32,15 +27,15 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function PhotoIDs() {
+export default function PhotoIDs({ documents0, documents1, documents2, setValue }) {
   const classes = useStyles()
 
   const [open, setOpen] = React.useState(false)
-  const [currentModal, setCurrentModal] = React.useState(false)
   const [dataUri, setDataUri] = React.useState(false)
+  const [currentDocument, setCurrentDocument] = React.useState(false)
 
-  const handleOpen = (id) => {
-    setCurrentModal(id)
+  const handleOpen = (currentDoc) => {
+    setCurrentDocument(currentDoc)
     setOpen(true);
   }
 
@@ -48,18 +43,32 @@ export default function PhotoIDs() {
     setOpen(false);
   }
 
-  const onTakePhoto = (dataUri) => {
-    setDataUri(dataUri)
-    setTimeout(function () { handleClose() }, 1500);
+  const onTakePhoto = ( dataUri) => {
+    setValue(currentDocument, dataUri)
   }
 
+  const photos = [
+    { name: 'Face', desc: 'Required', price: 'photo here', dataUri: documents0, currentDoc: "documents0" },
+    { name: 'ID Front', desc: 'Required', price: 'photo here', dataUri: documents1, currentDoc: "documents1"  },
+    { name: 'ID Back', desc: 'Required', price: 'photo here', dataUri: documents2, currentDoc: "documents2"  },
+  ]  
   return (
     <>
       <CustomModal 
-      handleClose={handleClose} 
-      open={open}
+        handleClose={handleClose} 
+        open={open}
       >
-        <Camera onTakePhoto={(dataUri) => { onTakePhoto(dataUri) }} />
+        <Camera
+          idealFacingMode={FACING_MODES.USER} 
+          onTakePhoto={(dataUri) => { onTakePhoto(dataUri) }}
+          onTakePhotoAnimationDone={handleClose}
+          onCameraError={(error) => { console.log(error)}}
+          idealResolution={{ width: 640, height: 480 }}
+          imageType={IMAGE_TYPES.JPG}
+          imageCompression={0.97}
+          isMaxResolution={true}
+          isImageMirror={false} 
+        />
       </CustomModal>
       <Typography variant="h6" gutterBottom>
         PhotoIDs
@@ -68,24 +77,29 @@ export default function PhotoIDs() {
         {photos.map(photo => (
           <ListItem className={classes.listItem} key={photo.name}>
             <ListItemText primary={photo.name} secondary={photo.desc} />
-            {dataUri ? <img src={dataUri} style={{
-              maxWidth: "300px",
-              padding: "24px"
-            }}/> :
-            <>
-            <Fab aria-label="add" className={classes.fab}>
-              <AddIcon />
-            </Fab>
-            <Fab aria-label="camera" className={classes.fab}>
-              <CameraIcon onClick={() => handleOpen(photo.id)}/>
-            </Fab>
-            </>
+            {!photo.dataUri ?
+              <>
+                <Fab aria-label="add" className={classes.fab}>
+                  <AddIcon />
+                </Fab>
+                <Fab aria-label="camera" className={classes.fab}>
+                  <CameraIcon onClick={() => handleOpen(photo.currentDoc)}/>
+                </Fab>
+              </>
+              :
+              <img 
+                src={photo.dataUri} 
+                style={{
+                  maxWidth: "300px",
+                  padding: "24px"
+                }} 
+              />
             }
             <Fab 
-              disabled={dataUri ? false : true} 
+              disabled={photo.dataUri ? false : true} 
               aria-label="delete" 
               className={classes.fab}
-              onClick={() => setDataUri(false)}
+              onClick={() => setValue(currentDocument, "")}
             >
               <DeleteIcon />
             </Fab>
