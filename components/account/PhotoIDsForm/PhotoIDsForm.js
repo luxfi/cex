@@ -12,10 +12,10 @@ import { CustomModal } from "../../app"
 import 'react-html5-camera-photo/build/css/index.css'
 import Camera from 'react-html5-camera-photo'
 
-const products = [
-  { name: 'Face', desc: 'Required', price: 'photo here' },
-  { name: 'ID Front', desc: 'Required', price: 'photo here' },
-  { name: 'ID Back', desc: 'Required', price: 'photo here' },
+const photos = [
+  { name: 'Face', desc: 'Required', price: 'photo here', id: "face" },
+  { name: 'ID Front', desc: 'Required', price: 'photo here', id: "id-front" },
+  { name: 'ID Back', desc: 'Required', price: 'photo here', id: "id-back" },
 ]
 const useStyles = makeStyles(theme => ({
   fab: {
@@ -35,15 +35,23 @@ const useStyles = makeStyles(theme => ({
 export default function PhotoIDs() {
   const classes = useStyles()
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false)
+  const [currentModal, setCurrentModal] = React.useState(false)
+  const [dataUri, setDataUri] = React.useState(false)
 
-  const handleOpen = () => {
+  const handleOpen = (id) => {
+    setCurrentModal(id)
     setOpen(true);
-  };
+  }
 
   const handleClose = () => {
     setOpen(false);
-  };
+  }
+
+  const onTakePhoto = (dataUri) => {
+    setDataUri(dataUri)
+    setTimeout(function () { handleClose() }, 1500);
+  }
 
   return (
     <>
@@ -51,25 +59,36 @@ export default function PhotoIDs() {
       handleClose={handleClose} 
       open={open}
       >
-        <Camera onTakePhoto={(dataUri) => { console.log(dataUri) }} />
+        <Camera onTakePhoto={(dataUri) => { onTakePhoto(dataUri) }} />
       </CustomModal>
       <Typography variant="h6" gutterBottom>
         PhotoIDs
       </Typography>
       <List disablePadding>
-        {products.map(product => (
-          <ListItem className={classes.listItem} key={product.name}>
-            <ListItemText primary={product.name} secondary={product.desc} />
+        {photos.map(photo => (
+          <ListItem className={classes.listItem} key={photo.name}>
+            <ListItemText primary={photo.name} secondary={photo.desc} />
+            {dataUri ? <img src={dataUri} style={{
+              maxWidth: "300px",
+              padding: "24px"
+            }}/> :
+            <>
             <Fab aria-label="add" className={classes.fab}>
               <AddIcon />
             </Fab>
             <Fab aria-label="camera" className={classes.fab}>
-              <CameraIcon onClick={handleOpen}/>
+              <CameraIcon onClick={() => handleOpen(photo.id)}/>
             </Fab>
-            <Fab disabled aria-label="delete" className={classes.fab}>
+            </>
+            }
+            <Fab 
+              disabled={dataUri ? false : true} 
+              aria-label="delete" 
+              className={classes.fab}
+              onClick={() => setDataUri(false)}
+            >
               <DeleteIcon />
             </Fab>
-            {/* <Typography variant="body2">{product.price}</Typography> */}
           </ListItem>
         ))}
       </List>

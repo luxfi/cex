@@ -66,13 +66,14 @@ class CustomModal extends React.Component {
           }}
         >
           <Fade in={open}>
+            {children ? children : 
             <div className={classes.paper}>
               <div className={classes.modalHeader}>
                 <div className={classes.modalTitle}>{title}</div>
               </div>
-              {children ? children : <div className={classes.modalBody}>{body ? body : "Put " + title + " information here"}</div>}
-              
+              <div className={classes.modalBody}>{body ? body : "Put " + title + " information here"}</div>
             </div>
+            }
           </Fade>
         </Modal>
       </div>
