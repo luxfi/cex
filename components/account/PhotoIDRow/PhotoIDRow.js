@@ -22,15 +22,17 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const MyDropzone = ({ setValue, name }) => {
-  const { getRootProps, getInputProps } = useDropzone({
+const MyDropzone = ({ setValue, name, eventArray }) => {
+  const { getRootProps, getInputProps, open } = useDropzone({
     accept: "image/*",
     onDrop: acceptedFiles => {
       const firstFile = acceptedFiles[0]
       setValue(name, URL.createObjectURL(firstFile))
     }
   })
-  
+
+  eventArray.push(open)
+
   const { ref, ...rootProps } = getRootProps()
   return (
     <RootRef rootRef={ref}>
@@ -45,27 +47,40 @@ const MyDropzone = ({ setValue, name }) => {
 }
 
 const PhotoPreview = ({ photo }) => {
-  return <img src={photo.dataUri} style={{ maxWidth: "300px" }} />
+  return <img src={photo.dataUri} style={{ maxWidth: "300px", paddingRight: "16px" }} />
 }
 
 const PhotoUpload = ({ photo, setValue, handleOpenCam, classes }) => {
+  // will reference "open" on useDropZone hook
+  const eventArray = []
+  const openDialog = e => {
+    eventArray.forEach(cb => cb())
+  }
   return (
     <>
-      <MyDropzone setValue={setValue} name={photo.currentDoc} />
-      <Fab aria-label="add" className={classes.fab}>
-        <AddIcon onClick={open} />
+      <MyDropzone
+        setValue={setValue}
+        name={photo.currentDoc}
+        eventArray={eventArray}
+      />
+      <Fab aria-label="add" className={classes.fab} onClick={openDialog}>
+        <AddIcon />
       </Fab>
-      <Fab aria-label="camera" className={classes.fab}>
-        <CameraIcon onClick={() => handleOpenCam(photo.currentDoc)} />
+      <Fab
+        aria-label="camera"
+        className={classes.fab}
+        onClick={() => handleOpenCam(photo.currentDoc)}
+      >
+        <CameraIcon />
       </Fab>
     </>
   )
 }
 
-const PhotoIDRow = (props) => {
+const PhotoIDRow = props => {
   const { photo, setValue } = props
   const classes = useStyles()
-  const rootProps = { classes, ...props}
+  const rootProps = { classes, ...props }
   return (
     <>
       <ListItem className={classes.listItem}>
@@ -87,7 +102,6 @@ const PhotoIDRow = (props) => {
     </>
   )
 }
-
 
 const thumbsContainer = {
   display: "flex",
