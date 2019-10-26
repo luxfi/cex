@@ -95,7 +95,12 @@ export default function PhotoIDs({
       </Typography>
       <List disablePadding>
         {photos.map(photo => (
-          <PhotoIDRow photo={photo} handleOpenCam={handleOpenCam} />
+          <PhotoIDRow
+            photo={photo}
+            handleOpenCam={handleOpenCam}
+            key={photo.currentDoc}
+            setValue={setValue}
+          />
         ))}
       </List>
     </>
