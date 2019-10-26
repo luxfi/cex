@@ -43,29 +43,36 @@ const MyDropzone = ({ setValue, name }) => {
   )
 }
 
-const PhotoIDRow = ({ photo, setValue, handleOpenCam }) => {
-  const classes = useStyles()
+const PhotoPreview = ({ photo }) => {
+  return <img src={photo.dataUri} style={{ maxWidth: "300px" }} />
+}
+
+const PhotoUpload = ({ photo, setValue, handleOpenCam, classes }) => {
   return (
     <>
-      <ListItem className={classes.listItem} key={photo.name}>
+      <MyDropzone setValue={setValue} name={photo.currentDoc} />
+      <Fab aria-label="add" className={classes.fab}>
+        <AddIcon onClick={open} />
+      </Fab>
+      <Fab aria-label="camera" className={classes.fab}>
+        <CameraIcon onClick={() => handleOpenCam(photo.currentDoc)} />
+      </Fab>
+    </>
+  )
+}
+
+const PhotoIDRow = (props) => {
+  const { photo, setValue } = props
+  const classes = useStyles()
+  const rootProps = { classes, ...props}
+  return (
+    <>
+      <ListItem className={classes.listItem}>
         <ListItemText primary={photo.name} secondary={photo.desc} />
-        {!photo.dataUri ? (
-          <>
-            <MyDropzone setValue={setValue} name={photo.currentDoc} />
-            <Fab aria-label="add" className={classes.fab}>
-              <AddIcon onClick={open} />
-            </Fab>
-            <Fab aria-label="camera" className={classes.fab}>
-              <CameraIcon onClick={() => handleOpenCam(photo.currentDoc)} />
-            </Fab>
-          </>
+        {photo.dataUri ? (
+          <PhotoPreview {...rootProps} />
         ) : (
-          <img
-            src={photo.dataUri}
-            style={{
-              maxWidth: "300px"
-            }}
-          />
+          <PhotoUpload {...rootProps} />
         )}
         <Fab
           disabled={photo.dataUri ? false : true}
