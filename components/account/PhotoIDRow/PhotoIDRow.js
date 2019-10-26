@@ -51,7 +51,8 @@ const PhotoPreview = ({ photo }) => {
 }
 
 const PhotoUpload = ({ photo, setValue, handleOpenCam, classes }) => {
-  // will reference "open" on useDropZone hook
+  // TODO find a better way to call a siblings function
+  // will reference "open" on useDropzone hook
   const eventArray = []
   const openDialog = e => {
     eventArray.forEach(cb => cb())
