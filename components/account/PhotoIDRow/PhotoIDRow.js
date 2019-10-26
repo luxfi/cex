@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { ListItem, ListItemText, Fab, Box, Paper } from "@material-ui/core"
 import AddIcon from "@material-ui/icons/Backup"
 import CameraIcon from "@material-ui/icons/CameraAlt"
@@ -26,10 +26,11 @@ const MyDropzone = ({ setValue, name }) => {
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
     onDrop: acceptedFiles => {
-      console.log(name, acceptedFiles[0])
-      setValue(name, acceptedFiles[0].preview)
+      const firstFile = acceptedFiles[0]
+      setValue(name, URL.createObjectURL(firstFile))
     }
   })
+  
   const { ref, ...rootProps } = getRootProps()
   return (
     <RootRef rootRef={ref}>
@@ -85,6 +86,38 @@ const PhotoIDRow = (props) => {
       </ListItem>
     </>
   )
+}
+
+
+const thumbsContainer = {
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  marginTop: 16
+}
+
+const thumb = {
+  display: "inline-flex",
+  borderRadius: 2,
+  border: "1px solid #eaeaea",
+  marginBottom: 8,
+  marginRight: 8,
+  width: 100,
+  height: 100,
+  padding: 4,
+  boxSizing: "border-box"
+}
+
+const thumbInner = {
+  display: "flex",
+  minWidth: 0,
+  overflow: "hidden"
+}
+
+const img = {
+  display: "block",
+  width: "auto",
+  height: "100%"
 }
 
 export default PhotoIDRow
