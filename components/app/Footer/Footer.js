@@ -101,26 +101,24 @@ const Copyright = () => {
 const footers = [
   {
     title: 'Company',
-    description: ['About', 'Careers', 'Press', 'Blog'],
+    links: ['About', 'Careers', 'Press', 'Blog'],
   },
   {
     title: 'Projects',
-    description: ['Movies', 'TV Series', 'Music', 'Gaming'],
+    links: ['Movies', 'TV Series', 'Music', 'Gaming'],
   },
   {
     title: 'Support',
-    description: [
+    links: [
       {
         title: 'Investor FAQ',
         link: 'investorFaq'
       },
       {
         title: 'Project FAQ',
-        link: 'projectFaq'
       },
       {
         title: 'Risks',
-        link: 'risks'
       },
       {
         title: 'Contact Us',
@@ -130,7 +128,7 @@ const footers = [
   },
   {
     title: 'Account',
-    description: ['Sign In', 'Create Account', 'Orders', 'Portfolio'],
+    links: ['Sign In', 'Create Account', 'Orders', 'Portfolio'],
   },
 ];
 
@@ -203,17 +201,20 @@ const FooterMiddleRow = ({ classes, openModal }) => (
             {footer.title}
           </Typography>
           <ul>
-            {footer.description.map(item => {
-              const isRealLink = (typeof item === 'object')
+            {footer.links.map(item => {
+              const activeLink = item.hasOwnProperty('link');
+              const title = item.hasOwnProperty('title') ? item.title : item
+              const link = (activeLink) ? item.link : `/#`
+              const key = (activeLink) ? item.link : title
               return (
-                <li key={(isRealLink) ? item.link : item}>
+                <li key={key}>
                   <Link
-                    href={(isRealLink) ? item.link : null}
+                    href={link}
                     variant="subtitle1"
                     color="textSecondary"
-                    onClick={(isRealLink) ? null : () => { openModal(item) }}
+                    onClick={(activeLink) ? null : () => { openModal(title) }}
                   >
-                    {(isRealLink) ? item.title : item}
+                    {title}
                   </Link>
                 </li>
               )
