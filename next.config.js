@@ -77,7 +77,8 @@ module.exports = withCSS(
           '/portfolio': { page: '/portfolio' },
           '/account': { page: '/account' },
           '/account/kyc': { page: '/account/kyc' },
-          '/investorFaq': { page: '/investorFaq' }
+          '/investorFaq': { page: '/investorFaq' },
+          '/contact': { page: '/contact' }
         })
       }
     })
