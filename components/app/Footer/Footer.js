@@ -17,9 +17,6 @@ import {
   Box,
 } from "@material-ui/core"
 
-// core components
-import { CustomLink } from ".."
-
 // styles
 import { withStyles } from "@material-ui/core/styles"
 
