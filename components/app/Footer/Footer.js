@@ -18,7 +18,7 @@ import {
 } from "@material-ui/core"
 
 // core components
-import { CustomLink } from "../"
+import { CustomLink } from ".."
 
 // styles
 import { withStyles } from "@material-ui/core/styles"
@@ -109,7 +109,24 @@ const footers = [
   },
   {
     title: 'Support',
-    description: ['Investory FAQ', 'Project FAQ', 'Risks', 'Contact'],
+    description: [
+      {
+        title: 'Investor FAQ',
+        link: 'investorFaq'
+      },
+      {
+        title: 'Project FAQ',
+        link: 'projectFaq'
+      },
+      {
+        title: 'Risks',
+        link: 'risks'
+      },
+      {
+        title: 'Contact Us',
+        link: 'contact'
+      },
+    ],
   },
   {
     title: 'Account',
@@ -117,7 +134,7 @@ const footers = [
   },
 ];
 
-const FooterTopRow = ({classes}) => (
+const FooterTopRow = ({ classes }) => (
   <Box mb={5}>
     <Grid container>
       <Grid item xs={6} sm={8}>
@@ -177,7 +194,7 @@ const FooterTopRow = ({classes}) => (
   </Box>
 )
 
-const FooterMiddleRow = ( {classes, openModal} ) => (
+const FooterMiddleRow = ({ classes, openModal }) => (
   <Grid container direction="row">
     <Grid xs={8} item container justify="space-evenly">
       {footers.map(footer => (
@@ -186,21 +203,22 @@ const FooterMiddleRow = ( {classes, openModal} ) => (
             {footer.title}
           </Typography>
           <ul>
-            {footer.description.map(item => (
-              <li key={item}>
-
-                <Link
-                  href="#"
-                  variant="subtitle1"
-                  color="textSecondary"
-                  onClick={() => {
-                    openModal(item)
-                  }}
+            {footer.description.map(item => {
+              const isRealLink = (typeof item === 'object')
+              return (
+                <li key={(isRealLink) ? item.link : item}>
+                  <Link
+                    href={(isRealLink) ? item.link : null}
+                    variant="subtitle1"
+                    color="textSecondary"
+                    onClick={(isRealLink) ? null : () => { openModal(item) }}
                   >
-                  {item}
-                </Link>
-              </li>
-            ))}
+                    {(isRealLink) ? item.title : item}
+                  </Link>
+                </li>
+              )
+            })
+            }
           </ul>
         </Grid>
       ))}
@@ -248,8 +266,8 @@ class Footer extends React.Component {
     return (
       <div className={classes.root}>
         <Container maxWidth="xl" component="footer" className={classes.footer}>
-          <FooterTopRow classes={classes}/>
-          <FooterMiddleRow openModal={openModal}/>
+          <FooterTopRow classes={classes} />
+          <FooterMiddleRow openModal={openModal} />
           <Box mt={5}>
             <Copyright />
           </Box>
