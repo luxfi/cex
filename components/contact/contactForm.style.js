@@ -4,13 +4,25 @@ export default (theme) => ({
     width: "600px"
   },
 
+  formItself: {
+    display: "flex",
+    flexDirection: "column",
+  },
+
   fieldsOuter: {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "row",
+    justifyContent: "space-between"
   },
 
   textField: {
-    maxWidth: "200px"
+    flexGrow: 1,
+    "&:first-child": {
+      marginRight: theme.spacing(2)
+    }
+  },
+
+  commentTextField: {
   },
 
   buttonsOuter: {
