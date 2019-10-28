@@ -10,7 +10,7 @@ const styles = theme => ({
   container: {
     ...container,
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "center"
   },
 })
@@ -22,11 +22,12 @@ const ContentSections = (props) => {
       {
         items && Array.isArray(items) &&
         items.map(
-          section => {
+          item => {
+            console.log(JSON.stringify(item))
             return (
-              <section className={classes.contentSection} key={section.key}>
-                <h3 className={classes.contentSectionTitle}>{section.title}</h3>
-                <p className={classes.contentSectionBody}>{section.body}</p>
+              <section className={classes.contentSection} key={item.fields.key}>
+                <h3 className={classes.contentSectionTitle}>{item.fields.title}</h3>
+                <p className={classes.contentSectionBody}>{item.fields.body}</p>
               </section>
             )
           }
@@ -47,11 +48,11 @@ class InvestorFAQ extends React.Component {
   render() {
 
     const { classes, store} = this.props
-    const { content } = store.contentfulStore
+    const { items } = store.contentfulStore
 
     return (
       <div className={classes.container}>
-        <ContentSections classes={classes} items={content.items} />
+        <ContentSections classes={classes} items={items} />
       </div>
     )
   }
