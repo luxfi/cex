@@ -13,6 +13,7 @@ import OrderBook from "./OrderBook"
 import UserStore from "./UserStore"
 import UserPortfolio from "./UserPortfolio"
 import UIStore from "./UIStore"
+import ContentfulStore from "./ContentfulStore"
 
 const isServer = typeof window === "undefined"
 useStaticRendering(isServer)
@@ -37,7 +38,8 @@ export default function initializeStore(initialData = _initialData) {
       orderBook: new OrderBook(initialData.orderBook, api),
       userStore: new UserStore(initialData.userStore, api),
       userPortfolio: new UserPortfolio(initialData.userPortfolio, api),
-      uiStore: new UIStore(initialData.uiStore, api)
+      uiStore: new UIStore(initialData.uiStore, api),
+      contentfulStore: new ContentfulStore(isServer)
     }
   } else if (store === null) {
     // Client stuff
@@ -47,7 +49,8 @@ export default function initializeStore(initialData = _initialData) {
       orderBook: new OrderBook(initialData.orderBook, api),
       userStore: new UserStore(initialData.userStore, api),
       userPortfolio: new UserPortfolio(initialData.userPortfolio, api),
-      uiStore: new UIStore(initialData.uiStore, api)
+      uiStore: new UIStore(initialData.uiStore, api),
+      contentfulStore: new ContentfulStore(isServer)
     }
   }
   // Otherwise we don't need to re-initialize the store
