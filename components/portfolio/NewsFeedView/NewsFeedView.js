@@ -3,7 +3,7 @@ import React from "react"
 import { makeStyles } from "@material-ui/core"
 import ContentLoader from "react-content-loader"
 
-import myStyles from "./NewsFeedView.styles.js"
+import myStyles from "./NewsFeedView.style.js"
 
 const styles = makeStyles(myStyles)
 
