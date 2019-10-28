@@ -17,9 +17,6 @@ import {
   Box,
 } from "@material-ui/core"
 
-// core components
-import { CustomLink } from "../"
-
 // styles
 import { withStyles } from "@material-ui/core/styles"
 
@@ -101,23 +98,38 @@ const Copyright = () => {
 const footers = [
   {
     title: 'Company',
-    description: ['About', 'Careers', 'Press', 'Blog'],
+    links: ['About', 'Careers', 'Press', 'Blog'],
   },
   {
     title: 'Projects',
-    description: ['Movies', 'TV Series', 'Music', 'Gaming'],
+    links: ['Movies', 'TV Series', 'Music', 'Gaming'],
   },
   {
     title: 'Support',
-    description: ['Investory FAQ', 'Project FAQ', 'Risks', 'Contact'],
+    links: [
+      {
+        title: 'Investor FAQ',
+        link: 'investorFaq'
+      },
+      {
+        title: 'Project FAQ',
+      },
+      {
+        title: 'Risks',
+      },
+      {
+        title: 'Contact Us',
+        link: 'contact'
+      },
+    ],
   },
   {
     title: 'Account',
-    description: ['Sign In', 'Create Account', 'Orders', 'Portfolio'],
+    links: ['Sign In', 'Create Account', 'Orders', 'Portfolio'],
   },
 ];
 
-const FooterTopRow = ({classes}) => (
+const FooterTopRow = ({ classes }) => (
   <Box mb={5}>
     <Grid container>
       <Grid item xs={6} sm={8}>
@@ -177,7 +189,7 @@ const FooterTopRow = ({classes}) => (
   </Box>
 )
 
-const FooterMiddleRow = ( {classes, openModal} ) => (
+const FooterMiddleRow = ({ classes, openModal }) => (
   <Grid container direction="row">
     <Grid xs={8} item container justify="space-evenly">
       {footers.map(footer => (
@@ -186,21 +198,25 @@ const FooterMiddleRow = ( {classes, openModal} ) => (
             {footer.title}
           </Typography>
           <ul>
-            {footer.description.map(item => (
-              <li key={item}>
-
-                <Link
-                  href="#"
-                  variant="subtitle1"
-                  color="textSecondary"
-                  onClick={() => {
-                    openModal(item)
-                  }}
+            {footer.links.map(item => {
+              const activeLink = item.hasOwnProperty('link');
+              const title = item.hasOwnProperty('title') ? item.title : item
+              const link = (activeLink) ? item.link : `/#`
+              const key = (activeLink) ? item.link : title
+              return (
+                <li key={key}>
+                  <Link
+                    href={link}
+                    variant="subtitle1"
+                    color="textSecondary"
+                    onClick={(activeLink) ? null : () => { openModal(title) }}
                   >
-                  {item}
-                </Link>
-              </li>
-            ))}
+                    {title}
+                  </Link>
+                </li>
+              )
+            })
+            }
           </ul>
         </Grid>
       ))}
@@ -248,8 +264,8 @@ class Footer extends React.Component {
     return (
       <div className={classes.root}>
         <Container maxWidth="xl" component="footer" className={classes.footer}>
-          <FooterTopRow classes={classes}/>
-          <FooterMiddleRow openModal={openModal}/>
+          <FooterTopRow classes={classes} />
+          <FooterMiddleRow openModal={openModal} />
           <Box mt={5}>
             <Copyright />
           </Box>
