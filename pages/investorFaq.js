@@ -16,12 +16,12 @@ const styles = theme => ({
 })
 
 const ContentSections = (props) => {
-  const {sections, classes, contentful} = props;
+  const {items, classes} = props;
   return (
     <>
       {
-        sections && Array.isArray(sections) &&
-        sections.map(
+        items && Array.isArray(items) &&
+        items.map(
           section => {
             return (
               <section className={classes.contentSection} key={section.key}>
@@ -40,13 +40,18 @@ const ContentSections = (props) => {
 @observer
 class InvestorFAQ extends React.Component {
 
+  static async getInitialProps({ mobxStore }) {
+    return { ...mobxStore }
+  }
+
   render() {
-    const { classes, store, contentful } = this.props
-    //const { content } = store.cmsStore
+
+    const { classes, store} = this.props
+    const { content } = store.contentfulStore
 
     return (
       <div className={classes.container}>
-        <ContentSections classes={classes} content={contentful} />
+        <ContentSections classes={classes} items={content.items} />
       </div>
     )
   }
