@@ -22,12 +22,12 @@ const ContentSections = (props) => {
       {
         items && Array.isArray(items) &&
         items.map(
-          item => {
-            console.log(JSON.stringify(item))
+          contentFulEntry => {
+            const item = contentFulEntry.fields
             return (
-              <section className={classes.contentSection} key={item.fields.key}>
-                <h3 className={classes.contentSectionTitle}>{item.fields.title}</h3>
-                <p className={classes.contentSectionBody}>{item.fields.body}</p>
+              <section className={classes.contentSection} key={item.key}>
+                <h3 className={classes.contentSectionTitle}>{item.title}</h3>
+                <p className={classes.contentSectionBody}>{item.body}</p>
               </section>
             )
           }
