@@ -29,6 +29,7 @@
     "ethers": "4.0.38",
     "file-loader": "4.2.0",
     "formik": "^1.5.8",
+    "formik-material-ui": "0.0.22",
     "hanzo.js": "2.5.11",
     "hdkey": "1.1.1",
     "limit-order-book": "^0.3.0",

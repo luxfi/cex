@@ -1,10 +1,11 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 
-import { TextField, Button } from '@material-ui/core'
+import { Button } from '@material-ui/core'
 
-import { Formik } from 'formik';
-import * as yup from 'yup';
+import { Formik, Field } from 'formik'
+import { TextField } from 'formik-material-ui'
+import * as yup from 'yup'
 
 import styles from "./contactForm.style.js"
 
@@ -35,13 +36,10 @@ class ContactForm extends React.Component {
 
       // Formik stuff
     const {
-      values,
       touched,
       errors,
       dirty,
       isSubmitting,
-      handleChange,
-      handleBlur,
       handleSubmit,
       handleReset,
     } = props;
@@ -55,43 +53,34 @@ class ContactForm extends React.Component {
     }
 
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={classes.formItself}>
         <div className={classes.fieldsOuter}>
-          <TextField
+          <Field
             label="name"
             name="name"
             className={classes.textField}
-            value={values.name}
-            onChange={handleChange}
-            onBlur={handleBlur}
             helperText={(errors.name && touched.name) && errors.name}
-            margin="normal"
+            component={TextField}
           />
-          <TextField
+          <Field
             error={errors.email && touched.email}
             label="email"
             name="email"
             className={classes.textField}
-            value={values.email}
-            onChange={handleChange}
-            onBlur={handleBlur}
             helperText={(errors.email && touched.email) && errors.email}
-            margin="normal"
-          />
-          <TextField
-            label="comment"
-            name="comment"
-            multiline={true}
-            rows={2}
-            maxRows={6}
-            className={classes.commentTextField}
-            value={values.comment}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            helperText={(errors.comment && touched.comment) && errors.comment}
-            margin="normal"
+            component={TextField}
           />
         </div>
+        <Field
+          label="comment"
+          name="comment"
+          multiline={true}
+          rows={4}
+          maxRows={6}
+          className={classes.commentTextField}
+          helperText={(errors.comment && touched.comment) && errors.comment}
+          component={TextField}
+        />
         <div className={classes.buttonsOuter} >
           <Button
             type="button"
@@ -99,7 +88,7 @@ class ContactForm extends React.Component {
             onClick={handleReset}
             disabled={!dirty || isSubmitting}
           >Reset</Button>
-          <Button type="submit" disabled={isSubmitting}>Submit</Button>
+          <Button disabled={isSubmitting} onClick={handleSubmit}>Submit</Button>
         </div>
       </form>
     )
