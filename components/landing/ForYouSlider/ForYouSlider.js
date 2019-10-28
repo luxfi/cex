@@ -8,13 +8,13 @@ const forYouImages =
   [
     {
       "imgSrc": "/static/images/Buffy.png",
-      "body": "Exclusive Sale on Buffy the Vampire Slayer goods for EMIX fans!",
+      "body": "Exclusive Sale on Buffy the Vampire Slayer goods for ESX fans!",
       "title": "Buffy"
     },
     {
       "imgSrc": "/static/images/EmiliaClarke.png",
       "title": "Emilia Clarke",
-      "body": "Vote on the name of GOT sequels to win EMIX points and prizes!"
+      "body": "Vote on the name of GOT sequels to win ESX credits and prizes!"
     },
     {
       "imgSrc": "/static/images/StarWarsConceptArt.png",

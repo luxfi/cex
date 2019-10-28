@@ -1,6 +1,7 @@
-import App from "next/app"
 import React from "react"
+import App from "next/app"
 import { Provider, observer } from "mobx-react"
+import { withRouter } from "next/router"
 
 // This ensures that the icon CSS is loaded immediately before attempting to render icons
 import "@fortawesome/fontawesome-svg-core/styles.css"
@@ -18,12 +19,11 @@ import { CustomSnackbar, Header, Footer, CustomModal } from "../components/app"
 
 import initializeStore from "../stores/stores"
 
-// NEW ***********
-import { withRouter } from "next/router"
-
 // styles
 import styles from "../pageStyles/app.style"
 import { darkTheme, lightTheme } from "../components/themes"
+
+
 
 // ****************
 @observer
