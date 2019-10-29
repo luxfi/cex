@@ -12,6 +12,22 @@ import isPassword from "../src/control-middlewares/isPassword"
 import isPhone from "../src/control-middlewares/isPhone"
 import isRequired from "../src/control-middlewares/isRequired"
 
+const base64MimeType = (encoded) => {
+  var result = null;
+
+  if (typeof encoded !== 'string') {
+    return result;
+  }
+
+  var mime = encoded.match(/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,.*/);
+
+  if (mime && mime.length) {
+    result = mime[1];
+  }
+
+  return result;
+}
+
 /**
  * Later we'll wrap the fetch stuff up a bit more cleanly and / or use a helper library
  */
@@ -247,6 +263,46 @@ export default class UserStore {
   @action validateNewPaymentMethodMetadata() {
     this.validNewPaymentMethodMetadata = isRequired(this.newPaymentMethodMetadata)
   }
+
+  @action updateKYCPhotoDocuments() {
+    const docs = [this.documents0, this.documents1, this.documents2]
+    docs.forEach((file) => {
+      this.updateKYCPhoto(file)
+    })
+  }
+
+  @action async updateKYCPhoto(file, onSuccess, onError) {
+    // ** ONLY CALL WHEN @computed isValidSignUp IS TRUE **
+    this.updating = true
+
+    const mimeType = base64MimeType(file)
+
+    console.log(mimeType)
+
+    try {
+      const res = await fetch("https://files.hanzo.ai/upload", {
+        // Your POST endpoint
+        method: "POST",
+        headers: {
+          // Content-Type may need to be completely **omitted**
+          // or you may need something
+          "Content-Type": mimeType
+        },
+        body: file // This is your file object
+      })
+
+      let data = await response.json()
+
+      console.log("json response: ", data)
+
+      onSuccess && onSuccess()
+    } catch (ex) {
+      console.log("Error updatng photo documents", ex)
+      onError && onError(ex.toString())
+    } finally {
+      this.updating = false
+    }
+  } 
 
   @action async signUp(onSuccess, onError) {
     // ** ONLY CALL WHEN @computed isValidSignUp IS TRUE **
