@@ -534,6 +534,10 @@ export default class UserStore {
     )
   }
 
+  @computed get isValidPhotoIDs() {
+    return this.documents0 && this.documents1 && this.documents2
+  }
+
 
   @computed get passwordsMatch() {
     return this.password === this.passwordConfirm

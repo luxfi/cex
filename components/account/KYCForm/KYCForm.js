@@ -168,6 +168,7 @@ export default function KYCForm({
   validFirstName,
   validLastName,
   isValidPersonalDetails,
+  isValidPhotoIDs,
   validAddress1,
   validCity,
   validPostalCode,
@@ -205,7 +206,7 @@ export default function KYCForm({
       case 1:
         return setCurrentStepDisabled(!isValidAddress)
       case 2:
-        return setCurrentStepDisabled(false)
+        return setCurrentStepDisabled(!isValidPhotoIDs)
       default:
       // Todo - I did not need to comment this out before..., not sure why I have to now
       // throw new Error("Unknown step")
@@ -214,7 +215,7 @@ export default function KYCForm({
 
   React.useEffect(() => {
     checkActiveStep(activeStep)
-  }, [isValidPersonalDetails, isValidAddress, activeStep])
+  }, [isValidPersonalDetails, isValidAddress, isValidPhotoIDs, activeStep])
 
   return (
     <>
