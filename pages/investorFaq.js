@@ -4,7 +4,6 @@ import { withRouter } from "next/router"
 import { withStyles } from '@material-ui/core/styles'
 
 import { container } from "../components/esxStyles.js"
-import { withContentful } from "react-contentful"
 
 const styles = theme => ({
   container: {
@@ -41,21 +40,40 @@ const ContentSections = (props) => {
 @observer
 class InvestorFAQ extends React.Component {
 
+
   static async getInitialProps({ mobxStore }) {
     return { ...mobxStore }
   }
 
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      items: []
+    }
+  }
+
+  componentDidMount() {
+    const { store } = this.props
+    this.setState(
+      {
+        items: store.contentfulStore.byTag('project')
+
+      }
+    )
+  }
+
   render() {
 
-    const { classes, store} = this.props
-    const { items } = store.contentfulStore
+    const { classes} = this.props
+    //const investorItems = store.contentfulStore.byTag('project')
 
     return (
       <div className={classes.container}>
-        <ContentSections classes={classes} items={items} />
+        <ContentSections classes={classes} items={this.state.items} />
       </div>
     )
   }
 } 
 
-export default withContentful(withRouter(withStyles(styles)(InvestorFAQ)))
+export default withRouter(withStyles(styles)(InvestorFAQ))
