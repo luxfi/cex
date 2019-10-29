@@ -34,13 +34,12 @@ class KYC extends React.Component {
       documents1,
       documents2,
       isValidKYC,
-      updateKYC,
-      updateKYCPhotoDocuments,
       firstName,
       lastName,
       validFirstName,
       validLastName,
       isValidPersonalDetails,
+      isValidPhotoIDs,
       validAddress1,
       validCity,
       validPostalCode,
@@ -85,6 +84,7 @@ class KYC extends React.Component {
             validLastName={validLastName}
             setErrorMessage={setErrorMessage}
             isValidPersonalDetails={isValidPersonalDetails}
+            isValidPhotoIDs={isValidPhotoIDs}
             validAddress1={validAddress1}
             validCity={validCity}
             validPostalCode={validPostalCode}
