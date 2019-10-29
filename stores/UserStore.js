@@ -1,10 +1,10 @@
 // Generic Libraries
 import { action, observable, computed, toJS } from "mobx"
 import Router from "next/router"
-import moment from 'moment/moment.js'
+import moment from "moment/moment.js"
 
 import * as ethers from "ethers"
-import _ from 'lodash'
+import _ from "lodash"
 
 // Utilities
 import isEmail from "../src/control-middlewares/isEmail"
@@ -12,20 +12,20 @@ import isPassword from "../src/control-middlewares/isPassword"
 import isPhone from "../src/control-middlewares/isPhone"
 import isRequired from "../src/control-middlewares/isRequired"
 
-const base64MimeType = (encoded) => {
-  var result = null;
+const base64MimeType = encoded => {
+  var result = null
 
-  if (typeof encoded !== 'string') {
-    return result;
+  if (typeof encoded !== "string") {
+    return result
   }
 
-  var mime = encoded.match(/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,.*/);
+  var mime = encoded.match(/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,.*/)
 
   if (mime && mime.length) {
-    result = mime[1];
+    result = mime[1]
   }
 
-  return result;
+  return result
 }
 
 /**
@@ -128,7 +128,7 @@ export default class UserStore {
       if (this.token) {
         const ps = [
           this.api.client.library.shopjs(),
-          this.api.client.account.get(),
+          this.api.client.account.get()
         ]
 
         let [appSettings, account] = await Promise.all(ps)
@@ -139,7 +139,7 @@ export default class UserStore {
         this.appSettings = await this.api.client.library.shopjs()
       }
     } catch (e) {
-      console.log('account token expired', e)
+      console.log("account token expired", e)
       this.logout()
     }
 
@@ -147,16 +147,16 @@ export default class UserStore {
   }
 
   hydrateStore(account) {
-    const userFields = ["firstName", "lastName", "email"]
-    const kycFields = ["birthdate", "gender", "phone", "taxId" ]
-    const addressFields = 
-      ["name", 
-      "country", 
+    const userFields = ["firstName", "lastName", "email", "id"]
+    const kycFields = ["birthdate", "gender", "phone", "taxId"]
+    const addressFields = [
+      "name",
+      "country",
       "postalCode",
       "state",
-      "city" ,
-      [ "address1", "line1" ],
-      [ "address2", "line2" ],
+      "city",
+      ["address1", "line1"],
+      ["address2", "line2"]
     ]
     const user = account
     const { kyc } = account
@@ -171,9 +171,9 @@ export default class UserStore {
     // make sure our changes aren't sent back to the server
     keys.forEach(k => {
       // only update if available
-      if (typeof k === 'string' && json[k]) {
+      if (typeof k === "string" && json[k]) {
         this[k] = json[k]
-      } else if(Array.isArray(k) && json[k[1]]) {
+      } else if (Array.isArray(k) && json[k[1]]) {
         this[k[0]] = json[k[1]]
       }
     })
@@ -181,13 +181,14 @@ export default class UserStore {
 
   checkCurrentStatus() {
     const personalDetails = ["birthdate", "gender", "phone", "taxId"]
-    const personalAddress = 
-    ["name",
+    const personalAddress = [
+      "name",
       "country",
       "postalCode",
       "state",
       "city",
-      "address1"]
+      "address1"
+    ]
     if (this.anyMissingData(personalDetails)) {
       this.setActiveStep(0)
     } else if (this.anyMissingData(personalDetails)) {
@@ -198,7 +199,7 @@ export default class UserStore {
   }
 
   anyMissingData(keys) {
-    keys.some(k => _.isEmpty(this[k]) )
+    keys.some(k => _.isEmpty(this[k]))
   }
 
   // TODO store this w httpOnly in a cookie w all the proper security precautions.
@@ -235,7 +236,7 @@ export default class UserStore {
   }
 
   @computed get validPassword() {
-    return typeof this.password === 'string' && this.password.length > 6
+    return typeof this.password === "string" && this.password.length > 6
   }
 
   @computed get validPhone() {
@@ -243,7 +244,6 @@ export default class UserStore {
     const regex = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/
     return regex.test(this.phone)
   }
-
 
   @computed get validTaxId() {
     // 9 digits etc
@@ -253,7 +253,9 @@ export default class UserStore {
   }
 
   @action validateNewPaymentMethodPublicToken() {
-    this.validNewPaymentMethodPublicToken = isRequired(this.newPaymentMethodPublicToken)
+    this.validNewPaymentMethodPublicToken = isRequired(
+      this.newPaymentMethodPublicToken
+    )
   }
 
   @action validateNewPaymentMethodName() {
@@ -261,23 +263,31 @@ export default class UserStore {
   }
 
   @action validateNewPaymentMethodMetadata() {
-    this.validNewPaymentMethodMetadata = isRequired(this.newPaymentMethodMetadata)
+    this.validNewPaymentMethodMetadata = isRequired(
+      this.newPaymentMethodMetadata
+    )
   }
 
   @action updateKYCPhotoDocuments() {
-    const docs = [this.documents0, this.documents1, this.documents2]
-    docs.forEach((file) => {
-      this.updateKYCPhoto(file)
+    const docs = [
+      [this.documents0, "face"],
+      [this.documents1, "id-front"],
+      [this.documents2, "id-back"]
+    ]
+    docs.forEach(([data, name]) => {
+      this.updateKYCPhoto(data, name)
     })
   }
 
-  @action async updateKYCPhoto(file, onSuccess, onError) {
+  @action async updateKYCPhoto(data, name, onSuccess, onError) {
     // ** ONLY CALL WHEN @computed isValidSignUp IS TRUE **
     this.updating = true
 
-    const mimeType = base64MimeType(file)
-
-    console.log(mimeType)
+    const mimeType = base64MimeType(data)
+    const ext = mimeType.split("/")[1]
+    const filename = `${this.id}-${name}.${ext}`
+    console.log('file', data)
+    console.log("filename", filename)
 
     try {
       const res = await fetch("https://files.hanzo.ai/upload", {
@@ -288,10 +298,15 @@ export default class UserStore {
           // or you may need something
           "Content-Type": mimeType
         },
-        body: file // This is your file object
+        body: {
+          file: data,
+          fileName: filename,
+          userId: this.id
+        } // This is your file object
       })
+      console.log(res)
 
-      let data = await response.json()
+      const data = await res.json()
 
       console.log("json response: ", data)
 
@@ -302,7 +317,7 @@ export default class UserStore {
     } finally {
       this.updating = false
     }
-  } 
+  }
 
   @action async signUp(onSuccess, onError) {
     // ** ONLY CALL WHEN @computed isValidSignUp IS TRUE **
@@ -370,7 +385,7 @@ export default class UserStore {
       // TODO Not sure what this is? This needs to go in the password update function
       // this.inputs.password.val(this.inputs.password.val().replace(/./g, '•'))
       onSuccess && onSuccess()
-      Router.push('/login')
+      Router.push("/login")
     } catch (ex) {
       console.log("Error logging out", ex)
       onError && onError(ex.toString())
@@ -386,11 +401,10 @@ export default class UserStore {
         accountId: this.newPaymentMethodMetadata.account_id,
         type: this.newPaymentMethodType,
         name: this.newPaymentMethodName,
-        metadata: this.newPaymentMethodMetadata,
+        metadata: this.newPaymentMethodMetadata
       }
 
       const res = await this.api.client.account.paymentMethod.create(opts)
-
     } catch (ex) {
       console.log("Error logging out", ex)
       onError && onError(ex.toString())
@@ -402,19 +416,17 @@ export default class UserStore {
   @action async updateKYC(onSuccess, onError) {
     // ** ONLY CALL WHEN @computed isValidKYC IS TRUE **
     this.updating = true
-    const addressObj =
-    {
+    const addressObj = {
       name: `${this.firstName} ${this.lastName}`,
       line1: this.address1,
       line2: this.address2,
       city: this.city,
       postalCode: this.postalCode,
       state: this.state,
-      country: this.country,
+      country: this.country
     }
 
-    const kycObj =
-    {
+    const kycObj = {
       address: addressObj,
       taxId: this.taxId,
       phone: this.phone,
@@ -423,13 +435,11 @@ export default class UserStore {
       documents: this.documents
     }
     try {
-      const newAcc = Object.assign(
-        this.account,
-        {
-          kyc: kycObj,
-          firstName: this.firstName,
-          lastName: this.lastName
-        })
+      const newAcc = Object.assign(this.account, {
+        kyc: kycObj,
+        firstName: this.firstName,
+        lastName: this.lastName
+      })
       await this.api.client.account.update(newAcc)
       // On success
       this.account = newAcc
@@ -485,11 +495,7 @@ export default class UserStore {
   }
 
   @computed get isValidAddress() {
-    return (
-      this.validAddress1 &&
-      this.validCity &&
-      this.validPostalCode
-    )
+    return this.validAddress1 && this.validCity && this.validPostalCode
   }
 
   @computed get countries() {
@@ -498,7 +504,7 @@ export default class UserStore {
     // { "name": "Albania", "code": "AL" }]
     if (!this.appSettings) return {}
     return this.appSettings.countries.reduce((acc, memo) => {
-      acc.push({ "name": memo.name, "code": memo.code })
+      acc.push({ name: memo.name, code: memo.code })
       return acc
     }, [])
   }
@@ -508,10 +514,12 @@ export default class UserStore {
     // [{ name: "Florida", code: "FL" },
     // { name: "Michigan", code: "MI" }]
     if (!this.appSettings) return {}
-    const countryObj = this.appSettings.countries.find(country => country.code === this.country)
+    const countryObj = this.appSettings.countries.find(
+      country => country.code === this.country
+    )
     const statesArray = countryObj.subdivisions
     return statesArray.reduce((acc, memo) => {
-      acc.push({ "name": memo.name, "code": memo.code })
+      acc.push({ name: memo.name, code: memo.code })
       return acc
     }, [])
   }
@@ -537,7 +545,6 @@ export default class UserStore {
   @computed get isValidPhotoIDs() {
     return this.documents0 && this.documents1 && this.documents2
   }
-
 
   @computed get passwordsMatch() {
     return this.password === this.passwordConfirm
