@@ -286,29 +286,24 @@ export default class UserStore {
     const mimeType = base64MimeType(data)
     const ext = mimeType.split("/")[1]
     const filename = `${this.id}-${name}.${ext}`
-    console.log('file', data)
-    console.log("filename", filename)
+    // console.log('file', data)
+    // console.log("filename", filename)
 
     try {
-      const res = await fetch("https://files.hanzo.ai/upload", {
+      const blob = data.slice(0, data.size, data.type)
+      const file = new File([blob], filename, {type: data.type})
+      const formData = new FormData()
+      formData.append('upload', file)
+      const res = await fetch('http://localhost:3001/upload', { // "https://files.hanzo.ai/upload", {
         // Your POST endpoint
         method: "POST",
-        headers: {
-          // Content-Type may need to be completely **omitted**
-          // or you may need something
-          "Content-Type": mimeType
-        },
-        body: {
-          file: data,
-          fileName: filename,
-          userId: this.id
-        } // This is your file object
+        body: formData
       })
       console.log(res)
 
-      const data = await res.json()
+      const res2 = await res.json()
 
-      console.log("json response: ", data)
+      console.log("json response: ", res2)
 
       onSuccess && onSuccess()
     } catch (ex) {
