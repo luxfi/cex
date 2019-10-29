@@ -35,6 +35,7 @@ class KYC extends React.Component {
       documents2,
       isValidKYC,
       updateKYC,
+      updateKYCPhotoDocuments,
       firstName,
       lastName,
       validFirstName,
@@ -72,7 +73,12 @@ class KYC extends React.Component {
             documents1={documents1}
             documents2={documents2}
             isValidKYC={isValidKYC}
-            updateKYC={(onSuccess, onError) => userStore.updateKYC(onSuccess, onError)}
+            updateKYC={(onSuccess, onError) =>
+              userStore.updateKYC(onSuccess, onError)
+            }
+            updateKYCPhotoDocuments={(onSuccess, onError) =>
+              userStore.updateKYCPhotoDocuments(onSuccess, onError)
+            }
             firstName={firstName}
             lastName={lastName}
             validFirstName={validFirstName}
@@ -87,8 +93,8 @@ class KYC extends React.Component {
               userStore.setValue(key, val)
             }}
             activeStep={activeStep}
-            setActiveStep={(step) => userStore.setActiveStep(step)}
-              />
+            setActiveStep={step => userStore.setActiveStep(step)}
+          />
         </Container>
       </main>
     )

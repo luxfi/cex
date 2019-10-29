@@ -63,7 +63,8 @@ const ButtonLink = React.forwardRef(
 
 function getStepContent(
   step,
-  { phone,
+  {
+    phone,
     taxId,
     validPhone,
     validTaxId,
@@ -81,7 +82,6 @@ function getStepContent(
     documents1,
     documents2,
     setValue,
-    updateKYC,
     firstName,
     lastName,
     setErrorMessage,
@@ -94,110 +94,121 @@ function getStepContent(
 ) {
   switch (step) {
     case 0:
-      return <PersonalDetailsForm
-        setValue={setValue}
-        gender={gender}
-        firstName={firstName}
-        lastName={lastName}
-        birthdate={birthdate}
-        validFirstName={validFirstName}
-        validLastName={validLastName}
-        setErrorMessage={setErrorMessage}
-        phone={phone}
-        taxId={taxId}
-        validPhone={validPhone}
-        validTaxId={validTaxId}
-      />
+      return (
+        <PersonalDetailsForm
+          setValue={setValue}
+          gender={gender}
+          firstName={firstName}
+          lastName={lastName}
+          birthdate={birthdate}
+          validFirstName={validFirstName}
+          validLastName={validLastName}
+          setErrorMessage={setErrorMessage}
+          phone={phone}
+          taxId={taxId}
+          validPhone={validPhone}
+          validTaxId={validTaxId}
+        />
+      )
     case 1:
-      return <PrimaryAddressForm 
-        setValue={setValue}
-        validAddress1={validAddress1}
-        validCity={validCity}
-        validPostalCode={validPostalCode}
-        address1={address1}
-        address2={address2}
-        city={city}
-        postalCode={postalCode}
-        country={country}
-        state={state}
-        countries={countries}
-        states={states}
-        setErrorMessage={setErrorMessage}
-        countries={countries}
-      />
+      return (
+        <PrimaryAddressForm
+          setValue={setValue}
+          validAddress1={validAddress1}
+          validCity={validCity}
+          validPostalCode={validPostalCode}
+          address1={address1}
+          address2={address2}
+          city={city}
+          postalCode={postalCode}
+          country={country}
+          state={state}
+          countries={countries}
+          states={states}
+          setErrorMessage={setErrorMessage}
+          countries={countries}
+        />
+      )
     case 2:
-      return <PhotoIDsForm 
-        documents0={documents0}
-        documents1={documents1}
-        documents2={documents2}
-        setValue={setValue}
-      />
+      return (
+        <PhotoIDsForm
+          documents0={documents0}
+          documents1={documents1}
+          documents2={documents2}
+          setValue={setValue}
+        />
+      )
     default:
       throw new Error("Unknown step")
   }
 }
 
-export default function KYCForm(
-  { phone,
-    taxId,
-    validPhone,
-    validTaxId,
-    birthdate,
-    gender,
-    address1,
-    address2,
-    city,
-    postalCode,
-    country,
-    state,
-    countries,
-    states,
-    documents0,
-    documents1,
-    documents2,
-    setValue,
-    updateKYC,
-    firstName,
-    lastName,
-    validFirstName,
-    validLastName,
-    isValidPersonalDetails,
-    validAddress1,
-    validCity,
-    validPostalCode,
-    isValidAddress,
-    setErrorMessage,
-    activeStep,
-    setActiveStep
-  }
-) {
+export default function KYCForm({
+  phone,
+  taxId,
+  validPhone,
+  validTaxId,
+  birthdate,
+  gender,
+  address1,
+  address2,
+  city,
+  postalCode,
+  country,
+  state,
+  countries,
+  states,
+  documents0,
+  documents1,
+  documents2,
+  setValue,
+  updateKYC,
+  firstName,
+  lastName,
+  validFirstName,
+  validLastName,
+  isValidPersonalDetails,
+  validAddress1,
+  validCity,
+  validPostalCode,
+  isValidAddress,
+  setErrorMessage,
+  activeStep,
+  setActiveStep,
+  updateKYCPhotoDocuments
+}) {
   const classes = useStyles()
   const [currentStepDisabled, setCurrentStepDisabled] = React.useState(false)
 
   const handleNext = () => {
     setActiveStep(activeStep + 1)
-    updateKYC(
-      () => null,
-      ex => {
-        setErrorMessage(ex)
-      })
+    if (activeStep === steps.length - 1) {
+      updateKYCPhotoDocuments()
+    } else {
+      updateKYC(
+        () => null,
+        ex => {
+          setErrorMessage(ex)
+        }
+      )
+    }
   }
 
   const handleBack = () => {
     setActiveStep(activeStep - 1)
   }
 
-  const checkActiveStep = (step) => {
+  const checkActiveStep = step => {
     switch (step) {
       case 0:
         return setCurrentStepDisabled(!isValidPersonalDetails)
       case 1:
         return setCurrentStepDisabled(!isValidAddress)
       case 2:
-        return <PhotoIDsForm />
+        return setCurrentStepDisabled(false)
       default:
-        // Todo - I did not need to comment this out before..., not sure why I have to now
-        // throw new Error("Unknown step")
+      // Todo - I did not need to comment this out before..., not sure why I have to now
+      // throw new Error("Unknown step")
     }
   }
 
@@ -252,65 +263,64 @@ export default function KYCForm(
                     component={ButtonLink}
                     href={"/portfolio"}
                     className={classes.finalButton}
-                  //put on click handler to sumbit info here
+                    //put on click handler to sumbit info here
                   >
                     Go To Your Portfolio
                   </Button>
                 </div>
               </>
             ) : (
-                <>
-                  {getStepContent(activeStep,
-                    {
-                      phone,
-                      taxId,
-                      validPhone,
-                      validTaxId,
-                      birthdate,
-                      gender,
-                      address1,
-                      address2,
-                      city,
-                      postalCode,
-                      country,
-                      state,
-                      countries,
-                      states,
-                      documents0,
-                      documents1,
-                      documents2,
-                      setValue,
-                      updateKYC,
-                      firstName,
-                      lastName,
-                      setErrorMessage,
-                      validFirstName,
-                      validLastName,
-                      validAddress1,
-                      validCity,
-                      validPostalCode,
-                      isValidAddress,
-                      setErrorMessage,
-                    }
-                  )}
-                  <div className={classes.buttons}>
-                    {activeStep !== 0 && (
-                      <Button onClick={handleBack} className={classes.button}>
-                        Back
-                      </Button>
-                    )}
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                      className={classes.button}
-                      disabled={currentStepDisabled}
-                    >
-                    {activeStep === steps.length - 1 ? "Continue" : "Next"}
+              <>
+                {getStepContent(activeStep, {
+                  phone,
+                  taxId,
+                  validPhone,
+                  validTaxId,
+                  birthdate,
+                  gender,
+                  address1,
+                  address2,
+                  city,
+                  postalCode,
+                  country,
+                  state,
+                  countries,
+                  states,
+                  documents0,
+                  documents1,
+                  documents2,
+                  setValue,
+                  updateKYC,
+                  firstName,
+                  lastName,
+                  setErrorMessage,
+                  validFirstName,
+                  validLastName,
+                  validAddress1,
+                  validCity,
+                  validPostalCode,
+                  isValidAddress,
+                  setErrorMessage,
+                  updateKYCPhotoDocuments
+                })}
+                <div className={classes.buttons}>
+                  {activeStep !== 0 && (
+                    <Button onClick={handleBack} className={classes.button}>
+                      Back
                     </Button>
-                  </div>
-                </>
-              )}
+                  )}
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                    className={classes.button}
+                    disabled={currentStepDisabled}
+                  >
+                    {activeStep === steps.length - 1 ? "Continue" : "Next"}
+                  </Button>
+                </div>
+              </>
+            )}
           </>
         </Paper>
       </main>
