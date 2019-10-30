@@ -2,6 +2,8 @@ import React from "react"
 import { inject, observer } from "mobx-react"
 import { withStyles } from '@material-ui/core/styles'
 
+import { ContentfulItems } from "../components/app"
+
 import { container } from "../components/esxStyles.js"
 
 const styles = theme => ({
@@ -12,29 +14,6 @@ const styles = theme => ({
     justifyContent: "center"
   },
 })
-
-const ContentSections = (props) => {
-  const { items, classes } = props;
-  return (
-    <>
-      {
-        items && Array.isArray(items) &&
-        items.map(
-          contentFulEntry => {
-            const item = contentFulEntry.fields
-            console.log('item', item)
-            return (
-              <section className={classes.contentSection} key={item.key}>
-                <h3 className={classes.contentSectionTitle}>{item.title}</h3>
-                <p className={classes.contentSectionBody}>{item.body}</p>
-              </section>
-            )
-          }
-        )
-      }
-    </>
-  )
-}
 
 @inject("store")
 @observer
@@ -57,7 +36,7 @@ class InvestorFAQ extends React.Component {
     return (
       <div className={classes.container}>
         <h1 className={classes.heading}>Some of our investors have these common questions.</h1>
-        <ContentSections classes={classes} items={contentfulStore.byTag('investor')} />
+        <ContentfulItems classes={classes} items={contentfulStore.byTag('investor')} />
       </div>
     )
   }
