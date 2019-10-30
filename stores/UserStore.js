@@ -119,6 +119,7 @@ export default class UserStore {
    */
   @action async loadSession() {
     this.isLoading = true
+    console.log(window.api=this.api.client)
     if (this.api.client.getCustomerToken) {
       this.token = this.api.client.getCustomerToken()
     }
@@ -330,6 +331,8 @@ export default class UserStore {
       const i = this.email + this.password
 
       this.identity = ethers.utils.sha256(ethers.utils.toUtf8Bytes(i))
+
+      this.api.client.setCustomerToken(res.token)
 
       // this.setToken(res.token)
       this.loadSession()
