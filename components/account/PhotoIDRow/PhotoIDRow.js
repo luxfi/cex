@@ -27,7 +27,11 @@ const MyDropzone = ({ setValue, name, eventArray }) => {
     accept: "image/*",
     onDrop: acceptedFiles => {
       const firstFile = acceptedFiles[0]
-      setValue(name, URL.createObjectURL(firstFile))
+      const reader = new FileReader()
+      reader.onload = event => {
+        setValue(name, event.target.result)
+      }
+      reader.readAsDataURL(firstFile)
     }
   })
 
