@@ -39,7 +39,7 @@ export default function initializeStore(initialData = _initialData) {
       userStore: new UserStore(initialData.userStore, api),
       userPortfolio: new UserPortfolio(initialData.userPortfolio, api),
       uiStore: new UIStore(initialData.uiStore, api),
-      contentfulStore: new ContentfulStore(isServer)
+      contentfulStore: new ContentfulStore()
     }
   } else if (store === null) {
     // Client stuff
@@ -50,7 +50,7 @@ export default function initializeStore(initialData = _initialData) {
       userStore: new UserStore(initialData.userStore, api),
       userPortfolio: new UserPortfolio(initialData.userPortfolio, api),
       uiStore: new UIStore(initialData.uiStore, api),
-      contentfulStore: new ContentfulStore(isServer)
+      contentfulStore: new ContentfulStore()
     }
   }
   // Otherwise we don't need to re-initialize the store

@@ -15,10 +15,6 @@ export default class ContentfulStore {
   @observable items = []
   @observable mappedByTags = new Map()
 
-  constructor(isSSR) {
-    // this.getContent(isSSR)
-  }
-
   @action getContent(isSSR) {
     const client = new ContentfulClient({
       ...CONTENTFUL_API,

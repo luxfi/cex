@@ -1,6 +1,5 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
-import { withRouter } from "next/router"
 import { withStyles } from '@material-ui/core/styles'
 
 import { container } from "../components/esxStyles.js"
@@ -46,22 +45,8 @@ class InvestorFAQ extends React.Component {
     return { ...mobxStore }
   }
 
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      items: []
-    }
-  }
-
   componentDidMount() {
     const { store } = this.props
-    // this.setState(
-    //   {
-    //     items: store.contentfulStore.byTag('project')
-
-    //   }
-    // )
     store.contentfulStore.getContent(false)
   }
 
@@ -69,14 +54,13 @@ class InvestorFAQ extends React.Component {
 
     const { classes, store } = this.props
     const { contentfulStore } = store
-    //const investorItems = store.contentfulStore.byTag('project')
-    console.log('do we have items?', contentfulStore)
     return (
       <div className={classes.container}>
-        <ContentSections classes={classes} items={contentfulStore.items} />
+        <h1 className={classes.heading}>Some of our investors have these common questions.</h1>
+        <ContentSections classes={classes} items={contentfulStore.byTag('investor')} />
       </div>
     )
   }
 } 
 
-export default withRouter(withStyles(styles)(InvestorFAQ))
+export default withStyles(styles)(InvestorFAQ)
