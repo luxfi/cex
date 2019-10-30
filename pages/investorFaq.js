@@ -15,7 +15,7 @@ const styles = theme => ({
 })
 
 const ContentSections = (props) => {
-  const {items, classes} = props;
+  const { items, classes } = props;
   return (
     <>
       {
@@ -23,6 +23,7 @@ const ContentSections = (props) => {
         items.map(
           contentFulEntry => {
             const item = contentFulEntry.fields
+            console.log('item', item)
             return (
               <section className={classes.contentSection} key={item.key}>
                 <h3 className={classes.contentSectionTitle}>{item.title}</h3>
@@ -55,22 +56,24 @@ class InvestorFAQ extends React.Component {
 
   componentDidMount() {
     const { store } = this.props
-    this.setState(
-      {
-        items: store.contentfulStore.byTag('project')
+    // this.setState(
+    //   {
+    //     items: store.contentfulStore.byTag('project')
 
-      }
-    )
+    //   }
+    // )
+    store.contentfulStore.getContent(false)
   }
 
   render() {
 
-    const { classes} = this.props
+    const { classes, store } = this.props
+    const { contentfulStore } = store
     //const investorItems = store.contentfulStore.byTag('project')
-
+    console.log('do we have items?', contentfulStore)
     return (
       <div className={classes.container}>
-        <ContentSections classes={classes} items={this.state.items} />
+        <ContentSections classes={classes} items={contentfulStore.items} />
       </div>
     )
   }
