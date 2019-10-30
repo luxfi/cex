@@ -1,4 +1,4 @@
-import React, { useCallback, createRef } from "react"
+import React, { useCallback, createRef, useState, useEffect } from "react"
 import Typography from "@material-ui/core/Typography"
 import List from "@material-ui/core/List"
 import { CustomModal } from "../../app"
@@ -7,14 +7,25 @@ import Camera, { FACING_MODES, IMAGE_TYPES } from "react-html5-camera-photo"
 import { PhotoIDRow } from "../"
 
 const MyModal = ({ handleCloseCam, openCam, onTakePhoto }) => {
-  return (
-    <CustomModal handleClose={handleCloseCam} open={openCam}>
+  const [isRemoveCamera, setIsRemoveCamera] = useState(false)
+
+  const handleClose = () => {
+    setIsRemoveCamera(true)
+    handleCloseCam()
+  }
+
+  useEffect(() => {
+    setIsRemoveCamera(false)
+  }, [openCam])
+
+  return isRemoveCamera ? null : (
+    <CustomModal handleClose={handleClose} open={openCam}>
       <Camera
         idealFacingMode={FACING_MODES.USER}
         onTakePhoto={dataUri => {
           onTakePhoto(dataUri)
         }}
-        onTakePhotoAnimationDone={handleCloseCam}
+        onTakePhotoAnimationDone={handleClose}
         onCameraError={error => {
           console.log(error)
         }}
