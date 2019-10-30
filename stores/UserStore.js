@@ -13,6 +13,7 @@ import isPhone from "../src/control-middlewares/isPhone"
 import isRequired from "../src/control-middlewares/isRequired"
 
 const base64MimeType = encoded => {
+
   var result = null
 
   if (typeof encoded !== "string") {
@@ -283,7 +284,6 @@ export default class UserStore {
   @action async updateKYCPhoto(data, name, onSuccess, onError) {
     // ** ONLY CALL WHEN @computed isValidSignUp IS TRUE **
     this.updating = true
-
     const mimeType = base64MimeType(data)
     const ext = mimeType.split("/")[1]
     const filename = `${this.id}-${name}.${ext}`
