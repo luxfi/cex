@@ -420,7 +420,6 @@ export default class UserStore {
       state: this.state,
       country: this.country
     }
-
     const kycObj = {
       address: addressObj,
       taxId: this.taxId,
@@ -428,7 +427,6 @@ export default class UserStore {
       birthdate: this.birthdate,
       gender: this.gender,
     }
-    debugger
     try {
       const newAcc = Object.assign(this.account, {
         kyc: kycObj,
