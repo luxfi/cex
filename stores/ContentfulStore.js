@@ -1,4 +1,4 @@
-//import { action, observable, computed } from "mobx"
+import { action, observable, computed } from "mobx"
 
 import { ContentfulClient, ContentfulCache} from 'react-contentful'
 
@@ -12,14 +12,14 @@ const CONTENT_TYPE = 'faq' // couldn't change once it had been created
 
 export default class ContentfulStore {
 
-  items = []
-  mappedByTags = new Map()
+  @observable items = []
+  @observable mappedByTags = new Map()
 
   constructor(isSSR) {
-    this.getContent(isSSR)
+    // this.getContent(isSSR)
   }
 
-  getContent(isSSR) {
+  @action getContent(isSSR) {
     const client = new ContentfulClient({
       ...CONTENTFUL_API,
       cache: new ContentfulCache(),
