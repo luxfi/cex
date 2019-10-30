@@ -6,7 +6,7 @@ import { inject, observer } from "mobx-react"
 @observer
 class SignUp extends React.Component {
   render() {
-    const { userStore } = this.props.store
+    const { userStore, uiStore } = this.props.store
     const {
       email,
       password,
@@ -21,8 +21,8 @@ class SignUp extends React.Component {
       isValidSignUp
     } = userStore
     const setErrorMessage = message => {
-      store.uiStore.errorMessage = message
-      store.uiStore.snackBarOpen = true
+      uiStore.errorMessage = message
+      uiStore.snackBarOpen = true
     }
     return (
       <SignUpForm

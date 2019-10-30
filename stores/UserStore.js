@@ -427,8 +427,8 @@ export default class UserStore {
       phone: this.phone,
       birthdate: this.birthdate,
       gender: this.gender,
-      documents: this.documents
     }
+    debugger
     try {
       const newAcc = Object.assign(this.account, {
         kyc: kycObj,
