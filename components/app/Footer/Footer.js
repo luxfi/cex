@@ -3,7 +3,16 @@ import { inject, observer } from "mobx-react"
 
 //font awesome share icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faFacebook, faTwitter, faPinterest, faInstagram, faYoutube, faMedium } from "@fortawesome/free-brands-svg-icons"
+
+import { 
+  faFacebook, 
+  faTwitter, 
+  faPinterest, 
+  faInstagram, 
+  faYoutube, 
+  faMedium,
+  faReddit 
+} from "@fortawesome/free-brands-svg-icons"
 
 // material components
 import {
@@ -98,7 +107,7 @@ const Copyright = () => {
 const footers = [
   {
     title: 'Company',
-    links: ['About', 'Careers', 'Press', 'Blog'],
+    links: ['About', 'Careers', 'Press', { title: 'Blog', link: "https://medium.com/entertainment-stock-x" }],
   },
   {
     title: 'Projects',
@@ -179,10 +188,16 @@ const FooterTopRow = ({ classes }) => (
           <FontAwesomeIcon icon={faYoutube} size="1x" />
         </IconButton>
         <IconButton
-          href="https://www.medium.com/"
+          href="https://medium.com/entertainment-stock-x"
           target="_blank"
         >
           <FontAwesomeIcon icon={faMedium} size="1x" />
+        </IconButton>
+        <IconButton
+          href="https://www.reddit.com/r/EntertainmentStockX/"
+          target="_blank"
+        >
+          <FontAwesomeIcon icon={faReddit} size="1x" />
         </IconButton>
       </Grid>
     </Grid>
@@ -209,6 +224,7 @@ const FooterMiddleRow = ({ classes, openModal }) => (
                     href={link}
                     variant="subtitle1"
                     color="textSecondary"
+                    target={(activeLink) ? "_blank" : "_self"}
                     onClick={(activeLink) ? null : () => { openModal(title) }}
                   >
                     {title}
