@@ -18,6 +18,8 @@ import RewardsView from "../components/portfolio/RewardsView/RewardsView"
 import NewsFeedView from "../components/portfolio/NewsFeedView"
 import ProTraderCTA from "../components/portfolio/ProTraderCTA/ProTraderCTA"
 
+const isServer = typeof window === "undefined"
+
 @inject("store")
 @observer
 class Portfolio extends React.Component {
@@ -25,8 +27,29 @@ class Portfolio extends React.Component {
     tabIdx: 0
   }
 
+  constructor(props) {
+    super(props)
+
+    if (!isServer) {
+      let tabIdx = localStorage.getItem("portfolio-index")
+
+      if (tabIdx) {
+        tabIdx = JSON.parse(tabIdx)
+      } else {
+        tabIdx = 0
+      }
+
+      this.state = {
+        tabIdx: tabIdx,
+      }
+    }
+  }
+
   setTab = (evt, val) => {
     this.setState({ tabIdx: val })
+    if (!isServer) {
+      localStorage.setItem("portfolio-index", JSON.stringify(val))
+    }
   }
 
   componentDidMount () {

@@ -70,7 +70,7 @@ export default class UserPortfolio {
       const _watchlist = localStorage.getItem("watchlist")
       if (_watchlist !== null) {
         this.watchlist = JSON.parse(_watchlist)
-      } 
+      }
       onSuccess && onSuccess()
     } catch (ex) {
       console.log("Error logging in", ex)
@@ -178,7 +178,7 @@ export default class UserPortfolio {
       this.investments = JSON.parse(_investments)
     }
 
-    const holdingIndex = _.findIndex(this.investments, { ticker: order.ticker })
+    let holdingIndex = _.findIndex(this.investments, { ticker: order.ticker })
 
     if (orderType === "bid") {
       // Add the order to the user portfolio, no need to check anything
@@ -188,6 +188,7 @@ export default class UserPortfolio {
         this.investments[holdingIndex].price = order.price
       } else {
         this.investments.push(order)
+        holdingIndex = 0
       }
     } else {
       // Make sure the user owns enough shares to sell?
@@ -205,6 +206,16 @@ export default class UserPortfolio {
         return false
       }
     }
+
+    // Add transaction array
+    if (!this.investments[holdingIndex].transactions) {
+      this.investments[holdingIndex].transactions = []
+    }
+
+    // Add order to transaction array
+    this.investments[holdingIndex].transactions.push(Object.assign({
+      type: orderType,
+    }, order))
 
     this.updateHoldings()
     localStorage.setItem("investments", JSON.stringify(toJS(this.investments)))

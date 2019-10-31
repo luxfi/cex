@@ -34,6 +34,7 @@
     "hdkey": "1.1.1",
     "limit-order-book": "^0.3.0",
     "lodash": "4.17.15",
+    "material-table": "1.53.0",
     "mobx": "^5.14.0",
     "mobx-react": "^6.1.4",
     "moment": "^2.24.0",
