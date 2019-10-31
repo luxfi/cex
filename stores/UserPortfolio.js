@@ -1,6 +1,7 @@
 // Generic Libraries
 import { action, observable, computed, toJS } from "mobx"
 import _ from "lodash"
+import moment from 'moment-timezone'
 
 import { padDollarAmount } from "../components/utils/generic"
 /**
@@ -179,6 +180,7 @@ export default class UserPortfolio {
     }
 
     let holdingIndex = _.findIndex(this.investments, { ticker: order.ticker })
+    console.log('what', holdingIndex, this.investments, order, orderType)
 
     if (orderType === "bid") {
       // Add the order to the user portfolio, no need to check anything
@@ -187,8 +189,8 @@ export default class UserPortfolio {
         this.investments[holdingIndex].amount += order.amount
         this.investments[holdingIndex].price = order.price
       } else {
+        holdingIndex = this.investments.length
         this.investments.push(order)
-        holdingIndex = 0
       }
     } else {
       // Make sure the user owns enough shares to sell?
@@ -207,15 +209,19 @@ export default class UserPortfolio {
       }
     }
 
+    console.log('a', holdingIndex)
     // Add transaction array
     if (!this.investments[holdingIndex].transactions) {
       this.investments[holdingIndex].transactions = []
     }
 
     // Add order to transaction array
-    this.investments[holdingIndex].transactions.push(Object.assign({
+    this.investments[holdingIndex].transactions.unshift(Object.assign({
       type: orderType,
+      date: moment().format('LLL'),
     }, order))
+
+    console.log('b', this.investments)
 
     this.updateHoldings()
     localStorage.setItem("investments", JSON.stringify(toJS(this.investments)))

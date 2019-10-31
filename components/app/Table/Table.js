@@ -39,7 +39,7 @@ const icons = {
 
 class Table extends Component {
   render() {
-    return pug `MaterialTable(icons=icons, ...this.props)`
+    return <MaterialTable icons={icons} {...this.props} />
   }
 }
 
