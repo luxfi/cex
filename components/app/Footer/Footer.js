@@ -26,6 +26,12 @@ import {
   Box,
 } from "@material-ui/core"
 
+
+const EXTERNAL_LINKS = {
+  medium: "https://medium.com/entertainment-stock-x",
+  reddit: "https://www.reddit.com/r/EntertainmentStockX/"
+}
+
 // styles
 import { withStyles } from "@material-ui/core/styles"
 
@@ -107,7 +113,7 @@ const Copyright = () => {
 const footers = [
   {
     title: 'Company',
-    links: ['About', 'Careers', 'Press', { title: 'Blog', link: "https://medium.com/entertainment-stock-x" }],
+    links: ['About', 'Careers', 'Press', { title: 'Blog', link: EXTERNAL_LINKS.medium }],
   },
   {
     title: 'Projects',
@@ -188,13 +194,13 @@ const FooterTopRow = ({ classes }) => (
           <FontAwesomeIcon icon={faYoutube} size="1x" />
         </IconButton>
         <IconButton
-          href="https://medium.com/entertainment-stock-x"
+          href={EXTERNAL_LINKS.medium}
           target="_blank"
         >
           <FontAwesomeIcon icon={faMedium} size="1x" />
         </IconButton>
         <IconButton
-          href="https://www.reddit.com/r/EntertainmentStockX/"
+          href={EXTERNAL_LINKS.reddit}
           target="_blank"
         >
           <FontAwesomeIcon icon={faReddit} size="1x" />
