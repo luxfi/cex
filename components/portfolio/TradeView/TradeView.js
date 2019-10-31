@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react"
 
-import { TrendingInvestments, TopInvestmentPicks} from "../../app"
+import { ActivePositions, TopInvestmentPicks} from "../../app"
 
 const TradeView = props => {
   const { tabIdx, index, investments, findMovieByTicker, store } = props
@@ -12,7 +12,7 @@ const TradeView = props => {
   return (
     <div>
       <TopInvestmentPicks store={store} />
-      <TrendingInvestments investments={investments} findMovieByTicker={findMovieByTicker} />
+      <ActivePositions investments={investments} findMovieByTicker={findMovieByTicker} />
     </div>
   )
 }

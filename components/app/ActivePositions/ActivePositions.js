@@ -60,7 +60,7 @@ export default props => {
   return (
     <>
       <h2 className={classes.title} style={{ textAlign: "left" }}>
-        Your Investments
+        Active Positions
       </h2>
       <List>
         <ListItem>
