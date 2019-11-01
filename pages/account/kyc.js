@@ -7,10 +7,15 @@ import Container from "@material-ui/core/Container"
 import Link from "@material-ui/core/Link"
 
 import { KYCForm } from "../../components/account"
+import { googlePageView } from '../../components/utils/generic'
 
 @inject("store")
 @observer
 class KYC extends React.Component {
+  componentDidMount() {
+    googlePageView()
+  }
+
   render() {
     const { store } = this.props
     window.store = store

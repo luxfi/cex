@@ -17,7 +17,8 @@ const PortfolioView = (props) => {
     benefitsMonthly,
     topCategories,
     watchlist,
-    removeFromWatchlist
+    removeFromWatchlist,
+    topChips
   } = props
 
   // Hide the tab
@@ -33,6 +34,7 @@ const PortfolioView = (props) => {
         benefits={benefits}
         benefitsMonthly={benefitsMonthly}
         topCategories={topCategories}
+        topChips={topChips}
       />
       <WatchlistSection
         watchlist={watchlist}
