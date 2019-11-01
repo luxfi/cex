@@ -94,7 +94,7 @@ export default props => {
         <h2 className={classes.title} style={{ textAlign: "left" }}>
           Top Picks for You
         </h2>
-        <Grid container>
+        <Grid container spacing={3}>
           {investorTopPicks.map((d, i) => (
             <Grid item key={`picks_${i}`} xs={12} sm={12} md={4}>
               <Card className={classes.investmentCard}>

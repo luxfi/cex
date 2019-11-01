@@ -50,7 +50,7 @@ const styles = (theme => ({
 class CustomModal extends React.Component {
 
   render() {
-    const { open, handleClose, title, body, classes } = this.props
+    const { open, handleClose, title, body, classes, children} = this.props
     return (
       <div>
         <Modal
@@ -66,17 +66,14 @@ class CustomModal extends React.Component {
           }}
         >
           <Fade in={open}>
+            {children ? children : 
             <div className={classes.paper}>
               <div className={classes.modalHeader}>
                 <div className={classes.modalTitle}>{title}</div>
               </div>
               <div className={classes.modalBody}>{body ? body : "Put " + title + " information here"}</div>
-              {/* {children} */}
-              {/* <h2 id="transition-modal-title">Transition modal</h2>
-            <p id="transition-modal-description">
-              react-transiton-group animates me.
-            </p> */}
             </div>
+            }
           </Fade>
         </Modal>
       </div>
