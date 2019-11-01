@@ -1,0 +1,6 @@
+// allow Experimental Decorators for VSCode
+{
+  "compilerOptions": {
+    "experimentalDecorators": true
+  }
+}
