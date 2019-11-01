@@ -1,6 +1,6 @@
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
-import TextField from "@material-ui/core/TextField"
+// import TextField from "@material-ui/core/TextField"
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -8,28 +8,41 @@ const useStyles = makeStyles(theme => ({
     flexWrap: "wrap"
   },
   textField: {
-    // marginLeft: theme.spacing(1),
-    // marginRight: theme.spacing(1),
-    // width: 200
     width: "100%"
   }
 }))
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
+import MomentUtils from '@date-io/moment'
+import moment from 'moment/moment.js'
 
-export default function DatePickers() {
+const BirthdatePicker = ({ setValue, birthdate }) => {
   const classes = useStyles()
-
+  const EighteenYearsAgo = moment().subtract(18, 'years')
+  const AWhileAgo = moment().subtract(120, 'years')
+  // setValue("birthdate", EighteenYearsAgo)
+  // initialize store with max valid birthdate
   return (
-    <form className={classes.container} noValidate>
-      <TextField
-        id="date"
-        label="Birthday"
-        type="date"
-        defaultValue="2017-05-24"
-        className={classes.textField}
-        InputLabelProps={{
-          shrink: true
-        }}
-      />
-    </form>
+    <MuiPickersUtilsProvider utils={MomentUtils}>
+      <KeyboardDatePicker
+        clearable 
+          value={birthdate}
+          onChange={date => setValue("birthdate", date.format())}
+          className={classes.textField}
+          disableFuture
+          openTo="month"
+          format="MM/DD/YYYY"
+          label="Date of birth"
+          views={["month", "date", "year"]}
+          maxDate={EighteenYearsAgo}
+          maxDateMessage="Must be 18 years or older"
+          initialFocusedDate={EighteenYearsAgo}
+          minDate={AWhileAgo}
+          minDateMessage="Please choose an appropriate date of birth"
+          // onError="TODO"
+        />
+     
+    </MuiPickersUtilsProvider>
   )
 }
+
+export default BirthdatePicker
