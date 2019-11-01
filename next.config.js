@@ -78,6 +78,8 @@ module.exports = withCSS(
           '/account': { page: '/account' },
           '/account/kyc': { page: '/account/kyc' },
           '/investorFaq': { page: '/investorFaq' },
+          '/projectFaq': { page: '/projectFaq' },
+          '/risks': { page: '/risks' },
           '/contact': { page: '/contact' }
         })
       }

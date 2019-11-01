@@ -1,6 +1,6 @@
 import { action, observable, computed } from "mobx"
 
-import { ContentfulClient, ContentfulCache, withContentful } from 'react-contentful'
+import { ContentfulClient, ContentfulCache} from 'react-contentful'
 
 const CONTENTFUL_API = {
   accessToken: '1ulGLoKXVO2wTcEODgrGo0W-GzCk8m8ZZCZ_GGfLP9Y',
@@ -13,12 +13,9 @@ const CONTENT_TYPE = 'faq' // couldn't change once it had been created
 export default class ContentfulStore {
 
   @observable items = []
+  @observable mappedByTags = new Map()
 
-  constructor(isSSR) {
-    this.getContent(isSSR)
-  }
-
-  getContent(isSSR) {
+  @action getContent(isSSR) {
     const client = new ContentfulClient({
       ...CONTENTFUL_API,
       cache: new ContentfulCache(),
@@ -31,9 +28,34 @@ export default class ContentfulStore {
     })
     .then((res) => {
       this.items = res.items
+      this.mappedByTags = sortByTags(this.items)
     })
     .catch (console.error)
   }
 
+  byTag(tag) {
+    let result = this.mappedByTags.get(tag)
+    return (result) ? result : []
+  }
 }
 
+
+const itemTags = (item) => {
+  return (item.fields.tags) ? item.fields.tags : []
+}
+
+const sortByTags = (items) => {
+  const mapByTags = new Map()
+  items.forEach(item => {
+    const tags = itemTags(item)
+    tags.forEach((tag) => {
+      let taggedItems = mapByTags.get(tag)
+      if (!taggedItems) {
+        taggedItems = []
+        mapByTags.set(tag, taggedItems)
+      }
+      taggedItems.push(item)
+    })
+  })
+  return mapByTags
+}

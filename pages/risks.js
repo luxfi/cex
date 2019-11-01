@@ -17,7 +17,7 @@ const styles = theme => ({
 
 @inject("store")
 @observer
-class InvestorFAQ extends React.Component {
+class Risks extends React.Component {
 
 
   static async getInitialProps({ mobxStore }) {
@@ -35,11 +35,11 @@ class InvestorFAQ extends React.Component {
     const { contentfulStore } = store
     return (
       <div className={classes.container}>
-        <h1 className={classes.heading}>Some of our investors have these common questions.</h1>
-        <ContentfulItems classes={classes} items={contentfulStore.byTag('investor')} />
+        <h1 className={classes.heading}>Some things to consider regarding the risks of investing.</h1>
+        <ContentfulItems classes={classes} items={contentfulStore.byTag('risks')} />
       </div>
     )
   }
-} 
+}
 
-export default withStyles(styles)(InvestorFAQ)
+export default withStyles(styles)(Risks)
