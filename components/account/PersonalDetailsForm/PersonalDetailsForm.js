@@ -5,46 +5,57 @@ import TextField from "@material-ui/core/TextField"
 import InputLabel from "@material-ui/core/InputLabel"
 import MenuItem from "@material-ui/core/MenuItem"
 import Select from "@material-ui/core/Select"
-import { makeStyles } from "@material-ui/core/styles"
+import { withStyles } from "@material-ui/core/styles"
 import FormControl from "@material-ui/core/FormControl"
 import { BirthdayPicker } from "../../app"
+import { observer } from 'mobx-react'
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     display: "flex",
     flexWrap: "wrap"
   },
   formControl: {
-    // margin: theme.spacing(1),
-    // minWidth: 120,
     width: "100%"
   },
   selectEmpty: {
     marginTop: theme.spacing(2)
   }
-}))
+})
 
-export default function PersonalDetails() {
-  const classes = useStyles()
-  const [values, setValues] = React.useState({
-    gender: ""
-  })
-
-  // const inputLabel = React.useRef(null);
-  // const [labelWidth, setLabelWidth] = React.useState(0);
-  // React.useEffect(() => {
-  //   setLabelWidth(inputLabel.current.offsetWidth);
-  // }, [])
-
-  function handleChange(event) {
-    setValues(oldValues => ({
-      ...oldValues,
-      [event.target.name]: event.target.value
-    }))
+@observer
+class PersonalDetails extends React.Component {
+  constructor(props) {
+    super(props)
+    this.updateProperty = this.updateProperty.bind(this)
+    this.onChange = this.onChange.bind(this)
   }
 
-  return (
-    <>
+  updateProperty(key, value) {
+    this.props.person[key] = value
+  }
+
+  onChange(event) {
+    this.updateProperty(event.target.name, event.target.value)
+  }
+
+  render() {
+    const {
+      classes,
+      firstName,
+      lastName,
+      phone,
+      taxId,
+      birthdate,
+      gender,
+      setValue,
+      validLastName,
+      validFirstName,
+      validPhone,
+      validTaxId
+    } = this.props
+    return (
+      <>
       <Typography variant="h6" gutterBottom>
         Personal Details
       </Typography>
@@ -54,9 +65,14 @@ export default function PersonalDetails() {
             required
             id="firstName"
             name="firstName"
+            type="firstName"
             label="First name"
             fullWidth
             autoComplete="fname"
+            error={firstName.length >= 2 && !validFirstName}
+            helperText={firstName.length >= 2 && !validFirstName && "Please enter valid first name"}
+            value={firstName}
+            onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -65,8 +81,13 @@ export default function PersonalDetails() {
             id="lastName"
             name="lastName"
             label="Last name"
+            type="lastName"
             fullWidth
             autoComplete="lname"
+            error={lastName.length >= 2 && !validLastName}
+            helperText={lastName.length >= 2 && !validLastName && "Please enter valid last name"}
+            value={lastName}
+            onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -77,35 +98,35 @@ export default function PersonalDetails() {
             label="Phone"
             fullWidth
             autoComplete="phone"
+            error={phone.length >= 2 && !validPhone}
+            helperText={phone.length >= 2 && !validPhone && "Please enter a 10 digit phone number"}
+            value={phone}
+            onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="ssn"
-            name="ssn"
+            id="taxId"
+            name="taxId"
             label="SSN"
             fullWidth
-            autoComplete="ssn"
+            autoComplete="taxId"
+            error={taxId.length >= 2 && !validTaxId}
+            helperText={taxId.length >= 2 && !validTaxId && `Please enter valid last ssn "nn-nn-nnnn"`}
+            value={taxId}
+            onChange={evt => setValue(evt.target.name, evt.target.value)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          {/* <TextField
-            required
-            id="birthday"
-            name="birthday"
-            label="Birthday"
-            fullWidth
-            autoComplete="bday"
-          /> */}
-          <BirthdayPicker />
+          <BirthdayPicker setValue={setValue} birthdate={birthdate}/>
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="gender">Gender</InputLabel>
             <Select
-              value={values.gender}
-              onChange={handleChange}
+              value={gender}
+              onChange={evt => setValue(evt.target.name, evt.target.value)}
               inputProps={{
                 name: "gender",
                 id: "gender"
@@ -119,6 +140,9 @@ export default function PersonalDetails() {
           </FormControl>
         </Grid>
       </Grid>
-    </>
-  )
+  </>
+    )
+  }
 }
+
+export default withStyles(styles)(PersonalDetails)
