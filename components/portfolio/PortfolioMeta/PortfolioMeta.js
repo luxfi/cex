@@ -62,7 +62,7 @@ export default props => {
   // const imageClasses = classNames(classes.imgCardTop)
 
   return (
-    <Grid container>
+    <Grid container spacing={3}>
       <Grid item xs={12} md={8}>
         <Card className={classes.card}>
           <CardContent>

@@ -1,6 +1,7 @@
 // Generic Libraries
 import { action, observable, computed, toJS } from "mobx"
 import _ from "lodash"
+import moment from 'moment-timezone'
 
 import { padDollarAmount } from "../components/utils/generic"
 /**
@@ -70,7 +71,7 @@ export default class UserPortfolio {
       const _watchlist = localStorage.getItem("watchlist")
       if (_watchlist !== null) {
         this.watchlist = JSON.parse(_watchlist)
-      } 
+      }
       onSuccess && onSuccess()
     } catch (ex) {
       console.log("Error logging in", ex)
@@ -178,7 +179,8 @@ export default class UserPortfolio {
       this.investments = JSON.parse(_investments)
     }
 
-    const holdingIndex = _.findIndex(this.investments, { ticker: order.ticker })
+    let holdingIndex = _.findIndex(this.investments, { ticker: order.ticker })
+    console.log('what', holdingIndex, this.investments, order, orderType)
 
     if (orderType === "bid") {
       // Add the order to the user portfolio, no need to check anything
@@ -187,6 +189,7 @@ export default class UserPortfolio {
         this.investments[holdingIndex].amount += order.amount
         this.investments[holdingIndex].price = order.price
       } else {
+        holdingIndex = this.investments.length
         this.investments.push(order)
       }
     } else {
@@ -205,6 +208,20 @@ export default class UserPortfolio {
         return false
       }
     }
+
+    console.log('a', holdingIndex)
+    // Add transaction array
+    if (!this.investments[holdingIndex].transactions) {
+      this.investments[holdingIndex].transactions = []
+    }
+
+    // Add order to transaction array
+    this.investments[holdingIndex].transactions.unshift(Object.assign({
+      type: orderType,
+      date: moment().format('LLL'),
+    }, order))
+
+    console.log('b', this.investments)
 
     this.updateHoldings()
     localStorage.setItem("investments", JSON.stringify(toJS(this.investments)))
