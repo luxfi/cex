@@ -13,11 +13,17 @@ import Typography from "@material-ui/core/Typography"
 import { AddPaymentMethodForm } from "../../components/account"
 import { CustomLink } from '../../components/app'
 
+import { googlePageView } from '../../components/utils/generic'
+
 @inject("store")
 @observer
 class Account extends React.Component {
   static async getInitialProps({ mobxStore }) {
     return { ...mobxStore }
+  }
+
+  componentDidMount() {
+    googlePageView()
   }
 
   render() {

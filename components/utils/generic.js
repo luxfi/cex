@@ -1,3 +1,5 @@
+import ReactGA from 'react-ga'
+
 const padDollarAmount = (amount) => {
   let _amount = amount
   if (typeof _amount === 'number') _amount = _amount.toString()
@@ -14,4 +16,9 @@ const padDollarAmount = (amount) => {
   }
 }
 
-export { padDollarAmount }
+const googlePageView = () => {
+ ReactGA.pageview(window.location.pathname + window.location.search);
+ console.log('Page view',  window.location.pathname + window.location.search)
+}
+
+export { padDollarAmount, googlePageView }

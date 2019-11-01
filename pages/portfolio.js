@@ -17,6 +17,7 @@ import TradeView from "../components/portfolio/TradeView/TradeView"
 import RewardsView from "../components/portfolio/RewardsView/RewardsView"
 import NewsFeedView from "../components/portfolio/NewsFeedView"
 import ProTraderCTA from "../components/portfolio/ProTraderCTA/ProTraderCTA"
+import { googlePageView } from "../components/utils/generic.js"
 
 const isServer = typeof window === "undefined"
 
@@ -55,6 +56,7 @@ class Portfolio extends React.Component {
   componentDidMount () {
     this.props.store.userPortfolio.getInvestments()
     this.props.store.userPortfolio.getWatchlist()
+    googlePageView()
   }
 
   render() {
@@ -93,6 +95,7 @@ class Portfolio extends React.Component {
           rankPercent={fakeRankPercent}
           benefits={userPortfolio.benefits}
           benefitsMonthly={userPortfolio.benefitsThisMonth}
+          topChips={userPortfolio.topChips}
           topCategories={userPortfolio.topPortfolioCategories}
           watchlist={userPortfolio.userTopWatchlist}
           removeFromWatchlist={removeFromWatchlist}
