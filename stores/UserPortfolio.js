@@ -249,7 +249,17 @@ export default class UserPortfolio {
   }
 
   @computed get topInvestments() {
-    return _.sortBy(this.investments, i => i.amount * i.price).reverse()
+    return _.sortBy(this.investments, i => i.amount * Number.parseFloat(i.price)).reverse()
+  }
+
+  @computed get topChips() {
+    const sorted = _.sortBy(this.investments, i => i.amount * Number.parseFloat(i.price)).reverse().slice(0, 2)
+    const chips = []
+    sorted.map(s => {
+      chips.unshift({ ticker: s.ticker, amount: s.amount })
+    })
+    
+    return chips
   }
 
   getMaxSell(ticker) {

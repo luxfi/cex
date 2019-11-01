@@ -55,10 +55,13 @@ class MyMobxApp extends App {
   constructor(props) {
     super(props)
     const isServer = typeof window === "undefined"
-    initializeReactGA()
     this.mobxStore = isServer
       ? props.initialMobxState
       : initializeStore(props.initialMobxState)
+  }
+
+  componentDidMount () {
+    ReactGA.initialize('UA-151184093-1')
   }
 
   render() {
@@ -108,13 +111,5 @@ class MyMobxApp extends App {
     super.componentDidCatch(error, errorInfo)
   }
 }
-
-
-const initializeReactGA = () => {
-  ReactGA.initialize('UA-151184093-1');
-  ReactGA.pageview('/');
-//  ReactGA.pageview(window.location.pathname + window.location.search);
-}
-
 
 export default withRouter(withStyles(styles)(MyMobxApp))

@@ -13,6 +13,7 @@ import { CustomBreadcrumbs } from "../components/app"
 import styles from "../pageStyles/article.style.js"
 
 import { InvestNow } from "../components/app"
+import { googlePageView } from '../components/utils/generic'
 
 const MyLoader = () => (
   <ContentLoader
@@ -89,14 +90,9 @@ class Article extends React.Component {
   //   }
   // }
 
-  // componentDidMount() {
-  //   console.log("index props componentDidMount", this.props.store.orderBook)
-  //   this.props.store.orderBook.initiateDataGenerator()
-  // }
-
-  // componentWillUnmount() {
-  //   this.props.store.orderBook.terminateDataGenerator()
-  // }
+  componentDidMount() {
+    googlePageView()
+  }
 
   render() {
     // const { movieStore } = this.props.store

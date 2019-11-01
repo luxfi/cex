@@ -57,7 +57,8 @@ export default props => {
     rankPercent,
     benefits,
     benefitsMonthly,
-    topCategories
+    topCategories,
+    topChips
   } = props
   // const imageClasses = classNames(classes.imgCardTop)
 
@@ -100,7 +101,7 @@ export default props => {
                     {weeklyChange} from last week
                   </Typography>
                   <Grid item xs={6}>
-                    {dataStub.earningsChips.map((c, i) => (
+                    {topChips.map((c, i) => (
                       <Chip
                         key={`earningsChip_${i}`}
                         label={`${c.amount} ${c.ticker}`}

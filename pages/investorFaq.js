@@ -6,6 +6,8 @@ import { withStyles } from '@material-ui/core/styles'
 import { container } from "../components/esxStyles.js"
 import { withContentful } from "react-contentful"
 
+import { googlePageView } from "../components/utils/generic.js"
+
 const styles = theme => ({
   container: {
     ...container,
@@ -43,6 +45,10 @@ class InvestorFAQ extends React.Component {
 
   static async getInitialProps({ mobxStore }) {
     return { ...mobxStore }
+  }
+
+  componentDidMount() {
+    googlePageView()
   }
 
   render() {
