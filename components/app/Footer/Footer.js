@@ -128,9 +128,11 @@ const footers = [
       },
       {
         title: 'Project FAQ',
+        link: 'projectFaq'
       },
       {
         title: 'Risks',
+        link: 'risks'
       },
       {
         title: 'Contact Us',
