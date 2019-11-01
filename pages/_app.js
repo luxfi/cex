@@ -27,13 +27,6 @@ import initializeStore from "../stores/stores"
 import styles from "../pageStyles/app.style"
 import { darkTheme, lightTheme } from "../components/themes"
 
-const trackGA = () => {
-  ReactGA.initialize('UA-151184093-1')
-  ReactGA.pageview(window.location.pathname + window.location.search)
-}
-
-
-
 // ****************
 @observer
 class MyMobxApp extends App {
@@ -63,13 +56,13 @@ class MyMobxApp extends App {
     super(props)
 
     const isServer = typeof window === "undefined"
-    if (!isServer) {
-      trackGA()
-    }
-
     this.mobxStore = isServer
       ? props.initialMobxState
       : initializeStore(props.initialMobxState)
+  }
+
+  componentDidMount () {
+    ReactGA.initialize('UA-151184093-1')
   }
 
   render() {
@@ -119,6 +112,5 @@ class MyMobxApp extends App {
     super.componentDidCatch(error, errorInfo)
   }
 }
-
 
 export default withRouter(withStyles(styles)(MyMobxApp))

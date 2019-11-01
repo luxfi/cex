@@ -6,6 +6,8 @@ import { ContentfulItems } from "../components/app"
 
 import { container } from "../components/esxStyles.js"
 
+import { googlePageView } from "../components/utils/generic.js"
+
 const styles = theme => ({
   container: {
     ...container,
@@ -27,6 +29,7 @@ class InvestorFAQ extends React.Component {
   componentDidMount() {
     const { store } = this.props
     store.contentfulStore.getContent(false)
+    googlePageView()
   }
 
   render() {
@@ -40,6 +43,6 @@ class InvestorFAQ extends React.Component {
       </div>
     )
   }
-} 
+}
 
 export default withStyles(styles)(InvestorFAQ)

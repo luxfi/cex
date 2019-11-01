@@ -102,7 +102,6 @@ const PillsTabs = (props) => {
         onChange={handleChange}
       >
         <Tab label="Portfolio" disableFocusRipple />
-        <Tab label="Trade" disableFocusRipple />
         <Tab label="Rewards" disableFocusRipple />
         <Tab label="Newsfeed" disableFocusRipple />
       </Tabs>
