@@ -3,12 +3,17 @@ import Router from "next/router"
 import { inject, observer } from "mobx-react"
 
 import LoginForm from "../components/login/LoginForm"
+import { googlePageView } from "../components/utils/generic.js"
 
 @inject("store")
 @observer
 class Login extends React.Component {
   static async getInitialProps({ mobxStore }) {
     return { ...mobxStore }
+  }
+
+  componentDidMount() {
+    googlePageView()
   }
 
   render() {

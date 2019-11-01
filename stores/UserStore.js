@@ -104,14 +104,9 @@ export default class UserStore {
    */
   @action async loadSession() {
     this.isLoading = true
-    if (typeof window != "undefined") {
-      console.log(window.api=this.api.client)
-    }
-    if (this.api.client.getCustomerToken) {
-      this.token = this.api.client.getCustomerToken()
-    }
 
     this.token = this.api.client.getCustomerToken()
+
     try {
       if (this.token) {
         const ps = [
@@ -177,13 +172,15 @@ export default class UserStore {
       "city",
       "address1"
     ]
-    if (this.anyMissingData(personalDetails)) {
-      this.setActiveStep(0)
-    } else if (this.anyMissingData(personalDetails)) {
-      this.setActiveStep(1)
-    } else {
-      this.setActiveStep(2)
-    }
+    this.setActiveStep(0)
+
+    // if (this.anyMissingData(personalDetails)) {
+    //   this.setActiveStep(0)
+    // } else if (this.anyMissingData(personalDetails)) {
+    //   this.setActiveStep(1)
+    // } else {
+    //   this.setActiveStep(2)
+    // }
   }
 
   // TODO: this doesn't work
@@ -308,7 +305,7 @@ export default class UserStore {
         method: "POST",
         body: formData
       })
-      console.log(res)
+      console.log('res', res)
 
       const res2 = await res.text()
 

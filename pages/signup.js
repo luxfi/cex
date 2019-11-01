@@ -2,9 +2,15 @@ import React from "react"
 import { SignUpForm } from "../components/signup"
 import { inject, observer } from "mobx-react"
 
+import { googlePageView } from "../components/utils/generic.js"
+
 @inject("store")
 @observer
 class SignUp extends React.Component {
+  componentDidMount() {
+    googlePageView()
+  }
+  
   render() {
     const { userStore, uiStore } = this.props.store
     const {

@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { ContactForm } from "../components/contact"
 import { container } from "../components/esxStyles.js"
 
-
+import { googlePageView } from '../components/utils/generic'
 
 const styles = theme => ({
   container: {
@@ -15,14 +15,21 @@ const styles = theme => ({
   },
 })
 
-const Contact = (props) => {
-  const { classes } = props
+class Contact extends React.Component {
+  componentDidMount() {
+    googlePageView()
+  }
+  
 
-  return (
-    <div className={classes.container}>
-      <ContactForm/>
-    </div>
-  )
+  render() {
+    const { classes } = props
+
+    return (
+      <div className={classes.container}>
+        <ContactForm/>
+      </div>
+    )
+  }
 }
 
 export default withStyles(styles)(Contact)
