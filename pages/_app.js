@@ -1,6 +1,9 @@
-import App from "next/app"
 import React from "react"
+import App from "next/app"
 import { Provider, observer } from "mobx-react"
+import { withRouter } from "next/router"
+
+import ReactGA from 'react-ga'
 
 // This ensures that the icon CSS is loaded immediately before attempting to render icons
 import "@fortawesome/fontawesome-svg-core/styles.css"
@@ -18,12 +21,11 @@ import { CustomSnackbar, Header, Footer, CustomModal } from "../components/app"
 
 import initializeStore from "../stores/stores"
 
-// NEW ***********
-import { withRouter } from "next/router"
-
 // styles
 import styles from "../pageStyles/app.style"
 import { darkTheme, lightTheme } from "../components/themes"
+
+
 
 // ****************
 @observer
@@ -53,6 +55,7 @@ class MyMobxApp extends App {
   constructor(props) {
     super(props)
     const isServer = typeof window === "undefined"
+    initializeReactGA()
     this.mobxStore = isServer
       ? props.initialMobxState
       : initializeStore(props.initialMobxState)
@@ -105,5 +108,13 @@ class MyMobxApp extends App {
     super.componentDidCatch(error, errorInfo)
   }
 }
+
+
+const initializeReactGA = () => {
+  ReactGA.initialize('UA-151184093-1');
+  ReactGA.pageview('/');
+//  ReactGA.pageview(window.location.pathname + window.location.search);
+}
+
 
 export default withRouter(withStyles(styles)(MyMobxApp))

@@ -1,7 +1,5 @@
 import React from "react"
-// @material-ui/core components
 import { MuiThemeProvider } from "@material-ui/core/styles"
-import { inject, observer } from "mobx-react"
 
 import { FilmView } from "../components/film"
 

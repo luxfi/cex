@@ -12,23 +12,6 @@ import isPassword from "../src/control-middlewares/isPassword"
 import isPhone from "../src/control-middlewares/isPhone"
 import isRequired from "../src/control-middlewares/isRequired"
 
-const base64MimeType = encoded => {
-
-  var result = null
-
-  if (typeof encoded !== "string") {
-    return result
-  }
-
-  var mime = encoded.match(/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,.*/)
-
-  if (mime && mime.length) {
-    result = mime[1]
-  }
-
-  return result
-}
-
 /**
  * Later we'll wrap the fetch stuff up a bit more cleanly and / or use a helper library
  */
@@ -79,6 +62,7 @@ export default class UserStore {
   @observable documents0 = ""
   @observable documents1 = ""
   @observable documents2 = ""
+  @observable documents = []
   // start kyc on first step
   @observable activeStep = 0
 
@@ -200,6 +184,7 @@ export default class UserStore {
     }
   }
 
+  // TODO: this doesn't work
   anyMissingData(keys) {
     keys.some(k => _.isEmpty(this[k]))
   }
@@ -270,45 +255,68 @@ export default class UserStore {
     )
   }
 
-  @action updateKYCPhotoDocuments() {
+  @action async updateKYCPhotoDocuments() {
     const docs = [
       [this.documents0, "face"],
       [this.documents1, "id-front"],
       [this.documents2, "id-back"]
     ]
-    docs.forEach(([data, name]) => {
-      this.updateKYCPhoto(data, name)
+
+    let ps = []
+
+    docs.forEach(([data, name], i) => {
+      ps[i] = this.updateKYCPhoto(data, name)
     })
+
+    this.documents = await Promise.all(ps)
   }
 
   @action async updateKYCPhoto(data, name, onSuccess, onError) {
     // ** ONLY CALL WHEN @computed isValidSignUp IS TRUE **
     this.updating = true
-    const mimeType = base64MimeType(data)
-    const ext = mimeType.split("/")[1]
+
+    // https://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata/5100158
+    // convert base64/URLEncoded data component to raw binary data held in a string
+    let [mimeType, bytes] = data.split(',')
+    if (mimeType.indexOf('base64') >= 0) {
+        bytes = atob(bytes)
+    } else {
+        bytes = unescape(bytes)
+    }
+
+    // separate out the mime component
+    mimeType = mimeType.split(':')[1].split(';')[0]
+
+    // write the bytes of the string to a typed array
+    var blob = new Uint8Array(bytes.length);
+    for (var i = 0; i < bytes.length; i++) {
+        blob[i] = bytes.charCodeAt(i);
+    }
+
+    let ext = mimeType.split('/')[1]
+
     const filename = `${this.id}-${name}.${ext}`
-    // console.log('file', data)
-    // console.log("filename", filename)
 
     try {
-      const blob = data.slice(0, data.size, data.type)
       const file = new File([blob], filename, {type: data.type})
       const formData = new FormData()
       formData.append('upload', file)
-      const res = await fetch("https://files.hanzo.ai/upload", { // 'http://localhost:3001/upload', { 
+      const res = await fetch('https://files.hanzo.ai/upload', { // "https://files.hanzo.ai/upload", {
         // Your POST endpoint
         method: "POST",
         body: formData
       })
       console.log('res', res)
 
-      const res2 = await res.json()
+      const res2 = await res.text()
 
       console.log("json response: ", res2)
 
       onSuccess && onSuccess()
+
+      return res2
     } catch (ex) {
-      console.log("Error updatng photo documents", ex)
+      console.log("Error updating photo documents", ex)
       onError && onError(ex.toString())
     } finally {
       this.updating = false
@@ -424,11 +432,12 @@ export default class UserStore {
       country: this.country
     }
     const kycObj = {
-      address: addressObj,
-      taxId: this.taxId,
-      phone: this.phone,
+      address:   addressObj,
+      taxId:     this.taxId,
+      phone:     this.phone,
       birthdate: this.birthdate,
-      gender: this.gender,
+      gender:    this.gender,
+      documents: this.documents,
     }
     try {
       const newAcc = Object.assign(this.account, {
@@ -539,7 +548,7 @@ export default class UserStore {
   }
 
   @computed get isValidPhotoIDs() {
-    return this.documents0 && this.documents1 && this.documents2
+    return !this.documents || !this.documents.length || !this.documents[0] || !this.account.kyc || !this.account.kyc.documents || !this.account.kyc.documents.length || !this.account.kyc.documents[0]
   }
 
   @computed get passwordsMatch() {
