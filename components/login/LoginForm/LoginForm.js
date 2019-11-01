@@ -115,8 +115,6 @@ class LoginForm extends React.Component {
       setValue,
       email,
       password,
-      validatePassword,
-      validateEmail,
       isValidLogin,
       validEmail,
       validPassword,
@@ -139,9 +137,6 @@ class LoginForm extends React.Component {
             id="email"
             label="Email Address"
             name="email"
-            onBlur={validateEmail}
-            // onClick={e => e.stopPropagation()}
-            // autoComplete="email"
             autoFocus
             error={this.state.displayErrors && !validEmail}
             helperText={
@@ -161,9 +156,6 @@ class LoginForm extends React.Component {
             label="Password"
             type="password"
             id="password"
-            // onClick={e => e.stopPropagation()}
-            onBlur={validatePassword}
-            // autoComplete="current-password"
             error={this.state.displayErrors && !validPassword}
             helperText={
               this.state.displayErrors && !validPassword

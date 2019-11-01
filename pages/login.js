@@ -35,12 +35,6 @@ class Login extends React.Component {
         login={(onSuccess, onError) => {
           userStore.login(onSuccess, onError)
         }}
-        validateEmail={() => {
-          userStore.validateEmail()
-        }}
-        validatePassword={() => {
-          userStore.validatePassword()
-        }}
         isValidLogin={isValidLogin}
         validEmail={validEmail}
         validPassword={validPassword}

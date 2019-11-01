@@ -1,9 +1,10 @@
 // Generic Libraries
-import { action, observable, computed } from "mobx"
+import { action, observable, computed, toJS } from "mobx"
 import Router from "next/router"
+import moment from "moment/moment.js"
 
 import * as ethers from "ethers"
-// import _ from 'lodash'
+import _ from "lodash"
 
 // Utilities
 import isEmail from "../src/control-middlewares/isEmail"
@@ -23,6 +24,9 @@ export default class UserStore {
   // (not sure of type)
   @observable errors = null
 
+  // Application Level Settings
+  @observable appSettings = null
+
   /*
   ** USER INFO **
   Works for both signup and login
@@ -38,40 +42,29 @@ export default class UserStore {
   @observable account = null
 
   // ** SIGNUP INFO **
-  @observable validEmail = false
-  @observable validPassword = false
-  @observable validFirstName = false
-  @observable validLastName = false
-  @observable over18 = false
-  @observable firstName = undefined
-  @observable middleName = undefined
-  @observable lastName = undefined
-  @observable passwordConfirm = undefined
+  // must initialize to empty string for controlled inputs
+  // https://reactjs.org/docs/forms.html#controlled-components
+  @observable firstName = ""
+  @observable lastName = ""
+  @observable passwordConfirm = ""
 
   // ** KYC **
-  @observable phone = undefined
-  @observable taxId = undefined
-  @observable birthdate = undefined
+  @observable phone = ""
+  @observable taxId = ""
+  @observable birthdate = null
   @observable gender = "unspecified"
-  @observable address1 = undefined
-  @observable address2 = undefined
-  @observable city = undefined
-  @observable postalCode = undefined
-  @observable country = undefined
-  @observable state = undefined
-  @observable documents0 = undefined
-  @observable documents1 = undefined
-  @observable documents2 = undefined
-
-  @observable validPhone = false
-  @observable validTaxId = false
-  @observable validBirthdate = false
-  // gender is a dropdown and defaults to 'unspecified' -- no need to track
-  @observable validAddress1 = false
-  @observable validCity = false
-  @observable validPostalCode = false
-  // country is a dropdown
-  // state is a dropdown
+  @observable address1 = ""
+  @observable address2 = ""
+  @observable city = ""
+  @observable postalCode = ""
+  @observable country = "US"
+  @observable state = ""
+  @observable documents0 = ""
+  @observable documents1 = ""
+  @observable documents2 = ""
+  @observable documents = []
+  // start kyc on first step
+  @observable activeStep = 0
 
   /* what to do with ... TODO
     opts.kyc.ethereumAddress = this.props.ethKey.address
@@ -87,14 +80,14 @@ export default class UserStore {
 
   // ** Payment Method **
   @observable newPaymentMethodPublicToken = undefined
-  @observable newPaymentMethodName        = undefined
+  @observable newPaymentMethodName = undefined
   // Set to plaid for now
-  @observable newPaymentMethodType        = "plaid"
-  @observable newPaymentMethodMetadata    = undefined
+  @observable newPaymentMethodType = "plaid"
+  @observable newPaymentMethodMetadata = undefined
 
   @observable validNewPaymentMethodPublicToken = false
-  @observable validNewPaymentMethodName        = false
-  @observable validNewPaymentMethodMetadata    = false
+  @observable validNewPaymentMethodName = false
+  @observable validNewPaymentMethodMetadata = false
 
   constructor(initialData = {}, hanzoApi) {
     // TODO Do we still need this?
@@ -111,18 +104,89 @@ export default class UserStore {
    */
   @action async loadSession() {
     this.isLoading = true
+    console.log(window.api=this.api.client)
     if (this.api.client.getCustomerToken) {
       this.token = this.api.client.getCustomerToken()
-      if (!!this.token) {
-        try {
-          this.account = await this.api.client.account.get()
-        } catch (e) {
-          console.log('account token expired')
-          this.logout()
-        }
-      }
     }
+
+    this.token = this.api.client.getCustomerToken()
+    try {
+      if (this.token) {
+        const ps = [
+          this.api.client.library.shopjs(),
+          this.api.client.account.get()
+        ]
+
+        let [appSettings, account] = await Promise.all(ps)
+        this.appSettings = appSettings
+        this.account = account
+        this.hydrateStore(account)
+      } else {
+        this.appSettings = await this.api.client.library.shopjs()
+      }
+    } catch (e) {
+      console.log("account token expired", e)
+      this.logout()
+    }
+
     this.isLoading = false
+  }
+
+  hydrateStore(account) {
+    const userFields = ["firstName", "lastName", "email", "id"]
+    const kycFields = ["birthdate", "gender", "phone", "taxId"]
+    const addressFields = [
+      "name",
+      "country",
+      "postalCode",
+      "state",
+      "city",
+      ["address1", "line1"],
+      ["address2", "line2"]
+    ]
+    const user = account
+    const { kyc } = account
+    const { address } = kyc
+    this.updateFromJson(user, userFields)
+    this.updateFromJson(kyc, kycFields)
+    this.updateFromJson(address, addressFields)
+    this.checkCurrentStatus()
+  }
+
+  updateFromJson(json, keys) {
+    // make sure our changes aren't sent back to the server
+    keys.forEach(k => {
+      // only update if available
+      if (typeof k === "string" && json[k]) {
+        this[k] = json[k]
+      } else if (Array.isArray(k) && json[k[1]]) {
+        this[k[0]] = json[k[1]]
+      }
+    })
+  }
+
+  checkCurrentStatus() {
+    const personalDetails = ["birthdate", "gender", "phone", "taxId"]
+    const personalAddress = [
+      "name",
+      "country",
+      "postalCode",
+      "state",
+      "city",
+      "address1"
+    ]
+    if (this.anyMissingData(personalDetails)) {
+      this.setActiveStep(0)
+    } else if (this.anyMissingData(personalDetails)) {
+      this.setActiveStep(1)
+    } else {
+      this.setActiveStep(2)
+    }
+  }
+
+  // TODO: this doesn't work
+  anyMissingData(keys) {
+    keys.some(k => _.isEmpty(this[k]))
   }
 
   // TODO store this w httpOnly in a cookie w all the proper security precautions.
@@ -137,62 +201,48 @@ export default class UserStore {
   }
 
   @action setValue(key, val) {
-    // console.log("key, val", [key, val])
     this[key] = val
   }
 
-  @action validateEmail() {
-    console.log("Validating email", isEmail(this.email))
-    this.validEmail = isEmail(this.email)
+  @action setActiveStep(step) {
+    // sets current step in KYC
+    this.activeStep = step
   }
 
-  @action validatePassword() {
-    this.validPassword = isPassword(this.password)
+  @computed get validFirstName() {
+    return stringPresentAndValid(this.firstName)
   }
 
-  @action validateFirstName() {
-    this.validFirstName = stringPresentAndValid(this.firstName)
+  @computed get validLastName() {
+    return stringPresentAndValid(this.lastName)
   }
 
-  @action validateLastName() {
-    this.validLastName = stringPresentAndValid(this.lastName)
+  @computed get validEmail() {
+    const regex = /^\S+@\S+\.\S+$/
+    return regex.test(this.email)
   }
 
-  @action validatePhone(phone) {
-    this.validPhone = isPhone(phone)
+  @computed get validPassword() {
+    return typeof this.password === "string" && this.password.length > 6
   }
 
-  @action validateTaxId(id) {
+  @computed get validPhone() {
+    // https://stackoverflow.com/questions/4338267/validate-phone-number-with-javascript
+    const regex = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/
+    return regex.test(this.phone)
+  }
+
+  @computed get validTaxId() {
     // 9 digits etc
     // https://howtodoinjava.com/regex/java-regex-validate-social-security-numbers-ssn/
     const regex = /^(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$/
-    this.validTaxId = regex.test(id)
-  }
-
-  @action validateBirthdate(d) {
-    // TODO valid date and range (this could be unnecessary if a date control is used)
-    this.validBirthdate = stringPresentAndValid(d)
-  }
-
-  @action validateAddress1(a) {
-    // TODO call API for street addresses in the US and make this unnecessary :)
-    // in the meantime check for a valid date
-    this.validAddress1 = stringPresentAndValid(a)
-  }
-
-  @action validateCity(c) {
-    // TODO call API for street addresses in the US and make this unnecessary :)
-    // in the meantime check for a valid date
-    this.validCity = stringPresentAndValid(c)
-  }
-
-  @action validatePostalCode(c) {
-    const regex = /^\d{ 5}$/
-    this.validPostalCode = regex(c)
+    return regex.test(this.taxId)
   }
 
   @action validateNewPaymentMethodPublicToken() {
-    this.validNewPaymentMethodPublicToken = isRequired(this.newPaymentMethodPublicToken)
+    this.validNewPaymentMethodPublicToken = isRequired(
+      this.newPaymentMethodPublicToken
+    )
   }
 
   @action validateNewPaymentMethodName() {
@@ -200,11 +250,81 @@ export default class UserStore {
   }
 
   @action validateNewPaymentMethodMetadata() {
-    this.validNewPaymentMethodMetadata = isRequired(this.newPaymentMethodMetadata)
+    this.validNewPaymentMethodMetadata = isRequired(
+      this.newPaymentMethodMetadata
+    )
+  }
+
+  @action async updateKYCPhotoDocuments() {
+    const docs = [
+      [this.documents0, "face"],
+      [this.documents1, "id-front"],
+      [this.documents2, "id-back"]
+    ]
+
+    let ps = []
+
+    docs.forEach(([data, name], i) => {
+      ps[i] = this.updateKYCPhoto(data, name)
+    })
+
+    this.documents = await Promise.all(ps)
+  }
+
+  @action async updateKYCPhoto(data, name, onSuccess, onError) {
+    // ** ONLY CALL WHEN @computed isValidSignUp IS TRUE **
+    this.updating = true
+
+    // https://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata/5100158
+    // convert base64/URLEncoded data component to raw binary data held in a string
+    let [mimeType, bytes] = data.split(',')
+    if (mimeType.indexOf('base64') >= 0) {
+        bytes = atob(bytes)
+    } else {
+        bytes = unescape(bytes)
+    }
+
+    // separate out the mime component
+    mimeType = mimeType.split(':')[1].split(';')[0]
+
+    // write the bytes of the string to a typed array
+    var blob = new Uint8Array(bytes.length);
+    for (var i = 0; i < bytes.length; i++) {
+        blob[i] = bytes.charCodeAt(i);
+    }
+
+    let ext = mimeType.split('/')[1]
+
+    const filename = `${this.id}-${name}.${ext}`
+
+    try {
+      const file = new File([blob], filename, {type: data.type})
+      const formData = new FormData()
+      formData.append('upload', file)
+      const res = await fetch('https://files.hanzo.ai/upload', { // "https://files.hanzo.ai/upload", {
+        // Your POST endpoint
+        method: "POST",
+        body: formData
+      })
+      console.log(res)
+
+      const res2 = await res.text()
+
+      console.log("json response: ", res2)
+
+      onSuccess && onSuccess()
+
+      return res2
+    } catch (ex) {
+      console.log("Error updating photo documents", ex)
+      onError && onError(ex.toString())
+    } finally {
+      this.updating = false
+    }
   }
 
   @action async signUp(onSuccess, onError) {
-    // ** ONLY CALL WHEN @computed isValidSignup IS TRUE **
+    // ** ONLY CALL WHEN @computed isValidSignUp IS TRUE **
     this.updating = true
 
     try {
@@ -220,7 +340,10 @@ export default class UserStore {
 
       this.identity = ethers.utils.sha256(ethers.utils.toUtf8Bytes(i))
 
-      this.setToken(res.token)
+      this.api.client.setCustomerToken(res.token)
+
+      // this.setToken(res.token)
+      this.loadSession()
       onSuccess && onSuccess()
     } catch (ex) {
       // this.errors = (err.response && err.response.body && err.response.body.errors)
@@ -247,7 +370,8 @@ export default class UserStore {
       const i = this.email + this.password
 
       this.identity = ethers.utils.sha256(ethers.utils.toUtf8Bytes(i))
-      this.account = await this.api.client.account.get()
+      // this.account = await this.api.client.account.get()
+      this.loadSession()
       this.setToken(res.token)
       onSuccess && onSuccess()
     } catch (ex) {
@@ -257,6 +381,7 @@ export default class UserStore {
       this.updating = false
     }
   }
+
   @action async logout(onSuccess, onError) {
     this.updating = true
 
@@ -266,7 +391,7 @@ export default class UserStore {
       // TODO Not sure what this is? This needs to go in the password update function
       // this.inputs.password.val(this.inputs.password.val().replace(/./g, '•'))
       onSuccess && onSuccess()
-      Router.push('/login')
+      Router.push("/login")
     } catch (ex) {
       console.log("Error logging out", ex)
       onError && onError(ex.toString())
@@ -282,11 +407,10 @@ export default class UserStore {
         accountId: this.newPaymentMethodMetadata.account_id,
         type: this.newPaymentMethodType,
         name: this.newPaymentMethodName,
-        metadata: this.newPaymentMethodMetadata,
+        metadata: this.newPaymentMethodMetadata
       }
 
       const res = await this.api.client.account.paymentMethod.create(opts)
-
     } catch (ex) {
       console.log("Error logging out", ex)
       onError && onError(ex.toString())
@@ -298,24 +422,32 @@ export default class UserStore {
   @action async updateKYC(onSuccess, onError) {
     // ** ONLY CALL WHEN @computed isValidKYC IS TRUE **
     this.updating = true
-    let opts = ({
-      phone,
-      taxId,
-      birthdate,
-      gender,
-      address1,
-      address2,
-      city,
-      postalCode,
-      country,
-      state,
-      documents0,
-      documents1,
-      documents2
-    } = this)
-
+    const addressObj = {
+      name: `${this.firstName} ${this.lastName}`,
+      line1: this.address1,
+      line2: this.address2,
+      city: this.city,
+      postalCode: this.postalCode,
+      state: this.state,
+      country: this.country
+    }
+    const kycObj = {
+      address:   addressObj,
+      taxId:     this.taxId,
+      phone:     this.phone,
+      birthdate: this.birthdate,
+      gender:    this.gender,
+      documents: this.documents,
+    }
     try {
-      this.account = await this.api.client.account.update({ opts })
+      const newAcc = Object.assign(this.account, {
+        kyc: kycObj,
+        firstName: this.firstName,
+        lastName: this.lastName
+      })
+      await this.api.client.account.update(newAcc)
+      // On success
+      this.account = newAcc
       onSuccess && onSuccess()
     } catch (ex) {
       console.log("Error saving KYC options", ex)
@@ -334,36 +466,17 @@ export default class UserStore {
     this.setToken(undefined)
   }
 
-  @computed get isValidName() {
-    return (
-      stringPresentAndValid(this.firstName) &&
-      stringPresentAndValid(this.lastName)
-    )
-    // middle name is not checked
-  }
-
-  @computed get isValidSignup() {
-    console.log("validEmail", this.validEmail)
-    console.log("validPassword", this.validPassword)
-    console.log(
-      "password === passwordConfirm",
-      this.password === this.passwordConfirm
-    )
-    console.log("over18", this.over18)
-    console.log("isValidName", this.isValidName)
-
+  @computed get isValidSignUp() {
     return (
       this.validEmail &&
+      this.validFirstName &&
+      this.validLastName &&
       this.validPassword &&
-      this.passwordsMatch &&
-      this.over18 &&
-      this.isValidName
+      this.passwordsMatch
     )
   }
 
   @computed get isValidLogin() {
-    console.log("this.validEmail", this.validEmail)
-    console.log("this.validPassword", this.validPassword)
     return this.validEmail && this.validPassword
   }
 
@@ -371,17 +484,59 @@ export default class UserStore {
     return !!this.token
   }
 
-  @computed get isValidKYC() {
+  @computed get validAddress1() {
+    const regex = /^\s*\S+(?:\s+\S+){2}/
+    return regex.test(this.address1)
+  }
+
+  @computed get validCity() {
+    const regex = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/
+    return regex.test(this.city)
+  }
+
+  @computed get validPostalCode() {
+    const regex = /(^\d{5}$)|(^\d{5}-\d{4}$)/
+    return regex.test(this.postalCode)
+  }
+
+  @computed get isValidAddress() {
+    return this.validAddress1 && this.validCity && this.validPostalCode
+  }
+
+  @computed get countries() {
+    // returns array of objects, countries with code
+    // [{ "name": "Afghanistan", "code": "AF" },
+    // { "name": "Albania", "code": "AL" }]
+    if (!this.appSettings) return {}
+    return this.appSettings.countries.reduce((acc, memo) => {
+      acc.push({ name: memo.name, code: memo.code })
+      return acc
+    }, [])
+  }
+
+  @computed get states() {
+    // returns array of objects, states with code
+    // [{ name: "Florida", code: "FL" },
+    // { name: "Michigan", code: "MI" }]
+    if (!this.appSettings) return {}
+    const countryObj = this.appSettings.countries.find(
+      country => country.code === this.country
+    )
+    const statesArray = countryObj.subdivisions
+    return statesArray.reduce((acc, memo) => {
+      acc.push({ name: memo.name, code: memo.code })
+      return acc
+    }, [])
+  }
+
+  @computed get isValidPersonalDetails() {
     return (
-      this.isValidName() &&
+      this.validFirstName &&
+      this.validLastName &&
       this.validPhone &&
       this.validTaxId &&
-      this.validBirthdate &&
-      this.validAddress1 &&
-      this.validCity &&
-      this.postalCode
+      !!this.birthdate
     )
-    // country is dropdown (noted above)
   }
 
   @computed get isValidNewPaymentMethod() {
@@ -392,6 +547,9 @@ export default class UserStore {
     )
   }
 
+  @computed get isValidPhotoIDs() {
+    return !this.documents || !this.documents.length || !this.documents[0] || !this.account.kyc || !this.account.kyc.documents || !this.account.kyc.documents.length || !this.account.kyc.documents[0]
+  }
 
   @computed get passwordsMatch() {
     return this.password === this.passwordConfirm
@@ -399,7 +557,10 @@ export default class UserStore {
 }
 
 function stringPresentAndValid(s) {
-  return typeof s === "string" && s.length >= 2
+  // support international names
+  // https://stackoverflow.com/questions/2385701/regular-expression-for-first-and-last-name
+  const regex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
+  return typeof s === "string" && s.length >= 2 && regex.test(s)
 }
 
 export async function fetchUserSession() {
