@@ -75,13 +75,17 @@ class Portfolio extends React.Component {
       fakeRank = 0
       fakeRankPercent = 100
     }
+
     return (
       <div className={classes.container}>
         <div style={{ height: "30px" }}></div>
         <PillsTabs tabIdx={tabIdx} handleChange={this.setTab} />
-        <PortfolioView
+        <TradeView
           tabIdx={tabIdx}
           index={0}
+          investments={userPortfolio.topInvestments}
+          findMovieByTicker={findMovieByTicker}
+          store={store}
           findMovie={findMovieByTicker}
           holdings={userPortfolio.userHoldings}
           weeklyChange={userPortfolio.earningsChangeWeek}
@@ -93,15 +97,8 @@ class Portfolio extends React.Component {
           watchlist={userPortfolio.userTopWatchlist}
           removeFromWatchlist={removeFromWatchlist}
         />
-        <TradeView
-          tabIdx={tabIdx}
-          index={1}
-          investments={userPortfolio.topInvestments}
-          findMovieByTicker={findMovieByTicker}
-          store={store}
-        />
-        <RewardsView tabIdx={tabIdx} index={2} />
-        <NewsFeedView tabIdx={tabIdx} index={3} />
+        <RewardsView tabIdx={tabIdx} index={1} />
+        <NewsFeedView tabIdx={tabIdx} index={2} />
         <ProTraderCTA />
       </div>
     )

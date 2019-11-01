@@ -177,13 +177,15 @@ export default class UserStore {
       "city",
       "address1"
     ]
-    if (this.anyMissingData(personalDetails)) {
-      this.setActiveStep(0)
-    } else if (this.anyMissingData(personalDetails)) {
-      this.setActiveStep(1)
-    } else {
-      this.setActiveStep(2)
-    }
+    this.setActiveStep(0)
+
+    // if (this.anyMissingData(personalDetails)) {
+    //   this.setActiveStep(0)
+    // } else if (this.anyMissingData(personalDetails)) {
+    //   this.setActiveStep(1)
+    // } else {
+    //   this.setActiveStep(2)
+    // }
   }
 
   // TODO: this doesn't work
