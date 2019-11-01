@@ -29,7 +29,8 @@ import {
 
 const EXTERNAL_LINKS = {
   medium: "https://medium.com/entertainment-stock-x",
-  reddit: "https://www.reddit.com/r/EntertainmentStockX/"
+  reddit: "https://www.reddit.com/r/EntertainmentStockX/",
+  twitter: "https://twitter.com/EntertainStock"
 }
 
 // styles
@@ -165,7 +166,7 @@ const FooterTopRow = ({ classes }) => (
       </Grid>
       <Grid item xs={6} sm={4} className={classes.center}>
         <IconButton
-          href="https://twitter.com/"
+          href={EXTERNAL_LINKS.twitter}
           target="_blank"
           title="Tweet"
         >

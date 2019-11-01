@@ -2,8 +2,10 @@ import React from "react"
 import App from "next/app"
 import { Provider, observer } from "mobx-react"
 import { withRouter } from "next/router"
+//import Router from 'next/router'
 
 import ReactGA from 'react-ga'
+//import withGA from "next-ga"
 
 // This ensures that the icon CSS is loaded immediately before attempting to render icons
 import "@fortawesome/fontawesome-svg-core/styles.css"
@@ -24,6 +26,11 @@ import initializeStore from "../stores/stores"
 // styles
 import styles from "../pageStyles/app.style"
 import { darkTheme, lightTheme } from "../components/themes"
+
+const trackGA = () => {
+  ReactGA.initialize('UA-151184093-1')
+  ReactGA.pageview(window.location.pathname + window.location.search)
+}
 
 
 
@@ -54,8 +61,12 @@ class MyMobxApp extends App {
 
   constructor(props) {
     super(props)
+
     const isServer = typeof window === "undefined"
-    initializeReactGA()
+    if (!isServer) {
+      trackGA()
+    }
+
     this.mobxStore = isServer
       ? props.initialMobxState
       : initializeStore(props.initialMobxState)
@@ -107,13 +118,6 @@ class MyMobxApp extends App {
     // This is needed to render errors correctly in development / production
     super.componentDidCatch(error, errorInfo)
   }
-}
-
-
-const initializeReactGA = () => {
-  ReactGA.initialize('UA-151184093-1');
-  ReactGA.pageview('/');
-//  ReactGA.pageview(window.location.pathname + window.location.search);
 }
 
 
