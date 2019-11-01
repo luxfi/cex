@@ -22,6 +22,7 @@ const TradeView = props => {
     topCategories,
     watchlist,
     removeFromWatchlist,
+    topChips,
   } = props
 
   // Hide the tab
@@ -37,6 +38,7 @@ const TradeView = props => {
         benefits={benefits}
         benefitsMonthly={benefitsMonthly}
         topCategories={topCategories}
+        topChips={topChips}
       />
       <ActivePositions investments={investments} findMovieByTicker={findMovieByTicker} />
       <TopInvestmentPicks store={store} />
