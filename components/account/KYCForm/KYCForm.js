@@ -181,18 +181,17 @@ export default function KYCForm({
   const classes = useStyles()
   const [currentStepDisabled, setCurrentStepDisabled] = React.useState(false)
 
-  const handleNext = () => {
+  const handleNext = async () => {
     setActiveStep(activeStep + 1)
     if (activeStep === steps.length - 1) {
-      updateKYCPhotoDocuments()
-    } else {
-      updateKYC(
-        () => null,
-        ex => {
-          setErrorMessage(ex)
-        }
-      )
+      await updateKYCPhotoDocuments()
     }
+    await updateKYC(
+      () => null,
+      ex => {
+        setErrorMessage(ex)
+      }
+    )
   }
 
   const handleBack = () => {
