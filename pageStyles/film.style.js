@@ -28,24 +28,10 @@ export default theme => ({
     padding: "0 32px 32px 32px"
   },
 
-  leftAndRight: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start"
-  },
-
-  topAndBottom: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "flex-start"
-  },
-
   breadcrumbRow: {
     marginBottom: "30px"
   },
-  
+
   pageTabsOuter: {
     display: "flex",
     flexDirection: "row",
@@ -63,19 +49,9 @@ export default theme => ({
     lineHeight: "1.1"
   },
   selectedTab: {
-    // better than textDecoration: underline, 
-    // which renders too close to the text 
+    // better than textDecoration: underline,
+    // which renders too close to the text
     borderBottom: "1px solid " + theme.palette.text.primary
-  },
-
-  mainArea: {
-    alignItems: "stretch",
-    marginBottom: "32px"
-  },
-
-
-  copyArea: {
-    paddingTop: "30px"
   },
 
   titleAndDescription: {
@@ -113,13 +89,6 @@ export default theme => ({
     marginBottom: "24px"
   },
 
-  mainImage: {
-    display: "block",
-    textAlign: "center",
-    backgroundColor: "#f4f3f3",
-    marginLeft: "70px",
-  },
-
   graphImage: {
     display: "block",
     margin: "0 auto",
@@ -150,16 +119,6 @@ export default theme => ({
     alignItems: "flex-end"
   },
 
-
-  movieButtonsOuter: {
-    width: "70%",
-    maxWidth: "400px",
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    //flexGrow: 1
-  },
-
   movieButton: {
     [theme.breakpoints.up("sm")]: {
       //marginLeft: theme.spacing(1),
@@ -168,10 +127,7 @@ export default theme => ({
     display: "inline-block",
     flexGrow: 1,
     //    marginLeft: 0,
-    "&:first-child": {
-      marginRight: "12px"
-    },
-
+    marginLeft: "12px",
   },
   faPlay: {
     paddingRight: "10px"
@@ -217,23 +173,23 @@ export default theme => ({
   },
 
   investCompanyName: {
-    margin: "0 auto", 
-    marginTop: "32px"   
+    margin: "0 auto",
+    marginTop: "32px"
   },
   investCompanyDescription: {
-    margin: "0 auto"    
+    margin: "0 auto"
   },
   investPrice: {
-    margin: "0 auto",   
-    marginTop: "12px", 
-    marginTop: "8px" 
+    margin: "0 auto",
+    marginTop: "12px",
+    marginTop: "8px"
   },
   deltaRow: {
-    margin: "0 auto",    
-    marginBottom: "12px" 
+    margin: "0 auto",
+    marginBottom: "12px"
   },
   statsButton: {
-    margin: "0 auto"    
+    margin: "0 auto"
   },
 
   dollarSign: {
