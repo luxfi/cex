@@ -75,12 +75,17 @@ const GuestNavBar = (props) => {
 
   const {
     opened,
+    navVariant,
     classes,
     accountLoaded,
-    openModal
+    openModal,
+    collapsed
   } = props
 
-  
+  if (navVariant !== "permanent") {
+    return ""
+  }
+
   return (
     <>
       <Link href="/" component={CustomLink}>
@@ -250,9 +255,11 @@ class HeaderEx extends React.Component {
         {ctx => (
           <GuestNavBar 
             opened={ctx.opened} 
+            collapsed={ctx.collapsed} 
             classes={classes} 
             openModal={openModal} 
             accountLoaded={accountLoaded}
+            navVariant={ctx.navVariant}
           />
         )}
       </LayoutContext.Consumer>
