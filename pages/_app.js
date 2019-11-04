@@ -16,10 +16,8 @@ import { MuiThemeProvider } from "@material-ui/core/styles"
 import NoSsr from '@material-ui/core/NoSsr'
 import CssBaseline from "@material-ui/core/CssBaseline"
 
-
 import {
   Root,
-  Nav,
   Content,
   Footer,
   presets,
@@ -28,6 +26,7 @@ import {
 import { 
   CustomSnackbar, 
   Header, 
+  MobileNav,
   FooterEx, 
   CustomModal 
 } from "../components/app"
@@ -72,12 +71,17 @@ const muiLayoutConfig = presets.createStandardLayout()
 muiLayoutConfig.navWidth = 0
 muiLayoutConfig.initialAdjustmentHeight = {
   "xs": 64,
-  "sm": 80
+  //"sm": 80
 }
 muiLayoutConfig.navVariant = {
   "xs": "temporary",
-  "sm": "permanent",
-//  "lg": "temporary",
+  "sm": "temporary",
+  "md": "permanent",
+}
+
+muiLayoutConfig.collapsedWidth = "80vw"
+muiLayoutConfig.collapsible = {
+  "xs": true,
 }
 muiLayoutConfig.headerPosition = "sticky"
 
@@ -120,11 +124,12 @@ class MyMobxApp extends App {
       : initializeStore(props.initialMobxState)
   }
 
+  openModal = (title, body) => {
+    this.mobxStore.uiStore.openModal(title, body)
+  }
+
   render() {
-    const { Component, pageProps, classes, router } = this.props
-    const onHomePage = router.pathname === "/" || router.pathname === "/#"
-
-
+    const { Component, pageProps} = this.props
 
     return (
         <Provider store={this.mobxStore}>
@@ -132,7 +137,8 @@ class MyMobxApp extends App {
           <CssBaseline />
           <NoSsr>
             <Root config={muiLayoutConfig}>
-              <Header openModal={(title, body) => this.mobxStore.uiStore.openModal(title, body)} />
+              <Header openModal={this.openModal} />
+              <MobileNav openModal={this.openModal} />
               <Content>
                 <Component
                   {...pageProps}
@@ -148,7 +154,7 @@ class MyMobxApp extends App {
                 <CustomSnackbar />
               </Content>
               <Footer>
-                <FooterEx openModal={(title, body) => this.mobxStore.uiStore.openModal(title, body)} />
+                <FooterEx openModal={this.openModal} />
               </Footer>
             </Root>
         </NoSsr>
