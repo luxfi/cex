@@ -276,7 +276,6 @@ const FooterMiddleRow = ({ classes, openModal }) => (
       </Grid>
     </Grid>
   </Grid>
-
 )
 
 
@@ -346,8 +345,8 @@ const styles = theme => {
     footer: {
       paddingTop: theme.spacing(3),
       paddingBottom: theme.spacing(3),
-      paddingLeft: theme.spacing(9),
-      paddingRight: theme.spacing(9),
+      paddingLeft: theme.spacing(3),
+      paddingRight: theme.spacing(3),
       [theme.breakpoints.up('sm')]: {
         paddingTop: theme.spacing(6),
         paddingBottom: theme.spacing(6),
