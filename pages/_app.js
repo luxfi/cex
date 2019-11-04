@@ -79,8 +79,8 @@ muiLayoutConfig.navVariant = {
   "sm": "permanent",
 //  "lg": "temporary",
 }
+muiLayoutConfig.headerPosition = "sticky"
 
-//muiLayoutConfig.collapsedBreakpoint = 'lg'
 
 // ****************
 @observer

@@ -3,6 +3,13 @@ import { fade, makeStyles } from "@material-ui/core/styles"
 const headerStyles = (theme) => {
   return {
 
+    appBar: {
+      //height: "80px",
+      boxShadow: "none",
+      paddingLeft: "15px",
+      paddingRight: "15px"
+    },
+
     logo: {
       display: "inline-block",
       marginLeft: theme.spacing(1),
