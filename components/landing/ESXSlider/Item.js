@@ -1,4 +1,5 @@
 import React from "react"
+import Link from "next/link"
 import { makeStyles, useTheme } from "@material-ui/core/styles"
 import SliderContext from "./context"
 import "./Item.css"
@@ -13,6 +14,7 @@ import {
 import PlayArrowIcon from "@material-ui/icons/PlayArrowRounded"
 import { TrailerSliderModal } from "../"
 const { forwardRef, useRef, useImperativeHandle } = React
+import { CustomLink } from "../../app/"
 
 const useStyles = makeStyles(theme => {
   console.log(theme)
@@ -85,13 +87,23 @@ const Item = ({ movie }) => {
                 style={{ background: "transparent" }}
                 className={classes.buttons}
               >
-                <Button size="small" className={classes.button}>
+                <Button
+                  component={CustomLink}
+                  href={"/film/" + movie.movieSlug}
+                  size="small"
+                  className={classes.button}
+                >
                   Learn More
                 </Button>
                 <Button size="small" className={classes.button}>
                   Add to Watchlist
                 </Button>
-                <Button size="small" className={classes.button}>
+                <Button
+                  component={CustomLink}
+                  href={"/film/" + movie.movieSlug}
+                  size="small"
+                  className={classes.button}
+                >
                   Invest
                 </Button>
               </CardActions>
