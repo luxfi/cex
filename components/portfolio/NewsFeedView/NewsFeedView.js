@@ -1,6 +1,9 @@
 /* eslint-disable react/prop-types */
 import React from "react"
-import { makeStyles } from "@material-ui/core"
+import {
+  makeStyles,
+  Grid,
+} from "@material-ui/core"
 import ContentLoader from "react-content-loader"
 
 import myStyles from "./NewsFeedView.style.js"
@@ -26,7 +29,7 @@ const lipsum = "Duis aute irure dolor in reprehenderit in \
 const randomInt = (min, max) => {
   min = Math.ceil(min)
   max = Math.floor(max)
-  return Math.floor(Math.random() * (max - min)) + min 
+  return Math.floor(Math.random() * (max - min)) + min
 }
 
 
@@ -43,23 +46,22 @@ const ImgLoader = (props) => {
       <rect x="0" y="0" rx="5" ry="5" width={props.width} height={props.height} />
     </ContentLoader>
   )
-} 
+}
 
 const Item = props => {
 
   const {classes} = props
 
   return (
-    <div className={classes.itemOuter}>
+    <Grid item xs={12} sm={4}>
       <ImgLoader width={500} height={400} />
       <h6 className={classes.itemTitle} >{filmTitles[randomInt(0, 3)]}</h6>
-      <p className={classes.itemCopy} >{lipsum}</p> 
-    </div>
+      <p className={classes.itemCopy} >{lipsum}</p>
+    </Grid>
   )
 }
 
 const NewsFeedSection = props => {
-
   const {
     title,
     classes,
@@ -69,9 +71,10 @@ const NewsFeedSection = props => {
   return (
     <>
       <h2 className={classes.sectionTitle}>{title}</h2>
-      <div className={classes.rowOuter}>
+      <br />
+      <Grid container spacing={3}>
         {children}
-      </div>
+      </Grid>
     </>
   )
 }
@@ -90,16 +93,19 @@ const NewsFeedView = (props) => {
         <Item classes={classes} />
         <Item classes={classes} />
       </NewsFeedSection>
+      <br />
       <NewsFeedSection title={sectionTitles.thisWeek} classes={classes} >
         <Item classes={classes} />
         <Item classes={classes} />
         <Item classes={classes} />
       </NewsFeedSection>
+      <br />
       <NewsFeedSection title={sectionTitles.indieNews} classes={classes} >
         <Item classes={classes} />
         <Item classes={classes} />
         <Item classes={classes} />
       </NewsFeedSection>
+      <br />
     </div>
   )
 }
