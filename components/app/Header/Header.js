@@ -324,8 +324,6 @@ const styles = theme => {
     appBar: {
       height: "80px",
       boxShadow: "none",
-      paddingLeft: "15px",
-      paddingRight: "15px"
     },
     transparent: {
       background: "transparent !important",
