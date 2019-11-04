@@ -279,7 +279,7 @@ const FooterMiddleRow = ({ classes, openModal }) => (
 
 @inject("store")
 @observer
-class Footer extends React.Component {
+class FooterEx extends React.Component {
   static async getInitialProps({ mobxStore }) {
     return { ...mobxStore }
   }
@@ -340,4 +340,4 @@ const styles = theme => {
   }
 }
 
-export default withStyles(styles)(Footer)
+export default withStyles(styles)(FooterEx)
