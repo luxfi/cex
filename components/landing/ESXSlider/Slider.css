@@ -16,15 +16,15 @@
 }
 
 .slider:not(.no-hover):not(.slider--open) .item:hover {
-  transform: scale(1.5) !important;
+  transform: scale(1.25) !important;
 }
 
 .slider:not(.no-hover):not(.slider--open):hover .item {
-  transform: translateX(-25%);
+  transform: translateX(-12.5%);
 }
 
 .slider:not(.no-hover):not(.slider--open) .item:hover~.item {
-  transform: translateX(25%);
+  transform: translateX(12.5%);
 }
 
 /* .slider:not(.no-hover) .item:hover .show-details-button {
