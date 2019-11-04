@@ -173,6 +173,40 @@ const UrlWasCopiedSnackbar = props => {
   )
 }
 
+const rewards = [
+  {
+    title: 'complete your profile',
+    completed: true,
+  },
+  {
+    title: 'invite a friend',
+    completed: true,
+  },
+  {
+    title: 'add a payment option',
+    completed: true,
+  },
+  {
+    title: 'make 1 investment',
+    completed: true,
+  },
+  {
+    title: 'make 2 investment',
+  },
+  {
+    title: 'make 1 investment',
+  },
+  {
+    title: 'make 10 investment',
+  },
+  {
+    title: 'make 20 investment',
+  },
+  {
+    title: 'make 50 investment',
+  },
+]
+
 const RewardsView = (props) => {
 
   const { tabIdx, index } = props
@@ -199,33 +233,13 @@ const RewardsView = (props) => {
           onCopied={(ignore) => {setShareUrlWasCopied(true)}}
         />
       </Grid>
-      <Grid item xs={12} sm={4}>
-        <RewardCard title={"complete your profile"} points={5} completed/>
-      </Grid>
-      <Grid item xs={12} sm={4}>
-        <RewardCard title={"invite a friend"} points={15} completed />
-      </Grid>
-      <Grid item xs={12} sm={4}>
-        <RewardCard title={"add a payment option"} points={10} completed />
-      </Grid>
-      <Grid item xs={12} sm={4}>
-        <RewardCard title={"make 1 investment"} points={15} completed />
-      </Grid>
-      <Grid item xs={12} sm={4}>
-        <RewardCard title={"make 2 investments"} points={10} />
-      </Grid>
-      <Grid item xs={12} sm={4}>
-        <RewardCard title={"make 5 investments"} points={10} />
-      </Grid>
-      <Grid item xs={12} sm={4}>
-        <RewardCard title={"make 10 investments"} points={10} />
-      </Grid>
-      <Grid item xs={12} sm={4}>
-        <RewardCard title={"make 20 investments"} points={10} />
-      </Grid>
-      <Grid item xs={12} sm={4}>
-        <RewardCard title={"make 30 investments"} points={10} />
-      </Grid>
+      {
+        rewards.map(reward => (
+          <Grid item xs={12} sm={4}>
+            <RewardCard title={reward.title} points={5} completed={!!reward.completed}/>
+          </Grid>
+        ))
+      }
     </Grid>
     <br />
     <UrlWasCopiedSnackbar
