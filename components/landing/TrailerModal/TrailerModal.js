@@ -21,11 +21,10 @@ export default ({ movie }) => {
         startIcon={<PlayArrowIcon />}
       >
         <Typography variant="body2">
-          <i className="fas fa-play" />
-            Play Trailer
-          </Typography>
+          Play Trailer
+        </Typography>
       </Button>
-      <div style={{ display: "none" }}> // 
+      <div style={{ display: "none" }}> //
         <TransitionsModal handleClose={handleClose} open={open}>
           <div className="videoWrapper">
             <iframe width="560" height="349" src={movie.trailer + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0"} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
