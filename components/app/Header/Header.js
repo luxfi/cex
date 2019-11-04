@@ -104,7 +104,7 @@ class Header extends React.Component {
                       height="52px"
                     />
                   </Link>
-                  <div className={classes.menu} style={{ marginLeft: "128px" }}>
+                  <div className={classes.menu}>
                     <Button
                       aria-controls="menu"
                       aria-haspopup="true"
@@ -348,6 +348,7 @@ const styles = theme => {
       paddingRight: "0px",
     },
     menu: {
+      marginLeft: "128px",
       [theme.breakpoints.down("sm")]: {
         display: "none",
       }
