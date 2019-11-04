@@ -12,19 +12,13 @@ import { config } from "@fortawesome/fontawesome-svg-core"
 // Prevent fontawesome from dynamically adding its css since we did it manually above
 config.autoAddCss = false
 
-import { withStyles, MuiThemeProvider } from "@material-ui/core/styles"
+import { MuiThemeProvider } from "@material-ui/core/styles"
 import NoSsr from '@material-ui/core/NoSsr'
 import CssBaseline from "@material-ui/core/CssBaseline"
 
-import {
-  ChevronLeft,
-  ChevronRight, 
-  MenuRounded
-} from '@material-ui/icons'
 
 import {
   Root,
-  Header,
   Nav,
   Content,
   Footer,
@@ -33,7 +27,7 @@ import {
 
 import { 
   CustomSnackbar, 
-  HeaderEx, 
+  Header, 
   FooterEx, 
   CustomModal 
 } from "../components/app"
@@ -138,16 +132,7 @@ class MyMobxApp extends App {
           <CssBaseline />
           <NoSsr>
             <Root config={muiLayoutConfig}>
-              <Header
-                renderMenuIcon={open => (open ? <ChevronLeft /> : <MenuRounded />)}
-              >
-                <HeaderEx
-                  onHomePage={onHomePage}
-                  darkTheme={darkTheme}
-                  lightTheme={lightTheme}
-                  openModal={(title, body) => this.mobxStore.uiStore.openModal(title, body)}
-                />
-              </Header>
+              <Header openModal={(title, body) => this.mobxStore.uiStore.openModal(title, body)} />
               <Content>
                 <Component
                   {...pageProps}

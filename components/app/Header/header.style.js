@@ -1,7 +1,6 @@
-import { fade } from "@material-ui/core/styles"
+import { fade, makeStyles } from "@material-ui/core/styles"
 
-export default (theme) => {
-
+const headerStyles = (theme) => {
   return {
 
     logo: {
@@ -76,10 +75,6 @@ export default (theme) => {
       }
     },
 
-    flex: {
-      display: "flex"
-    },
-
     transparent: {
       background: "transparent !important",
       transition: "background 0.25s ease-in-out"
@@ -99,4 +94,13 @@ export default (theme) => {
       display: "none"
     },
   }
+}
+
+const appBarStyles = {
+
+}
+
+export {
+  appBarStyles,
+  headerStyles
 }
