@@ -17,7 +17,6 @@ const { forwardRef, useRef, useImperativeHandle } = React
 import { CustomLink } from "../../app/"
 
 const useStyles = makeStyles(theme => {
-  console.log(theme)
   return {
     avatar: {
       backgroundColor: "rgba(0,0,0,.5)",
@@ -68,7 +67,7 @@ const Item = ({ movie }) => {
                   justifyContent: "center",
                   maxHeight: "1200px",
                   minHeight: "487px",
-                  minWidth: "287px",
+                  minWidth: "337px",
                   backgroundImage: `url(${movie.posterImg})`,
                   backgroundSize: "cover"
                 }}
