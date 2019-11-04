@@ -1,55 +1,106 @@
-import React from 'react';
-import cx from 'classnames';
-import SliderContext from './context'
-import ShowDetailsButton from './ShowDetailsButton'
-import Mark from './Mark'
-import './Item.css'
-import { Card, CardContent } from "@material-ui/core"
+import React from "react"
+import { makeStyles, useTheme } from "@material-ui/core/styles"
+import SliderContext from "./context"
+import "./Item.css"
+import {
+  Card,
+  CardContent,
+  Button,
+  CardActions,
+  IconButton,
+  Avatar
+} from "@material-ui/core"
+import PlayArrowIcon from "@material-ui/icons/PlayArrowRounded"
 import { TrailerSliderModal } from "../"
 const { forwardRef, useRef, useImperativeHandle } = React
 
+const useStyles = makeStyles(theme => {
+  console.log(theme)
+  return {
+    avatar: {
+      backgroundColor: "rgba(0,0,0,.5)",
+      margin: 10,
+      width: 100,
+      height: 100
+    },
+    playIcon: {
+      height: 80,
+      width: 80,
+      color: theme.palette.secondary.main
+    },
+    buttons: {
+      display: "flex",
+      justifyContent: "space-around"
+    },
+    button: {
+      marginLeft: theme.spacing(1)
+    }
+  }
+})
+
 const Item = ({ movie }) => {
   const childRef = useRef()
+  const classes = useStyles()
   return (
-      <SliderContext.Consumer>
-        {({ onSelectSlide, currentSlide, elementRef }) => {
-          const isActive = currentSlide && currentSlide.id === movie.id;
-          return (
-            <div
-              ref={elementRef}
-              className="item"
-              style={{
-                flex: "0 0 19.7%",
-                textAlign: "center",
-                marginRight: "16px",
-                transition: "transform 300ms ease 100ms",
-                position: "relative"
-              }}
-            >
-              <Card
-                onClick={() => childRef.current.handleOpen()}
+    <SliderContext.Consumer>
+      {({ onSelectSlide, currentSlide, elementRef }) => {
+        const isActive = currentSlide && currentSlide.id === movie.id
+        return (
+          <div
+            ref={elementRef}
+            className="item"
+            style={{
+              flex: "0 0 19.7%",
+              textAlign: "center",
+              marginRight: "16px",
+              transition: "transform 300ms ease 100ms",
+              position: "relative"
+            }}
+          >
+            <Card>
+              <CardContent
+                style={{
+                  display: "flex",
+                  position: "relative",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  maxHeight: "1200px",
+                  minHeight: "487px",
+                  minWidth: "287px",
+                  backgroundImage: `url(${movie.posterImg})`,
+                  backgroundSize: "cover"
+                }}
               >
-                <CardContent
-                  style={{
-                    display: 'block',
-                    position: 'relative',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backgroundImage: `url(${movie.posterImg})`,
-                    maxHeight: '1200px',
-                    minHeight: '487px',
-                    minWidth: '287px',
-                    backgroundSize: 'cover',
-                  }}
+                <Avatar
+                  className={classes.avatar}
+                  onClick={() => childRef.current.handleOpen()}
                 >
-                  <TrailerSliderModal movie={movie} ref={childRef} />
-                </CardContent>
-              </Card>
-            </div>
-          );
-        }}
-      </SliderContext.Consumer>
+                  <IconButton aria-label="play/pause">
+                    <PlayArrowIcon className={classes.playIcon} />
+                  </IconButton>
+                </Avatar>
+                <TrailerSliderModal movie={movie} ref={childRef} />
+              </CardContent>
+              <CardActions
+                style={{ background: "transparent" }}
+                className={classes.buttons}
+              >
+                <Button size="small" className={classes.button}>
+                  Learn More
+                </Button>
+                <Button size="small" className={classes.button}>
+                  Add to Watchlist
+                </Button>
+                <Button size="small" className={classes.button}>
+                  Invest
+                </Button>
+              </CardActions>
+            </Card>
+          </div>
+        )
+      }}
+    </SliderContext.Consumer>
   )
-};
+}
 
-export default Item;
+export default Item
