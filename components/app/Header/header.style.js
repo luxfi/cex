@@ -1,13 +1,10 @@
-import { fade, makeStyles } from "@material-ui/core/styles"
+import { fade } from "@material-ui/core/styles"
 
 const headerStyles = (theme) => {
   return {
 
     appBar: {
-      //height: "80px",
       boxShadow: "none",
-      paddingLeft: "15px",
-      paddingRight: "15px"
     },
 
     logo: {
@@ -107,7 +104,12 @@ const appBarStyles = {
 
 }
 
+const mobileNavStyles = {
+  
+}
+
 export {
   appBarStyles,
-  headerStyles
+  headerStyles,
+  mobileNavStyles
 }

@@ -276,6 +276,8 @@ const FooterMiddleRow = ({ classes, openModal }) => (
 
 )
 
+//  < Container maxWidth = "xl" component = "footer" className = { classes.footer } >
+//         </Container>
 
 @inject("store")
 @observer
@@ -288,13 +290,11 @@ class FooterEx extends React.Component {
     const loggedIn = store.userStore.loggedIn
     return (
       <div className={classes.root}>
-        <Container maxWidth="xl" component="footer" className={classes.footer}>
           <FooterTopRow classes={classes} />
           <FooterMiddleRow openModal={openModal} />
           <Box mt={5}>
             <Copyright />
           </Box>
-        </Container>
       </div>
     )
   }
@@ -317,7 +317,7 @@ const styles = theme => {
     root: {
       flexGrow: 1,
       padding: "32px 0px",
-      background: "#000",
+      //background: "#000",
     },
     menuButton: {
       marginRight: theme.spacing(2),
