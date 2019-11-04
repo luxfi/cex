@@ -104,7 +104,6 @@ class Hero extends React.Component {
                       >
                         <Link href={hrefLink}>
                           <Typography variant="body2">
-                            <i className="fas fa-play" />
                             INVEST IN {movie.ticker}
                           </Typography>
                         </Link>
@@ -113,8 +112,6 @@ class Hero extends React.Component {
                       <br />
                       <br />
                     </Grid>
-                    {/* <Grid item xs={12} sm={12} md={6}>
-                    </Grid> */}
                   </Grid>
                 </div>
               </HeroImg>
