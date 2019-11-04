@@ -47,7 +47,7 @@ class Account extends React.Component {
       store.uiStore.snackBarOpen = true
     }
     return (
-      <Container maxWidth="lg" style={{ marginTop: 30 }}>
+      <Container maxWidth="lg" style={{ marginTop: 30, marginBottom: 30 }}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
             <Card>

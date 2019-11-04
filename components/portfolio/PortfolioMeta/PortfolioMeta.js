@@ -64,7 +64,7 @@ export default props => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} md={8}>
+      <Grid item xs={12} sm={8}>
         <Card className={classes.card}>
           <CardContent>
             <Grid container>
@@ -123,7 +123,7 @@ export default props => {
           </CardContent>
         </Card>
       </Grid>
-      <Grid item xs={6} md={4}>
+      <Grid item xs={12} sm={4}>
         <Card className={classes.card} style={{ minHeight: "221px" }}>
           <CardContent>
             <Grid container

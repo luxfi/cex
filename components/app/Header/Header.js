@@ -32,9 +32,6 @@ const CustomLink = React.forwardRef(
   )
 )
 
-
-
-
 const StyledMenu = withStyles({
   paper: {
     backgroundColor: "#0000009e",
@@ -90,8 +87,7 @@ class Header extends React.Component {
                 }`
               }
             >
-              {" "}
-              <Container maxWidth="xl" style={{ paddingLeft: "72px", paddingRight: "72px"}}>
+              <Container maxWidth="xl" className={classes.header}>
                 <Toolbar
                   className={`${classes.noPadding} ${classes.toolBar}`}
                 >
@@ -108,7 +104,7 @@ class Header extends React.Component {
                       height="52px"
                     />
                   </Link>
-                  <div style={{ marginLeft: "128px" }}>
+                  <div className={classes.menu}>
                     <Button
                       aria-controls="menu"
                       aria-haspopup="true"
@@ -267,6 +263,10 @@ const styles = theme => {
     root: {
       flexGrow: 1
     },
+    header: {
+      paddingLeft: theme.spacing(3),
+      paddingRight: theme.spacing(3),
+    },
     menuButton: {
       marginRight: theme.spacing(2)
     },
@@ -324,8 +324,6 @@ const styles = theme => {
     appBar: {
       height: "80px",
       boxShadow: "none",
-      paddingLeft: "15px",
-      paddingRight: "15px"
     },
     transparent: {
       background: "transparent !important",
@@ -347,7 +345,13 @@ const styles = theme => {
     toolBar: {
       minHeight: "80px",
       paddingLeft: "0px",
-      paddingRight: "0px"
+      paddingRight: "0px",
+    },
+    menu: {
+      marginLeft: "128px",
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
+      }
     },
   }
 }

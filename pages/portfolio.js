@@ -102,7 +102,6 @@ class Portfolio extends React.Component {
         />
         <RewardsView tabIdx={tabIdx} index={1} />
         <NewsFeedView tabIdx={tabIdx} index={2} />
-        <ProTraderCTA />
       </div>
     )
   }
