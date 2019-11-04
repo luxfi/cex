@@ -59,9 +59,7 @@ const CardOuter = props => {
   }
 
   return (
-    <Grid item xs={(props.double) ? 8 : 4}>
-      <Paper className={classNames(names)}>{props.children}</Paper>
-    </Grid>
+    <Paper className={classNames(names)}>{props.children}</Paper>
   )
 }
 
@@ -82,7 +80,7 @@ const RewardCard = props => {
   const completedStringStyle = completed ? { visibility: "visible" } : { visibility: "hidden" }
 
   return (
-    <CardOuter double={!!double} disabled={!completed} classes={classes}>
+    <CardOuter disabled={!completed} classes={classes}>
       <h6 className={classes.title}>{title}</h6>
       <Icon className={iconClasses}>stars_rounded</Icon>
       <p className={classes.pointsString}>{pointsString}</p>
@@ -133,13 +131,13 @@ const SocialIcons = props => {
   )
 }
 
-const ReferalCard = props => {
+const ReferralCard = props => {
 
   const { rewardsURL, rewardsShareMessage, onCopied } = props
   const classes = styles()
 
   return (
-    <CardOuter double leftAligned classes={classes} >
+    <CardOuter leftAligned classes={classes} >
       <h6 className={classes.totalTitle}>Earn 15 points for each friend you invite</h6>
       <div className={classes.urlCopyOuter}>
         <InputBase
@@ -190,23 +188,46 @@ const RewardsView = (props) => {
 
   return (
     <>
-    <Grid container spacing={3} className={classes.root}>
-      <TotalCard total={45} monthTotal={30} />
-      <ReferalCard
-        rewardsURL={rewardsURL}
-        message={rewardsShareMessage}
-        onCopied={(ignore) => {setShareUrlWasCopied(true)}}
-      />
-      <RewardCard title={"complete your profile"} points={5} completed/>
-      <RewardCard title={"invite a friend"} points={15} completed />
-      <RewardCard title={"add a payment option"} points={10} completed />
-      <RewardCard title={"make 1 investment"} points={15} completed />
-      <RewardCard title={"make 2 investments"} points={10} />
-      <RewardCard title={"make 5 investments"} points={10} />
-      <RewardCard title={"make 10 investments"} points={10} />
-      <RewardCard title={"make 20 investments"} points={10} />
-      <RewardCard title={"make 30 investments"} points={10} />
+    <Grid container spacing={3}>
+      <Grid item xs={12} sm={4}>
+        <TotalCard total={45} monthTotal={30} />
+      </Grid>
+      <Grid item xs={12} sm={8}>
+        <ReferralCard
+          rewardsURL={rewardsURL}
+          message={rewardsShareMessage}
+          onCopied={(ignore) => {setShareUrlWasCopied(true)}}
+        />
+      </Grid>
+      <Grid item xs={12} sm={4}>
+        <RewardCard title={"complete your profile"} points={5} completed/>
+      </Grid>
+      <Grid item xs={12} sm={4}>
+        <RewardCard title={"invite a friend"} points={15} completed />
+      </Grid>
+      <Grid item xs={12} sm={4}>
+        <RewardCard title={"add a payment option"} points={10} completed />
+      </Grid>
+      <Grid item xs={12} sm={4}>
+        <RewardCard title={"make 1 investment"} points={15} completed />
+      </Grid>
+      <Grid item xs={12} sm={4}>
+        <RewardCard title={"make 2 investments"} points={10} />
+      </Grid>
+      <Grid item xs={12} sm={4}>
+        <RewardCard title={"make 5 investments"} points={10} />
+      </Grid>
+      <Grid item xs={12} sm={4}>
+        <RewardCard title={"make 10 investments"} points={10} />
+      </Grid>
+      <Grid item xs={12} sm={4}>
+        <RewardCard title={"make 20 investments"} points={10} />
+      </Grid>
+      <Grid item xs={12} sm={4}>
+        <RewardCard title={"make 30 investments"} points={10} />
+      </Grid>
     </Grid>
+    <br />
     <UrlWasCopiedSnackbar
       open={shareUrlWasCopied}
       handleSnackbarClose={
