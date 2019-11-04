@@ -80,6 +80,13 @@ muiLayoutConfig.initialAdjustmentHeight = {
   "xs": 64,
   "sm": 80
 }
+muiLayoutConfig.navVariant = {
+  "xs": "temporary",
+  "sm": "permanent",
+//  "lg": "temporary",
+}
+
+//muiLayoutConfig.collapsedBreakpoint = 'lg'
 
 // ****************
 @observer
