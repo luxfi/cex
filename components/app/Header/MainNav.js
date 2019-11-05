@@ -19,6 +19,7 @@ import {
 import { withStyles } from "@material-ui/core/styles"
 
 import { AutoCompleteSearch } from ".."
+//import { faCcDiscover } from "@fortawesome/free-brands-svg-icons"
 
 const CustomLink = React.forwardRef(
   ({ className, href, hrefAs, children, }, ref) => (
@@ -28,15 +29,214 @@ const CustomLink = React.forwardRef(
   )
 )
 
-const StyledMenu = withStyles({
-  paper: {
-    backgroundColor: "#0000009e",
+const navStructure = [
+  {
+    title: "Discover",
+    items: [
+      {
+        title: "Movies",
+        link: "/film" 
+      },
+      {
+        title: "TV Series",
+        placeholder: "TV Series"
+      },
+      {
+        title: "Music",
+        placeholder: "Music"
+      },
+      {
+        title: "Gaming",
+        placeholder: "Gaming"
+      }
+    ]
   },
-})(props => (
-  <Menu
-    {...props}
-  />
-));
+  {
+    title: "Investors",
+    placeholder: "Investors"
+  },  
+  {
+    title: "Communities",
+    placeholder: "Communities"
+  },  
+  {
+    title: "Loyalty",
+    placeholder: "Loyalty"
+  },  
+
+]
+
+const renderMainNav_Temp = (props) => {
+
+  const {classes, openModal} = props
+
+  return (
+    <div className={classes.menuBarOuter}>
+      <div className={classes.menuSpacer} />
+      <Button
+        aria-controls="menu"
+        aria-haspopup="true"
+        onClick={handleClick2}
+        color="inherit"
+        className={classes.menuButton}
+      >
+        Discover
+        </Button>
+      <Menu
+        id="menu"
+        anchorEl={anchorEl2}
+        keepMounted
+        open={open2}
+        onClose={handleClose2}
+        className={classes.menuButton}
+        style={{} /*{ marginTop: "50px", transform: "translate(-22px, 0px)" }*/}
+      >
+        <MenuItem onClick={() => {
+          openModal("Movies")
+        }}>
+          <span style={{ padding: "16px" }}>Movies</span>
+        </MenuItem>
+        <MenuItem onClick={() => {
+          openModal("TV Series")
+        }}>
+          <span style={{ padding: "16px" }}>TV Series</span>
+        </MenuItem>
+        <MenuItem onClick={() => {
+          openModal("Music")
+        }}>
+          <span style={{ padding: "16px" }}>Music</span>
+        </MenuItem>
+        <MenuItem onClick={() => {
+          openModal("Gaming")
+        }}>
+          <span style={{ padding: "16px" }}>Gaming</span>
+        </MenuItem>
+      </Menu>
+      <Button
+        onClick={() => {
+          openModal("Shop")
+        }}
+        color="inherit"
+        className={classes.menuButton}
+      >
+        Shop
+                    </Button>
+      <Button
+        onClick={() => {
+          openModal("Investors")
+        }}
+        color="inherit"
+        className={classes.menuButton}
+      >
+        Investors
+                    </Button>
+      <Button
+        onClick={() => {
+          openModal("Communities")
+        }}
+        color="inherit"
+        className={classes.menuButton}
+      >
+        Communities
+                    </Button>
+      <Button
+        onClick={() => {
+          openModal("Loyalty")
+        }}
+        color="inherit"
+        className={classes.menuButton}
+      >
+        Loyalty
+        </Button>
+    </div>
+  )
+}
+
+const renderAccountArea = (accountLoaded, logout, classes) => {
+
+  return (<>
+    <div className={classes.search}>
+      <div className={classes.searchIcon}>
+        <Search />
+      </div>
+      <AutoCompleteSearch
+        placeholder="Search…"
+        classes={{
+          root: classes.inputRoot,
+          input: classes.inputInput
+        }}
+      />
+    </div>
+    {accountLoaded ? (
+      <>
+        <IconButton
+          aria-controls="menu"
+          aria-haspopup="true"
+          onClick={handleClick}
+        >
+          <AccountCircle style={{ fontSize: "2rem" }} />
+        </IconButton>
+        <Menu
+          id="menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={open}
+          onClose={handleClose}
+          style={{ marginTop: "50px" }}
+        >
+          <MenuItem component={CustomLink} href={"/account"}>
+            <AccountCircle />
+            <span style={{ padding: "15px" }}>Account</span>
+          </MenuItem>
+          <MenuItem component={CustomLink} href={"/portfolio"}>
+            <AccountCircle />
+            <span style={{ padding: "15px" }}>Portfolio</span>
+          </MenuItem>
+          <MenuItem onClick={logout}>
+            <ExitToApp />
+            <span style={{ padding: "15px" }}>Logout</span>
+          </MenuItem>
+        </Menu>
+      </>
+    ) : (
+        <>
+          <Button
+            component={CustomLink}
+            href={"/login"}
+            color="inherit"
+            className={classes.menuButton}
+          >
+            Login
+          </Button>
+          <Button
+            component={CustomLink}
+            color="inherit"
+            variant="outlined"
+            href={"/signup"}
+            className={classes.menuButton}
+          >
+            Sign Up
+          </Button>
+        </>
+      )}
+  </>)
+}
+
+function renderMainNav(structure, classes) {
+
+  let result = []
+
+  structure.forEach((item) => {
+    result.push(
+      <Button color="inherit" className={classes.menuButton}>
+        {item.title}
+      </Button>
+    )
+  })
+  return result;
+}
+
+
 
 export default (props) => {
 
@@ -61,6 +261,7 @@ export default (props) => {
     setAnchorEl2(null)
   }
 
+
   const {
     showElements,
     classes,
@@ -79,148 +280,11 @@ export default (props) => {
       </Link>
       <div className={classes.menuBarOuter}>
         <div className={classes.menuSpacer} />
-        <Button
-          aria-controls="menu"
-          aria-haspopup="true"
-          onClick={handleClick2}
-          color="inherit"
-          className={classes.menuButton}
-        >
-          Discover
-        </Button>
-        <StyledMenu
-          id="menu"
-          anchorEl={anchorEl2}
-          keepMounted
-          open={open2}
-          onClose={handleClose2}
-          className={classes.menuButton}
-          style={{} /*{ marginTop: "50px", transform: "translate(-22px, 0px)" }*/}
-        >
-          <MenuItem onClick={() => {
-            openModal("Movies")
-          }}>
-            <span style={{ padding: "16px" }}>Movies</span>
-          </MenuItem>
-          <MenuItem onClick={() => {
-            openModal("TV Series")
-          }}>
-            <span style={{ padding: "16px" }}>TV Series</span>
-          </MenuItem>
-          <MenuItem onClick={() => {
-            openModal("Music")
-          }}>
-            <span style={{ padding: "16px" }}>Music</span>
-          </MenuItem>
-          <MenuItem onClick={() => {
-            openModal("Gaming")
-          }}>
-            <span style={{ padding: "16px" }}>Gaming</span>
-          </MenuItem>
-        </StyledMenu>
-        <Button
-          onClick={() => {
-            openModal("Shop")
-          }}
-          color="inherit"
-          className={classes.menuButton}
-        >
-          Shop
-                    </Button>
-        <Button
-          onClick={() => {
-            openModal("Investors")
-          }}
-          color="inherit"
-          className={classes.menuButton}
-        >
-          Investors
-                    </Button>
-        <Button
-          onClick={() => {
-            openModal("Communities")
-          }}
-          color="inherit"
-          className={classes.menuButton}
-        >
-          Communities
-                    </Button>
-        <Button
-          onClick={() => {
-            openModal("Loyalty")
-          }}
-          color="inherit"
-          className={classes.menuButton}
-        >
-          Loyalty
-        </Button>
+        {renderMainNav(navStructure, classes)}
       </div>
+
       <div className={classes.accountOuter} >
-        <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <Search />
-          </div>
-          <AutoCompleteSearch
-            placeholder="Search…"
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput
-            }}
-          />
-        </div>
-        {accountLoaded ?
-          (
-            <>
-              <IconButton
-                aria-controls="menu"
-                aria-haspopup="true"
-                onClick={handleClick}
-              >
-                <AccountCircle style={{ fontSize: "2rem" }} />
-              </IconButton>
-              <StyledMenu
-                id="menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={open}
-                onClose={handleClose}
-                style={{ marginTop: "50px" }}
-              >
-                <MenuItem component={CustomLink} href={"/account"}>
-                  <AccountCircle />
-                  <span style={{ padding: "15px" }}>Account</span>
-                </MenuItem>
-                <MenuItem component={CustomLink} href={"/portfolio"}>
-                  <AccountCircle />
-                  <span style={{ padding: "15px" }}>Portfolio</span>
-                </MenuItem>
-                <MenuItem onClick={() => userStore.logout()}>
-                  <ExitToApp />
-                  <span style={{ padding: "15px" }}>Logout</span>
-                </MenuItem>
-              </StyledMenu>
-            </>
-          ) : (
-            <>
-              <Button
-                component={CustomLink}
-                href={"/login"}
-                color="inherit"
-                className={classes.menuButton}
-              >
-                Login
-            </Button>
-              <Button
-                component={CustomLink}
-                color="inherit"
-                variant="outlined"
-                href={"/signup"}
-                className={classes.menuButton}
-              >
-                Sign Up
-            </Button>
-            </>
-          )}
+        {renderAccountArea(accountLoaded, logout, classes)}
       </div>
     </>
   )
