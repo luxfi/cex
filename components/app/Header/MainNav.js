@@ -261,12 +261,11 @@ export default (props) => {
     setAnchorEl2(null)
   }
 
-
   const {
     showElements,
-    classes,
     accountLoaded,
-    openModal
+    logout,
+    classes
   } = props
 
   if (!showElements) {
