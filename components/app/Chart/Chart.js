@@ -33,10 +33,10 @@ export default props => {
       <div className="title" name="section1">
         Trade This Stock
       </div>
-      {/* <ChartIntervalControls
+      <ChartIntervalControls
         updatePrintInterval={updatePrintInterval}
         printInterval={printInterval}
-      /> */}
+      />
       <TVChartContainer />
       <div className="posts-container">
         {/* <ChartCandlestickFake data={chartData} yDomain={yDomain} labels={labels} /> */}
