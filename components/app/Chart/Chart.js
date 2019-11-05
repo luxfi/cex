@@ -37,9 +37,9 @@ export default props => {
         updatePrintInterval={updatePrintInterval}
         printInterval={printInterval}
       />
-      <TVChartContainer />
+      {/* <TVChartContainer /> */}
       <div className="posts-container">
-        {/* <ChartCandlestickFake data={chartData} yDomain={yDomain} labels={labels} /> */}
+        <ChartCandlestickFake data={chartData} yDomain={yDomain} labels={labels} />
         <div className="container-row space-between">
           <BuySellForm
             buttonColor="green"
