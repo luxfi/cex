@@ -39,7 +39,13 @@ const useStyles = makeStyles(theme => {
   }
 })
 
-const Item = ({ movie }) => {
+const Item = ({
+  movie,
+  loggedIn,
+  inWatchlist,
+  addToWatchlist,
+  removeFromWatchlist
+}) => {
   const childRef = useRef()
   const classes = useStyles()
   return (
@@ -94,8 +100,16 @@ const Item = ({ movie }) => {
                 >
                   Learn More
                 </Button>
-                <Button size="small" className={classes.button}>
-                  Add to Watchlist
+                <Button
+                  size="small"
+                  className={classes.button}
+                  onClick={e => {
+                    inWatchlist
+                      ? removeFromWatchlist(movie.ticker)
+                      : addToWatchlist(movie.ticker)
+                  }}
+                >
+                  {inWatchlist ? "Remove from Watchlist" : "Add to WatchList"}
                 </Button>
                 <Button
                   component={CustomLink}

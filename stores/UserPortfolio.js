@@ -100,7 +100,7 @@ export default class UserPortfolio {
       }
       onSuccess && onSuccess()
     } catch (ex) {
-      console.log("Error logging in", ex)
+      console.log("Error adding to watchlist", ex)
       onError && onError()
     } finally {
       this.updating = false
@@ -124,7 +124,7 @@ export default class UserPortfolio {
     }
       onSuccess && onSuccess()
     } catch (ex) {
-      console.log("Error logging in", ex)
+      console.log("Error removing from watchlist", ex)
       onError && onError()
     } finally {
       this.updating = false

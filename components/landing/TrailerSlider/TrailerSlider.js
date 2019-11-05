@@ -31,6 +31,7 @@ export default class TrailerSlider extends React.Component {
   render() {
     const { store } = this.props
     const { movies } = store.movieStore
+    const { loggedIn } = store.userStore
     return (
       <div id="trailer-slider" style={{ padding: "48px 0px"}} >
         <Typography variant="h5" style={{ marginLeft: "56px" }} gutterBottom>
@@ -45,8 +46,21 @@ export default class TrailerSlider extends React.Component {
         }}>
           <Slider>
           {movies.map((movie, i) => {
+            const inWatchlist =
+              store.userPortfolio.watchlist.indexOf(movie.ticker) > -1
             return (
-              <Slider.Item movie={movie} key={i}>item1</Slider.Item>
+              <Slider.Item
+                movie={movie}
+                loggedIn={loggedIn}
+                key={i}
+                removeFromWatchlist={(ticket) =>
+                  store.userPortfolio.removeFromWatchlist(ticket)
+                }
+                addToWatchlist={(ticker) => store.userPortfolio.addToWatchlist(ticker)}
+                inWatchlist={inWatchlist}
+              >
+                item1
+              </Slider.Item>
             )
           })}
           </Slider>
