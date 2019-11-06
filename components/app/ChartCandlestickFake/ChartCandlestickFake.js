@@ -6,7 +6,7 @@ import React from "react"
 const XYAxisOnHover = ({ yDomain, xLabels, data, labels }) => {
   return (
     <div>
-        <FlexibleWidthXYPlot animation yDomain={yDomain} height={450}>
+        {/* <FlexibleWidthXYPlot animation yDomain={yDomain} height={450}>
           <YAxis/>
           <ChartCandlestick
             colorType="literal"
@@ -23,7 +23,7 @@ const XYAxisOnHover = ({ yDomain, xLabels, data, labels }) => {
               yPercent={1.089}
             />
           ))}
-        </FlexibleWidthXYPlot>
+        </FlexibleWidthXYPlot> */}
     </div>
   )
 }
