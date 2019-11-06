@@ -125,9 +125,6 @@ export default props => {
           margin-top: 20px;
           fill: transparent;
         }
-        text {
-          fill: white !important
-        }
         .divider {
           width: 1px;
           background: black;
