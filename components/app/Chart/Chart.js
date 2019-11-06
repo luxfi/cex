@@ -9,6 +9,7 @@ import { timelineLabels } from "../../utils/dateRange"
 import dynamic from "next/dynamic"
 import { Toolbar, Grid } from "@material-ui/core"
 import { useState } from "react"
+import { StockRechart } from "../"
 
 const TVChartContainer = dynamic(
   async () => {
@@ -42,6 +43,7 @@ export default props => {
   return (
     <div className="container">
       {/* <TVChartContainer /> */}
+      <StockRechart/>
         <div className="container-row space-between">
           <BuySellForm
             buttonColor="green"
