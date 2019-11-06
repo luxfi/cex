@@ -20,7 +20,7 @@ const TVChartContainer = dynamic(
   }
 )
 
-function getActiveChart(activeChart, {chartData, yDomain, labels}) {
+function getActiveChart(activeChart, { chartData, yDomain, labels }) {
   switch (activeChart) {
     case "candlestick":
       return (
@@ -30,8 +30,14 @@ function getActiveChart(activeChart, {chartData, yDomain, labels}) {
           labels={labels}
         />
       )
-    case 1:
-      return null
+    case "line-chart":
+      return (
+        <ChartCandlestickFake
+          data={chartData}
+          yDomain={yDomain}
+          labels={labels}
+        />
+      )
     case 2:
       return null
     default:
@@ -57,7 +63,6 @@ export default props => {
   } = props
 
   let labels = timelineLabels()
-  chartData
   return (
     <Element className="container">
       <Toolbar>
