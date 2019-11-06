@@ -1,15 +1,48 @@
-import { BuySellForm, ChartIntervalControls, ChartCandlestickFake } from '../'
+import {
+  BuySellForm,
+  ChartIntervalControls,
+  ChartCandlestickFake,
+  ChartLineSeries,
+  ToggleVisibleChart
+} from "../"
 import { timelineLabels } from "../../utils/dateRange"
 import { Element } from "react-scroll"
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic"
+import { Toolbar, Grid } from "@material-ui/core"
+import { useState } from "react"
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 
 const TVChartContainer = dynamic(
-	async () => {
-    const mod = await import('../TVChartContainer')
+  async () => {
+    const mod = await import("../TVChartContainer")
     return mod.TVChartContainer
   },
-	{ ssr: false, loading: () => <div style={{ color: 'red' }}>This is loading</div> },
+  {
+    ssr: false,
+    loading: () => <div style={{ color: "red" }}>This is loading</div>
+  }
 )
+
+function getActiveChart(activeChart, { chartData, yDomain, labels }) {
+  switch (activeChart) {
+    case "candlestick":
+      return (
+        <ChartCandlestickFake
+          data={chartData}
+          yDomain={yDomain}
+          labels={labels}
+        />
+      )
+    case "line-chart":
+      return (
+        <ChartLineSeries data={chartData} yDomain={yDomain} labels={labels} />
+      )
+    case 2:
+      return null
+    default:
+      return null
+  }
+}
 
 export default props => {
   const {
@@ -17,53 +50,56 @@ export default props => {
     yDomain,
     updatePrintInterval,
     printInterval,
+    activeChart,
     buyOrders,
     sellOrders,
     orderBook,
     ticker,
     movieCategories,
     onExecute,
-    maxSell
+    maxSell,
+    setActiveChart
   } = props
 
   let labels = timelineLabels()
-
+  const [visible, setVisible] = useState(false)
   return (
     <Element className="container">
-      <div className="title" name="section1">
-        Trade This Stock
-      </div>
-      {/* <ChartIntervalControls
-        updatePrintInterval={updatePrintInterval}
-        printInterval={printInterval}
-      /> */}
-      <TVChartContainer />
+      <Toolbar>
+          <ChartIntervalControls
+            updatePrintInterval={updatePrintInterval}
+            activeChart={activeChart}
+          />
+        <div style={{ flexGrow: 1 }} />
+        <ToggleVisibleChart setActiveChart={setActiveChart} />
+      </Toolbar>
+      {/* <TVChartContainer /> */}
       <div className="posts-container">
-        {/* <ChartCandlestickFake data={chartData} yDomain={yDomain} labels={labels} /> */}
-        <div className="container-row space-between">
-          <BuySellForm
-            buttonColor="green"
-            buttonText="BUY"
-            orderType="bid"
-            ticker={ticker}
-            orders={buyOrders}
-            orderBook={orderBook}
-            onExecute={onExecute}
-            movieCategories={movieCategories}
-          />
-          <div className="divider" />
-          <BuySellForm
-            buttonColor="red"
-            buttonText="SELL"
-            orderType="ask"
-            ticker={ticker}
-            orders={sellOrders}
-            orderBook={orderBook}
-            onExecute={onExecute}
-            movieCategories={movieCategories}
-            maxSell={maxSell}
-          />
-        </div>
+        {getActiveChart(activeChart, { chartData, yDomain, labels })}
+          <div className="container-row space-between">
+            <BuySellForm
+              buttonColor="green"
+              buttonText="BUY"
+              orderType="bid"
+              ticker={ticker}
+              orders={buyOrders}
+              orderBook={orderBook}
+              onExecute={onExecute}
+              movieCategories={movieCategories}
+            />
+            <div className="divider" />
+            <BuySellForm
+              buttonColor="red"
+              buttonText="SELL"
+              orderType="ask"
+              ticker={ticker}
+              orders={sellOrders}
+              orderBook={orderBook}
+              onExecute={onExecute}
+              movieCategories={movieCategories}
+              maxSell={maxSell}
+            />
+          </div>
       </div>
 
       <style jsx>{`
@@ -86,7 +122,7 @@ export default props => {
         }
         .posts-container {
           margin-top: 20px;
-          fill: white;
+          fill: transparent;
         }
         .divider {
           width: 1px;
