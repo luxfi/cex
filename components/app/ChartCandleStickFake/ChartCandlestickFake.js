@@ -1,86 +1,76 @@
 import { XAxis, YAxis, FlexibleWidthXYPlot, ChartLabel } from "react-vis"
 import { ChartCandlestick } from ".."
 import { observer } from "mobx-react"
+import React from "react"
+import { useSpring, animated } from "react-spring"
+
+const XYAxisOnHover = ({ yDomain, xLabels, data, labels }) => {
+  const [props, set] = useSpring(() => ({ opacity: 0 }))
+  return (
+    <div>
+      <animated.div
+        className="animated"
+        onMouseEnter={() => set({ opacity: 1 })}
+        onMouseLeave={() => set({ opacity: 0 })}
+      >
+        <FlexibleWidthXYPlot animation yDomain={yDomain} height={450}>
+          <YAxis
+            style={{
+              opacity: props.opacity.value
+            }}
+          />
+          <ChartCandlestick
+            colorType="literal"
+            opacityType="literal"
+            data={data}
+          />
+          {labels.map((marker, i) => (
+            <ChartLabel
+              key={i}
+              text={marker}
+              className="text"
+              includeMargin={false}
+              xPercent={xLabels[i]}
+              yPercent={1.089}
+              style={{
+                opacity: props.opacity.value
+              }}
+            />
+          ))}
+        </FlexibleWidthXYPlot>
+      </animated.div>
+    </div>
+  )
+}
+
+const createXLabels = intervals => {
+  const xPercentFirst = -0.005
+  const xPercentLast = 1 - 0.01
+  let xPercent = -0.005
+  const range = xPercentLast - xPercentFirst
+  const increments = range / intervals
+  const xLabels = []
+  xLabels.push(xPercent)
+
+  while (xPercent < xPercentLast) {
+    xPercent += increments
+    xLabels.push(xPercent)
+  }
+  return xLabels
+}
 
 @observer
 export default class FakeCandleStickChart extends React.Component {
   render() {
-    const { data, yDomain, labels, marginLeft } = this.props
-    let domain = yDomain || [13, 13.7]
-    let xPercentFirst = -0.005
-    let xPercentLast = 1 - 0.01
-    let xPercent = -0.005
-    let range = xPercentLast - xPercentFirst
-    let intervals = 21.0
-    let increments = range / intervals
-    let array = []
-
-    array.push(xPercent)
-
-    while (xPercent < xPercentLast) {
-      xPercent += increments
-      array.push(xPercent)
-    }
-
+    const { data, yDomain, labels } = this.props
+    const xLabels = createXLabels(labels.length)
     return (
-      <div className="candlestick-example">
-        <div className="chart">
-          <FlexibleWidthXYPlot
-            animation
-            yDomain={domain}
-            height={450}
-            style={{ marginLeft: "-12px" }}
-          >
-            {/* <XAxis color="white" /> */}
-            <YAxis />
-            <ChartCandlestick
-              colorType="literal"
-              opacityType="literal"
-              stroke="#79C7E3"
-              data={data}
-            />
-            {labels.map((marker, i) => {
-              return (
-                <ChartLabel
-                  key={i}
-                  text={marker}
-                  className="text"
-                  includeMargin={false}
-                  xPercent={array[i]}
-                  yPercent={1.089}
-                  fill="white"
-                />
-              )
-            })}
-          </FlexibleWidthXYPlot>
-        </div>
-        <style jsx>{`
-          .candlestick-example {
-            width: 100%;
-          }
-
-          .chart {
-            width: 100%;
-          }
-
-          .dashed-example-line {
-            stroke-dasharray: 2, 2;
-          }
-
-          .rv-xy-plot__axis.rv-xy-plot__axis--vertical {
-            fill: white;
-          }
-
-          .rv-xy-plot__series--label {
-            fill: white;
-          }
-
-          .text {
-            fill: white;
-            color: white;
-          }
-        `}</style>
-      </div>
+      <XYAxisOnHover
+        yDomain={yDomain}
+        xLabels={xLabels}
+        data={data}
+        labels={labels}
+      />
     )
   }
 }
