@@ -46,8 +46,7 @@ const formatMonthlyStats = (price, valueDelta) => {
     Math.abs(valueDelta) +
     " (" +
     ((valueDelta / price) * 100).toFixed(2) +
-    "%) " +
-    " PAST MONTH"
+    "%) "
   )
 }
 
@@ -243,7 +242,9 @@ class Index extends React.Component {
     chartData,
     yDomain,
     updatePrintInterval,
+    setActiveChart,
     printInterval,
+    activeChart,
     buyOrders,
     sellOrders,
     orderBook,
@@ -257,7 +258,7 @@ class Index extends React.Component {
       (chartPrice - movie.price).toFixed(2)
     )
     return (
-      <div className={classNames(classes.flexCenteredColumn, classes.mainArea)}>
+      <div>
         <h1 className={classes.investCompanyName}>{movie.name}</h1>
         <h3 className={classes.investCompanyDescription}>
           {movie.financialDescription}
@@ -281,7 +282,9 @@ class Index extends React.Component {
               chartData={chartData}
               yDomain={yDomain}
               updatePrintInterval={updatePrintInterval}
+              setActiveChart={setActiveChart}
               printInterval={printInterval}
+              activeChart={activeChart}
               buyOrders={buyOrders}
               sellOrders={sellOrders}
               orderBook={orderBook}
@@ -364,11 +367,14 @@ class Index extends React.Component {
 
     // orderBook stuff
     let takeResultsArray = orderBook.takeResults.slice(0)
-    const { printInterval, buyOrders, sellOrders } = orderBook
+    const { printInterval, buyOrders, sellOrders, activeChart } = orderBook
     const chartData = formatTakeResults(takeResultsArray, printInterval)
     const yDomain = [orderBook.low * 0.94, orderBook.high * 1.06]
     const updatePrintInterval = time => {
       orderBook.updatePrintInterval(time)
+    }
+    const setActiveChart = activeChart => {
+      orderBook.setActiveChart(activeChart)
     }
 
     // Load necessary user data
@@ -391,7 +397,9 @@ class Index extends React.Component {
                 chartData,
                 yDomain,
                 updatePrintInterval,
+                setActiveChart,
                 printInterval,
+                activeChart,
                 buyOrders,
                 sellOrders,
                 orderBook,
