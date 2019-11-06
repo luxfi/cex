@@ -1,6 +1,8 @@
 import React from "react"
 import ToggleButton from "@material-ui/lab/ToggleButton"
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup"
+import ShowChartIcon from "@material-ui/icons/ShowChart"
+import GraphicEqIcon from '@material-ui/icons/GraphicEq'
 import { makeStyles, withStyles } from "@material-ui/core/styles"
 
 const useStyles = makeStyles(theme => ({
@@ -9,8 +11,8 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const ToggleVisibleButtons = ({ updateSelected }) => {
-  const [selected, setSelected] = React.useState("5 min")
+const ToggleVisibleButtons = ({ setActiveChart }) => {
+  const [selected, setSelected] = React.useState("line-chart")
 
   const handleSelection = (event, updatedSelection) => {
     setSelected(updatedSelection)
@@ -22,25 +24,18 @@ const ToggleVisibleButtons = ({ updateSelected }) => {
     <div className={classes.toggleContainer}>
       <ToggleButtonGroup value={selected} exclusive onChange={handleSelection}>
         <ToggleButton
-          value="1 min"
-          onClick={e => updateSelected(1)}
+          value="line-chart"
+          onClick={e => setActiveChart("line-chart")}
           disableFocusRipple
         >
-          1 min
+          <ShowChartIcon />
         </ToggleButton>
         <ToggleButton
-          value="5 min"
-          onClick={e => updateSelected(5)}
+          value="candlestick"
+          onClick={e => setActiveChart("candlestick")}
           disableFocusRipple
         >
-          5 min
-        </ToggleButton>
-        <ToggleButton
-          value="5 min"
-          onClick={e => updateSelected(5)}
-          disableFocusRipple
-        >
-          5 min
+          <GraphicEqIcon />
         </ToggleButton>
       </ToggleButtonGroup>
     </div>

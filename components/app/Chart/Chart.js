@@ -1,15 +1,43 @@
-import { BuySellForm, ChartIntervalControls, ChartCandlestickFake } from '../'
+import {
+  BuySellForm,
+  ChartIntervalControls,
+  ChartCandlestickFake,
+  ToggleVisibleChart
+} from "../"
 import { timelineLabels } from "../../utils/dateRange"
 import { Element } from "react-scroll"
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic"
+import { Toolbar } from "@material-ui/core"
 
 const TVChartContainer = dynamic(
-	async () => {
-    const mod = await import('../TVChartContainer')
+  async () => {
+    const mod = await import("../TVChartContainer")
     return mod.TVChartContainer
   },
-	{ ssr: false, loading: () => <div style={{ color: 'red' }}>This is loading</div> },
+  {
+    ssr: false,
+    loading: () => <div style={{ color: "red" }}>This is loading</div>
+  }
 )
+
+function getActiveChart(activeChart, {chartData, yDomain, labels}) {
+  switch (activeChart) {
+    case "candlestick":
+      return (
+        <ChartCandlestickFake
+          data={chartData}
+          yDomain={yDomain}
+          labels={labels}
+        />
+      )
+    case 1:
+      return null
+    case 2:
+      return null
+    default:
+      return null
+  }
+}
 
 export default props => {
   const {
@@ -17,26 +45,32 @@ export default props => {
     yDomain,
     updatePrintInterval,
     printInterval,
+    activeChart,
     buyOrders,
     sellOrders,
     orderBook,
     ticker,
     movieCategories,
     onExecute,
-    maxSell
+    maxSell,
+    setActiveChart
   } = props
 
   let labels = timelineLabels()
-
+  chartData
   return (
     <Element className="container">
-      <ChartIntervalControls
-        updatePrintInterval={updatePrintInterval}
-        printInterval={printInterval}
-      />
+      <Toolbar>
+        <ChartIntervalControls
+          updatePrintInterval={updatePrintInterval}
+          activeChart={activeChart}
+        />
+        <div style={{ flexGrow: 1 }} />
+        <ToggleVisibleChart setActiveChart={setActiveChart} />
+      </Toolbar>
       {/* <TVChartContainer /> */}
       <div className="posts-container">
-        <ChartCandlestickFake data={chartData} yDomain={yDomain} labels={labels} />
+        {getActiveChart(activeChart, { chartData, yDomain, labels })}
         <div className="container-row space-between">
           <BuySellForm
             buttonColor="green"
