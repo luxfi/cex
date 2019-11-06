@@ -47,6 +47,7 @@ export default class OrderBook {
   @observable high = 13.37
   @observable low = 13.37
   @observable printInterval = 5
+  @observable activeChart = "line-chart"
 
   constructor(
     initialData = {
@@ -191,6 +192,10 @@ export default class OrderBook {
 
   @action updatePrintInterval(time) {
     this.printInterval = time
+  }
+
+  @action setActiveChart(chart) {
+    this.activeChart = chart
   }
 
   @action updateOrders() {
