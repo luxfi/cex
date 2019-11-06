@@ -55,6 +55,7 @@
     "react-parallax": "2.2.4",
     "react-plaid-link": "^1.5.0",
     "react-responsive-carousel": "3.1.51",
+    "react-spring": "^8.0.27",
     "react-scroll": "^1.7.14",
     "react-share": "^3.0.1",
     "react-spinners": "^0.6.1",

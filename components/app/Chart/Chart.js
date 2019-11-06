@@ -66,40 +66,40 @@ export default props => {
   return (
     <Element className="container">
       <Toolbar>
-          <ChartIntervalControls
-            updatePrintInterval={updatePrintInterval}
-            activeChart={activeChart}
-          />
+        <ChartIntervalControls
+          updatePrintInterval={updatePrintInterval}
+          activeChart={activeChart}
+        />
         <div style={{ flexGrow: 1 }} />
         <ToggleVisibleChart setActiveChart={setActiveChart} />
       </Toolbar>
       {/* <TVChartContainer /> */}
       <div className="posts-container">
         {getActiveChart(activeChart, { chartData, yDomain, labels })}
-          <div className="container-row space-between">
-            <BuySellForm
-              buttonColor="green"
-              buttonText="BUY"
-              orderType="bid"
-              ticker={ticker}
-              orders={buyOrders}
-              orderBook={orderBook}
-              onExecute={onExecute}
-              movieCategories={movieCategories}
-            />
-            <div className="divider" />
-            <BuySellForm
-              buttonColor="red"
-              buttonText="SELL"
-              orderType="ask"
-              ticker={ticker}
-              orders={sellOrders}
-              orderBook={orderBook}
-              onExecute={onExecute}
-              movieCategories={movieCategories}
-              maxSell={maxSell}
-            />
-          </div>
+        <div className="container-row space-between">
+          <BuySellForm
+            buttonColor="green"
+            buttonText="BUY"
+            orderType="bid"
+            ticker={ticker}
+            orders={buyOrders}
+            orderBook={orderBook}
+            onExecute={onExecute}
+            movieCategories={movieCategories}
+          />
+          <div className="divider" />
+          <BuySellForm
+            buttonColor="red"
+            buttonText="SELL"
+            orderType="ask"
+            ticker={ticker}
+            orders={sellOrders}
+            orderBook={orderBook}
+            onExecute={onExecute}
+            movieCategories={movieCategories}
+            maxSell={maxSell}
+          />
+        </div>
       </div>
 
       <style jsx>{`
