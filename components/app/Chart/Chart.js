@@ -8,7 +8,9 @@ import {
 import { timelineLabels } from "../../utils/dateRange"
 import { Element } from "react-scroll"
 import dynamic from "next/dynamic"
-import { Toolbar } from "@material-ui/core"
+import { Toolbar, Grid } from "@material-ui/core"
+import { useState } from "react"
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 
 const TVChartContainer = dynamic(
   async () => {
@@ -47,7 +49,6 @@ export default props => {
     chartData,
     yDomain,
     updatePrintInterval,
-    printInterval,
     activeChart,
     buyOrders,
     sellOrders,
@@ -60,15 +61,14 @@ export default props => {
   } = props
 
   let labels = timelineLabels()
+  const [visible, setVisible] = useState(false)
   return (
     <Element className="container">
       <Toolbar>
-        {activeChart === "candlestick" ? (
-          <ChartIntervalControls
-            updatePrintInterval={updatePrintInterval}
-            activeChart={activeChart}
-          />
-        ) : null}
+        <ChartIntervalControls
+          updatePrintInterval={updatePrintInterval}
+          activeChart={activeChart}
+        />
         <div style={{ flexGrow: 1 }} />
         <ToggleVisibleChart setActiveChart={setActiveChart} />
       </Toolbar>

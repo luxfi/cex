@@ -1,24 +1,13 @@
-import { XAxis, YAxis, FlexibleWidthXYPlot, ChartLabel } from "react-vis"
+import { YAxis, FlexibleWidthXYPlot, ChartLabel } from "react-vis"
 import { ChartCandlestick } from ".."
 import { observer } from "mobx-react"
 import React from "react"
-import { useSpring, animated } from "react-spring"
 
 const XYAxisOnHover = ({ yDomain, xLabels, data, labels }) => {
-  const [props, set] = useSpring(() => ({ opacity: 0 }))
   return (
     <div>
-      <animated.div
-        className="animated"
-        onMouseEnter={() => set({ opacity: 1 })}
-        onMouseLeave={() => set({ opacity: 0 })}
-      >
         <FlexibleWidthXYPlot animation yDomain={yDomain} height={450}>
-          <YAxis
-            style={{
-              opacity: props.opacity.value
-            }}
-          />
+          <YAxis/>
           <ChartCandlestick
             colorType="literal"
             opacityType="literal"
@@ -32,13 +21,9 @@ const XYAxisOnHover = ({ yDomain, xLabels, data, labels }) => {
               includeMargin={false}
               xPercent={xLabels[i]}
               yPercent={1.089}
-              style={{
-                opacity: props.opacity.value
-              }}
             />
           ))}
         </FlexibleWidthXYPlot>
-      </animated.div>
     </div>
   )
 }
