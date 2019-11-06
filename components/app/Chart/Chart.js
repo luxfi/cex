@@ -3,7 +3,8 @@ import {
   ChartIntervalControls,
   ChartCandlestickFake,
   ChartLineSeries,
-  ToggleVisibleChart
+  ToggleVisibleChart,
+  StockRechart
 } from "../"
 import { timelineLabels } from "../../utils/dateRange"
 import dynamic from "next/dynamic"
@@ -42,6 +43,7 @@ export default props => {
   return (
     <div className="container">
       {/* <TVChartContainer /> */}
+      <StockRechart/>
         <div className="container-row space-between">
           <BuySellForm
             buttonColor="green"
