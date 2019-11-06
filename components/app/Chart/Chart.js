@@ -30,9 +30,6 @@ export default props => {
 
   return (
     <Element className="container">
-      <div className="title" name="section1">
-        Trade This Stock
-      </div>
       <ChartIntervalControls
         updatePrintInterval={updatePrintInterval}
         printInterval={printInterval}
