@@ -26,12 +26,13 @@ const XYAxisOnHover = ({ yDomain, xLabels, data, labels }) => {
           height={450}
           stroke="white"
         >
+          <LineSeries data={seriesData} />
           <YAxis
             style={{
-              opacity: props.opacity.value
+              opacity: props.opacity.value,
+              fill: 'white'
             }}
           />
-          <LineSeries data={seriesData} />
           {labels.map((marker, i) => (
             <ChartLabel
               key={i}
@@ -41,7 +42,8 @@ const XYAxisOnHover = ({ yDomain, xLabels, data, labels }) => {
               xPercent={xLabels[i]}
               yPercent={1.089}
               style={{
-                opacity: props.opacity.value
+                opacity: props.opacity.value,
+                fill: 'white',
               }}
             />
           ))}
