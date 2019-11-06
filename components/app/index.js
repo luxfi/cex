@@ -17,6 +17,5 @@ export { default as InvestNow } from './InvestNow'
 export { default as LimitOrders } from './LimitOrders'
 export { default as TopInvestmentPicks } from './TopInvestmentPicks'
 export { default as ActivePositions } from './ActivePositions'
-export { default as StockRechart } from "./StockRechart"
 export { default as Table } from './Table'
 export { default as ToggleVisibleChart } from './ToggleVisibleChart'
