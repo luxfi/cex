@@ -2,6 +2,7 @@ import {
   BuySellForm,
   ChartIntervalControls,
   ChartCandlestickFake,
+  ChartLineSeries,
   ToggleVisibleChart
 } from "../"
 import { timelineLabels } from "../../utils/dateRange"
@@ -32,7 +33,7 @@ function getActiveChart(activeChart, { chartData, yDomain, labels }) {
       )
     case "line-chart":
       return (
-        <ChartCandlestickFake
+        <ChartLineSeries
           data={chartData}
           yDomain={yDomain}
           labels={labels}
@@ -122,7 +123,10 @@ export default props => {
         }
         .posts-container {
           margin-top: 20px;
-          fill: white;
+          fill: transparent;
+        }
+        text {
+          fill: white !important
         }
         .divider {
           width: 1px;
