@@ -33,11 +33,7 @@ function getActiveChart(activeChart, { chartData, yDomain, labels }) {
       )
     case "line-chart":
       return (
-        <ChartLineSeries
-          data={chartData}
-          yDomain={yDomain}
-          labels={labels}
-        />
+        <ChartLineSeries data={chartData} yDomain={yDomain} labels={labels} />
       )
     case 2:
       return null
@@ -67,10 +63,12 @@ export default props => {
   return (
     <Element className="container">
       <Toolbar>
-        <ChartIntervalControls
-          updatePrintInterval={updatePrintInterval}
-          activeChart={activeChart}
-        />
+        {activeChart === "candlestick" ? (
+          <ChartIntervalControls
+            updatePrintInterval={updatePrintInterval}
+            activeChart={activeChart}
+          />
+        ) : null}
         <div style={{ flexGrow: 1 }} />
         <ToggleVisibleChart setActiveChart={setActiveChart} />
       </Toolbar>
