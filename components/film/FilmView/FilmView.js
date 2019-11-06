@@ -46,8 +46,7 @@ const formatMonthlyStats = (price, valueDelta) => {
     Math.abs(valueDelta) +
     " (" +
     ((valueDelta / price) * 100).toFixed(2) +
-    "%) " +
-    " PAST MONTH"
+    "%) "
   )
 }
 
