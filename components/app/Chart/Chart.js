@@ -7,8 +7,9 @@ import {
   StockRechart
 } from "../"
 import { timelineLabels } from "../../utils/dateRange"
+import { Element } from "react-scroll"
 import dynamic from "next/dynamic"
-import { Toolbar, Grid } from "@material-ui/core"
+import { Toolbar, Grid, Button } from "@material-ui/core"
 import { useState } from "react"
 
 const TVChartContainer = dynamic(
@@ -21,6 +22,27 @@ const TVChartContainer = dynamic(
     loading: () => <div style={{ color: "red" }}>This is loading</div>
   }
 )
+
+function getActiveChart(activeChart, { chartData, yDomain, labels }) {
+  switch (activeChart) {
+    case "candlestick":
+      return (
+        <ChartCandlestickFake
+          data={chartData}
+          yDomain={yDomain}
+          labels={labels}
+        />
+      )
+    case "line-chart":
+      return (
+        <ChartLineSeries data={chartData} yDomain={yDomain} labels={labels} />
+      )
+    case 2:
+      return null
+    default:
+      return null
+  }
+}
 
 export default props => {
   const {
@@ -35,13 +57,24 @@ export default props => {
     movieCategories,
     onExecute,
     maxSell,
-    setActiveChart
+    setActiveChart,
+    setMarketOrderType,
+    marketOrderType,
+    funds,
   } = props
 
   let labels = timelineLabels()
   const [visible, setVisible] = useState(false)
   return (
-    <div className="container">
+    <Element className="container">
+      <Toolbar>
+        <ChartIntervalControls
+          updatePrintInterval={updatePrintInterval}
+          activeChart={activeChart}
+        />
+        <div style={{ flexGrow: 1 }} />
+        <ToggleVisibleChart setActiveChart={setActiveChart} />
+      </Toolbar>
       {/* <TVChartContainer /> */}
       <StockRechart/>
         <div className="container-row space-between">
@@ -54,8 +87,43 @@ export default props => {
             orderBook={orderBook}
             onExecute={onExecute}
             movieCategories={movieCategories}
+            marketOrderType={marketOrderType}
+            funds={funds}
           />
-          <div className="divider" />
+          <Grid
+            container
+            direction="column"
+            alignItems="center"
+            className="divider"
+            style={{
+              marginTop: "84px"
+            }}
+          >
+            <Grid item>
+              <Button
+                variant="contained"
+                color={marketOrderType ? "primary" : "default"}
+                onClick={() => setMarketOrderType(true)}
+                style={{
+                  margin: "8px 32px"
+                }}
+              >
+                Market
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="contained"
+                color={marketOrderType ? "default" : "primary"}
+                onClick={() => setMarketOrderType(false)}
+                style={{
+                  margin: "8px 32px"
+                }}
+              >
+                Limit
+              </Button>
+            </Grid>
+          </Grid>
           <BuySellForm
             buttonColor="red"
             buttonText="SELL"
@@ -66,8 +134,11 @@ export default props => {
             onExecute={onExecute}
             movieCategories={movieCategories}
             maxSell={maxSell}
+            marketOrderType={marketOrderType}
+            funds={funds}
           />
         </div>
+
       <style jsx>{`
         .container {
           display: flex;
@@ -80,13 +151,21 @@ export default props => {
         .space-between {
           justify-content: space-between;
         }
+        .title {
+          color: #2d92dd;
+          font-size: 32px;
+          margin-top: 30px;
+          font-weight: lighter;
+        }
+        .posts-container {
+          margin-top: 20px;
+          fill: transparent;
+        }
         .divider {
-          width: 1px;
-          background: black;
           margin-left: 20px;
           margin-right: 20px;
         }
       `}</style>
-    </div>
+    </Element>
   )
 }

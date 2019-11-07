@@ -8,11 +8,18 @@ import {
 import { ChartCandlestick } from ".."
 import { observer } from "mobx-react"
 import React from "react"
+import { useSpring, animated } from "react-spring"
 
 const XYAxisOnHover = ({ yDomain, xLabels, data, labels }) => {
-  const seriesData = data.map(element=> ({x: element["x"], y: element["y"]}))
+  const seriesData = data.map(element => ({ x: element["x"], y: element["y"] }))
+  const [props, set] = useSpring(() => ({ opacity: 0 }))
   return (
     <div>
+      <animated.div
+        className="animated"
+        onMouseEnter={() => set({ opacity: 1 })}
+        onMouseLeave={() => set({ opacity: 0 })}
+      >
         <FlexibleWidthXYPlot
           animation
           yDomain={yDomain}
@@ -22,7 +29,8 @@ const XYAxisOnHover = ({ yDomain, xLabels, data, labels }) => {
           <LineSeries data={seriesData} />
           <YAxis
             style={{
-              fill: 'white'
+              opacity: props.opacity.value,
+              fill: "white"
             }}
           />
           {labels.map((marker, i) => (
@@ -34,11 +42,13 @@ const XYAxisOnHover = ({ yDomain, xLabels, data, labels }) => {
               xPercent={xLabels[i]}
               yPercent={1.089}
               style={{
-                fill: 'white',
+                opacity: props.opacity.value,
+                fill: "white"
               }}
             />
           ))}
         </FlexibleWidthXYPlot>
+      </animated.div>
     </div>
   )
 }
