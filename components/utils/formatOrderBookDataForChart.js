@@ -1,3 +1,5 @@
+const MarketOrder = require("limit-order-book").MarketOrder
+
 export function formatTakeResults(data, printInterval = 5) {
   if (!data || data.length === 0) return []
   let amountOfArrays = 105 / printInterval
@@ -11,7 +13,14 @@ export function formatTakeResults(data, printInterval = 5) {
     return accumulator
   }
   const result = data
-    .map(d => parseFloat(d.taker.price)) //get prices from each order
+    .map(d => {
+      const { taker, takeSize, takeValue } = d
+      const { price } = taker
+      if (taker instanceof MarketOrder) {
+        return parseFloat((takeValue / takeSize).toFixed(2))
+      }
+      return parseFloat(taker.price)
+    }) //get prices from each order
     .reduce(reducer, [[]]) //group arrays by amount of x values in chart
     .map((data, group) => {
       const max = Math.max.apply(Math, data);

@@ -212,6 +212,12 @@ export default class OrderBook {
     //   console.log("takeResult", takeResult)
     // }
     this.takeResults.push(takeResult)
+    if (this.price < this.low) {
+      this.low = this.price
+    } //set new low
+    if (this.price > this.high) {
+      this.high = this.price
+    } //set new high
     this.updateOrders()
 
     // TODO call onExecute to update the user's portfolio
