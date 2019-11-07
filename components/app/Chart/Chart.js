@@ -135,6 +135,8 @@ export default props => {
             onExecute={onExecute}
             movieCategories={movieCategories}
             maxSell={maxSell}
+            marketOrderType={marketOrderType}
+            funds={funds}
           />
         </div>
       </div>
