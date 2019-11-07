@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { Typography, Box } from "@material-ui/core"
 // import useForm from '../customHooks/useForm'
 
 import { padDollarAmount } from "../../utils/generic"
@@ -140,7 +141,7 @@ export default class BuySellForm extends React.Component {
       orderType,
       maxSell,
       marketOrderType,
-      funds
+      orderBook
     } = this.props
 
     const amountPlaceholder =
@@ -152,20 +153,25 @@ export default class BuySellForm extends React.Component {
         {/* <p className="dark">Your balance 0.0000 USDT D W</p>
         <p className="dark">Obtainable 0.0000 THETA</p> */}
         <p>{buttonText}</p>
-        <div className="form-group">
-          <input
-            type="number"
-            name="price"
-            className="form-control"
-            id="inputPrice"
-            placeholder="Price ($)"
-            onChange={this.handleInputChange}
-            // value={this.state.price !== '' ? `$${this.state.price}` : ''} />
-            value={this.state.price}
-            step="0.01"
-            disabled={marketOrderType}
-          />
-        </div>
+        {!marketOrderType ? ( // limit order
+          <div className="form-group">
+            <input
+              type="number"
+              name="price"
+              className="form-control"
+              id="inputPrice"
+              placeholder="Price ($)"
+              onChange={this.handleInputChange}
+              // value={this.state.price !== '' ? `$${this.state.price}` : ''} />
+              value={this.state.price}
+              step="0.01"
+            />
+          </div>
+        ) : (
+          <Box justifyContent="center" display="flex" m={2}>
+            <Typography variant="h4">${(this.state.price  || "0.00")}</Typography>
+          </Box>
+        )}
         <div className="form-group">
           <input
             type="number"
