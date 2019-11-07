@@ -300,16 +300,16 @@ export default class UserStore {
       const file = new File([blob], filename, {type: data.type})
       const formData = new FormData()
       formData.append('upload', file)
-      const res = await fetch('https://files.hanzo.ai/upload', { // "https://files.hanzo.ai/upload", {
+      const res = await fetch('https://files.hanzo.ai/upload', {
         // Your POST endpoint
         method: "POST",
         body: formData
       })
-      console.log('res', res)
+      // console.log('res', res)
 
       const res2 = await res.text()
 
-      console.log("json response: ", res2)
+      // console.log("json response: ", res2)
 
       onSuccess && onSuccess()
 
