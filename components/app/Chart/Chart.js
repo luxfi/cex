@@ -94,7 +94,6 @@ export default props => {
             container
             direction="column"
             alignItems="center"
-            xs
             className="divider"
             style={{
               marginTop: "84px"
@@ -103,7 +102,7 @@ export default props => {
             <Grid item>
               <Button
                 variant="contained"
-                color={marketOrderType ? "primary" : ""}
+                color={marketOrderType ? "primary" : "default"}
                 onClick={() => setMarketOrderType(true)}
                 style={{
                   margin: "8px 32px"
@@ -115,7 +114,7 @@ export default props => {
             <Grid item>
               <Button
                 variant="contained"
-                color={marketOrderType ? "" : "primary"}
+                color={marketOrderType ? "default" : "primary"}
                 onClick={() => setMarketOrderType(false)}
                 style={{
                   margin: "8px 32px"
