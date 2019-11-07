@@ -31,4 +31,19 @@ export default (theme) => ({
     margin: theme.spacing(0.5, 0)
   },
 
+  itemCopy: {
+    overflow: 'hidden',
+    // whiteSpace: 'nowrap',
+    display: '-webkit-box',
+    textOverflow: 'ellipsis',
+    WebkitLineClamp: 3,
+    WebkitBoxOrient: 'vertical'
+  },
+
+  itemCategories: {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis'
+  }
+
 })
