@@ -15,6 +15,11 @@ export default class ContentfulStore {
   @observable items = []
   @observable mappedByTags = new Map()
 
+  constructor(initialData = {}, hanzoApi) {
+    // Pass down the Hanzo API through a central point
+    this.api = hanzoApi
+  }
+
   @action getContent(isSSR) {
     const client = new ContentfulClient({
       ...CONTENTFUL_API,
