@@ -8,9 +8,8 @@ import {
 import { timelineLabels } from "../../utils/dateRange"
 import { Element } from "react-scroll"
 import dynamic from "next/dynamic"
-import { Toolbar, Grid } from "@material-ui/core"
+import { Toolbar, Grid, Button } from "@material-ui/core"
 import { useState } from "react"
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 
 const TVChartContainer = dynamic(
   async () => {
@@ -49,7 +48,6 @@ export default props => {
     chartData,
     yDomain,
     updatePrintInterval,
-    printInterval,
     activeChart,
     buyOrders,
     sellOrders,
@@ -58,7 +56,10 @@ export default props => {
     movieCategories,
     onExecute,
     maxSell,
-    setActiveChart
+    setActiveChart,
+    setMarketOrderType,
+    marketOrderType,
+    funds,
   } = props
 
   let labels = timelineLabels()
@@ -86,8 +87,43 @@ export default props => {
             orderBook={orderBook}
             onExecute={onExecute}
             movieCategories={movieCategories}
+            marketOrderType={marketOrderType}
+            funds={funds}
           />
-          <div className="divider" />
+          <Grid
+            container
+            direction="column"
+            alignItems="center"
+            className="divider"
+            style={{
+              marginTop: "84px"
+            }}
+          >
+            <Grid item>
+              <Button
+                variant="contained"
+                color={marketOrderType ? "primary" : "default"}
+                onClick={() => setMarketOrderType(true)}
+                style={{
+                  margin: "8px 32px"
+                }}
+              >
+                Market
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="contained"
+                color={marketOrderType ? "default" : "primary"}
+                onClick={() => setMarketOrderType(false)}
+                style={{
+                  margin: "8px 32px"
+                }}
+              >
+                Limit
+              </Button>
+            </Grid>
+          </Grid>
           <BuySellForm
             buttonColor="red"
             buttonText="SELL"
@@ -98,6 +134,8 @@ export default props => {
             onExecute={onExecute}
             movieCategories={movieCategories}
             maxSell={maxSell}
+            marketOrderType={marketOrderType}
+            funds={funds}
           />
         </div>
       </div>
@@ -125,8 +163,6 @@ export default props => {
           fill: transparent;
         }
         .divider {
-          width: 1px;
-          background: black;
           margin-left: 20px;
           margin-right: 20px;
         }
