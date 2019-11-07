@@ -409,7 +409,7 @@ export default class UserStore {
         metadata: this.newPaymentMethodMetadata
       }
 
-      const res = await this.api.client.account.paymentMethod.create(opts)
+      const res = await this.api.client.account.paymentMethod(opts)
     } catch (ex) {
       console.log("Error logging out", ex)
       onError && onError(ex.toString())
