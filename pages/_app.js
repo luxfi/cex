@@ -137,7 +137,11 @@ class MyMobxApp extends App {
           <CssBaseline />
           <NoSsr>
             <Root config={muiLayoutConfig}>
-              <Header openModal={this.openModal} />
+              <Header 
+                handlePlaceHolder={this.openModal} 
+                isLoggedIn={this.mobxStore.userStore.loggedIn}
+                handleLogout={() => {this.mobxStore.userStore.logout()}}
+              />
               <MobileNav openModal={this.openModal} />
               <Content>
                 <Component

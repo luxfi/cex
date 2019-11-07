@@ -19,7 +19,6 @@ import {
 import { withStyles } from "@material-ui/core/styles"
 
 import { AutoCompleteSearch } from ".."
-//import { faCcDiscover } from "@fortawesome/free-brands-svg-icons"
 
 const CustomLink = React.forwardRef(
   ({ className, href, hrefAs, children, }, ref) => (
@@ -29,42 +28,42 @@ const CustomLink = React.forwardRef(
   )
 )
 
-const navStructure = [
-  {
-    title: "Discover",
-    items: [
-      {
-        title: "Movies",
-        link: "/film" 
-      },
-      {
-        title: "TV Series",
-        placeholder: "TV Series"
-      },
-      {
-        title: "Music",
-        placeholder: "Music"
-      },
-      {
-        title: "Gaming",
-        placeholder: "Gaming"
-      }
-    ]
-  },
-  {
-    title: "Investors",
-    placeholder: "Investors"
-  },  
-  {
-    title: "Communities",
-    placeholder: "Communities"
-  },  
-  {
-    title: "Loyalty",
-    placeholder: "Loyalty"
-  },  
+export default (props) => {
 
-]
+  const {
+    show,
+    navStructure,
+    handlePlaceHolder,
+    handleLogout,
+    isLoggedIn,
+    classes
+  } = props
+
+  if (!show) {
+    return ""
+  }
+
+  return (
+    <>
+      <Link href="/" component={CustomLink}>
+        <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.logo} height="52px" />
+      </Link>
+      <div className={classes.menuBarOuter}>
+        <div className={classes.menuSpacer} />
+        <DesktopMainNav 
+          navStructure={navStructure} 
+          handlePlaceHolder={handlePlaceHolder} 
+          classes={classes}
+        />
+      </div>
+      <div className={classes.accountOuter} >
+        <DesktopProfileArea isLoggedIn={isLoggedIn} handleLogout={handleLogout} classes={classes} />
+      </div>
+    </>
+  )
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
 
 const renderMainNav_Temp = (props) => {
 
@@ -152,7 +151,76 @@ const renderMainNav_Temp = (props) => {
   )
 }
 
-const renderAccountArea = (accountLoaded, logout, classes) => {
+
+
+const DesktopMainNav = (props) => {
+
+  const {
+    navStructure, 
+    handlePlaceHolder,
+    classes
+  } = props
+
+  let result = []
+  navStructure.forEach((navElement) => {
+
+    if ('placeholder' in navElement) {
+      result.push(
+        <Button 
+          color="inherit" 
+          className={classes.menuButton}
+          onClick={() => {
+            handlePlaceHolder("Investors")
+          }}
+        >
+          {navElement.title}
+        </Button>
+      ) 
+    }
+    else if ('link' in navElement) {
+      result.push(
+        <NextLink href={navElement.link}>
+          <Button
+            color="inherit"
+            className={classes.menuButton}
+          >
+            {navElement.title}
+          </Button>
+        </NextLink>
+      ) 
+    }
+    else /* menu */ {
+      result.push(
+        <Button color="inherit" className={classes.menuButton}>
+          {"MT: " + navElement.title}
+        </Button>
+      )
+    }
+  })
+  return (
+    <>
+      {result}
+    </> 
+  )
+}
+
+
+const DesktopProfileArea = (props) => {
+
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const menuOpen = Boolean(anchorEl)
+
+  function handleClick(event) {
+    setAnchorEl(event.currentTarget)
+  }
+
+  function handleClose() {
+    setAnchorEl(null)
+  }
+
+  const {
+    isLoggedIn, handleLogout, classes
+  } = props
 
   return (<>
     <div className={classes.search}>
@@ -167,7 +235,7 @@ const renderAccountArea = (accountLoaded, logout, classes) => {
         }}
       />
     </div>
-    {accountLoaded ? (
+    {isLoggedIn ? (
       <>
         <IconButton
           aria-controls="menu"
@@ -180,7 +248,7 @@ const renderAccountArea = (accountLoaded, logout, classes) => {
           id="menu"
           anchorEl={anchorEl}
           keepMounted
-          open={open}
+          open={menuOpen}
           onClose={handleClose}
           style={{ marginTop: "50px" }}
         >
@@ -192,7 +260,7 @@ const renderAccountArea = (accountLoaded, logout, classes) => {
             <AccountCircle />
             <span style={{ padding: "15px" }}>Portfolio</span>
           </MenuItem>
-          <MenuItem onClick={logout}>
+          <MenuItem onClick={handleLogout}>
             <ExitToApp />
             <span style={{ padding: "15px" }}>Logout</span>
           </MenuItem>
@@ -222,69 +290,3 @@ const renderAccountArea = (accountLoaded, logout, classes) => {
   </>)
 }
 
-function renderMainNav(structure, classes) {
-
-  let result = []
-
-  structure.forEach((item) => {
-    result.push(
-      <Button color="inherit" className={classes.menuButton}>
-        {item.title}
-      </Button>
-    )
-  })
-  return result;
-}
-
-
-
-export default (props) => {
-
-  const [anchorEl, setAnchorEl] = React.useState(null)
-  const [anchorEl2, setAnchorEl2] = React.useState(null)
-  const open = Boolean(anchorEl)
-  const open2 = Boolean(anchorEl2)
-
-  function handleClick(event) {
-    setAnchorEl(event.currentTarget)
-  }
-
-  function handleClose() {
-    setAnchorEl(null)
-  }
-
-  function handleClick2(event) {
-    setAnchorEl2(event.currentTarget)
-  }
-
-  function handleClose2() {
-    setAnchorEl2(null)
-  }
-
-  const {
-    showElements,
-    accountLoaded,
-    logout,
-    classes
-  } = props
-
-  if (!showElements) {
-    return ""
-  }
-
-  return (
-    <>
-      <Link href="/" component={CustomLink}>
-        <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.logo} height="52px" />
-      </Link>
-      <div className={classes.menuBarOuter}>
-        <div className={classes.menuSpacer} />
-        {renderMainNav(navStructure, classes)}
-      </div>
-
-      <div className={classes.accountOuter} >
-        {renderAccountArea(accountLoaded, logout, classes)}
-      </div>
-    </>
-  )
-}

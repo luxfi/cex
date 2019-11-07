@@ -13,7 +13,7 @@ import {
 
 import { withStyles } from "@material-ui/core/styles"
 
-import MainNav from "./MainNav"
+import MainNav from "./DesktopNav"
 
 import { mobileNavStyles } from './header.style.js'
 
