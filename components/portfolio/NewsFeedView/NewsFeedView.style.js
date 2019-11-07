@@ -44,6 +44,11 @@ export default (theme) => ({
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis'
+  },
+
+  link: {
+    color: 'white',
+    paddingRight: '.5em'
   }
 
 })

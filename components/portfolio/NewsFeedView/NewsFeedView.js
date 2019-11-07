@@ -70,12 +70,12 @@ const Item = props => {
       <p className={classes.itemCopy}>{author} - {moment(date).format('MM-DD-YYYY')}</p>
       <div className={classes.itemCategories}>
         {
-          categories.map((c, i) => <a key={c._+i} href={c['$'].domain} target="_blank"><Chip clickable label={c._} /></a>)
+          categories.slice(0, 3).map((c, i) => <a key={c._+i} className={classes.link} href={c['$'].domain} target="_blank"><Chip clickable label={c._} /></a>)
         }
       </div>
       <p className={classes.itemCopy}>{blurb}</p>
       <p>
-        <a href={link} target="_blank">Read More</a>
+        <a href={link} className={classes.link} target="_blank">Read More</a>
       </p>
     </Grid>
   )
@@ -90,8 +90,8 @@ const NewsFeedSection = props => {
 
   return (
     <>
-      <h2 className={classes.sectionTitle}>{title}</h2>
-      <br />
+      {/* <h2 className={classes.sectionTitle}>{title}</h2> */}
+      {/* <br /> */}
       <Grid container spacing={3}>
         {children}
       </Grid>
