@@ -48,7 +48,6 @@ export default props => {
     chartData,
     yDomain,
     updatePrintInterval,
-    printInterval,
     activeChart,
     buyOrders,
     sellOrders,
@@ -60,6 +59,7 @@ export default props => {
     setActiveChart,
     setMarketOrderType,
     marketOrderType,
+    funds,
   } = props
 
   let labels = timelineLabels()
@@ -87,6 +87,8 @@ export default props => {
             orderBook={orderBook}
             onExecute={onExecute}
             movieCategories={movieCategories}
+            marketOrderType={marketOrderType}
+            funds={funds}
           />
           <Grid
             container

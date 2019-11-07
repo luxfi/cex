@@ -245,6 +245,7 @@ class Index extends React.Component {
     setActiveChart,
     setMarketOrderType,
     marketOrderType,
+    funds,
     printInterval,
     activeChart,
     buyOrders,
@@ -287,9 +288,9 @@ class Index extends React.Component {
               setActiveChart={setActiveChart}
               setMarketOrderType={setMarketOrderType}
               marketOrderType={marketOrderType}
+              funds={funds}
               printInterval={printInterval}
               activeChart={activeChart}
-              marketOrderType={marketOrderType}
               buyOrders={buyOrders}
               sellOrders={sellOrders}
               orderBook={orderBook}
@@ -377,8 +378,8 @@ class Index extends React.Component {
       sellOrders,
       activeChart,
       marketOrderType,
-      connected
     } = orderBook
+    const funds = userStore.accountBalance
     const chartData = formatTakeResults(takeResultsArray, printInterval)
     const yDomain = [orderBook.low * 0.94, orderBook.high * 1.06]
     const updatePrintInterval = time => {
@@ -414,6 +415,7 @@ class Index extends React.Component {
                 setActiveChart,
                 setMarketOrderType,
                 marketOrderType,
+                funds,
                 printInterval,
                 activeChart,
                 buyOrders,

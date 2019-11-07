@@ -4,6 +4,7 @@ import uuid from "uuid"
 
 // import io from 'socket.io-client'
 const LimitOrder = require("limit-order-book").LimitOrder
+const MarketOrder = require("limit-order-book").MarketOrder
 const LimitOrderBook = require("limit-order-book").LimitOrderBook
 
 const bidAsk = () => {
@@ -169,6 +170,42 @@ export default class OrderBook {
       currentOrderType,
       parseFloat(currentOrderPrice),
       currentOrderSize
+    )
+    let takeResult = this.book.add(currentOrder)
+    // if (typeof window !== 'undefined') {
+    //   console.log("takeResult", takeResult)
+    // }
+    this.takeResults.push(takeResult)
+    if (currentOrderPrice < this.low) {
+      this.low = currentOrderPrice
+    } //set new low
+    if (currentOrderPrice > this.high) {
+      this.high = currentOrderPrice
+    } //set new high
+    this.updateOrders()
+
+    // TODO call onExecute to update the user's portfolio
+    return takeResult
+  }
+
+  @action placeNewMarketOrder(
+    currentOrderID,
+    currentOrderType,
+    currentOrderSize,
+    currentOrderFunds,
+    orderData,
+    onExecute
+  ) {
+    if (onExecute && !onExecute(orderData, currentOrderType)) {
+      // The user doesn't own any shares
+      return null
+    }
+
+    let currentOrder = new MarketOrder(
+      currentOrderID,
+      currentOrderType,
+      currentOrderSize,
+      currentOrderFunds
     )
     let takeResult = this.book.add(currentOrder)
     // if (typeof window !== 'undefined') {
