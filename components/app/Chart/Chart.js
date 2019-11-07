@@ -10,7 +10,6 @@ import { Element } from "react-scroll"
 import dynamic from "next/dynamic"
 import { Toolbar, Grid, Button } from "@material-ui/core"
 import { useState } from "react"
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 
 const TVChartContainer = dynamic(
   async () => {
@@ -58,12 +57,13 @@ export default props => {
     movieCategories,
     onExecute,
     maxSell,
-    setActiveChart
+    setActiveChart,
+    setMarketOrderType,
+    marketOrderType,
   } = props
 
   let labels = timelineLabels()
   const [visible, setVisible] = useState(false)
-  const [marketOrder, setMarketOrder] = useState(true)
   return (
     <Element className="container">
       <Toolbar>
@@ -101,8 +101,8 @@ export default props => {
             <Grid item>
               <Button
                 variant="contained"
-                color={marketOrder ? "primary" : ""}
-                onClick={() => setMarketOrder(true)}
+                color={marketOrderType ? "primary" : ""}
+                onClick={() => setMarketOrderType(true)}
                 style={{
                   margin: "8px 32px"
                 }}
@@ -113,8 +113,8 @@ export default props => {
             <Grid item>
               <Button
                 variant="contained"
-                color={marketOrder ? "" : "primary"}
-                onClick={() => setMarketOrder(false)}
+                color={marketOrderType ? "" : "primary"}
+                onClick={() => setMarketOrderType(false)}
                 style={{
                   margin: "8px 32px"
                 }}
