@@ -8,7 +8,7 @@ import {
 import { timelineLabels } from "../../utils/dateRange"
 import { Element } from "react-scroll"
 import dynamic from "next/dynamic"
-import { Toolbar, Grid } from "@material-ui/core"
+import { Toolbar, Grid, Button } from "@material-ui/core"
 import { useState } from "react"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 
@@ -63,6 +63,7 @@ export default props => {
 
   let labels = timelineLabels()
   const [visible, setVisible] = useState(false)
+  const [marketOrder, setMarketOrder] = useState(true)
   return (
     <Element className="container">
       <Toolbar>
@@ -87,7 +88,41 @@ export default props => {
             onExecute={onExecute}
             movieCategories={movieCategories}
           />
-          <div className="divider" />
+          <Grid
+            container
+            direction="column"
+            alignItems="center"
+            xs
+            className="divider"
+            style={{
+              marginTop: "84px"
+            }}
+          >
+            <Grid item>
+              <Button
+                variant="contained"
+                color={marketOrder ? "primary" : ""}
+                onClick={() => setMarketOrder(true)}
+                style={{
+                  margin: "8px 32px"
+                }}
+              >
+                Market
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="contained"
+                color={marketOrder ? "" : "primary"}
+                onClick={() => setMarketOrder(false)}
+                style={{
+                  margin: "8px 32px"
+                }}
+              >
+                Limit
+              </Button>
+            </Grid>
+          </Grid>
           <BuySellForm
             buttonColor="red"
             buttonText="SELL"
@@ -125,8 +160,6 @@ export default props => {
           fill: transparent;
         }
         .divider {
-          width: 1px;
-          background: black;
           margin-left: 20px;
           margin-right: 20px;
         }
