@@ -40,6 +40,7 @@ export default class UserStore {
   // Account comes from the Hanzo API
   @observable token = null
   @observable account = null
+  @observable accountBalance = 100000
 
   // ** SIGNUP INFO **
   // must initialize to empty string for controlled inputs

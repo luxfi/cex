@@ -33,15 +33,28 @@ export default class BuySellForm extends React.Component {
     this.submitOrder = this.submitOrder.bind(this)
   }
 
+  componentDidUpdate(prevProps) {
+    // Typical usage (don't forget to compare props):
+    if (this.props.marketOrderType !== prevProps.marketOrderType) {
+      this.setState({
+        price: "",
+        size: "",
+        total: ""
+      })
+    }
+  }
+
   submitOrder(e) {
     e.preventDefault()
     const price = parseFloat(this.state.price)
     const size = parseInt(this.state.size)
-    if (!price || !size) return //still need to validate
+    const total = parseFloat(this.state.total)
+    const { ticker, movieCategories, marketOrderType, funds } = this.props
+    if ((!price || !size) && !marketOrderType) return // need price and size if limit order
+    if (!total && marketOrderType) return //need total funds if market order
     let id = Date.now() // unique id
     let currentOrderID = `${this.props.ticker}-${id}`
     // id type price size book
-    const { ticker, movieCategories } = this.props
     const orderData = {
       ticker: ticker,
       amount: size,
@@ -49,14 +62,26 @@ export default class BuySellForm extends React.Component {
       categories: movieCategories
     }
 
-    this.props.orderBook.placeNewOrder(
-      currentOrderID,
-      this.props.orderType,
-      price,
-      size,
-      orderData,
-      this.props.onExecute
-    )
+    if (!marketOrderType) {
+      this.props.orderBook.placeNewOrder(
+        currentOrderID,
+        this.props.orderType,
+        price,
+        size,
+        orderData,
+        this.props.onExecute
+      )
+    } else {
+      this.props.orderBook.placeNewMarketOrder(
+        currentOrderID,
+        this.props.orderType,
+        size,
+        funds,
+        orderData,
+        this.props.onExecute
+      )
+    }
+
     this.setState({
       price: "",
       size: "",
@@ -67,10 +92,17 @@ export default class BuySellForm extends React.Component {
   handleInputChange(event) {
     const newState = this.state
     let newVal = event.target.value
-    const { orderType, maxSell } = this.props
+    const { orderType, maxSell, orderBook, marketOrderType } = this.props
+    const { price } = orderBook
 
     // if (newVal.indexOf('$') > -1) newVal = parseFloat(newVal.split('$').slice(-1).pop())
-
+    if (marketOrderType) {
+      if (newVal) {
+        newState["price"] = price.toFixed(2)
+      } else {
+        newState.price = ""
+      }
+    }
     if (newVal === "" || newVal === 0) {
       newState.total = ""
     } else {
@@ -92,11 +124,6 @@ export default class BuySellForm extends React.Component {
           const total = newVal * newState.price
           newState.total = total.toFixed(2)
         }
-      } else if (event.target.name === "total") {
-        if (newState.price) {
-          const size = Math.ceil(newVal / newState.price)
-          newState.size = size
-        }
       }
     }
 
@@ -111,8 +138,11 @@ export default class BuySellForm extends React.Component {
       buttonText,
       width,
       orderType,
-      maxSell
+      maxSell,
+      marketOrderType,
+      funds
     } = this.props
+
     const amountPlaceholder =
       orderType === "bid"
         ? "Number of Shares"
@@ -133,6 +163,7 @@ export default class BuySellForm extends React.Component {
             // value={this.state.price !== '' ? `$${this.state.price}` : ''} />
             value={this.state.price}
             step="0.01"
+            disabled={marketOrderType}
           />
         </div>
         <div className="form-group">
