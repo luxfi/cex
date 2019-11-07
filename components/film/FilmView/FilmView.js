@@ -10,7 +10,7 @@ import classNames from "classnames"
 import { formatTakeResults } from "../../utils/formatOrderBookDataForChart"
 
 // @material-ui/core components
-import { Button, Grid } from "@material-ui/core"
+import { Button, Grid, Typography } from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
 
 // core components
@@ -167,7 +167,7 @@ class Index extends React.Component {
               rel="noopener noreferrer"
               variant="contained"
               className={classes.movieButton}
-              onClick={ addToWatchList(movie.ticker) }
+              onClick={addToWatchList(movie.ticker)}
             >
               Add to watchlist
             </Button>
@@ -243,6 +243,9 @@ class Index extends React.Component {
     yDomain,
     updatePrintInterval,
     setActiveChart,
+    setMarketOrderType,
+    marketOrderType,
+    funds,
     printInterval,
     activeChart,
     buyOrders,
@@ -283,6 +286,9 @@ class Index extends React.Component {
               yDomain={yDomain}
               updatePrintInterval={updatePrintInterval}
               setActiveChart={setActiveChart}
+              setMarketOrderType={setMarketOrderType}
+              marketOrderType={marketOrderType}
+              funds={funds}
               printInterval={printInterval}
               activeChart={activeChart}
               buyOrders={buyOrders}
@@ -364,10 +370,16 @@ class Index extends React.Component {
     const { slug } = router.query
     const { movieStore, orderBook, userStore, userPortfolio } = this.props.store
     const movie = movieStore.getMovieBySlug(slug)
-
     // orderBook stuff
     let takeResultsArray = orderBook.takeResults.slice(0)
-    const { printInterval, buyOrders, sellOrders, activeChart } = orderBook
+    const {
+      printInterval,
+      buyOrders,
+      sellOrders,
+      activeChart,
+      marketOrderType,
+    } = orderBook
+    const funds = userStore.accountBalance
     const chartData = formatTakeResults(takeResultsArray, printInterval)
     const yDomain = [orderBook.low * 0.94, orderBook.high * 1.06]
     const updatePrintInterval = time => {
@@ -375,6 +387,9 @@ class Index extends React.Component {
     }
     const setActiveChart = activeChart => {
       orderBook.setActiveChart(activeChart)
+    }
+    const setMarketOrderType = marketOrder => {
+      orderBook.setMarketOrderType(marketOrder)
     }
 
     // Load necessary user data
@@ -398,6 +413,9 @@ class Index extends React.Component {
                 yDomain,
                 updatePrintInterval,
                 setActiveChart,
+                setMarketOrderType,
+                marketOrderType,
+                funds,
                 printInterval,
                 activeChart,
                 buyOrders,
@@ -407,7 +425,7 @@ class Index extends React.Component {
                 (order, orderType) => {
                   return userPortfolio.onOrderExecute(order, orderType)
                 },
-                maxSell,
+                maxSell
               )}
           {this.state.selectedTab === "about"
             ? this.renderAboutMore(classes, movie)
