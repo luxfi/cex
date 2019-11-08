@@ -56,7 +56,7 @@ class Portfolio extends React.Component {
   componentDidMount () {
     this.props.store.userPortfolio.getInvestments()
     this.props.store.userPortfolio.getWatchlist()
-    this.props.store.newsStore.loadFeed('http://localhost:3001/feed')
+    this.props.store.newsStore.loadFeed()
     googlePageView()
   }
 
