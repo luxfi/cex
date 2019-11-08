@@ -61,12 +61,16 @@ const Item2 = props => {
 
 const Item = props => {
 
-  const { classes, title, author, date, blurb, link, categories } = props
+  const { classes, title, author, date, blurb, link, categories, image } = props
 
   return (
     <Grid item xs={12} sm={4} style={{ height: 'auto' }}>
       {/* <ImgLoader width={500} height={400} /> */}
       <h6 className={classes.itemTitle}>{title}</h6>
+      {
+        image ?
+          <img src={image} height={225} /> : null
+      }
       <p className={classes.itemCopy}>{author} - {moment(date).format('MM-DD-YYYY')}</p>
       <div className={classes.itemCategories}>
         {
@@ -120,6 +124,7 @@ const NewsFeedView = (props) => {
               author={i.creator} 
               blurb={i.contentSnippet} 
               categories={i.categories} 
+              image={i.image}
             />
           )
         }
