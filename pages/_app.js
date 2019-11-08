@@ -124,7 +124,7 @@ class MyMobxApp extends App {
       : initializeStore(props.initialMobxState)
   }
 
-  openModal = (title, body) => {
+  placeholder = (title, body) => {
     this.mobxStore.uiStore.openModal(title, body)
   }
 
@@ -138,11 +138,13 @@ class MyMobxApp extends App {
           <NoSsr>
             <Root config={muiLayoutConfig}>
               <Header 
-                handlePlaceHolder={this.openModal} 
+                handlePlaceholder={this.placeholder} 
                 isLoggedIn={this.mobxStore.userStore.loggedIn}
                 handleLogout={() => {this.mobxStore.userStore.logout()}}
               />
-              <MobileNav openModal={this.openModal} />
+              <MobileNav 
+                handlePlaceholder={this.placeholder} 
+              />
               <Content>
                 <Component
                   {...pageProps}

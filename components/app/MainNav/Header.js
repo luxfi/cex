@@ -2,7 +2,6 @@ import React from "react"
 import { inject, observer } from "mobx-react"
 
 import { useScrollTrigger } from "@material-ui/core"
-import { withStyles } from "@material-ui/core/styles"
 
 import {
   ChevronLeft,
@@ -17,18 +16,23 @@ import {
 import DesktopNav from "./DesktopNav"
 import navStructure from "./navStructure"
 
-import { headerStyles } from './header.style.js'
+import { makeStyles } from "@material-ui/core/styles"
+import styles from './header.style.js'
 
-const EsxHeader = inject("store")(observer((props) => {
+const useStyles = makeStyles(styles)
 
-  let { 
-    classes, 
-    handlePlaceHolder, 
+
+export default inject("store")(observer((props) => {
+
+  const { 
+    handlePlaceholder, 
     handleLogout,
     isLoggedIn
   } = props
 
   const trigger = useScrollTrigger({ threshold: 0, disableHysteresis: true, })
+
+  const classes = useStyles()
 
   return (
     <Header 
@@ -42,8 +46,7 @@ const EsxHeader = inject("store")(observer((props) => {
           <DesktopNav 
             show={(ctx.navVariant === "permanent")}
             navStructure={navStructure}
-            classes={classes}
-            handlePlaceHolder={handlePlaceHolder}
+            handlePlaceholder={handlePlaceholder}
             handleLogout={handleLogout}
             isLoggedIn={isLoggedIn}
           />
@@ -52,5 +55,3 @@ const EsxHeader = inject("store")(observer((props) => {
     </Header>
   )
 }))
-
-export default withStyles(headerStyles)(EsxHeader)
