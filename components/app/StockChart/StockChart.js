@@ -4,8 +4,7 @@ import { ClipLoader } from "react-spinners"
 
 class StockChart extends React.Component {
   render() {
-    const { stock } = this.props
-    console.log("stockChart.js....", stock)
+    const { stock, stockName } = this.props
     const { intradayData, dailyData } = this.props.stock
 
     // the intraday times which the 1D chart will always render
@@ -94,7 +93,7 @@ class StockChart extends React.Component {
     let prevPrice,
       openPrice = dailyData[dailyData.length - 1].close
 
-    // if market is closed then dailyData will have today's information, therefore previous day's close will actually be second to last item in it
+      // if market is closed then dailyData will have today's information, therefore previous day's close will actually be second to last item in it
     if (
       intradayData.length === 0 ||
       dailyData[dailyData.length - 1].date.split("-").join("") ===
@@ -115,7 +114,7 @@ class StockChart extends React.Component {
         if (!intradayData[i].label) {
           data.push({
             time: `${intradayData[i].minute} AM ET`,
-            price: null
+            price: null,
           })
           times.shift()
           continue
@@ -134,13 +133,13 @@ class StockChart extends React.Component {
             } ET`
         data.push({
           time,
-          price
+          price,
         })
         times.shift()
       } else if (intradayData[i].minute === "15:59") {
         data.push({
           time: "4:00 PM ET",
-          price: prevPrice
+          price: prevPrice,
         })
         times.shift()
       } else if (intradayData[i].average) {
@@ -194,11 +193,17 @@ class StockChart extends React.Component {
         data.push({ time, price: closePrice })
       })
     }
+    data = data.map(d => ({
+      time: d.time,
+      price: d.price,
+      lastClose: dailyData[dailyData.length - 1].close // until we correctly calculate last close
+    }))
     return (
-      <div style={{marginBottom: "32px"}}>
+      <div style={{ marginBottom: "32px" }}>
         {Object.keys(stock).length > 31 ? (
           <StockRechart
             stock={stock}
+            stockName={stockName}
             openPrice={openPrice}
             currPrice={currPrice}
             priceFlux={priceFlux}

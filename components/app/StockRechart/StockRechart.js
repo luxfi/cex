@@ -209,10 +209,10 @@ class StockRechart extends React.Component {
     currPrice = parseFloat(currPrice).formatMoney(2)
     priceFlux = Math.abs(parseFloat(priceFlux)).formatMoney(2)
     priceFluxPercentage = parseFloat(priceFluxPercentage).formatMoney(2)
-
+    console.log(data)
     return (
       <div className="chart">
-        <h1>{this.props.stock.name}</h1>
+        <h1>{this.props.stockName}</h1>
         <h2 id="stock-price">${currPrice}</h2>
         <h3 id="stock-price-flux">
           {neg}${priceFlux} ({priceFluxPercentage}%)
@@ -234,7 +234,7 @@ class StockRechart extends React.Component {
                 // width={710}
                 // height={195}
                 data={data}
-                margin={{ top: 5, right: 30, left: 0, bottom: 5 }}
+                margin={{ top: 5, right: 0, left: 0, bottom: 5 }}
               >
                 <YAxis hide={true} domain={[min, max]} />
                 <Tooltip
@@ -258,6 +258,16 @@ class StockRechart extends React.Component {
                   dot={false}
                   strokeWidth={2}
                 />
+                {this.state.active === "1D" ? (
+                  <Line
+                    type="monotone"
+                    dataKey="lastClose"
+                    stroke="white"
+                    dot={false}
+                    strokeDasharray="2 2"
+                    activeDot={{ r: 0 }}
+                  />
+                ) : null}
               </LineChart>
             </ResponsiveContainer>
           )}
@@ -362,7 +372,7 @@ class StockRechart extends React.Component {
             font-size: 14px;
             font-weight: 700;
             padding-bottom: 15px;
-            margin-right: 35px;
+            // margin-right: 35px;
             border-bottom: 1px solid #eee;
           }
           .chart-range li {

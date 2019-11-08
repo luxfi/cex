@@ -298,6 +298,7 @@ class Index extends React.Component {
               onExecute={onExecute}
               movieCategories={toJS(movie.genre)}
               maxSell={maxSell}
+              stockName={movie.name}
             />
           ) : (
             <Typography>Loading chart...</Typography>

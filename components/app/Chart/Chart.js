@@ -61,7 +61,8 @@ export default props => {
     setActiveChart,
     setMarketOrderType,
     marketOrderType,
-    funds
+    funds,
+    stockName
   } = props
   let labels = timelineLabels()
   const [visible, setVisible] = useState(false)
@@ -78,7 +79,7 @@ export default props => {
         <ToggleVisibleChart setActiveChart={setActiveChart} />
       </Toolbar> */}
       {/* <TVChartContainer /> */}
-      <StockChart stock={stock}/>
+      <StockChart stock={stock} stockName={stockName} />
       <div className="container-row space-between">
         <BuySellForm
           buttonColor="green"
