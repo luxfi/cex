@@ -1,5 +1,4 @@
 import React from "react"
-
 import NextLink from "next/link"
 
 import {
@@ -16,32 +15,29 @@ import {
   Search,
 } from "@material-ui/icons"
 
-import { withStyles } from "@material-ui/core/styles"
-
 import { AutoCompleteSearch } from ".."
 
-const CustomLink = React.forwardRef(
-  ({ className, href, hrefAs, children, }, ref) => (
-    <NextLink ref={ref} href={href} as={hrefAs}>
-      <a className={className}>{children}</a>
-    </NextLink>
-  )
-)
+import { makeStyles } from "@material-ui/core/styles"
+import styles from './desktopNav.style.js'
+
+const useStyles = makeStyles(styles)
+
 
 export default (props) => {
 
   const {
     show,
     navStructure,
-    handlePlaceHolder,
+    handlePlaceholder,
     handleLogout,
-    isLoggedIn,
-    classes
+    isLoggedIn
   } = props
 
   if (!show) {
     return ""
   }
+
+  const classes = useStyles()
 
   return (
     <>
@@ -52,7 +48,7 @@ export default (props) => {
         <div className={classes.menuSpacer} />
         <DesktopMainNav 
           navStructure={navStructure} 
-          handlePlaceHolder={handlePlaceHolder} 
+          handlePlaceholder={handlePlaceholder} 
           classes={classes}
         />
       </div>
@@ -63,11 +59,211 @@ export default (props) => {
   )
 }
 
-/////////////////////////////////////////////////////////////////////////////////////
 
+const MainNavDropdown = (props) => {
+
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const menuOpen = Boolean(anchorEl)
+
+  function handleMenuOpen(event) {
+    setAnchorEl(event.currentTarget)
+  }
+
+  function handleMenuClose() {
+    setAnchorEl(null)
+  }
+
+  const {
+    menuDefinition,
+    handlePlaceholder,
+    classes
+  } = props
+
+  return (<>
+    
+    < Button color="inherit" className={classes.menuButton} onClick={handleMenuOpen} >
+      {menuDefinition.title}
+    </Button >
+    <Menu
+      id="menu"
+      anchorEl={anchorEl}
+      keepMounted
+      open={menuOpen}
+      onClose={handleMenuClose}
+      className={classes.menu}
+    >
+      {menuDefinition.items.map(
+        (item) => {
+          return ('link' in item)
+            ? (
+              <NextLink href={item.link} key={item.link} >
+                <MenuItem ><span className={classes.subMenuItemText}>{item.title}</span></MenuItem>
+              </NextLink>
+            ) : (
+              <MenuItem key={item.placeholder} onClick={() => {
+                handlePlaceholder(item.placeholder)
+                handleMenuClose()
+              }}>
+                <span className={classes.subMenuItemText}>{item.title}</span>
+              </MenuItem>
+            )
+        }
+      )}
+    </Menu>
+  </>)
+}
+
+const DesktopMainNav = (props) => {
+
+  const {
+    navStructure, 
+    handlePlaceholder,
+    classes
+  } = props
+
+  let result = []
+  navStructure.forEach((navElement) => {
+
+    if ('placeholder' in navElement) {
+      result.push(
+        <Button 
+          color="inherit" 
+          className={classes.menuButton}
+          onClick={() => {
+            handlePlaceholder(navElement.placeholder)
+          }}
+        >
+          {navElement.title}
+        </Button>
+      ) 
+    }
+    else if ('link' in navElement) {
+      result.push(
+        <NextLink href={navElement.link}>
+          <Button
+            color="inherit"
+            className={classes.menuButton}
+          >
+            {navElement.title}
+          </Button>
+        </NextLink>
+      ) 
+    }
+    else /* menu */ {
+      result.push(
+        <MainNavDropdown 
+          classes={classes} 
+          menuDefinition={navElement} 
+          handlePlaceholder={handlePlaceholder}
+        />
+      )
+    }
+  })
+  return (
+    <>
+      {result}
+    </> 
+  )
+}
+
+
+const DesktopProfileArea = (props) => {
+
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const menuOpen = Boolean(anchorEl)
+
+  function handleMenuOpen(event) {
+    setAnchorEl(event.currentTarget)
+  }
+
+  function handleMenuClose() {
+    setAnchorEl(null)
+  }
+
+  const {
+    isLoggedIn, handleLogout, classes
+  } = props
+
+  return (<>
+    <div className={classes.search}>
+      <div className={classes.searchIcon}>
+        <Search />
+      </div>
+      <AutoCompleteSearch
+        placeholder="Search…"
+        classes={{
+          root: classes.inputRoot,
+          input: classes.inputInput
+        }}
+      />
+    </div>
+    {isLoggedIn ? (
+      <>
+        <IconButton
+          aria-controls="menu"
+          aria-haspopup="true"
+          onClick={handleMenuOpen}
+        >
+          <AccountCircle style={{ fontSize: "2rem" }} />
+        </IconButton>
+        <Menu
+          anchorEl={anchorEl}
+          keepMounted
+          open={menuOpen}
+          onClose={handleMenuClose}
+          className={classes.menu}
+        >
+          <MenuItem component={CustomLink} href={"/account"}>
+            <AccountCircle />
+            <span className={classes.subMenuItemText}>Account</span>
+          </MenuItem>
+          <MenuItem component={CustomLink} href={"/portfolio"}>
+            <AccountCircle />
+            <span className={classes.subMenuItemText}>Portfolio</span>
+          </MenuItem>
+          <MenuItem onClick={handleLogout}>
+            <ExitToApp />
+            <span className={classes.subMenuItemText}>Logout</span>
+          </MenuItem>
+        </Menu>
+      </>
+    ) : (
+        <>
+          <Button
+            component={CustomLink}
+            href={"/login"}
+            color="inherit"
+            className={classes.menuButton}
+          >
+            Login
+          </Button>
+          <Button
+            component={CustomLink}
+            color="inherit"
+            variant="outlined"
+            href={"/signup"}
+            className={classes.menuButton}
+          >
+            Sign Up
+          </Button>
+        </>
+      )}
+  </>)
+}
+
+const CustomLink = React.forwardRef(
+  ({ className, href, hrefAs, children, }, ref) => (
+    <NextLink ref={ref} href={href} as={hrefAs}>
+      <a className={className}>{children}</a>
+    </NextLink>
+  )
+)
+
+/////////////////////////////////////////////////////////////////////////////////////
+/*
 const renderMainNav_Temp = (props) => {
 
-  const {classes, openModal} = props
+  const { classes, openModal } = props
 
   return (
     <div className={classes.menuBarOuter}>
@@ -88,7 +284,7 @@ const renderMainNav_Temp = (props) => {
         open={open2}
         onClose={handleClose2}
         className={classes.menuButton}
-        style={{} /*{ marginTop: "50px", transform: "translate(-22px, 0px)" }*/}
+        style={{ marginTop: "50px", transform: "translate(-22px, 0px)" }}
       >
         <MenuItem onClick={() => {
           openModal("Movies")
@@ -151,142 +347,4 @@ const renderMainNav_Temp = (props) => {
   )
 }
 
-
-
-const DesktopMainNav = (props) => {
-
-  const {
-    navStructure, 
-    handlePlaceHolder,
-    classes
-  } = props
-
-  let result = []
-  navStructure.forEach((navElement) => {
-
-    if ('placeholder' in navElement) {
-      result.push(
-        <Button 
-          color="inherit" 
-          className={classes.menuButton}
-          onClick={() => {
-            handlePlaceHolder("Investors")
-          }}
-        >
-          {navElement.title}
-        </Button>
-      ) 
-    }
-    else if ('link' in navElement) {
-      result.push(
-        <NextLink href={navElement.link}>
-          <Button
-            color="inherit"
-            className={classes.menuButton}
-          >
-            {navElement.title}
-          </Button>
-        </NextLink>
-      ) 
-    }
-    else /* menu */ {
-      result.push(
-        <Button color="inherit" className={classes.menuButton}>
-          {"MT: " + navElement.title}
-        </Button>
-      )
-    }
-  })
-  return (
-    <>
-      {result}
-    </> 
-  )
-}
-
-
-const DesktopProfileArea = (props) => {
-
-  const [anchorEl, setAnchorEl] = React.useState(null)
-  const menuOpen = Boolean(anchorEl)
-
-  function handleClick(event) {
-    setAnchorEl(event.currentTarget)
-  }
-
-  function handleClose() {
-    setAnchorEl(null)
-  }
-
-  const {
-    isLoggedIn, handleLogout, classes
-  } = props
-
-  return (<>
-    <div className={classes.search}>
-      <div className={classes.searchIcon}>
-        <Search />
-      </div>
-      <AutoCompleteSearch
-        placeholder="Search…"
-        classes={{
-          root: classes.inputRoot,
-          input: classes.inputInput
-        }}
-      />
-    </div>
-    {isLoggedIn ? (
-      <>
-        <IconButton
-          aria-controls="menu"
-          aria-haspopup="true"
-          onClick={handleClick}
-        >
-          <AccountCircle style={{ fontSize: "2rem" }} />
-        </IconButton>
-        <Menu
-          id="menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={menuOpen}
-          onClose={handleClose}
-          style={{ marginTop: "50px" }}
-        >
-          <MenuItem component={CustomLink} href={"/account"}>
-            <AccountCircle />
-            <span style={{ padding: "15px" }}>Account</span>
-          </MenuItem>
-          <MenuItem component={CustomLink} href={"/portfolio"}>
-            <AccountCircle />
-            <span style={{ padding: "15px" }}>Portfolio</span>
-          </MenuItem>
-          <MenuItem onClick={handleLogout}>
-            <ExitToApp />
-            <span style={{ padding: "15px" }}>Logout</span>
-          </MenuItem>
-        </Menu>
-      </>
-    ) : (
-        <>
-          <Button
-            component={CustomLink}
-            href={"/login"}
-            color="inherit"
-            className={classes.menuButton}
-          >
-            Login
-          </Button>
-          <Button
-            component={CustomLink}
-            color="inherit"
-            variant="outlined"
-            href={"/signup"}
-            className={classes.menuButton}
-          >
-            Sign Up
-          </Button>
-        </>
-      )}
-  </>)
-}
-
+*/
