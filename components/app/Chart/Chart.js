@@ -4,8 +4,9 @@ import {
   ChartCandlestickFake,
   ChartLineSeries,
   ToggleVisibleChart,
-  StockRechart
+  StockChart
 } from "../"
+import { toJS } from "mobx"
 import { timelineLabels } from "../../utils/dateRange"
 import { Element } from "react-scroll"
 import dynamic from "next/dynamic"
@@ -60,84 +61,85 @@ export default props => {
     setActiveChart,
     setMarketOrderType,
     marketOrderType,
-    funds,
+    funds
   } = props
-
   let labels = timelineLabels()
   const [visible, setVisible] = useState(false)
+  const stock = toJS(orderBook.stock)
+  console.log("chart.js", stock)
   return (
     <Element className="container">
-      <Toolbar>
+      {/* <Toolbar>
         <ChartIntervalControls
           updatePrintInterval={updatePrintInterval}
           activeChart={activeChart}
         />
         <div style={{ flexGrow: 1 }} />
         <ToggleVisibleChart setActiveChart={setActiveChart} />
-      </Toolbar>
+      </Toolbar> */}
       {/* <TVChartContainer /> */}
-      <StockRechart/>
-        <div className="container-row space-between">
-          <BuySellForm
-            buttonColor="green"
-            buttonText="BUY"
-            orderType="bid"
-            ticker={ticker}
-            orders={buyOrders}
-            orderBook={orderBook}
-            onExecute={onExecute}
-            movieCategories={movieCategories}
-            marketOrderType={marketOrderType}
-            funds={funds}
-          />
-          <Grid
-            container
-            direction="column"
-            alignItems="center"
-            className="divider"
-            style={{
-              marginTop: "84px"
-            }}
-          >
-            <Grid item>
-              <Button
-                variant="contained"
-                color={marketOrderType ? "primary" : "default"}
-                onClick={() => setMarketOrderType(true)}
-                style={{
-                  margin: "8px 32px"
-                }}
-              >
-                Market
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button
-                variant="contained"
-                color={marketOrderType ? "default" : "primary"}
-                onClick={() => setMarketOrderType(false)}
-                style={{
-                  margin: "8px 32px"
-                }}
-              >
-                Limit
-              </Button>
-            </Grid>
+      <StockChart stock={stock}/>
+      <div className="container-row space-between">
+        <BuySellForm
+          buttonColor="green"
+          buttonText="BUY"
+          orderType="bid"
+          ticker={ticker}
+          orders={buyOrders}
+          orderBook={orderBook}
+          onExecute={onExecute}
+          movieCategories={movieCategories}
+          marketOrderType={marketOrderType}
+          funds={funds}
+        />
+        <Grid
+          container
+          direction="column"
+          alignItems="center"
+          className="divider"
+          style={{
+            marginTop: "84px"
+          }}
+        >
+          <Grid item>
+            <Button
+              variant="contained"
+              color={marketOrderType ? "primary" : "default"}
+              onClick={() => setMarketOrderType(true)}
+              style={{
+                margin: "8px 32px"
+              }}
+            >
+              Market
+            </Button>
           </Grid>
-          <BuySellForm
-            buttonColor="red"
-            buttonText="SELL"
-            orderType="ask"
-            ticker={ticker}
-            orders={sellOrders}
-            orderBook={orderBook}
-            onExecute={onExecute}
-            movieCategories={movieCategories}
-            maxSell={maxSell}
-            marketOrderType={marketOrderType}
-            funds={funds}
-          />
-        </div>
+          <Grid item>
+            <Button
+              variant="contained"
+              color={marketOrderType ? "default" : "primary"}
+              onClick={() => setMarketOrderType(false)}
+              style={{
+                margin: "8px 32px"
+              }}
+            >
+              Limit
+            </Button>
+          </Grid>
+        </Grid>
+        <BuySellForm
+          buttonColor="red"
+          buttonText="SELL"
+          orderType="ask"
+          ticker={ticker}
+          orders={sellOrders}
+          orderBook={orderBook}
+          onExecute={onExecute}
+          movieCategories={movieCategories}
+          maxSell={maxSell}
+          marketOrderType={marketOrderType}
+          funds={funds}
+        />
+      </div>
 
       <style jsx>{`
         .container {

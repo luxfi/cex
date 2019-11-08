@@ -12,11 +12,13 @@ export { default as CustomBreadcrumbs } from './CustomBreadcrumbs'
 export { default as CustomLink } from './CustomLink'
 export { default as CustomModal } from './CustomModal'
 export { default as CustomSnackbar } from './CustomSnackbar'
+export { default as CustomStockTooltip } from "./CustomStockTooltip"
 export { default as Footer } from './Footer'
 export { default as Header } from './Header'
 export { default as InvestNow } from './InvestNow'
 export { default as LimitOrders } from './LimitOrders'
 export { default as StockRechart } from "./StockRechart"
+export { default as StockChart } from "./StockChart"
 export { default as Table } from './Table'
 export { default as TopInvestmentPicks } from './TopInvestmentPicks'
 export { default as ToggleVisibleChart } from './ToggleVisibleChart'

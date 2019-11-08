@@ -1,6 +1,7 @@
 import { action, observable, computed } from "mobx"
 import _ from "lodash"
 import uuid from "uuid"
+import stock from "../assets/tempData/stocks"
 
 // import io from 'socket.io-client'
 const LimitOrder = require("limit-order-book").LimitOrder
@@ -50,6 +51,7 @@ export default class OrderBook {
   @observable printInterval = 5
   @observable activeChart = "line-chart"
   @observable marketOrderType = true
+  @observable stock = {}
 
   constructor(
     initialData = {
@@ -72,6 +74,7 @@ export default class OrderBook {
     this.printInterval = initialData.printInterval || 5
     this.api = hanzoApi
     this.id = id
+    this.stock = stock
   }
 
   @action clearData() {
