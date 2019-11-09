@@ -7,6 +7,14 @@ import Icon from "@material-ui/core/Icon"
 import ButtonBase from "@material-ui/core/ButtonBase"
 import Collapse from "@material-ui/core/Collapse"
 import { makeStyles } from "@material-ui/styles"
+import * as Scroll from "react-scroll"
+// Or Access Link,Element,etc as follows
+let Link       = Scroll.Link;
+let Element    = Scroll.Element;
+let Events     = Scroll.Events;
+let scroll     = Scroll.animateScroll;
+let scrollSpy  = Scroll.scrollSpy;
+let scroller   = Scroll.scroller;
 
 const useStyles = makeStyles(theme => {
   const { palette } = theme
@@ -26,7 +34,7 @@ const useStyles = makeStyles(theme => {
     },
     item: {
       minWidth: 0,
-      flexGrow: 1,
+      flexGrow: 1
       // "&:hover": {
       //   backgroundColor: palette.grey[100]
       // }
@@ -35,7 +43,7 @@ const useStyles = makeStyles(theme => {
       margin: "0 -4px 0 auto"
     },
     toggle: {
-      minWidth: 48,
+      minWidth: 48
       // "&:hover": {
       //   backgroundColor: palette.grey[200]
       // }
@@ -43,7 +51,7 @@ const useStyles = makeStyles(theme => {
     // -------------------------
     // Sub 1
     sub1: {
-      paddingLeft: 40,
+      paddingLeft: 40
       // "&:hover": {
       //   backgroundColor: palette.grey[100]
       // }
@@ -67,7 +75,7 @@ const useStyles = makeStyles(theme => {
         height: "100%",
         left: 40,
         backgroundColor: palette.grey[100]
-      },
+      }
       // "&:hover": {
       //   backgroundColor: palette.grey[100]
       // }
@@ -96,10 +104,12 @@ const Header = ({
   toggle = separated,
   onMenuClick,
   onToggle,
+  currentKey,
   ...menuItemProps
 }) => {
   const classes = useStyles()
   const icon = `keyboard_arrow_${expanded ? "up" : "down"}`
+  console.log(currentKey)
   return (
     <div
       className={cx(
@@ -132,7 +142,8 @@ const Header = ({
             onMenuClick(e)
           }}
         >
-          {label} {toggle && <Icon className={classes.itemArrow}>{icon}</Icon>}
+          {label}
+          {toggle && <Icon className={classes.itemArrow}>{icon}</Icon>}
         </MenuItem>
       )}
     </div>
@@ -153,6 +164,17 @@ const NestedMenu01 = ({ menus, selectedKey, openKeys }) => {
   useEffect(() => {
     setCurrentKey(selectedKey)
   }, [selectedKey])
+  useEffect(() => {
+    window.scroller = scroller
+  }, [])
+  useEffect(() => {
+    scroller.scrollTo(currentKey, {
+      duration: 800,
+      delay: 0,
+      smooth: "easeInOutQuart",
+      offset: -130
+    })
+  }, [currentKey])
 
   useEffect(() => {
     setCurrentOpenKeys(openKeys)
@@ -176,6 +198,7 @@ const NestedMenu01 = ({ menus, selectedKey, openKeys }) => {
       {level === 0 ? (
         <Header
           label={label}
+          currentKey={currentKey}
           selected={
             subMenus ? separated && currentKey === key : currentKey === key
           }
