@@ -14,6 +14,9 @@ import {
 } from 'mui-layout'
 
 import DesktopNav from "./DesktopNav"
+import DesktopProfileAndSearch from "./DesktopProfileAndSearch"
+import MobileProfileAndSearch from "./MobileProfileAndSearch"
+
 import navStructure from "./navStructure"
 
 import { makeStyles } from "@material-ui/core/styles"
@@ -37,20 +40,27 @@ export default inject("store")(observer((props) => {
   return (
     <LayoutContext.Consumer>
       {(ctx) => {
-        const showDesktopNav = ctx.navVariant === "permanent"
+        const desktopView = ctx.navVariant === "permanent"
         
         return (
           <Header
             renderMenuIcon={open => (open ? <ChevronLeft /> : <MenuRounded />)}
-            className={`${classes.appBar} ${(!showDesktopNav || trigger) ? classes.translucent : classes.transparent }`}
+            className={`${classes.appBar} ${(!desktopView || trigger) ? classes.translucent : classes.transparent }`}
           >
-            <DesktopNav 
-              show={showDesktopNav}
-              navStructure={navStructure}
-              handlePlaceholder={handlePlaceholder}
-              handleLogout={handleLogout}
-              isLoggedIn={isLoggedIn}
-            />
+            {(desktopView) ? (
+                <>
+                <DesktopNav
+                  navStructure={navStructure}
+                  handlePlaceholder={handlePlaceholder}
+                  handleLogout={handleLogout}
+                  isLoggedIn={isLoggedIn}
+                />
+                <DesktopProfileAndSearch isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+                </>
+              ) : (
+                <MobileProfileAndSearch isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+              )
+            }
           </Header>
         )
       }}
