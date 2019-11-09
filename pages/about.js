@@ -14,15 +14,35 @@ let scrollSpy = Scroll.scrollSpy
 
 const styles = theme => ({})
 
+const content = [
+  {
+    title: "Welcome to the Future of Hollywood",
+    key: "first",
+    paragraph:
+      "In May 2016, the United States Securities and Exchange Commission (SEC) enacted Title III of the JOBS Act, allowing a majority of the US population to invest in completely new ways. Entertainment Stock X will for the first time in history make investing in, and true ownership of the entertainment media we all love and consume, truly accessible. \nMain street, welcome to ownership in most well known commodities you could have never touched before.\nThat’s why we built Entertainment Stock X. We’re SEC-registered and FINRA-licensed, and if you’re at all interested in movies, TV, music, and/or Broadway plays, we finally have a way for you to own portions of them. ESX is a platform built together with some of the most prolific producers and creators in the entertainment space and built to be the trusted ecosystem in which the world can finally invest in the media it loves to watch.\nWe launched our equity investing platform to provide real ownership in the projects you see on this site. The value of your ownership stock is tied directly to the performance of that media. No tricky Hollywood accounting garbage either. Investors will have access to the “ultimates” and know exactly how their holdings are performing and develop plans to maximize ROI on every stock.\nWe pledge to innovate on our mission to democratize entertainment media holdings and investing. This is truly a new future in investing in entertainment.\n"
+  },
+  {
+    title: "Why we’ve built this platform",
+    key: "second",
+    paragraph:
+      "Hollywood is an amazing place of dreams that has become increasingly closed off from Main Street’s input. It’s an industry insulated in a bizarrely strange way from it’s end user. The consumer (while being able to invest in the publicly traded big production studios) has never been able to voice influence in individual projects beyond their consumer power at the box office.\nFortunately, Title III opened the door for those previously excluded from media investing to fund the films, TV, music, and Broadway they believe in. This makes room for more entrepreneurs and potentially new audiences. ESX is built to not only get new ideas funded, but to provide a community of producers to help voice their power early in the production process.\n"
+  },
+  {
+    title: "Who is Entertainment Stock X",
+    key: "third",
+    paragraph:
+      "In May 2016, the United States Securities and Exchange Commission (SEC) enacted Title III of the JOBS Act, allowing a majority of the US population to invest in completely new ways. Entertainment Stock X will for the first time in history make investing in, and true ownership of the entertainment media we all love and consume, truly accessible. \nMain street, welcome to ownership in most well known commodities you could have never touched before.\nThat’s why we built Entertainment Stock X. We’re SEC-registered and FINRA-licensed, and if you’re at all interested in movies, TV, music, and/or Broadway plays, we finally have a way for you to own portions of them. ESX is a platform built together with some of the most prolific producers and creators in the entertainment space and built to be the trusted ecosystem in which the world can finally invest in the media it loves to watch.\nWe launched our equity investing platform to provide real ownership in the projects you see on this site. The value of your ownership stock is tied directly to the performance of that media. No tricky Hollywood accounting garbage either. Investors will have access to the “ultimates” and know exactly how their holdings are performing and develop plans to maximize ROI on every stock.\nWe pledge to innovate on our mission to democratize entertainment media holdings and investing. This is truly a new future in investing in entertainment.\n"
+  }
+]
+
 const Menu = () => {
   return (
     <NestedMenu
       selectedKeys={["first"]}
       menus={[
-        { key: "first", label: "First" },
-        { key: "second", label: "Second" },
-        { key: "third", label: "Third" },
-        { key: "fourth", label: "Fourth" }
+        { key: "first", label: "Welcome to the Future of Hollywood" },
+        { key: "second", label: "Why we’ve built this platform" },
+        { key: "third", label: "Who is Entertainment Stock X" }
       ]}
     />
   )
@@ -38,7 +58,7 @@ class About extends React.Component {
     })
     let that = this
     Events.scrollEvent.register("end", function(to, element) {
-      if(to === "fourth") {
+      if (to === "third") {
         that.setState({ start: window.pageYOffset })
       }
     })
@@ -48,24 +68,23 @@ class About extends React.Component {
     let distance
     let nav = document.getElementById("floating-nav")
     let top
-	window.addEventListener('scroll', function (event) {
+    window.addEventListener("scroll", function(event) {
       // Calculate distance
-      if(that.state.start) {
-			  end = window.pageYOffset
+      if (that.state.start) {
+        end = window.pageYOffset
         distance = end - that.state.start
         top = distance > 0 ? 128 - distance : 128
         console.log("distance", distance)
         nav.style.top = `${top}px`
-
       }
-		})
+    })
 
     scrollSpy.update()
   }
   componentWillUnmount() {
     Events.scrollEvent.remove("begin")
     Events.scrollEvent.remove("end")
-    window.removeEventListener('scroll')
+    window.removeEventListener("scroll")
   }
   render() {
     const { classes, store } = this.props
@@ -74,13 +93,13 @@ class About extends React.Component {
       <>
         <Container component="main" maxWidth="md">
           <Box mt={8} mb={16}>
-            <Grid container spacing={3}>
+            <Grid container spacing={10}>
               <Grid item xs={4}>
                 <Box
                   id="floating-nav"
                   style={{
                     position: "fixed",
-                    width: "260px",
+                    width: "307px",
                     top: "128px"
                   }}
                 >
@@ -88,78 +107,16 @@ class About extends React.Component {
                 </Box>
               </Grid>
               <Grid item xs={8}>
-                <Element name="first" className="element">
-                  <Typography paragraph>
-                    Consequat mauris nunc congue nisi vitae suscipit. Fringilla
-                    est ullamcorper eget nulla facilisi etiam dignissim diam.
-                    Pulvinar elementum integer enim neque volutpat ac tincidunt.
-                    Ornare suspendisse sed nisi lacus sed viverra tellus. Purus
-                    sit amet volutpat consequat mauris. Elementum eu facilisis
-                    sed odio morbi. Euismod lacinia at quis risus sed vulputate
-                    odio. Morbi tincidunt ornare massa eget egestas purus
-                    viverra accumsan in. In hendrerit gravida rutrum quisque non
-                    tellus orci ac. Pellentesque nec nam aliquam sem et tortor.
-                    Habitant morbi tristique senectus et. Adipiscing elit duis
-                    tristique sollicitudin nibh sit. Ornare aenean euismod
-                    elementum nisi quis eleifend. Commodo viverra maecenas
-                    accumsan lacus vel facilisis. Nulla posuere sollicitudin
-                    aliquam ultrices sagittis orci a.
-                  </Typography>
-                </Element>
-                <Element name="second" className="element">
-                  <Typography paragraph>
-                    Consequat mauris nunc congue nisi vitae suscipit. Fringilla
-                    est ullamcorper eget nulla facilisi etiam dignissim diam.
-                    Pulvinar elementum integer enim neque volutpat ac tincidunt.
-                    Ornare suspendisse sed nisi lacus sed viverra tellus. Purus
-                    sit amet volutpat consequat mauris. Elementum eu facilisis
-                    sed odio morbi. Euismod lacinia at quis risus sed vulputate
-                    odio. Morbi tincidunt ornare massa eget egestas purus
-                    viverra accumsan in. In hendrerit gravida rutrum quisque non
-                    tellus orci ac. Pellentesque nec nam aliquam sem et tortor.
-                    Habitant morbi tristique senectus et. Adipiscing elit duis
-                    tristique sollicitudin nibh sit. Ornare aenean euismod
-                    elementum nisi quis eleifend. Commodo viverra maecenas
-                    accumsan lacus vel facilisis. Nulla posuere sollicitudin
-                    aliquam ultrices sagittis orci a.
-                  </Typography>
-                </Element>
-                <Element name="third" className="element">
-                  <Typography paragraph>
-                    Consequat mauris nunc congue nisi vitae suscipit. Fringilla
-                    est ullamcorper eget nulla facilisi etiam dignissim diam.
-                    Pulvinar elementum integer enim neque volutpat ac tincidunt.
-                    Ornare suspendisse sed nisi lacus sed viverra tellus. Purus
-                    sit amet volutpat consequat mauris. Elementum eu facilisis
-                    sed odio morbi. Euismod lacinia at quis risus sed vulputate
-                    odio. Morbi tincidunt ornare massa eget egestas purus
-                    viverra accumsan in. In hendrerit gravida rutrum quisque non
-                    tellus orci ac. Pellentesque nec nam aliquam sem et tortor.
-                    Habitant morbi tristique senectus et. Adipiscing elit duis
-                    tristique sollicitudin nibh sit. Ornare aenean euismod
-                    elementum nisi quis eleifend. Commodo viverra maecenas
-                    accumsan lacus vel facilisis. Nulla posuere sollicitudin
-                    aliquam ultrices sagittis orci a.
-                  </Typography>
-                </Element>
-                <Element name="fourth" className="element">
-                  <Typography paragraph>
-                    Consequat mauris nunc congue nisi vitae suscipit. Fringilla
-                    est ullamcorper eget nulla facilisi etiam dignissim diam.
-                    Pulvinar elementum integer enim neque volutpat ac tincidunt.
-                    Ornare suspendisse sed nisi lacus sed viverra tellus. Purus
-                    sit amet volutpat consequat mauris. Elementum eu facilisis
-                    sed odio morbi. Euismod lacinia at quis risus sed vulputate
-                    odio. Morbi tincidunt ornare massa eget egestas purus
-                    viverra accumsan in. In hendrerit gravida rutrum quisque non
-                    tellus orci ac. Pellentesque nec nam aliquam sem et tortor.
-                    Habitant morbi tristique senectus et. Adipiscing elit duis
-                    tristique sollicitudin nibh sit. Ornare aenean euismod
-                    elementum nisi quis eleifend. Commodo viverra maecenas
-                    accumsan lacus vel facilisis. Nulla posuere sollicitudin
-                    aliquam ultrices sagittis orci a.
-                  </Typography>
-                </Element>
+                {content.map(section => (
+                  <Element name={section.key} className="element">
+                    <Box mb={10}>
+                      <Typography gutterBottom variant="h4">
+                        {section.title}
+                      </Typography>
+                      <Typography paragraph>{section.paragraph}</Typography>
+                    </Box>
+                  </Element>
+                ))}
               </Grid>
             </Grid>
           </Box>
