@@ -109,6 +109,9 @@ const Header = ({
 }) => {
   const classes = useStyles()
   const icon = `keyboard_arrow_${expanded ? "up" : "down"}`
+  const handleSetActive = (to) => {
+    console.log(to);
+  }
   console.log(currentKey)
   return (
     <div
@@ -134,17 +137,17 @@ const Header = ({
           )}
         </>
       ) : (
-        <MenuItem
-          className={classes.item}
-          {...menuItemProps}
-          onClick={e => {
-            onToggle(e)
-            onMenuClick(e)
-          }}
-        >
-          {label}
-          {toggle && <Icon className={classes.itemArrow}>{icon}</Icon>}
-        </MenuItem>
+          <MenuItem
+            className={classes.item}
+            {...menuItemProps}
+            onClick={e => {
+              onToggle(e)
+              onMenuClick(e)
+            }}
+          >
+            {label}
+            {toggle && <Icon className={classes.itemArrow}>{icon}</Icon>}
+          </MenuItem>
       )}
     </div>
   )
