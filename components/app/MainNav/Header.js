@@ -35,23 +35,25 @@ export default inject("store")(observer((props) => {
   const classes = useStyles()
 
   return (
-    <Header 
-      renderMenuIcon={open => (open ? <ChevronLeft /> : <MenuRounded />)} 
-      className={
-        `${classes.appBar} ${!trigger ? classes.transparent : classes.translucent}`
-      }
-    >
-      <LayoutContext.Consumer>
-        {ctx => (
-          <DesktopNav 
-            show={(ctx.navVariant === "permanent")}
-            navStructure={navStructure}
-            handlePlaceholder={handlePlaceholder}
-            handleLogout={handleLogout}
-            isLoggedIn={isLoggedIn}
-          />
-        )}
-      </LayoutContext.Consumer>
-    </Header>
-  )
-}))
+    <LayoutContext.Consumer>
+      {(ctx) => {
+        const showDesktopNav = ctx.navVariant === "permanent"
+        
+        return (
+          <Header
+            renderMenuIcon={open => (open ? <ChevronLeft /> : <MenuRounded />)}
+            className={`${classes.appBar} ${(!showDesktopNav || trigger) ? classes.translucent : classes.transparent }`}
+          >
+            <DesktopNav 
+              show={showDesktopNav}
+              navStructure={navStructure}
+              handlePlaceholder={handlePlaceholder}
+              handleLogout={handleLogout}
+              isLoggedIn={isLoggedIn}
+            />
+          </Header>
+        )
+      }}
+    </LayoutContext.Consumer>
+  )}
+))
