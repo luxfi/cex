@@ -8,12 +8,12 @@ export default (theme) => {
 
     transparent: {
       background: "transparent !important",
-      transition: "background 0.25s ease-in-out"
+      transition: "background 0.5s ease-in-out"
     },
 
     translucent: {
-      background: "rgba(17, 17, 17, 0.847)",
-      transition: "background 0.25s ease-in-out"
+      background: "rgba(17, 17, 17, 0.7)",
+      transition: "background 0.5s ease-in-out"
     },
   }
 }
