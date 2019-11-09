@@ -8,7 +8,13 @@ import ButtonBase from "@material-ui/core/ButtonBase"
 import Collapse from "@material-ui/core/Collapse"
 import { makeStyles } from "@material-ui/styles"
 import * as Scroll from "react-scroll"
-let scroller   = Scroll.scroller;
+
+let Link = Scroll.Link
+let Element = Scroll.Element
+let Events = Scroll.Events
+let scroll = Scroll.animateScroll
+let scrollSpy = Scroll.scrollSpy
+let scroller = Scroll.scroller
 
 const useStyles = makeStyles(theme => {
   const { palette } = theme
@@ -103,10 +109,6 @@ const Header = ({
 }) => {
   const classes = useStyles()
   const icon = `keyboard_arrow_${expanded ? "up" : "down"}`
-  const handleSetActive = (to) => {
-    console.log(to);
-  }
-  console.log(currentKey)
   return (
     <div
       className={cx(
@@ -115,6 +117,17 @@ const Header = ({
         expanded && classes.headerExpanded
       )}
     >
+      <Link
+        to={label.toLowerCase()}
+        spy={true}
+        smooth={true}
+        offset={-130}
+        duration={500}
+        onSetActive={e => {
+          onToggle(e)
+          onMenuClick(e)
+        }}
+      ></Link>
       {separated ? (
         <>
           <MenuItem
@@ -131,17 +144,17 @@ const Header = ({
           )}
         </>
       ) : (
-          <MenuItem
-            className={classes.item}
-            {...menuItemProps}
-            onClick={e => {
-              onToggle(e)
-              onMenuClick(e)
-            }}
-          >
-            {label}
-            {toggle && <Icon className={classes.itemArrow}>{icon}</Icon>}
-          </MenuItem>
+        <MenuItem
+          className={classes.item}
+          {...menuItemProps}
+          onClick={e => {
+            onToggle(e)
+            onMenuClick(e)
+          }}
+        >
+          {label}
+          {toggle && <Icon className={classes.itemArrow}>{icon}</Icon>}
+        </MenuItem>
       )}
     </div>
   )
@@ -156,14 +169,11 @@ const NestedMenu01 = ({ menus, selectedKey, openKeys }) => {
   const classes = useStyles()
   const [currentKey, setCurrentKey] = useState(selectedKey || "")
   const [currentOpenKeys, setCurrentOpenKeys] = useState(openKeys || [])
-  console.log("currentOpenKeys", currentOpenKeys)
+  // console.log("currentOpenKeys", currentOpenKeys)
 
   useEffect(() => {
     setCurrentKey(selectedKey)
   }, [selectedKey])
-  useEffect(() => {
-    window.scroller = scroller
-  }, [])
   useEffect(() => {
     scroller.scrollTo(currentKey, {
       duration: 800,

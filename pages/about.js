@@ -3,7 +3,14 @@ import { inject, observer } from "mobx-react"
 import { withStyles } from "@material-ui/core/styles"
 import { Container, Typography, Grid, Box } from "@material-ui/core"
 import { NestedMenu } from "../components/app"
-import { Element } from "react-scroll"
+import * as Scroll from "react-scroll"
+import { InvestNow } from "../components/app"
+
+let Link = Scroll.Link
+let Element = Scroll.Element
+let Events = Scroll.Events
+let scroll = Scroll.animateScroll
+let scrollSpy = Scroll.scrollSpy
 
 const styles = theme => ({})
 
@@ -24,19 +31,57 @@ const Menu = () => {
 @inject("store")
 @observer
 class About extends React.Component {
+  state = { start: null, end: null }
+  componentDidMount() {
+    Events.scrollEvent.register("begin", function(to, element) {
+      // console.log("begin", arguments)
+    })
+    let that = this
+    Events.scrollEvent.register("end", function(to, element) {
+      if(to === "fourth") {
+        that.setState({ start: window.pageYOffset })
+      }
+    })
+
+    // Listen for scroll events
+    let end
+    let distance
+    let nav = document.getElementById("floating-nav")
+    let top
+	window.addEventListener('scroll', function (event) {
+      // Calculate distance
+      if(that.state.start) {
+			  end = window.pageYOffset
+        distance = end - that.state.start
+        top = distance > 0 ? 128 - distance : 128
+        console.log("distance", distance)
+        nav.style.top = `${top}px`
+
+      }
+		})
+
+    scrollSpy.update()
+  }
+  componentWillUnmount() {
+    Events.scrollEvent.remove("begin")
+    Events.scrollEvent.remove("end")
+    window.removeEventListener('scroll')
+  }
   render() {
-    const { classes } = this.props
+    const { classes, store } = this.props
+    const { loggedIn } = store.userStore
     return (
+      <>
         <Container component="main" maxWidth="md">
           <Box mt={8} mb={16}>
             <Grid container spacing={3}>
               <Grid item xs={4}>
                 <Box
+                  id="floating-nav"
                   style={{
                     position: "fixed",
-                    width: "260px"
-                    // left: "32px",
-                    // top: "0px"
+                    width: "260px",
+                    top: "128px"
                   }}
                 >
                   <Menu />
@@ -119,6 +164,13 @@ class About extends React.Component {
             </Grid>
           </Box>
         </Container>
+        <InvestNow loggedIn={loggedIn} />
+        <div
+          style={{
+            height: "70px"
+          }}
+        ></div>
+      </>
     )
   }
 }
