@@ -8,12 +8,6 @@ import ButtonBase from "@material-ui/core/ButtonBase"
 import Collapse from "@material-ui/core/Collapse"
 import { makeStyles } from "@material-ui/styles"
 import * as Scroll from "react-scroll"
-// Or Access Link,Element,etc as follows
-let Link       = Scroll.Link;
-let Element    = Scroll.Element;
-let Events     = Scroll.Events;
-let scroll     = Scroll.animateScroll;
-let scrollSpy  = Scroll.scrollSpy;
 let scroller   = Scroll.scroller;
 
 const useStyles = makeStyles(theme => {
