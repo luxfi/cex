@@ -121,12 +121,7 @@ class About extends React.Component {
             </Grid>
           </Box>
         </Container>
-        <InvestNow loggedIn={loggedIn} />
-        <div
-          style={{
-            height: "70px"
-          }}
-        ></div>
+        <InvestNow loggedIn={loggedIn} noPadding />
       </>
     )
   }

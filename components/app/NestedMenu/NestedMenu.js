@@ -175,6 +175,7 @@ const NestedMenu01 = ({ menus, selectedKey, openKeys }) => {
   useEffect(() => {
     setCurrentKey(selectedKey)
   }, [selectedKey])
+  
   useEffect(() => {
     scroller.scrollTo(currentKey, {
       duration: 800,
