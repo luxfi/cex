@@ -68,24 +68,14 @@ const muiLayoutConfig = presets.createStandardLayout()
   "footerShrink": true
 }
 */
-muiLayoutConfig.navWidth = 0
-muiLayoutConfig.initialAdjustmentHeight = {
-  "xs": 64,
-  //"sm": 80
-}
+muiLayoutConfig.navWidth = 360
 muiLayoutConfig.navVariant = {
   "xs": "temporary",
   "sm": "temporary",
-  "md": "permanent",
 }
-muiLayoutConfig.collapsedBreakpoint = "md"
-muiLayoutConfig.autoCollapsedDisabled = false
-
-
-muiLayoutConfig.collapsedWidth = "80vw"
 muiLayoutConfig.collapsible = {
-  "xs": true,
-}
+  "xs": false,
+},
 muiLayoutConfig.headerPosition = "sticky"
 
 
