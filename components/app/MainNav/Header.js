@@ -21,11 +21,6 @@ import styles from './header.style.js'
 
 const useStyles = makeStyles(styles)
 
-
-const isDesktopView = (screen) => {
-  return !["xs", "sm"].includes(screen)
-}
-
 export default inject("store")(observer((props) => {
 
   const { 
@@ -41,22 +36,33 @@ export default inject("store")(observer((props) => {
   return (
     <LayoutContext.Consumer>
       {(ctx) => {
-        const desktopView = isDesktopView(ctx.screen)
+        const desktopNav = !["xs", "sm"].includes(ctx.screen)
+        const mobileProfile = ["xs"].includes(ctx.screen)
         
         return (
           <Header
-            renderMenuIcon={open => (!desktopView && <MenuRounded />)}
-            className={`${classes.appBar} ${(!desktopView || trigger) ? classes.translucent : classes.transparent }`}
-            toolbarProps={{disableGutters: true}}
+            renderMenuIcon={open => (!desktopNav && <MenuRounded />)}
+            className={`${classes.appBar} ${(!desktopNav || trigger) ? classes.translucent : classes.transparent} ${(mobileProfile) ? classes.mobile : ''}`}
+            toolbarProps={{
+              disableGutters: true,
+              style: {
+                flexGrow: 1,
+                alignItems: "center",
+                justifyContent: "space-between"
+              }
+            }}
           >
-            {(desktopView) ? (
-                <>
-                <DesktopNav navStructure={navStructure} handlePlaceholder={handlePlaceholder} />
-                <DesktopProfileAndSearch isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
-                </>
-              ) : (
+            {desktopNav &&  
+              <DesktopNav navStructure={navStructure} handlePlaceholder={handlePlaceholder} />
+            }
+            {(mobileProfile) ? (
+              <>
+                <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.mobileLogo} height="26px" />
                 <MobileProfileAndSearch isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
-              )
+              </>
+            ) : (
+              <DesktopProfileAndSearch isLoggedIn = { isLoggedIn } handleLogout = { handleLogout } />
+            )
             }
           </Header>
         )
