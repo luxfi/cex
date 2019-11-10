@@ -46,6 +46,7 @@ export default inject("store")(observer((props) => {
           <Header
             renderMenuIcon={open => (open ? <ChevronLeft /> : <MenuRounded />)}
             className={`${classes.appBar} ${(!desktopView || trigger) ? classes.translucent : classes.transparent }`}
+            toolbarProps={{disableGutters: true}}
           >
             {(desktopView) ? (
                 <>

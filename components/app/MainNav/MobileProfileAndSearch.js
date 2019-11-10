@@ -18,9 +18,11 @@ import {
 
 
 import { makeStyles } from "@material-ui/core/styles"
-import styles from './desktopNav.style.js'
+import mainStyles from './desktopNav.style.js'
+import searchStyles from './searchWidget.style.js'
 
-const useStyles = makeStyles(styles)
+const useMainStyles = makeStyles(mainStyles)
+const useSearchStyles = makeStyles(searchStyles)
 
 
 export default (props) => {
@@ -40,22 +42,19 @@ export default (props) => {
     isLoggedIn, handleLogout
   } = props
 
-  const classes = useStyles()
+  const classes = useMainStyles()
+  const searchClasses = useSearchStyles()
 
-  return (<>
-    <div className={classes.search}>
-      <div className={classes.searchIcon}>
-        <Search />
+  return (
+    <div className={classes.accountOuter}>
+      <div className={searchClasses.search}>
+        <Search className={searchClasses.searchIcon} />
+        <AutoCompleteSearch
+          placeholder="Search…"
+          classes={searchClasses}
+        />
       </div>
-      <AutoCompleteSearch
-        placeholder="Search…"
-        classes={{
-          root: classes.inputRoot,
-          input: classes.inputInput
-        }}
-      />
-    </div>
-    {isLoggedIn ? (
+      {isLoggedIn ? (
       <>
         <IconButton
           aria-controls="menu"
@@ -85,7 +84,7 @@ export default (props) => {
           </MenuItem>
         </Menu>
       </>
-    ) : (
+      ) : (
         <>
           <Button
             component={CustomLink}
@@ -106,7 +105,8 @@ export default (props) => {
           </Button>
         </>
       )}
-  </>)
+    </div>
+  )
 }
 
 const CustomLink = React.forwardRef(

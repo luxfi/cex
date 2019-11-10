@@ -245,6 +245,7 @@ function getSuggestionValue(suggestion) {
   return suggestion.name
 }
 
+  // Autosuggest styling ONLY
 const useStyles = makeStyles(theme => ({
   root: {
     height: 250,
@@ -270,7 +271,8 @@ const useStyles = makeStyles(theme => ({
   },
   divider: {
     height: theme.spacing(2)
-  },
+  }
+  /*
   inputRoot: {
     color: "inherit"
   },
@@ -284,11 +286,15 @@ const useStyles = makeStyles(theme => ({
         width: 200
       }
     }
-  }
+  }*/
 }))
 
-export default function IntegrationAutosuggest() {
-  const classes = useStyles()
+export default (props) =>  {
+
+    // control itself is styled by these
+  const {classes} = props
+  const autoSuggestClasses = useStyles()
+
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [state, setState] = React.useState({
     single: "",
@@ -333,10 +339,10 @@ export default function IntegrationAutosuggest() {
           onChange: handleChange("single")
         }}
         theme={{
-          container: classes.container,
-          suggestionsContainerOpen: classes.suggestionsContainerOpen,
-          suggestionsList: classes.suggestionsList,
-          suggestion: classes.suggestion
+          container: autoSuggestClasses.container,
+          suggestionsContainerOpen: autoSuggestClasses.suggestionsContainerOpen,
+          suggestionsList: autoSuggestClasses.suggestionsList,
+          suggestion: autoSuggestClasses.suggestion
         }}
         renderSuggestionsContainer={options => (
           <Paper {...options.containerProps} square>

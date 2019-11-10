@@ -78,6 +78,9 @@ muiLayoutConfig.navVariant = {
   "sm": "temporary",
   "md": "permanent",
 }
+muiLayoutConfig.collapsedBreakpoint = "md"
+muiLayoutConfig.autoCollapsedDisabled = false
+
 
 muiLayoutConfig.collapsedWidth = "80vw"
 muiLayoutConfig.collapsible = {

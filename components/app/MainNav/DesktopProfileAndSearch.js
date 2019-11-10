@@ -18,10 +18,12 @@ import {
 
 
 import { makeStyles } from "@material-ui/core/styles"
-import styles from './desktopNav.style.js'
 
-const useStyles = makeStyles(styles)
+import mainStyles from './desktopNav.style.js'
+import searchStyles from './searchWidget.style.js'
 
+const useMainStyles = makeStyles(mainStyles)
+const useSearchStyles = makeStyles(searchStyles)
 
 export default (props) => {
 
@@ -40,20 +42,16 @@ export default (props) => {
     isLoggedIn, handleLogout
   } = props
 
-  const classes = useStyles()
+  const classes = useMainStyles()
+  const searchClasses = useSearchStyles()
 
   return (
     <div className={classes.accountOuter}>
-      <div className={classes.search}>
-        <div className={classes.searchIcon}>
-          <Search />
-        </div>
+      <div className={searchClasses.search}>
+        <Search className={searchClasses.searchIcon}/>
         <AutoCompleteSearch
           placeholder="Search…"
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput
-          }}
+          classes={searchClasses}
         />
       </div>
       {isLoggedIn ? (
