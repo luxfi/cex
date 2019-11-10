@@ -38,8 +38,6 @@ export default inject("store")(observer((props) => {
     handlePlaceholder,
   } = props
 
-  const classes = useStyles()
-
   return (
       <LayoutContext.Consumer>
         {ctx => (
@@ -51,7 +49,6 @@ export default inject("store")(observer((props) => {
           >
             <MobileNavItself
               navStructure={navStructure}
-              classes={classes}
               handlePlaceholder={handlePlaceholder}
               handleClose={() => ctx.setOpened(false)}
             />
@@ -66,7 +63,6 @@ export default inject("store")(observer((props) => {
 const MobileNavItself = (props) => {
 
   const { 
-    classes, 
     navStructure, 
     handlePlaceholder,
     handleClose 
@@ -77,6 +73,7 @@ const MobileNavItself = (props) => {
     handleClose() 
   }
 
+  const classes = useStyles()
 
   let result = []
   navStructure.forEach((navElement) => {
