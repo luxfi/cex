@@ -2,7 +2,7 @@ import React from "react"
 import { withStyles } from '@material-ui/core/styles'
 
 import { ContactForm } from "../components/contact"
-import { container } from "../components/esxStyles.js"
+import { container } from "../styles/esxStyles.js"
 
 
 

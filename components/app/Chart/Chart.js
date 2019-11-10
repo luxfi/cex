@@ -1,5 +1,5 @@
-import { BuySellForm, ChartIntervalControls, ChartCandlestickFake } from '../'
-import { timelineLabels } from "../../utils/dateRange"
+import { BuySellForm } from '../'
+import { timelineLabels } from "../../../util/dateRange"
 import { Element } from "react-scroll"
 import dynamic from 'next/dynamic'
 

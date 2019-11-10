@@ -7,7 +7,7 @@ import { withRouter } from "next/router"
 import classNames from "classnames"
 
 // orderbook
-import { formatTakeResults } from "../../utils/formatOrderBookDataForChart"
+import { formatTakeResults } from "../../../util/formatOrderBookDataForChart"
 
 // @material-ui/core components
 import Button from "@material-ui/core/Button"
@@ -17,13 +17,13 @@ import { withStyles } from "@material-ui/core/styles"
 import { CustomBreadcrumbs, Chart, InvestNow } from "../../app"
 
 // section
-import { padDollarAmount } from "../../utils/generic"
+import { padDollarAmount } from "../../../util/generic"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 // the nice looking double chevrons are part of the "pro" package that costs money
 import { faPlay } from "@fortawesome/free-solid-svg-icons"
 
-import styles from "../../../pageStyles/film.style"
+import styles from "./film.style.js"
 
 import { isObservableArray } from "mobx"
 

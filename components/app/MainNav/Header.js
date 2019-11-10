@@ -3,10 +3,7 @@ import { inject, observer } from "mobx-react"
 
 import { useScrollTrigger } from "@material-ui/core"
 
-import {
-  ChevronLeft,
-  MenuRounded
-} from "@material-ui/icons"
+import { MenuRounded } from "@material-ui/icons"
 
 import {
   LayoutContext,
@@ -54,12 +51,7 @@ export default inject("store")(observer((props) => {
           >
             {(desktopView) ? (
                 <>
-                <DesktopNav
-                  navStructure={navStructure}
-                  handlePlaceholder={handlePlaceholder}
-                  handleLogout={handleLogout}
-                  isLoggedIn={isLoggedIn}
-                />
+                <DesktopNav navStructure={navStructure} handlePlaceholder={handlePlaceholder} />
                 <DesktopProfileAndSearch isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
                 </>
               ) : (
