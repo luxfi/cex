@@ -21,6 +21,17 @@ export default (theme) => {
       background: "rgba(17, 17, 17, 0.7)",
       transition: "background 0.5s ease-in-out"
     },
+
+    mobileLogo : {
+      height: "26px",
+      display: "block"
+    },
+
+    mobile: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center"
+    }
   }
 }
 

@@ -18,7 +18,7 @@ import {
 
 
 import { makeStyles } from "@material-ui/core/styles"
-import mainStyles from './desktopNav.style.js'
+import mainStyles from './mobileProfile.style.js'
 import searchStyles from './searchWidget.style.js'
 
 const useMainStyles = makeStyles(mainStyles)
@@ -46,6 +46,16 @@ export default (props) => {
   const searchClasses = useSearchStyles()
 
   return (
+    <div className={classes.accountOuter}>
+    <IconButton
+      aria-controls="menu"
+      aria-haspopup="true"
+    >
+      <AccountCircle style={{ fontSize: "2rem" }} />
+    </IconButton>
+    </div>
+
+/*
     <div className={classes.accountOuter}>
       <div className={searchClasses.search}>
         <Search className={searchClasses.searchIcon} />
@@ -106,6 +116,8 @@ export default (props) => {
         </>
       )}
     </div>
+*/
+
   )
 }
 
