@@ -25,6 +25,10 @@ import styles from './header.style.js'
 const useStyles = makeStyles(styles)
 
 
+const isDesktopView = (screen) => {
+  return !["xs", "sm"].includes(screen)
+}
+
 export default inject("store")(observer((props) => {
 
   const { 
@@ -40,11 +44,11 @@ export default inject("store")(observer((props) => {
   return (
     <LayoutContext.Consumer>
       {(ctx) => {
-        const desktopView = ctx.navVariant === "permanent"
+        const desktopView = isDesktopView(ctx.screen)
         
         return (
           <Header
-            renderMenuIcon={open => (open ? <ChevronLeft /> : <MenuRounded />)}
+            renderMenuIcon={open => (!desktopView && <MenuRounded />)}
             className={`${classes.appBar} ${(!desktopView || trigger) ? classes.translucent : classes.transparent }`}
             toolbarProps={{disableGutters: true}}
           >

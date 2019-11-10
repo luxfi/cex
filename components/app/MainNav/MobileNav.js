@@ -102,8 +102,9 @@ const MobileNavItself = (props) => {
           <ListItem
             className={classes.listButton}
             button
+            key={navElement.link}
           >
-            <NextLink href={navElement.link} key={navElement.link}>
+            <NextLink href={navElement.link} >
               {navElement.title}
             </NextLink>
           </ListItem>
