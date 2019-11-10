@@ -9,10 +9,9 @@ import {
 } from 'mui-layout'
 
 import {
-  ChevronLeft,
-  ChevronRight,
   ExpandLess,
-  ExpandMore
+  ExpandMore,
+  ChevronLeft
 } from "@material-ui/icons"
 
 import {
@@ -37,8 +36,6 @@ export default inject("store")(observer((props) => {
 
   const {
     handlePlaceholder,
-    handleLogout,
-    isLoggedIn,
   } = props
 
   const classes = useStyles()
@@ -46,9 +43,10 @@ export default inject("store")(observer((props) => {
   return (
       <LayoutContext.Consumer>
         {ctx => (
-          <Nav 
-            renderIcon={collapsed =>
-              collapsed ? <ChevronRight /> : <ChevronLeft />
+        <Nav 
+          renderIcon={
+              // :aa BUG in mui-layout -- renderIcon must be supplied! (Might be their use of < Grow />)
+              () => <ChevronLeft/> 
             }
           >
             <MobileNavItself

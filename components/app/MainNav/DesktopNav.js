@@ -115,6 +115,7 @@ const DesktopMainNav = (props) => {
           onClick={() => {
             handlePlaceholder(navElement.placeholder)
           }}
+          key={navElement.placeholder}
         >
           {navElement.title}
         </Button>
@@ -122,7 +123,7 @@ const DesktopMainNav = (props) => {
     }
     else if ('link' in navElement) {
       result.push(
-        <NextLink href={navElement.link}>
+        <NextLink href={navElement.link} key={navElement.placeholder}>
           <Button
             color="inherit"
             className={classes.menuButton}
