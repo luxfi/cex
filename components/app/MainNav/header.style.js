@@ -4,6 +4,12 @@ export default (theme) => {
 
     appBar: {
       boxShadow: "none",
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+      [theme.breakpoints.down("xs")]: {
+        paddingLeft: theme.spacing(1),
+        paddingRight: theme.spacing(1),
+      },
     },
 
     transparent: {
