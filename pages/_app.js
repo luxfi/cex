@@ -68,16 +68,19 @@ const muiLayoutConfig = presets.createStandardLayout()
   "footerShrink": true
 }
 */
-muiLayoutConfig.navWidth = 360
+muiLayoutConfig.navWidth = {
+  "xs": "85vw",   // mobile:  take "most of it"
+  "sm": "400px"   // all else: take "what's needed"
+}
+
 muiLayoutConfig.navVariant = {
   "xs": "temporary",
   "sm": "temporary",
 }
 muiLayoutConfig.collapsible = {
   "xs": false,
-},
+}
 muiLayoutConfig.headerPosition = "sticky"
-
 
 // ****************
 @observer
