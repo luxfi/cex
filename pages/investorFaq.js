@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles'
 
 import { ContentfulItems } from "../components/app"
 
-import { container } from "../components/esxStyles.js"
+import { container } from "../styles/esxStyles.js"
 
 const styles = theme => ({
   container: {

@@ -10,7 +10,7 @@ import { Button, Avatar, Grid } from "@material-ui/core"
 
 import { CustomBreadcrumbs } from "../components/app"
 
-import styles from "../pageStyles/article.style.js"
+import styles from "../styles/pages/article.style.js"
 
 import { InvestNow } from "../components/app"
 

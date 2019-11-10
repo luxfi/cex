@@ -1,4 +1,4 @@
-import { container, title } from "../../esxStyles.js"
+import { container, title } from "../../../styles/esxStyles.js"
 
 export default {
   container: {

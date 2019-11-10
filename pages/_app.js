@@ -33,7 +33,7 @@ import {
 
 import initializeStore from "../stores/stores"
 
-import { darkTheme, lightTheme } from "../components/themes"
+import { darkTheme, lightTheme } from "../styles/esxThemes"
 
 const trackGA = () => {
   ReactGA.initialize('UA-151184093-1')
@@ -41,33 +41,6 @@ const trackGA = () => {
 }
 
 const muiLayoutConfig = presets.createStandardLayout()
-/*
-{
-  "navWidth": 256,
-  "navAnchor": "left",
-  "navVariant": {
-    "xs": "temporary",
-    "sm": "permanent"
-  },
-  "collapsible": {
-    "xs": false,
-    "sm": true
-  },
-  "collapsedWidth": 64,
-  "collapsedBreakpoint": "md",
-  "autoCollapsedDisabled": false,
-  "clipped": true,
-  "heightAdjustmentDisabled": false,
-  "initialAdjustmentHeight": {
-    "xs": 56,
-    "sm": 64
-  },
-  "heightAdjustmentSpeed": 144,
-  "headerPosition": "relative",
-  "squeezed": false,
-  "footerShrink": true
-}
-*/
 muiLayoutConfig.navWidth = {
   "xs": "85vw",   // mobile:  take "most of it"
   "sm": "400px"   // all else: take "what's needed"
@@ -138,9 +111,7 @@ class MyMobxApp extends App {
                 isLoggedIn={this.mobxStore.userStore.loggedIn}
                 handleLogout={() => {this.mobxStore.userStore.logout()}}
               />
-              <MobileNav 
-                handlePlaceholder={this.placeholder} 
-              />
+              <MobileNav handlePlaceholder={this.placeholder} />
               <Content>
                 <Component
                   {...pageProps}

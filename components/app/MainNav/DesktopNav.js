@@ -19,8 +19,6 @@ export default (props) => {
   const {
     navStructure,
     handlePlaceholder,
-    handleLogout,
-    isLoggedIn
   } = props
 
   const classes = useStyles()

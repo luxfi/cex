@@ -9,10 +9,15 @@ import { inject, observer } from "mobx-react"
 import Hero from "../components/landing/Hero/Hero"
 
 // styles
-import styles from "../pageStyles/landing.style.js"
+import styles from "../styles/pages/landing.style.js"
 
 // Sections for this page
-import { TrailerSlider, StudioSlider, CategorySlider, ForYouSlider } from "../components/landing"
+import { 
+  TrailerSlider, 
+  StudioSlider, 
+  CategorySlider, 
+  ForYouSlider 
+} from "../components/landing"
 
 @inject("store")
 @observer
