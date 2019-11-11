@@ -104,7 +104,7 @@ class Hero extends React.Component {
                       >
                         <Link href={hrefLink}>
                           <Typography variant="body2">
-                            INVEST IN {movie.ticker}
+                            INVEST IN {movie.name}
                           </Typography>
                         </Link>
                       </Button>
