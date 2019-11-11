@@ -30,7 +30,7 @@ export default (props) => {
   const {
     isLoggedIn, 
     handleLogout,
-    openRightMenu
+    openRightDrawer
   } = props
 
   const classes = useMainStyles()
@@ -41,7 +41,7 @@ export default (props) => {
       <IconButton
         aria-controls="menu"
         aria-haspopup="true"
-        onClick={() => openRightMenu() }
+        onClick={openRightDrawer}
       >
         <AccountCircle style={{ fontSize: "2rem" }} />
       </IconButton>
