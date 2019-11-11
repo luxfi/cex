@@ -7,6 +7,7 @@ import {
 } from "@material-ui/core"
 import ContentLoader from "react-content-loader"
 import moment from 'moment'
+import classnames from 'classnames'
 
 import myStyles from "./NewsFeedView.style.js"
 
@@ -74,7 +75,7 @@ const Item = props => {
       <p className={classes.itemCopy}>{author} - {moment(date).format('MM-DD-YYYY')}</p>
       <div className={classes.itemCategories}>
         {
-          categories.slice(0, 3).map((c, i) => <a key={c._+i} className={classes.link} href={c['$'].domain} target="_blank"><Chip clickable label={c._} /></a>)
+          categories.slice(0, 3).map((c, i) => <a key={c._+i} className={classnames(classes.link, classes.chipLink)} href={c['$'].domain} target="_blank"><Chip clickable label={c._} /></a>)
         }
       </div>
       <p className={classes.itemCopy}>{blurb}</p>
