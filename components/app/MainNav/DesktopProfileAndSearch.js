@@ -1,21 +1,31 @@
 import React from "react"
-import NextLink from "next/link"
-
-import { AutoCompleteSearch } from ".."
+import Link from "next/link"
 
 import {
   Button,
   IconButton,
-  Menu,
+  Popover,
   MenuItem,
 } from "@material-ui/core"
 
 import {
   AccountCircle,
-  ExitToApp,
   Search,
 } from "@material-ui/icons"
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
+import {
+  faAddressCard,
+  faChartArea,
+  faSignOutAlt,
+} from "@fortawesome/free-solid-svg-icons"
+
+import { AutoCompleteSearch } from ".."
+
+
+  // This one is recommended in the MUI docs themselves :)
+import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state'
 
 import { makeStyles } from "@material-ui/core/styles"
 
@@ -26,17 +36,6 @@ const useMainStyles = makeStyles(mainStyles)
 const useSearchStyles = makeStyles(searchStyles)
 
 export default (props) => {
-
-  const [anchorEl, setAnchorEl] = React.useState(null)
-  const menuOpen = Boolean(anchorEl)
-
-  function handleMenuOpen(event) {
-    setAnchorEl(event.currentTarget)
-  }
-
-  function handleMenuClose() {
-    setAnchorEl(null)
-  }
 
   const {
     isLoggedIn, handleLogout
@@ -55,64 +54,58 @@ export default (props) => {
         />
       </div>
       {isLoggedIn ? (
-      <>
-        <IconButton
-          aria-controls="menu"
-          aria-haspopup="true"
-          onClick={handleMenuOpen}
-        >
-          <AccountCircle style={{ fontSize: "2rem" }} />
-        </IconButton>
-        <Menu
-          anchorEl={anchorEl}
-          keepMounted
-          open={menuOpen}
-          onClose={handleMenuClose}
-          className={classes.menu}
-        >
-          <MenuItem component={CustomLink} href={"/account"}>
-            <AccountCircle />
-            <span className={classes.subMenuItemText}>Account</span>
-          </MenuItem>
-          <MenuItem component={CustomLink} href={"/portfolio"}>
-            <AccountCircle />
-            <span className={classes.subMenuItemText}>Portfolio</span>
-          </MenuItem>
-          <MenuItem onClick={handleLogout}>
-            <ExitToApp />
-            <span className={classes.subMenuItemText}>Logout</span>
-          </MenuItem>
-        </Menu>
-      </>
+        <PopupState variant="popover" popupId="menu-popover">
+          { (popupState) => {
+            return (
+            <>
+            <IconButton
+              aria-controls="menu"
+              aria-haspopup="true"
+              {...bindTrigger(popupState)}
+            >
+              <AccountCircle className={classes.accountIcon}/>
+            </IconButton>
+            <Popover
+              {...bindPopover(popupState)}
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              transformOrigin={{ vertical: "top", horizontal: "right" }}
+            >
+              <Link href="/account">
+                <MenuItem className={classes.menuItem} onClick={popupState.close}>
+                  <span className={classes.menuItemText}>Account</span>
+                  <FontAwesomeIcon icon={faAddressCard} size="1x" className={classes.menuItem} />
+                </MenuItem>
+              </Link>
+              <Link href="/portfolio">
+                <MenuItem className={classes.menuItem} onClick={popupState.close}>
+                  <span className={classes.menuItemText}>Portfolio</span>
+                  <FontAwesomeIcon icon={faChartArea} size="1x" className={classes.menuItem} />
+                </MenuItem>
+              </Link>
+              <MenuItem onClick={handleLogout} className={classes.menuItem} >
+                <span className={classes.menuItemText}>Logout</span>
+                <FontAwesomeIcon icon={faSignOutAlt} size="1x" />
+              </MenuItem>
+            </Popover>
+            </>
+            )
+          }
+        }
+        </PopupState>
       ) : (
       <>
-        <Button
-          component={CustomLink}
-          href={"/login"}
-          color="inherit"
-          className={classes.menuButton}
-        >
-          Login
-        </Button>
-        <Button
-          component={CustomLink}
-          color="inherit"
-          variant="outlined"
-          href={"/signup"}
-          className={classes.menuButton}
-        >
-          Sign Up
-        </Button>
+        <Link href={"/login"} >
+          <Button color="inherit" className={classes.navButton}>
+            Login
+          </Button>
+        </Link>
+        <Link href={"/signup"} >
+          <Button color="inherit" variant="outlined" className={classes.navButton}>
+            Sign Up
+          </Button>
+        </Link>
       </>
       )}
     </div>
   )
 }
-
-const CustomLink = React.forwardRef(
-  ({ className, href, hrefAs, children, }, ref) => (
-    <NextLink ref={ref} href={href} as={hrefAs}>
-      <a className={className}>{children}</a>
-    </NextLink>
-  )
-)

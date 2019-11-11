@@ -1,7 +1,6 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
 
-//font awesome share icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import { 
@@ -14,10 +13,7 @@ import {
   faReddit 
 } from "@fortawesome/free-brands-svg-icons"
 
-// material components
 import {
-  Toolbar,
-  Container,
   Typography,
   Link,
   Button,
@@ -26,14 +22,12 @@ import {
   Box,
 } from "@material-ui/core"
 
-
 const EXTERNAL_LINKS = {
   medium: "https://medium.com/entertainment-stock-x",
   reddit: "https://www.reddit.com/r/EntertainmentStockX/",
   twitter: "https://twitter.com/EntertainStock"
 }
 
-// styles
 import { withStyles } from "@material-ui/core/styles"
 
 const AboutESX = ({ classes, openModal }) => {

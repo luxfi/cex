@@ -7,14 +7,30 @@ export default (theme) => {
       marginTop: "-15px",
     },
 
-    menuBarOuter: {
+    navOuter: {
       display: "flex",
       flexWrap: "noWrap",
       justifyContent: "space-between",
       flexDirection: "row"
     },
 
-    menuButton: {
+    navSpacer: {
+      width: theme.spacing(12)
+    },
+
+    menuItem: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      width: "130px"
+    },
+
+    menuItemIcon: {
+      width: 24,
+      height: 24
+    },
+
+    navButton: {
       marginRight: theme.spacing(2),
       [theme.breakpoints.down("sm")]: {
         marginRight: theme.spacing(1),
@@ -23,18 +39,20 @@ export default (theme) => {
       whiteSpace: "nowrap"
     },
 
-    menuSpacer: {
-      width: theme.spacing(12)
-    },
-
     accountOuter: {
       display: "flex",
       flexDirection: "row",
       marginLeft: "auto",
+      alignItems: "center",
       paddingRight: theme.spacing(6),
       [theme.breakpoints.down("sm")] : {
         paddingRight: 0,
       }
+    },
+
+    accountIcon : {
+      width: "36px",
+      height: "36px"
     },
   }
 }
