@@ -2,6 +2,7 @@ import { action, observable, computed } from "mobx"
 
 export default class UIStore {
   @observable snackBarOpen = false
+  @observable rightMenuOpen = false
   @observable error = ""
   @observable modal = {
     open: false,
@@ -15,6 +16,10 @@ export default class UIStore {
 
   @computed get error() {
     return this.snackBarOpen
+  }
+
+  @action openRightMenu(open) {
+    this.rightMenuOpen = open
   }
 
   @action openModal(title, body) {

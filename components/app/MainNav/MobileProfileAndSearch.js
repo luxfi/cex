@@ -27,19 +27,10 @@ const useSearchStyles = makeStyles(searchStyles)
 
 export default (props) => {
 
-  const [anchorEl, setAnchorEl] = React.useState(null)
-  const menuOpen = Boolean(anchorEl)
-
-  function handleMenuOpen(event) {
-    setAnchorEl(event.currentTarget)
-  }
-
-  function handleMenuClose() {
-    setAnchorEl(null)
-  }
-
   const {
-    isLoggedIn, handleLogout
+    isLoggedIn, 
+    handleLogout,
+    openRightMenu
   } = props
 
   const classes = useMainStyles()
@@ -47,12 +38,13 @@ export default (props) => {
 
   return (
     <div className={classes.accountOuter}>
-    <IconButton
-      aria-controls="menu"
-      aria-haspopup="true"
-    >
-      <AccountCircle style={{ fontSize: "2rem" }} />
-    </IconButton>
+      <IconButton
+        aria-controls="menu"
+        aria-haspopup="true"
+        onClick={() => openRightMenu() }
+      >
+        <AccountCircle style={{ fontSize: "2rem" }} />
+      </IconButton>
     </div>
 
 /*

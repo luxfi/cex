@@ -28,7 +28,8 @@ import {
   Header, 
   MobileNav,
   FooterEx, 
-  CustomModal 
+  CustomModal,
+  MobileRightMenu 
 } from "../components/app"
 
 import initializeStore from "../stores/stores"
@@ -97,6 +98,10 @@ class MyMobxApp extends App {
     this.mobxStore.uiStore.openModal(title, body)
   }
 
+  openRightMenu = (open) => {
+    this.mobxStore.uiStore.openRightMenu(open) 
+  }
+
   render() {
     const { Component, pageProps} = this.props
 
@@ -109,6 +114,7 @@ class MyMobxApp extends App {
               <Header 
                 handlePlaceholder={this.placeholder} 
                 isLoggedIn={this.mobxStore.userStore.loggedIn}
+                openRightMenu={this.openRightMenu}
                 handleLogout={() => {this.mobxStore.userStore.logout()}}
               />
               <MobileNav handlePlaceholder={this.placeholder} />
@@ -126,6 +132,11 @@ class MyMobxApp extends App {
                 />
                 <CustomSnackbar />
               </Content>
+              <MobileRightMenu 
+                opened={this.mobxStore.uiStore.rightMenuOpen} 
+                setOpened={this.openRightMenu}
+                width="80vw"
+              />
               <Footer>
                 <FooterEx openModal={this.openModal} />
               </Footer>

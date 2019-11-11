@@ -24,6 +24,7 @@ const useStyles = makeStyles(styles)
 export default inject("store")(observer((props) => {
 
   const { 
+    openRightMenu,
     handlePlaceholder, 
     handleLogout,
     isLoggedIn
@@ -58,7 +59,11 @@ export default inject("store")(observer((props) => {
             {(mobileProfile) ? (
               <>
                 <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.mobileLogo} height="26px" />
-                <MobileProfileAndSearch isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+                <MobileProfileAndSearch 
+                  isLoggedIn={isLoggedIn} 
+                  handleLogout={handleLogout} 
+                  openRightMenu={openRightMenu}
+                />
               </>
             ) : (
               <DesktopProfileAndSearch isLoggedIn = { isLoggedIn } handleLogout = { handleLogout } />
