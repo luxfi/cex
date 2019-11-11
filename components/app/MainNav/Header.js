@@ -24,7 +24,7 @@ const useStyles = makeStyles(styles)
 export default inject("store")(observer((props) => {
 
   const { 
-    openRightMenu,
+    openRightDrawer,
     handlePlaceholder, 
     handleLogout,
     isLoggedIn
@@ -62,7 +62,7 @@ export default inject("store")(observer((props) => {
                 <MobileProfileAndSearch 
                   isLoggedIn={isLoggedIn} 
                   handleLogout={handleLogout} 
-                  openRightMenu={openRightMenu}
+                  openRightDrawer={openRightDrawer}
                 />
               </>
             ) : (

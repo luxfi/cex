@@ -29,7 +29,7 @@ import {
   MobileNav,
   FooterEx, 
   CustomModal,
-  MobileRightMenu 
+  RightDrawer 
 } from "../components/app"
 
 import initializeStore from "../stores/stores"
@@ -98,8 +98,8 @@ class MyMobxApp extends App {
     this.mobxStore.uiStore.openModal(title, body)
   }
 
-  openRightMenu = (open) => {
-    this.mobxStore.uiStore.openRightMenu(open) 
+  setRightDrawerOpen = (open) => {
+    this.mobxStore.uiStore.setRightDrawerOpen(open) 
   }
 
   render() {
@@ -114,7 +114,7 @@ class MyMobxApp extends App {
               <Header 
                 handlePlaceholder={this.placeholder} 
                 isLoggedIn={this.mobxStore.userStore.loggedIn}
-                openRightMenu={this.openRightMenu}
+                openRightDrawer={() => this.setRightDrawerOpen(true)}
                 handleLogout={() => {this.mobxStore.userStore.logout()}}
               />
               <MobileNav handlePlaceholder={this.placeholder} />
@@ -132,9 +132,9 @@ class MyMobxApp extends App {
                 />
                 <CustomSnackbar />
               </Content>
-              <MobileRightMenu 
-                opened={this.mobxStore.uiStore.rightMenuOpen} 
-                setOpened={this.openRightMenu}
+              <RightDrawer 
+                open={this.mobxStore.uiStore.rightDrawerOpen} 
+                setOpen={this.setRightDrawerOpen}
                 width="80vw"
               />
               <Footer>
