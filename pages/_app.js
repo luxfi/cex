@@ -98,7 +98,11 @@ class MyMobxApp extends App {
               openRightDrawer={() => this.mobxStore.uiStore.setRightDrawerOpen(true)}
               handleLogout={() => {this.mobxStore.userStore.logout()}}
             />
-            <MobileNav handlePlaceholder={this.placeholder} />
+            <MobileNav 
+              open={this.mobxStore.uiStore.drawers.left}
+              setOpen={this.mobxStore.uiStore.setLeftDrawerOpen}
+              handlePlaceholder={this.placeholder} 
+            />
             <Component
               {...pageProps}
               darkTheme={darkTheme}
@@ -112,6 +116,8 @@ class MyMobxApp extends App {
             />
             <CustomSnackbar />
             <MobileProfileMenu 
+              open={this.mobxStore.uiStore.drawers.right}
+              setOpen={this.mobxStore.uiStore.setRightDrawerOpen}
               isLoggedIn={this.mobxStore.userStore.loggedIn}
               handleLogout={() => { this.mobxStore.userStore.logout() }}
               handlePlaceholder={this.placeholder}

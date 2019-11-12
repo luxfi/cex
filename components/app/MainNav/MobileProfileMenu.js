@@ -1,6 +1,4 @@
 import React from "react"
-import { inject, observer } from "mobx-react"
-
 import NextLink from "next/link"
 
 import {
@@ -62,9 +60,11 @@ const menuElements = {
 }
 
 
-export default inject("store")(observer((props) => {
+export default (props) => {
 
   const {
+    open,
+    setOpen,
     isLoggedIn,
     handleLogout,
     handlePlaceholder,
@@ -72,8 +72,8 @@ export default inject("store")(observer((props) => {
 
   return (
     <SideDrawer
-      open={props.store.uiStore.drawers.right}
-      setOpen={props.store.uiStore.setRightDrawerOpen}
+      open={open}
+      setOpen={setOpen}
       width="85vw"
       anchor="right"
     >
@@ -81,11 +81,11 @@ export default inject("store")(observer((props) => {
         isLoggedIn={isLoggedIn}
         handlePlaceholder={handlePlaceholder}
         handleLogout={handleLogout}
-        handleClose={() => props.store.uiStore.setRightDrawerOpen(false)}
+        handleClose={() => setOpen(false)}
       />
     </SideDrawer>
   )
-}))
+}
 
 const NavElements = (props) => {
 
@@ -160,7 +160,6 @@ const NavElements = (props) => {
       )
     }
   })
-
 
   return (
     <List>

@@ -39,7 +39,6 @@ export default (props) => {
   )
 }
 
-
 const MainNavDropdown = (props) => {
 
   const {
@@ -49,7 +48,6 @@ const MainNavDropdown = (props) => {
   } = props
 
   return (
-  
     <PopupState variant="popover" popupId="menu-popover">
       {(popupState) => (
         <>

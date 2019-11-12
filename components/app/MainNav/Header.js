@@ -1,5 +1,4 @@
 import React from "react"
-import { inject, observer } from "mobx-react"
 
 import { 
   AppBar,
@@ -20,7 +19,7 @@ import styles from './header.style.js'
 
 const useStyles = makeStyles(styles)
 
-export default inject("store")(observer((props) => {
+export default (props) => {
 
   const { 
     showDesktopNav,
@@ -65,4 +64,4 @@ export default inject("store")(observer((props) => {
     </AppBar>
   )
 
-}))
+}
