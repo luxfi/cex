@@ -62,6 +62,19 @@ class ContactForm extends React.Component {
           <Typography component="h1" variant="h5">
             Contact
           </Typography>
+          <form
+            name="contact"
+            method="post"
+            data-netlify="true"
+            data-netlify-honeypot="bot-field"
+          >
+            {/* You still need to add the hidden input with the form name to your JSX form */}
+            <input type="hidden" name="form-name" value="contact" />
+            <input type="text" name="name" />
+            <input type="email" name="email" />
+            <textarea name="message"></textarea>
+            ...
+          </form>
           <Formik
             initialValues={{ email: "", name: "", message: "" }}
             onSubmit={values => {
@@ -73,15 +86,15 @@ class ContactForm extends React.Component {
                 },
                 body: encode({ "form-name": "contact", ...values })
               })
-              .then(resp => {
-                this.setSubmitted(true);
-                this.setSubmitting(false);
-                // TODO: link snackbar success here...
-              })
-              .catch(error => {
-                // TODO: link snackbar success here...
-                console.log(error);
-              });
+                .then(resp => {
+                  this.setSubmitted(true);
+                  this.setSubmitting(false);
+                  // TODO: link snackbar success here...
+                })
+                .catch(error => {
+                  // TODO: link snackbar success here...
+                  console.log(error);
+                });
             }}
             validationSchema={yup.object().shape({
               email: yup
@@ -105,7 +118,7 @@ class ContactForm extends React.Component {
                 handleBlur,
                 handleSubmit,
                 isValid
-              } = props
+              } = props;
               if (this.state.submitted) {
                 return <p>Thanks for your inquiry. We'll respond shortly.</p>;
               }
