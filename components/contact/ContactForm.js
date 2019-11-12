@@ -73,15 +73,15 @@ class ContactForm extends React.Component {
                 },
                 body: encode({ "form-name": "contact", ...values })
               })
-              .then(resp => {
-                this.setSubmitted(true);
-                this.setSubmitting(false);
-                // TODO: link snackbar success here...
-              })
-              .catch(error => {
-                // TODO: link snackbar success here...
-                console.log(error);
-              });
+                .then(resp => {
+                  this.setSubmitted(true);
+                  this.setSubmitting(false);
+                  // TODO: link snackbar success here...
+                })
+                .catch(error => {
+                  // TODO: link snackbar success here...
+                  console.log(error);
+                });
             }}
             validationSchema={yup.object().shape({
               email: yup
@@ -105,14 +105,34 @@ class ContactForm extends React.Component {
                 handleBlur,
                 handleSubmit,
                 isValid
-              } = props
+              } = props;
               if (this.state.submitted) {
                 return <p>Thanks for your inquiry. We'll respond shortly.</p>;
               }
 
               return (
-                <form onSubmit={handleSubmit}>
-                  <input type="hidden" name="contact-form" value="contact" />
+                <form
+                  name="contact"
+                  method="post"
+                  data-netlify="true"
+                  data-netlify-honeypot="bot-field"
+                  netlify="true"
+                  onSubmit={e => {
+                    e.preventDefault()
+                    handleSubmit(e)
+                  }}
+                >
+                  <input type="hidden" name="form-name" value="contact" />
+                  <p>
+                    <label>
+                      Your Name:{" "}
+                      <input
+                        type="text"
+                        name="name"
+                        onChange={this.handleChange}
+                      />
+                    </label>
+                  </p>
                   <TextField
                     variant="outlined"
                     margin="normal"
