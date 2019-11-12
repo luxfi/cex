@@ -1,12 +1,11 @@
-export default (theme) => ({
-
-  contactOuter: {
-    width: "600px"
-  },
+export default theme => ({
+  // contactOuter: {
+  //   width: "600px"
+  // },
 
   formItself: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "column"
   },
 
   fieldsOuter: {
@@ -22,8 +21,7 @@ export default (theme) => ({
     }
   },
 
-  commentTextField: {
-  },
+  commentTextField: {},
 
   buttonsOuter: {
     display: "flex",
