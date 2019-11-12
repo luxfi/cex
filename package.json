@@ -42,7 +42,6 @@
     "mobx-react": "^6.1.4",
     "moment": "^2.24.0",
     "moment-timezone": "0.5.27",
-    "mui-layout": "^1.2.9",
     "next": "latest",
     "next-contentful": "^0.3.5",
     "react": "^16.11.0",

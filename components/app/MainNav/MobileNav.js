@@ -4,18 +4,11 @@ import { inject, observer } from "mobx-react"
 import NextLink from "next/link"
 
 import {
-  LayoutContext,
-  Nav
-} from 'mui-layout'
-
-import {
   ExpandLess,
-  ExpandMore,
-  ChevronLeft
+  ExpandMore
 } from "@material-ui/icons"
 
 import {
-  Link,
   List,
   ListItem,
   ListItemText,
@@ -23,14 +16,13 @@ import {
   Divider
 } from "@material-ui/core"
 
+import SideDrawer from "../SideDrawer"
+
 import { makeStyles } from "@material-ui/core/styles"
 import styles from './mobileNav.style.js'
-
 const useStyles = makeStyles(styles)
 
-
 import navStructure from "./navStructure"
-
 
 export default inject("store")(observer((props) => {
 
@@ -39,31 +31,23 @@ export default inject("store")(observer((props) => {
   } = props
 
   return (
-      <LayoutContext.Consumer>
-        {ctx => (
-        <Nav 
-          renderIcon={
-              // :aa BUG in mui-layout -- renderIcon must be supplied! (Might be their use of < Grow />)
-              () => <ChevronLeft/> 
-            }
-          >
-            <MobileNavItself
-              navStructure={navStructure}
-              handlePlaceholder={handlePlaceholder}
-              handleClose={() => ctx.setOpened(false)}
-            />
-          </Nav>
-        )}
-      </LayoutContext.Consumer>
+    <SideDrawer
+      open={props.store.uiStore.drawers.left}
+      setOpen={props.store.uiStore.setLeftDrawerOpen}
+      width="85vw"
+      anchor="left"
+    >
+      <NavElements
+        handlePlaceholder={handlePlaceholder}
+        handleClose={() => props.store.uiStore.setLeftDrawerOpen(false)}
+      />
+    </SideDrawer>
   )
-}
-))
+}))
 
-
-const MobileNavItself = (props) => {
+const NavElements = (props) => {
 
   const { 
-    navStructure, 
     handlePlaceholder,
     handleClose 
   } = props
@@ -76,41 +60,38 @@ const MobileNavItself = (props) => {
   const classes = useStyles()
 
   let result = []
-  navStructure.forEach((navElement) => {
+  navStructure.forEach((elementDef) => {
 
-    if ('placeholder' in navElement) {
+    if ('placeholder' in elementDef) {
       result.push(
         <ListItem
           className={classes.listButton}
           onClick={() => {
-            handlePlaceHolderAndClose(navElement.placeholder)
+            handlePlaceHolderAndClose(elementDef.placeholder)
           }}
-          key={navElement.placeholder}
+          key={elementDef.placeholder}
           button
         >
-          {navElement.title}
+          {elementDef.title}
         </ListItem>
       )
     }
-    else if ('link' in navElement) {
+    else if ('link' in elementDef) {
       result.push(
-          <ListItem
-            className={classes.listButton}
-            button
-            key={navElement.link}
-          >
-            <NextLink href={navElement.link} >
-              {navElement.title}
-            </NextLink>
-          </ListItem>
+        <ListItem className={classes.listButton} button key={elementDef.link}>
+          <NextLink href={elementDef.link} >
+            {elementDef.title}
+          </NextLink>
+        </ListItem>
       )
     }
     else {
       result.push(
         <SubNav 
-          menuDefinition={navElement}
+          menuDefinition={elementDef}
           classes={classes}
           handlePlaceHolder={handlePlaceHolderAndClose}
+          key={elementDef.link}
         />
       )
     }
@@ -183,26 +164,13 @@ const SubNav = (props) => {
       </Collapse>
     </>
   )
-
-
-
 }
-
 
 const Logo = (props) => {
-
   const {classes} = props
   return (
-    <Link href="/" component={CustomLink} className={classes.logoLink}>
+    <NextLink href="/" className={classes.logoLink}>
       <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.logoImg}/>
-    </Link>
-  )
-}
-
-const CustomLink = React.forwardRef(
-  ({ className, href, hrefAs, children, }, ref) => (
-    <NextLink ref={ref} href={href} as={hrefAs}>
-      <a className={className}>{children}</a>
     </NextLink>
   )
-)
+}

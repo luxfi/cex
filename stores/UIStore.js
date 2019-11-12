@@ -2,7 +2,12 @@ import { action, observable, computed } from "mobx"
 
 export default class UIStore {
   @observable snackBarOpen = false
-  @observable rightDrawerOpen = false
+
+  @observable drawers = {
+    left: false,
+    right: false
+  }
+  
   @observable error = ""
   @observable modal = {
     open: false,
@@ -18,8 +23,12 @@ export default class UIStore {
     return this.snackBarOpen
   }
 
-  @action setRightDrawerOpen(open) {
-    this.rightDrawerOpen = open
+  @action setLeftDrawerOpen = (open) => {
+    this.drawers.left = open
+  }
+
+  @action setRightDrawerOpen = (open) => {
+    this.drawers.right = open
   }
 
   @action openModal(title, body) {
