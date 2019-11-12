@@ -62,19 +62,6 @@ class ContactForm extends React.Component {
           <Typography component="h1" variant="h5">
             Contact
           </Typography>
-          <form
-            name="contact"
-            method="post"
-            data-netlify="true"
-            data-netlify-honeypot="bot-field"
-          >
-            {/* You still need to add the hidden input with the form name to your JSX form */}
-            <input type="hidden" name="form-name" value="contact" />
-            <input type="text" name="name" />
-            <input type="email" name="email" />
-            <textarea name="message"></textarea>
-            ...
-          </form>
           <Formik
             initialValues={{ email: "", name: "", message: "" }}
             onSubmit={values => {
@@ -124,8 +111,22 @@ class ContactForm extends React.Component {
               }
 
               return (
-                <form onSubmit={handleSubmit}>
-                  <input type="hidden" name="contact-form" value="contact" />
+                <form
+                  name="contact"
+                  method="post"
+                  action="/contact/success"
+                  encType="application/x-www-form-urlencoded"
+                  data-netlify="true"
+                  data-netlify-honeypot="bot-field"
+                  onSubmit={this.handleSubmit}
+                >
+                  <input type="hidden" name="form-name" value="contact" />
+                  <div hidden>
+                    <label>
+                      Don’t fill this out:{" "}
+                      <input name="bot-field" onChange={this.handleChange} />
+                    </label>
+                  </div>
                   <TextField
                     variant="outlined"
                     margin="normal"
