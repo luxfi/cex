@@ -294,7 +294,7 @@ const styles = theme => {
     },
     root: {
       flexGrow: 1,
-      padding: "32px 0px",
+      padding: theme.spacing(4),
       //background: "#000",
     },
     menuButton: {
@@ -320,10 +320,7 @@ const styles = theme => {
       display: "block",
     },
     footer: {
-      paddingTop: theme.spacing(3),
-      paddingBottom: theme.spacing(3),
-      paddingLeft: theme.spacing(3),
-      paddingRight: theme.spacing(3),
+      padding: theme.spacing(3),
       [theme.breakpoints.up('sm')]: {
         paddingTop: theme.spacing(6),
         paddingBottom: theme.spacing(6),
