@@ -1,6 +1,6 @@
 import React from "react"
 import { ContactForm } from "../components/contact"
-import { googlePageView } from '../components/utils/generic'
+import { googlePageView } from '../util/generic'
 
 class Contact extends React.Component {
   componentDidMount() {

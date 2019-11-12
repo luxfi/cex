@@ -7,7 +7,7 @@ import Container from "@material-ui/core/Container"
 import Link from "@material-ui/core/Link"
 
 import { KYCForm } from "../../components/account"
-import { googlePageView } from '../../components/utils/generic'
+import { googlePageView } from '../../util/generic'
 
 @inject("store")
 @observer

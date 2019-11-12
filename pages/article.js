@@ -13,7 +13,7 @@ import { CustomBreadcrumbs } from "../components/app"
 import styles from "../styles/pages/article.style.js"
 
 import { InvestNow } from "../components/app"
-import { googlePageView } from '../components/utils/generic'
+import { googlePageView } from '../util/generic'
 
 const MyLoader = () => (
   <ContentLoader
