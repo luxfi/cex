@@ -117,7 +117,10 @@ class ContactForm extends React.Component {
                   data-netlify="true"
                   data-netlify-honeypot="bot-field"
                   netlify="true"
-                  onSubmit={handleSubmit}
+                  onSubmit={e => {
+                    e.preventDefault()
+                    handleSubmit(e)
+                  }}
                 >
                   <input type="hidden" name="form-name" value="contact" />
                   <p>
