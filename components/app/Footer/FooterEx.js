@@ -30,29 +30,6 @@ const EXTERNAL_LINKS = {
 
 import { withStyles } from "@material-ui/core/styles"
 
-const AboutESX = ({ classes, openModal }) => {
-  const body = (<>
-    <p>ESX is a film investing platform for everyone.</p>{" "}
-    <p>
-      We allow regular people — not just wealthy film producers — to invest
-      in promising films, with as little as $10 or as much as $100,000 per
-      investment.
-        </p>{" "}
-    <p>
-      ESX was created to democratize fundraising for film while giving
-      anyone the chance to back the next greatest film.
-        </p>
-  </>)
-  const title = "What is ESX?"
-  return (
-    <Button className={classes.menuButton} onClick={() => {
-      openModal(title, body)
-    }}>
-      About ESX
-      </Button>
-  )
-}
-
 const Partnerships = ({ classes, openModal }) => {
   const body = (<>
     <p>
@@ -107,38 +84,43 @@ const Copyright = () => {
 
 const footers = [
   {
-    title: 'Company',
-    links: ['About', 'Careers', 'Press', { title: 'Blog', link: EXTERNAL_LINKS.medium }],
+    title: "Company",
+    links: [
+      { title: "About", link: "/about" },
+      "Careers",
+      "Press",
+      { title: "Blog", link: EXTERNAL_LINKS.medium }
+    ]
   },
   {
-    title: 'Projects',
-    links: ['Movies', 'TV Series', 'Music', 'Gaming'],
+    title: "Projects",
+    links: ["Movies", "TV Series", "Music", "Gaming"]
   },
   {
-    title: 'Support',
+    title: "Support",
     links: [
       {
-        title: 'Investor FAQ',
-        link: 'investorFaq'
+        title: "Investor FAQ",
+        link: "investorFaq"
       },
       {
-        title: 'Project FAQ',
-        link: 'projectFaq'
+        title: "Project FAQ",
+        link: "projectFaq"
       },
       {
-        title: 'Risks',
-        link: 'risks'
+        title: "Risks",
+        link: "risks"
       },
       {
-        title: 'Contact Us',
-        link: 'contact'
-      },
-    ],
+        title: "Contact Us",
+        link: "contact"
+      }
+    ]
   },
   {
-    title: 'Account',
-    links: ['Sign In', 'Create Account', 'Orders', 'Portfolio'],
-  },
+    title: "Account",
+    links: ["Sign In", "Create Account", "Orders", "Portfolio"]
+  }
 ];
 
 const FooterTopRow = ({ classes }) => (
@@ -312,7 +294,7 @@ const styles = theme => {
     },
     root: {
       flexGrow: 1,
-      padding: "32px 0px",
+      padding: theme.spacing(4),
       //background: "#000",
     },
     menuButton: {
@@ -338,10 +320,7 @@ const styles = theme => {
       display: "block",
     },
     footer: {
-      paddingTop: theme.spacing(3),
-      paddingBottom: theme.spacing(3),
-      paddingLeft: theme.spacing(3),
-      paddingRight: theme.spacing(3),
+      padding: theme.spacing(3),
       [theme.breakpoints.up('sm')]: {
         paddingTop: theme.spacing(6),
         paddingBottom: theme.spacing(6),
