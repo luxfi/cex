@@ -3,14 +3,14 @@ import { inject, observer } from "mobx-react"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-import { 
-  faFacebook, 
-  faTwitter, 
-  faPinterest, 
-  faInstagram, 
-  faYoutube, 
+import {
+  faFacebook,
+  faTwitter,
+  faPinterest,
+  faInstagram,
+  faYoutube,
   faMedium,
-  faReddit 
+  faReddit
 } from "@fortawesome/free-brands-svg-icons"
 
 import {
@@ -143,22 +143,20 @@ const footers = [
 
 const FooterTopRow = ({ classes }) => (
   <Box mb={5}>
-    <Grid container>
-      <Grid item xs={6} sm={8}>
-        <Link href="/" className={classes.flex}>
-          {" "}
-          {/* get rid of inline style */}
+    <Grid container justify='center' alignItems='center'>
+      <Grid item xs={12} sm={8}>
+        <Link href="/">
           <img
             id="logo"
+            className={classes.logo}
             src="/static/images/esx/esx-white-logo.png"
             alt="ESX"
-            style={{ marginTop: "-22px" }}
             height="52px"
           />
         </Link>
         <div className={classes.grow} />
       </Grid>
-      <Grid item xs={6} sm={4} className={classes.center}>
+      <Grid item xs={12} sm={4} className={classes.center}>
         <IconButton
           href={EXTERNAL_LINKS.twitter}
           target="_blank"
@@ -208,10 +206,10 @@ const FooterTopRow = ({ classes }) => (
 )
 
 const FooterMiddleRow = ({ classes, openModal }) => (
-  <Grid container direction="row">
-    <Grid xs={8} item container justify="space-evenly">
+  <Grid container direction="row" className={classes.footerColumns}>
+    <Grid xs={12} sm={8} item container justify="space-evenly">
       {footers.map(footer => (
-        <Grid item xs={6} sm={3} key={footer.title}>
+        <Grid item xs={12} sm={6} md={3} key={footer.title}>
           <Typography variant="h6" color="textPrimary" gutterBottom>
             {footer.title}
           </Typography>
@@ -237,11 +235,13 @@ const FooterMiddleRow = ({ classes, openModal }) => (
             })
             }
           </ul>
+          <br />
         </Grid>
       ))}
     </Grid>
     <Grid
-      xs={4}
+      xs={12}
+      sm={4}
       item
       container
       justify="center"
@@ -263,11 +263,13 @@ const FooterMiddleRow = ({ classes, openModal }) => (
           <Link target="_blank" rel="noopener noreferrer" href="https://play.google.com/">
             <img style={{ height: '60px', paddingLeft: "8px" }} alt="Download on Google Play" src="/static/images/footer/GoogleStoreBadge.png" />
           </Link>
+          <br />
+          <br />
+          <br />
         </Grid>
       </Grid>
     </Grid>
   </Grid>
-
 )
 
 //  < Container maxWidth = "xl" component = "footer" className = { classes.footer } >
@@ -285,7 +287,7 @@ class FooterEx extends React.Component {
     return (
       <div className={classes.root}>
           <FooterTopRow classes={classes} />
-          <FooterMiddleRow openModal={openModal} />
+          <FooterMiddleRow openModal={openModal} classes={classes}/>
           <Box mt={5}>
             <Copyright />
           </Box>
@@ -316,16 +318,30 @@ const styles = theme => {
     menuButton: {
       marginRight: theme.spacing(2),
     },
+    footerColumns: {
+      [theme.breakpoints.down('sm')]: {
+        flexDirection: 'column-reverse',
+      },
+    },
+    logo: {
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2),
+      display: 'block',
+      [theme.breakpoints.down('sm')]: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+      },
+    },
     grow: {
       flexGrow: 1,
       display: "none",
-      display: "block"
+      display: "block",
     },
     footer: {
       paddingTop: theme.spacing(3),
       paddingBottom: theme.spacing(3),
-      paddingLeft: theme.spacing(9),
-      paddingRight: theme.spacing(9),
+      paddingLeft: theme.spacing(3),
+      paddingRight: theme.spacing(3),
       [theme.breakpoints.up('sm')]: {
         paddingTop: theme.spacing(6),
         paddingBottom: theme.spacing(6),

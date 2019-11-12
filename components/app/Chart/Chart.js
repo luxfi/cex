@@ -1,45 +1,82 @@
-import { BuySellForm } from '../'
-import { timelineLabels } from "../../../util/dateRange"
+import {
+  BuySellForm,
+  ChartIntervalControls,
+  ChartCandlestickFake,
+  ChartLineSeries,
+  ToggleVisibleChart
+} from "../"
+import { timelineLabels } from "../../utils/dateRange"
 import { Element } from "react-scroll"
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic"
+import { Toolbar, Grid, Button } from "@material-ui/core"
+import { useState } from "react"
 
 const TVChartContainer = dynamic(
-	async () => {
-    const mod = await import('../TVChartContainer')
+  async () => {
+    const mod = await import("../TVChartContainer")
     return mod.TVChartContainer
   },
-	{ ssr: false, loading: () => <div style={{ color: 'red' }}>This is loading</div> },
+  {
+    ssr: false,
+    loading: () => <div style={{ color: "red" }}>This is loading</div>
+  }
 )
+
+function getActiveChart(activeChart, { chartData, yDomain, labels }) {
+  switch (activeChart) {
+    case "candlestick":
+      return (
+        <ChartCandlestickFake
+          data={chartData}
+          yDomain={yDomain}
+          labels={labels}
+        />
+      )
+    case "line-chart":
+      return (
+        <ChartLineSeries data={chartData} yDomain={yDomain} labels={labels} />
+      )
+    case 2:
+      return null
+    default:
+      return null
+  }
+}
 
 export default props => {
   const {
     chartData,
     yDomain,
     updatePrintInterval,
-    printInterval,
+    activeChart,
     buyOrders,
     sellOrders,
     orderBook,
     ticker,
     movieCategories,
     onExecute,
-    maxSell
+    maxSell,
+    setActiveChart,
+    setMarketOrderType,
+    marketOrderType,
+    funds,
   } = props
 
   let labels = timelineLabels()
-
+  const [visible, setVisible] = useState(false)
   return (
     <Element className="container">
-      <div className="title" name="section1">
-        Trade This Stock
-      </div>
-      {/* <ChartIntervalControls
-        updatePrintInterval={updatePrintInterval}
-        printInterval={printInterval}
-      /> */}
-      <TVChartContainer />
+      <Toolbar>
+        <ChartIntervalControls
+          updatePrintInterval={updatePrintInterval}
+          activeChart={activeChart}
+        />
+        <div style={{ flexGrow: 1 }} />
+        <ToggleVisibleChart setActiveChart={setActiveChart} />
+      </Toolbar>
+      {/* <TVChartContainer /> */}
       <div className="posts-container">
-        {/* <ChartCandlestickFake data={chartData} yDomain={yDomain} labels={labels} /> */}
+        {getActiveChart(activeChart, { chartData, yDomain, labels })}
         <div className="container-row space-between">
           <BuySellForm
             buttonColor="green"
@@ -50,8 +87,43 @@ export default props => {
             orderBook={orderBook}
             onExecute={onExecute}
             movieCategories={movieCategories}
+            marketOrderType={marketOrderType}
+            funds={funds}
           />
-          <div className="divider" />
+          <Grid
+            container
+            direction="column"
+            alignItems="center"
+            className="divider"
+            style={{
+              marginTop: "84px"
+            }}
+          >
+            <Grid item>
+              <Button
+                variant="contained"
+                color={marketOrderType ? "primary" : "default"}
+                onClick={() => setMarketOrderType(true)}
+                style={{
+                  margin: "8px 32px"
+                }}
+              >
+                Market
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="contained"
+                color={marketOrderType ? "default" : "primary"}
+                onClick={() => setMarketOrderType(false)}
+                style={{
+                  margin: "8px 32px"
+                }}
+              >
+                Limit
+              </Button>
+            </Grid>
+          </Grid>
           <BuySellForm
             buttonColor="red"
             buttonText="SELL"
@@ -62,6 +134,8 @@ export default props => {
             onExecute={onExecute}
             movieCategories={movieCategories}
             maxSell={maxSell}
+            marketOrderType={marketOrderType}
+            funds={funds}
           />
         </div>
       </div>
@@ -86,11 +160,9 @@ export default props => {
         }
         .posts-container {
           margin-top: 20px;
-          fill: white;
+          fill: transparent;
         }
         .divider {
-          width: 1px;
-          background: black;
           margin-left: 20px;
           margin-right: 20px;
         }

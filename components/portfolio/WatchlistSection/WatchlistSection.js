@@ -50,10 +50,10 @@ export default props => {
         <h2 className={classes.title} style={{ textAlign: "left" }}>
           Your Watchlist
         </h2>
-        <Grid container justify={'center'}>
+        <Grid container>
           {
             watchlistMovies.length > 0 ?
-            watchlistMovies.map((d, i) => 
+            watchlistMovies.map((d, i) =>
               <Grid item key={i} xs={12} sm={12} md={4}>
                 <Card plain>
                   <Grid item

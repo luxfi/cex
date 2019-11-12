@@ -57,13 +57,14 @@ export default props => {
     rankPercent,
     benefits,
     benefitsMonthly,
-    topCategories
+    topCategories,
+    topChips
   } = props
   // const imageClasses = classNames(classes.imgCardTop)
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} md={8}>
+      <Grid item xs={12} sm={8}>
         <Card className={classes.card}>
           <CardContent>
             <Grid container>
@@ -100,7 +101,7 @@ export default props => {
                     {weeklyChange} from last week
                   </Typography>
                   <Grid item xs={6}>
-                    {dataStub.earningsChips.map((c, i) => (
+                    {topChips.map((c, i) => (
                       <Chip
                         key={`earningsChip_${i}`}
                         label={`${c.amount} ${c.ticker}`}
@@ -112,17 +113,18 @@ export default props => {
               </Grid>
               <Grid item xs={12} sm={9}>
                 <img
-                  src="/static/img/portfolio/portfolioChartTmp.png"
+                  src="/static/img/portfolio/portfolioChartTmpDark-2.png"
                   alt="USER EARNINGS CHART"
-                  width="400"
+                  width="500"
                   height="200"
+                  style={{ borderBottom: '1px solid darkgray', borderLeft: '1px solid darkgray' }}
                 />
               </Grid>
             </Grid>
           </CardContent>
         </Card>
       </Grid>
-      <Grid item xs={6} md={4}>
+      <Grid item xs={12} sm={4}>
         <Card className={classes.card} style={{ minHeight: "221px" }}>
           <CardContent>
             <Grid container
