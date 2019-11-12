@@ -1,6 +1,4 @@
 import React from "react"
-import { inject, observer } from "mobx-react"
-
 import NextLink from "next/link"
 
 import {
@@ -24,26 +22,28 @@ const useStyles = makeStyles(styles)
 
 import navStructure from "./navStructure"
 
-export default inject("store")(observer((props) => {
+export default (props) => {
 
   const {
+    open,
+    setOpen,
     handlePlaceholder,
   } = props
 
   return (
     <SideDrawer
-      open={props.store.uiStore.drawers.left}
-      setOpen={props.store.uiStore.setLeftDrawerOpen}
+      open={open}
+      setOpen={setOpen}
       width="85vw"
       anchor="left"
     >
       <NavElements
         handlePlaceholder={handlePlaceholder}
-        handleClose={() => props.store.uiStore.setLeftDrawerOpen(false)}
+        handleClose={() => setOpen(false)}
       />
     </SideDrawer>
   )
-}))
+}
 
 const NavElements = (props) => {
 
