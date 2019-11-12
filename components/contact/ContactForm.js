@@ -123,16 +123,6 @@ class ContactForm extends React.Component {
                   }}
                 >
                   <input type="hidden" name="form-name" value="contact" />
-                  <p>
-                    <label>
-                      Your Name:{" "}
-                      <input
-                        type="text"
-                        name="name"
-                        onChange={this.handleChange}
-                      />
-                    </label>
-                  </p>
                   <TextField
                     variant="outlined"
                     margin="normal"
