@@ -114,21 +114,22 @@ class ContactForm extends React.Component {
                 <form
                   name="contact"
                   method="post"
-                  encType="application/x-www-form-urlencoded"
                   data-netlify="true"
                   data-netlify-honeypot="bot-field"
-                  onSubmit={e => {
-                    e.stopPropagation()
-                    handleSubmit(e)
-                  }}
+                  netlify="true"
+                  onSubmit={handleSubmit}
                 >
                   <input type="hidden" name="form-name" value="contact" />
-                  <div hidden>
+                  <p>
                     <label>
-                      Don’t fill this out:{" "}
-                      <input name="bot-field" onChange={handleChange} />
+                      Your Name:{" "}
+                      <input
+                        type="text"
+                        name="name"
+                        onChange={this.handleChange}
+                      />
                     </label>
-                  </div>
+                  </p>
                   <TextField
                     variant="outlined"
                     margin="normal"
