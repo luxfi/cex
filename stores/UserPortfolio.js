@@ -3,7 +3,7 @@ import { action, observable, computed, toJS } from "mobx"
 import _ from "lodash"
 import moment from 'moment-timezone'
 
-import { padDollarAmount } from "../components/utils/generic"
+import { padDollarAmount } from "../util/generic"
 /**
  * Later we'll wrap the fetch stuff up a bit more cleanly and / or use a helper library
  */

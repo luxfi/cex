@@ -1,4 +1,4 @@
-import { cardTitle, title } from "../../esxStyles.js"
+import { cardTitle, title } from "../../../styles/esxStyles.js"
 
 const grayText = 'rgb(102, 112, 121)'
 

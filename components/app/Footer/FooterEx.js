@@ -1,7 +1,6 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
 
-//font awesome share icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import {
@@ -14,10 +13,7 @@ import {
   faReddit
 } from "@fortawesome/free-brands-svg-icons"
 
-// material components
 import {
-  Toolbar,
-  Container,
   Typography,
   Link,
   Button,
@@ -26,14 +22,12 @@ import {
   Box,
 } from "@material-ui/core"
 
-
 const EXTERNAL_LINKS = {
   medium: "https://medium.com/entertainment-stock-x",
   reddit: "https://www.reddit.com/r/EntertainmentStockX/",
   twitter: "https://twitter.com/EntertainStock"
 }
 
-// styles
 import { withStyles } from "@material-ui/core/styles"
 
 const AboutESX = ({ classes, openModal }) => {
@@ -278,10 +272,12 @@ const FooterMiddleRow = ({ classes, openModal }) => (
   </Grid>
 )
 
+//  < Container maxWidth = "xl" component = "footer" className = { classes.footer } >
+//         </Container>
 
 @inject("store")
 @observer
-class Footer extends React.Component {
+class FooterEx extends React.Component {
   static async getInitialProps({ mobxStore }) {
     return { ...mobxStore }
   }
@@ -290,13 +286,11 @@ class Footer extends React.Component {
     const loggedIn = store.userStore.loggedIn
     return (
       <div className={classes.root}>
-        <Container maxWidth="xl" component="footer" className={classes.footer}>
           <FooterTopRow classes={classes} />
           <FooterMiddleRow openModal={openModal} classes={classes}/>
           <Box mt={5}>
             <Copyright />
           </Box>
-        </Container>
       </div>
     )
   }
@@ -318,7 +312,8 @@ const styles = theme => {
     },
     root: {
       flexGrow: 1,
-      background: "#000",
+      padding: "32px 0px",
+      //background: "#000",
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -355,4 +350,4 @@ const styles = theme => {
   }
 }
 
-export default withStyles(styles)(Footer)
+export default withStyles(styles)(FooterEx)

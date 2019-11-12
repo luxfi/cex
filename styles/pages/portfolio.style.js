@@ -1,6 +1,6 @@
-import { container, title } from "../components/esxStyles.js"
+import { container, title } from "../esxStyles.js"
 
-const articlePageStyle = theme => ({
+const portfolioPageStyle = theme => ({
   container: {
     zIndex: "12",
     ...container,
@@ -113,4 +113,4 @@ const articlePageStyle = theme => ({
   }
 })
 
-export default articlePageStyle
+export default portfolioPageStyle

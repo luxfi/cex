@@ -1,0 +1,58 @@
+export default (theme) => {
+  return {
+
+    logo: {
+      display: "inline-block",
+      marginLeft: theme.spacing(1),
+      marginTop: "-15px",
+    },
+
+    navOuter: {
+      display: "flex",
+      flexWrap: "noWrap",
+      justifyContent: "space-between",
+      flexDirection: "row"
+    },
+
+    navSpacer: {
+      width: theme.spacing(12)
+    },
+
+    menuItem: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      width: "130px"
+    },
+
+    menuItemIcon: {
+      width: 24,
+      height: 24
+    },
+
+    navButton: {
+      marginRight: theme.spacing(2),
+      [theme.breakpoints.down("sm")]: {
+        marginRight: theme.spacing(1),
+      },
+      minWidth: "0",
+      whiteSpace: "nowrap"
+    },
+
+    accountOuter: {
+      display: "flex",
+      flexDirection: "row",
+      marginLeft: "auto",
+      alignItems: "center",
+      paddingRight: theme.spacing(6),
+      [theme.breakpoints.down("sm")] : {
+        paddingRight: 0,
+      }
+    },
+
+    accountIcon : {
+      width: "36px",
+      height: "36px"
+    },
+  }
+}
