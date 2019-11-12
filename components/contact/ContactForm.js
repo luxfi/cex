@@ -1,7 +1,12 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 
-import { Button, Container, Typography, TextField } from "@material-ui/core";
+import {
+  Button,
+  Container,
+  Typography,
+  TextField,
+} from "@material-ui/core";
 
 import { Formik, Field } from "formik";
 import * as yup from "yup";
@@ -51,7 +56,6 @@ class ContactForm extends React.Component {
 
   render = () => {
     const { classes } = this.props;
-    const values = { name: "", email: "", confirmPassword: "", password: "" };
     return (
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
@@ -111,19 +115,21 @@ class ContactForm extends React.Component {
           >
             {props => {
               const {
+                values,
                 touched,
                 errors,
                 isSubmitting,
-                isValid,
-                handleSubmit
-              } = props;
-              debugger;
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                isValid
+              } = props
               if (this.state.submitted) {
                 return <p>Thanks for your inquiry. We'll respond shortly.</p>;
               }
 
               return (
-                <form onSubmit={handleSubmit} className={classes.formItself}>
+                <form onSubmit={handleSubmit}>
                   <TextField
                     variant="outlined"
                     margin="normal"
@@ -131,9 +137,14 @@ class ContactForm extends React.Component {
                     fullWidth
                     label="name"
                     name="name"
+                    className={classes.textField}
+                    value={values.name}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     helperText={errors.name && touched.name && errors.name}
-                    component={TextField}
+                    margin="normal"
                   />
+
                   <TextField
                     variant="outlined"
                     margin="normal"
@@ -142,22 +153,32 @@ class ContactForm extends React.Component {
                     error={errors.email && touched.email}
                     label="email"
                     name="email"
+                    className={classes.textField}
+                    value={values.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     helperText={errors.email && touched.email && errors.email}
-                    component={TextField}
+                    margin="normal"
                   />
+
                   <TextField
+                    multiline={true}
+                    rows={3}
+                    rowsMax={5}
                     variant="outlined"
                     margin="normal"
                     required
                     fullWidth
                     label="message"
                     name="message"
-                    multiline={true}
-                    className={classes.messageTextField}
+                    className={classes.textField}
+                    value={values.message}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     helperText={
                       errors.message && touched.message && errors.message
                     }
-                    component={TextField}
+                    margin="normal"
                   />
 
                   <Button
