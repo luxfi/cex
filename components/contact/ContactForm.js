@@ -117,7 +117,10 @@ class ContactForm extends React.Component {
                   encType="application/x-www-form-urlencoded"
                   data-netlify="true"
                   data-netlify-honeypot="bot-field"
-                  onSubmit={handleSubmit}
+                  onSubmit={e => {
+                    e.stopPropagation()
+                    handleSubmit(e)
+                  }}
                 >
                   <input type="hidden" name="form-name" value="contact" />
                   <div hidden>
