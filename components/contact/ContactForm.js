@@ -62,12 +62,6 @@ class ContactForm extends React.Component {
           <Typography component="h1" variant="h5">
             Contact
           </Typography>
-        {/* hidden form for netlify bots */}
-        <form name="contact" netlify netlify-honeypot="bot-field" hidden>
-          <input type="text" name="name" />
-          <input type="email" name="email" />
-          <textarea name="message"></textarea>
-        </form>
           <Formik
             initialValues={{ email: "", name: "", message: "" }}
             onSubmit={values => {
