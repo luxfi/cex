@@ -21,7 +21,7 @@ import {
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons"
 
-import { AutoCompleteSearch } from ".."
+import { AutoCompleteSearch } from "../"
 
 
   // This one is recommended in the MUI docs themselves :)
