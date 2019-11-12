@@ -11,6 +11,7 @@ let Element = Scroll.Element
 let Events = Scroll.Events
 let scroll = Scroll.animateScroll
 let scrollSpy = Scroll.scrollSpy
+let scroller = Scroll.scroller
 
 const styles = theme => ({})
 
@@ -52,40 +53,51 @@ const Menu = () => {
 @observer
 class About extends React.Component {
   state = { start: null, end: null }
+
   componentDidMount() {
-    Events.scrollEvent.register("begin", function(to, element) {
+    Events.scrollEvent.register("begin", (to, element) => {
       // console.log("begin", arguments)
     })
-    let that = this
-    Events.scrollEvent.register("end", function(to, element) {
+    Events.scrollEvent.register("end", (to, element) => {
       if (to === "third") {
-        that.setState({ start: window.pageYOffset })
+        this.setState({ start: window.pageYOffset })
       }
     })
 
     // Listen for scroll events
-    let end
-    let distance
-    let nav = document.getElementById("floating-nav")
-    let top
-    window.addEventListener("scroll", function(event) {
+    window.addEventListener("scroll", this.scrollEvent);
+
+    scroller.scrollTo("first", {
+      duration: 800,
+      delay: 0,
+      smooth: "easeInOutQuart",
+      offset: -128
+    });
+
+    scrollSpy.update()
+  }
+
+  componentWillUnmount() {
+    Events.scrollEvent.remove("begin")
+    Events.scrollEvent.remove("end")
+    window.removeEventListener("scroll", this.scrollEvent);
+  }
+
+  scrollEvent = (event) => {
+      let end
+      let distance
+      let nav = document.getElementById("floating-nav")
+      let top
       // Calculate distance
-      if (that.state.start) {
+      if (this.state.start) {
         end = window.pageYOffset
-        distance = end - that.state.start
+        distance = end - this.state.start
         top = distance > 0 ? 128 - distance : 128
         console.log("distance", distance)
         nav.style.top = `${top}px`
       }
-    })
+  }
 
-    scrollSpy.update()
-  }
-  componentWillUnmount() {
-    Events.scrollEvent.remove("begin")
-    Events.scrollEvent.remove("end")
-    window.removeEventListener("scroll")
-  }
   render() {
     const { classes, store } = this.props
     const { loggedIn } = store.userStore
@@ -106,7 +118,7 @@ class About extends React.Component {
                   <Menu />
                 </Box>
               </Grid>
-              <Grid item xs={8}>
+              <Grid item xs={8} style={{marginTop: "70px"}}>
                 {content.map(section => (
                   <Element name={section.key} className="element">
                     <Box mb={10}>
