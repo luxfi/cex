@@ -38,6 +38,7 @@
     "limit-order-book": "^0.3.0",
     "lodash": "4.17.15",
     "material-table": "1.53.0",
+    "material-ui-popup-state": "^1.4.1",
     "mobx": "^5.14.2",
     "mobx-react": "^6.1.4",
     "moment": "^2.24.0",

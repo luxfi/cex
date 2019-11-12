@@ -9,7 +9,7 @@ import { inject, observer } from "mobx-react"
 import Hero from "../components/landing/Hero/Hero"
 
 // styles
-import styles from "../pageStyles/landing.style"
+import styles from "../styles/pages/landing.style.js"
 
 // Sections for this page
 import { InvestNow } from "../components/app"

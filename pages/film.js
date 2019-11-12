@@ -2,7 +2,7 @@ import React from "react"
 import { MuiThemeProvider } from "@material-ui/core/styles"
 
 import { FilmView } from "../components/film"
-import { googlePageView } from '../components/utils/generic'
+import { googlePageView } from '../util/generic'
 
 class Film extends React.Component {
   componentDidMount() {

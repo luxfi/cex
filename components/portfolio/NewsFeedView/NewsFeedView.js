@@ -7,6 +7,7 @@ import {
 } from "@material-ui/core"
 import ContentLoader from "react-content-loader"
 import moment from 'moment'
+import classnames from 'classnames'
 
 import myStyles from "./NewsFeedView.style.js"
 
@@ -61,16 +62,20 @@ const Item2 = props => {
 
 const Item = props => {
 
-  const { classes, title, author, date, blurb, link, categories } = props
+  const { classes, title, author, date, blurb, link, categories, image } = props
 
   return (
     <Grid item xs={12} sm={4} style={{ height: 'auto' }}>
       {/* <ImgLoader width={500} height={400} /> */}
       <h6 className={classes.itemTitle}>{title}</h6>
+      {
+        image ?
+          <img src={image} height={225} /> : null
+      }
       <p className={classes.itemCopy}>{author} - {moment(date).format('MM-DD-YYYY')}</p>
       <div className={classes.itemCategories}>
         {
-          categories.slice(0, 3).map((c, i) => <a key={c._+i} className={classes.link} href={c['$'].domain} target="_blank"><Chip clickable label={c._} /></a>)
+          categories.slice(0, 3).map((c, i) => <a key={c._+i} className={classnames(classes.link, classes.chipLink)} href={c['$'].domain} target="_blank"><Chip clickable label={c._} /></a>)
         }
       </div>
       <p className={classes.itemCopy}>{blurb}</p>
@@ -120,6 +125,7 @@ const NewsFeedView = (props) => {
               author={i.creator} 
               blurb={i.contentSnippet} 
               categories={i.categories} 
+              image={i.image}
             />
           )
         }

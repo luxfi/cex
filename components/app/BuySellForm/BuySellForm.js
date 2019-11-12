@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import { Typography, Box } from "@material-ui/core"
 // import useForm from '../customHooks/useForm'
 
-import { padDollarAmount } from "../../utils/generic"
 import { LimitOrders } from ".."
 
 function precision(a) {
