@@ -49,6 +49,10 @@ export default (theme) => ({
   link: {
     color: 'white',
     paddingRight: '.5em'
+  },
+
+  chipLink: {
+    textDecoration: 'none'
   }
 
 })

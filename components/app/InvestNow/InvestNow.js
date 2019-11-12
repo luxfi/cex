@@ -29,7 +29,7 @@ const MyLoader = () => (
 
 export default props => {
   const classes = useStyles()
-  const { loggedIn, ...rest } = props
+  const { loggedIn, noPadding, ...rest } = props
   const imageClasses = classNames(classes.imgCardTop)
   const hrefLink = loggedIn ? "/portfolio" : "/signup"
 
@@ -44,7 +44,7 @@ export default props => {
   }
 
   return (
-    <div style={{ padding: "48px 0px"}}>
+    <div style={noPadding ? {} : { padding: "48px 0px" }}>
       <Box clone pt={2} pr={1} pb={1} pl={2}>
         <Paper elevation={0}>
           <Grid
@@ -54,15 +54,16 @@ export default props => {
             justify="center"
             alignItems="center"
           >
-            <Typography align="center" color="textPrimary" variant="h5" component="h2" gutterBottom>
-              <Box>
-                Invest more than screen time in your favorite films.
-             </Box>
-            </Typography>
-            <Grid
-              container
-              justify="center"
+            <Typography
+              align="center"
+              color="textPrimary"
+              variant="h5"
+              component="h2"
+              gutterBottom
             >
+              <Box>Invest more than screen time in your favorite films.</Box>
+            </Typography>
+            <Grid container justify="center">
               <Button component={CustomLink} href={hrefLink}>
                 Invest Now
               </Button>
@@ -76,17 +77,21 @@ export default props => {
                 What is ESX?
               </Button>
 
-              <CustomModal handleClose={handleClose} open={open} title="What is ESX?">
+              <CustomModal
+                handleClose={handleClose}
+                open={open}
+                title="What is ESX?"
+              >
                 <p>ESX is a film investing platform for everyone.</p>{" "}
                 <p>
                   We allow regular people — not just wealthy film producers — to
                   invest in promising films, with as little as $10 or as much as
                   $100,000 per investment.
-              </p>{" "}
+                </p>{" "}
                 <p>
-                  ESX was created to democratize fundraising for film while giving
-                  anyone the chance to back the next greatest film.
-              </p>
+                  ESX was created to democratize fundraising for film while
+                  giving anyone the chance to back the next greatest film.
+                </p>
               </CustomModal>
             </Grid>
           </Grid>

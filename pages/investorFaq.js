@@ -4,9 +4,9 @@ import { withStyles } from '@material-ui/core/styles'
 
 import { ContentfulItems } from "../components/app"
 
-import { container } from "../components/esxStyles.js"
+import { container } from "../styles/esxStyles.js"
 
-import { googlePageView } from "../components/utils/generic.js"
+import { googlePageView } from "../util/generic.js"
 
 const styles = theme => ({
   container: {
