@@ -1,7 +1,9 @@
 export default (theme) => {
   return {
     logoImg: {
-      height: "26px",
+      height: "32px",
+      paddingTop: theme.spacing(1),
+      paddingLeft: theme.spacing(2)
     },
     logoLink: {
       display: "block",

@@ -22,6 +22,12 @@ export default (theme) => {
       transition: "background 0.5s ease-in-out"
     },
 
+    toolbar: {
+      flexGrow: 1,
+      alignItems: "center",
+      justifyContent: "space-between"
+    },
+
     mobileLogo : {
       height: "26px",
       display: "block"

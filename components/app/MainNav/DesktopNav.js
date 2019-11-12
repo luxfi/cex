@@ -15,14 +15,11 @@ import styles from './desktopNav.style.js'
 
 const useStyles = makeStyles(styles)
 
+import navStructure from "./navStructure"
 
 export default (props) => {
 
-  const {
-    navStructure,
-    handlePlaceholder,
-  } = props
-
+  const { handlePlaceholder } = props
   const classes = useStyles()
 
   return (

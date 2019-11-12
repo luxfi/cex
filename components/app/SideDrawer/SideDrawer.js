@@ -10,13 +10,8 @@ import { makeStyles } from '@material-ui/styles'
 const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent)
 
 const useStyles = makeStyles(
-  ({ breakpoints, transitions, palette, spacing, zIndex, shadows }) => ({
-    root: {},
-    heightAdjustment: {
-      flexShrink: 0,
-      transition: transitions.create(),
-    },
-    container: {
+  ({transitions}) => ({
+    drawerOuter: {
       overflow: 'hidden',
       display: 'flex',
       flexGrow: 1,
@@ -26,7 +21,7 @@ const useStyles = makeStyles(
         duration: transitions.duration.leavingScreen,
       }),
     },
-    content: {
+    drawerContents: {
       flexGrow: 1,
       overflow: 'auto',
     },
@@ -39,6 +34,7 @@ export default (props) => {
     open,
     setOpen,
     width,
+    anchor,
     children,
     className
   } = props
@@ -54,10 +50,10 @@ export default (props) => {
       onOpen={(ignore) => setOpen(true)}
       onClose={(ignore) => setOpen(false)}
       variant="temporary"
-      anchor="right"
+      anchor={anchor}
     >
-      <div className={classes.container} style={{ width: width }}>
-        <div className={classes.content}>
+      <div className={classes.drawerOuter} style={{ width: width }}>
+        <div className={classes.drawerContents} >
           {typeof children === 'function' ? children(ctx) : children}
         </div>
       </div>

@@ -3,25 +3,15 @@ import { Provider, observer } from "mobx-react"
 import { withRouter } from "next/router"
 import App from "next/app"
 
-import ReactGA from 'react-ga'
+import { MuiThemeProvider } from "@material-ui/core/styles"
+import { NoSsr, CssBaseline} from '@material-ui/core'
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 
 // This ensures that the icon CSS is loaded immediately before attempting to render icons
 import "@fortawesome/fontawesome-svg-core/styles.css"
 import { config } from "@fortawesome/fontawesome-svg-core"
-
 // Prevent fontawesome from dynamically adding its css since we did it manually above
 config.autoAddCss = false
-
-import { MuiThemeProvider } from "@material-ui/core/styles"
-import NoSsr from '@material-ui/core/NoSsr'
-import CssBaseline from "@material-ui/core/CssBaseline"
-
-import {
-  Root,
-  Content,
-  Footer,
-  presets,
-} from 'mui-layout'
 
 import { 
   CustomSnackbar, 
@@ -29,11 +19,11 @@ import {
   MobileNav,
   FooterEx, 
   CustomModal,
-  RightDrawer 
+  SideDrawer 
 } from "../components/app"
 
+import ReactGA from 'react-ga'
 import initializeStore from "../stores/stores"
-
 import { darkTheme, lightTheme } from "../styles/esxThemes"
 
 const trackGA = () => {
@@ -41,20 +31,6 @@ const trackGA = () => {
   ReactGA.pageview(window.location.pathname + window.location.search)
 }
 
-const muiLayoutConfig = presets.createStandardLayout()
-muiLayoutConfig.navWidth = {
-  "xs": "85vw",   // mobile:  take "most of it"
-  "sm": "400px"   // all else: take "what's needed"
-}
-
-muiLayoutConfig.navVariant = {
-  "xs": "temporary",
-  "sm": "temporary",
-}
-muiLayoutConfig.collapsible = {
-  "xs": false,
-}
-muiLayoutConfig.headerPosition = "sticky"
 
 // ****************
 @observer
@@ -98,49 +74,50 @@ class MyMobxApp extends App {
     this.mobxStore.uiStore.openModal(title, body)
   }
 
-  setRightDrawerOpen = (open) => {
-    this.mobxStore.uiStore.setRightDrawerOpen(open) 
-  }
-
   render() {
-    const { Component, pageProps} = this.props
+    const { 
+      Component, 
+      pageProps, 
+      width
+    } = this.props
+    
+    const showDesktopNav = isWidthUp('md', width) 
+    const showDesktopProfileMenu = isWidthUp('sm', width) 
 
     return (
         <Provider store={this.mobxStore}>
         <MuiThemeProvider theme={darkTheme}>
           <CssBaseline />
           <NoSsr>
-            <Root config={muiLayoutConfig}>
-              <Header 
-                handlePlaceholder={this.placeholder} 
-                isLoggedIn={this.mobxStore.userStore.loggedIn}
-                openRightDrawer={() => this.setRightDrawerOpen(true)}
-                handleLogout={() => {this.mobxStore.userStore.logout()}}
-              />
-              <MobileNav handlePlaceholder={this.placeholder} />
-              <Content>
-                <Component
-                  {...pageProps}
-                  darkTheme={darkTheme}
-                  lightTheme={lightTheme}
-                />
-                <CustomModal
-                  open={this.mobxStore.uiStore.modal.open}
-                  handleClose={() => this.mobxStore.uiStore.closeModal()}
-                  body={this.mobxStore.uiStore.modal.body}
-                  title={this.mobxStore.uiStore.modal.title}
-                />
-                <CustomSnackbar />
-              </Content>
-              <RightDrawer 
-                open={this.mobxStore.uiStore.rightDrawerOpen} 
-                setOpen={this.setRightDrawerOpen}
-                width="80vw"
-              />
-              <Footer>
-                <FooterEx openModal={this.openModal} />
-              </Footer>
-            </Root>
+            <Header 
+              showDesktopNav={showDesktopNav}
+              showDesktopProfileMenu={showDesktopProfileMenu}
+              handlePlaceholder={this.placeholder} 
+              isLoggedIn={this.mobxStore.userStore.loggedIn}
+              openLeftDrawer={() => this.mobxStore.uiStore.setLeftDrawerOpen(true)}
+              openRightDrawer={() => this.mobxStore.uiStore.setRightDrawerOpen(true)}
+              handleLogout={() => {this.mobxStore.userStore.logout()}}
+            />
+            <MobileNav handlePlaceholder={this.placeholder} />
+            <Component
+              {...pageProps}
+              darkTheme={darkTheme}
+              lightTheme={lightTheme}
+            />
+            <CustomModal
+              open={this.mobxStore.uiStore.modal.open}
+              handleClose={() => this.mobxStore.uiStore.closeModal()}
+              body={this.mobxStore.uiStore.modal.body}
+              title={this.mobxStore.uiStore.modal.title}
+            />
+            <CustomSnackbar />
+            <SideDrawer 
+              open={this.mobxStore.uiStore.drawers.right} 
+              setOpen={(open) => this.mobxStore.uiStore.setRightDrawerOpen(open)}
+              width="85vw"
+              anchor="right"
+            />
+            <FooterEx openModal={this.openModal} />
         </NoSsr>
       </MuiThemeProvider>
       </Provider>
@@ -154,4 +131,4 @@ class MyMobxApp extends App {
   }
 }
 
-export default withRouter(MyMobxApp)
+export default withWidth()(withRouter(MyMobxApp))
