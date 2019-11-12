@@ -2,7 +2,7 @@ import React from "react"
 import { SignUpForm } from "../components/signup"
 import { inject, observer } from "mobx-react"
 
-import { googlePageView } from "../components/utils/generic.js"
+import { googlePageView } from "../util/generic.js"
 
 @inject("store")
 @observer

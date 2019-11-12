@@ -6,7 +6,7 @@ import { ContentfulItems } from "../components/app"
 
 import { container } from "../styles/esxStyles.js"
 
-import { googlePageView } from "../components/utils/generic.js"
+import { googlePageView } from "../util/generic.js"
 
 const styles = theme => ({
   container: {

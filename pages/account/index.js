@@ -13,7 +13,7 @@ import Typography from "@material-ui/core/Typography"
 import { AddPaymentMethodForm } from "../../components/account"
 import { CustomLink } from '../../components/app'
 
-import { googlePageView } from '../../components/utils/generic'
+import { googlePageView } from '../../util/generic'
 
 @inject("store")
 @observer
