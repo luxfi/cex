@@ -1,144 +1,184 @@
-import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
+import React from "react";
+import { withStyles } from "@material-ui/core/styles";
 
-import { Button } from '@material-ui/core'
+import {
+  Button,
+  Container,
+  Typography,
+  TextField,
+} from "@material-ui/core";
 
-import { Formik, Field } from 'formik'
-import { TextField } from 'formik-material-ui'
-import * as yup from 'yup'
+import { Formik, Field } from "formik";
+import * as yup from "yup";
 
-import styles from "./contactForm.style.js"
+const styles = theme => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1)
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2)
+  }
+});
+
+const encode = data => {
+  return Object.keys(data)
+    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+    .join("&");
+};
 
 class ContactForm extends React.Component {
-
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       submitting: false,
       submitted: false
-    }
+    };
   }
 
   setSubmitting(b) {
     this.setState({
       submitting: b
-    })
+    });
   }
 
   setSubmitted(b) {
     this.setState({
       submitted: b
-    })
-  }
-
-    // a renderprops function for Formik
-  renderForm = (props) => {
-
-      // Formik stuff
-    const {
-      touched,
-      errors,
-      dirty,
-      isSubmitting,
-      handleSubmit,
-      handleReset,
-    } = props;
-
-    const classes = this.props.classes
-
-    if (this.state.submitted) {
-      return (
-        <p>Thanks for your inquiry.  We'll respond shortly.</p>
-      )
-    }
-
-    return (
-      <form onSubmit={handleSubmit} className={classes.formItself}>
-        <div className={classes.fieldsOuter}>
-          <Field
-            label="name"
-            name="name"
-            className={classes.textField}
-            helperText={(errors.name && touched.name) && errors.name}
-            component={TextField}
-          />
-          <Field
-            error={errors.email && touched.email}
-            label="email"
-            name="email"
-            className={classes.textField}
-            helperText={(errors.email && touched.email) && errors.email}
-            component={TextField}
-          />
-        </div>
-        <Field
-          label="comment"
-          name="comment"
-          multiline={true}
-          rows={4}
-          maxRows={6}
-          className={classes.commentTextField}
-          helperText={(errors.comment && touched.comment) && errors.comment}
-          component={TextField}
-        />
-        <div className={classes.buttonsOuter} >
-          <Button
-            type="button"
-            className="outline"
-            onClick={handleReset}
-            disabled={!dirty || isSubmitting}
-          >Reset</Button>
-          <Button disabled={isSubmitting} onClick={handleSubmit}>Submit</Button>
-        </div>
-      </form>
-    )
+    });
   }
 
   render = () => {
+    const { classes } = this.props;
     return (
-      <div className={this.props.classes.contactOuter}>
-        <h3>Contact</h3>
-        <Formik
-          initialValues={{ email: '', name: '', comment: '' }}
-          onSubmit={(values) => {
-
-            this.setSubmitting(true); // wait state
-
-              /*  FOR EXAMPLE ...something like
-            fetch.post(contactFormEndpoint,
-              values,
-              {
+      <Container component="main" maxWidth="xs">
+        <div className={classes.paper}>
+          <Typography component="h1" variant="h5">
+            Contact
+          </Typography>
+          <Formik
+            initialValues={{ email: "", name: "", message: "" }}
+            onSubmit={values => {
+              this.setSubmitting(true); // wait state
+              fetch("/", {
+                method: "POST",
                 headers: {
-                  'Access-Control-Allow-Origin': '*',
-                  'Content-Type': 'application/json',
-                }
-              },
-            ).then((resp) => {
-              this.setSubmitted(true)
-              this.setSubmitting(false)
-            }
-            )
-            */
+                  "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: encode({ "form-name": "contact", ...values })
+              })
+              .then(resp => {
+                this.setSubmitted(true);
+                this.setSubmitting(false);
+                // TODO: link snackbar success here...
+              })
+              .catch(error => {
+                // TODO: link snackbar success here...
+                console.log(error);
+              });
+            }}
+            validationSchema={yup.object().shape({
+              email: yup
+                .string("Enter your email")
+                .email("Enter a valid email")
+                .required("Email is required"),
+              name: yup.string("Enter a name").required("Name is required"),
+              message: yup
+                .string("Enter a message")
+                .required("Message is required")
+            })}
+          >
+            {props => {
+              const {
+                values,
+                touched,
+                errors,
+                dirty,
+                isSubmitting,
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                isValid
+              } = props
+              if (this.state.submitted) {
+                return <p>Thanks for your inquiry. We'll respond shortly.</p>;
+              }
 
-            // TEMP
-            this.setSubmitted(true)
-          }}
-
-          validationSchema={yup.object().shape({
-            email: yup.string()
-              .email()
-              .required('Required'),
-            name: yup.string()
-              .required('Required'),
-            comment: yup.string()
-              .required('Required'),
-          })}
-
-          render={this.renderForm /* reference the renderProps function, don't call it! */}
-        />
-      </div>
-    )
-  }
+              return (
+                <form onSubmit={handleSubmit}>
+                  <input type="hidden" name="contact-form" value="contact" />
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    label="name"
+                    name="name"
+                    className={classes.textField}
+                    value={values.name}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={errors.name && touched.name && errors.name}
+                    margin="normal"
+                  />
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    error={errors.email && touched.email}
+                    label="email"
+                    name="email"
+                    className={classes.textField}
+                    value={values.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={errors.email && touched.email && errors.email}
+                    margin="normal"
+                  />
+                  <TextField
+                    multiline={true}
+                    rows={3}
+                    rowsMax={5}
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    label="message"
+                    name="message"
+                    className={classes.textField}
+                    value={values.message}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={
+                      errors.message && touched.message && errors.message
+                    }
+                    margin="normal"
+                  />
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    disabled={!isValid || isSubmitting || !dirty}
+                  >
+                    Submit
+                  </Button>
+                </form>
+              );
+            }}
+          </Formik>
+        </div>
+      </Container>
+    );
+  };
 }
 
-export default withStyles(styles)(ContactForm)
+export default withStyles(styles)(ContactForm);
