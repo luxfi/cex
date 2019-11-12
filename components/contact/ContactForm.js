@@ -66,25 +66,6 @@ class ContactForm extends React.Component {
             initialValues={{ email: "", name: "", message: "" }}
             onSubmit={values => {
               this.setSubmitting(true); // wait state
-
-                /*  FOR EXAMPLE ...something like
-              fetch.post(contactFormEndpoint,
-                values,
-                {
-                  headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Content-Type': 'application/json',
-                  }
-                },
-              ).then((resp) => {
-                this.setSubmitted(true)
-                this.setSubmitting(false)
-              }
-              )
-              */
-
-              /* According to Netlify docs for posting the form submission */
-
               fetch("/", {
                 method: "POST",
                 headers: {
@@ -92,15 +73,15 @@ class ContactForm extends React.Component {
                 },
                 body: encode({ "form-name": "contact", ...values })
               })
-                .then(resp => {
-                  this.setSubmitted(true);
-                  this.setSubmitting(false);
-                  // TODO: link snackbar success here...
-                })
-                .catch(error => {
-                  // TODO: link snackbar success here...
-                  console.log(error);
-                });
+              .then(resp => {
+                this.setSubmitted(true);
+                this.setSubmitting(false);
+                // TODO: link snackbar success here...
+              })
+              .catch(error => {
+                // TODO: link snackbar success here...
+                console.log(error);
+              });
             }}
             validationSchema={yup.object().shape({
               email: yup
@@ -118,6 +99,7 @@ class ContactForm extends React.Component {
                 values,
                 touched,
                 errors,
+                dirty,
                 isSubmitting,
                 handleChange,
                 handleBlur,
@@ -144,7 +126,6 @@ class ContactForm extends React.Component {
                     helperText={errors.name && touched.name && errors.name}
                     margin="normal"
                   />
-
                   <TextField
                     variant="outlined"
                     margin="normal"
@@ -160,7 +141,6 @@ class ContactForm extends React.Component {
                     helperText={errors.email && touched.email && errors.email}
                     margin="normal"
                   />
-
                   <TextField
                     multiline={true}
                     rows={3}
@@ -180,14 +160,13 @@ class ContactForm extends React.Component {
                     }
                     margin="normal"
                   />
-
                   <Button
                     type="submit"
                     fullWidth
                     variant="contained"
                     color="primary"
                     className={classes.submit}
-                    disabled={!isValid || isSubmitting}
+                    disabled={!isValid || isSubmitting ||!dirty}
                   >
                     Submit
                   </Button>
