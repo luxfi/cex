@@ -18,6 +18,7 @@ import {
   CategorySlider, 
   ForYouSlider 
 } from "../components/landing"
+import { googlePageView } from '../components/utils/generic'
 
 @inject("store")
 @observer
@@ -25,6 +26,7 @@ class Index extends React.Component {
 
   componentDidMount() {
     this.props.store.userPortfolio.getWatchlist()
+    googlePageView()
   }
 
   render() {
@@ -36,13 +38,13 @@ class Index extends React.Component {
         <Hero loggedIn={loggedIn} />
         <Container maxWidth="xl"
           style={{
-            transform: "translate(0, -72vh)"
+            transform: "translate(0, -52vh)"
           }}
         >
           <TrailerSlider />
           <ForYouSlider />
           <StudioSlider />
-          <div style={{ marginBottom: "-72vh" }}>
+          <div style={{ marginBottom: "-52vh" }}>
             <CategorySlider />
           </div>
         </Container>

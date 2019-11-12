@@ -13,11 +13,17 @@ import Typography from "@material-ui/core/Typography"
 import { AddPaymentMethodForm } from "../../components/account"
 import { CustomLink } from '../../components/app'
 
+import { googlePageView } from '../../components/utils/generic'
+
 @inject("store")
 @observer
 class Account extends React.Component {
   static async getInitialProps({ mobxStore }) {
     return { ...mobxStore }
+  }
+
+  componentDidMount() {
+    googlePageView()
   }
 
   render() {
@@ -41,7 +47,7 @@ class Account extends React.Component {
       store.uiStore.snackBarOpen = true
     }
     return (
-      <Container maxWidth="lg" style={{ marginTop: 30 }}>
+      <Container maxWidth="lg" style={{ marginTop: 30, marginBottom: 30 }}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
             <Card>

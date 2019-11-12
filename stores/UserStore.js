@@ -40,6 +40,7 @@ export default class UserStore {
   // Account comes from the Hanzo API
   @observable token = null
   @observable account = null
+  @observable accountBalance = 100000
 
   // ** SIGNUP INFO **
   // must initialize to empty string for controlled inputs
@@ -104,14 +105,9 @@ export default class UserStore {
    */
   @action async loadSession() {
     this.isLoading = true
-    if (typeof window != "undefined") {
-      console.log(window.api=this.api.client)
-    }
-    if (this.api.client.getCustomerToken) {
-      this.token = this.api.client.getCustomerToken()
-    }
 
     this.token = this.api.client.getCustomerToken()
+
     try {
       if (this.token) {
         const ps = [
@@ -177,13 +173,15 @@ export default class UserStore {
       "city",
       "address1"
     ]
-    if (this.anyMissingData(personalDetails)) {
-      this.setActiveStep(0)
-    } else if (this.anyMissingData(personalDetails)) {
-      this.setActiveStep(1)
-    } else {
-      this.setActiveStep(2)
-    }
+    this.setActiveStep(0)
+
+    // if (this.anyMissingData(personalDetails)) {
+    //   this.setActiveStep(0)
+    // } else if (this.anyMissingData(personalDetails)) {
+    //   this.setActiveStep(1)
+    // } else {
+    //   this.setActiveStep(2)
+    // }
   }
 
   // TODO: this doesn't work
@@ -303,16 +301,16 @@ export default class UserStore {
       const file = new File([blob], filename, {type: data.type})
       const formData = new FormData()
       formData.append('upload', file)
-      const res = await fetch('https://files.hanzo.ai/upload', { // "https://files.hanzo.ai/upload", {
+      const res = await fetch('https://files.hanzo.ai/upload', {
         // Your POST endpoint
         method: "POST",
         body: formData
       })
-      console.log(res)
+      // console.log('res', res)
 
       const res2 = await res.text()
 
-      console.log("json response: ", res2)
+      // console.log("json response: ", res2)
 
       onSuccess && onSuccess()
 
@@ -412,7 +410,7 @@ export default class UserStore {
         metadata: this.newPaymentMethodMetadata
       }
 
-      const res = await this.api.client.account.paymentMethod.create(opts)
+      const res = await this.api.client.account.paymentMethod(opts)
     } catch (ex) {
       console.log("Error logging out", ex)
       onError && onError(ex.toString())

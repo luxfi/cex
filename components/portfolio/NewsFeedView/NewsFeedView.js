@@ -1,7 +1,13 @@
 /* eslint-disable react/prop-types */
 import React from "react"
-import { makeStyles } from "@material-ui/core"
+import {
+  makeStyles,
+  Grid,
+  Chip
+} from "@material-ui/core"
 import ContentLoader from "react-content-loader"
+import moment from 'moment'
+import classnames from 'classnames'
 
 import myStyles from "./NewsFeedView.style.js"
 
@@ -26,7 +32,7 @@ const lipsum = "Duis aute irure dolor in reprehenderit in \
 const randomInt = (min, max) => {
   min = Math.ceil(min)
   max = Math.floor(max)
-  return Math.floor(Math.random() * (max - min)) + min 
+  return Math.floor(Math.random() * (max - min)) + min
 }
 
 
@@ -43,23 +49,44 @@ const ImgLoader = (props) => {
       <rect x="0" y="0" rx="5" ry="5" width={props.width} height={props.height} />
     </ContentLoader>
   )
-} 
+}
+
+const Item2 = props => {
+  const content = {__html: props.content}
+  return (
+    <Grid item xs={12} sm={4}>
+      <div dangerouslySetInnerHTML={content} />
+    </Grid>
+  )
+}
 
 const Item = props => {
 
-  const {classes} = props
+  const { classes, title, author, date, blurb, link, categories, image } = props
 
   return (
-    <div className={classes.itemOuter}>
-      <ImgLoader width={500} height={400} />
-      <h6 className={classes.itemTitle} >{filmTitles[randomInt(0, 3)]}</h6>
-      <p className={classes.itemCopy} >{lipsum}</p> 
-    </div>
+    <Grid item xs={12} sm={4} style={{ height: 'auto' }}>
+      {/* <ImgLoader width={500} height={400} /> */}
+      <h6 className={classes.itemTitle}>{title}</h6>
+      {
+        image ?
+          <img src={image} height={225} /> : null
+      }
+      <p className={classes.itemCopy}>{author} - {moment(date).format('MM-DD-YYYY')}</p>
+      <div className={classes.itemCategories}>
+        {
+          categories.slice(0, 3).map((c, i) => <a key={c._+i} className={classnames(classes.link, classes.chipLink)} href={c['$'].domain} target="_blank"><Chip clickable label={c._} /></a>)
+        }
+      </div>
+      <p className={classes.itemCopy}>{blurb}</p>
+      <p>
+        <a href={link} className={classes.link} target="_blank">Read More</a>
+      </p>
+    </Grid>
   )
 }
 
 const NewsFeedSection = props => {
-
   const {
     title,
     classes,
@@ -68,10 +95,11 @@ const NewsFeedSection = props => {
 
   return (
     <>
-      <h2 className={classes.sectionTitle}>{title}</h2>
-      <div className={classes.rowOuter}>
+      {/* <h2 className={classes.sectionTitle}>{title}</h2> */}
+      {/* <br /> */}
+      <Grid container spacing={3}>
         {children}
-      </div>
+      </Grid>
     </>
   )
 }
@@ -85,21 +113,36 @@ const NewsFeedView = (props) => {
 
   return (
     <div className={classes.outerMost}>
-      <NewsFeedSection title={sectionTitles.investments} classes={classes} >
-        <Item classes={classes} />
-        <Item classes={classes} />
-        <Item classes={classes} />
+      <NewsFeedSection title='Hot Off The Wrap' classes={classes} >
+        {
+          props.feed.map((i, k) => 
+            <Item 
+              key={k} 
+              classes={classes} 
+              title={i.title} 
+              date={i.isoDate} 
+              link={i.link} 
+              author={i.creator} 
+              blurb={i.contentSnippet} 
+              categories={i.categories} 
+              image={i.image}
+            />
+          )
+        }
       </NewsFeedSection>
+      {/* <br />
       <NewsFeedSection title={sectionTitles.thisWeek} classes={classes} >
         <Item classes={classes} />
         <Item classes={classes} />
         <Item classes={classes} />
       </NewsFeedSection>
+      <br />
       <NewsFeedSection title={sectionTitles.indieNews} classes={classes} >
         <Item classes={classes} />
         <Item classes={classes} />
         <Item classes={classes} />
       </NewsFeedSection>
+      <br /> */}
     </div>
   )
 }

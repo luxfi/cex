@@ -4,6 +4,7 @@ import uuid from "uuid"
 
 // import io from 'socket.io-client'
 const LimitOrder = require("limit-order-book").LimitOrder
+const MarketOrder = require("limit-order-book").MarketOrder
 const LimitOrderBook = require("limit-order-book").LimitOrderBook
 
 const bidAsk = () => {
@@ -47,6 +48,8 @@ export default class OrderBook {
   @observable high = 13.37
   @observable low = 13.37
   @observable printInterval = 5
+  @observable activeChart = "line-chart"
+  @observable marketOrderType = true
 
   constructor(
     initialData = {
@@ -185,12 +188,56 @@ export default class OrderBook {
     return takeResult
   }
 
+  @action placeNewMarketOrder(
+    currentOrderID,
+    currentOrderType,
+    currentOrderSize,
+    currentOrderFunds,
+    orderData,
+    onExecute
+  ) {
+    if (onExecute && !onExecute(orderData, currentOrderType)) {
+      // The user doesn't own any shares
+      return null
+    }
+
+    let currentOrder = new MarketOrder(
+      currentOrderID,
+      currentOrderType,
+      currentOrderSize,
+      currentOrderFunds
+    )
+    let takeResult = this.book.add(currentOrder)
+    // if (typeof window !== 'undefined') {
+    //   console.log("takeResult", takeResult)
+    // }
+    this.takeResults.push(takeResult)
+    if (this.price < this.low) {
+      this.low = this.price
+    } //set new low
+    if (this.price > this.high) {
+      this.high = this.price
+    } //set new high
+    this.updateOrders()
+
+    // TODO call onExecute to update the user's portfolio
+    return takeResult
+  }
+
   @action setTicker(ticker) {
     this.ticker = ticker
   }
 
   @action updatePrintInterval(time) {
     this.printInterval = time
+  }
+
+  @action setActiveChart(chart) {
+    this.activeChart = chart
+  }
+
+  @action setMarketOrderType(marketOrderType) {
+    this.marketOrderType = marketOrderType
   }
 
   @action updateOrders() {

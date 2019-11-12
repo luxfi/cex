@@ -2,8 +2,13 @@ import React from "react"
 import { MuiThemeProvider } from "@material-ui/core/styles"
 
 import { FilmView } from "../components/film"
+import { googlePageView } from '../components/utils/generic'
 
 class Film extends React.Component {
+  componentDidMount() {
+    googlePageView()
+  }
+  
   render() {
     const { darkTheme } = this.props
     return (

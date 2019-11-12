@@ -16,6 +16,7 @@ import TradeView from "../components/portfolio/TradeView/TradeView"
 import RewardsView from "../components/portfolio/RewardsView/RewardsView"
 import NewsFeedView from "../components/portfolio/NewsFeedView"
 import ProTraderCTA from "../components/portfolio/ProTraderCTA/ProTraderCTA"
+import { googlePageView } from "../components/utils/generic.js"
 
 const isServer = typeof window === "undefined"
 
@@ -54,11 +55,13 @@ class Portfolio extends React.Component {
   componentDidMount () {
     this.props.store.userPortfolio.getInvestments()
     this.props.store.userPortfolio.getWatchlist()
+    this.props.store.newsStore.loadFeed()
+    googlePageView()
   }
 
   render() {
     const { store, classes } = this.props
-    const { movieStore, userPortfolio } = store
+    const { movieStore, userPortfolio, newsStore } = store
     const { tabIdx } = this.state
 
     // What functions do we need from the movie and user store?
@@ -74,13 +77,17 @@ class Portfolio extends React.Component {
       fakeRank = 0
       fakeRankPercent = 100
     }
+
     return (
       <div className={classes.container}>
         <div style={{ height: "30px" }}></div>
         <PillsTabs tabIdx={tabIdx} handleChange={this.setTab} />
-        <PortfolioView
+        <TradeView
           tabIdx={tabIdx}
           index={0}
+          investments={userPortfolio.topInvestments}
+          findMovieByTicker={findMovieByTicker}
+          store={store}
           findMovie={findMovieByTicker}
           holdings={userPortfolio.userHoldings}
           weeklyChange={userPortfolio.earningsChangeWeek}
@@ -88,20 +95,13 @@ class Portfolio extends React.Component {
           rankPercent={fakeRankPercent}
           benefits={userPortfolio.benefits}
           benefitsMonthly={userPortfolio.benefitsThisMonth}
+          topChips={userPortfolio.topChips}
           topCategories={userPortfolio.topPortfolioCategories}
           watchlist={userPortfolio.userTopWatchlist}
           removeFromWatchlist={removeFromWatchlist}
         />
-        <TradeView
-          tabIdx={tabIdx}
-          index={1}
-          investments={userPortfolio.topInvestments}
-          findMovieByTicker={findMovieByTicker}
-          store={store}
-        />
-        <RewardsView tabIdx={tabIdx} index={2} />
-        <NewsFeedView tabIdx={tabIdx} index={3} />
-        <ProTraderCTA />
+        <RewardsView tabIdx={tabIdx} index={1} />
+        <NewsFeedView tabIdx={tabIdx} index={2} feed={newsStore.getFeedItems} />
       </div>
     )
   }

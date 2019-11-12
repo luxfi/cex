@@ -10,11 +10,12 @@ import classNames from "classnames"
 import { formatTakeResults } from "../../../util/formatOrderBookDataForChart"
 
 // @material-ui/core components
-import Button from "@material-ui/core/Button"
+import { Button, Grid, Typography } from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
 
 // core components
 import { CustomBreadcrumbs, Chart, InvestNow } from "../../app"
+import { TrailerModal } from "../../landing"
 
 // section
 import { padDollarAmount } from "../../../util/generic"
@@ -49,8 +50,7 @@ const formatMonthlyStats = (price, valueDelta) => {
     Math.abs(valueDelta) +
     " (" +
     ((valueDelta / price) * 100).toFixed(2) +
-    "%) " +
-    " PAST MONTH"
+    "%) "
   )
 }
 
@@ -145,36 +145,21 @@ class Index extends React.Component {
     )
   }
 
-  renderAboutMain(classes, movie) {
+  renderAboutMain(classes, movie, addToWatchList) {
     return (
-      <div className={classNames(classes.leftAndRight, classes.mainArea)}>
-        <div className={classNames(classes.copyArea, classes.topAndBottom)}>
+      <Grid container>
+        <Grid item xs={12} md={9}>
           <div className={classes.titleAndDescription}>
             <h1 className={classes.title} style={{ textAlign: "left" }}>
               {movie.name}
             </h1>
             <p className={classes.description}>{movie.shortDescription}</p>
           </div>
-          <div className={classes.movieButtonsOuter}>
-            <Button
-              href={movie.trailer}
-              component={ExternalLink}
-              target="_blank"
-              style={{
-                color: "black",
-                marginLeft: "20px",
-                height: "48px"
-              }}
-              className={classes.movieButton}
-            >
-              <FontAwesomeIcon icon={faPlay} style={{ paddingRight: "2px" }} />
-              Watch Trailer
-            </Button>
+          <div>
+            <TrailerModal movie={movie} />
             <Button
               rel="noopener noreferrer"
-              style={{
-                height: "48px"
-              }}
+              variant="contained"
               className={classes.movieButton}
               onClick={() => {
                 this.onTabSelected("invest")
@@ -182,10 +167,22 @@ class Index extends React.Component {
             >
               Invest
             </Button>
+            <Button
+              rel="noopener noreferrer"
+              variant="contained"
+              className={classes.movieButton}
+              onClick={addToWatchList(movie.ticker)}
+            >
+              Add to watchlist
+            </Button>
           </div>
-        </div>
-        <img className={classes.mainImage} src={movie.posterImg} height="444" />
-      </div>
+          <br />
+          <br />
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <img src={movie.posterImg} height="444" />
+        </Grid>
+      </Grid>
     )
   }
 
@@ -249,7 +246,12 @@ class Index extends React.Component {
     chartData,
     yDomain,
     updatePrintInterval,
+    setActiveChart,
+    setMarketOrderType,
+    marketOrderType,
+    funds,
     printInterval,
+    activeChart,
     buyOrders,
     sellOrders,
     orderBook,
@@ -263,7 +265,7 @@ class Index extends React.Component {
       (chartPrice - movie.price).toFixed(2)
     )
     return (
-      <div className={classNames(classes.flexCenteredColumn, classes.mainArea)}>
+      <div>
         <h1 className={classes.investCompanyName}>{movie.name}</h1>
         <h3 className={classes.investCompanyDescription}>
           {movie.financialDescription}
@@ -287,7 +289,12 @@ class Index extends React.Component {
               chartData={chartData}
               yDomain={yDomain}
               updatePrintInterval={updatePrintInterval}
+              setActiveChart={setActiveChart}
+              setMarketOrderType={setMarketOrderType}
+              marketOrderType={marketOrderType}
+              funds={funds}
               printInterval={printInterval}
+              activeChart={activeChart}
               buyOrders={buyOrders}
               sellOrders={sellOrders}
               orderBook={orderBook}
@@ -367,25 +374,41 @@ class Index extends React.Component {
     const { slug } = router.query
     const { movieStore, orderBook, userStore, userPortfolio } = this.props.store
     const movie = movieStore.getMovieBySlug(slug)
-
     // orderBook stuff
     let takeResultsArray = orderBook.takeResults.slice(0)
-    const { printInterval, buyOrders, sellOrders } = orderBook
+    const {
+      printInterval,
+      buyOrders,
+      sellOrders,
+      activeChart,
+      marketOrderType,
+    } = orderBook
+    const funds = userStore.accountBalance
     const chartData = formatTakeResults(takeResultsArray, printInterval)
     const yDomain = [orderBook.low * 0.94, orderBook.high * 1.06]
     const updatePrintInterval = time => {
       orderBook.updatePrintInterval(time)
     }
+    const setActiveChart = activeChart => {
+      orderBook.setActiveChart(activeChart)
+    }
+    const setMarketOrderType = marketOrder => {
+      orderBook.setMarketOrderType(marketOrder)
+    }
 
     // Load necessary user data
     const maxSell = userPortfolio.getMaxSell(movie.ticker)
+
+    const addToWatchlist = t => {
+      userPortfolio.addToWatchlist(t)
+    }
 
     return (
       <>
         <article className={classNames(classes.container, classes.outermost)}>
           {this.renderUpperRow(classes, this.state.selectedTab, movie)}
           {this.state.selectedTab === "about"
-            ? this.renderAboutMain(classes, movie)
+            ? this.renderAboutMain(classes, movie, addToWatchlist)
             : this.renderInvestMain(
                 classes,
                 movie,
@@ -393,7 +416,12 @@ class Index extends React.Component {
                 chartData,
                 yDomain,
                 updatePrintInterval,
+                setActiveChart,
+                setMarketOrderType,
+                marketOrderType,
+                funds,
                 printInterval,
+                activeChart,
                 buyOrders,
                 sellOrders,
                 orderBook,
