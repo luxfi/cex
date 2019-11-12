@@ -31,7 +31,7 @@ export default (theme) => {
 
     mobileLogo : {
       height: "26px",
-      display: "block"
+      display: "block",
     },
 
     mobile: {
