@@ -19,7 +19,7 @@ import {
   MobileNav,
   FooterEx, 
   CustomModal,
-  SideDrawer 
+  MobileProfileMenu 
 } from "../components/app"
 
 import ReactGA from 'react-ga'
@@ -111,11 +111,10 @@ class MyMobxApp extends App {
               title={this.mobxStore.uiStore.modal.title}
             />
             <CustomSnackbar />
-            <SideDrawer 
-              open={this.mobxStore.uiStore.drawers.right} 
-              setOpen={(open) => this.mobxStore.uiStore.setRightDrawerOpen(open)}
-              width="85vw"
-              anchor="right"
+            <MobileProfileMenu 
+              isLoggedIn={this.mobxStore.userStore.loggedIn}
+              handleLogout={() => { this.mobxStore.userStore.logout() }}
+              handlePlaceholder={this.placeholder}
             />
             <FooterEx openModal={this.openModal} />
         </NoSsr>

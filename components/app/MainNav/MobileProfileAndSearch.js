@@ -112,11 +112,3 @@ export default (props) => {
 
   )
 }
-
-const CustomLink = React.forwardRef(
-  ({ className, href, hrefAs, children, }, ref) => (
-    <NextLink ref={ref} href={href} as={hrefAs}>
-      <a className={className}>{children}</a>
-    </NextLink>
-  )
-)
