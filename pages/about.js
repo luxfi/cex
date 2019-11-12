@@ -1,19 +1,19 @@
-import React from "react";
-import { inject, observer } from "mobx-react";
-import { withStyles } from "@material-ui/core/styles";
-import { Container, Typography, Grid, Box } from "@material-ui/core";
-import { NestedMenu } from "../components/app";
-import * as Scroll from "react-scroll";
-import { InvestNow } from "../components/app";
+import React from "react"
+import { inject, observer } from "mobx-react"
+import { withStyles } from "@material-ui/core/styles"
+import { Container, Typography, Grid, Box } from "@material-ui/core"
+import { NestedMenu } from "../components/app"
+import * as Scroll from "react-scroll"
+import { InvestNow } from "../components/app"
 
-let Link = Scroll.Link;
-let Element = Scroll.Element;
-let Events = Scroll.Events;
-let scroll = Scroll.animateScroll;
-let scrollSpy = Scroll.scrollSpy;
-let scroller = Scroll.scroller;
+let Link = Scroll.Link
+let Element = Scroll.Element
+let Events = Scroll.Events
+let scroll = Scroll.animateScroll
+let scrollSpy = Scroll.scrollSpy
+let scroller = Scroll.scroller
 
-const styles = theme => ({});
+const styles = theme => ({})
 
 const content = [
   {
@@ -35,7 +35,7 @@ const content = [
 Our team has extensive experience in investing, media fundraising, business, law, engineering, AI analysis, Adtech, Fintech, blockchain tech, exchange interfacing, and community building. We’re extremely passionate about entertianment media and believe ESX is the best way to create better entertainment media. Funded and owned by its very fanbase from the beginning.
 Get signed up and see the investment opportunities available today!`
   }
-];
+]
 
 const Menu = () => {
   return (
@@ -47,61 +47,60 @@ const Menu = () => {
         { key: "third", label: "Who is Entertainment Stock X" }
       ]}
     />
-  );
-};
+  )
+}
 
 @inject("store")
 @observer
 class About extends React.Component {
-  state = { start: null, end: null };
+  state = { start: null, end: null }
 
   componentDidMount() {
     Events.scrollEvent.register("begin", (to, element) => {
       // console.log("begin", arguments)
-    });
+    })
     Events.scrollEvent.register("end", (to, element) => {
       if (to === "third") {
-        this.setState({ start: window.pageYOffset });
+        this.setState({ start: window.pageYOffset })
       }
-    });
+    })
 
     // Listen for scroll events
-    window.addEventListener("scroll", this.scrollEvent);
+    window.addEventListener("scroll", this.scrollEvent)
 
     scroller.scrollTo("first", {
       duration: 800,
       delay: 0,
       smooth: "easeInOutQuart",
       offset: -128
-    });
+    })
 
-    scrollSpy.update();
+    scrollSpy.update()
   }
 
   componentWillUnmount() {
-    Events.scrollEvent.remove("begin");
-    Events.scrollEvent.remove("end");
-    window.removeEventListener("scroll", this.scrollEvent);
+    Events.scrollEvent.remove("begin")
+    Events.scrollEvent.remove("end")
+    window.removeEventListener("scroll", this.scrollEvent)
   }
 
   scrollEvent = event => {
-    let end;
-    let distance;
-    let nav = document.getElementById("floating-nav");
-    let top;
+    let end
+    let distance
+    let nav = document.getElementById("floating-nav")
+    let top
     // Calculate distance
     if (this.state.start) {
-      end = window.pageYOffset;
-      distance = end - this.state.start;
-      top = distance > 0 ? 128 - distance : 128;
-      console.log("distance", distance);
-      nav.style.top = `${top}px`;
+      end = window.pageYOffset
+      distance = end - this.state.start
+      top = distance > 0 ? 128 - distance : 128
+      nav.style.top = `${top}px`
     }
-  };
+  }
 
   render() {
-    const { classes, store } = this.props;
-    const { loggedIn } = store.userStore;
+    const { classes, store } = this.props
+    const { loggedIn } = store.userStore
     return (
       <>
         <Container component="main" maxWidth="md">
@@ -136,8 +135,8 @@ class About extends React.Component {
         </Container>
         <InvestNow loggedIn={loggedIn} noPadding />
       </>
-    );
+    )
   }
 }
 
-export default withStyles(styles)(About);
+export default withStyles(styles)(About)

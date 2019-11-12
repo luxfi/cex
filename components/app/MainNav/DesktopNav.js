@@ -64,14 +64,14 @@ const MainNavDropdown = (props) => {
           className={classes.menu}
         >
           {menuDefinition.items.map(
-            (item) => {
+            (item, i) => {
               return ('link' in item)
                 ? (
-                  <Link href={item.link} key={item.link} >
+                  <Link href={item.link} key={i} >
                     <MenuItem onClick={popupState.close}><span className={classes.subMenuItemText}>{item.title}</span></MenuItem>
                   </Link>
                 ) : (
-                  <MenuItem key={item.placeholder} onClick={() => {
+                  <MenuItem key={i} onClick={() => {
                     handlePlaceholder(item.placeholder)
                     popupState.close()
                   }}>
