@@ -5,7 +5,7 @@ import {
   ChartLineSeries,
   ToggleVisibleChart
 } from "../"
-import { timelineLabels } from "../../utils/dateRange"
+import { timelineLabels } from "../../../util/dateRange"
 import { Element } from "react-scroll"
 import dynamic from "next/dynamic"
 import { Toolbar, Grid, Button } from "@material-ui/core"

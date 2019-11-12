@@ -8,8 +8,7 @@ import { inject, observer } from "mobx-react"
 // core components
 import { PillsTabs } from "../components/portfolio"
 
-// import styles from "assets/jss/material-kit-react/views/portfolioPage.js"
-import styles from "../pageStyles/portfolio.style"
+import styles from "../styles/pages/portfolio.style.js"
 
 // Sections for this page
 import PortfolioView from "../components/portfolio/PortfolioView/PortfolioView"
@@ -17,7 +16,7 @@ import TradeView from "../components/portfolio/TradeView/TradeView"
 import RewardsView from "../components/portfolio/RewardsView/RewardsView"
 import NewsFeedView from "../components/portfolio/NewsFeedView"
 import ProTraderCTA from "../components/portfolio/ProTraderCTA/ProTraderCTA"
-import { googlePageView } from "../components/utils/generic.js"
+import { googlePageView } from "../util/generic.js"
 
 const isServer = typeof window === "undefined"
 
