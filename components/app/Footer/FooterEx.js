@@ -22,6 +22,8 @@ import {
   Box,
 } from "@material-ui/core"
 
+import { CustomLink } from "../";
+
 const EXTERNAL_LINKS = {
   medium: "https://medium.com/entertainment-stock-x",
   reddit: "https://www.reddit.com/r/EntertainmentStockX/",
@@ -207,13 +209,19 @@ const FooterMiddleRow = ({ classes, openModal }) => (
                     href={link}
                     variant="subtitle1"
                     color="textSecondary"
-                    target={(activeLink) ? "_blank" : "_self"}
-                    onClick={(activeLink) ? null : () => { openModal(title) }}
+                    onClick={
+                      activeLink
+                        ? null
+                        : () => {
+                            openModal(title);
+                          }
+                    }
+                    component={CustomLink}
                   >
                     {title}
                   </Link>
                 </li>
-              )
+              );
             })
             }
           </ul>

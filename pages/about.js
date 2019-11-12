@@ -1,19 +1,19 @@
-import React from "react"
-import { inject, observer } from "mobx-react"
-import { withStyles } from "@material-ui/core/styles"
-import { Container, Typography, Grid, Box } from "@material-ui/core"
-import { NestedMenu } from "../components/app"
-import * as Scroll from "react-scroll"
-import { InvestNow } from "../components/app"
+import React from "react";
+import { inject, observer } from "mobx-react";
+import { withStyles } from "@material-ui/core/styles";
+import { Container, Typography, Grid, Box } from "@material-ui/core";
+import { NestedMenu } from "../components/app";
+import * as Scroll from "react-scroll";
+import { InvestNow } from "../components/app";
 
-let Link = Scroll.Link
-let Element = Scroll.Element
-let Events = Scroll.Events
-let scroll = Scroll.animateScroll
-let scrollSpy = Scroll.scrollSpy
-let scroller = Scroll.scroller
+let Link = Scroll.Link;
+let Element = Scroll.Element;
+let Events = Scroll.Events;
+let scroll = Scroll.animateScroll;
+let scrollSpy = Scroll.scrollSpy;
+let scroller = Scroll.scroller;
 
-const styles = theme => ({})
+const styles = theme => ({});
 
 const content = [
   {
@@ -31,10 +31,11 @@ const content = [
   {
     title: "Who is Entertainment Stock X",
     key: "third",
-    paragraph:
-      "In May 2016, the United States Securities and Exchange Commission (SEC) enacted Title III of the JOBS Act, allowing a majority of the US population to invest in completely new ways. Entertainment Stock X will for the first time in history make investing in, and true ownership of the entertainment media we all love and consume, truly accessible. \nMain street, welcome to ownership in most well known commodities you could have never touched before.\nThat’s why we built Entertainment Stock X. We’re SEC-registered and FINRA-licensed, and if you’re at all interested in movies, TV, music, and/or Broadway plays, we finally have a way for you to own portions of them. ESX is a platform built together with some of the most prolific producers and creators in the entertainment space and built to be the trusted ecosystem in which the world can finally invest in the media it loves to watch.\nWe launched our equity investing platform to provide real ownership in the projects you see on this site. The value of your ownership stock is tied directly to the performance of that media. No tricky Hollywood accounting garbage either. Investors will have access to the “ultimates” and know exactly how their holdings are performing and develop plans to maximize ROI on every stock.\nWe pledge to innovate on our mission to democratize entertainment media holdings and investing. This is truly a new future in investing in entertainment.\n"
+    paragraph: `ESX was founded by Ryan Kavanaugh and other media moguls that have understood disruption in the space and the power of main street to finally have its influence on the Hollywood business models. Major motion picture investing should not be a vehicle for ONLY accredited investors. We have strategic partners in nearly every major and minor Hollywood production companies and distributors. 
+Our team has extensive experience in investing, media fundraising, business, law, engineering, AI analysis, Adtech, Fintech, blockchain tech, exchange interfacing, and community building. We’re extremely passionate about entertianment media and believe ESX is the best way to create better entertainment media. Funded and owned by its very fanbase from the beginning.
+Get signed up and see the investment opportunities available today!`
   }
-]
+];
 
 const Menu = () => {
   return (
@@ -46,23 +47,23 @@ const Menu = () => {
         { key: "third", label: "Who is Entertainment Stock X" }
       ]}
     />
-  )
-}
+  );
+};
 
 @inject("store")
 @observer
 class About extends React.Component {
-  state = { start: null, end: null }
+  state = { start: null, end: null };
 
   componentDidMount() {
     Events.scrollEvent.register("begin", (to, element) => {
       // console.log("begin", arguments)
-    })
+    });
     Events.scrollEvent.register("end", (to, element) => {
       if (to === "third") {
-        this.setState({ start: window.pageYOffset })
+        this.setState({ start: window.pageYOffset });
       }
-    })
+    });
 
     // Listen for scroll events
     window.addEventListener("scroll", this.scrollEvent);
@@ -74,33 +75,33 @@ class About extends React.Component {
       offset: -128
     });
 
-    scrollSpy.update()
+    scrollSpy.update();
   }
 
   componentWillUnmount() {
-    Events.scrollEvent.remove("begin")
-    Events.scrollEvent.remove("end")
+    Events.scrollEvent.remove("begin");
+    Events.scrollEvent.remove("end");
     window.removeEventListener("scroll", this.scrollEvent);
   }
 
-  scrollEvent = (event) => {
-      let end
-      let distance
-      let nav = document.getElementById("floating-nav")
-      let top
-      // Calculate distance
-      if (this.state.start) {
-        end = window.pageYOffset
-        distance = end - this.state.start
-        top = distance > 0 ? 128 - distance : 128
-        console.log("distance", distance)
-        nav.style.top = `${top}px`
-      }
-  }
+  scrollEvent = event => {
+    let end;
+    let distance;
+    let nav = document.getElementById("floating-nav");
+    let top;
+    // Calculate distance
+    if (this.state.start) {
+      end = window.pageYOffset;
+      distance = end - this.state.start;
+      top = distance > 0 ? 128 - distance : 128;
+      console.log("distance", distance);
+      nav.style.top = `${top}px`;
+    }
+  };
 
   render() {
-    const { classes, store } = this.props
-    const { loggedIn } = store.userStore
+    const { classes, store } = this.props;
+    const { loggedIn } = store.userStore;
     return (
       <>
         <Container component="main" maxWidth="md">
@@ -118,7 +119,7 @@ class About extends React.Component {
                   <Menu />
                 </Box>
               </Grid>
-              <Grid item xs={8} style={{marginTop: "70px"}}>
+              <Grid item xs={8} style={{ marginTop: "70px" }}>
                 {content.map(section => (
                   <Element name={section.key} className="element">
                     <Box mb={10}>
@@ -135,8 +136,8 @@ class About extends React.Component {
         </Container>
         <InvestNow loggedIn={loggedIn} noPadding />
       </>
-    )
+    );
   }
 }
 
-export default withStyles(styles)(About)
+export default withStyles(styles)(About);
