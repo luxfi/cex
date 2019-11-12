@@ -3,6 +3,7 @@ export default (theme) => {
   return {
 
     appBar: {
+      color: "inherit",
       boxShadow: "none",
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),

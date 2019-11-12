@@ -64,6 +64,10 @@ class MyMobxApp extends App {
     ReactGA.initialize('UA-151184093-1')
   }
 
+  placeholder = (title, body) => {
+    this.mobxStore.uiStore.openModal(title, body)
+  }
+
   render() {
     const { 
       Component, 

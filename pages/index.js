@@ -18,7 +18,8 @@ import {
   CategorySlider, 
   ForYouSlider 
 } from "../components/landing"
-import { googlePageView } from '../components/utils/generic'
+
+import { googlePageView } from '../util/generic'
 
 @inject("store")
 @observer
