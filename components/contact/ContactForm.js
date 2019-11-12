@@ -117,13 +117,13 @@ class ContactForm extends React.Component {
                   encType="application/x-www-form-urlencoded"
                   data-netlify="true"
                   data-netlify-honeypot="bot-field"
-                  onSubmit={this.handleSubmit}
+                  onSubmit={handleSubmit}
                 >
                   <input type="hidden" name="form-name" value="contact" />
                   <div hidden>
                     <label>
                       Don’t fill this out:{" "}
-                      <input name="bot-field" onChange={this.handleChange} />
+                      <input name="bot-field" onChange={handleChange} />
                     </label>
                   </div>
                   <TextField
