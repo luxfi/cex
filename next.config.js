@@ -75,17 +75,18 @@ module.exports = withBundleAnalyzer(
 
           // combine the map of post pages with the home
           return Object.assign({}, articles, movies, {
-            '/': { page: '/' },
-            '/login': { page: '/login' },
-            '/signup': { page: '/signup' },
-            '/portfolio': { page: '/portfolio' },
-            '/account': { page: '/account' },
-            '/account/kyc': { page: '/account/kyc' },
-            '/investorFaq': { page: '/investorFaq' },
-            '/projectFaq': { page: '/projectFaq' },
-            '/risks': { page: '/risks' },
-            '/contact': { page: '/contact' }
-          })
+            "/": { page: "/" },
+            "/login": { page: "/login" },
+            "/signup": { page: "/signup" },
+            "/portfolio": { page: "/portfolio" },
+            "/account": { page: "/account" },
+            "/account/kyc": { page: "/account/kyc" },
+            "/investorFaq": { page: "/investorFaq" },
+            "/projectFaq": { page: "/projectFaq" },
+            "/risks": { page: "/risks" },
+            "/contact": { page: "/contact" },
+            "/about": { page: "/about" }
+          });
         }
       })
     )
