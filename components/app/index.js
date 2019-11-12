@@ -13,17 +13,16 @@ export { default as CustomLink } from './CustomLink'
 export { default as CustomModal } from './CustomModal'
 export { default as CustomSnackbar } from './CustomSnackbar'
 export { default as CustomStockTooltip } from "./CustomStockTooltip"
-export { default as InvestNow } from './InvestNow'
-export { default as StockRechart } from "./StockRechart"
-export { default as StockChart } from "./StockChart"
-export { default as TopInvestmentPicks } from './TopInvestmentPicks'
 export { default as FooterEx } from './Footer'
-export { default as SideDrawer } from './SideDrawer'
+export { Header } from './MainNav'
+export { default as InvestNow } from './InvestNow'
 export { default as LimitOrders } from './LimitOrders'
 export { default as NestedMenu } from './NestedMenu'
-export { default as ActivePositions } from './ActivePositions'
+export { MobileProfileMenu } from './MainNav'
+export { MobileNav } from './MainNav'
+export { default as SideDrawer } from './SideDrawer'
+export { default as StockRechart } from "./StockRechart"
+export { default as StockChart } from "./StockChart"
 export { default as Table } from './Table'
-export { default as Header } from './MainNav'
-export { default as MobileNav } from './MainNav'
-export { default as MobileProfileMenu } from './MainNav'
+export { default as TopInvestmentPicks } from './TopInvestmentPicks'
 export { default as ToggleVisibleChart } from './ToggleVisibleChart'
