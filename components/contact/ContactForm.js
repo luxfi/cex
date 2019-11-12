@@ -111,77 +111,90 @@ class ContactForm extends React.Component {
               }
 
               return (
-                <form
-                  name="contact"
-                  method="post"
-                  data-netlify="true"
-                  data-netlify-honeypot="bot-field"
-                  netlify="true"
-                  onSubmit={e => {
-                    e.preventDefault()
-                    handleSubmit(e)
-                  }}
-                >
-                  <input type="hidden" name="form-name" value="contact" />
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    label="name"
-                    name="name"
-                    className={classes.textField}
-                    value={values.name}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={errors.name && touched.name && errors.name}
-                    margin="normal"
-                  />
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    error={errors.email && touched.email}
-                    label="email"
-                    name="email"
-                    className={classes.textField}
-                    value={values.email}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={errors.email && touched.email && errors.email}
-                    margin="normal"
-                  />
-                  <TextField
-                    multiline={true}
-                    rows={3}
-                    rowsMax={5}
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    label="message"
-                    name="message"
-                    className={classes.textField}
-                    value={values.message}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={
-                      errors.message && touched.message && errors.message
-                    }
-                    margin="normal"
-                  />
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                    disabled={!isValid || isSubmitting || !dirty}
+                <> 
+                  {/* for netlify */}
+                  <form
+                    name="contact"
+                    netlify
+                    netlify-honeypot="bot-field"
+                    hidden
                   >
-                    Submit
-                  </Button>
-                </form>
+                    <input type="text" name="name" hidden />
+                    <input type="email" name="email" hidden />
+                    <textarea name="message" hidden />
+                  </form>
+                  <form
+                    name="contact"
+                    method="post"
+                    data-netlify="true"
+                    data-netlify-honeypot="bot-field"
+                    netlify="true"
+                    onSubmit={e => {
+                      e.preventDefault();
+                      handleSubmit(e);
+                    }}
+                  >
+                    <input type="hidden" name="form-name" value="contact" />
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      label="name"
+                      name="name"
+                      className={classes.textField}
+                      value={values.name}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      helperText={errors.name && touched.name && errors.name}
+                      margin="normal"
+                    />
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      error={errors.email && touched.email}
+                      label="email"
+                      name="email"
+                      className={classes.textField}
+                      value={values.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      helperText={errors.email && touched.email && errors.email}
+                      margin="normal"
+                    />
+                    <TextField
+                      multiline={true}
+                      rows={3}
+                      rowsMax={5}
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      label="message"
+                      name="message"
+                      className={classes.textField}
+                      value={values.message}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      helperText={
+                        errors.message && touched.message && errors.message
+                      }
+                      margin="normal"
+                    />
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      className={classes.submit}
+                      disabled={!isValid || isSubmitting || !dirty}
+                    >
+                      Submit
+                    </Button>
+                  </form>
+                </>
               );
             }}
           </Formik>
