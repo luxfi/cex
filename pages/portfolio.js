@@ -80,7 +80,6 @@ class Portfolio extends React.Component {
 
     return (
       <div className={classes.container}>
-        <div style={{ height: "30px" }}></div>
         <PillsTabs tabIdx={tabIdx} handleChange={this.setTab} />
         <TradeView
           tabIdx={tabIdx}
