@@ -16,7 +16,7 @@ import TradeView from "../components/portfolio/TradeView/TradeView"
 import RewardsView from "../components/portfolio/RewardsView/RewardsView"
 import NewsFeedView from "../components/portfolio/NewsFeedView"
 import ProTraderCTA from "../components/portfolio/ProTraderCTA/ProTraderCTA"
-import { googlePageView } from "../components/utils/generic.js"
+import { googlePageView } from "../util/generic.js"
 
 const isServer = typeof window === "undefined"
 

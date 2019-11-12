@@ -52,7 +52,6 @@ const MainNavDropdown = (props) => {
       {(popupState) => (
         <>
         <Button 
-          color="inherit" 
           {...bindTrigger(popupState)}
           className={classes.navButton} 
         >
@@ -102,7 +101,6 @@ const DesktopMainNav = (props) => {
     if ('placeholder' in navElement) {
       result.push(
         <Button 
-          color="inherit" 
           className={classes.navButton}
           onClick={() => {
             handlePlaceholder(navElement.placeholder)
@@ -117,7 +115,6 @@ const DesktopMainNav = (props) => {
       result.push(
         <Link href={navElement.link} key={navElement.placeholder}>
           <Button
-            color="inherit"
             className={classes.navButton}
           >
             {navElement.title}
