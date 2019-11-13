@@ -21,12 +21,13 @@ const BirthdatePicker = ({ setValue, birthdate }) => {
   const AWhileAgo = moment().subtract(120, 'years')
   // setValue("birthdate", EighteenYearsAgo)
   // initialize store with max valid birthdate
+  console.log('birthdat', birthdate)
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
       <KeyboardDatePicker
         clearable 
           value={birthdate}
-          onChange={date => setValue("birthdate", date.format())}
+          onChange={date => setValue("birthdate", date ? date.format() : null)}
           className={classes.textField}
           disableFuture
           openTo="month"
