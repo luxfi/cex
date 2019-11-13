@@ -107,7 +107,6 @@ export default class UserStore {
     this.isLoading = true
 
     this.token = this.api.client.getCustomerToken()
-    debugger
     try {
       if (this.token) {
         const ps = [
