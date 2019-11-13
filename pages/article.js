@@ -147,13 +147,13 @@ class Article extends React.Component {
               {/* <MyLoader /> */}
             </div>
             <ArticleSections classes={classes} article={article} />
-            <div style={{ height: "70px" }}></div>
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                marginBottom: "70px"
+                marginBottom: "70px",
+                marginTop: "70px"
               }}
             >
               <span style={{ width: "30px" }}>
