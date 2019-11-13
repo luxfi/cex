@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "prepare": "git config core.hooksPath .githooks",
-    "dev": "next",
+    "dev": "npm run prepare && next",
     "build": "next build",
     "analyze": "ANALYZE=true next build",
     "start": "next start",
