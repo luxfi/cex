@@ -21,7 +21,6 @@ const BirthdatePicker = ({ setValue, birthdate }) => {
   const AWhileAgo = moment().subtract(120, 'years')
   // setValue("birthdate", EighteenYearsAgo)
   // initialize store with max valid birthdate
-  console.log('birthdat', birthdate)
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
       <KeyboardDatePicker
