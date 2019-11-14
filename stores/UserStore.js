@@ -1,16 +1,16 @@
 // Generic Libraries
-import { action, observable, computed, toJS } from "mobx"
-import Router from "next/router"
-import moment from "moment/moment.js"
+import { action, observable, computed, toJS } from 'mobx';
+import Router from 'next/router';
+import moment from 'moment/moment.js';
 
-import * as ethers from "ethers"
-import _ from "lodash"
+import * as ethers from 'ethers';
+import _ from 'lodash';
 
 // Utilities
-import isEmail from "../src/control-middlewares/isEmail"
-import isPassword from "../src/control-middlewares/isPassword"
-import isPhone from "../src/control-middlewares/isPhone"
-import isRequired from "../src/control-middlewares/isRequired"
+import isEmail from '../src/control-middlewares/isEmail';
+import isPassword from '../src/control-middlewares/isPassword';
+import isPhone from '../src/control-middlewares/isPhone';
+import isRequired from '../src/control-middlewares/isRequired';
 
 /**
  * Later we'll wrap the fetch stuff up a bit more cleanly and / or use a helper library
@@ -19,53 +19,53 @@ import isRequired from "../src/control-middlewares/isRequired"
 export default class UserStore {
   // ** GENERIC HELPERS **
   // use for wait states in UI
-  @observable updating = false
+  @observable updating = false;
   // any errors returned by APIs
   // (not sure of type)
-  @observable errors = null
+  @observable errors = null;
 
   // Application Level Settings
-  @observable appSettings = null
+  @observable appSettings = null;
 
   /*
   ** USER INFO **
   Works for both signup and login
   */
   // User Email
-  @observable email = ""
+  @observable email = '';
   // User Password
-  @observable password = ""
+  @observable password = '';
   // logged in user object returned by API
-  @observable currentUser = ""
+  @observable currentUser = '';
   // Account comes from the Hanzo API
-  @observable token = null
-  @observable account = null
-  @observable accountBalance = 100000
+  @observable token = null;
+  @observable account = null;
+  @observable accountBalance = 100000;
 
   // ** SIGNUP INFO **
   // must initialize to empty string for controlled inputs
   // https://reactjs.org/docs/forms.html#controlled-components
-  @observable firstName = ""
-  @observable lastName = ""
-  @observable passwordConfirm = ""
+  @observable firstName = '';
+  @observable lastName = '';
+  @observable passwordConfirm = '';
 
   // ** KYC **
-  @observable phone = ""
-  @observable taxId = ""
-  @observable birthdate = null
-  @observable gender = "unspecified"
-  @observable address1 = ""
-  @observable address2 = ""
-  @observable city = ""
-  @observable postalCode = ""
-  @observable country = "US"
-  @observable state = ""
-  @observable documents0 = ""
-  @observable documents1 = ""
-  @observable documents2 = ""
-  @observable documents = []
+  @observable phone = '';
+  @observable taxId = '';
+  @observable birthdate = null;
+  @observable gender = 'unspecified';
+  @observable address1 = '';
+  @observable address2 = '';
+  @observable city = '';
+  @observable postalCode = '';
+  @observable country = 'US';
+  @observable state = '';
+  @observable documents0 = '';
+  @observable documents1 = '';
+  @observable documents2 = '';
+  @observable documents = [];
   // start kyc on first step
-  @observable activeStep = 0
+  @observable activeStep = 0;
 
   /* what to do with ... TODO
     opts.kyc.ethereumAddress = this.props.ethKey.address
@@ -73,22 +73,22 @@ export default class UserStore {
   */
 
   // ** Watchlist **
-  @observable watchlist = []
+  @observable watchlist = [];
 
   // **
 
   // ... Etc
 
   // ** Payment Method **
-  @observable newPaymentMethodPublicToken = undefined
-  @observable newPaymentMethodName = undefined
+  @observable newPaymentMethodPublicToken = undefined;
+  @observable newPaymentMethodName = undefined;
   // Set to plaid for now
-  @observable newPaymentMethodType = "plaid"
-  @observable newPaymentMethodMetadata = undefined
+  @observable newPaymentMethodType = 'plaid';
+  @observable newPaymentMethodMetadata = undefined;
 
-  @observable validNewPaymentMethodPublicToken = false
-  @observable validNewPaymentMethodName = false
-  @observable validNewPaymentMethodMetadata = false
+  @observable validNewPaymentMethodPublicToken = false;
+  @observable validNewPaymentMethodName = false;
+  @observable validNewPaymentMethodMetadata = false;
 
   constructor(initialData = {}, hanzoApi) {
     // TODO Do we still need this?
@@ -96,84 +96,86 @@ export default class UserStore {
     // E: This might be required for persisting state across page changes
 
     // Pass down the Hanzo API through a central point
-    this.api = hanzoApi
-    this.loadSession()
+    this.api = hanzoApi;
+    this.loadSession();
   }
 
   /**
    * Fetches all todos from the server
    */
   @action async loadSession() {
-    this.isLoading = true
+    this.isLoading = true;
 
-    this.token = this.api.client.getCustomerToken()
-
+    this.token = this.api.client.getCustomerToken();
     try {
       if (this.token) {
         const ps = [
           this.api.client.library.shopjs(),
-          this.api.client.account.get()
-        ]
+          this.api.client.account.get(),
+        ];
 
-        let [appSettings, account] = await Promise.all(ps)
-        this.appSettings = appSettings
-        this.account = account
-        this.hydrateStore(account)
+        let [appSettings, account] = await Promise.all(ps);
+        this.appSettings = appSettings;
+        this.account = account;
+        this.hydrateStore(account);
       } else {
-        this.appSettings = await this.api.client.library.shopjs()
+        this.appSettings = await this.api.client.library.shopjs();
       }
     } catch (e) {
-      console.log("account token expired", e)
-      this.logout()
+      console.log('account token expired', e);
+      this.logout();
     }
 
-    this.isLoading = false
+    this.isLoading = false;
   }
 
   hydrateStore(account) {
-    const userFields = ["firstName", "lastName", "email", "id"]
-    const kycFields = ["birthdate", "gender", "phone", "taxId"]
+    const userFields = ['firstName', 'lastName', 'email', 'id'];
+    const kycFields = ['birthdate', 'gender', 'phone', 'taxId'];
     const addressFields = [
-      "name",
-      "country",
-      "postalCode",
-      "state",
-      "city",
-      ["address1", "line1"],
-      ["address2", "line2"]
-    ]
-    const user = account
-    const { kyc } = account
-    const { address } = kyc
-    this.updateFromJson(user, userFields)
-    this.updateFromJson(kyc, kycFields)
-    this.updateFromJson(address, addressFields)
-    this.checkCurrentStatus()
+      'name',
+      'country',
+      'postalCode',
+      'state',
+      'city',
+      ['address1', 'line1'],
+      ['address2', 'line2'],
+    ];
+    const user = account;
+    const { kyc } = account;
+    const { address } = kyc;
+    this.updateFromJson(user, userFields);
+    this.updateFromJson(kyc, kycFields);
+    this.updateFromJson(address, addressFields);
+    this.checkCurrentStatus();
   }
 
   updateFromJson(json, keys) {
     // make sure our changes aren't sent back to the server
     keys.forEach(k => {
-      // only update if available
-      if (typeof k === "string" && json[k]) {
-        this[k] = json[k]
-      } else if (Array.isArray(k) && json[k[1]]) {
-        this[k[0]] = json[k[1]]
+      if (json[k] === '0001-01-01T00:00:00Z') {
+        // per request from David to detect date
       }
-    })
+      // only update if available
+      else if (typeof k === 'string' && json[k]) {
+        this[k] = json[k];
+      } else if (Array.isArray(k) && json[k[1]]) {
+        this[k[0]] = json[k[1]];
+      }
+    });
   }
 
   checkCurrentStatus() {
-    const personalDetails = ["birthdate", "gender", "phone", "taxId"]
+    const personalDetails = ['birthdate', 'gender', 'phone', 'taxId'];
     const personalAddress = [
-      "name",
-      "country",
-      "postalCode",
-      "state",
-      "city",
-      "address1"
-    ]
-    this.setActiveStep(0)
+      'name',
+      'country',
+      'postalCode',
+      'state',
+      'city',
+      'address1',
+    ];
+    this.setActiveStep(0);
 
     // if (this.anyMissingData(personalDetails)) {
     //   this.setActiveStep(0)
@@ -186,146 +188,150 @@ export default class UserStore {
 
   // TODO: this doesn't work
   anyMissingData(keys) {
-    keys.some(k => _.isEmpty(this[k]))
+    keys.some(k => _.isEmpty(this[k]));
   }
 
   // TODO store this w httpOnly in a cookie w all the proper security precautions.
   @action setToken(token) {
     if (!!token) {
-      this.token = token
-      window.localStorage.setItem("token", token)
+      this.token = token;
+      window.localStorage.setItem('token', token);
     } else {
-      this.token = undefined
-      window.localStorage.removeItem("token")
+      this.token = undefined;
+      window.localStorage.removeItem('token');
     }
   }
 
   @action setValue(key, val) {
-    this[key] = val
+    this[key] = val;
   }
 
   @action setActiveStep(step) {
     // sets current step in KYC
-    this.activeStep = step
+    this.activeStep = step;
   }
 
   @computed get validFirstName() {
-    return stringPresentAndValid(this.firstName)
+    return stringPresentAndValid(this.firstName);
   }
 
   @computed get validLastName() {
-    return stringPresentAndValid(this.lastName)
+    return stringPresentAndValid(this.lastName);
   }
 
   @computed get validEmail() {
-    const regex = /^\S+@\S+\.\S+$/
-    return regex.test(this.email)
+    const regex = /^\S+@\S+\.\S+$/;
+    return regex.test(this.email);
   }
 
   @computed get validPassword() {
-    return typeof this.password === "string" && this.password.length > 6
+    return (
+      typeof this.password === 'string' && this.password.length > 6
+    );
   }
 
   @computed get validPhone() {
     // https://stackoverflow.com/questions/4338267/validate-phone-number-with-javascript
-    const regex = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/
-    return regex.test(this.phone)
+    const regex = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+    return regex.test(this.phone);
   }
 
   @computed get validTaxId() {
     // 9 digits etc
     // https://howtodoinjava.com/regex/java-regex-validate-social-security-numbers-ssn/
-    const regex = /^(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$/
-    return regex.test(this.taxId)
+    const regex = /^(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$/;
+    return regex.test(this.taxId);
   }
 
   @action validateNewPaymentMethodPublicToken() {
     this.validNewPaymentMethodPublicToken = isRequired(
-      this.newPaymentMethodPublicToken
-    )
+      this.newPaymentMethodPublicToken,
+    );
   }
 
   @action validateNewPaymentMethodName() {
-    this.validNewPaymentMethodName = isRequired(this.newPaymentMethodName)
+    this.validNewPaymentMethodName = isRequired(
+      this.newPaymentMethodName,
+    );
   }
 
   @action validateNewPaymentMethodMetadata() {
     this.validNewPaymentMethodMetadata = isRequired(
-      this.newPaymentMethodMetadata
-    )
+      this.newPaymentMethodMetadata,
+    );
   }
 
   @action async updateKYCPhotoDocuments() {
     const docs = [
-      [this.documents0, "face"],
-      [this.documents1, "id-front"],
-      [this.documents2, "id-back"]
-    ]
+      [this.documents0, 'face'],
+      [this.documents1, 'id-front'],
+      [this.documents2, 'id-back'],
+    ];
 
-    let ps = []
+    let ps = [];
 
     docs.forEach(([data, name], i) => {
-      ps[i] = this.updateKYCPhoto(data, name)
-    })
+      ps[i] = this.updateKYCPhoto(data, name);
+    });
 
-    this.documents = await Promise.all(ps)
+    this.documents = await Promise.all(ps);
   }
 
   @action async updateKYCPhoto(data, name, onSuccess, onError) {
     // ** ONLY CALL WHEN @computed isValidSignUp IS TRUE **
-    this.updating = true
+    this.updating = true;
 
     // https://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata/5100158
     // convert base64/URLEncoded data component to raw binary data held in a string
-    let [mimeType, bytes] = data.split(',')
+    let [mimeType, bytes] = data.split(',');
     if (mimeType.indexOf('base64') >= 0) {
-        bytes = atob(bytes)
+      bytes = atob(bytes);
     } else {
-        bytes = unescape(bytes)
+      bytes = unescape(bytes);
     }
 
     // separate out the mime component
-    mimeType = mimeType.split(':')[1].split(';')[0]
+    mimeType = mimeType.split(':')[1].split(';')[0];
 
     // write the bytes of the string to a typed array
     var blob = new Uint8Array(bytes.length);
     for (var i = 0; i < bytes.length; i++) {
-        blob[i] = bytes.charCodeAt(i);
+      blob[i] = bytes.charCodeAt(i);
     }
 
-    let ext = mimeType.split('/')[1]
+    let ext = mimeType.split('/')[1];
 
-    const filename = `${this.id}-${name}.${ext}`
+    const filename = `${this.id}-${name}.${ext}`;
 
     try {
-      const file = new File([blob], filename, {type: data.type})
-      const formData = new FormData()
-      formData.append('upload', file)
+      const file = new File([blob], filename, { type: data.type });
+      const formData = new FormData();
+      formData.append('upload', file);
       const res = await fetch('https://files.hanzo.ai/upload', {
         // Your POST endpoint
-        method: "POST",
-        body: formData
-      })
+        method: 'POST',
+        body: formData,
+      });
       // console.log('res', res)
 
-      const res2 = await res.text()
+      const res2 = await res.text();
 
       // console.log("json response: ", res2)
 
-      onSuccess && onSuccess()
+      onSuccess && onSuccess();
 
-      return res2
+      return res2;
     } catch (ex) {
-      console.log("Error updating photo documents", ex)
-      onError && onError(ex.toString())
+      console.log('Error updating photo documents', ex);
+      onError && onError(ex.toString());
     } finally {
-      this.updating = false
+      this.updating = false;
     }
   }
 
   @action async signUp(onSuccess, onError) {
     // ** ONLY CALL WHEN @computed isValidSignUp IS TRUE **
-    this.updating = true
+    this.updating = true;
 
     try {
       const res = await this.api.client.account.create({
@@ -333,70 +339,74 @@ export default class UserStore {
         firstName: this.firstName,
         lastName: this.lastName,
         password: this.password,
-        passwordConfirm: this.passwordConfirm
-      })
+        passwordConfirm: this.passwordConfirm,
+      });
 
-      const i = this.email + this.password
+      const i = this.email + this.password;
 
-      this.identity = ethers.utils.sha256(ethers.utils.toUtf8Bytes(i))
+      this.identity = ethers.utils.sha256(
+        ethers.utils.toUtf8Bytes(i),
+      );
 
-      this.api.client.setCustomerToken(res.token)
+      this.api.client.setCustomerToken(res.token);
 
       // this.setToken(res.token)
-      this.loadSession()
-      onSuccess && onSuccess()
+      this.loadSession();
+      onSuccess && onSuccess();
     } catch (ex) {
       // this.errors = (err.response && err.response.body && err.response.body.errors)
       //   ? err.response.body.errors : ''
-      console.log("Error signing up", ex)
-      onError && onError(ex.toString())
+      console.log('Error signing up', ex);
+      onError && onError(ex.toString());
     } finally {
-      this.updating = false
+      this.updating = false;
     }
   }
 
   @action async login(onSuccess, onError) {
-    this.updating = true
+    this.updating = true;
 
     try {
       const res = await this.api.client.account.login({
         email: this.email,
-        password: this.password
-      })
+        password: this.password,
+      });
 
       // TODO Not sure what this is? This needs to go in the password update function
       // this.inputs.password.val(this.inputs.password.val().replace(/./g, '•'))
 
-      const i = this.email + this.password
+      const i = this.email + this.password;
 
-      this.identity = ethers.utils.sha256(ethers.utils.toUtf8Bytes(i))
+      this.identity = ethers.utils.sha256(
+        ethers.utils.toUtf8Bytes(i),
+      );
       // this.account = await this.api.client.account.get()
-      this.loadSession()
-      this.setToken(res.token)
-      onSuccess && onSuccess()
+      this.loadSession();
+      this.setToken(res.token);
+      onSuccess && onSuccess();
     } catch (ex) {
-      console.log("Error logging in", ex)
-      onError && onError(ex.toString())
+      console.log('Error logging in', ex);
+      onError && onError(ex.toString());
     } finally {
-      this.updating = false
+      this.updating = false;
     }
   }
 
   @action async logout(onSuccess, onError) {
-    this.updating = true
+    this.updating = true;
 
     try {
-      const res = await this.api.client.account.logout()
-      this.forgetUser()
+      const res = await this.api.client.account.logout();
+      this.forgetUser();
       // TODO Not sure what this is? This needs to go in the password update function
       // this.inputs.password.val(this.inputs.password.val().replace(/./g, '•'))
-      onSuccess && onSuccess()
-      Router.push("/login")
+      onSuccess && onSuccess();
+      Router.push('/login');
     } catch (ex) {
-      console.log("Error logging out", ex)
-      onError && onError(ex.toString())
+      console.log('Error logging out', ex);
+      onError && onError(ex.toString());
     } finally {
-      this.updating = false
+      this.updating = false;
     }
   }
 
@@ -407,21 +417,21 @@ export default class UserStore {
         accountId: this.newPaymentMethodMetadata.account_id,
         type: this.newPaymentMethodType,
         name: this.newPaymentMethodName,
-        metadata: this.newPaymentMethodMetadata
-      }
+        metadata: this.newPaymentMethodMetadata,
+      };
 
-      const res = await this.api.client.account.paymentMethod(opts)
+      const res = await this.api.client.account.paymentMethod(opts);
     } catch (ex) {
-      console.log("Error logging out", ex)
-      onError && onError(ex.toString())
+      console.log('Error logging out', ex);
+      onError && onError(ex.toString());
     } finally {
-      this.updating = false
+      this.updating = false;
     }
   }
 
   @action async updateKYC(onSuccess, onError) {
     // ** ONLY CALL WHEN @computed isValidKYC IS TRUE **
-    this.updating = true
+    this.updating = true;
     const addressObj = {
       name: `${this.firstName} ${this.lastName}`,
       line1: this.address1,
@@ -429,41 +439,41 @@ export default class UserStore {
       city: this.city,
       postalCode: this.postalCode,
       state: this.state,
-      country: this.country
-    }
+      country: this.country,
+    };
     const kycObj = {
-      address:   addressObj,
-      taxId:     this.taxId,
-      phone:     this.phone,
+      address: addressObj,
+      taxId: this.taxId,
+      phone: this.phone,
       birthdate: this.birthdate,
-      gender:    this.gender,
+      gender: this.gender,
       documents: this.documents,
-    }
+    };
     try {
       const newAcc = Object.assign(this.account, {
         kyc: kycObj,
         firstName: this.firstName,
-        lastName: this.lastName
-      })
-      await this.api.client.account.update(newAcc)
+        lastName: this.lastName,
+      });
+      await this.api.client.account.update(newAcc);
       // On success
-      this.account = newAcc
-      onSuccess && onSuccess()
+      this.account = newAcc;
+      onSuccess && onSuccess();
     } catch (ex) {
-      console.log("Error saving KYC options", ex)
-      onError && onError()
+      console.log('Error saving KYC options', ex);
+      onError && onError();
     } finally {
-      this.updating = false
+      this.updating = false;
     }
   }
 
   @action forgetUser() {
     if (this.api.client.deleteCustomerToken) {
-      this.token = this.api.client.deleteCustomerToken()
+      this.token = this.api.client.deleteCustomerToken();
     }
-    this.account = undefined
-    this.currentUser = undefined
-    this.setToken(undefined)
+    this.account = undefined;
+    this.currentUser = undefined;
+    this.setToken(undefined);
   }
 
   @computed get isValidSignUp() {
@@ -473,60 +483,62 @@ export default class UserStore {
       this.validLastName &&
       this.validPassword &&
       this.passwordsMatch
-    )
+    );
   }
 
   @computed get isValidLogin() {
-    return this.validEmail && this.validPassword
+    return this.validEmail && this.validPassword;
   }
 
   @computed get loggedIn() {
-    return !!this.token
+    return !!this.token;
   }
 
   @computed get validAddress1() {
-    const regex = /^\s*\S+(?:\s+\S+){2}/
-    return regex.test(this.address1)
+    const regex = /^\s*\S+(?:\s+\S+){2}/;
+    return regex.test(this.address1);
   }
 
   @computed get validCity() {
-    const regex = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/
-    return regex.test(this.city)
+    const regex = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
+    return regex.test(this.city);
   }
 
   @computed get validPostalCode() {
-    const regex = /(^\d{5}$)|(^\d{5}-\d{4}$)/
-    return regex.test(this.postalCode)
+    const regex = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+    return regex.test(this.postalCode);
   }
 
   @computed get isValidAddress() {
-    return this.validAddress1 && this.validCity && this.validPostalCode
+    return (
+      this.validAddress1 && this.validCity && this.validPostalCode
+    );
   }
 
   @computed get countries() {
     // returns array of objects, countries with code
     // [{ "name": "Afghanistan", "code": "AF" },
     // { "name": "Albania", "code": "AL" }]
-    if (!this.appSettings) return {}
+    if (!this.appSettings) return {};
     return this.appSettings.countries.reduce((acc, memo) => {
-      acc.push({ name: memo.name, code: memo.code })
-      return acc
-    }, [])
+      acc.push({ name: memo.name, code: memo.code });
+      return acc;
+    }, []);
   }
 
   @computed get states() {
     // returns array of objects, states with code
     // [{ name: "Florida", code: "FL" },
     // { name: "Michigan", code: "MI" }]
-    if (!this.appSettings) return {}
+    if (!this.appSettings) return {};
     const countryObj = this.appSettings.countries.find(
-      country => country.code === this.country
-    )
-    const statesArray = countryObj.subdivisions
+      country => country.code === this.country,
+    );
+    const statesArray = countryObj.subdivisions;
     return statesArray.reduce((acc, memo) => {
-      acc.push({ name: memo.name, code: memo.code })
-      return acc
-    }, [])
+      acc.push({ name: memo.name, code: memo.code });
+      return acc;
+    }, []);
   }
 
   @computed get isValidPersonalDetails() {
@@ -536,7 +548,7 @@ export default class UserStore {
       this.validPhone &&
       this.validTaxId &&
       !!this.birthdate
-    )
+    );
   }
 
   @computed get isValidNewPaymentMethod() {
@@ -544,26 +556,34 @@ export default class UserStore {
       this.validNewPaymentMethodPublicToken &&
       this.validNewPaymentMethodName &&
       this.validNewPaymentMethodMetadata
-    )
+    );
   }
 
   @computed get isValidPhotoIDs() {
-    return !this.documents || !this.documents.length || !this.documents[0] || !this.account.kyc || !this.account.kyc.documents || !this.account.kyc.documents.length || !this.account.kyc.documents[0]
+    return (
+      !this.documents ||
+      !this.documents.length ||
+      !this.documents[0] ||
+      !this.account.kyc ||
+      !this.account.kyc.documents ||
+      !this.account.kyc.documents.length ||
+      !this.account.kyc.documents[0]
+    );
   }
 
   @computed get passwordsMatch() {
-    return this.password === this.passwordConfirm
+    return this.password === this.passwordConfirm;
   }
 }
 
 function stringPresentAndValid(s) {
   // support international names
   // https://stackoverflow.com/questions/2385701/regular-expression-for-first-and-last-name
-  const regex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
-  return typeof s === "string" && s.length >= 2 && regex.test(s)
+  const regex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
+  return typeof s === 'string' && s.length >= 2 && regex.test(s);
 }
 
 export async function fetchUserSession() {
   // You can do anything to fetch initial store state
-  return {}
+  return {};
 }
