@@ -2,7 +2,7 @@ import React from "react"
 import Link from "next/link"
 import { toJS } from "mobx"
 import { inject, observer } from "mobx-react"
-import { withRouter } from "next/router"
+import { withRouter, Router } from "next/router"
 
 import classNames from "classnames"
 
@@ -100,6 +100,13 @@ class Index extends React.Component {
     const movie = movieStore.getMovieBySlug(slug)
     orderBook.initiateDataGenerator(movie.ticker, movie.price)
     userPortfolio.getInvestments()
+    orderBook.connect()
+  }
+
+  componentWillUnmount() {
+    // Disconnect socket
+    console.log('Emitting disconnect')
+    this.props.store.orderBook.disconnect()
   }
 
   onTabSelected(tab) {

@@ -1,5 +1,6 @@
 import React from "react"
 import { MuiThemeProvider } from "@material-ui/core/styles"
+import io from 'socket.io-client'
 
 import { FilmView } from "../components/film"
 import { googlePageView } from '../util/generic'
@@ -13,7 +14,7 @@ class Film extends React.Component {
     const { darkTheme } = this.props
     return (
       <MuiThemeProvider theme={darkTheme}>
-        <FilmView />
+        <FilmView socket={this.socket} />
       </MuiThemeProvider>
     )
   }

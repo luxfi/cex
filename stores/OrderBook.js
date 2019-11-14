@@ -1,11 +1,14 @@
 import { action, observable, computed } from "mobx"
 import _ from "lodash"
 import uuid from "uuid"
+import io from 'socket.io-client'
 
 // import io from 'socket.io-client'
 const LimitOrder = require("limit-order-book").LimitOrder
 const MarketOrder = require("limit-order-book").MarketOrder
 const LimitOrderBook = require("limit-order-book").LimitOrderBook
+
+const SOCKET_STRING = 'http://localhost:4000'
 
 const bidAsk = () => {
   return Math.floor(Math.random() * 2) == 0 ? "bid" : "ask" // 50/50 chance of "bid" or "ask"
@@ -72,6 +75,45 @@ export default class OrderBook {
     this.printInterval = initialData.printInterval || 5
     this.api = hanzoApi
     this.id = id
+  }
+
+  @action connect() {
+    this.socket = io(SOCKET_STRING)
+    // To handle responses:
+    this.socket.on('book.subscribe.success', data => {
+      console.log('book.subscribe.success', data)
+    })
+    this.socket.on('book.subscribe.error', err => {
+      console.log('book.subscribe.error', err)
+    })
+    this.socket.on('book.unsubscribe.success', data => {
+      console.log('book.unsubscribe.success', data)
+    })
+    this.socket.on('book.unsubscribe.error', err => {
+      console.log('book.unsubscribe.error', err)
+    })
+    this.socket.on('order.create.success', data => {
+      console.log('order.create.success', data)
+    })
+    this.socket.on('order.create.error', err => {
+      console.log('order.create.error', err)
+    })
+    this.socket.on('candles.get.success', data => {
+      console.log('candles.get.success', data)
+    })
+    this.socket.on('candles.get.error', err => {
+      console.log('candles.get.error', err)
+    })
+    this.socket.on('book.data', data => {
+      console.log('book.data', data)
+    })
+    // Initiate the connection to the correct book
+    console.log('Subscribbing to ', this.ticker)
+    this.socket.emit('book.subscribe', { name: this.ticker })
+  }
+
+  @action disconnect() {
+    this.socket.disconnect()
   }
 
   @action clearData() {
