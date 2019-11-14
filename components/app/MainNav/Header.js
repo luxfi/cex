@@ -1,58 +1,67 @@
-import React from "react"
+import React from "react";
 
-import { 
+import {
   AppBar,
   Toolbar,
   IconButton,
-  useScrollTrigger 
-} from "@material-ui/core"
+  useScrollTrigger
+} from "@material-ui/core";
 
-import { MenuRounded } from "@material-ui/icons"
+import { MenuRounded } from "@material-ui/icons";
 
-import DesktopNav from "./DesktopNav"
-import DesktopProfileAndSearch from "./DesktopProfileAndSearch"
-import MobileProfileAndSearch from "./MobileProfileAndSearch"
+import DesktopNav from "./DesktopNav";
+import DesktopProfileAndSearch from "./DesktopProfileAndSearch";
+import MobileProfileAndSearch from "./MobileProfileAndSearch";
 
-import { makeStyles } from "@material-ui/core/styles"
-import classNames from "classnames"
-import styles from './header.style.js'
+import { makeStyles } from "@material-ui/core/styles";
+import classNames from "classnames";
+import styles from "./header.style.js";
 
-const useStyles = makeStyles(styles)
+const useStyles = makeStyles(styles);
 
-export default (props) => {
-
-  const { 
+export default props => {
+  const {
     showDesktopNav,
     showDesktopProfileMenu,
     openLeftDrawer,
     openRightDrawer,
-    handlePlaceholder, 
+    handlePlaceholder,
     handleLogout,
     isLoggedIn
-  } = props
+  } = props;
 
-  const trigger = useScrollTrigger({ threshold: 0, disableHysteresis: true, })
-  const classes = useStyles()
+  const trigger = useScrollTrigger({ threshold: 0, disableHysteresis: true });
+  const classes = useStyles();
 
   return (
-    <AppBar className={classNames(
+    <AppBar
+      className={classNames(
         classes.appBar,
-        (!showDesktopNav || trigger) ? classes.translucent : classes.transparent,
-        (showDesktopProfileMenu) ? classes.mobile : ''
-    )}>
+        !showDesktopNav || trigger ? classes.translucent : classes.transparent,
+        showDesktopProfileMenu ? classes.mobile : ""
+      )}
+    >
       <Toolbar disableGutters className={classes.toolbar}>
-        {(showDesktopNav) ? (
+        {showDesktopNav ? (
           <DesktopNav handlePlaceholder={handlePlaceholder} />
         ) : (
-          <IconButton onClick={openLeftDrawer} >
-            <MenuRounded className={classes.mobileHamburgerIcon}/>
+          <IconButton onClick={openLeftDrawer}>
+            <MenuRounded className={classes.mobileHamburgerIcon} />
           </IconButton>
         )}
-        {(showDesktopProfileMenu) ? (
-          <DesktopProfileAndSearch isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+        {showDesktopProfileMenu ? (
+          <DesktopProfileAndSearch
+            isLoggedIn={isLoggedIn}
+            handleLogout={handleLogout}
+          />
         ) : (
           <>
-            <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.mobileLogo} height="26px" />
+            <img
+              src="/static/images/esx/esx-white-logo.png"
+              alt="ESX"
+              className={classes.mobileLogo}
+              height="26px"
+            />
             <MobileProfileAndSearch
               isLoggedIn={isLoggedIn}
               handleLogout={handleLogout}
@@ -62,6 +71,5 @@ export default (props) => {
         )}
       </Toolbar>
     </AppBar>
-  )
-
-}
+  );
+};
