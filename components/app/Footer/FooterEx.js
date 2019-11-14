@@ -19,8 +19,10 @@ import {
   Button,
   IconButton,
   Grid,
-  Box,
+  Box
 } from "@material-ui/core"
+
+import { CustomLink } from "../"
 
 const EXTERNAL_LINKS = {
   medium: "https://medium.com/entertainment-stock-x",
@@ -31,41 +33,51 @@ const EXTERNAL_LINKS = {
 import { withStyles } from "@material-ui/core/styles"
 
 const Partnerships = ({ classes, openModal }) => {
-  const body = (<>
-    <p>
-      Proxicoin - $750 million in capacity 8-10 films per year at scale 1-4
-      television properties per year
-        </p>{" "}
-    <p>
-      Twisted Pictures - Horror / Urban production company led by Mark Burg,
-      producer of the Saw franchise
-        </p>{" "}
-    <p>
-      Centauri Media - $250mm film production fund with potential of up to 5
-      studio released films a year
-        </p>
-  </>)
+  const body = (
+    <>
+      <p>
+        Proxicoin - $750 million in capacity 8-10 films per year at scale 1-4
+        television properties per year
+      </p>{" "}
+      <p>
+        Twisted Pictures - Horror / Urban production company led by Mark Burg,
+        producer of the Saw franchise
+      </p>{" "}
+      <p>
+        Centauri Media - $250mm film production fund with potential of up to 5
+        studio released films a year
+      </p>
+    </>
+  )
   const title = "Partnerships"
   return (
-    <Button className={classes.menuButton} onClick={() => {
-      openModal(title, body)
-    }}>
+    <Button
+      className={classes.menuButton}
+      onClick={() => {
+        openModal(title, body)
+      }}
+    >
       Partnerships
-      </Button>
+    </Button>
   )
 }
 
 const ContactUs = ({ classes, openModal }) => {
-  const body = (<>
-    <p>Put Contact Infomation Here</p>{" "}
-  </>)
+  const body = (
+    <>
+      <p>Put Contact Infomation Here</p>{" "}
+    </>
+  )
   const title = "Contact Us"
   return (
-    <Button className={classes.menuButton} onClick={() => {
-      openModal(title, body)
-    }}>
+    <Button
+      className={classes.menuButton}
+      onClick={() => {
+        openModal(title, body)
+      }}
+    >
       Contact Us
-      </Button>
+    </Button>
   )
 }
 
@@ -73,12 +85,12 @@ const Copyright = () => {
   return (
     <Box mt={5}>
       <Typography variant="body2" color="textSecondary" align="left">
-        {'Privacy Policy / Terms of Use'}
+        {"Privacy Policy / Terms of Use"}
       </Typography>
       <Typography variant="body2" color="textSecondary" align="left">
-        {'Copyright © 2019 ESX. All rights reserved.'}
+        {"Copyright © 2019 ESX. All rights reserved."}
       </Typography>
-    </ Box>
+    </Box>
   )
 }
 
@@ -89,7 +101,7 @@ const footers = [
       { title: "About", link: "/about" },
       "Careers",
       "Press",
-      { title: "Blog", link: EXTERNAL_LINKS.medium }
+      { title: "Blog", link: EXTERNAL_LINKS.medium, external: true }
     ]
   },
   {
@@ -121,11 +133,11 @@ const footers = [
     title: "Account",
     links: ["Sign In", "Create Account", "Orders", "Portfolio"]
   }
-];
+]
 
 const FooterTopRow = ({ classes }) => (
   <Box mb={5}>
-    <Grid container justify='center' alignItems='center'>
+    <Grid container justify="center" alignItems="center">
       <Grid item xs={12} sm={8}>
         <Link href="/">
           <img
@@ -139,47 +151,25 @@ const FooterTopRow = ({ classes }) => (
         <div className={classes.grow} />
       </Grid>
       <Grid item xs={12} sm={4} className={classes.center}>
-        <IconButton
-          href={EXTERNAL_LINKS.twitter}
-          target="_blank"
-          title="Tweet"
-        >
+        <IconButton href={EXTERNAL_LINKS.twitter} target="_blank" title="Tweet">
           <FontAwesomeIcon icon={faTwitter} size="1x" />
         </IconButton>
-        <IconButton
-          href="https://www.facebook.com/"
-          target="_blank"
-        >
+        <IconButton href="https://www.facebook.com/" target="_blank">
           <FontAwesomeIcon icon={faFacebook} size="1x" />
         </IconButton>
-        <IconButton
-          href="https://www.pinterest.com/"
-          target="_blank"
-        >
+        <IconButton href="https://www.pinterest.com/" target="_blank">
           <FontAwesomeIcon icon={faPinterest} size="1x" />
         </IconButton>
-        <IconButton
-          href="https://www.instagram.com/"
-          target="_blank"
-        >
+        <IconButton href="https://www.instagram.com/" target="_blank">
           <FontAwesomeIcon icon={faInstagram} size="1x" />
         </IconButton>
-        <IconButton
-          href="https://www.youtube.com/"
-          target="_blank"
-        >
+        <IconButton href="https://www.youtube.com/" target="_blank">
           <FontAwesomeIcon icon={faYoutube} size="1x" />
         </IconButton>
-        <IconButton
-          href={EXTERNAL_LINKS.medium}
-          target="_blank"
-        >
+        <IconButton href={EXTERNAL_LINKS.medium} target="_blank">
           <FontAwesomeIcon icon={faMedium} size="1x" />
         </IconButton>
-        <IconButton
-          href={EXTERNAL_LINKS.reddit}
-          target="_blank"
-        >
+        <IconButton href={EXTERNAL_LINKS.reddit} target="_blank">
           <FontAwesomeIcon icon={faReddit} size="1x" />
         </IconButton>
       </Grid>
@@ -197,25 +187,31 @@ const FooterMiddleRow = ({ classes, openModal }) => (
           </Typography>
           <ul>
             {footer.links.map(item => {
-              const activeLink = item.hasOwnProperty('link');
-              const title = item.hasOwnProperty('title') ? item.title : item
-              const link = (activeLink) ? item.link : `/#`
-              const key = (activeLink) ? item.link : title
+              const activeLink = item.hasOwnProperty("link")
+              const title = item.hasOwnProperty("title") ? item.title : item
+              const link = activeLink ? item.link : `/#`
+              const key = activeLink ? item.link : title
+              const nextLink = item.external ? Link : CustomLink
               return (
                 <li key={key}>
                   <Link
                     href={link}
                     variant="subtitle1"
                     color="textSecondary"
-                    target={(activeLink) ? "_blank" : "_self"}
-                    onClick={(activeLink) ? null : () => { openModal(title) }}
+                    onClick={
+                      activeLink
+                        ? null
+                        : () => {
+                            openModal(title)
+                          }
+                    }
+                    component={nextLink}
                   >
                     {title}
                   </Link>
                 </li>
               )
-            })
-            }
+            })}
           </ul>
           <br />
         </Grid>
@@ -232,18 +228,34 @@ const FooterMiddleRow = ({ classes, openModal }) => (
     >
       <Grid item>
         <Typography variant="h6" align="center">
-          {'Download the ESX app'}
+          {"Download the ESX app"}
         </Typography>
       </Grid>
       <Grid item container justify="center">
         <Grid item>
-          <Link target="_blank" rel="noopener noreferrer" href="https://itunes.apple.com">
-            <img style={{ height: '60px', padding: "10px 0px" }} alt="Available on the App Store" src="/static/images/footer/app-store-badge.svg" />
+          <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://itunes.apple.com"
+          >
+            <img
+              style={{ height: "60px", padding: "10px 0px" }}
+              alt="Available on the App Store"
+              src="/static/images/footer/app-store-badge.svg"
+            />
           </Link>
         </Grid>
         <Grid item>
-          <Link target="_blank" rel="noopener noreferrer" href="https://play.google.com/">
-            <img style={{ height: '60px', paddingLeft: "8px" }} alt="Download on Google Play" src="/static/images/footer/GoogleStoreBadge.png" />
+          <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://play.google.com/"
+          >
+            <img
+              style={{ height: "60px", paddingLeft: "8px" }}
+              alt="Download on Google Play"
+              src="/static/images/footer/GoogleStoreBadge.png"
+            />
           </Link>
           <br />
           <br />
@@ -268,11 +280,11 @@ class FooterEx extends React.Component {
     const loggedIn = store.userStore.loggedIn
     return (
       <div className={classes.root}>
-          <FooterTopRow classes={classes} />
-          <FooterMiddleRow openModal={openModal} classes={classes}/>
-          <Box mt={5}>
-            <Copyright />
-          </Box>
+        <FooterTopRow classes={classes} />
+        <FooterMiddleRow openModal={openModal} classes={classes} />
+        <Box mt={5}>
+          <Copyright />
+        </Box>
       </div>
     )
   }
@@ -280,52 +292,52 @@ class FooterEx extends React.Component {
 
 const styles = theme => {
   return {
-    '@global': {
+    "@global": {
       ul: {
         margin: 0,
-        padding: 0,
+        padding: 0
       },
       li: {
-        listStyle: 'none',
-      },
+        listStyle: "none"
+      }
     },
     center: {
-      textAlign: 'center',
+      textAlign: "center"
     },
     root: {
       flexGrow: 1,
-      padding: theme.spacing(4),
+      padding: theme.spacing(4)
       //background: "#000",
     },
     menuButton: {
-      marginRight: theme.spacing(2),
+      marginRight: theme.spacing(2)
     },
     footerColumns: {
-      [theme.breakpoints.down('sm')]: {
-        flexDirection: 'column-reverse',
-      },
+      [theme.breakpoints.down("sm")]: {
+        flexDirection: "column-reverse"
+      }
     },
     logo: {
       marginTop: theme.spacing(2),
       marginBottom: theme.spacing(2),
-      display: 'block',
-      [theme.breakpoints.down('sm')]: {
-        marginLeft: 'auto',
-        marginRight: 'auto',
-      },
+      display: "block",
+      [theme.breakpoints.down("sm")]: {
+        marginLeft: "auto",
+        marginRight: "auto"
+      }
     },
     grow: {
       flexGrow: 1,
       display: "none",
-      display: "block",
+      display: "block"
     },
     footer: {
       padding: theme.spacing(3),
-      [theme.breakpoints.up('sm')]: {
+      [theme.breakpoints.up("sm")]: {
         paddingTop: theme.spacing(6),
-        paddingBottom: theme.spacing(6),
-      },
-    },
+        paddingBottom: theme.spacing(6)
+      }
+    }
   }
 }
 
