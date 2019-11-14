@@ -266,7 +266,7 @@ class Index extends React.Component {
     )
     return (
       <div>
-        <h1 className={classes.investCompanyName}>{movie.name}</h1>
+        {/* <h1 className={classes.investCompanyName}>{movie.name}</h1>
         <h3 className={classes.investCompanyDescription}>
           {movie.financialDescription}
         </h3>
@@ -275,7 +275,7 @@ class Index extends React.Component {
           <span className={classes.dollarValue}>{price[0]}</span>
           <span className={classes.centsValue}>.{price[1]}</span>
         </div>
-        <div className={classes.deltaRow}>{deltaString}</div>
+        <div className={classes.deltaRow}>{deltaString}</div> */}
         {!loggedIn
           ? this.renderInvestButton(
               classNames(classes.movieButton, classes.statsButton),
@@ -302,6 +302,7 @@ class Index extends React.Component {
               onExecute={onExecute}
               movieCategories={toJS(movie.genre)}
               maxSell={maxSell}
+              stockName={movie.name}
             />
           ) : (
             <Typography>Loading chart...</Typography>
