@@ -2,6 +2,8 @@ import React from "react"
 import StockRechart from "../StockRechart"
 import { ClipLoader } from "react-spinners"
 
+const isEmpty = obj => [Object, Array].includes((obj || {}).constructor) && !Object.entries((obj || {})).length;
+
 class StockChart extends React.Component {
   render() {
     const { stock, stockName } = this.props
@@ -93,11 +95,11 @@ class StockChart extends React.Component {
     let prevPrice,
       openPrice = dailyData[dailyData.length - 1].close
 
-      // if market is closed then dailyData will have today's information, therefore previous day's close will actually be second to last item in it
+    // if market is closed then dailyData will have today's information, therefore previous day's close will actually be second to last item in it
     if (
       intradayData.length === 0 ||
       dailyData[dailyData.length - 1].date.split("-").join("") ===
-        intradayData[intradayData.length - 1].date
+      intradayData[intradayData.length - 1].date
     ) {
       openPrice = dailyData[dailyData.length - 2].close
     }
@@ -129,8 +131,8 @@ class StockChart extends React.Component {
         let time = intradayData[i].label.includes(":")
           ? `${intradayData[i].label} ET`
           : `${intradayData[i].label.split(" ")[0]}:00 ${
-              intradayData[i].label.split(" ")[1]
-            } ET`
+          intradayData[i].label.split(" ")[1]
+          } ET`
         data.push({
           time,
           price,
@@ -160,7 +162,7 @@ class StockChart extends React.Component {
       Math.round(
         ((parseFloat(currPrice) - parseFloat(openPrice)) /
           parseFloat(openPrice)) *
-          10000
+        10000
       ) / 100
     let neg = "+"
     if (priceFlux < 0) {
@@ -196,11 +198,10 @@ class StockChart extends React.Component {
     data = data.map(d => ({
       time: d.time,
       price: d.price,
-      lastClose: dailyData[dailyData.length - 1].close // until we correctly calculate last close
     }))
     return (
       <div style={{ marginBottom: "32px" }}>
-        {Object.keys(stock).length > 31 ? (
+        {!isEmpty(dailyData) && !isEmpty(intradayData) ? (
           <StockRechart
             stock={stock}
             stockName={stockName}
@@ -217,16 +218,15 @@ class StockChart extends React.Component {
             color={color}
           />
         ) : (
-          <div className="sweet-loading">
-            <ClipLoader
-              className={override}
-              sizeUnit={"px"}
-              size={150}
-              color={"#123abc"}
-              loading={true}
-            />
-          </div>
-        )}
+            <div className="sweet-loading">
+              <ClipLoader
+                sizeUnit={"px"}
+                size={150}
+                color={"#123abc"}
+                loading={true}
+              />
+            </div>
+          )}
       </div>
     )
   }

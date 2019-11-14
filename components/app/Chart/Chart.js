@@ -138,29 +138,29 @@ export default props => {
 
       <style jsx>{`
                 .container {
-                    display: flex
-                    flex-direction: column
+                    display: flex;
+                    flex-direction: column;
                 }
                 .container-row {
-                    display: flex
-                    flex-direction: row
+                    display: flex;
+                    flex-direction: row;
                 }
                 .space-between {
-                    justify-content: space-between
+                    justify-content: space-between;
                 }
                 .title {
-                    color: #2d92dd
-                    font-size: 32px
-                    margin-top: 30px
-                    font-weight: lighter
+                    color: #2d92dd;
+                    font-size: 32px;
+                    margin-top: 30px;
+                    font-weight: lighter;
                 }
                 .posts-container {
-                    margin-top: 20px
-                    fill: transparent
+                    margin-top: 20px;
+                    fill: transparent;
                 }
                 .divider {
-                    margin-left: 20px
-                    margin-right: 20px
+                    margin-left: 20px;
+                    margin-right: 20px;
                 }
             `}</style>
     </Element>

@@ -10,7 +10,7 @@ import {
 import CustomStockTooltip from "../CustomStockTooltip"
 import { BeatLoader, ScaleLoader } from "react-spinners"
 
-Number.prototype.formatMoney = function(c, d, t) {
+Number.prototype.formatMoney = function (c, d, t) {
   var n = this,
     c = isNaN((c = Math.abs(c))) ? 2 : c,
     d = d == undefined ? "." : d,
@@ -24,9 +24,9 @@ Number.prototype.formatMoney = function(c, d, t) {
     i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) +
     (c
       ? d +
-        Math.abs(n - i)
-          .toFixed(c)
-          .slice(2)
+      Math.abs(n - i)
+        .toFixed(c)
+        .slice(2)
       : "")
   )
 }
@@ -88,7 +88,7 @@ class StockRechart extends React.Component {
       Math.round(
         ((parseFloat(currPrice) - parseFloat(openPrice)) /
           parseFloat(openPrice)) *
-          10000
+        10000
       ) / 100
     if (priceFlux < 0) {
       neg = "-"
@@ -209,7 +209,6 @@ class StockRechart extends React.Component {
     currPrice = parseFloat(currPrice).formatMoney(2)
     priceFlux = Math.abs(parseFloat(priceFlux)).formatMoney(2)
     priceFluxPercentage = parseFloat(priceFluxPercentage).formatMoney(2)
-    console.log(data)
     return (
       <div className="chart">
         <h1>{this.props.stockName}</h1>
@@ -221,7 +220,6 @@ class StockRechart extends React.Component {
           {this.props.loading ? (
             <div className="chart-loading">
               <ScaleLoader
-                className={override}
                 sizeUnit={"px"}
                 size={20}
                 color={"#21ce99"}
@@ -229,48 +227,38 @@ class StockRechart extends React.Component {
               />
             </div>
           ) : (
-            <ResponsiveContainer width="100%" height={400}>
-              <LineChart
-                // width={710}
-                // height={195}
-                data={data}
-                margin={{ top: 5, right: 0, left: 0, bottom: 5 }}
-              >
-                <YAxis hide={true} domain={[min, max]} />
-                <Tooltip
-                  content={
-                    <CustomStockTooltip
-                      price={currPrice}
-                      priceFlux={priceFlux}
-                      priceFluxPercentage={priceFluxPercentage}
-                      openPrice={openPrice}
-                      neg={neg}
-                    />
-                  }
-                  offset={-40}
-                  position={{ y: -20 }}
-                  isAnimationActive={false}
-                />
-                <Line
-                  type="linear"
-                  dataKey="price"
-                  stroke={color}
-                  dot={false}
-                  strokeWidth={2}
-                />
-                {this.state.active === "1D" ? (
-                  <Line
-                    type="monotone"
-                    dataKey="lastClose"
-                    stroke="white"
-                    dot={false}
-                    strokeDasharray="2 2"
-                    activeDot={{ r: 0 }}
+              <ResponsiveContainer width="100%" height={400}>
+                <LineChart
+                  // width={710}
+                  // height={195}
+                  data={data}
+                  margin={{ top: 5, right: 0, left: 0, bottom: 5 }}
+                >
+                  <YAxis hide={true} domain={[min, max]} />
+                  <Tooltip
+                    content={
+                      <CustomStockTooltip
+                        price={currPrice}
+                        priceFlux={priceFlux}
+                        priceFluxPercentage={priceFluxPercentage}
+                        openPrice={openPrice}
+                        neg={neg}
+                      />
+                    }
+                    offset={-40}
+                    position={{ y: -20 }}
+                    isAnimationActive={false}
                   />
-                ) : null}
-              </LineChart>
-            </ResponsiveContainer>
-          )}
+                  <Line
+                    type="linear"
+                    dataKey="price"
+                    stroke={color}
+                    dot={false}
+                    strokeWidth={2}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            )}
           <ul className="chart-range stock">
             <li>
               <a
