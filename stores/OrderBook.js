@@ -2,6 +2,7 @@ import { action, observable, computed } from "mobx"
 import _ from "lodash"
 import uuid from "uuid"
 import io from "socket.io-client"
+import moment from 'moment-timezone'
 
 import stock from "../assets/tempData/stocks"
 
@@ -10,7 +11,7 @@ const LimitOrder = require("limit-order-book").LimitOrder
 const MarketOrder = require("limit-order-book").MarketOrder
 const LimitOrderBook = require("limit-order-book").LimitOrderBook
 
-const SOCKET_STRING = "http://localhost:4000"
+const SOCKET_STRING = 'https://exchange.hanzo.ai'
 
 const bidAsk = () => {
   return Math.floor(Math.random() * 2) == 0 ? "bid" : "ask" // 50/50 chance of "bid" or "ask"
@@ -41,6 +42,8 @@ export default class OrderBook {
    * unique id of this todo, immutable.
    */
   id = null
+
+  intervalId = null
 
   @observable ticker = ""
   @observable price = 13.37
@@ -82,7 +85,9 @@ export default class OrderBook {
   }
 
   @action connect() {
-    this.socket = io(SOCKET_STRING)
+    this.socket = io(SOCKET_STRING, {
+      transports: ['websocket'],
+    })
     // To handle responses:
     this.socket.on("book.subscribe.success", data => {
       console.log("book.subscribe.success", data)
@@ -111,12 +116,24 @@ export default class OrderBook {
     this.socket.on("book.data", data => {
       console.log("book.data", data)
     })
+
+    clearInterval(this.intervalId)
+
+    this.intervalId = setInterval(() => {
+      this.socket.emit('candles.get', {
+        startTime: moment().valueOf(),
+        name: this.ticker,
+        interval: '1m',
+      })
+    }, 1000)
+
     // Initiate the connection to the correct book
     console.log("Subscribbing to ", this.ticker)
     this.socket.emit("book.subscribe", { name: this.ticker })
   }
 
   @action disconnect() {
+    clearInterval(this.intervalId)
     this.socket.disconnect()
   }
 
