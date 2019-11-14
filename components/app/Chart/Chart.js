@@ -36,7 +36,11 @@ function getActiveChart(activeChart, { chartData, yDomain, labels }) {
       )
     case "line-chart":
       return (
-        <ChartLineSeries data={chartData} yDomain={yDomain} labels={labels} />
+        <ChartLineSeries
+          data={chartData}
+          yDomain={yDomain}
+          labels={labels}
+        />
       )
     case 2:
       return null
@@ -67,18 +71,8 @@ export default props => {
   let labels = timelineLabels()
   const [visible, setVisible] = useState(false)
   const stock = toJS(orderBook.stock)
-  console.log("chart.js", stock)
   return (
     <Element className="container">
-      {/* <Toolbar>
-        <ChartIntervalControls
-          updatePrintInterval={updatePrintInterval}
-          activeChart={activeChart}
-        />
-        <div style={{ flexGrow: 1 }} />
-        <ToggleVisibleChart setActiveChart={setActiveChart} />
-      </Toolbar> */}
-      {/* <TVChartContainer /> */}
       <StockChart stock={stock} stockName={stockName} />
       <div className="container-row space-between">
         <BuySellForm
@@ -112,7 +106,7 @@ export default props => {
               }}
             >
               Market
-            </Button>
+                        </Button>
           </Grid>
           <Grid item>
             <Button
@@ -124,7 +118,7 @@ export default props => {
               }}
             >
               Limit
-            </Button>
+                        </Button>
           </Grid>
         </Grid>
         <BuySellForm
@@ -143,32 +137,32 @@ export default props => {
       </div>
 
       <style jsx>{`
-        .container {
-          display: flex;
-          flex-direction: column;
-        }
-        .container-row {
-          display: flex;
-          flex-direction: row;
-        }
-        .space-between {
-          justify-content: space-between;
-        }
-        .title {
-          color: #2d92dd;
-          font-size: 32px;
-          margin-top: 30px;
-          font-weight: lighter;
-        }
-        .posts-container {
-          margin-top: 20px;
-          fill: transparent;
-        }
-        .divider {
-          margin-left: 20px;
-          margin-right: 20px;
-        }
-      `}</style>
+                .container {
+                    display: flex
+                    flex-direction: column
+                }
+                .container-row {
+                    display: flex
+                    flex-direction: row
+                }
+                .space-between {
+                    justify-content: space-between
+                }
+                .title {
+                    color: #2d92dd
+                    font-size: 32px
+                    margin-top: 30px
+                    font-weight: lighter
+                }
+                .posts-container {
+                    margin-top: 20px
+                    fill: transparent
+                }
+                .divider {
+                    margin-left: 20px
+                    margin-right: 20px
+                }
+            `}</style>
     </Element>
   )
 }

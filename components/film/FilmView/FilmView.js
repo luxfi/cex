@@ -1,279 +1,310 @@
-import React from "react"
-import Link from "next/link"
-import { toJS } from "mobx"
-import { inject, observer } from "mobx-react"
-import { withRouter, Router } from "next/router"
+import React from "react";
+import Link from "next/link";
+import { toJS } from "mobx";
+import { inject, observer } from "mobx-react";
+import { withRouter, Router } from "next/router";
 
-import classNames from "classnames"
+import classNames from "classnames";
 
 // orderbook
-import { formatTakeResults } from "../../../util/formatOrderBookDataForChart"
+import { formatTakeResults } from "../../../util/formatOrderBookDataForChart";
 
 // @material-ui/core components
-import { Button, Grid, Typography } from "@material-ui/core"
-import { withStyles } from "@material-ui/core/styles"
+import { Button, Grid, Typography } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
 
 // core components
-import { CustomBreadcrumbs, Chart, InvestNow } from "../../app"
-import { TrailerModal } from "../../landing"
+import { CustomBreadcrumbs, Chart, InvestNow } from "../../app";
+import { TrailerModal } from "../../landing";
 
 // section
-import { padDollarAmount } from "../../../util/generic"
+import { padDollarAmount } from "../../../util/generic";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // the nice looking double chevrons are part of the "pro" package that costs money
-import { faPlay } from "@fortawesome/free-solid-svg-icons"
+import { faPlay } from "@fortawesome/free-solid-svg-icons";
 
-import styles from "./film.style.js"
+import styles from "./film.style.js";
 
-import { isObservableArray } from "mobx"
+import { isObservableArray } from "mobx";
 
 const ButtonLink = React.forwardRef(
-  ({ className, href, hrefAs, children }, ref) => (
-    <Link ref={ref} href={href || ""} as={hrefAs}>
-      <a className={className}>{children}</a>
-    </Link>
-  )
-)
+    ({ className, href, hrefAs, children }, ref) => (
+        <Link ref={ref} href={href || ""} as={hrefAs}>
+            <a className={className}>{children}</a>
+        </Link>
+    )
+);
 
 const ExternalLink = React.forwardRef(
-  ({ className, href, hrefAs, children }, ref) => (
-    <a className={className} ref={ref} href={href || ""} as={hrefAs} target="_blank">
-      {children}
-    </a>
-  )
-)
+    ({ className, href, hrefAs, children }, ref) => (
+        <a
+            className={className}
+            ref={ref}
+            href={href || ""}
+            as={hrefAs}
+            target="_blank"
+        >
+            {children}
+        </a>
+    )
+);
 
 const formatMonthlyStats = (price, valueDelta) => {
-  return (
-    (valueDelta > 0 ? "+ " : "- ") +
-    Math.abs(valueDelta) +
-    " (" +
-    ((valueDelta / price) * 100).toFixed(2) +
-    "%) "
-  )
-}
+    return (
+        (valueDelta > 0 ? "+ " : "- ") +
+        Math.abs(valueDelta) +
+        " (" +
+        ((valueDelta / price) * 100).toFixed(2) +
+        "%) "
+    );
+};
 
 const PageTabs = props => {
-  const { classes, onTabSelected, selectedTab } = props
+    const { classes, onTabSelected, selectedTab } = props;
 
-  return (
-    <div className={classes.pageTabsOuter}>
-      <a
-        className={classNames(
-          classes.pageTab,
-          selectedTab === "about" ? classes.selectedTab : ""
-        )}
-        onClick={() => onTabSelected("about")}
-      >
-        About
-      </a>
-      <a
-        className={classNames(
-          classes.pageTab,
-          selectedTab === "invest" ? classes.selectedTab : ""
-        )}
-        onClick={() => onTabSelected("invest")}
-      >
-        Invest
-      </a>
-    </div>
-  )
-}
+    return (
+        <div className={classes.pageTabsOuter}>
+            <a
+                className={classNames(
+                    classes.pageTab,
+                    selectedTab === "about" ? classes.selectedTab : ""
+                )}
+                onClick={() => onTabSelected("about")}
+            >
+                About
+            </a>
+            <a
+                className={classNames(
+                    classes.pageTab,
+                    selectedTab === "invest" ? classes.selectedTab : ""
+                )}
+                onClick={() => onTabSelected("invest")}
+            >
+                Invest
+            </a>
+        </div>
+    );
+};
 
 @inject("store")
 @observer
 class Index extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      selectedTab: "about"
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedTab: "about"
+        };
+        this.onTabSelected = this.onTabSelected.bind(this);
     }
-    this.onTabSelected = this.onTabSelected.bind(this)
-  }
 
-  componentDidMount() {
-    // Need to pass the order book the data to render
-    const { router } = this.props
-    const { slug } = router.query
-    const { movieStore, orderBook, userPortfolio } = this.props.store
-    const movie = movieStore.getMovieBySlug(slug)
-    orderBook.initiateDataGenerator(movie.ticker, movie.price)
-    userPortfolio.getInvestments()
-    orderBook.connect()
-  }
-
-  componentWillUnmount() {
-    // Disconnect socket
-    console.log('Emitting disconnect')
-    this.props.store.orderBook.disconnect()
-  }
-
-  onTabSelected(tab) {
-    if (this.state.selectedTab !== tab) {
-      // if going to a new tab, collapse the view as well.
-      this.setState({
-        selectedTab: tab
-      })
+    componentDidMount() {
+        // Need to pass the order book the data to render
+        const { router } = this.props;
+        const { slug } = router.query;
+        const { movieStore, orderBook, userPortfolio } = this.props.store;
+        const movie = movieStore.getMovieBySlug(slug);
+        orderBook.initiateDataGenerator(movie.ticker, movie.price);
+        userPortfolio.getInvestments();
+        orderBook.connect();
     }
-  }
 
-  renderInvestButton(className, movie, text, onClick) {
-    return (
-      <Button
-        component={ButtonLink}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          color: "black",
-          height: "48px"
-        }}
-        className={className}
-        onClick={onClick}
-      >
-        {text}
-      </Button>
-    )
-  }
+    componentWillUnmount() {
+        // Disconnect socket
+        console.log("Emitting disconnect");
+        this.props.store.orderBook.disconnect();
+    }
 
-  renderUpperRow(classes, selectedTab, movie) {
-    return (
-      <div
-        className={classNames(classes.leftAndRight, classes.breadcrumbRow)}
-        style={{ marginTop: "20px" }}
-      >
-        <CustomBreadcrumbs>{movie.name}</CustomBreadcrumbs>
-        <PageTabs
-          classes={classes}
-          selectedTab={selectedTab}
-          onTabSelected={this.onTabSelected}
-        />
-      </div>
-    )
-  }
+    onTabSelected(tab) {
+        if (this.state.selectedTab !== tab) {
+            // if going to a new tab, collapse the view as well.
+            this.setState({
+                selectedTab: tab
+            });
+        }
+    }
 
-  renderAboutMain(classes, movie, addToWatchList) {
-    return (
-      <Grid container>
-        <Grid item xs={12} md={9}>
-          <div className={classes.titleAndDescription}>
-            <h1 className={classes.title} style={{ textAlign: "left" }}>
-              {movie.name}
-            </h1>
-            <p className={classes.description}>{movie.shortDescription}</p>
-          </div>
-          <div>
-            <TrailerModal movie={movie} />
+    renderInvestButton(className, movie, text, onClick) {
+        return (
             <Button
-              rel="noopener noreferrer"
-              variant="contained"
-              className={classes.movieButton}
-              onClick={() => {
-                this.onTabSelected("invest")
-              }}
+                component={ButtonLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                    color: "black",
+                    height: "48px"
+                }}
+                className={className}
+                onClick={onClick}
             >
-              Invest
+                {text}
             </Button>
-            <Button
-              rel="noopener noreferrer"
-              variant="contained"
-              className={classes.movieButton}
-              onClick={addToWatchList(movie.ticker)}
+        );
+    }
+
+    renderUpperRow(classes, selectedTab, movie) {
+        return (
+            <div
+                className={classNames(
+                    classes.leftAndRight,
+                    classes.breadcrumbRow
+                )}
+                style={{ marginTop: "20px" }}
             >
-              Add to watchlist
-            </Button>
-          </div>
-          <br />
-          <br />
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <img src={movie.posterImg} height="444" />
-        </Grid>
-      </Grid>
-    )
-  }
+                <CustomBreadcrumbs>{movie.name}</CustomBreadcrumbs>
+                <PageTabs
+                    classes={classes}
+                    selectedTab={selectedTab}
+                    onTabSelected={this.onTabSelected}
+                />
+            </div>
+        );
+    }
 
-  renderTableRow(field, label, movie) {
-    // note that Array.isArray() will return false
-    const content = isObservableArray(movie[field])
-      ? movie[field].join(", ")
-      : movie[field]
+    renderAboutMain(classes, movie, addToWatchList) {
+        return (
+            <Grid container>
+                <Grid item xs={12} md={9}>
+                    <div className={classes.titleAndDescription}>
+                        <h1
+                            className={classes.title}
+                            style={{ textAlign: "left" }}
+                        >
+                            {movie.name}
+                        </h1>
+                        <p className={classes.description}>
+                            {movie.shortDescription}
+                        </p>
+                    </div>
+                    <div>
+                        <TrailerModal movie={movie} />
+                        <Button
+                            rel="noopener noreferrer"
+                            variant="contained"
+                            className={classes.movieButton}
+                            onClick={() => {
+                                this.onTabSelected("invest");
+                            }}
+                        >
+                            Invest
+                        </Button>
+                        <Button
+                            rel="noopener noreferrer"
+                            variant="contained"
+                            className={classes.movieButton}
+                            onClick={addToWatchList(movie.ticker)}
+                        >
+                            Add to watchlist
+                        </Button>
+                    </div>
+                    <br />
+                    <br />
+                </Grid>
+                <Grid item xs={12} md={3}>
+                    <img src={movie.posterImg} height="444" />
+                </Grid>
+            </Grid>
+        );
+    }
 
-    return (
-      <tr style={{ marginBottom: "12px" }}>
-        <td valign="top">{label}</td>
-        <td valign="top">{content}</td>
-      </tr>
-    )
-  }
+    renderTableRow(field, label, movie) {
+        // note that Array.isArray() will return false
+        const content = isObservableArray(movie[field])
+            ? movie[field].join(", ")
+            : movie[field];
 
-  renderAboutMore(classes, movie) {
-    return (
-      <>
-        <div className={classes.aboutMoreTitleArea}>
-          <h1 className={classes.sectionTitle}>About</h1>
-          <h2 className={classes.sectionByline}>More about the film</h2>
-        </div>
-        <div className={classes.aboutMoreCopyArea}>
-          <div className={classes.aboutMoreStats}>
-            <table className={classes.aboutMoreStatsTable}>
-              <tbody>
-                {this.renderTableRow("director", "Director", movie)}
-                {this.renderTableRow("actors", "Starring", movie)}
-                {this.renderTableRow("writer", "Writers", movie)}
-                {this.renderTableRow("genre", "Genres", movie)}
-                {this.renderTableRow("rated", "Rating", movie)}
-              </tbody>
-            </table>
-          </div>
-          <div className={classes.aboutMoreText}>
-            <p>
-              Ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-              voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-          </div>
-        </div>
-      </>
-    )
-  }
+        return (
+            <tr style={{ marginBottom: "12px" }}>
+                <td valign="top">{label}</td>
+                <td valign="top">{content}</td>
+            </tr>
+        );
+    }
 
-  renderInvestMain(
-    classes,
-    movie,
-    chartPrice,
-    chartData,
-    yDomain,
-    updatePrintInterval,
-    setActiveChart,
-    setMarketOrderType,
-    marketOrderType,
-    funds,
-    printInterval,
-    activeChart,
-    buyOrders,
-    sellOrders,
-    orderBook,
-    loggedIn,
-    onExecute,
-    maxSell
-  ) {
-    const price = padDollarAmount(chartPrice).split(".")
-    const deltaString = formatMonthlyStats(
-      chartPrice,
-      (chartPrice - movie.price).toFixed(2)
-    )
-    return (
-      <div>
-        {/* <h1 className={classes.investCompanyName}>{movie.name}</h1>
+    renderAboutMore(classes, movie) {
+        return (
+            <>
+                <div className={classes.aboutMoreTitleArea}>
+                    <h1 className={classes.sectionTitle}>About</h1>
+                    <h2 className={classes.sectionByline}>
+                        More about the film
+                    </h2>
+                </div>
+                <div className={classes.aboutMoreCopyArea}>
+                    <div className={classes.aboutMoreStats}>
+                        <table className={classes.aboutMoreStatsTable}>
+                            <tbody>
+                                {this.renderTableRow(
+                                    "director",
+                                    "Director",
+                                    movie
+                                )}
+                                {this.renderTableRow(
+                                    "actors",
+                                    "Starring",
+                                    movie
+                                )}
+                                {this.renderTableRow(
+                                    "writer",
+                                    "Writers",
+                                    movie
+                                )}
+                                {this.renderTableRow("genre", "Genres", movie)}
+                                {this.renderTableRow("rated", "Rating", movie)}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className={classes.aboutMoreText}>
+                        <p>
+                            Ex ea commodo consequat. Duis aute irure dolor in
+                            reprehenderit in voluptate velit esse cillum dolore
+                            eu fugiat nulla pariatur.
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua. Ut enim ad minim veniam, quis
+                            nostrud exercitation ullamco laboris nisi ut aliquip
+                            ex ea commodo consequat. Duis aute irure dolor in
+                            reprehenderit in voluptate velit esse cillum dolore
+                            eu fugiat nulla pariatur. Excepteur sint occaecat
+                            cupidatat non proident, sunt in culpa qui officia
+                            deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+                </div>
+            </>
+        );
+    }
+
+    renderInvestMain(
+        classes,
+        movie,
+        chartPrice,
+        chartData,
+        yDomain,
+        updatePrintInterval,
+        setActiveChart,
+        setMarketOrderType,
+        marketOrderType,
+        funds,
+        printInterval,
+        activeChart,
+        buyOrders,
+        sellOrders,
+        orderBook,
+        loggedIn,
+        onExecute,
+        maxSell
+    ) {
+        const price = padDollarAmount(chartPrice).split(".");
+        const deltaString = formatMonthlyStats(
+            chartPrice,
+            (chartPrice - movie.price).toFixed(2)
+        );
+        return (
+            <div>
+                {/* <h1 className={classes.investCompanyName}>{movie.name}</h1>
         <h3 className={classes.investCompanyDescription}>
           {movie.financialDescription}
         </h3>
@@ -283,175 +314,189 @@ class Index extends React.Component {
           <span className={classes.centsValue}>.{price[1]}</span>
         </div>
         <div className={classes.deltaRow}>{deltaString}</div> */}
-        {!loggedIn
-          ? this.renderInvestButton(
-              classNames(classes.movieButton, classes.statsButton),
-              movie,
-              "Invest Now"
-            )
-          : null}
-        <div>
-          {orderBook.connected ? (
-            <Chart
-              chartData={chartData}
-              yDomain={yDomain}
-              updatePrintInterval={updatePrintInterval}
-              setActiveChart={setActiveChart}
-              setMarketOrderType={setMarketOrderType}
-              marketOrderType={marketOrderType}
-              funds={funds}
-              printInterval={printInterval}
-              activeChart={activeChart}
-              buyOrders={buyOrders}
-              sellOrders={sellOrders}
-              orderBook={orderBook}
-              ticker={movie.ticker}
-              onExecute={onExecute}
-              movieCategories={toJS(movie.genre)}
-              maxSell={maxSell}
-              stockName={movie.name}
-            />
-          ) : (
-            <Typography>Loading chart...</Typography>
-          )}
-        </div>
-      </div>
-    )
-  }
-
-  renderInvestMore(classes, movie) {
-    return (
-      <div className={classes.investMoreOuter}>
-        <table className={classes.investMoreTable}>
-          <tbody>
-            <tr>
-              <td>OPEN</td>
-              <td>631.45</td>
-            </tr>
-            <tr>
-              <td>OPEN</td>
-              <td>631.45</td>
-            </tr>
-            <tr>
-              <td>OPEN</td>
-              <td>631.45</td>
-            </tr>
-            <tr>
-              <td>OPEN</td>
-              <td>631.45</td>
-            </tr>
-            <tr>
-              <td>OPEN</td>
-              <td>631.45</td>
-            </tr>
-          </tbody>
-        </table>
-        <table className={classes.investMoreTable}>
-          <tbody>
-            <tr>
-              <td>OPEN</td>
-              <td>631.45</td>
-            </tr>
-            <tr>
-              <td>OPEN</td>
-              <td>631.45</td>
-            </tr>
-            <tr>
-              <td>OPEN</td>
-              <td>631.45</td>
-            </tr>
-            <tr>
-              <td>OPEN</td>
-              <td>631.45</td>
-            </tr>
-            <tr>
-              <td>OPEN</td>
-              <td>631.45</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    )
-  }
-
-  render() {
-    const { classes, store } = this.props
-
-    // get router slug and find article
-    const { router } = this.props
-    const { slug } = router.query
-    const { movieStore, orderBook, userStore, userPortfolio } = this.props.store
-    const movie = movieStore.getMovieBySlug(slug)
-    // orderBook stuff
-    let takeResultsArray = orderBook.takeResults.slice(0)
-    const {
-      printInterval,
-      buyOrders,
-      sellOrders,
-      activeChart,
-      marketOrderType,
-    } = orderBook
-    const funds = userStore.accountBalance
-    const chartData = formatTakeResults(takeResultsArray, printInterval)
-    const yDomain = [orderBook.low * 0.94, orderBook.high * 1.06]
-    const updatePrintInterval = time => {
-      orderBook.updatePrintInterval(time)
-    }
-    const setActiveChart = activeChart => {
-      orderBook.setActiveChart(activeChart)
-    }
-    const setMarketOrderType = marketOrder => {
-      orderBook.setMarketOrderType(marketOrder)
+                {!loggedIn
+                    ? this.renderInvestButton(
+                          classNames(classes.movieButton, classes.statsButton),
+                          movie,
+                          "Invest Now"
+                      )
+                    : null}
+                <div>
+                    {orderBook.connected ? (
+                        <Chart
+                            chartData={chartData}
+                            yDomain={yDomain}
+                            updatePrintInterval={updatePrintInterval}
+                            setActiveChart={setActiveChart}
+                            setMarketOrderType={setMarketOrderType}
+                            marketOrderType={marketOrderType}
+                            funds={funds}
+                            printInterval={printInterval}
+                            activeChart={activeChart}
+                            buyOrders={buyOrders}
+                            sellOrders={sellOrders}
+                            orderBook={orderBook}
+                            ticker={movie.ticker}
+                            onExecute={onExecute}
+                            movieCategories={toJS(movie.genre)}
+                            maxSell={maxSell}
+                            stockName={movie.name}
+                        />
+                    ) : (
+                        <Typography>Loading chart...</Typography>
+                    )}
+                </div>
+            </div>
+        );
     }
 
-    // Load necessary user data
-    const maxSell = userPortfolio.getMaxSell(movie.ticker)
-
-    const addToWatchlist = t => {
-      userPortfolio.addToWatchlist(t)
+    renderInvestMore(classes, movie) {
+        return (
+            <div className={classes.investMoreOuter}>
+                <table className={classes.investMoreTable}>
+                    <tbody>
+                        <tr>
+                            <td>OPEN</td>
+                            <td>631.45</td>
+                        </tr>
+                        <tr>
+                            <td>OPEN</td>
+                            <td>631.45</td>
+                        </tr>
+                        <tr>
+                            <td>OPEN</td>
+                            <td>631.45</td>
+                        </tr>
+                        <tr>
+                            <td>OPEN</td>
+                            <td>631.45</td>
+                        </tr>
+                        <tr>
+                            <td>OPEN</td>
+                            <td>631.45</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table className={classes.investMoreTable}>
+                    <tbody>
+                        <tr>
+                            <td>OPEN</td>
+                            <td>631.45</td>
+                        </tr>
+                        <tr>
+                            <td>OPEN</td>
+                            <td>631.45</td>
+                        </tr>
+                        <tr>
+                            <td>OPEN</td>
+                            <td>631.45</td>
+                        </tr>
+                        <tr>
+                            <td>OPEN</td>
+                            <td>631.45</td>
+                        </tr>
+                        <tr>
+                            <td>OPEN</td>
+                            <td>631.45</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        );
     }
 
-    return (
-      <>
-        <article className={classNames(classes.container, classes.outermost)}>
-          {this.renderUpperRow(classes, this.state.selectedTab, movie)}
-          {this.state.selectedTab === "about"
-            ? this.renderAboutMain(classes, movie, addToWatchlist)
-            : this.renderInvestMain(
-                classes,
-                movie,
-                orderBook.price,
-                chartData,
-                yDomain,
-                updatePrintInterval,
-                setActiveChart,
-                setMarketOrderType,
-                marketOrderType,
-                funds,
-                printInterval,
-                activeChart,
-                buyOrders,
-                sellOrders,
-                orderBook,
-                userStore.token !== null,
-                (order, orderType) => {
-                  return userPortfolio.onOrderExecute(order, orderType)
-                },
-                maxSell
-              )}
-          {this.state.selectedTab === "about"
-            ? this.renderAboutMore(classes, movie)
-            : null}
-        </article>
-        <div
-          className={classNames(classes.container)}
-          style={{ paddingLeft: "0px", paddingRight: "0px" }}
-        >
-          {!userStore.token ? <InvestNow /> : ""}
-        </div>
-      </>
-    )
-  }
+    render() {
+        const { classes, store } = this.props;
+
+        // get router slug and find article
+        const { router } = this.props;
+        const { slug } = router.query;
+        const {
+            movieStore,
+            orderBook,
+            userStore,
+            userPortfolio
+        } = this.props.store;
+        const movie = movieStore.getMovieBySlug(slug);
+        // orderBook stuff
+        let takeResultsArray = orderBook.takeResults.slice(0);
+        const {
+            printInterval,
+            buyOrders,
+            sellOrders,
+            activeChart,
+            marketOrderType
+        } = orderBook;
+        const funds = userStore.accountBalance;
+        const chartData = formatTakeResults(takeResultsArray, printInterval);
+        const yDomain = [orderBook.low * 0.94, orderBook.high * 1.06];
+        const updatePrintInterval = time => {
+            orderBook.updatePrintInterval(time);
+        };
+        const setActiveChart = activeChart => {
+            orderBook.setActiveChart(activeChart);
+        };
+        const setMarketOrderType = marketOrder => {
+            orderBook.setMarketOrderType(marketOrder);
+        };
+
+        // Load necessary user data
+        const maxSell = userPortfolio.getMaxSell(movie.ticker);
+
+        const addToWatchlist = t => {
+            userPortfolio.addToWatchlist(t);
+        };
+
+        return (
+            <>
+                <article
+                    className={classNames(classes.container, classes.outermost)}
+                >
+                    {this.renderUpperRow(
+                        classes,
+                        this.state.selectedTab,
+                        movie
+                    )}
+                    {this.state.selectedTab === "about"
+                        ? this.renderAboutMain(classes, movie, addToWatchlist)
+                        : this.renderInvestMain(
+                              classes,
+                              movie,
+                              orderBook.price,
+                              chartData,
+                              yDomain,
+                              updatePrintInterval,
+                              setActiveChart,
+                              setMarketOrderType,
+                              marketOrderType,
+                              funds,
+                              printInterval,
+                              activeChart,
+                              buyOrders,
+                              sellOrders,
+                              orderBook,
+                              userStore.token !== null,
+                              (order, orderType) => {
+                                  return userPortfolio.onOrderExecute(
+                                      order,
+                                      orderType
+                                  );
+                              },
+                              maxSell
+                          )}
+                    {this.state.selectedTab === "about"
+                        ? this.renderAboutMore(classes, movie)
+                        : null}
+                </article>
+                <div
+                    className={classNames(classes.container)}
+                    style={{ paddingLeft: "0px", paddingRight: "0px" }}
+                >
+                    {!userStore.token ? <InvestNow /> : ""}
+                </div>
+            </>
+        );
+    }
 }
 
-export default withRouter(withStyles(styles)(Index))
+export default withRouter(withStyles(styles)(Index));
