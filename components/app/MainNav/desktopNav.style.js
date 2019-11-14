@@ -1,10 +1,10 @@
 export default (theme) => {
   return {
-
     logo: {
       display: "inline-block",
       marginLeft: theme.spacing(1),
       marginTop: "-15px",
+      cursor: "pointer"
     },
 
     navOuter: {
@@ -33,7 +33,7 @@ export default (theme) => {
     navButton: {
       marginRight: theme.spacing(2),
       [theme.breakpoints.down("sm")]: {
-        marginRight: theme.spacing(1),
+        marginRight: theme.spacing(1)
       },
       minWidth: "0",
       whiteSpace: "nowrap"
@@ -45,14 +45,14 @@ export default (theme) => {
       marginLeft: "auto",
       alignItems: "center",
       paddingRight: theme.spacing(6),
-      [theme.breakpoints.down("sm")] : {
-        paddingRight: 0,
+      [theme.breakpoints.down("sm")]: {
+        paddingRight: 0
       }
     },
 
-    accountIcon : {
+    accountIcon: {
       width: "36px",
       height: "36px"
-    },
-  }
+    }
+  };
 }
