@@ -1,5 +1,5 @@
 import React from "react"
-import Link from "next/link"
+import NextLink from "next/link"
 import "react-responsive-carousel/lib/styles/carousel.min.css"
 import { inject, observer } from 'mobx-react'
 import { Carousel } from 'react-responsive-carousel'
@@ -32,9 +32,9 @@ import birdsOfPreyLogo from "../../../assets/images/birds-of-prey-logo.png"
 
 const ButtonLink = React.forwardRef(
   ({ className, href, hrefAs, children }, ref) => (
-    <Link ref={ref} href={href} as={hrefAs}>
+    <NextLink ref={ref} href={href} as={hrefAs}>
       <a className={className}>{children}</a>
-    </Link>
+    </NextLink>
   )
 )
 
@@ -73,6 +73,7 @@ class Hero extends React.Component {
           <Carousel showThumbs={false} infiniteLoop={true} showStatus={false}>
             {this.props.store.movieStore.movies.map((movie, i) => {
               const hrefLink = '/film/' + movie.movieSlug
+              console.log('hrefLink', hrefLink)
               return <HeroImg key={i} {...rest} img={movieExtendedMap[movie.movieSlug].img}>
                 <div className={classes.container}>
                   <Grid container>
@@ -102,11 +103,11 @@ class Hero extends React.Component {
                         size="large"
                         startIcon={<MonetizationOnIcon />}
                       >
-                        <Link href={hrefLink}>
+                        <a href={hrefLink}>
                           <Typography variant="body2">
                             INVEST IN {movie.name}
                           </Typography>
-                        </Link>
+                        </a>
                       </Button>
                       <br />
                       <br />
