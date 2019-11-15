@@ -3,6 +3,7 @@ import Link from "next/link"
 import { toJS } from "mobx"
 import { inject, observer } from "mobx-react"
 import { withRouter, Router } from "next/router"
+import { MUISwitch } from '@hanzo/react'
 
 import classNames from "classnames"
 
@@ -10,7 +11,7 @@ import classNames from "classnames"
 import { formatTakeResults } from "../../../util/formatOrderBookDataForChart"
 
 // @material-ui/core components
-import { Button, Grid, Typography, Switch } from "@material-ui/core"
+import { Box, Button, Grid, Typography } from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
 
 // core components
@@ -73,7 +74,6 @@ class Index extends React.Component {
     this.state = {
       selectedMode: "basic",
     }
-    this.onTabSelected = this.onTabSelected.bind(this)
   }
 
   componentDidMount() {
@@ -95,7 +95,7 @@ class Index extends React.Component {
     this.props.store.orderBook.disconnect()
   }
 
-  onTabSelected(tab) {
+  onModeSelected(tab) {
     if (this.state.selectedMode !== tab) {
       // if going to a new tab, collapse the view as well.
       this.setState({
@@ -149,60 +149,62 @@ class Index extends React.Component {
     return (
       <>
         <article>
-          { this.state.selectedMode === "basic" &&
-            orderBook.isReady ? (
-              <BasicTrader
-                chartData={chartData}
-                yDomain={yDomain}
-                updatePrintInterval={updatePrintInterval}
-                setActiveChart={setActiveChart}
-                setMarketOrderType={setMarketOrderType}
-                marketOrderType={marketOrderType}
-                funds={funds}
-                printInterval={printInterval}
-                activeChart={activeChart}
-                buyOrders={buyOrders}
-                sellOrders={sellOrders}
-                orderBook={orderBook}
-                ticker={movie.ticker}
-                onExecute={(order, orderType) => {
-                  return userPortfolio.onOrderExecute(order, orderType)
-                }}
-                movieCategories={toJS(movie.genre)}
-                maxSell={maxSell}
-                stockName={movie.name}
-              />
-            ) : (
-              <Typography>Loading chart...</Typography>
-            )
-          }
-          { this.state.selectedMode === "pro" &&
-            orderBook.isReady ? (
-              <ProTrader
-                chartData={chartData}
-                yDomain={yDomain}
-                updatePrintInterval={updatePrintInterval}
-                setActiveChart={setActiveChart}
-                setMarketOrderType={setMarketOrderType}
-                marketOrderType={marketOrderType}
-                funds={funds}
-                printInterval={printInterval}
-                activeChart={activeChart}
-                buyOrders={buyOrders}
-                sellOrders={sellOrders}
-                orderBook={orderBook}
-                ticker={movie.ticker}
-                onExecute={(order, orderType) => {
-                  return userPortfolio.onOrderExecute(order, orderType)
-                }}
-                movieCategories={toJS(movie.genre)}
-                maxSell={maxSell}
-                stockName={movie.name}
-              />
-            ) : (
-              <Typography>Loading chart...</Typography>
-            )
-          }
+          <Box p={3} pt={8}>
+            <MUISwitch
+              label="Professional"
+              value={this.state.selectedMode == "pro"}
+              setValue={ (val) => this.onModeSelected(val ? "pro" : "basic") }
+            />
+            { orderBook.isReady ?
+              this.state.selectedMode === "basic" ? (
+                <BasicTrader
+                  chartData={chartData}
+                  yDomain={yDomain}
+                  updatePrintInterval={updatePrintInterval}
+                  setActiveChart={setActiveChart}
+                  setMarketOrderType={setMarketOrderType}
+                  marketOrderType={marketOrderType}
+                  funds={funds}
+                  printInterval={printInterval}
+                  activeChart={activeChart}
+                  buyOrders={buyOrders}
+                  sellOrders={sellOrders}
+                  orderBook={orderBook}
+                  ticker={movie.ticker}
+                  onExecute={(order, orderType) => {
+                    return userPortfolio.onOrderExecute(order, orderType)
+                  }}
+                  movieCategories={toJS(movie.genre)}
+                  maxSell={maxSell}
+                  stockName={movie.name}
+                />
+              ) : (
+                <ProTrader
+                  chartData={chartData}
+                  yDomain={yDomain}
+                  updatePrintInterval={updatePrintInterval}
+                  setActiveChart={setActiveChart}
+                  setMarketOrderType={setMarketOrderType}
+                  marketOrderType={marketOrderType}
+                  funds={funds}
+                  printInterval={printInterval}
+                  activeChart={activeChart}
+                  buyOrders={buyOrders}
+                  sellOrders={sellOrders}
+                  orderBook={orderBook}
+                  ticker={movie.ticker}
+                  onExecute={(order, orderType) => {
+                    return userPortfolio.onOrderExecute(order, orderType)
+                  }}
+                  movieCategories={toJS(movie.genre)}
+                  maxSell={maxSell}
+                  stockName={movie.name}
+                />
+              ) : (
+                <Typography>Loading chart...</Typography>
+              )
+            }
+          </Box>
         </article>
         <div
           className={classNames(classes.container)}

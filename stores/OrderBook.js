@@ -137,7 +137,6 @@ export default class OrderBook {
         let targetTime = 930
 
         for (let data of formattedData) {
-          console.log('targetTime', targetTime, '?', data.id)
           while (targetTime < data.id) {
             let timestamp = moment('' + targetTime, 'Hmm')
 
