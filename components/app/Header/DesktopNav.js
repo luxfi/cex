@@ -15,7 +15,7 @@ import styles from './desktopNav.style.js'
 
 const useStyles = makeStyles(styles)
 
-import navStructure from "./navStructure"
+import navStructure from "../../../util/navStructure"
 
 export default (props) => {
 

@@ -16,10 +16,10 @@ config.autoAddCss = false
 import { 
   CustomSnackbar, 
   Header, 
-  MobileNav,
-  FooterEx, 
+  MobileNavMenu,
+  Footer, 
   CustomModal,
-  MobileProfileMenu 
+  MobileAccountMenu 
 } from "../components/app"
 
 import ReactGA from 'react-ga'
@@ -92,7 +92,7 @@ class MyMobxApp extends App {
               openRightDrawer={() => this.mobxStore.uiStore.setRightDrawerOpen(true)}
               handleLogout={() => {this.mobxStore.userStore.logout()}}
             />
-            <MobileNav 
+            <MobileNavMenu 
               open={this.mobxStore.uiStore.drawers.left}
               setOpen={this.mobxStore.uiStore.setLeftDrawerOpen}
               handlePlaceholder={this.placeholder} 
@@ -109,14 +109,14 @@ class MyMobxApp extends App {
               title={this.mobxStore.uiStore.modal.title}
             />
             <CustomSnackbar />
-            <MobileProfileMenu 
+            <MobileAccountMenu 
               open={this.mobxStore.uiStore.drawers.right}
               setOpen={this.mobxStore.uiStore.setRightDrawerOpen}
               isLoggedIn={this.mobxStore.userStore.loggedIn}
               handleLogout={() => { this.mobxStore.userStore.logout() }}
               handlePlaceholder={this.placeholder}
             />
-            <FooterEx openModal={this.openModal} />
+            <Footer openModal={this.openModal} />
         </NoSsr>
       </MuiThemeProvider>
       </Provider>
