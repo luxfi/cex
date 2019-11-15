@@ -5,7 +5,7 @@ import io from 'socket.io-client'
 import { FilmView } from "../components/film"
 import { googlePageView } from '../util/generic'
 
-class Film extends React.Component {
+class Trade extends React.Component {
   componentDidMount() {
     googlePageView()
   }
@@ -20,4 +20,4 @@ class Film extends React.Component {
   }
 }
 
-export default Film
+export default Trade
