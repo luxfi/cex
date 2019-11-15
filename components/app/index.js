@@ -14,12 +14,12 @@ export { default as CustomModal } from './CustomModal'
 export { default as CustomSnackbar } from './CustomSnackbar'
 export { default as CustomStockTooltip } from "./CustomStockTooltip"
 export { default as FooterEx } from './Footer'
-export { Header } from './MainNav'
+export { default as Header } from './Header'
 export { default as InvestNow } from './InvestNow'
 export { default as LimitOrders } from './LimitOrders'
 export { default as NestedMenu } from './NestedMenu'
-export { MobileProfileMenu } from './MainNav'
-export { MobileNav } from './MainNav'
+export { default as MobileAccountMenu } from './MobileAccountMenu'
+export { default as MobileNavMenu } from './MobileNavMenu'
 export { default as SideDrawer } from './SideDrawer'
 export { default as StockRechart } from "./StockRechart"
 export { default as StockChart } from "./StockChart"

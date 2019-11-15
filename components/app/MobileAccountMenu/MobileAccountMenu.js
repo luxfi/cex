@@ -25,7 +25,7 @@ import {
 import SideDrawer from "../SideDrawer"
 
 import { makeStyles } from "@material-ui/core/styles"
-import styles from './mobileNav.style.js'
+import styles from './mobileAccountMenu.style.js'
 const useStyles = makeStyles(styles)
 
 
