@@ -96,7 +96,7 @@ const DesktopMainNav = (props) => {
   } = props
 
   let result = []
-  navStructure.forEach((navElement) => {
+  navStructure.forEach((navElement, i) => {
 
     if ('placeholder' in navElement) {
       result.push(
@@ -105,7 +105,7 @@ const DesktopMainNav = (props) => {
           onClick={() => {
             handlePlaceholder(navElement.placeholder)
           }}
-          key={navElement.placeholder}
+          key={`button+${i}`}
         >
           {navElement.title}
         </Button>
@@ -113,7 +113,7 @@ const DesktopMainNav = (props) => {
     }
     else if ('link' in navElement) {
       result.push(
-        <Link href={navElement.link} key={navElement.placeholder}>
+        <Link href={navElement.link} key={`link+${i}`}>
           <Button
             className={classes.navButton}
           >
@@ -128,6 +128,7 @@ const DesktopMainNav = (props) => {
           classes={classes} 
           menuDefinition={navElement} 
           handlePlaceholder={handlePlaceholder}
+          key={`dropdown+${i}`}
         />
       )
     }

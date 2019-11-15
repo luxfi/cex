@@ -7,6 +7,9 @@ import {
   CardContent,
   Container,
   Link,
+  Divider,
+  Button,
+  TextField,
 } from "@material-ui/core"
 import Typography from "@material-ui/core/Typography"
 
@@ -22,6 +25,10 @@ class Account extends React.Component {
     return { ...mobxStore }
   }
 
+  state = {
+
+  }
+
   componentDidMount() {
     googlePageView()
   }
@@ -31,24 +38,25 @@ class Account extends React.Component {
     const { userStore } = store
     const {
       setValue,
-
       account,
       addPaymentMethod,
-
       isValidNewPaymentMethod,
       validNewPaymentMethodName,
       validNewPaymentMethodPublicToken,
       validateNewPaymentMethodName,
       validateNewPaymentMethodPublicToken,
       validateNewPaymentMethodMetadata,
+      addBalance,
     } = userStore
+
     const setErrorMessage = message => {
       store.uiStore.errorMessage = message
       store.uiStore.snackBarOpen = true
     }
+
     return (
-      <Container maxWidth="lg" style={{ marginTop: 30, marginBottom: 30 }}>
-        <Grid container spacing={3}>
+      <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
+        <Grid container spacing={3} justify="center">
           <Grid item xs={12} sm={4}>
             <Card>
               <CardContent>
@@ -60,29 +68,77 @@ class Account extends React.Component {
                   isValidNewPaymentMethod             = {isValidNewPaymentMethod}
                   validNewPaymentMethodName           = {validNewPaymentMethodName}
                   validNewPaymentMethodPublicToken    = {validNewPaymentMethodPublicToken}
-
                   setValue        = {setValue.bind(userStore)}
                   setErrorMessage = {setErrorMessage}
+                  refreshSession={() => { userStore.loadSession() }}
                 />
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={8}>
-            { (!!account && !!account.paymentMethods && !!account.paymentMethods.map ) ? (
-              account.paymentMethods.map( (method, i) => (
-                <Card key={i} style={{ marginBottom: 20 }}>
-                  <CardContent>
-                    <Typography variant="body1">
-                      { method.name }
-                    </Typography>
-                    <Typography variant="body2">
-                      { (method.metadata && method.metadata.institution) ? method.metadata.institution.name : ""}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              ))
-            ) : null }
-          </Grid>
+          {
+            !!account && !!account.paymentMethods ? 
+              <Grid item xs={12} sm={8}>
+                {
+                  account.paymentMethods.map((m, i) => {
+                    return (
+                      <Card key={`m+${i}`} style={{ marginBottom: 20 }}>
+                        <CardContent>
+                          <Typography variant="body1">
+                            { m.name }
+                          </Typography>
+                          <Typography variant="body2">
+                            { (m.Inputs && m.Inputs.metadata.institution) ? m.Inputs.metadata.institution.name : ""}
+                          </Typography>
+                          <Grid container>
+                            <Grid item xs={4}>
+                            <TextField
+                              variant="outlined"
+                              margin="normal"
+                              required
+                              fullWidth
+                              name="newFunds"
+                              label="Add Funds"
+                              id="add-new-funds"
+                              value={this.state[`${m.name}-newFunds`] || ""}
+                              onChange={evt => {
+                                this.setState({ 
+                                  [`${m.name}-newFunds`]: evt.target.value,
+                                  [`${m.name}-newFunds-error`]: null
+                                })
+                              }}
+                              helperText={this.state[`${m.name}-newFunds-error`]}
+                              error={this.state[`${m.name}-newFunds-error`] && this.state[`${m.name}-newFunds-error`].length > 0}
+                            />
+                            </Grid>
+                          </Grid>
+                          <Button
+                            variant="outlined"
+                            onClick={
+                              () => {
+                                userStore.addBalance(
+                                  this.state[`${m.name}-newFunds`],
+                                  () => { this.setState({ [`${m.name}-newFunds`]: ""}) },
+                                  () => { 
+                                    this.setState({
+                                      [`${m.name}-newFunds`]: "",
+                                      [`${m.name}-newFunds-error`]: `Error adding funds from ${m.name}` 
+                                    })
+                                  }
+                                )
+                              }
+                            }
+                          >
+                            Add Funds
+                          </Button>
+                          <Divider variant="inset" style={{ marginTop: '10px' }} />
+                        </CardContent>
+                      </Card>
+                    )
+                  })
+                }
+              </Grid>
+            : null 
+          }
           <Grid item xs={12}>
             <Link component={CustomLink} href="/account/kyc">
               Check your identify verification status

@@ -17,11 +17,13 @@ class AddPaymentMethodForm extends React.Component {
     this.state = { displayErrors: false }
   }
 
-  handleSubmit(addPaymentMethod, isValidNewPaymentMethod, setErrorMessage) {
+  handleSubmit(token, meta, addPaymentMethod, isValidNewPaymentMethod, setErrorMessage, refreshSession) {
     if (isValidNewPaymentMethod) {
       addPaymentMethod(
+        token,
+        meta,
         () => {
-
+          refreshSession()
         },
         ex => {
           setErrorMessage(ex)
@@ -47,17 +49,13 @@ class AddPaymentMethodForm extends React.Component {
   render() {
     const {
       classes,
-
       setValue,
-
       addPaymentMethod,
       validateNewPaymentMethodName,
-      isValidNewPaymentMethod,
-
       validNewPaymentMethodName,
       validNewPaymentMethodPublicToken,
-
-      setErrorMessage
+      setErrorMessage,
+      refreshSession
     } = this.props
 
     return (
@@ -89,7 +87,9 @@ class AddPaymentMethodForm extends React.Component {
           env="sandbox"
           product={["auth", "transactions"]}
           publicKey={PLAID_PUBLIC_KEY}
-          onSuccess={this.onSuccess.bind(this)}
+          onSuccess={(pub_token, meta) => {
+            this.handleSubmit(pub_token, meta, addPaymentMethod, true, setErrorMessage, refreshSession)
+          }}
         >
           <Typography component="p" variant="body2">
             {
@@ -99,19 +99,6 @@ class AddPaymentMethodForm extends React.Component {
             }
           </Typography>
         </PlaidLink>
-        <br />
-        <Button
-          id="add-payment-method-submit-button"
-          fullWidth
-          variant="contained"
-          color="primary"
-          // disabled={}
-          onClick={() =>
-            this.handleSubmit(addPaymentMethod, isValidNewPaymentMethod, setErrorMessage)
-          }
-        >
-          Save Payment Method
-        </Button>
       </Container>
     )
   }
