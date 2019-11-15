@@ -262,7 +262,7 @@ class StockRechart extends React.Component {
                       y={this.props.previousDayClose}
                       stroke="white"
                       strokeDasharray="3 3"
-                      alwaysShow />
+                    />
                   }
                 </LineChart>
               </ResponsiveContainer>

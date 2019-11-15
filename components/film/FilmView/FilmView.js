@@ -191,9 +191,8 @@ class Index extends React.Component {
           <div>
             <TrailerModal movie={movie} />
             <Button
-              component={ButtonLink}
               target="_blank"
-              href="trade"
+              href={ "/trade/" + movie.movieSlug }
               rel="noopener noreferrer"
               variant="contained"
               className={classes.movieButton}

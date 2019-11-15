@@ -137,7 +137,6 @@ export default class OrderBook {
         let targetTime = 930
 
         for (let data of formattedData) {
-          console.log('targetTime', targetTime, '?', data.id)
           while (targetTime < data.id) {
             let timestamp = moment('' + targetTime, 'Hmm')
 
@@ -459,6 +458,10 @@ export default class OrderBook {
     const dailyData = this.dailyData
     const previousDayClose = this.previousDayClose
     return { intradayData, dailyData, previousDayClose }
+  }
+
+  @computed get isReady() {
+    return this.connected && this.intradayData.length > 0 && this.dailyData.length > 0
   }
 
   generatefullDay(book) {

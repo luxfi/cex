@@ -10,7 +10,7 @@ import { toJS } from "mobx"
 import { timelineLabels } from "../../../util/dateRange"
 import { Element } from "react-scroll"
 import dynamic from "next/dynamic"
-import { Box, Grid, Button } from "@material-ui/core"
+import { Grid, Button } from "@material-ui/core"
 import { useState } from "react"
 
 const TVChartContainer = dynamic(
@@ -75,79 +75,75 @@ export default props => {
   window.orderBook = orderBook
   return (
     <Element>
-      <Box p={3} pt={6}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <StockChart stock={stock} stockName={stockName} connected={connected} />
-          </Grid>
-          <Grid item xs={12} sm={5}>
-            <BuySellForm
-              buttonColor="green"
-              buttonText="BUY"
-              orderType="bid"
-              ticker={ticker}
-              orders={buyOrders}
-              orderBook={orderBook}
-              onExecute={onExecute}
-              movieCategories={movieCategories}
-              marketOrderType={marketOrderType}
-              funds={funds}
-              connected={connected}
-            />
-          </Grid>
-          <Grid item xs={12} sm={2}>
-            <Grid
-              container
-              direction="column"
-              alignItems="center"
-              className="divider"
-              style={{
-                marginTop: "84px"
-              }}
-            >
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color={marketOrderType ? "primary" : "default"}
-                  onClick={() => setMarketOrderType(true)}
-                  style={{
-                    margin: "8px 32px"
-                  }}
-                >
-                  Market
-                            </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color={marketOrderType ? "default" : "primary"}
-                  onClick={() => setMarketOrderType(false)}
-                  style={{
-                    margin: "8px 32px"
-                  }}
-                >
-                  Limit
-                            </Button>
-              </Grid>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6} md={3}>
+          <BuySellForm
+            buttonColor="green"
+            buttonText="BUY"
+            orderType="bid"
+            ticker={ticker}
+            orders={buyOrders}
+            orderBook={orderBook}
+            onExecute={onExecute}
+            movieCategories={movieCategories}
+            marketOrderType={marketOrderType}
+            funds={funds}
+            connected={connected}
+          />
+          <BuySellForm
+            buttonColor="red"
+            buttonText="SELL"
+            orderType="ask"
+            ticker={ticker}
+            orders={sellOrders}
+            orderBook={orderBook}
+            onExecute={onExecute}
+            movieCategories={movieCategories}
+            maxSell={maxSell}
+            marketOrderType={marketOrderType}
+            funds={funds}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={9}>
+          <StockChart stock={stock} stockName={stockName} connected={connected} />
+        </Grid>
+        <Grid item xs={12}>
+          <Grid
+            container
+            direction="column"
+            alignItems="center"
+            className="divider"
+            style={{
+              marginTop: "84px"
+            }}
+          >
+            <Grid item>
+              <Button
+                variant="contained"
+                color={marketOrderType ? "primary" : "default"}
+                onClick={() => setMarketOrderType(true)}
+                style={{
+                  margin: "8px 32px"
+                }}
+              >
+                Market
+                          </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="contained"
+                color={marketOrderType ? "default" : "primary"}
+                onClick={() => setMarketOrderType(false)}
+                style={{
+                  margin: "8px 32px"
+                }}
+              >
+                Limit
+                          </Button>
             </Grid>
           </Grid>
-          <Grid item xs={12} sm={5}>
-            <BuySellForm
-              buttonColor="red"
-              buttonText="SELL"
-              orderType="ask"
-              ticker={ticker}
-              orders={sellOrders}
-              orderBook={orderBook}
-              onExecute={onExecute}
-              movieCategories={movieCategories}
-              maxSell={maxSell}
-              marketOrderType={marketOrderType}
-              funds={funds}
-            />
-          </Grid>
         </Grid>
-      </Box>
+      </Grid>
 
       <style jsx>{`
                 .title {
