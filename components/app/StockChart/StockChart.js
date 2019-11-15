@@ -94,9 +94,11 @@ class StockChart extends React.Component {
     let prevPrice, openPrice
     if (isEmpty(dailyData)) {
       //if no daily data take opening of intraday
-      prevPrice, openPrice = intradayData[0].minute
+      openPrice = intradayData[0].minute
+      prevPrice = openPrice
     } else {
-      prevPrice, openPrice = dailyData[dailyData.length - 1].close
+      openPrice = dailyData[dailyData.length - 1].close
+      prevPrice = openPrice
     }
 
     // if market is closed then dailyData will have today's information, therefore previous day's close will actually be second to last item in it
