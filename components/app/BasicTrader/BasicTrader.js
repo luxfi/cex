@@ -80,7 +80,7 @@ export default props => {
         <Grid item xs={12}>
           <StockChart stock={stock} stockName={stockName} connected={connected} />
         </Grid>
-        <Grid item xs={12} sm={5}>
+        <Grid item xs={12} sm={6}>
           <BuySellForm
             buttonColor="green"
             buttonText="BUY"
@@ -96,43 +96,7 @@ export default props => {
             accountBalance={accountBalance}
           />
         </Grid>
-        <Grid item xs={12} sm={2}>
-          <Grid
-            container
-            direction="column"
-            alignItems="center"
-            className="divider"
-            style={{
-              marginTop: "84px"
-            }}
-          >
-            <Grid item>
-              <Button
-                variant="contained"
-                color={marketOrderType ? "primary" : "default"}
-                onClick={() => setMarketOrderType(true)}
-                style={{
-                  margin: "8px 32px"
-                }}
-              >
-                Market
-                          </Button>
-            </Grid>
-            <Grid item>
-              <Button
-                variant="contained"
-                color={marketOrderType ? "default" : "primary"}
-                onClick={() => setMarketOrderType(false)}
-                style={{
-                  margin: "8px 32px"
-                }}
-              >
-                Limit
-                          </Button>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={12} sm={5}>
+        <Grid item xs={12} sm={6}>
           <BuySellForm
             buttonColor="red"
             buttonText="SELL"

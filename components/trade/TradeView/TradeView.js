@@ -99,7 +99,7 @@ class Index extends React.Component {
       // if going to a new tab, collapse the view as well.
       localStorage.setItem("tradeMode", tab)
       this.setState({
-        selectedMode: tab
+        selectedMode: tab || "pro",
       })
     }
   }
@@ -139,6 +139,21 @@ class Index extends React.Component {
       orderBook.setMarketOrderType(marketOrder)
     }
 
+    const createOrder = (order) => {
+      orderBook.socketOrderCreate(
+        order,
+        (ticker, orderType) => {
+          const updateBalance = (side, val) => {
+            if (side === 'bid')
+              userStore.removeBalance(val)
+            else
+              userStore.addBalance(val)
+          }
+          userPortfolio.onOrderExecute(order, ticker, orderType, updateBalance)
+        }
+      )
+    }
+
     // Load necessary user data
     const maxSell = userPortfolio.getMaxSell(movie.ticker)
 
@@ -170,7 +185,9 @@ class Index extends React.Component {
                   buyOrders={buyOrders}
                   sellOrders={sellOrders}
                   orderBook={orderBook}
+                  book={orderBook.book}
                   ticker={movie.ticker}
+                  createOrder={createOrder}
                   onExecute={(order, orderType) => {
                     return userPortfolio.onOrderExecute(order, orderType)
                   }}
@@ -193,7 +210,9 @@ class Index extends React.Component {
                   buyOrders={buyOrders}
                   sellOrders={sellOrders}
                   orderBook={orderBook}
+                  book={orderBook.book}
                   ticker={movie.ticker}
+                  createOrder={createOrder}
                   onExecute={(order, orderType) => {
                     return userPortfolio.onOrderExecute(order, orderType)
                   }}

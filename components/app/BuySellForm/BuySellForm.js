@@ -220,7 +220,7 @@ export default class BuySellForm extends React.Component {
         >
           {buttonText}
         </button>
-        <LimitOrders orders={orders} />
+        {/* <LimitOrders orders={orders} /> */}
         <style jsx>{`
           form {
             width: 100%;
