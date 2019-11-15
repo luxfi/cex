@@ -150,8 +150,8 @@ export default props => {
 
   window.orderBook = orderBook
 
-  let bids = book.orderBook.bids.slice().reverse().slice(0, 10)
-  let asks = book.orderBook.asks.slice().slice(0, 10).reverse()
+  let bids = book.orderBook.bids.slice().reverse().slice(0, 5)
+  let asks = book.orderBook.asks.slice().slice(0, 5).reverse()
 
   return (
     <Element>
@@ -275,37 +275,41 @@ export default props => {
           <StockChart stock={stock} stockName={stockName} connected={connected} />
         </Grid>
         <Grid item xs={12}>
-          <Grid container>
-            <Grid item xs={6}>
-              Price
-            </Grid>
-            <Grid item xs={6}>
-              Quantity
-            </Grid>
-          </Grid>
-            { asks.map((ask) =>
-                <Grid container style={{ color: 'red' }}>
-                  <Grid item xs={6}>
-                    ${parseFloat(ask[0]).toFixed(2)}
-                  </Grid>
-                  <Grid item xs={6}>
-                    {parseFloat(ask[1]).toFixed(0)}
-                  </Grid>
+          <Paper>
+            <Box p={2}>
+              <Grid container>
+                <Grid item xs={6}>
+                  Price
                 </Grid>
-              )
-            }
-            { bids.map((bid) =>
-                <Grid container style={{ color: 'green' }}>
-                  <Grid item xs={6}>
-                    ${parseFloat(bid[0]).toFixed(2)}
-                  </Grid>
-                  <Grid item xs={6}>
-                    {parseFloat(bid[1]).toFixed(0)}
-                  </Grid>
+                <Grid item xs={6}>
+                  Quantity
                 </Grid>
-              )
-            }
-          </Grid>
+              </Grid>
+                { asks.map((ask) =>
+                    <Grid container style={{ color: 'red' }}>
+                      <Grid item xs={6}>
+                        ${parseFloat(ask[0]).toFixed(2)}
+                      </Grid>
+                      <Grid item xs={6}>
+                        {parseFloat(ask[1]).toFixed(0)}
+                      </Grid>
+                    </Grid>
+                  )
+                }
+                { bids.map((bid) =>
+                    <Grid container style={{ color: 'green' }}>
+                      <Grid item xs={6}>
+                        ${parseFloat(bid[0]).toFixed(2)}
+                      </Grid>
+                      <Grid item xs={6}>
+                        {parseFloat(bid[1]).toFixed(0)}
+                      </Grid>
+                    </Grid>
+                  )
+                }
+            </Box>
+          </Paper>
+        </Grid>
       </Grid>
 
       <style jsx>{`
