@@ -146,7 +146,7 @@ const ReferralCard = props => {
           readOnly
         />
         <CopyToClipboard text={rewardsURL} onCopy={onCopied}>
-          <Button variant="outlined" color="inherit">
+          <Button variant="outlined">
             <FontAwesomeIcon className={classes.clipboardIcon} icon={faClipboard} />&nbsp;Copy
           </Button>
         </CopyToClipboard>

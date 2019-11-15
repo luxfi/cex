@@ -7,7 +7,7 @@ import './Item.css'
 import { Card, CardContent, Typography, Box, Grid } from "@material-ui/core"
 import IconArrowDown from '../Icons/IconArrowDown'
 import { TrailerSliderModal } from ".."
-const { forwardRef, useRef, useImperativeHandle } = React
+const { useRef } = React
 
 const Item = ({ category, openModal }) => {
   const childRef = useRef()

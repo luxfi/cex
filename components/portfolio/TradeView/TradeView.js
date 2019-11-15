@@ -7,6 +7,7 @@ import WatchlistSection from '../WatchlistSection/WatchlistSection'
 
 const TradeView = props => {
   const {
+    accountBalance,
     tabIdx,
     index,
     investments,
@@ -39,6 +40,7 @@ const TradeView = props => {
         benefitsMonthly={benefitsMonthly}
         topCategories={topCategories}
         topChips={topChips}
+        accountBalance={accountBalance}
       />
       <ActivePositions investments={investments} findMovieByTicker={findMovieByTicker} />
       <TopInvestmentPicks store={store} />

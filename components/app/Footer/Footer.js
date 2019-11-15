@@ -19,7 +19,7 @@ import {
   Button,
   IconButton,
   Grid,
-  Box
+  Box,
 } from "@material-ui/core"
 
 import { CustomLink } from ".."
