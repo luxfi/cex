@@ -176,6 +176,7 @@ const FooterMiddleRow = ({ classes, openModal }) => (
     <Grid sm={12} item container>
       {footers.map(footer => (
         <Grid item xs={12} sm={6} md={3} key={footer.title} className={classes.footerColumn} >
+          <div className={classes.footerColumnInner}>
           <Typography variant="h6" color="textPrimary" gutterBottom>
             {footer.title}
           </Typography>
@@ -207,7 +208,7 @@ const FooterMiddleRow = ({ classes, openModal }) => (
               )
             })}
           </ul>
-          <br />
+          </div>
         </Grid>
       ))}
     </Grid>
@@ -312,15 +313,31 @@ const styles = theme => {
     footerColumnsOuter: {
       display: "flex",
       flexDirection: "column",
-      //alignItems: "center",
+      justifyContent: "center",
+      paddingRight: theme.spacing(6),
+      paddingLeft: theme.spacing(6),
+      marginBottom: theme.spacing(3),
       [theme.breakpoints.down("sm")]: {
-        flexDirection: "column-reverse"
+        flexDirection: "column-reverse",
+        marginBottom: theme.spacing(1),
       }
     },
     footerColumn: {
       display: "flex",
       flexDirection: "column",
-      alignItems: "center",
+      alignItems: "align-left",
+      [theme.breakpoints.down("xs")]: {
+        alignItems: "center",
+      }
+    },
+    footerColumnInner: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "align-left",
+      marginBottom: theme.spacing(2),
+      [theme.breakpoints.down("xs")]: {
+        alignItems: "center",
+      }
     },
     logoImg: {
       display: "block",
@@ -338,7 +355,10 @@ const styles = theme => {
     appArea: {
       display: "flex",
       flexDirection: "column",
-      justifyContent: "center"
+      justifyContent: "center",
+      [theme.breakpoints.down("sm")]: {
+        marginBottom: theme.spacing(3)
+      }
     },
     appStoreButtons: {
 
@@ -351,11 +371,19 @@ const styles = theme => {
     },
 
 
-    footer: {
-      padding: theme.spacing(3),
-      [theme.breakpoints.up("sm")]: {
-        paddingTop: theme.spacing(6),
-        paddingBottom: theme.spacing(6)
+    root: {
+      margin: "0 auto",
+      [theme.breakpoints.down("xs")]: {
+        width: "98%",
+      },
+      [theme.breakpoints.down("sm")]: {
+        width: "90%",
+      },
+      [theme.breakpoints.down("md")]: {
+        width: "80%",
+      },
+      [theme.breakpoints.down("xl")]: {
+        width: "65%",
       }
     },
     copyrightOuter: {
