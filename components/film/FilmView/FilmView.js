@@ -14,7 +14,12 @@ import { Button, Grid, Typography } from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
 
 // core components
-import { CustomBreadcrumbs, Chart, InvestNow } from "../../app"
+import {
+  CustomBreadcrumbs,
+  BasicTrader,
+  InvestNow,
+  ProTrader
+} from "../../app"
 import { TrailerModal } from "../../landing"
 
 // section
@@ -61,7 +66,11 @@ const formatMonthlyStats = (price, valueDelta) => {
 }
 
 const PageTabs = props => {
-  const { classes, onTabSelected, selectedTab } = props
+  const {
+    classes,
+    onTabSelected,
+    selectedTab
+  } = props
 
   return (
     <div className={classes.pageTabsOuter}>
@@ -93,7 +102,8 @@ class Index extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedTab: "about"
+      selectedTab: "about",
+      selectedTrader: "basic",
     }
     this.onTabSelected = this.onTabSelected.bind(this)
   }
@@ -316,38 +326,36 @@ class Index extends React.Component {
           <span className={classes.centsValue}>.{price[1]}</span>
         </div>
         <div className={classes.deltaRow}>{deltaString}</div> */}
-        {!loggedIn
-          ? this.renderInvestButton(
+        {!loggedIn &&
+          this.renderInvestButton(
             classNames(classes.movieButton, classes.statsButton),
             movie,
             "Invest Now"
           )
-          : null}
-        <div>
-          {orderBook.connected ? (
-            <Chart
-              chartData={chartData}
-              yDomain={yDomain}
-              updatePrintInterval={updatePrintInterval}
-              setActiveChart={setActiveChart}
-              setMarketOrderType={setMarketOrderType}
-              marketOrderType={marketOrderType}
-              funds={funds}
-              printInterval={printInterval}
-              activeChart={activeChart}
-              buyOrders={buyOrders}
-              sellOrders={sellOrders}
-              orderBook={orderBook}
-              ticker={movie.ticker}
-              onExecute={onExecute}
-              movieCategories={toJS(movie.genre)}
-              maxSell={maxSell}
-              stockName={movie.name}
-            />
-          ) : (
-              <Typography>Loading chart...</Typography>
-            )}
-        </div>
+        }
+        {orderBook.connected ? (
+          <BasicTrader
+            chartData={chartData}
+            yDomain={yDomain}
+            updatePrintInterval={updatePrintInterval}
+            setActiveChart={setActiveChart}
+            setMarketOrderType={setMarketOrderType}
+            marketOrderType={marketOrderType}
+            funds={funds}
+            printInterval={printInterval}
+            activeChart={activeChart}
+            buyOrders={buyOrders}
+            sellOrders={sellOrders}
+            orderBook={orderBook}
+            ticker={movie.ticker}
+            onExecute={onExecute}
+            movieCategories={toJS(movie.genre)}
+            maxSell={maxSell}
+            stockName={movie.name}
+          />
+        ) : (
+            <Typography>Loading chart...</Typography>
+          )}
       </div>
     )
   }
@@ -451,17 +459,22 @@ class Index extends React.Component {
 
     return (
       <>
-        <article
-          className={classNames(classes.container, classes.outermost)}
-        >
-          {this.renderUpperRow(
-            classes,
-            this.state.selectedTab,
-            movie
-          )}
-          {this.state.selectedTab === "about"
-            ? this.renderAboutMain(classes, movie, addToWatchlist)
-            : this.renderInvestMain(
+        { this.state.selectedTab === "about" &&
+          <article
+            className={classNames(classes.container, classes.outermost)}
+          >
+            { this.renderUpperRow(
+              classes,
+              this.state.selectedTab,
+              movie
+            )}
+            { this.renderAboutMain(classes, movie, addToWatchlist) }
+            { this.renderAboutMore(classes, movie) }
+          </article>
+        }
+        { this.state.selectedTab === "invest" && this.state.selectedTrader === "basic" &&
+          <article>
+            { this.renderInvestMain(
               classes,
               movie,
               orderBook.price,
@@ -486,10 +499,37 @@ class Index extends React.Component {
               },
               maxSell
             )}
-          {this.state.selectedTab === "about"
-            ? this.renderAboutMore(classes, movie)
-            : null}
-        </article>
+          </article>
+        }
+        { this.state.selectedTab === "invest" && this.state.selectedTrader === "pro" &&
+          <article>
+            { this.renderInvestMain(
+              classes,
+              movie,
+              orderBook.price,
+              chartData,
+              yDomain,
+              updatePrintInterval,
+              setActiveChart,
+              setMarketOrderType,
+              marketOrderType,
+              funds,
+              printInterval,
+              activeChart,
+              buyOrders,
+              sellOrders,
+              orderBook,
+              userStore.token !== null,
+              (order, orderType) => {
+                return userPortfolio.onOrderExecute(
+                  order,
+                  orderType
+                )
+              },
+              maxSell
+            )}
+          </article>
+        }
         <div
           className={classNames(classes.container)}
           style={{ paddingLeft: "0px", paddingRight: "0px" }}

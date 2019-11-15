@@ -24,7 +24,10 @@ export default theme => ({
   },
 
   outermost: {
-    padding: "0 32px 32px 32px"
+    paddingTop: 64,
+    paddingLeft: 32,
+    paddingRight: 32,
+    paddingBottom: 32,
   },
 
   breadcrumbRow: {
