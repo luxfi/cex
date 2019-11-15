@@ -65,45 +65,13 @@ const formatMonthlyStats = (price, valueDelta) => {
   )
 }
 
-const PageTabs = props => {
-  const {
-    classes,
-    onTabSelected,
-    selectedTab
-  } = props
-
-  return (
-    <div className={classes.pageTabsOuter}>
-      <a
-        className={classNames(
-          classes.pageTab,
-          selectedTab === "about" ? classes.selectedTab : ""
-        )}
-        onClick={() => onTabSelected("about")}
-      >
-        About
-            </a>
-      <a
-        className={classNames(
-          classes.pageTab,
-          selectedTab === "invest" ? classes.selectedTab : ""
-        )}
-        onClick={() => onTabSelected("invest")}
-      >
-        Invest
-            </a>
-    </div>
-  )
-}
-
 @inject("store")
 @observer
 class Index extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedTab: "about",
-      selectedTrader: "basic",
+      selectedMode: "basic",
     }
     this.onTabSelected = this.onTabSelected.bind(this)
   }
@@ -128,290 +96,12 @@ class Index extends React.Component {
   }
 
   onTabSelected(tab) {
-    if (this.state.selectedTab !== tab) {
+    if (this.state.selectedMode !== tab) {
       // if going to a new tab, collapse the view as well.
       this.setState({
-        selectedTab: tab
+        selectedMode: tab
       })
     }
-  }
-
-  renderInvestButton(className, movie, text, onClick) {
-    return (
-      <Button
-        component={ButtonLink}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          color: "black",
-          height: "48px"
-        }}
-        className={className}
-        onClick={onClick}
-      >
-        {text}
-      </Button>
-    )
-  }
-
-  renderUpperRow(classes, selectedTab, movie) {
-    return (
-      <div
-        className={classNames(
-          classes.leftAndRight,
-          classes.breadcrumbRow
-        )}
-        style={{ marginTop: "20px" }}
-      >
-        <CustomBreadcrumbs>{movie.name}</CustomBreadcrumbs>
-        <PageTabs
-          classes={classes}
-          selectedTab={selectedTab}
-          onTabSelected={this.onTabSelected}
-        />
-      </div>
-    )
-  }
-
-  renderAboutMain(classes, movie, addToWatchList) {
-    return (
-      <Grid container>
-        <Grid item xs={12} md={9}>
-          <div className={classes.titleAndDescription}>
-            <h1
-              className={classes.title}
-              style={{ textAlign: "left" }}
-            >
-              {movie.name}
-            </h1>
-            <p className={classes.description}>
-              {movie.shortDescription}
-            </p>
-          </div>
-          <div>
-            <TrailerModal movie={movie} />
-            <Button
-              target="_blank"
-              href={ "/trade/" + movie.movieSlug }
-              rel="noopener noreferrer"
-              variant="contained"
-              className={classes.movieButton}
-            >
-              Invest
-            </Button>
-            <Button
-              rel="noopener noreferrer"
-              variant="contained"
-              className={classes.movieButton}
-              onClick={addToWatchList(movie.ticker)}
-            >
-              Add to watchlist
-            </Button>
-          </div>
-          <br />
-          <br />
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <img src={movie.posterImg} height="444" />
-        </Grid>
-      </Grid>
-    )
-  }
-
-  renderTableRow(field, label, movie) {
-    // note that Array.isArray() will return false
-    const content = isObservableArray(movie[field])
-      ? movie[field].join(", ")
-      : movie[field]
-
-    return (
-      <tr style={{ marginBottom: "12px" }}>
-        <td valign="top">{label}</td>
-        <td valign="top">{content}</td>
-      </tr>
-    )
-  }
-
-  renderAboutMore(classes, movie) {
-    return (
-      <>
-        <div className={classes.aboutMoreTitleArea}>
-          <h1 className={classes.sectionTitle}>About</h1>
-          <h2 className={classes.sectionByline}>
-            More about the film
-                    </h2>
-        </div>
-        <div className={classes.aboutMoreCopyArea}>
-          <div className={classes.aboutMoreStats}>
-            <table className={classes.aboutMoreStatsTable}>
-              <tbody>
-                {this.renderTableRow(
-                  "director",
-                  "Director",
-                  movie
-                )}
-                {this.renderTableRow(
-                  "actors",
-                  "Starring",
-                  movie
-                )}
-                {this.renderTableRow(
-                  "writer",
-                  "Writers",
-                  movie
-                )}
-                {this.renderTableRow("genre", "Genres", movie)}
-                {this.renderTableRow("rated", "Rating", movie)}
-              </tbody>
-            </table>
-          </div>
-          <div className={classes.aboutMoreText}>
-            <p>
-              Ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore
-              eu fugiat nulla pariatur.
-                        </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing
-              elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam, quis
-              nostrud exercitation ullamco laboris nisi ut aliquip
-              ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore
-              eu fugiat nulla pariatur. Excepteur sint occaecat
-              cupidatat non proident, sunt in culpa qui officia
-              deserunt mollit anim id est laborum.
-                        </p>
-          </div>
-        </div>
-      </>
-    )
-  }
-
-  renderInvestMain(
-    classes,
-    movie,
-    chartPrice,
-    chartData,
-    yDomain,
-    updatePrintInterval,
-    setActiveChart,
-    setMarketOrderType,
-    marketOrderType,
-    funds,
-    printInterval,
-    activeChart,
-    buyOrders,
-    sellOrders,
-    orderBook,
-    loggedIn,
-    onExecute,
-    maxSell
-  ) {
-    const price = padDollarAmount(chartPrice).split(".")
-    const deltaString = formatMonthlyStats(
-      chartPrice,
-      (chartPrice - movie.price).toFixed(2)
-    )
-    return (
-      <div>
-        {/* <h1 className={classes.investCompanyName}>{movie.name}</h1>
-        <h3 className={classes.investCompanyDescription}>
-          {movie.financialDescription}
-        </h3>
-        <div className={classes.investPrice}>
-          <span className={classes.dollarSign}>$</span>
-          <span className={classes.dollarValue}>{price[0]}</span>
-          <span className={classes.centsValue}>.{price[1]}</span>
-        </div>
-        <div className={classes.deltaRow}>{deltaString}</div> */}
-        {!loggedIn &&
-          this.renderInvestButton(
-            classNames(classes.movieButton, classes.statsButton),
-            movie,
-            "Invest Now"
-          )
-        }
-        {orderBook.connected ? (
-          <BasicTrader
-            chartData={chartData}
-            yDomain={yDomain}
-            updatePrintInterval={updatePrintInterval}
-            setActiveChart={setActiveChart}
-            setMarketOrderType={setMarketOrderType}
-            marketOrderType={marketOrderType}
-            funds={funds}
-            printInterval={printInterval}
-            activeChart={activeChart}
-            buyOrders={buyOrders}
-            sellOrders={sellOrders}
-            orderBook={orderBook}
-            ticker={movie.ticker}
-            onExecute={onExecute}
-            movieCategories={toJS(movie.genre)}
-            maxSell={maxSell}
-            stockName={movie.name}
-          />
-        ) : (
-            <Typography>Loading chart...</Typography>
-          )}
-      </div>
-    )
-  }
-
-  renderInvestMore(classes, movie) {
-    return (
-      <div className={classes.investMoreOuter}>
-        <table className={classes.investMoreTable}>
-          <tbody>
-            <tr>
-              <td>OPEN</td>
-              <td>631.45</td>
-            </tr>
-            <tr>
-              <td>OPEN</td>
-              <td>631.45</td>
-            </tr>
-            <tr>
-              <td>OPEN</td>
-              <td>631.45</td>
-            </tr>
-            <tr>
-              <td>OPEN</td>
-              <td>631.45</td>
-            </tr>
-            <tr>
-              <td>OPEN</td>
-              <td>631.45</td>
-            </tr>
-          </tbody>
-        </table>
-        <table className={classes.investMoreTable}>
-          <tbody>
-            <tr>
-              <td>OPEN</td>
-              <td>631.45</td>
-            </tr>
-            <tr>
-              <td>OPEN</td>
-              <td>631.45</td>
-            </tr>
-            <tr>
-              <td>OPEN</td>
-              <td>631.45</td>
-            </tr>
-            <tr>
-              <td>OPEN</td>
-              <td>631.45</td>
-            </tr>
-            <tr>
-              <td>OPEN</td>
-              <td>631.45</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    )
   }
 
   render() {
@@ -458,49 +148,38 @@ class Index extends React.Component {
 
     return (
       <>
-        { this.state.selectedTab === "about" &&
-          <article
-            className={classNames(classes.container, classes.outermost)}
-          >
-            { this.renderUpperRow(
-              classes,
-              this.state.selectedTab,
-              movie
-            )}
-            { this.renderAboutMain(classes, movie, addToWatchlist) }
-            { this.renderAboutMore(classes, movie) }
-          </article>
-        }
-        { this.state.selectedTab === "invest" && this.state.selectedTrader === "basic" &&
+        { this.state.selectedMode === "basic" &&
           <article>
-            { this.renderInvestMain(
-              classes,
-              movie,
-              orderBook.price,
-              chartData,
-              yDomain,
-              updatePrintInterval,
-              setActiveChart,
-              setMarketOrderType,
-              marketOrderType,
-              funds,
-              printInterval,
-              activeChart,
-              buyOrders,
-              sellOrders,
-              orderBook,
-              userStore.token !== null,
-              (order, orderType) => {
-                return userPortfolio.onOrderExecute(
-                  order,
-                  orderType
-                )
-              },
-              maxSell
-            )}
+            {
+              orderBook.connected ? (
+                <BasicTrader
+                  chartData={chartData}
+                  yDomain={yDomain}
+                  updatePrintInterval={updatePrintInterval}
+                  setActiveChart={setActiveChart}
+                  setMarketOrderType={setMarketOrderType}
+                  marketOrderType={marketOrderType}
+                  funds={funds}
+                  printInterval={printInterval}
+                  activeChart={activeChart}
+                  buyOrders={buyOrders}
+                  sellOrders={sellOrders}
+                  orderBook={orderBook}
+                  ticker={movie.ticker}
+                  onExecute={(order, orderType) => {
+                    return userPortfolio.onOrderExecute(order, orderType)
+                  }}
+                  movieCategories={toJS(movie.genre)}
+                  maxSell={maxSell}
+                  stockName={movie.name}
+                />
+              ) : (
+                <Typography>Loading chart...</Typography>
+              )
+            }
           </article>
         }
-        { this.state.selectedTab === "invest" && this.state.selectedTrader === "pro" &&
+        { this.state.selectedMode === "pro" &&
           <article>
             { this.renderInvestMain(
               classes,
