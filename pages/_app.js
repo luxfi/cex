@@ -2,9 +2,10 @@ import React from "react"
 import { Provider, observer } from "mobx-react"
 import { withRouter } from "next/router"
 import App from "next/app"
+import { withStyles } from "@material-ui/core/styles"
 
 import { MuiThemeProvider } from "@material-ui/core/styles"
-import { NoSsr, CssBaseline} from '@material-ui/core'
+import { NoSsr, CssBaseline, Container } from '@material-ui/core'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 
 // This ensures that the icon CSS is loaded immediately before attempting to render icons
@@ -13,18 +14,34 @@ import { config } from "@fortawesome/fontawesome-svg-core"
 // Prevent fontawesome from dynamically adding its css since we did it manually above
 config.autoAddCss = false
 
-import { 
-  CustomSnackbar, 
-  Header, 
+import {
+  CustomSnackbar,
+  Header,
   MobileNavMenu,
-  Footer, 
+  Footer,
   CustomModal,
-  MobileAccountMenu 
+  MobileAccountMenu
 } from "../components/app"
 
 import ReactGA from 'react-ga'
 import initializeStore from "../stores/stores"
 import { darkTheme, lightTheme } from "../styles/esxThemes"
+
+const styles = darkTheme => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+  },
+  main: {
+    marginTop: darkTheme.spacing(8),
+    marginBottom: darkTheme.spacing(2),
+  },
+  footer: {
+    padding: darkTheme.spacing(2),
+    marginTop: 'auto',
+  },
+})
 
 // ****************
 @observer
@@ -60,7 +77,7 @@ class MyMobxApp extends App {
       : initializeStore(props.initialMobxState)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     ReactGA.initialize('UA-151184093-1')
   }
 
@@ -69,56 +86,64 @@ class MyMobxApp extends App {
   }
 
   render() {
-    const { 
-      Component, 
-      pageProps, 
-      width
+    const {
+      Component,
+      pageProps,
+      width,
+      classes
     } = this.props
-    
-    const showDesktopNav = isWidthUp('md', width) 
-    const showDesktopProfileMenu = isWidthUp('sm', width) 
+
+    const showDesktopNav = isWidthUp('md', width)
+    const showDesktopProfileMenu = isWidthUp('sm', width)
 
     return (
-        <Provider store={this.mobxStore}>
+      <Provider store={this.mobxStore}>
         <MuiThemeProvider theme={darkTheme}>
-          <CssBaseline />
-          <NoSsr>
-            <Header 
-              showDesktopNav={showDesktopNav}
-              showDesktopProfileMenu={showDesktopProfileMenu}
-              handlePlaceholder={this.placeholder} 
-              isLoggedIn={this.mobxStore.userStore.loggedIn}
-              openLeftDrawer={() => this.mobxStore.uiStore.setLeftDrawerOpen(true)}
-              openRightDrawer={() => this.mobxStore.uiStore.setRightDrawerOpen(true)}
-              handleLogout={() => {this.mobxStore.userStore.logout()}}
-            />
-            <MobileNavMenu 
-              open={this.mobxStore.uiStore.drawers.left}
-              setOpen={this.mobxStore.uiStore.setLeftDrawerOpen}
-              handlePlaceholder={this.placeholder} 
-            />
-            <Component
-              {...pageProps}
-              darkTheme={darkTheme}
-              lightTheme={lightTheme}
-            />
-            <CustomModal
-              open={this.mobxStore.uiStore.modal.open}
-              handleClose={() => this.mobxStore.uiStore.closeModal()}
-              body={this.mobxStore.uiStore.modal.body}
-              title={this.mobxStore.uiStore.modal.title}
-            />
-            <CustomSnackbar />
-            <MobileAccountMenu 
-              open={this.mobxStore.uiStore.drawers.right}
-              setOpen={this.mobxStore.uiStore.setRightDrawerOpen}
-              isLoggedIn={this.mobxStore.userStore.loggedIn}
-              handleLogout={() => { this.mobxStore.userStore.logout() }}
-              handlePlaceholder={this.placeholder}
-            />
-            <Footer openModal={this.openModal} />
-        </NoSsr>
-      </MuiThemeProvider>
+          <div className={classes.root}>
+            <CssBaseline />
+            <NoSsr>
+              <Header
+                showDesktopNav={showDesktopNav}
+                showDesktopProfileMenu={showDesktopProfileMenu}
+                handlePlaceholder={this.placeholder}
+                isLoggedIn={this.mobxStore.userStore.loggedIn}
+                openLeftDrawer={() => this.mobxStore.uiStore.setLeftDrawerOpen(true)}
+                openRightDrawer={() => this.mobxStore.uiStore.setRightDrawerOpen(true)}
+                handleLogout={() => { this.mobxStore.userStore.logout() }}
+              />
+              <MobileNavMenu
+                open={this.mobxStore.uiStore.drawers.left}
+                setOpen={this.mobxStore.uiStore.setLeftDrawerOpen}
+                handlePlaceholder={this.placeholder}
+              />
+              <div component="main" className={classes.main} maxWidth="sm">
+                <Component
+                  {...pageProps}
+                  darkTheme={darkTheme}
+                  lightTheme={lightTheme}
+                />
+              </div>
+              <CustomModal
+                open={this.mobxStore.uiStore.modal.open}
+                handleClose={() => this.mobxStore.uiStore.closeModal()}
+                body={this.mobxStore.uiStore.modal.body}
+                title={this.mobxStore.uiStore.modal.title}
+              />
+
+              <CustomSnackbar />
+              <MobileAccountMenu
+                open={this.mobxStore.uiStore.drawers.right}
+                setOpen={this.mobxStore.uiStore.setRightDrawerOpen}
+                isLoggedIn={this.mobxStore.userStore.loggedIn}
+                handleLogout={() => { this.mobxStore.userStore.logout() }}
+                handlePlaceholder={this.placeholder}
+              />
+              <footer className={classes.footer}>
+                <Footer openModal={this.openModal} />
+              </footer>
+            </NoSsr>
+          </div>
+        </MuiThemeProvider>
       </Provider>
     )
   }
@@ -130,4 +155,4 @@ class MyMobxApp extends App {
   }
 }
 
-export default withWidth()(withRouter(MyMobxApp))
+export default withWidth()(withRouter(withStyles(styles)(MyMobxApp)))
