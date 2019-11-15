@@ -196,7 +196,7 @@ export default class OrderBook {
   }
 
   @action disconnect() {
-    this.socket.disconnect()
+    this.socket && this.socket.disconnect()
   }
 
   @action socketOrderCreate(order, updateBalance) {
