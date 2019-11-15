@@ -47,7 +47,7 @@ export default class OrderBook {
 
   @observable ticker = ""
   @observable price = 13.37
-  @observable book = new LimitOrderBook()
+  @observable book = undefined //new LimitOrderBook()
   @observable buys = []
   @observable sells = []
   @observable takeResults = []
@@ -61,6 +61,9 @@ export default class OrderBook {
   @observable intradayData = []
   @observable dailyData = []
   @observable previousDayClose = []
+  @observable order = {}
+
+  activeOrders = {}
 
   constructor(
     initialData = {
@@ -145,7 +148,6 @@ export default class OrderBook {
             lastData.label = timestamp.format('LT')
 
             filteredData.push(lastData)
-            console.log('push', lastData.id)
             targetTime += 5
             if (targetTime % 100 >= 60) {
               targetTime += 40
@@ -154,7 +156,6 @@ export default class OrderBook {
 
           if (targetTime === data.id) {
             filteredData.push(data)
-            console.log('push', data.id)
           }
 
           lastData = data
@@ -172,13 +173,14 @@ export default class OrderBook {
       console.log("candles.get.error", err)
     })
     this.socket.on("book.data", data => {
-      console.log("book.data", data)
+      this.book = data
     })
+
     this.socket.on('disconnect', () => {
       this.connected = false
       const reconnect = setInterval(() => {
         if (!this.connected)
-          this.connect()
+          this.connect(ticker)
         else {
           this.connected = true
           clearInterval(reconnect)
@@ -197,12 +199,16 @@ export default class OrderBook {
 
   @action socketOrderCreate(order) {
     // const { externalId, side, type, quantity, price, name } = order
-    this.socket.emit("order.create", order)
+    let externalId = uuid.v4()
+    let name = this.ticker
+
+    this.activeOrders[externalId] = true
+    this.socket.emit("order.create", Object.assign({ externalId, name }, order))
   }
 
   @action getIntradayData(ticker) {
     // day is 24 hr based on EST
-    const now = moment('2019-11-13').tz('America/New_York')
+    const now = moment(/*'2019-11-13'*/).tz('America/New_York')
     // const startTime = now.startOf('day').valueOf()
     // const endTime = now.endOf('day').valueOf()
     const startTime = moment(now).startOf('day').add(9, 'hours').valueOf()
@@ -461,7 +467,7 @@ export default class OrderBook {
   }
 
   @computed get isReady() {
-    return this.connected && this.intradayData.length > 0 && this.dailyData.length > 0
+    return this.connected && this.book && this.intradayData.length > 0 && this.dailyData.length > 0
   }
 
   generatefullDay(book) {
