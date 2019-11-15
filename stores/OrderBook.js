@@ -11,7 +11,8 @@ const LimitOrder = require("limit-order-book").LimitOrder
 const MarketOrder = require("limit-order-book").MarketOrder
 const LimitOrderBook = require("limit-order-book").LimitOrderBook
 
-const SOCKET_STRING = "http://localhost:4000"
+const SOCKET_STRING = 'https://exchange.hanzo.ai'
+//const SOCKET_STRING = 'localhost:4000'
 
 const bidAsk = () => {
   return Math.floor(Math.random() * 2) == 0 ? "bid" : "ask" // 50/50 chance of "bid" or "ask"
@@ -42,6 +43,8 @@ export default class OrderBook {
    * unique id of this todo, immutable.
    */
   id = null
+
+  intervalId = null
 
   @observable ticker = ""
   @observable price = 13.37
@@ -89,7 +92,9 @@ export default class OrderBook {
 
   @action connect(ticker) {
     this.ticker = ticker
-    this.socket = io(SOCKET_STRING)
+    this.socket = io(SOCKET_STRING, {
+      transports: ['websocket'],
+    })
     // To handle responses:
     this.socket.on("book.subscribe.success", data => {
       this.connected = true
@@ -141,12 +146,14 @@ export default class OrderBook {
         }
       }, 2500)
     })
+
     // Initiate the connection to the correct book
     console.log("Subscribing to ", ticker)
     this.socket.emit("book.subscribe", { name: ticker })
   }
 
   @action disconnect() {
+    clearInterval(this.intervalId)
     this.socket.disconnect()
   }
 
