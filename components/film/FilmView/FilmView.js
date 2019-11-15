@@ -2,7 +2,7 @@ import React from "react"
 import Link from "next/link"
 import { toJS } from "mobx"
 import { inject, observer } from "mobx-react"
-import { withRouter } from "next/router"
+import { withRouter, Router } from "next/router"
 
 import classNames from "classnames"
 
@@ -10,11 +10,16 @@ import classNames from "classnames"
 import { formatTakeResults } from "../../../util/formatOrderBookDataForChart"
 
 // @material-ui/core components
-import { Button, Grid, Typography } from "@material-ui/core"
+import { Button, Grid, Typography, Switch } from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
 
 // core components
-import { CustomBreadcrumbs, Chart, InvestNow } from "../../app"
+import {
+  CustomBreadcrumbs,
+  BasicTrader,
+  InvestNow,
+  ProTrader,
+} from "../../app"
 import { TrailerModal } from "../../landing"
 
 // section
@@ -38,7 +43,13 @@ const ButtonLink = React.forwardRef(
 
 const ExternalLink = React.forwardRef(
   ({ className, href, hrefAs, children }, ref) => (
-    <a className={className} ref={ref} href={href || ""} as={hrefAs} target="_blank">
+    <a
+      className={className}
+      ref={ref}
+      href={href || ""}
+      as={hrefAs}
+      target="_blank"
+    >
       {children}
     </a>
   )
@@ -55,7 +66,11 @@ const formatMonthlyStats = (price, valueDelta) => {
 }
 
 const PageTabs = props => {
-  const { classes, onTabSelected, selectedTab } = props
+  const {
+    classes,
+    onTabSelected,
+    selectedTab
+  } = props
 
   return (
     <div className={classes.pageTabsOuter}>
@@ -67,7 +82,7 @@ const PageTabs = props => {
         onClick={() => onTabSelected("about")}
       >
         About
-      </a>
+            </a>
       <a
         className={classNames(
           classes.pageTab,
@@ -76,7 +91,7 @@ const PageTabs = props => {
         onClick={() => onTabSelected("invest")}
       >
         Invest
-      </a>
+            </a>
     </div>
   )
 }
@@ -87,7 +102,8 @@ class Index extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedTab: "about"
+      selectedTab: "about",
+      selectedTrader: "basic",
     }
     this.onTabSelected = this.onTabSelected.bind(this)
   }
@@ -98,8 +114,17 @@ class Index extends React.Component {
     const { slug } = router.query
     const { movieStore, orderBook, userPortfolio } = this.props.store
     const movie = movieStore.getMovieBySlug(slug)
-    orderBook.initiateDataGenerator(movie.ticker, movie.price)
+    // orderBook.initiateDataGenerator(movie.ticker, movie.price)
     userPortfolio.getInvestments()
+    // orderBook.connect(movie.ticker)
+    // this.props.store.orderBook.fetchStockData(movie.ticker)
+    console.log(orderBook)
+  }
+
+  componentWillUnmount() {
+    // Disconnect socket
+    console.log("Emitting disconnect")
+    this.props.store.orderBook.disconnect()
   }
 
   onTabSelected(tab) {
@@ -132,7 +157,10 @@ class Index extends React.Component {
   renderUpperRow(classes, selectedTab, movie) {
     return (
       <div
-        className={classNames(classes.leftAndRight, classes.breadcrumbRow)}
+        className={classNames(
+          classes.leftAndRight,
+          classes.breadcrumbRow
+        )}
         style={{ marginTop: "20px" }}
       >
         <CustomBreadcrumbs>{movie.name}</CustomBreadcrumbs>
@@ -150,20 +178,23 @@ class Index extends React.Component {
       <Grid container>
         <Grid item xs={12} md={9}>
           <div className={classes.titleAndDescription}>
-            <h1 className={classes.title} style={{ textAlign: "left" }}>
+            <h1
+              className={classes.title}
+              style={{ textAlign: "left" }}
+            >
               {movie.name}
             </h1>
-            <p className={classes.description}>{movie.shortDescription}</p>
+            <p className={classes.description}>
+              {movie.shortDescription}
+            </p>
           </div>
           <div>
             <TrailerModal movie={movie} />
             <Button
+              href={ "/trade/" + movie.movieSlug }
               rel="noopener noreferrer"
               variant="contained"
               className={classes.movieButton}
-              onClick={() => {
-                this.onTabSelected("invest")
-              }}
             >
               Invest
             </Button>
@@ -205,15 +236,29 @@ class Index extends React.Component {
       <>
         <div className={classes.aboutMoreTitleArea}>
           <h1 className={classes.sectionTitle}>About</h1>
-          <h2 className={classes.sectionByline}>More about the film</h2>
+          <h2 className={classes.sectionByline}>
+            More about the film
+                    </h2>
         </div>
         <div className={classes.aboutMoreCopyArea}>
           <div className={classes.aboutMoreStats}>
             <table className={classes.aboutMoreStatsTable}>
               <tbody>
-                {this.renderTableRow("director", "Director", movie)}
-                {this.renderTableRow("actors", "Starring", movie)}
-                {this.renderTableRow("writer", "Writers", movie)}
+                {this.renderTableRow(
+                  "director",
+                  "Director",
+                  movie
+                )}
+                {this.renderTableRow(
+                  "actors",
+                  "Starring",
+                  movie
+                )}
+                {this.renderTableRow(
+                  "writer",
+                  "Writers",
+                  movie
+                )}
                 {this.renderTableRow("genre", "Genres", movie)}
                 {this.renderTableRow("rated", "Rating", movie)}
               </tbody>
@@ -221,18 +266,21 @@ class Index extends React.Component {
           </div>
           <div className={classes.aboutMoreText}>
             <p>
-              Ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-              voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            </p>
+              Ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore
+              eu fugiat nulla pariatur.
+                        </p>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing
+              elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua. Ut enim ad minim veniam, quis
+              nostrud exercitation ullamco laboris nisi ut aliquip
+              ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore
+              eu fugiat nulla pariatur. Excepteur sint occaecat
+              cupidatat non proident, sunt in culpa qui officia
+              deserunt mollit anim id est laborum.
+                        </p>
           </div>
         </div>
       </>
@@ -276,38 +324,36 @@ class Index extends React.Component {
           <span className={classes.centsValue}>.{price[1]}</span>
         </div>
         <div className={classes.deltaRow}>{deltaString}</div> */}
-        {!loggedIn
-          ? this.renderInvestButton(
-              classNames(classes.movieButton, classes.statsButton),
-              movie,
-              "Invest Now"
-            )
-          : null}
-        <div>
-          {orderBook.connected ? (
-            <Chart
-              chartData={chartData}
-              yDomain={yDomain}
-              updatePrintInterval={updatePrintInterval}
-              setActiveChart={setActiveChart}
-              setMarketOrderType={setMarketOrderType}
-              marketOrderType={marketOrderType}
-              funds={funds}
-              printInterval={printInterval}
-              activeChart={activeChart}
-              buyOrders={buyOrders}
-              sellOrders={sellOrders}
-              orderBook={orderBook}
-              ticker={movie.ticker}
-              onExecute={onExecute}
-              movieCategories={toJS(movie.genre)}
-              maxSell={maxSell}
-              stockName={movie.name}
-            />
-          ) : (
+        {!loggedIn &&
+          this.renderInvestButton(
+            classNames(classes.movieButton, classes.statsButton),
+            movie,
+            "Invest Now"
+          )
+        }
+        {orderBook.connected ? (
+          <BasicTrader
+            chartData={chartData}
+            yDomain={yDomain}
+            updatePrintInterval={updatePrintInterval}
+            setActiveChart={setActiveChart}
+            setMarketOrderType={setMarketOrderType}
+            marketOrderType={marketOrderType}
+            funds={funds}
+            printInterval={printInterval}
+            activeChart={activeChart}
+            buyOrders={buyOrders}
+            sellOrders={sellOrders}
+            orderBook={orderBook}
+            ticker={movie.ticker}
+            onExecute={onExecute}
+            movieCategories={toJS(movie.genre)}
+            maxSell={maxSell}
+            stockName={movie.name}
+          />
+        ) : (
             <Typography>Loading chart...</Typography>
           )}
-        </div>
       </div>
     )
   }
@@ -373,7 +419,12 @@ class Index extends React.Component {
     // get router slug and find article
     const { router } = this.props
     const { slug } = router.query
-    const { movieStore, orderBook, userStore, userPortfolio } = this.props.store
+    const {
+      movieStore,
+      orderBook,
+      userStore,
+      userPortfolio
+    } = this.props.store
     const movie = movieStore.getMovieBySlug(slug)
     // orderBook stuff
     let takeResultsArray = orderBook.takeResults.slice(0)
@@ -382,7 +433,7 @@ class Index extends React.Component {
       buyOrders,
       sellOrders,
       activeChart,
-      marketOrderType,
+      marketOrderType
     } = orderBook
     const funds = userStore.accountBalance
     const chartData = formatTakeResults(takeResultsArray, printInterval)
@@ -406,36 +457,77 @@ class Index extends React.Component {
 
     return (
       <>
-        <article className={classNames(classes.container, classes.outermost)}>
-          {this.renderUpperRow(classes, this.state.selectedTab, movie)}
-          {this.state.selectedTab === "about"
-            ? this.renderAboutMain(classes, movie, addToWatchlist)
-            : this.renderInvestMain(
-                classes,
-                movie,
-                orderBook.price,
-                chartData,
-                yDomain,
-                updatePrintInterval,
-                setActiveChart,
-                setMarketOrderType,
-                marketOrderType,
-                funds,
-                printInterval,
-                activeChart,
-                buyOrders,
-                sellOrders,
-                orderBook,
-                userStore.token !== null,
-                (order, orderType) => {
-                  return userPortfolio.onOrderExecute(order, orderType)
-                },
-                maxSell
-              )}
-          {this.state.selectedTab === "about"
-            ? this.renderAboutMore(classes, movie)
-            : null}
-        </article>
+        { this.state.selectedTab === "about" &&
+          <article
+            className={classNames(classes.container, classes.outermost)}
+          >
+            { this.renderUpperRow(
+              classes,
+              this.state.selectedTab,
+              movie
+            )}
+            { this.renderAboutMain(classes, movie, addToWatchlist) }
+            { this.renderAboutMore(classes, movie) }
+          </article>
+        }
+        { this.state.selectedTab === "invest" && this.state.selectedTrader === "basic" &&
+          <article>
+            { this.renderInvestMain(
+              classes,
+              movie,
+              orderBook.price,
+              chartData,
+              yDomain,
+              updatePrintInterval,
+              setActiveChart,
+              setMarketOrderType,
+              marketOrderType,
+              funds,
+              printInterval,
+              activeChart,
+              buyOrders,
+              sellOrders,
+              orderBook,
+              userStore.token !== null,
+              (order, orderType) => {
+                return userPortfolio.onOrderExecute(
+                  order,
+                  orderType
+                )
+              },
+              maxSell
+            )}
+          </article>
+        }
+        { this.state.selectedTab === "invest" && this.state.selectedTrader === "pro" &&
+          <article>
+            { this.renderInvestMain(
+              classes,
+              movie,
+              orderBook.price,
+              chartData,
+              yDomain,
+              updatePrintInterval,
+              setActiveChart,
+              setMarketOrderType,
+              marketOrderType,
+              funds,
+              printInterval,
+              activeChart,
+              buyOrders,
+              sellOrders,
+              orderBook,
+              userStore.token !== null,
+              (order, orderType) => {
+                return userPortfolio.onOrderExecute(
+                  order,
+                  orderType
+                )
+              },
+              maxSell
+            )}
+          </article>
+        }
         <div
           className={classNames(classes.container)}
           style={{ paddingLeft: "0px", paddingRight: "0px" }}

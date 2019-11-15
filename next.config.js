@@ -67,8 +67,12 @@ module.exports = withBundleAnalyzer(
               Object.assign({}, movies, {
                 [`/film/${movie.movieSlug}`]: {
                   page: '/film',
-                  query: { slug: movie.movieSlug }
-                }
+                  query: { slug: movie.movieSlug },
+                },
+                [`/trade/${movie.movieSlug}`]: {
+                  page: '/trade',
+                  query: { slug: movie.movieSlug },
+                },
               }),
             {}
           )
