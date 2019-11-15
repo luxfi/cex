@@ -10,7 +10,7 @@ import classNames from "classnames"
 import { formatTakeResults } from "../../../util/formatOrderBookDataForChart"
 
 // @material-ui/core components
-import { Button, Grid, Typography } from "@material-ui/core"
+import { Button, Grid, Typography, Switch } from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
 
 // core components
@@ -18,7 +18,7 @@ import {
   CustomBreadcrumbs,
   BasicTrader,
   InvestNow,
-  ProTrader
+  ProTrader,
 } from "../../app"
 import { TrailerModal } from "../../landing"
 
