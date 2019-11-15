@@ -1,7 +1,7 @@
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 import { Button, Modal, Fade, Backdrop, Typography } from "@material-ui/core/"
 
-export default ({ movie }) => {
+export default ({ movie, buttonClass }) => {
   const [open, setOpen] = React.useState(false)
 
   const handleOpen = () => {
@@ -15,7 +15,7 @@ export default ({ movie }) => {
     <>
       <Button
         onClick={handleOpen}
-        className="watch-trailer-button button"
+        className={`watch-trailer-button button ${buttonClass}`}
         variant="outlined"
         size="large"
         startIcon={<PlayArrowIcon />}
