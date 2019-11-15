@@ -81,6 +81,7 @@ class Portfolio extends React.Component {
     return (
       <div className={classes.container}>
         <PillsTabs tabIdx={tabIdx} handleChange={this.setTab} />
+        <br />
         <TradeView
           tabIdx={tabIdx}
           index={0}
