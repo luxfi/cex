@@ -108,25 +108,6 @@ class Index extends React.Component {
     this.onTabSelected = this.onTabSelected.bind(this)
   }
 
-  componentDidMount() {
-    // Need to pass the order book the data to render
-    const { router } = this.props
-    const { slug } = router.query
-    const { movieStore, orderBook, userPortfolio } = this.props.store
-    const movie = movieStore.getMovieBySlug(slug)
-    // orderBook.initiateDataGenerator(movie.ticker, movie.price)
-    userPortfolio.getInvestments()
-    // orderBook.connect(movie.ticker)
-    // this.props.store.orderBook.fetchStockData(movie.ticker)
-    console.log(orderBook)
-  }
-
-  componentWillUnmount() {
-    // Disconnect socket
-    console.log("Emitting disconnect")
-    this.props.store.orderBook.disconnect()
-  }
-
   onTabSelected(tab) {
     if (this.state.selectedTab !== tab) {
       // if going to a new tab, collapse the view as well.
