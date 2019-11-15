@@ -73,6 +73,7 @@ class Hero extends React.Component {
           <Carousel showThumbs={false} infiniteLoop={true} showStatus={false}>
             {this.props.store.movieStore.movies.map((movie, i) => {
               const hrefLink = '/film/' + movie.movieSlug
+              console.log('hrefLink', hrefLink)
               return <HeroImg key={i} {...rest} img={movieExtendedMap[movie.movieSlug].img}>
                 <div className={classes.container}>
                   <Grid container>
