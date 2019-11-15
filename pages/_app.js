@@ -5,7 +5,7 @@ import App from "next/app"
 import { withStyles } from "@material-ui/core/styles"
 
 import { MuiThemeProvider } from "@material-ui/core/styles"
-import { NoSsr, CssBaseline, Container } from '@material-ui/core'
+import { NoSsr, CssBaseline } from '@material-ui/core'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 
 // This ensures that the icon CSS is loaded immediately before attempting to render icons
