@@ -72,7 +72,7 @@ class Index extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedMode: "basic",
+      selectedMode: localStorage.getItem("tradeMode") || "basic",
     }
   }
 
@@ -98,6 +98,7 @@ class Index extends React.Component {
   onModeSelected(tab) {
     if (this.state.selectedMode !== tab) {
       // if going to a new tab, collapse the view as well.
+      localStorage.setItem("tradeMode", tab)
       this.setState({
         selectedMode: tab
       })
