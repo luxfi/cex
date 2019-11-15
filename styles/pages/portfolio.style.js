@@ -4,8 +4,9 @@ const portfolioPageStyle = theme => ({
   container: {
     zIndex: 12,
     ...container,
-    fontSize: 16,
-    paddingBottom: 70,
+    fontSize: "16px",
+    paddingBottom: "70px",
+    marginTop: "24px"
   },
   title: {
     ...title,
