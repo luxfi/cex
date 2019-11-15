@@ -1,8 +1,8 @@
 export { default as ActivePositions } from './ActivePositions'
 export { default as AutoCompleteSearch } from './AutoCompleteSearch'
+export { default as BasicTrader } from './BasicTrader'
 export { default as BirthdayPicker } from './BirthdayPicker'
 export { default as BuySellForm } from './BuySellForm'
-export { default as Chart } from './Chart'
 export { default as ChartCandlestick } from './ChartCandlestick'
 export { default as ChartCandlestickFake } from './ChartCandlestickFake'
 export { default as ChartIntervalControls } from './ChartIntervalControls'
@@ -20,6 +20,7 @@ export { default as LimitOrders } from './LimitOrders'
 export { default as NestedMenu } from './NestedMenu'
 export { default as MobileAccountMenu } from './MobileAccountMenu'
 export { default as MobileNavMenu } from './MobileNavMenu'
+export { default as ProTrader } from './ProTrader'
 export { default as SideDrawer } from './SideDrawer'
 export { default as StockRechart } from "./StockRechart"
 export { default as StockChart } from "./StockChart"

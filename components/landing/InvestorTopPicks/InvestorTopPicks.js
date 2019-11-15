@@ -73,7 +73,7 @@ class MoviesView extends React.Component {
           const inWatchlist = userPortfolio.watchlist.indexOf(d.ticker) > -1
           return (
             <Grid item key={`picks_${i}`} xs={12} sm={12} md={4}>
-              <Card plain>
+              <Card plain="true">
                 <Grid item
                   style={{ cursor: "pointer" }}
                   onClick={() => {

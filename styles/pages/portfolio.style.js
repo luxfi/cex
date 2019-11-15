@@ -2,10 +2,10 @@ import { container, title } from "../esxStyles.js"
 
 const portfolioPageStyle = theme => ({
   container: {
-    zIndex: "12",
+    zIndex: 12,
     ...container,
-    fontSize: "16px",
-    paddingBottom: "70px"
+    fontSize: 16,
+    paddingBottom: 70,
   },
   title: {
     ...title,
