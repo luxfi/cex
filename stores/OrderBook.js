@@ -461,6 +461,10 @@ export default class OrderBook {
     return { intradayData, dailyData, previousDayClose }
   }
 
+  @computed get isReady() {
+    return this.connected && this.intradayData.length > 0 && this.dailyData.length > 0
+  }
+
   generatefullDay(book) {
     // estimate between 200 and 2000 trades a day
   }
