@@ -1,12 +1,19 @@
 import { action, observable, computed } from "mobx"
 import _ from "lodash"
 import uuid from "uuid"
-import stock from "../assets/tempData/stocks"
+import io from "socket.io-client"
+import moment from 'moment-timezone'
+const isEmpty = obj => [Object, Array].includes((obj || {}).constructor) && !Object.entries((obj || {})).length;
+
+// import stock from "../assets/tempData/stocks"
 
 // import io from 'socket.io-client'
 const LimitOrder = require("limit-order-book").LimitOrder
 const MarketOrder = require("limit-order-book").MarketOrder
 const LimitOrderBook = require("limit-order-book").LimitOrderBook
+
+const SOCKET_STRING = 'https://exchange.hanzo.ai'
+// const SOCKET_STRING = 'localhost:4000'
 
 const bidAsk = () => {
   return Math.floor(Math.random() * 2) == 0 ? "bid" : "ask" // 50/50 chance of "bid" or "ask"
@@ -21,12 +28,12 @@ const firstTwentyKeys = (orders, orderType) => {
   // list orders for sells('ask') at lowest price first
   const sortFn =
     orderType === "bid"
-      ? function(a, b) {
-          return b - a
-        }
-      : function(a, b) {
-          return a - b
-        }
+      ? function (a, b) {
+        return b - a
+      }
+      : function (a, b) {
+        return a - b
+      }
   return Object.keys(orders)
     .sort(sortFn)
     .slice(0, 20) // take first 20
@@ -40,7 +47,7 @@ export default class OrderBook {
 
   @observable ticker = ""
   @observable price = 13.37
-  @observable book = new LimitOrderBook()
+  @observable book = undefined //new LimitOrderBook()
   @observable buys = []
   @observable sells = []
   @observable takeResults = []
@@ -51,7 +58,12 @@ export default class OrderBook {
   @observable printInterval = 5
   @observable activeChart = "line-chart"
   @observable marketOrderType = true
-  @observable stock = {}
+  @observable intradayData = []
+  @observable dailyData = []
+  @observable previousDayClose = []
+  @observable order = {}
+
+  activeOrders = {}
 
   constructor(
     initialData = {
@@ -74,7 +86,160 @@ export default class OrderBook {
     this.printInterval = initialData.printInterval || 5
     this.api = hanzoApi
     this.id = id
-    this.stock = stock
+  }
+
+  @action fetchStockData(ticker) {
+    this.getIntradayData(ticker)
+    this.getDailyData(ticker)
+  }
+
+  @action connect(ticker) {
+    this.ticker = ticker
+    this.socket = io(SOCKET_STRING, {
+      transports: ['websocket'],
+    })
+    // To handle responses:
+    this.socket.on("book.subscribe.success", data => {
+      this.connected = true
+      // console.log("book.subscribe.success", data)
+    })
+    this.socket.on("book.subscribe.error", err => {
+      console.log("book.subscribe.error", err)
+    })
+    this.socket.on("book.unsubscribe.success", data => {
+      // console.log("book.unsubscribe.success", data)
+    })
+    this.socket.on("book.unsubscribe.error", err => {
+      console.log("book.unsubscribe.error", err)
+    })
+    this.socket.on("order.create.success", data => {
+      console.log("order.create.success", data)
+    })
+    this.socket.on("order.create.error", err => {
+      console.log("order.create.error", err)
+    })
+
+    this.socket.on("candles.get.success", data => {
+      if (isEmpty(data) || isEmpty(data.candles)) { return }
+      let { candles, type } = data
+      let formattedData = candles.map(candle => {
+        const [openTime, closeTime, open, high, low, close, notional, volume, numberOfTrades] = candle
+        const timestamp = moment(closeTime).tz('America/New_York')
+
+        const date = timestamp.format('YYYY-MM-DD')
+        const minute = timestamp.format('HH:mm')
+        const label = timestamp.format('LT')
+        const average = notional / volume
+        const id = parseInt(timestamp.format('HHmm'), 10)
+        return { id, date, minute, label, high, low, open, close, average, volume, notional, numberOfTrades }
+      })
+
+      if (type === 'intradayData') {
+        let filteredData = []
+        let lastData = formattedData
+        let targetTime = 930
+
+        for (let data of formattedData) {
+          while (targetTime < data.id) {
+            let timestamp = moment('' + targetTime, 'Hmm')
+
+            lastData.date = timestamp.format('YYYY-MM-DD')
+            lastData.minute = timestamp.format('HH:mm')
+            lastData.label = timestamp.format('LT')
+
+            filteredData.push(lastData)
+            // console.log('push', lastData.id)
+            targetTime += 5
+            if (targetTime % 100 >= 60) {
+              targetTime += 40
+            }
+          }
+
+          if (targetTime === data.id) {
+            filteredData.push(data)
+            // console.log('push', data.id)
+          }
+
+          lastData = data
+        }
+
+        this[type] = filteredData
+      } else {
+        this[type] = formattedData
+        this.previousDayClose = formattedData[formattedData.length - 2].close
+      }
+
+      // console.log("candles.get.success", this[type], type)
+    })
+    this.socket.on("candles.get.error", err => {
+      console.log("candles.get.error", err)
+    })
+    this.socket.on("book.data", data => {
+      this.book = data
+    })
+
+    this.socket.on('disconnect', () => {
+      this.connected = false
+      const reconnect = setInterval(() => {
+        if (!this.connected)
+          this.connect(ticker)
+        else {
+          this.connected = true
+          clearInterval(reconnect)
+        }
+      }, 2500)
+    })
+
+    // Initiate the connection to the correct book
+    console.log("Subscribing to ", ticker)
+    this.socket.emit("book.subscribe", { name: ticker })
+  }
+
+  @action disconnect() {
+    this.socket.disconnect()
+  }
+
+  @action socketOrderCreate(order, updateBalance) {
+    // const { externalId, side, type, quantity, price, name } = order
+    let externalId = uuid.v4()
+    let name = this.ticker
+
+    this.activeOrders[externalId] = true
+    console.log('socketOrderCreate', order)
+    this.socket.emit("order.create", Object.assign({ externalId, name }, order))
+    updateBalance(name, order.side)
+  }
+
+  @action getIntradayData(ticker) {
+    // day is 24 hr based on EST
+    const now = moment(/*'2019-11-13'*/).tz('America/New_York')
+    // const startTime = now.startOf('day').valueOf()
+    // const endTime = now.endOf('day').valueOf()
+    const startTime = moment(now).startOf('day').add(9, 'hours').valueOf()
+    const endTime = moment(now).startOf('day').add(16, 'hours').valueOf()
+    let opts = {
+      "startTime": startTime,
+      "endTime": endTime,
+      "interval": "1m",
+      "name": ticker,
+      "type": "intradayData"
+    }
+    this.socket.emit('candles.get', opts)
+  }
+
+  @action getDailyData(ticker) {
+    // day is 24 hr based on EST
+    const now = moment().tz('America/New_York')
+    const endTime = moment(now).endOf('day').valueOf()
+    const startTime = moment(now).startOf('day').subtract(1, 'year').valueOf()
+    let opts = {
+      "startTime": startTime,
+      "endTime": endTime,
+      "interval": "1d",
+      "name": ticker,
+      "type": "dailyData"
+    }
+    this.socket.emit('candles.get', opts)
   }
 
   @action clearData() {
@@ -298,6 +463,17 @@ export default class OrderBook {
     return this.sells
   }
 
+  @computed get stock() {
+    const intradayData = this.intradayData
+    const dailyData = this.dailyData
+    const previousDayClose = this.previousDayClose
+    return { intradayData, dailyData, previousDayClose }
+  }
+
+  @computed get isReady() {
+    return this.connected && this.book && this.intradayData.length > 0 && this.dailyData.length > 0
+  }
+
   generatefullDay(book) {
     // estimate between 200 and 2000 trades a day
   }
@@ -306,7 +482,7 @@ export default class OrderBook {
     //
   }
 
-  generatefullMonth(book) {}
+  generatefullMonth(book) { }
 
   // For later
   // @action setupSocket () {
