@@ -98,13 +98,13 @@ export default class OrderBook {
     // To handle responses:
     this.socket.on("book.subscribe.success", data => {
       this.connected = true
-      console.log("book.subscribe.success", data)
+      // console.log("book.subscribe.success", data)
     })
     this.socket.on("book.subscribe.error", err => {
       console.log("book.subscribe.error", err)
     })
     this.socket.on("book.unsubscribe.success", data => {
-      console.log("book.unsubscribe.success", data)
+      // console.log("book.unsubscribe.success", data)
     })
     this.socket.on("book.unsubscribe.error", err => {
       console.log("book.unsubscribe.error", err)
@@ -145,7 +145,7 @@ export default class OrderBook {
             lastData.label = timestamp.format('LT')
 
             filteredData.push(lastData)
-            console.log('push', lastData.id)
+            // console.log('push', lastData.id)
             targetTime += 5
             if (targetTime % 100 >= 60) {
               targetTime += 40
@@ -154,7 +154,7 @@ export default class OrderBook {
 
           if (targetTime === data.id) {
             filteredData.push(data)
-            console.log('push', data.id)
+            // console.log('push', data.id)
           }
 
           lastData = data
@@ -166,7 +166,7 @@ export default class OrderBook {
         this.previousDayClose = formattedData[formattedData.length - 2].close
       }
 
-      console.log("candles.get.success", this[type], type)
+      // console.log("candles.get.success", this[type], type)
     })
     this.socket.on("candles.get.error", err => {
       console.log("candles.get.error", err)

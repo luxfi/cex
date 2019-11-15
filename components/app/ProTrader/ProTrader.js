@@ -66,7 +66,8 @@ export default props => {
     setMarketOrderType,
     marketOrderType,
     funds,
-    stockName
+    stockName,
+    accountBalance
   } = props
   let labels = timelineLabels()
   const [visible, setVisible] = useState(false)
@@ -89,6 +90,7 @@ export default props => {
             marketOrderType={marketOrderType}
             funds={funds}
             connected={connected}
+            accountBalance={accountBalance}
           />
           <BuySellForm
             buttonColor="red"
@@ -102,6 +104,7 @@ export default props => {
             maxSell={maxSell}
             marketOrderType={marketOrderType}
             funds={funds}
+            accountBalance={accountBalance}
           />
         </Grid>
         <Grid item xs={12} sm={6} md={9}>
