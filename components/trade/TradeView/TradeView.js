@@ -148,66 +148,62 @@ class Index extends React.Component {
 
     return (
       <>
-        { this.state.selectedMode === "basic" &&
-          <article>
-            {
-              orderBook.connected ? (
-                <BasicTrader
-                  chartData={chartData}
-                  yDomain={yDomain}
-                  updatePrintInterval={updatePrintInterval}
-                  setActiveChart={setActiveChart}
-                  setMarketOrderType={setMarketOrderType}
-                  marketOrderType={marketOrderType}
-                  funds={funds}
-                  printInterval={printInterval}
-                  activeChart={activeChart}
-                  buyOrders={buyOrders}
-                  sellOrders={sellOrders}
-                  orderBook={orderBook}
-                  ticker={movie.ticker}
-                  onExecute={(order, orderType) => {
-                    return userPortfolio.onOrderExecute(order, orderType)
-                  }}
-                  movieCategories={toJS(movie.genre)}
-                  maxSell={maxSell}
-                  stockName={movie.name}
-                />
-              ) : (
-                <Typography>Loading chart...</Typography>
-              )
-            }
-          </article>
-        }
-        { this.state.selectedMode === "pro" &&
-          <article>
-            { this.renderInvestMain(
-              classes,
-              movie,
-              orderBook.price,
-              chartData,
-              yDomain,
-              updatePrintInterval,
-              setActiveChart,
-              setMarketOrderType,
-              marketOrderType,
-              funds,
-              printInterval,
-              activeChart,
-              buyOrders,
-              sellOrders,
-              orderBook,
-              userStore.token !== null,
-              (order, orderType) => {
-                return userPortfolio.onOrderExecute(
-                  order,
-                  orderType
-                )
-              },
-              maxSell
-            )}
-          </article>
-        }
+        <article>
+          { this.state.selectedMode === "basic" &&
+            orderBook.isReady ? (
+              <BasicTrader
+                chartData={chartData}
+                yDomain={yDomain}
+                updatePrintInterval={updatePrintInterval}
+                setActiveChart={setActiveChart}
+                setMarketOrderType={setMarketOrderType}
+                marketOrderType={marketOrderType}
+                funds={funds}
+                printInterval={printInterval}
+                activeChart={activeChart}
+                buyOrders={buyOrders}
+                sellOrders={sellOrders}
+                orderBook={orderBook}
+                ticker={movie.ticker}
+                onExecute={(order, orderType) => {
+                  return userPortfolio.onOrderExecute(order, orderType)
+                }}
+                movieCategories={toJS(movie.genre)}
+                maxSell={maxSell}
+                stockName={movie.name}
+              />
+            ) : (
+              <Typography>Loading chart...</Typography>
+            )
+          }
+          { this.state.selectedMode === "pro" &&
+            orderBook.isReady ? (
+              <ProTrader
+                chartData={chartData}
+                yDomain={yDomain}
+                updatePrintInterval={updatePrintInterval}
+                setActiveChart={setActiveChart}
+                setMarketOrderType={setMarketOrderType}
+                marketOrderType={marketOrderType}
+                funds={funds}
+                printInterval={printInterval}
+                activeChart={activeChart}
+                buyOrders={buyOrders}
+                sellOrders={sellOrders}
+                orderBook={orderBook}
+                ticker={movie.ticker}
+                onExecute={(order, orderType) => {
+                  return userPortfolio.onOrderExecute(order, orderType)
+                }}
+                movieCategories={toJS(movie.genre)}
+                maxSell={maxSell}
+                stockName={movie.name}
+              />
+            ) : (
+              <Typography>Loading chart...</Typography>
+            )
+          }
+        </article>
         <div
           className={classNames(classes.container)}
           style={{ paddingLeft: "0px", paddingRight: "0px" }}
