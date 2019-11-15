@@ -130,7 +130,7 @@ const footers = [
   },
   {
     title: "Account",
-    links: ["Sign In", "Create Account", "Orders", "Portfolio"]
+    links: ["Sign In", "Sign Up", "Orders", "Portfolio"]
   }
 ]
 
