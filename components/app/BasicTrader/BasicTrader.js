@@ -55,6 +55,7 @@ export default props => {
     yDomain,
     updatePrintInterval,
     activeChart,
+    createOrder,
     buyOrders,
     sellOrders,
     orderBook,
@@ -86,6 +87,7 @@ export default props => {
             buttonText="BUY"
             orderType="bid"
             ticker={ticker}
+            createOrder={createOrder}
             orders={buyOrders}
             orderBook={orderBook}
             onExecute={onExecute}
@@ -104,6 +106,7 @@ export default props => {
             ticker={ticker}
             orders={sellOrders}
             orderBook={orderBook}
+            createOrder={createOrder}
             onExecute={onExecute}
             movieCategories={movieCategories}
             maxSell={maxSell}
