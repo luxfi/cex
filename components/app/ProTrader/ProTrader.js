@@ -76,10 +76,7 @@ export default props => {
   return (
     <Element>
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <StockChart stock={stock} stockName={stockName} connected={connected} />
-        </Grid>
-        <Grid item xs={12} sm={5}>
+        <Grid item xs={12} sm={6} md={3}>
           <BuySellForm
             buttonColor="green"
             buttonText="BUY"
@@ -93,8 +90,24 @@ export default props => {
             funds={funds}
             connected={connected}
           />
+          <BuySellForm
+            buttonColor="red"
+            buttonText="SELL"
+            orderType="ask"
+            ticker={ticker}
+            orders={sellOrders}
+            orderBook={orderBook}
+            onExecute={onExecute}
+            movieCategories={movieCategories}
+            maxSell={maxSell}
+            marketOrderType={marketOrderType}
+            funds={funds}
+          />
         </Grid>
-        <Grid item xs={12} sm={2}>
+        <Grid item xs={12} sm={6} md={9}>
+          <StockChart stock={stock} stockName={stockName} connected={connected} />
+        </Grid>
+        <Grid item xs={12}>
           <Grid
             container
             direction="column"
@@ -129,21 +142,6 @@ export default props => {
                           </Button>
             </Grid>
           </Grid>
-        </Grid>
-        <Grid item xs={12} sm={5}>
-          <BuySellForm
-            buttonColor="red"
-            buttonText="SELL"
-            orderType="ask"
-            ticker={ticker}
-            orders={sellOrders}
-            orderBook={orderBook}
-            onExecute={onExecute}
-            movieCategories={movieCategories}
-            maxSell={maxSell}
-            marketOrderType={marketOrderType}
-            funds={funds}
-          />
         </Grid>
       </Grid>
 
