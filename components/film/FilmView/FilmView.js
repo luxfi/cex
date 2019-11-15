@@ -116,8 +116,8 @@ class Index extends React.Component {
     const movie = movieStore.getMovieBySlug(slug)
     // orderBook.initiateDataGenerator(movie.ticker, movie.price)
     userPortfolio.getInvestments()
-    orderBook.connect(movie.ticker)
-    this.props.store.orderBook.fetchStockData(movie.ticker)
+    // orderBook.connect(movie.ticker)
+    // this.props.store.orderBook.fetchStockData(movie.ticker)
     console.log(orderBook)
   }
 
@@ -191,7 +191,6 @@ class Index extends React.Component {
           <div>
             <TrailerModal movie={movie} />
             <Button
-              target="_blank"
               href={ "/trade/" + movie.movieSlug }
               rel="noopener noreferrer"
               variant="contained"

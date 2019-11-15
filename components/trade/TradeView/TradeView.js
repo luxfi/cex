@@ -80,18 +80,17 @@ class Index extends React.Component {
     // Need to pass the order book the data to render
     const { router } = this.props
     const { slug } = router.query
-    const { movieStore, orderBook, userPortfolio } = this.props.store
+    const { userStore, movieStore, orderBook, userPortfolio } = this.props.store
     const movie = movieStore.getMovieBySlug(slug)
     // orderBook.initiateDataGenerator(movie.ticker, movie.price)
+    userStore.loadAccountBalance()
     userPortfolio.getInvestments()
     orderBook.connect(movie.ticker)
     this.props.store.orderBook.fetchStockData(movie.ticker)
-    console.log(orderBook)
   }
 
   componentWillUnmount() {
     // Disconnect socket
-    console.log("Emitting disconnect")
     this.props.store.orderBook.disconnect()
   }
 
@@ -141,7 +140,18 @@ class Index extends React.Component {
     }
 
     const createOrder = (order) => {
-      orderBook.socketOrderCreate(order)
+      orderBook.socketOrderCreate(
+        order,
+        (ticker, orderType) => {
+          const updateBalance = (side, val) => {
+            if (side === 'bid')
+              userStore.removeBalance(val)
+            else
+              userStore.addBalance(val)
+          }
+          userPortfolio.onOrderExecute(order, ticker, orderType, updateBalance)
+        }
+      )
     }
 
     // Load necessary user data
@@ -150,8 +160,6 @@ class Index extends React.Component {
     const addToWatchlist = t => {
       userPortfolio.addToWatchlist(t)
     }
-
-    console.log('book', orderBook.book)
 
     return (
       <>
@@ -179,12 +187,14 @@ class Index extends React.Component {
                   orderBook={orderBook}
                   book={orderBook.book}
                   ticker={movie.ticker}
+                  createOrder={createOrder}
                   onExecute={(order, orderType) => {
                     return userPortfolio.onOrderExecute(order, orderType)
                   }}
                   movieCategories={toJS(movie.genre)}
                   maxSell={maxSell}
                   stockName={movie.name}
+                  accountBalance={userStore.accountBalance}
                 />
               ) : (
                 <ProTrader
@@ -209,6 +219,7 @@ class Index extends React.Component {
                   movieCategories={toJS(movie.genre)}
                   maxSell={maxSell}
                   stockName={movie.name}
+                  accountBalance={userStore.accountBalance}
                 />
               ) : (
                 <Typography>Loading chart...</Typography>
