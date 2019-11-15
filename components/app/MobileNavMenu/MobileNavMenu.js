@@ -17,10 +17,10 @@ import {
 import SideDrawer from "../SideDrawer"
 
 import { makeStyles } from "@material-ui/core/styles"
-import styles from './mobileNav.style.js'
+import styles from './mobileNavMenu.style.js'
 const useStyles = makeStyles(styles)
 
-import navStructure from "./navStructure"
+import navStructure from "../../../util/navStructure"
 
 export default (props) => {
 
