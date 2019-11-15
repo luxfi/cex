@@ -21,7 +21,7 @@ class Index extends React.Component  {
             }
           }}
         >
-          <Link color="inherit" href="/">Home</Link>
+          <Link href="/">Home</Link>
           <span>{pageName}</span>
         </Breadcrumbs>
     )
