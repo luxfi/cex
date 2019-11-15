@@ -12,6 +12,7 @@ const MarketOrder = require("limit-order-book").MarketOrder
 const LimitOrderBook = require("limit-order-book").LimitOrderBook
 
 const SOCKET_STRING = 'https://exchange.hanzo.ai'
+//const SOCKET_STRING = 'localhost:4000'
 
 const bidAsk = () => {
   return Math.floor(Math.random() * 2) == 0 ? "bid" : "ask" // 50/50 chance of "bid" or "ask"
@@ -121,7 +122,8 @@ export default class OrderBook {
 
     this.intervalId = setInterval(() => {
       this.socket.emit('candles.get', {
-        startTime: moment().valueOf(),
+        endTime:  moment().valueOf(),
+        startTime: moment().valueOf()-600000,
         name: this.ticker,
         interval: '1m',
       })
