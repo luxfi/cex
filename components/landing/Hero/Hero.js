@@ -118,14 +118,14 @@ class Hero extends React.Component {
                         <br />
                       </Box>
                       <br />
-                      <TrailerModal movie={movie} />
+                      <TrailerModal movie={movie} className={classes.watchModalButton} />
                       <Button
-                        className="invest-button button"
+                        className={classes.investButton}
                         size="large"
                         startIcon={<MonetizationOnIcon />}
                       >
                         <Link href={hrefLink}>
-                          <Typography variant="body2">
+                          <Typography variant="body2" className={classes.watchModalButtonText}>
                             INVEST IN {movie.name}
                           </Typography>
                         </Link>
@@ -144,7 +144,6 @@ class Hero extends React.Component {
           .hero-container {
             position: relative;
             overflow: hidden;
-            // margin-top: -64px;
             margin-top: -233px // -64px + -169px from slider
           }
 
@@ -161,24 +160,7 @@ class Hero extends React.Component {
           }
 
           .hero-container :global(p) {
-            color: #FFF !important;
-          }
-
-          .hero-container :global(.watch-trailer-button) {
-            color: #FFF !important;
-            border: 1px solid #FFF;
-            padding: 11px 24px;
-          }
-
-          .hero-container :global(.invest-button p) {
-            color: #000 !important;
-          }
-
-          .hero-container :global(.invest-button) {
-            color: #000 !important;
-            background-color: #FBC43E;
-            margin-left: 16px;
-            padding: 12px 24px;
+            color: #FFF;
           }
 
           .hero-container :global(.control-dots) {
