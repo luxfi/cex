@@ -7,7 +7,7 @@ const isEmpty = obj => [Object, Array].includes((obj || {}).constructor) && !Obj
 class StockChart extends React.Component {
   render() {
     const { stock, stockName, connected } = this.props
-    const { intradayData, dailyData } = stock
+    const { intradayData, dailyData, previousDayClose } = stock
 
     // the intraday times which the 1D chart will always render
     const times = [
@@ -94,13 +94,12 @@ class StockChart extends React.Component {
     let prevPrice, openPrice
     if (isEmpty(dailyData)) {
       //if no daily data take opening of intraday
-      openPrice = intradayData[0].minute
+      openPrice = intradayData[0].close
       prevPrice = openPrice
     } else {
       openPrice = dailyData[dailyData.length - 1].close
       prevPrice = openPrice
     }
-
     // if market is closed then dailyData will have today's information, therefore previous day's close will actually be second to last item in it
     if (
       intradayData.length === 0 ||
@@ -117,7 +116,6 @@ class StockChart extends React.Component {
     let data = []
     for (let i = 0; i < intradayData.length; i++) {
       let price
-
       if (intradayData[i].minute === times[0]) {
         if (!intradayData[i].label) {
           data.push({
@@ -128,10 +126,10 @@ class StockChart extends React.Component {
           continue
         }
         // check if there is price data, if not take most recent price
-        if (!intradayData[i].average) {
+        if (!intradayData[i].close) {
           price = prevPrice
         } else {
-          price = intradayData[i].average
+          price = intradayData[i].close
           prevPrice = price
         }
         let time = intradayData[i].label.includes(":")
@@ -150,8 +148,8 @@ class StockChart extends React.Component {
           price: prevPrice,
         })
         times.shift()
-      } else if (intradayData[i].average) {
-        prevPrice = intradayData[i].average
+      } else if (intradayData[i].close) {
+        prevPrice = intradayData[i].close
       }
     }
     // get list of all prices throughout the day to find key data points (high, low)
@@ -221,6 +219,7 @@ class StockChart extends React.Component {
             intradayData={intradayData}
             dailyData={dailyData}
             color={color}
+            previousDayClose={previousDayClose}
           />
         ) : (
             <div className="sweet-loading">

@@ -3,6 +3,7 @@ import {
   LineChart,
   Line,
   ResponsiveContainer,
+  ReferenceLine,
   XAxis,
   YAxis,
   Tooltip
@@ -81,7 +82,7 @@ class StockRechart extends React.Component {
     const max = Math.max(...prices)
     const min = Math.min(...prices)
     const currPrice = this.state.initialData.currPrice
-    const openPrice = dailyData[startIdx].close
+    const openPrice = prices[0]
     const priceFlux =
       Math.round((parseFloat(currPrice) - parseFloat(openPrice)) * 100) / 100
     const priceFluxPercentage =
@@ -256,6 +257,13 @@ class StockRechart extends React.Component {
                     dot={false}
                     strokeWidth={2}
                   />
+                  {this.state.active === "1D" &&
+                    <ReferenceLine
+                      y={this.props.previousDayClose}
+                      stroke="white"
+                      strokeDasharray="3 3"
+                      alwaysShow />
+                  }
                 </LineChart>
               </ResponsiveContainer>
             )}

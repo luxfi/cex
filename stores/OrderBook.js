@@ -60,6 +60,7 @@ export default class OrderBook {
   @observable marketOrderType = true
   @observable intradayData = []
   @observable dailyData = []
+  @observable previousDayClose = []
 
   constructor(
     initialData = {
@@ -120,7 +121,7 @@ export default class OrderBook {
       let { candles, type } = data
       let formattedData = candles.map(candle => {
         const [openTime, closeTime, open, high, low, close, notional, volume, numberOfTrades] = candle
-        const timestamp = moment(openTime).tz('America/New_York')
+        const timestamp = moment(closeTime).tz('America/New_York')
 
         const date = timestamp.format('YYYY-MM-DD')
         const minute = timestamp.format('HH:mm')
@@ -163,6 +164,7 @@ export default class OrderBook {
         this[type] = filteredData
       } else {
         this[type] = formattedData
+        this.previousDayClose = formattedData[formattedData.length - 2].close
       }
 
       console.log("candles.get.success", this[type], type)
@@ -455,7 +457,8 @@ export default class OrderBook {
   @computed get stock() {
     const intradayData = this.intradayData
     const dailyData = this.dailyData
-    return { intradayData, dailyData }
+    const previousDayClose = this.previousDayClose
+    return { intradayData, dailyData, previousDayClose }
   }
 
   generatefullDay(book) {
