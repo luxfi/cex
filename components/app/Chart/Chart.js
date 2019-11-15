@@ -71,9 +71,11 @@ export default props => {
   let labels = timelineLabels()
   const [visible, setVisible] = useState(false)
   const stock = toJS(orderBook.stock)
+  let { connected } = orderBook
+  window.orderBook = orderBook
   return (
     <Element className="container">
-      <StockChart stock={stock} stockName={stockName} />
+      <StockChart stock={stock} stockName={stockName} connected={connected} />
       <div className="container-row space-between">
         <BuySellForm
           buttonColor="green"
@@ -86,6 +88,7 @@ export default props => {
           movieCategories={movieCategories}
           marketOrderType={marketOrderType}
           funds={funds}
+          connected={connected}
         />
         <Grid
           container
