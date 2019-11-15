@@ -6,9 +6,9 @@ export default theme => ({
     marginTop: '30vh',
     zIndex: "12",
     color: "#FFFFFF",
-    marginLeft: theme.spacing(9),
+    marginLeft: theme.spacing(4),
     "@media (max-width: 573px)": {
-      marginTop: 320,
+      marginTop: '20vh',
     },
   },
   investButton: {
