@@ -215,7 +215,7 @@ export default class UserStore {
     const parsedVal = Number.parseFloat(val)
     if (typeof parsedVal === 'number' && !isNaN(parsedVal)) {
       let oldBalance = localStorage.getItem('accountBalance') ? Number.parseFloat(localStorage.getItem('accountBalance')) : 0
-      let newBalance = oldBalance + parsedVal
+      let newBalance = (oldBalance + parsedVal).toFixed(2)
       window.localStorage.setItem('accountBalance', newBalance)
       this.accountBalance = newBalance
       onSuccess && onSuccess()
@@ -228,7 +228,7 @@ export default class UserStore {
     const parsedVal = Number.parseFloat(val)
     if (typeof parsedVal === 'number' && !isNaN(parsedVal) && this.accountBalance > parsedVal) {
       let oldBalance = localStorage.getItem('accountBalance') ? Number.parseFloat(localStorage.getItem('accountBalance')) : 0
-      let newBalance = oldBalance - parsedVal
+      let newBalance = (oldBalance - parsedVal).toFixed(2)
       window.localStorage.setItem('accountBalance', newBalance)
       this.accountBalance = newBalance
       onSuccess && onSuccess()
