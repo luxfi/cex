@@ -116,7 +116,7 @@ class MyMobxApp extends App {
                 setOpen={this.mobxStore.uiStore.setLeftDrawerOpen}
                 handlePlaceholder={this.placeholder}
               />
-              <div component="main" className={classes.main} maxWidth="sm">
+              <div component="main" className={classes.main}>
                 <Component
                   {...pageProps}
                   darkTheme={darkTheme}
