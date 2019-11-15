@@ -11,8 +11,8 @@ const LimitOrder = require("limit-order-book").LimitOrder
 const MarketOrder = require("limit-order-book").MarketOrder
 const LimitOrderBook = require("limit-order-book").LimitOrderBook
 
-const SOCKET_STRING = 'https://exchange.hanzo.ai'
-//const SOCKET_STRING = 'localhost:4000'
+// const SOCKET_STRING = 'https://exchange.hanzo.ai'
+const SOCKET_STRING = 'localhost:4000'
 
 const bidAsk = () => {
   return Math.floor(Math.random() * 2) == 0 ? "bid" : "ask" // 50/50 chance of "bid" or "ask"
@@ -43,8 +43,6 @@ export default class OrderBook {
    * unique id of this todo, immutable.
    */
   id = null
-
-  intervalId = null
 
   @observable ticker = ""
   @observable price = 13.37
@@ -115,19 +113,59 @@ export default class OrderBook {
     this.socket.on("order.create.error", err => {
       console.log("order.create.error", err)
     })
-    this.socket.on("candles.get.success", data => {
-      let { candles, type } = data
+    this.socket.on("candles.get.success", (d) => {
+      let { candles, type } = d
+
       let formattedData = candles.map(candle => {
         const [openTime, closeTime, open, high, low, close, notional, volume, numberOfTrades] = candle
         const timestamp = moment(openTime).tz('America/New_York')
-        const date = moment(timestamp).format('YYYY-MM-DD')
-        const minute = moment(timestamp).format('HH:mm')
-        const label = moment(timestamp).format('LT')
+
+        const date    = timestamp.format('YYYY-MM-DD')
+        const minute  = timestamp.format('HH:mm')
+        const label   = timestamp.format('LT')
         const average = notional / volume
-        return { date, minute, label, high, low, open, close, average, volume, notional, numberOfTrades }
+        const id      = parseInt(timestamp.format('HHmm'), 10)
+        return { id, date, minute, label, high, low, open, close, average, volume, notional, numberOfTrades }
       })
-      this[type] = formattedData
-      console.log("candles.get.success", data)
+
+      if (type === 'intradayData') {
+        let filteredData = []
+        let lastData = formattedData
+        let targetTime = 930
+
+        console.log('fd', formattedData)
+        for (let data of formattedData) {
+          while (targetTime < data.id) {
+            let timestamp  = moment('' + targetTime, 'Hmm')
+
+            lastData.date  = timestamp.format('YYYY-MM-DD')
+            lastData.minute = timestamp.format('HH:mm')
+            lastData.label  = timestamp.format('LT')
+
+            filteredData.push(lastData)
+            targetTime += 5
+            if (targetTime % 100 >= 60) {
+              targetTime += 40
+            }
+          }
+
+          if (targetTime === data.id) {
+            filteredData.push(data)
+          }
+
+          targetTime += 5
+          if (targetTime % 100 >= 60) {
+            targetTime += 40
+          }
+          lastData = data
+        }
+
+        this[type] = filteredData
+      } else {
+        this[type] = formattedData
+      }
+
+      console.log("candles.get.success", this[type], type)
     })
     this.socket.on("candles.get.error", err => {
       console.log("candles.get.error", err)
@@ -153,7 +191,6 @@ export default class OrderBook {
   }
 
   @action disconnect() {
-    clearInterval(this.intervalId)
     this.socket.disconnect()
   }
 
