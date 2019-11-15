@@ -3,6 +3,7 @@ import _ from "lodash"
 import uuid from "uuid"
 import io from "socket.io-client"
 import moment from 'moment-timezone'
+const isEmpty = obj => [Object, Array].includes((obj || {}).constructor) && !Object.entries((obj || {})).length;
 
 // import stock from "../assets/tempData/stocks"
 
@@ -57,8 +58,8 @@ export default class OrderBook {
   @observable printInterval = 5
   @observable activeChart = "line-chart"
   @observable marketOrderType = true
-  @observable intradayData = {}
-  @observable dailyData = {}
+  @observable intradayData = []
+  @observable dailyData = []
 
   constructor(
     initialData = {
@@ -113,18 +114,19 @@ export default class OrderBook {
     this.socket.on("order.create.error", err => {
       console.log("order.create.error", err)
     })
-    this.socket.on("candles.get.success", (d) => {
-      let { candles, type } = d
 
+    this.socket.on("candles.get.success", data => {
+      if (isEmpty(data) || isEmpty(data.candles)) { return }
+      let { candles, type } = data
       let formattedData = candles.map(candle => {
         const [openTime, closeTime, open, high, low, close, notional, volume, numberOfTrades] = candle
         const timestamp = moment(openTime).tz('America/New_York')
 
-        const date    = timestamp.format('YYYY-MM-DD')
-        const minute  = timestamp.format('HH:mm')
-        const label   = timestamp.format('LT')
+        const date = timestamp.format('YYYY-MM-DD')
+        const minute = timestamp.format('HH:mm')
+        const label = timestamp.format('LT')
         const average = notional / volume
-        const id      = parseInt(timestamp.format('HHmm'), 10)
+        const id = parseInt(timestamp.format('HHmm'), 10)
         return { id, date, minute, label, high, low, open, close, average, volume, notional, numberOfTrades }
       })
 
@@ -136,11 +138,11 @@ export default class OrderBook {
         for (let data of formattedData) {
           console.log('targetTime', targetTime, '?', data.id)
           while (targetTime < data.id) {
-            let timestamp  = moment('' + targetTime, 'Hmm')
+            let timestamp = moment('' + targetTime, 'Hmm')
 
-            lastData.date  = timestamp.format('YYYY-MM-DD')
+            lastData.date = timestamp.format('YYYY-MM-DD')
             lastData.minute = timestamp.format('HH:mm')
-            lastData.label  = timestamp.format('LT')
+            lastData.label = timestamp.format('LT')
 
             filteredData.push(lastData)
             console.log('push', lastData.id)
