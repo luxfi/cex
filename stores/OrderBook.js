@@ -133,8 +133,8 @@ export default class OrderBook {
         let lastData = formattedData
         let targetTime = 930
 
-        console.log('fd', formattedData)
         for (let data of formattedData) {
+          console.log('targetTime', targetTime, '?', data.id)
           while (targetTime < data.id) {
             let timestamp  = moment('' + targetTime, 'Hmm')
 
@@ -143,6 +143,7 @@ export default class OrderBook {
             lastData.label  = timestamp.format('LT')
 
             filteredData.push(lastData)
+            console.log('push', lastData.id)
             targetTime += 5
             if (targetTime % 100 >= 60) {
               targetTime += 40
@@ -151,12 +152,9 @@ export default class OrderBook {
 
           if (targetTime === data.id) {
             filteredData.push(data)
+            console.log('push', data.id)
           }
 
-          targetTime += 5
-          if (targetTime % 100 >= 60) {
-            targetTime += 40
-          }
           lastData = data
         }
 
@@ -201,11 +199,11 @@ export default class OrderBook {
 
   @action getIntradayData(ticker) {
     // day is 24 hr based on EST
-    const now = moment().tz('America/New_York')
+    const now = moment('2019-11-13').tz('America/New_York')
     // const startTime = now.startOf('day').valueOf()
     // const endTime = now.endOf('day').valueOf()
-    const startTime = now.startOf('day').add(9, 'hours').valueOf()
-    const endTime = now.startOf('day').add(14, 'hours').valueOf()
+    const startTime = moment(now).startOf('day').add(9, 'hours').valueOf()
+    const endTime = moment(now).startOf('day').add(16, 'hours').valueOf()
     let opts = {
       "startTime": startTime,
       "endTime": endTime,
@@ -219,8 +217,8 @@ export default class OrderBook {
   @action getDailyData(ticker) {
     // day is 24 hr based on EST
     const now = moment().tz('America/New_York')
-    const endTime = now.endOf('day').valueOf()
-    const startTime = now.startOf('day').subtract(1, 'year').valueOf()
+    const endTime = moment(now).endOf('day').valueOf()
+    const startTime = moment(now).startOf('day').subtract(1, 'year').valueOf()
     let opts = {
       "startTime": startTime,
       "endTime": endTime,
