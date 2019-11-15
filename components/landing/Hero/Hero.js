@@ -1,5 +1,5 @@
 import React from "react"
-import Link from "next/link"
+import NextLink from "next/link"
 import "react-responsive-carousel/lib/styles/carousel.min.css"
 import { inject, observer } from 'mobx-react'
 import { Carousel } from 'react-responsive-carousel'
@@ -32,9 +32,9 @@ import birdsOfPreyLogo from "../../../assets/images/birds-of-prey-logo.png"
 
 const ButtonLink = React.forwardRef(
   ({ className, href, hrefAs, children }, ref) => (
-    <Link ref={ref} href={href} as={hrefAs}>
+    <NextLink ref={ref} href={href} as={hrefAs}>
       <a className={className}>{children}</a>
-    </Link>
+    </NextLink>
   )
 )
 
@@ -102,12 +102,12 @@ class Hero extends React.Component {
                         className="invest-button button"
                         size="large"
                         startIcon={<MonetizationOnIcon />}
+                        component={ButtonLink}
+                        href={hrefLink}
                       >
-                        <Link href={hrefLink}>
-                          <Typography variant="body2">
-                            INVEST IN {movie.name}
-                          </Typography>
-                        </Link>
+                        <Typography variant="body2">
+                          INVEST IN {movie.name}
+                        </Typography>
                       </Button>
                       <br />
                       <br />
