@@ -118,14 +118,14 @@ class Hero extends React.Component {
                         <br />
                       </Box>
                       <br />
-                      <TrailerModal movie={movie} className={classes.watchModalButton} />
+                      <TrailerModal movie={movie} buttonClass={classes.watchTrailerButton} />
                       <Button
                         className={classes.investButton}
                         size="large"
                         startIcon={<MonetizationOnIcon />}
                       >
                         <Link href={hrefLink}>
-                          <Typography variant="body2" className={classes.watchModalButtonText}>
+                          <Typography variant="body2" className={classes.watchTrailerButtonText}>
                             INVEST IN {movie.name}
                           </Typography>
                         </Link>

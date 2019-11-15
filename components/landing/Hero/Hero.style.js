@@ -22,7 +22,7 @@ export default theme => ({
     border: "1px solid #FFF",
     padding: "11px 24px"
   },
-  watchModalButtonText: {
+  watchTrailerButtonText: {
     color: "#000",
   }
 })
