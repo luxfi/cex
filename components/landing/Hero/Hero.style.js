@@ -14,7 +14,6 @@ export default theme => ({
   investButton: {
     color: "#000",
     backgroundColor: "#FBC43E",
-    marginLeft: "16px",
     padding: "12px 24px"
   },
   watchTrailerButton: {
