@@ -7,7 +7,10 @@ import {
   useScrollTrigger
 } from "@material-ui/core";
 
-import { MenuRounded } from "@material-ui/icons";
+import {
+  MenuRounded, 
+  AccountCircle
+} from "@material-ui/icons";
 
 import DesktopNav from "./DesktopNav";
 import DesktopProfileAndSearch from "./DesktopProfileAndSearch";

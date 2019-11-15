@@ -22,7 +22,7 @@ import {
   Box
 } from "@material-ui/core"
 
-import { CustomLink } from "../"
+import { CustomLink } from ".."
 
 const EXTERNAL_LINKS = {
   medium: "https://medium.com/entertainment-stock-x",
@@ -271,7 +271,7 @@ const FooterMiddleRow = ({ classes, openModal }) => (
 
 @inject("store")
 @observer
-class FooterEx extends React.Component {
+class Footer extends React.Component {
   static async getInitialProps({ mobxStore }) {
     return { ...mobxStore }
   }
@@ -341,4 +341,4 @@ const styles = theme => {
   }
 }
 
-export default withStyles(styles)(FooterEx)
+export default withStyles(styles)(Footer)

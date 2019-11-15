@@ -13,7 +13,7 @@ export { default as CustomLink } from './CustomLink'
 export { default as CustomModal } from './CustomModal'
 export { default as CustomSnackbar } from './CustomSnackbar'
 export { default as CustomStockTooltip } from "./CustomStockTooltip"
-export { default as FooterEx } from './Footer'
+export { default as Footer } from './Footer'
 export { default as Header } from './Header'
 export { default as InvestNow } from './InvestNow'
 export { default as LimitOrders } from './LimitOrders'

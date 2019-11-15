@@ -1,1 +1,1 @@
-export { default as MobileAccountMenu } from "./MobileAccountMenu"
+export { default } from "./MobileAccountMenu"
