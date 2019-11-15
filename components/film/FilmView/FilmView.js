@@ -191,15 +191,15 @@ class Index extends React.Component {
           <div>
             <TrailerModal movie={movie} />
             <Button
+              component={ButtonLink}
+              target="_blank"
+              href="trade"
               rel="noopener noreferrer"
               variant="contained"
               className={classes.movieButton}
-              onClick={() => {
-                this.onTabSelected("invest")
-              }}
             >
               Invest
-                        </Button>
+            </Button>
             <Button
               rel="noopener noreferrer"
               variant="contained"
@@ -207,7 +207,7 @@ class Index extends React.Component {
               onClick={addToWatchList(movie.ticker)}
             >
               Add to watchlist
-                        </Button>
+            </Button>
           </div>
           <br />
           <br />
