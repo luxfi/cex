@@ -7,11 +7,13 @@ import {
   useScrollTrigger
 } from "@material-ui/core";
 
-import { MenuRounded } from "@material-ui/icons";
+import {
+  MenuRounded, 
+  AccountCircle
+} from "@material-ui/icons";
 
 import DesktopNav from "./DesktopNav";
 import DesktopProfileAndSearch from "./DesktopProfileAndSearch";
-import MobileProfileAndSearch from "./MobileProfileAndSearch";
 
 import { makeStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
@@ -62,10 +64,9 @@ export default props => {
               className={classes.mobileLogo}
               height="26px"
             />
-            <MobileProfileAndSearch
-              isLoggedIn={isLoggedIn}
-              handleLogout={handleLogout}
-              openRightDrawer={openRightDrawer}
+            <AccountMenu
+              openAccountMenu={openRightDrawer}
+              classes={classes}
             />
           </>
         )}
@@ -73,3 +74,20 @@ export default props => {
     </AppBar>
   );
 };
+
+const AccountMenu = (props) => {
+
+  const { openAccountMenu, classes } = props
+
+  return (
+    <div className={classes.accountOuter}>
+      <IconButton
+        aria-controls="menu"
+        aria-haspopup="true"
+        onClick={openAccountMenu}
+      >
+        <AccountCircle style={{ fontSize: "2rem" }} />
+      </IconButton>
+    </div>
+  )
+}
