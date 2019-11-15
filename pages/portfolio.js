@@ -53,6 +53,7 @@ class Portfolio extends React.Component {
   }
 
   componentDidMount () {
+    this.props.store.userStore.loadAccountBalance()
     this.props.store.userPortfolio.getInvestments()
     this.props.store.userPortfolio.getWatchlist()
     this.props.store.newsStore.loadFeed()
@@ -61,7 +62,7 @@ class Portfolio extends React.Component {
 
   render() {
     const { store, classes } = this.props
-    const { movieStore, userPortfolio, newsStore } = store
+    const { movieStore, userPortfolio, newsStore, userStore } = store
     const { tabIdx } = this.state
 
     // What functions do we need from the movie and user store?
@@ -99,6 +100,7 @@ class Portfolio extends React.Component {
           topCategories={userPortfolio.topPortfolioCategories}
           watchlist={userPortfolio.userTopWatchlist}
           removeFromWatchlist={removeFromWatchlist}
+          accountBalance={userStore.accountBalance}
         />
         <RewardsView tabIdx={tabIdx} index={1} />
         <NewsFeedView tabIdx={tabIdx} index={2} feed={newsStore.getFeedItems} />

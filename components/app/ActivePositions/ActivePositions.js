@@ -99,8 +99,6 @@ class ActivePositions extends Component {
       transactions: []
     }
 
-    console.log(this.state.investmentIdx, investment)
-
     return (
       <>
         <Typography className={classes.title} style={{ textAlign: "left" }} variant='h5'>

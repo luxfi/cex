@@ -120,7 +120,8 @@ export default props => {
     setMarketOrderType,
     marketOrderType,
     funds,
-    stockName
+    stockName,
+    accountBalance
   } = props
   let labels = timelineLabels()
 
@@ -129,8 +130,6 @@ export default props => {
   const [orderType, setOrderType] = useState('limit')
   const [orderPrice, setOrderPrice] = useState(0)
   const [orderQuantity, setOrderQuantity] = useState(0)
-
-  console.log('p, q', orderPrice, orderQuantity)
 
   const stock = toJS(orderBook.stock)
   let { connected } = orderBook
@@ -165,6 +164,27 @@ export default props => {
             </Tabs>
             <Box p={2}>
               <div>
+                {
+                  mode === 0 ? (
+                    <>
+                      <Typography variant='body2'>
+                        Balance
+                      </Typography>
+                      <Typography variant='h6'>
+                        ${ accountBalance } USD
+                      </Typography>
+                    </>
+                  ) : (
+                    <>
+                      <Typography variant='body2'>
+                        Total Shares
+                      </Typography>
+                      <Typography variant='h6'>
+                        { maxSell }
+                      </Typography>
+                    </>
+                  )
+                }
                 <Typography variant='body2'>
                   Last Price
                 </Typography>

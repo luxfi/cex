@@ -65,7 +65,6 @@ function MySnackbarContentWrapper(props) {
         <IconButton
           key="close"
           aria-label="close"
-          color="inherit"
           onClick={onClose}
         >
           <CloseIcon className={classes.icon} />
