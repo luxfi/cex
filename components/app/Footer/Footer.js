@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faFacebook,
   faTwitter,
-  faPinterest,
   faInstagram,
   faYoutube,
   faMedium,
@@ -81,16 +80,16 @@ const ContactUs = ({ classes, openModal }) => {
   )
 }
 
-const Copyright = () => {
+const Copyright = (props) => {
   return (
-    <Box mt={5}>
-      <Typography variant="body2" color="textSecondary" align="left">
+    <div className={props.classes.copyrightOuter}>
+      <Typography variant="body2" color="textSecondary">
         {"Privacy Policy / Terms of Use"}
       </Typography>
-      <Typography variant="body2" color="textSecondary" align="left">
+      <Typography variant="body2" color="textSecondary">
         {"Copyright © 2019 ESX. All rights reserved."}
       </Typography>
-    </Box>
+    </div>
   )
 }
 
@@ -136,52 +135,47 @@ const footers = [
 ]
 
 const FooterTopRow = ({ classes }) => (
-  <Box mb={5}>
+  <div className={classes.topRow}>
     <Grid container justify="center" alignItems="center">
-      <Grid item xs={12} sm={8}>
-        <Link href="/">
+      <Grid item xs='auto' md={8}>
+        <Link href="/" className={classes.logoLink}>
           <img
-            id="logo"
-            className={classes.logo}
+            className={classes.logoImg}
             src="/static/images/esx/esx-white-logo.png"
             alt="ESX"
             height="52px"
           />
         </Link>
-        <div className={classes.grow} />
       </Grid>
-      <Grid item xs={12} sm={4} className={classes.center}>
-        <IconButton href={EXTERNAL_LINKS.twitter} target="_blank" title="Tweet">
-          <FontAwesomeIcon icon={faTwitter} size="1x" />
-        </IconButton>
-        <IconButton href="https://www.facebook.com/" target="_blank">
+      <Grid item xs={12} sm={12} md={4} className={classes.socialIconRow}>
+        <IconButton href="https://www.facebook.com/" className={classes.socialIcon} target="_blank">
           <FontAwesomeIcon icon={faFacebook} size="1x" />
         </IconButton>
-        <IconButton href="https://www.pinterest.com/" target="_blank">
-          <FontAwesomeIcon icon={faPinterest} size="1x" />
+        <IconButton href={EXTERNAL_LINKS.twitter} className={classes.socialIcon} target="_blank" title="Tweet">
+          <FontAwesomeIcon icon={faTwitter} size="1x" />
         </IconButton>
-        <IconButton href="https://www.instagram.com/" target="_blank">
+        <IconButton href="https://www.instagram.com/" className={classes.socialIcon} target="_blank">
           <FontAwesomeIcon icon={faInstagram} size="1x" />
         </IconButton>
-        <IconButton href="https://www.youtube.com/" target="_blank">
+        <IconButton href="https://www.youtube.com/" className={classes.socialIcon} target="_blank">
           <FontAwesomeIcon icon={faYoutube} size="1x" />
         </IconButton>
-        <IconButton href={EXTERNAL_LINKS.medium} target="_blank">
+        <IconButton href={EXTERNAL_LINKS.medium} className={classes.socialIcon} target="_blank">
           <FontAwesomeIcon icon={faMedium} size="1x" />
         </IconButton>
-        <IconButton href={EXTERNAL_LINKS.reddit} target="_blank">
+        <IconButton href={EXTERNAL_LINKS.reddit} className={classes.socialIcon} target="_blank">
           <FontAwesomeIcon icon={faReddit} size="1x" />
         </IconButton>
       </Grid>
     </Grid>
-  </Box>
+  </div>
 )
 
 const FooterMiddleRow = ({ classes, openModal }) => (
-  <Grid container direction="row" className={classes.footerColumns}>
-    <Grid xs={12} sm={8} item container justify="space-evenly">
+  <Grid container className={classes.footerColumnsOuter}>
+    <Grid sm={12} item container>
       {footers.map(footer => (
-        <Grid item xs={12} sm={6} md={3} key={footer.title}>
+        <Grid item xs={12} sm={6} md={3} key={footer.title} className={classes.footerColumn} >
           <Typography variant="h6" color="textPrimary" gutterBottom>
             {footer.title}
           </Typography>
@@ -219,55 +213,48 @@ const FooterMiddleRow = ({ classes, openModal }) => (
     </Grid>
     <Grid
       xs={12}
-      sm={4}
       item
       container
-      justify="center"
-      alignItems="center"
-      direction="column"
+      className={classes.appArea}
     >
-      <Grid item>
+      <Grid item sm={12} xs={12}>
         <Typography variant="h6" align="center">
           {"Download the ESX app"}
         </Typography>
       </Grid>
-      <Grid item container justify="center">
-        <Grid item>
+      <Grid item container justify="center" className={classes.appStoreButtons}>
+        <Grid item  justify="center">
           <Link
             target="_blank"
             rel="noopener noreferrer"
             href="https://itunes.apple.com"
           >
             <img
-              style={{ height: "60px", padding: "10px 0px" }}
+              height= "48px"
+              className={classes.appleAppStore}
               alt="Available on the App Store"
               src="/static/images/footer/app-store-badge.svg"
             />
           </Link>
         </Grid>
-        <Grid item>
+        <Grid item justify="center">
           <Link
             target="_blank"
             rel="noopener noreferrer"
             href="https://play.google.com/"
           >
             <img
-              style={{ height: "60px", paddingLeft: "8px" }}
+              height="48px"
+              className={classes.androidAppStore}
               alt="Download on Google Play"
               src="/static/images/footer/GoogleStoreBadge.png"
             />
           </Link>
-          <br />
-          <br />
-          <br />
         </Grid>
       </Grid>
     </Grid>
   </Grid>
 )
-
-//  < Container maxWidth = "xl" component = "footer" className = { classes.footer } >
-//         </Container>
 
 @inject("store")
 @observer
@@ -282,9 +269,7 @@ class Footer extends React.Component {
       <div className={classes.root}>
         <FooterTopRow classes={classes} />
         <FooterMiddleRow openModal={openModal} classes={classes} />
-        <Box mt={5}>
-          <Copyright />
-        </Box>
+        <Copyright classes={classes}/>
       </div>
     )
   }
@@ -301,41 +286,84 @@ const styles = theme => {
         listStyle: "none"
       }
     },
-    center: {
-      textAlign: "center"
+    topRow : {
+      marginBottom: theme.spacing(3)
+    },
+    socialIconRow: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      [theme.breakpoints.down("sm")]: {
+        marginTop: theme.spacing(2),
+      }
+    },
+    socialIcon: {
+      display: "block",
+      padding: 0,
+      paddingRight: theme.spacing(2)
     },
     root: {
       flexGrow: 1,
       padding: theme.spacing(4)
-      //background: "#000",
     },
     menuButton: {
       marginRight: theme.spacing(2)
     },
-    footerColumns: {
+    footerColumnsOuter: {
+      display: "flex",
+      flexDirection: "column",
+      //alignItems: "center",
       [theme.breakpoints.down("sm")]: {
         flexDirection: "column-reverse"
       }
     },
-    logo: {
-      marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2),
+    footerColumn: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    logoImg: {
       display: "block",
+      position: "relative",
+      top: "-15px"
+    },
+    logoLink: {
+      display: "block",
+      width: "auto",
+      marginLeft: theme.spacing(8),
       [theme.breakpoints.down("sm")]: {
-        marginLeft: "auto",
-        marginRight: "auto"
+        marginLeft: 0
       }
     },
-    grow: {
-      flexGrow: 1,
-      display: "none",
-      display: "block"
+    appArea: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center"
     },
+    appStoreButtons: {
+
+    },
+    appleAppStore: {
+      width: "100px",
+    },
+    androidAppStore: {
+      width: "120px",
+    },
+
+
     footer: {
       padding: theme.spacing(3),
       [theme.breakpoints.up("sm")]: {
         paddingTop: theme.spacing(6),
         paddingBottom: theme.spacing(6)
+      }
+    },
+    copyrightOuter: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      "& p": {
+        marginRight: theme.spacing(1)
       }
     }
   }
