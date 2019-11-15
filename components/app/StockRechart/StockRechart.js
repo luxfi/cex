@@ -228,7 +228,7 @@ class StockRechart extends React.Component {
               />
             </div>
           ) : (
-              <ResponsiveContainer width="100%" height={400}>
+              <ResponsiveContainer width="100%" height={300}>
                 <LineChart
                   // width={710}
                   // height={195}

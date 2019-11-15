@@ -12,8 +12,8 @@ const LimitOrder = require("limit-order-book").LimitOrder
 const MarketOrder = require("limit-order-book").MarketOrder
 const LimitOrderBook = require("limit-order-book").LimitOrderBook
 
-// const SOCKET_STRING = 'https://exchange.hanzo.ai'
-const SOCKET_STRING = 'localhost:4000'
+const SOCKET_STRING = 'https://exchange.hanzo.ai'
+// const SOCKET_STRING = 'localhost:4000'
 
 const bidAsk = () => {
   return Math.floor(Math.random() * 2) == 0 ? "bid" : "ask" // 50/50 chance of "bid" or "ask"
@@ -47,7 +47,7 @@ export default class OrderBook {
 
   @observable ticker = ""
   @observable price = 13.37
-  @observable book = new LimitOrderBook()
+  @observable book = undefined //new LimitOrderBook()
   @observable buys = []
   @observable sells = []
   @observable takeResults = []
@@ -61,6 +61,9 @@ export default class OrderBook {
   @observable intradayData = []
   @observable dailyData = []
   @observable previousDayClose = []
+  @observable order = {}
+
+  activeOrders = {}
 
   constructor(
     initialData = {
@@ -172,13 +175,14 @@ export default class OrderBook {
       console.log("candles.get.error", err)
     })
     this.socket.on("book.data", data => {
-      console.log("book.data", data)
+      this.book = data
     })
+
     this.socket.on('disconnect', () => {
       this.connected = false
       const reconnect = setInterval(() => {
         if (!this.connected)
-          this.connect()
+          this.connect(ticker)
         else {
           this.connected = true
           clearInterval(reconnect)
@@ -195,14 +199,20 @@ export default class OrderBook {
     this.socket.disconnect()
   }
 
-  @action socketOrderCreate(order) {
+  @action socketOrderCreate(order, updateBalance) {
     // const { externalId, side, type, quantity, price, name } = order
-    this.socket.emit("order.create", order)
+    let externalId = uuid.v4()
+    let name = this.ticker
+
+    this.activeOrders[externalId] = true
+    console.log('socketOrderCreate', order)
+    this.socket.emit("order.create", Object.assign({ externalId, name }, order))
+    updateBalance(name, order.side)
   }
 
   @action getIntradayData(ticker) {
     // day is 24 hr based on EST
-    const now = moment('2019-11-13').tz('America/New_York')
+    const now = moment(/*'2019-11-13'*/).tz('America/New_York')
     // const startTime = now.startOf('day').valueOf()
     // const endTime = now.endOf('day').valueOf()
     const startTime = moment(now).startOf('day').add(9, 'hours').valueOf()
@@ -461,7 +471,7 @@ export default class OrderBook {
   }
 
   @computed get isReady() {
-    return this.connected && this.intradayData.length > 0 && this.dailyData.length > 0
+    return this.connected && this.book && this.intradayData.length > 0 && this.dailyData.length > 0
   }
 
   generatefullDay(book) {
