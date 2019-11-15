@@ -51,19 +51,14 @@ function getActiveChart(activeChart, { chartData, yDomain, labels }) {
 
 export default props => {
   const {
-    chartData,
-    yDomain,
-    updatePrintInterval,
-    activeChart,
     buyOrders,
     sellOrders,
     orderBook,
     ticker,
     movieCategories,
     onExecute,
+    createOrder,
     maxSell,
-    setActiveChart,
-    setMarketOrderType,
     marketOrderType,
     funds,
     stockName,
@@ -89,6 +84,7 @@ export default props => {
             orders={buyOrders}
             orderBook={orderBook}
             onExecute={onExecute}
+            createOrder={createOrder}
             movieCategories={movieCategories}
             marketOrderType={marketOrderType}
             funds={funds}
@@ -105,6 +101,7 @@ export default props => {
             orders={sellOrders}
             orderBook={orderBook}
             onExecute={onExecute}
+            createOrder={createOrder}
             movieCategories={movieCategories}
             maxSell={maxSell}
             marketOrderType={marketOrderType}
