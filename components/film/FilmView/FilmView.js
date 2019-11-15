@@ -104,9 +104,11 @@ class Index extends React.Component {
     const { slug } = router.query
     const { movieStore, orderBook, userPortfolio } = this.props.store
     const movie = movieStore.getMovieBySlug(slug)
-    orderBook.initiateDataGenerator(movie.ticker, movie.price)
+    // orderBook.initiateDataGenerator(movie.ticker, movie.price)
     userPortfolio.getInvestments()
-    orderBook.connect()
+    orderBook.connect(movie.ticker)
+    this.props.store.orderBook.fetchStockData(movie.ticker)
+    console.log(orderBook)
   }
 
   componentWillUnmount() {

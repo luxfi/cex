@@ -6,8 +6,8 @@ const isEmpty = obj => [Object, Array].includes((obj || {}).constructor) && !Obj
 
 class StockChart extends React.Component {
   render() {
-    const { stock, stockName } = this.props
-    const { intradayData, dailyData } = this.props.stock
+    const { stock, stockName, connected } = this.props
+    const { intradayData, dailyData } = stock
 
     // the intraday times which the 1D chart will always render
     const times = [
@@ -91,14 +91,18 @@ class StockChart extends React.Component {
       "15:55",
       "16:00"
     ]
-
-    let prevPrice,
-      openPrice = dailyData[dailyData.length - 1].close
+    let prevPrice, openPrice
+    if (isEmpty(dailyData)) {
+      //if no daily data take opening of intraday
+      prevPrice, openPrice = intradayData[0].minute
+    } else {
+      prevPrice, openPrice = dailyData[dailyData.length - 1].close
+    }
 
     // if market is closed then dailyData will have today's information, therefore previous day's close will actually be second to last item in it
     if (
       intradayData.length === 0 ||
-      dailyData[dailyData.length - 1].date.split("-").join("") ===
+      !isEmpty(dailyData) && dailyData[dailyData.length - 1].date.split("-").join("") ===
       intradayData[intradayData.length - 1].date
     ) {
       openPrice = dailyData[dailyData.length - 2].close
@@ -201,9 +205,8 @@ class StockChart extends React.Component {
     }))
     return (
       <div style={{ marginBottom: "32px" }}>
-        {!isEmpty(dailyData) && !isEmpty(intradayData) ? (
+        {!isEmpty(intradayData) && connected ? (
           <StockRechart
-            stock={stock}
             stockName={stockName}
             openPrice={openPrice}
             currPrice={currPrice}
@@ -227,7 +230,7 @@ class StockChart extends React.Component {
               />
             </div>
           )}
-      </div>
+      </div >
     )
   }
 }

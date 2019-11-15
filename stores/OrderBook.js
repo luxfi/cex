@@ -2,8 +2,9 @@ import { action, observable, computed } from "mobx"
 import _ from "lodash"
 import uuid from "uuid"
 import io from "socket.io-client"
+import moment from 'moment-timezone'
 
-import stock from "../assets/tempData/stocks"
+// import stock from "../assets/tempData/stocks"
 
 // import io from 'socket.io-client'
 const LimitOrder = require("limit-order-book").LimitOrder
@@ -55,7 +56,8 @@ export default class OrderBook {
   @observable printInterval = 5
   @observable activeChart = "line-chart"
   @observable marketOrderType = true
-  @observable stock = {}
+  @observable intradayData = {}
+  @observable dailyData = {}
 
   constructor(
     initialData = {
@@ -78,13 +80,19 @@ export default class OrderBook {
     this.printInterval = initialData.printInterval || 5
     this.api = hanzoApi
     this.id = id
-    this.stock = stock
   }
 
-  @action connect() {
+  @action fetchStockData(ticker) {
+    this.getIntradayData(ticker)
+    this.getDailyData(ticker)
+  }
+
+  @action connect(ticker) {
+    this.ticker = ticker
     this.socket = io(SOCKET_STRING)
     // To handle responses:
     this.socket.on("book.subscribe.success", data => {
+      this.connected = true
       console.log("book.subscribe.success", data)
     })
     this.socket.on("book.subscribe.error", err => {
@@ -103,6 +111,17 @@ export default class OrderBook {
       console.log("order.create.error", err)
     })
     this.socket.on("candles.get.success", data => {
+      let { candles, type } = data
+      let formattedData = candles.map(candle => {
+        const [openTime, closeTime, open, high, low, close, notional, volume, numberOfTrades] = candle
+        const timestamp = moment(openTime).tz('America/New_York')
+        const date = moment(timestamp).format('YYYY-MM-DD')
+        const minute = moment(timestamp).format('HH:mm')
+        const label = moment(timestamp).format('LT')
+        const average = notional / volume
+        return { date, minute, label, high, low, open, close, average, volume, notional, numberOfTrades }
+      })
+      this[type] = formattedData
       console.log("candles.get.success", data)
     })
     this.socket.on("candles.get.error", err => {
@@ -111,9 +130,20 @@ export default class OrderBook {
     this.socket.on("book.data", data => {
       console.log("book.data", data)
     })
+    this.socket.on('disconnect', () => {
+      this.connected = false
+      const reconnect = setInterval(() => {
+        if (!this.connected)
+          this.connect()
+        else {
+          this.connected = true
+          clearInterval(reconnect)
+        }
+      }, 2500)
+    })
     // Initiate the connection to the correct book
-    console.log("Subscribbing to ", this.ticker)
-    this.socket.emit("book.subscribe", { name: this.ticker })
+    console.log("Subscribing to ", ticker)
+    this.socket.emit("book.subscribe", { name: ticker })
   }
 
   @action disconnect() {
@@ -123,6 +153,38 @@ export default class OrderBook {
   @action socketOrderCreate(order) {
     // const { externalId, side, type, quantity, price, name } = order
     this.socket.emit("order.create", order)
+  }
+
+  @action getIntradayData(ticker) {
+    // day is 24 hr based on EST
+    const now = moment().tz('America/New_York')
+    // const startTime = now.startOf('day').valueOf()
+    // const endTime = now.endOf('day').valueOf()
+    const startTime = now.startOf('day').add(9, 'hours').valueOf()
+    const endTime = now.startOf('day').add(14, 'hours').valueOf()
+    let opts = {
+      "startTime": startTime,
+      "endTime": endTime,
+      "interval": "1m",
+      "name": ticker,
+      "type": "intradayData"
+    }
+    this.socket.emit('candles.get', opts)
+  }
+
+  @action getDailyData(ticker) {
+    // day is 24 hr based on EST
+    const now = moment().tz('America/New_York')
+    const endTime = now.endOf('day').valueOf()
+    const startTime = now.startOf('day').subtract(1, 'year').valueOf()
+    let opts = {
+      "startTime": startTime,
+      "endTime": endTime,
+      "interval": "1d",
+      "name": ticker,
+      "type": "dailyData"
+    }
+    this.socket.emit('candles.get', opts)
   }
 
   @action clearData() {
@@ -344,6 +406,12 @@ export default class OrderBook {
 
   @computed get sellOrders() {
     return this.sells
+  }
+
+  @computed get stock() {
+    const intradayData = this.intradayData
+    const dailyData = this.dailyData
+    return { intradayData, dailyData }
   }
 
   generatefullDay(book) {
