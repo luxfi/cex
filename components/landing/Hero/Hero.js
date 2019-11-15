@@ -102,12 +102,12 @@ class Hero extends React.Component {
                         className="invest-button button"
                         size="large"
                         startIcon={<MonetizationOnIcon />}
-                        component={ButtonLink}
-                        href={hrefLink}
                       >
-                        <Typography variant="body2">
-                          INVEST IN {movie.name}
-                        </Typography>
+                        <a href={hrefLink}>
+                          <Typography variant="body2">
+                            INVEST IN {movie.name}
+                          </Typography>
+                        </a>
                       </Button>
                       <br />
                       <br />
