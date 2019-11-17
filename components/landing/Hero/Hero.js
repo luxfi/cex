@@ -1,12 +1,12 @@
 import React from "react"
-import Link from "next/link"
+import NextLink from "next/link"
 import "react-responsive-carousel/lib/styles/carousel.min.css"
 import { inject, observer } from 'mobx-react'
 import { Carousel } from 'react-responsive-carousel'
 
 // @material-ui/core components
 import { withStyles } from "@material-ui/core/styles"
-import { Grid } from "@material-ui/core"
+import { Grid, useMediaQuery } from "@material-ui/core"
 
 // @material-ui/icons
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
@@ -32,16 +32,16 @@ import birdsOfPreyLogo from "../../../assets/images/birds-of-prey-logo.png"
 
 const ButtonLink = React.forwardRef(
   ({ className, href, hrefAs, children }, ref) => (
-    <Link ref={ref} href={href} as={hrefAs}>
+    <NextLink ref={ref} href={href} as={hrefAs}>
       <a className={className}>{children}</a>
-    </Link>
+    </NextLink>
   )
 )
 
 const movieExtendedMap = {
   'terminator-dark-fate': {
     // logo: <img className="logo" src={terminatorLogo} />,
-    logo: <TerminatorLogo/>,
+    logo: <TerminatorLogo />,
     img: <img src={terminatorHero} style={{ height: "120vh", marginTop: "10vh", marginLeft: "40vw" }} />,
   },
   'uncut-gems': {
@@ -58,6 +58,23 @@ const movieExtendedMap = {
   }
 }
 
+const MyCarousel = ({ children }) => {
+  // collapse arrows on mobile
+  const mobile = useMediaQuery('(max-width:600px)')
+  React.useEffect(() => {
+    const buttons = document.getElementsByClassName('control-arrow')
+    // move zIndex down if on mobile to allow fo swipeable drawer component
+    const index = mobile ? "100" : "100000"
+    Array.from(buttons).forEach(button => button.style.zIndex = index)
+  }, [mobile])
+  return (
+    <Carousel showThumbs={false} infiniteLoop={true} showStatus={false} useKeyboardArrows>
+      {children}
+    </Carousel>
+  )
+}
+
+
 @inject("store")
 @observer
 class Hero extends React.Component {
@@ -65,14 +82,20 @@ class Hero extends React.Component {
     super(props)
   }
 
+  componentDidMount() {
+    const buttons = document.getElementsByClassName('control-arrow')
+    Array.from(buttons).forEach(button => button.style.zIndex = "100000")
+  }
+
   render() {
     const { classes, ...rest } = this.props
     return (
       <>
         <div className="hero-container">
-          <Carousel showThumbs={false} infiniteLoop={true} showStatus={false}>
+          <MyCarousel>
             {this.props.store.movieStore.movies.map((movie, i) => {
               const hrefLink = '/film/' + movie.movieSlug
+              console.log('hrefLink', hrefLink)
               return <HeroImg key={i} {...rest} img={movieExtendedMap[movie.movieSlug].img}>
                 <div className={classes.container}>
                   <Grid container>
@@ -102,11 +125,11 @@ class Hero extends React.Component {
                         size="large"
                         startIcon={<MonetizationOnIcon />}
                       >
-                        <Link href={hrefLink}>
+                        <a href={hrefLink}>
                           <Typography variant="body2">
                             INVEST IN {movie.name}
                           </Typography>
-                        </Link>
+                        </a>
                       </Button>
                       <br />
                       <br />
@@ -116,7 +139,7 @@ class Hero extends React.Component {
                 </div>
               </HeroImg>
             })}
-          </Carousel>
+          </MyCarousel>
         </div>
         <style jsx>{`
           .hero-container {

@@ -27,7 +27,8 @@ export default class BuySellForm extends React.Component {
     this.state = {
       price: "",
       size: "",
-      total: ""
+      total: "",
+      valid: false
     }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.submitOrder = this.submitOrder.bind(this)
@@ -49,50 +50,31 @@ export default class BuySellForm extends React.Component {
     const price = parseFloat(this.state.price)
     const size = parseInt(this.state.size)
     const total = parseFloat(this.state.total)
-    const { ticker, movieCategories, marketOrderType, funds } = this.props
+    const { ticker, movieCategories, marketOrderType, orderType, funds, createOrder } = this.props
     if ((!price || !size) && !marketOrderType) return // need price and size if limit order
     if (!total && marketOrderType) return //need total funds if market order
-    let id = Date.now() // unique id
-    let currentOrderID = `${this.props.ticker}-${id}`
-    // id type price size book
-    const orderData = {
-      ticker: ticker,
-      amount: size,
-      price: price.toFixed(2),
-      categories: movieCategories
+    
+    const order = {
+      side: orderType,
+      type: 'limit',
+      price: this.state.price,
+      quantity: this.state.size,
     }
 
-    if (!marketOrderType) {
-      this.props.orderBook.placeNewOrder(
-        currentOrderID,
-        this.props.orderType,
-        price,
-        size,
-        orderData,
-        this.props.onExecute
-      )
-    } else {
-      this.props.orderBook.placeNewMarketOrder(
-        currentOrderID,
-        this.props.orderType,
-        size,
-        funds,
-        orderData,
-        this.props.onExecute
-      )
-    }
+    createOrder(order)
 
     this.setState({
       price: "",
       size: "",
-      total: ""
+      total: "",
+      valid: false
     })
   }
 
   handleInputChange(event) {
     const newState = this.state
     let newVal = event.target.value
-    const { orderType, maxSell, orderBook, marketOrderType } = this.props
+    const { orderType, maxSell, orderBook, marketOrderType, accountBalance } = this.props
     const { price } = orderBook
 
     // if (newVal.indexOf('$') > -1) newVal = parseFloat(newVal.split('$').slice(-1).pop())
@@ -127,6 +109,14 @@ export default class BuySellForm extends React.Component {
       }
     }
 
+    if (orderType === 'bid' && accountBalance >= Number.parseFloat(newState.total) && newState.size > 0) {
+      newState.valid = true
+    } else if (orderType === 'ask' && maxSell >= newState.size && newState.size > 0) {
+      newState.valid = true
+    } else {
+      newState.valid = false
+    }
+
     newState[event.target.name] = newVal
     this.setState(newState)
   }
@@ -140,7 +130,8 @@ export default class BuySellForm extends React.Component {
       orderType,
       maxSell,
       marketOrderType,
-      orderBook
+      orderBook,
+      accountBalance
     } = this.props
 
     const amountPlaceholder =
@@ -168,7 +159,14 @@ export default class BuySellForm extends React.Component {
           </div>
         ) : (
           <Box justifyContent="center" display="flex" m={2}>
-            <Typography variant="h4">${(this.state.price  || "0.00")}</Typography>
+            <Typography variant="h4">
+              ${(this.state.price  || "0.00")} - 
+              {
+                orderType === 'bid' ?
+                ` Balance $${accountBalance}`
+                : ` Max Sell ${maxSell}`
+              }
+            </Typography>
           </Box>
         )}
         <div className="form-group">
@@ -197,12 +195,13 @@ export default class BuySellForm extends React.Component {
         {/* <p className="dark">Fee 0 USDT (0.2%)</p> */}
         <button
           type="submit"
-          className={`btn btn-${buttonColor || "primary"}`}
+          className={`btn btn-${buttonColor || "primary"} ${!this.state.valid ? `btn-${buttonColor}-disabled` : '' }`}
           style={{ width: width }}
+          disabled={!this.state.valid}
         >
           {buttonText}
         </button>
-        <LimitOrders orders={orders} />
+        {/* <LimitOrders orders={orders} /> */}
         <style jsx>{`
           form {
             width: 100%;
@@ -276,10 +275,21 @@ export default class BuySellForm extends React.Component {
             background-color: rgb(77, 167, 53);
             border-color: rbg(77, 167, 53);
           }
+          .btn-green-disabled {
+            color: #fff;
+            background-color: rgba(77, 167, 53, .5);
+            border-color: rbg(77, 167, 53);
+          }
 
           .btn-red {
             color: #fff;
             background-color: rgb(228, 81, 38);
+            border-color: rgb(228, 81, 38);
+          }
+
+          .btn-red-disabled {
+            color: #fff;
+            background-color: rgba(228, 81, 38, .5);
             border-color: rgb(228, 81, 38);
           }
         `}</style>

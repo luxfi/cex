@@ -95,12 +95,12 @@ export default (props) => {
       ) : (
       <>
         <Link href={"/login"} >
-          <Button color="inherit" className={classes.navButton}>
+          <Button className={classes.navButton}>
             Login
           </Button>
         </Link>
         <Link href={"/signup"} >
-          <Button color="inherit" variant="outlined" className={classes.navButton}>
+          <Button variant="outlined" className={classes.navButton}>
             Sign Up
           </Button>
         </Link>

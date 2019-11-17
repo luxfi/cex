@@ -55,7 +55,7 @@ export default props => {
             watchlistMovies.length > 0 ?
             watchlistMovies.map((d, i) =>
               <Grid item key={i} xs={12} sm={12} md={4}>
-                <Card plain>
+                <Card plain="true">
                   <Grid item
                     style={{ cursor: "pointer" }}
                     onClick={() => {
