@@ -84,10 +84,10 @@ const Copyright = (props) => {
   return (
     <div className={props.classes.copyrightOuter}>
       <Typography variant="body2" color="textSecondary">
-        {"Privacy Policy / Terms of Use"}
+        Privacy Policy / Terms of Use
       </Typography>
       <Typography variant="body2" color="textSecondary">
-        {"Copyright © 2019 ESX. All rights reserved."}
+        Copyright © 2019 ESX. All rights reserved.
       </Typography>
     </div>
   )
