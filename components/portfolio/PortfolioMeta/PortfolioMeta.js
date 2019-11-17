@@ -52,6 +52,7 @@ export default props => {
   const classes = useStyles()
   const {
     holdings,
+    accountBalance,
     weeklyChange,
     rank,
     rankPercent,
@@ -100,7 +101,24 @@ export default props => {
                   >
                     {weeklyChange} from last week
                   </Typography>
-                  <Grid item xs={6}>
+                  <Typography
+                    variant="h1"
+                    className={classes.earningsText}
+                    gutterBottom
+                  >
+                    Balance
+                  </Typography>
+                  <Typography className={classes.earningsAmountText}>
+                    <Typography
+                      component="span"
+                      variant="inherit"
+                      className={classes.currencySymbol}
+                    >
+                      {dataStub.currencySymbol}
+                    </Typography>
+                    {accountBalance}
+                  </Typography>
+                  {/* <Grid item xs={6}>
                     {topChips.map((c, i) => (
                       <Chip
                         key={`earningsChip_${i}`}
@@ -108,7 +126,7 @@ export default props => {
                         className={classes.earningsChip}
                       />
                     ))}
-                  </Grid>
+                  </Grid> */}
                 </Grid>
               </Grid>
               <Grid item xs={12} sm={9}>

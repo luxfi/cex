@@ -40,7 +40,7 @@ export default class UserStore {
   // Account comes from the Hanzo API
   @observable token = null;
   @observable account = null;
-  @observable accountBalance = 100000;
+  @observable accountBalance = 0;
 
   // ** SIGNUP INFO **
   // must initialize to empty string for controlled inputs
@@ -199,6 +199,41 @@ export default class UserStore {
     } else {
       this.token = undefined;
       window.localStorage.removeItem('token');
+    }
+  }
+
+  @action loadBalance () {
+    // Loads the users balance from local
+    this.accountBalance = localStorage.getItem('accountBalance')
+  }
+
+  @action loadAccountBalance () {
+    this.accountBalance = localStorage.getItem('accountBalance') ? Number.parseFloat(localStorage.getItem('accountBalance')).toFixed(2) : 0
+  }
+
+  @action addBalance (val, onSuccess, onError) {
+    const parsedVal = Number.parseFloat(val)
+    if (typeof parsedVal === 'number' && !isNaN(parsedVal)) {
+      let oldBalance = localStorage.getItem('accountBalance') ? Number.parseFloat(localStorage.getItem('accountBalance')) : 0
+      let newBalance = (oldBalance + parsedVal).toFixed(2)
+      window.localStorage.setItem('accountBalance', newBalance)
+      this.accountBalance = newBalance
+      onSuccess && onSuccess()
+    } else {
+      onError && onError()
+    }
+  }
+  
+  @action removeBalance (val, onSuccess, onError) {
+    const parsedVal = Number.parseFloat(val)
+    if (typeof parsedVal === 'number' && !isNaN(parsedVal) && this.accountBalance > parsedVal) {
+      let oldBalance = localStorage.getItem('accountBalance') ? Number.parseFloat(localStorage.getItem('accountBalance')) : 0
+      let newBalance = (oldBalance - parsedVal).toFixed(2)
+      window.localStorage.setItem('accountBalance', newBalance)
+      this.accountBalance = newBalance
+      onSuccess && onSuccess()
+    } else {
+      onError && onError()
     }
   }
 
@@ -410,17 +445,23 @@ export default class UserStore {
     }
   }
 
-  @action async addPaymentMethod(onSuccess, onError) {
+  @action async addPaymentMethod(token, meta, onSuccess, onError) {
     try {
+      const {
+        institution,
+        accounts,
+        account
+      } = meta
       const opts = {
-        publicToken: this.newPaymentMethodPublicToken,
-        accountId: this.newPaymentMethodMetadata.account_id,
+        publicToken: token,
+        accountId: meta.account_id,
         type: this.newPaymentMethodType,
         name: this.newPaymentMethodName,
-        metadata: this.newPaymentMethodMetadata,
-      };
+        metadata: { institution, accounts, account}
+      }
 
-      const res = await this.api.client.account.paymentMethod(opts);
+      const res = await this.api.client.account.paymentMethod(opts)
+      onSuccess && onSuccess()
     } catch (ex) {
       console.log('Error logging out', ex);
       onError && onError(ex.toString());
@@ -552,6 +593,7 @@ export default class UserStore {
   }
 
   @computed get isValidNewPaymentMethod() {
+    // TODO Delete
     return (
       this.validNewPaymentMethodPublicToken &&
       this.validNewPaymentMethodName &&

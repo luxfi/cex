@@ -9,12 +9,9 @@ export default class NewsStore {
   }
 
   @action async loadFeed(url) {
-    console.log('Calling loadFeed')
     try {
       const res = await fetch(url || 'https://files.hanzo.ai/feed/', { method: 'GET' })
       const { feed } = await res.json()
-      console.log(feed)
-      
       this.feed = feed
     } catch (ex) {
       console.error('Caught parser exception', ex)

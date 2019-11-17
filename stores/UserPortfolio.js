@@ -162,13 +162,13 @@ export default class UserPortfolio {
     }
   }
 
-  @action onOrderExecute(order, orderType) {
+  @action onOrderExecute(order, ticker, orderType, updateBalance) {
     // order is the thing movie that was bought or sold
     // orderType is buy/sell
 
     // order = {
     //   ticker: string,
-    //   amount: number,
+    //   quantity: number,
     //   price: number,
     //   categories: array[string]
     // }
@@ -179,14 +179,14 @@ export default class UserPortfolio {
       this.investments = JSON.parse(_investments)
     }
 
-    let holdingIndex = _.findIndex(this.investments, { ticker: order.ticker })
-    console.log('what', holdingIndex, this.investments, order, orderType)
+    let holdingIndex = _.findIndex(this.investments, { ticker })
+    console.log('onOrderExecute', holdingIndex, this.investments, order, orderType)
 
     if (orderType === "bid") {
-      // Add the order to the user portfolio, no need to check anything
+      // Add the order to the user portfolio after checking their account balance
       if (holdingIndex > -1) {
         // Then we have a holding
-        this.investments[holdingIndex].amount += order.amount
+        this.investments[holdingIndex].amount += order.quantity
         this.investments[holdingIndex].price = order.price
       } else {
         holdingIndex = this.investments.length
@@ -196,10 +196,10 @@ export default class UserPortfolio {
       // Make sure the user owns enough shares to sell?
       if (
         holdingIndex > -1 &&
-        this.investments[holdingIndex].amount >= order.amount
+        this.investments[holdingIndex].amount >= order.quantity
       ) {
         // Then we have a holding
-        this.investments[holdingIndex].amount -= order.amount
+        this.investments[holdingIndex].amount -= order.quantity
         this.investments[holdingIndex].price = order.price
 
         if (this.investments[holdingIndex].amount <= 0)
@@ -209,7 +209,8 @@ export default class UserPortfolio {
       }
     }
 
-    console.log('a', holdingIndex)
+    updateBalance(orderType, order.price * order.quantity)
+
     // Add transaction array
     if (!this.investments[holdingIndex].transactions) {
       this.investments[holdingIndex].transactions = []
@@ -220,8 +221,6 @@ export default class UserPortfolio {
       type: orderType,
       date: moment().format('LLL'),
     }, order))
-
-    console.log('b', this.investments)
 
     this.updateHoldings()
     localStorage.setItem("investments", JSON.stringify(toJS(this.investments)))

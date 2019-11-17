@@ -2,10 +2,12 @@ import React from "react"
 import StockRechart from "../StockRechart"
 import { ClipLoader } from "react-spinners"
 
+const isEmpty = obj => [Object, Array].includes((obj || {}).constructor) && !Object.entries((obj || {})).length;
+
 class StockChart extends React.Component {
   render() {
-    const { stock, stockName } = this.props
-    const { intradayData, dailyData } = this.props.stock
+    const { stock, stockName, connected } = this.props
+    const { intradayData, dailyData, previousDayClose } = stock
 
     // the intraday times which the 1D chart will always render
     const times = [
@@ -89,15 +91,20 @@ class StockChart extends React.Component {
       "15:55",
       "16:00"
     ]
-
-    let prevPrice,
+    let prevPrice, openPrice
+    if (isEmpty(dailyData)) {
+      //if no daily data take opening of intraday
+      openPrice = intradayData[0].close
+      prevPrice = openPrice
+    } else {
       openPrice = dailyData[dailyData.length - 1].close
-
-      // if market is closed then dailyData will have today's information, therefore previous day's close will actually be second to last item in it
+      prevPrice = openPrice
+    }
+    // if market is closed then dailyData will have today's information, therefore previous day's close will actually be second to last item in it
     if (
       intradayData.length === 0 ||
-      dailyData[dailyData.length - 1].date.split("-").join("") ===
-        intradayData[intradayData.length - 1].date
+      !isEmpty(dailyData) && dailyData[dailyData.length - 1].date.split("-").join("") ===
+      intradayData[intradayData.length - 1].date
     ) {
       openPrice = dailyData[dailyData.length - 2].close
     }
@@ -109,7 +116,6 @@ class StockChart extends React.Component {
     let data = []
     for (let i = 0; i < intradayData.length; i++) {
       let price
-
       if (intradayData[i].minute === times[0]) {
         if (!intradayData[i].label) {
           data.push({
@@ -120,17 +126,17 @@ class StockChart extends React.Component {
           continue
         }
         // check if there is price data, if not take most recent price
-        if (!intradayData[i].average) {
+        if (!intradayData[i].close) {
           price = prevPrice
         } else {
-          price = intradayData[i].average
+          price = intradayData[i].close
           prevPrice = price
         }
         let time = intradayData[i].label.includes(":")
           ? `${intradayData[i].label} ET`
           : `${intradayData[i].label.split(" ")[0]}:00 ${
-              intradayData[i].label.split(" ")[1]
-            } ET`
+          intradayData[i].label.split(" ")[1]
+          } ET`
         data.push({
           time,
           price,
@@ -142,8 +148,8 @@ class StockChart extends React.Component {
           price: prevPrice,
         })
         times.shift()
-      } else if (intradayData[i].average) {
-        prevPrice = intradayData[i].average
+      } else if (intradayData[i].close) {
+        prevPrice = intradayData[i].close
       }
     }
     // get list of all prices throughout the day to find key data points (high, low)
@@ -160,7 +166,7 @@ class StockChart extends React.Component {
       Math.round(
         ((parseFloat(currPrice) - parseFloat(openPrice)) /
           parseFloat(openPrice)) *
-          10000
+        10000
       ) / 100
     let neg = "+"
     if (priceFlux < 0) {
@@ -196,13 +202,11 @@ class StockChart extends React.Component {
     data = data.map(d => ({
       time: d.time,
       price: d.price,
-      lastClose: dailyData[dailyData.length - 1].close // until we correctly calculate last close
     }))
     return (
       <div style={{ marginBottom: "32px" }}>
-        {Object.keys(stock).length > 31 ? (
+        {!isEmpty(intradayData) && connected ? (
           <StockRechart
-            stock={stock}
             stockName={stockName}
             openPrice={openPrice}
             currPrice={currPrice}
@@ -215,19 +219,19 @@ class StockChart extends React.Component {
             intradayData={intradayData}
             dailyData={dailyData}
             color={color}
+            previousDayClose={previousDayClose}
           />
         ) : (
-          <div className="sweet-loading">
-            <ClipLoader
-              className={override}
-              sizeUnit={"px"}
-              size={150}
-              color={"#123abc"}
-              loading={true}
-            />
-          </div>
-        )}
-      </div>
+            <div className="sweet-loading">
+              <ClipLoader
+                sizeUnit={"px"}
+                size={150}
+                color={"#123abc"}
+                loading={true}
+              />
+            </div>
+          )}
+      </div >
     )
   }
 }
