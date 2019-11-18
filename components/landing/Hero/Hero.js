@@ -95,7 +95,6 @@ class Hero extends React.Component {
           <MyCarousel>
             {this.props.store.movieStore.movies.map((movie, i) => {
               const hrefLink = '/film/' + movie.movieSlug
-              console.log('hrefLink', hrefLink)
               return <HeroImg key={i} {...rest} img={movieExtendedMap[movie.movieSlug].img}>
                 <div className={classes.container}>
                   <Grid
@@ -104,7 +103,7 @@ class Hero extends React.Component {
                     direction="row"
                     justify="flex-start"
                   >
-                    <Grid justify="flex-start" spacing={1} item xs={10} md={6} style={{ textAlign: 'left' }} >
+                    <Grid item xs={10} md={6} style={{ textAlign: 'left' }} >
                       <Grid item xs>
                         <Box lineHeight={1} letterSpacing={2}>
                           <Typography className="esx-initial-offering" variant="h5">
