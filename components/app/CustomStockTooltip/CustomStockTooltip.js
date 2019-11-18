@@ -1,4 +1,5 @@
 import React from "react"
+import { padDollarAmount } from "../../../util/generic"
 
 class CustomStockTooltip extends React.Component {
   constructor(props) {
@@ -20,12 +21,8 @@ class CustomStockTooltip extends React.Component {
       if (priceFluxCalc < 0) {
         neg = "-"
       }
-      let priceFluxString = `${neg}$${Math.abs(priceFluxCalc).formatMoney(
-        2
-      )} (${priceFluxPercentageCalc.formatMoney(2)}%)`
-      price.innerHTML = `$${parseFloat(this.props.payload[0].value).formatMoney(
-        2
-      )}`
+      let priceFluxString = `${neg}$${padDollarAmount(Math.abs(priceFluxCalc))} (${padDollarAmount(priceFluxPercentageCalc)}%)`
+      price.innerHTML = `$${padDollarAmount(parseFloat(this.props.payload[0].value))}`
       priceFlux.innerHTML = priceFluxString
     } else if (prevProps.priceFlux !== this.props.priceFlux) {
       price.innerHTML = `$${prevProps.price}`

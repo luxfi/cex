@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react"
 
-import { ActivePositions, TopInvestmentPicks} from "../../app"
+import { ActivePositions, TopInvestmentPicks } from "../../app"
 import PortfolioPagePortfolioMeta from '../PortfolioMeta/PortfolioMeta'
 import WatchlistSection from '../WatchlistSection/WatchlistSection'
 
