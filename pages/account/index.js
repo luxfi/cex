@@ -56,27 +56,33 @@ class Account extends React.Component {
 
     return (
       <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
-        <Grid container spacing={3} justify="center">
+        <Grid
+          container
+          spacing={3}
+          direction="column"
+          justify="center"
+          alignItems="center"
+        >
           <Grid item xs={12} sm={4}>
             <Card>
               <CardContent>
                 <AddPaymentMethodForm
-                  addPaymentMethod                    = {addPaymentMethod.bind(userStore)}
-                  validateNewPaymentMethodName        = {validateNewPaymentMethodName.bind(userStore)}
-                  validateNewPaymentMethodPublicToken = {validateNewPaymentMethodPublicToken.bind(userStore)}
-                  validateNewPaymentMethodMetadata    = {validateNewPaymentMethodMetadata.bind(userStore)}
-                  isValidNewPaymentMethod             = {isValidNewPaymentMethod}
-                  validNewPaymentMethodName           = {validNewPaymentMethodName}
-                  validNewPaymentMethodPublicToken    = {validNewPaymentMethodPublicToken}
-                  setValue        = {setValue.bind(userStore)}
-                  setErrorMessage = {setErrorMessage}
+                  addPaymentMethod={addPaymentMethod.bind(userStore)}
+                  validateNewPaymentMethodName={validateNewPaymentMethodName.bind(userStore)}
+                  validateNewPaymentMethodPublicToken={validateNewPaymentMethodPublicToken.bind(userStore)}
+                  validateNewPaymentMethodMetadata={validateNewPaymentMethodMetadata.bind(userStore)}
+                  isValidNewPaymentMethod={isValidNewPaymentMethod}
+                  validNewPaymentMethodName={validNewPaymentMethodName}
+                  validNewPaymentMethodPublicToken={validNewPaymentMethodPublicToken}
+                  setValue={setValue.bind(userStore)}
+                  setErrorMessage={setErrorMessage}
                   refreshSession={() => { userStore.loadSession() }}
                 />
               </CardContent>
             </Card>
           </Grid>
           {
-            !!account && !!account.paymentMethods ? 
+            !!account && !!account.paymentMethods ?
               <Grid item xs={12} sm={8}>
                 {
                   account.paymentMethods.map((m, i) => {
@@ -84,31 +90,31 @@ class Account extends React.Component {
                       <Card key={`m+${i}`} style={{ marginBottom: 20 }}>
                         <CardContent>
                           <Typography variant="body1">
-                            { m.name }
+                            {m.name}
                           </Typography>
                           <Typography variant="body2">
-                            { (m.Inputs && m.Inputs.metadata.institution) ? m.Inputs.metadata.institution.name : ""}
+                            {(m.Inputs && m.Inputs.metadata.institution) ? m.Inputs.metadata.institution.name : ""}
                           </Typography>
                           <Grid container>
                             <Grid item xs={4}>
-                            <TextField
-                              variant="outlined"
-                              margin="normal"
-                              required
-                              fullWidth
-                              name="newFunds"
-                              label="Add Funds"
-                              id="add-new-funds"
-                              value={this.state[`${m.name}-newFunds`] || ""}
-                              onChange={evt => {
-                                this.setState({ 
-                                  [`${m.name}-newFunds`]: evt.target.value,
-                                  [`${m.name}-newFunds-error`]: null
-                                })
-                              }}
-                              helperText={this.state[`${m.name}-newFunds-error`]}
-                              error={this.state[`${m.name}-newFunds-error`] && this.state[`${m.name}-newFunds-error`].length > 0}
-                            />
+                              <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="newFunds"
+                                label="Add Funds"
+                                id="add-new-funds"
+                                value={this.state[`${m.name}-newFunds`] || ""}
+                                onChange={evt => {
+                                  this.setState({
+                                    [`${m.name}-newFunds`]: evt.target.value,
+                                    [`${m.name}-newFunds-error`]: null
+                                  })
+                                }}
+                                helperText={this.state[`${m.name}-newFunds-error`]}
+                                error={this.state[`${m.name}-newFunds-error`] && this.state[`${m.name}-newFunds-error`].length > 0}
+                              />
                             </Grid>
                           </Grid>
                           <Button
@@ -117,11 +123,11 @@ class Account extends React.Component {
                               () => {
                                 userStore.addBalance(
                                   this.state[`${m.name}-newFunds`],
-                                  () => { this.setState({ [`${m.name}-newFunds`]: ""}) },
-                                  () => { 
+                                  () => { this.setState({ [`${m.name}-newFunds`]: "" }) },
+                                  () => {
                                     this.setState({
                                       [`${m.name}-newFunds`]: "",
-                                      [`${m.name}-newFunds-error`]: `Error adding funds from ${m.name}` 
+                                      [`${m.name}-newFunds-error`]: `Error adding funds from ${m.name}`
                                     })
                                   }
                                 )
@@ -137,9 +143,9 @@ class Account extends React.Component {
                   })
                 }
               </Grid>
-            : null 
+              : null
           }
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={4}>
             <Link component={CustomLink} href="/account/kyc">
               Check your identify verification status
             </Link>

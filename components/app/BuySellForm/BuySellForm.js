@@ -50,15 +50,15 @@ export default class BuySellForm extends React.Component {
     const price = parseFloat(this.state.price)
     const size = parseInt(this.state.size)
     const total = parseFloat(this.state.total)
-    const { ticker, movieCategories, marketOrderType, orderType, funds, createOrder } = this.props
+    const { ticker, movieCategories, marketOrderType, funds, orderType, createOrder } = this.props
     if ((!price || !size) && !marketOrderType) return // need price and size if limit order
     if (!total && marketOrderType) return //need total funds if market order
-    
+
     const order = {
+      price: `${price}`,
+      quantity: `${size}`,
       side: orderType,
-      type: 'limit',
-      price: this.state.price,
-      quantity: this.state.size,
+      type: "market"
     }
 
     createOrder(order)
