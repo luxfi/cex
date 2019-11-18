@@ -1,12 +1,12 @@
 import React from "react"
-import Link from "next/link"
+import NextLink from "next/link"
 import "react-responsive-carousel/lib/styles/carousel.min.css"
 import { inject, observer } from 'mobx-react'
 import { Carousel } from 'react-responsive-carousel'
 
 // @material-ui/core components
 import { withStyles } from "@material-ui/core/styles"
-import { Grid } from "@material-ui/core"
+import { Grid, useMediaQuery } from "@material-ui/core"
 
 // @material-ui/icons
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
@@ -32,16 +32,16 @@ import birdsOfPreyLogo from "../../../assets/images/birds-of-prey-logo.png"
 
 const ButtonLink = React.forwardRef(
   ({ className, href, hrefAs, children }, ref) => (
-    <Link ref={ref} href={href} as={hrefAs}>
+    <NextLink ref={ref} href={href} as={hrefAs}>
       <a className={className}>{children}</a>
-    </Link>
+    </NextLink>
   )
 )
 
 const movieExtendedMap = {
   'terminator-dark-fate': {
     // logo: <img className="logo" src={terminatorLogo} />,
-    logo: <TerminatorLogo/>,
+    logo: <TerminatorLogo />,
     img: <img src={terminatorHero} style={{ height: "120vh", marginTop: "10vh", marginLeft: "40vw" }} />,
   },
   'uncut-gems': {
@@ -58,6 +58,23 @@ const movieExtendedMap = {
   }
 }
 
+const MyCarousel = ({ children }) => {
+  // collapse arrows on mobile
+  const mobile = useMediaQuery('(max-width:600px)')
+  React.useEffect(() => {
+    const buttons = document.getElementsByClassName('control-arrow')
+    // move zIndex down if on mobile to allow fo swipeable drawer component
+    const index = mobile ? "100" : "100000"
+    Array.from(buttons).forEach(button => button.style.zIndex = index)
+  }, [mobile])
+  return (
+    <Carousel showThumbs={false} infiniteLoop={true} showStatus={false} useKeyboardArrows>
+      {children}
+    </Carousel>
+  )
+}
+
+
 @inject("store")
 @observer
 class Hero extends React.Component {
@@ -65,49 +82,68 @@ class Hero extends React.Component {
     super(props)
   }
 
+  componentDidMount() {
+    const buttons = document.getElementsByClassName('control-arrow')
+    Array.from(buttons).forEach(button => button.style.zIndex = "100000")
+  }
+
   render() {
     const { classes, ...rest } = this.props
     return (
       <>
         <div className="hero-container">
-          <Carousel showThumbs={false} infiniteLoop={true} showStatus={false}>
+          <MyCarousel>
             {this.props.store.movieStore.movies.map((movie, i) => {
               const hrefLink = '/film/' + movie.movieSlug
+              console.log('hrefLink', hrefLink)
               return <HeroImg key={i} {...rest} img={movieExtendedMap[movie.movieSlug].img}>
                 <div className={classes.container}>
-                  <Grid container>
-                    <Grid item xs={12} sm={12} md={6} style={{ textAlign: 'left' }}>
-                      <Box lineHeight={1} letterSpacing={2}>
-                        <Typography className="esx-initial-offering" variant="h5">
-                          <Box fontWeight='bold' fontSize={24}>
-                            ESX
+                  <Grid
+                    container
+                    spacing={1}
+                    direction="row"
+                    justify="flex-start"
+                  >
+                    <Grid justify="flex-start" spacing={1} item xs={10} md={6} style={{ textAlign: 'left' }} >
+                      <Grid item xs>
+                        <Box lineHeight={1} letterSpacing={2}>
+                          <Typography className="esx-initial-offering" variant="h5">
+                            <Box fontWeight='bold' fontSize={24}>
+                              ESX
                           </Box>
-                          <Box fontWeight={100} fontSize={20}>
-                            INITIAL OFFERING
+                            <Box fontWeight={100} fontSize={20}>
+                              INITIAL OFFERING
                           </Box>
-                        </Typography>
-                        <br />
-                        {movieExtendedMap[movie.movieSlug].logo}
-                        <br />
-                        <br />
-                        <Typography variant="body2">
-                          {movie.shortDescription}
-                        </Typography>
-                        <br />
-                      </Box>
-                      <br />
-                      <TrailerModal movie={movie} />
-                      <Button
-                        className="invest-button button"
-                        size="large"
-                        startIcon={<MonetizationOnIcon />}
-                      >
-                        <Link href={hrefLink}>
-                          <Typography variant="body2">
-                            INVEST IN {movie.name}
                           </Typography>
-                        </Link>
-                      </Button>
+                          <br />
+                          {movieExtendedMap[movie.movieSlug].logo}
+                          <br />
+                          <br />
+                          <Typography variant="body2">
+                            {movie.shortDescription}
+                          </Typography>
+                          <br />
+                        </Box>
+                      </Grid>
+                      <br />
+                      <Grid container item spacing={2} justify="flex-start">
+                        <Grid item >
+                          <TrailerModal movie={movie} buttonClass={classes.watchTrailerButton} />
+                        </Grid>
+                        <Grid item >
+                          <Button
+                            className={classes.investButton}
+                            size="large"
+                            startIcon={<MonetizationOnIcon />}
+                          >
+                            <NextLink href={hrefLink}>
+                              <Typography variant="body2" className={classes.watchTrailerButtonText}>
+                                INVEST IN {movie.name}
+                              </Typography>
+                            </NextLink>
+                          </Button>
+                        </Grid>
+                      </Grid>
                       <br />
                       <br />
                       <br />
@@ -116,13 +152,12 @@ class Hero extends React.Component {
                 </div>
               </HeroImg>
             })}
-          </Carousel>
+          </MyCarousel>
         </div>
         <style jsx>{`
           .hero-container {
             position: relative;
             overflow: hidden;
-            // margin-top: -64px;
             margin-top: -233px // -64px + -169px from slider
           }
 
@@ -139,24 +174,7 @@ class Hero extends React.Component {
           }
 
           .hero-container :global(p) {
-            color: #FFF !important;
-          }
-
-          .hero-container :global(.watch-trailer-button) {
-            color: #FFF !important;
-            border: 1px solid #FFF;
-            padding: 11px 24px;
-          }
-
-          .hero-container :global(.invest-button p) {
-            color: #000 !important;
-          }
-
-          .hero-container :global(.invest-button) {
-            color: #000 !important;
-            background-color: #FBC43E;
-            margin-left: 16px;
-            padding: 12px 24px;
+            color: #FFF;
           }
 
           .hero-container :global(.control-dots) {
@@ -164,16 +182,16 @@ class Hero extends React.Component {
             display: none:
           }
 
-          @media (max-width: 768px) {
-            .hero-container :global(.button) {
-              margin: 0 0;
-              width: 100%;
-            }
+          // @media (max-width: 768px) {
+          //   .hero-container :global(.button) {
+          //     margin: 0 0;
+          //     width: 100%;
+          //   }
 
-            .hero-container :global(.watch-trailer-button) {
-              margin: 0 0 16px;
-            }
-          }
+          //   .hero-container :global(.watch-trailer-button) {
+          //     margin: 0 0 16px;
+          //   }
+          // }
 
           a {
             color: #FFF;

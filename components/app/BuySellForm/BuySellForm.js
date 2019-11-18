@@ -66,7 +66,8 @@ export default class BuySellForm extends React.Component {
     this.setState({
       price: "",
       size: "",
-      total: ""
+      total: "",
+      valid: false
     })
   }
 

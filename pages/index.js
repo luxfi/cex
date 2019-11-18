@@ -12,11 +12,11 @@ import Hero from "../components/landing/Hero/Hero"
 import styles from "../styles/pages/landing.style.js"
 
 // Sections for this page
-import { 
-  TrailerSlider, 
-  StudioSlider, 
-  CategorySlider, 
-  ForYouSlider 
+import {
+  TrailerSlider,
+  StudioSlider,
+  CategorySlider,
+  ForYouSlider
 } from "../components/landing"
 
 import { googlePageView } from '../util/generic'
@@ -37,7 +37,7 @@ class Index extends React.Component {
     return (
       <>
         <Hero loggedIn={loggedIn} />
-        <Container maxWidth="xl"
+        <div
           style={{
             transform: "translate(0, -52vh)"
           }}
@@ -48,7 +48,7 @@ class Index extends React.Component {
           <div style={{ marginBottom: "-52vh" }}>
             <CategorySlider />
           </div>
-        </Container>
+        </div>
       </>
     )
   }
