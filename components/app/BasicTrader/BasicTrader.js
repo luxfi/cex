@@ -5,35 +5,8 @@ import {
   StockChart
 } from "../"
 import { toJS } from "mobx"
-import { timelineLabels } from "../../../util/dateRange"
-import { Element } from "react-scroll"
 import { Grid } from "@material-ui/core"
 import { useState } from "react"
-
-function getActiveChart(activeChart, { chartData, yDomain, labels }) {
-  switch (activeChart) {
-    case "candlestick":
-      return (
-        <ChartCandlestickFake
-          data={chartData}
-          yDomain={yDomain}
-          labels={labels}
-        />
-      )
-    case "line-chart":
-      return (
-        <ChartLineSeries
-          data={chartData}
-          yDomain={yDomain}
-          labels={labels}
-        />
-      )
-    case 2:
-      return null
-    default:
-      return null
-  }
-}
 
 export default props => {
   const {
@@ -56,13 +29,12 @@ export default props => {
     stockName,
     accountBalance
   } = props
-  let labels = timelineLabels()
   const [visible, setVisible] = useState(false)
   const stock = toJS(orderBook.stock)
   let { connected } = orderBook
   window.orderBook = orderBook
   return (
-    <Element>
+    <>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <StockChart stock={stock} stockName={stockName} connected={connected} />
@@ -120,6 +92,6 @@ export default props => {
                     margin-right: 20px;
                 }
             `}</style>
-    </Element>
+    </>
   )
 }

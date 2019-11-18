@@ -4,33 +4,13 @@ import {
   Line,
   ResponsiveContainer,
   ReferenceLine,
-  XAxis,
   YAxis,
   Tooltip
 } from "recharts"
 import CustomStockTooltip from "../CustomStockTooltip"
-import { BeatLoader, ScaleLoader } from "react-spinners"
-
-Number.prototype.formatMoney = function (c, d, t) {
-  var n = this,
-    c = isNaN((c = Math.abs(c))) ? 2 : c,
-    d = d == undefined ? "." : d,
-    t = t == undefined ? "," : t,
-    s = n < 0 ? "-" : "",
-    i = String(parseInt((n = Math.abs(Number(n) || 0).toFixed(c)))),
-    j = (j = i.length) > 3 ? j % 3 : 0
-  return (
-    s +
-    (j ? i.substr(0, j) + t : "") +
-    i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) +
-    (c
-      ? d +
-      Math.abs(n - i)
-        .toFixed(c)
-        .slice(2)
-      : "")
-  )
-}
+import { ScaleLoader } from "react-spinners"
+import { Typography, Box } from "@material-ui/core"
+import { padDollarAmount } from "../../../util/generic"
 
 const RANGES = {
   "1W": { length: 5, increment: 1 },
@@ -207,12 +187,16 @@ class StockRechart extends React.Component {
     } else {
       document.getElementsByTagName("body")[0].className = ""
     }
-    currPrice = parseFloat(currPrice).formatMoney(2)
-    priceFlux = Math.abs(parseFloat(priceFlux)).formatMoney(2)
-    priceFluxPercentage = parseFloat(priceFluxPercentage).formatMoney(2)
+    currPrice = padDollarAmount(parseFloat(currPrice))
+    priceFlux = padDollarAmount(Math.abs(parseFloat(priceFlux)))
+    priceFluxPercentage = padDollarAmount(parseFloat(priceFluxPercentage))
     return (
-      <div className="chart">
-        <h1>{this.props.stockName}</h1>
+      <Box className="chart" mt={3}>
+        <Typography variant="h5">
+          <Box fontWeight="bold">
+            {this.props.stockName}
+          </Box>
+        </Typography>
         <h2 id="stock-price">${currPrice}</h2>
         <h3 id="stock-price-flux">
           {neg}${priceFlux} ({priceFluxPercentage}%)
@@ -395,7 +379,7 @@ class StockRechart extends React.Component {
             content: "";
           }
         `}</style>
-      </div>
+      </Box>
     )
   }
 }
