@@ -261,7 +261,7 @@ class StockRechart extends React.Component {
                     <ReferenceLine
                       y={this.props.previousDayClose}
                       stroke="white"
-                      strokeDasharray="3 3"
+                      strokeDasharray="1 6"
                     />
                   }
                 </LineChart>
