@@ -181,7 +181,7 @@ class StockRechart extends React.Component {
       max,
       neg
     } = this.state.currData
-    let color = neg === "+" ? "#82ca9d" : "#f45531"
+    let color = "#f3c463"
     if (neg === "-") {
       document.getElementsByTagName("body")[0].className = "negative"
     } else {
@@ -193,14 +193,20 @@ class StockRechart extends React.Component {
     return (
       <Box className="chart" mt={3}>
         <Typography variant="h5">
-          <Box fontWeight="bold">
+          <Box fontWeight="fontWeightBold">
             {this.props.stockName}
           </Box>
         </Typography>
-        <h2 id="stock-price">${currPrice}</h2>
-        <h3 id="stock-price-flux">
-          {neg}${priceFlux} ({priceFluxPercentage}%)
-        </h3>
+        <Typography variant="h3" >
+          <Box fontWeight="fontWeightLight" mt={2} id="stock-price">
+            ${currPrice}
+          </Box>
+        </Typography>
+        <Typography>
+          <Box id="stock-price-flux">
+            {neg}${priceFlux} ({priceFluxPercentage}%)
+          </Box>
+        </Typography>
         <div className="stock-chart">
           {this.props.loading ? (
             <div className="chart-loading">
@@ -332,11 +338,11 @@ class StockRechart extends React.Component {
             padding-bottom: 15px;
           }
           .chart-choice.active {
-            color: #21ce99;
-            border-bottom: 2px solid #21ce99;
+            color: #f3c463;
+            border-bottom: 2px solid #f3c463;
           }
           .chart-choice:hover {
-            color: #21ce99;
+            color: #f3c463;
           }
           .chart {
             padding: 0;
