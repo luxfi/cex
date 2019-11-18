@@ -1,28 +1,14 @@
 import {
   BuySellForm,
-  ChartIntervalControls,
   ChartCandlestickFake,
   ChartLineSeries,
-  ToggleVisibleChart,
   StockChart
 } from "../"
 import { toJS } from "mobx"
 import { timelineLabels } from "../../../util/dateRange"
 import { Element } from "react-scroll"
-import dynamic from "next/dynamic"
-import { Grid, Button } from "@material-ui/core"
+import { Grid } from "@material-ui/core"
 import { useState } from "react"
-
-const TVChartContainer = dynamic(
-  async () => {
-    const mod = await import("../TVChartContainer")
-    return mod.TVChartContainer
-  },
-  {
-    ssr: false,
-    loading: () => <div style={{ color: "red" }}>This is loading</div>
-  }
-)
 
 function getActiveChart(activeChart, { chartData, yDomain, labels }) {
   switch (activeChart) {
@@ -81,7 +67,8 @@ export default props => {
         <Grid item xs={12}>
           <StockChart stock={stock} stockName={stockName} connected={connected} />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        {/* hide buy sell until there is a design for it */}
+        {/* <Grid item xs={12} sm={6}>
           <BuySellForm
             buttonColor="green"
             buttonText="BUY"
@@ -114,7 +101,7 @@ export default props => {
             funds={funds}
             accountBalance={accountBalance}
           />
-        </Grid>
+        </Grid> */}
       </Grid>
 
       <style jsx>{`
