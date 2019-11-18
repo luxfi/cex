@@ -1,39 +1,28 @@
 import { container, title } from "../../../styles/esxStyles.js"
 
-export default {
+export default theme => ({
   container: {
     ...container,
     marginTop: '30vh',
     zIndex: "12",
     color: "#FFFFFF",
-    marginLeft: '72px',
+    marginLeft: theme.spacing(4),
     "@media (max-width: 573px)": {
-      marginTop: 320,
+      marginTop: '20vh',
     },
   },
-  title: {
-    ...title,
-    display: "inline-block",
-    position: "relative",
-    marginTop: "30px",
-    minHeight: "32px",
-    color: "#FFFFFF",
-    textDecoration: "none"
+  investButton: {
+    color: "#000",
+    backgroundColor: "#FBC43E",
+    padding: "12px 24px"
   },
-  subtitle: {
-    fontSize: "1.313rem",
-    maxWidth: "500px",
-    margin: "10px auto 0"
+  watchTrailerButton: {
+    color: "#FFF",
+    border: "1px solid #FFF",
+    padding: "11px 24px"
   },
-  main: {
-    background: "#FFFFFF",
-    position: "relative",
-    zIndex: "3"
-  },
-  mainRaised: {
-    margin: "-60px 30px 0px",
-    borderRadius: "6px",
-    boxShadow:
-      "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)"
+  watchTrailerButtonText: {
+    color: "#000",
   }
-}
+})
+
