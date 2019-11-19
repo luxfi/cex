@@ -126,7 +126,8 @@ export default props => {
                         <StockChart
                             stock={stock}
                             stockName={stockName}
-                            connected={connected}
+                connected={connected}
+                      
                         />
                     ) : (
                         <React.Fragment>
@@ -136,7 +137,7 @@ export default props => {
                         </React.Fragment>
                     )}
                 </Grid>
-                <Grid item lg={3} md={4} sm={6} xs={12} spacing={5}>
+                <Grid item lg={3} md={4} sm={6} xs={12}>
                     <Grid container direction="column">
                         <div className={classes.root}>
                             <Paper className={classes.paper}>
