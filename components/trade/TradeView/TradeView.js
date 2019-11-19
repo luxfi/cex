@@ -170,7 +170,7 @@ class Index extends React.Component {
               value={this.state.selectedMode == "pro"}
               setValue={ (val) => this.onModeSelected(val ? "pro" : "basic") }
             />
-            { orderBook.isReady ?
+            { 
               this.state.selectedMode === "basic" ? (
                 <BasicTrader
                   chartData={chartData}
@@ -221,8 +221,6 @@ class Index extends React.Component {
                   stockName={movie.name}
                   accountBalance={userStore.accountBalance}
                 />
-              ) : (
-                <Typography>Loading chart...</Typography>
               )
             }
           </Box>
