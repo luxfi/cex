@@ -80,7 +80,7 @@ const FinancialsSection = () => {
       <Box mb={3} mt={3}>
           <Grid justify="flexStart" container spacing={4}>
               {financialMetrics.map(metric => (
-                  <Grid item xs={12} lg={3}>
+                  <Grid item xs={6} lg={3} md={3} sm={4}>
                       <Typography>
                           <Box fontWeight="fontWeightBold">{metric.name}</Box>
                       </Typography>
