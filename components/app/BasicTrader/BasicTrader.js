@@ -1,7 +1,4 @@
 import {
-    BuySellForm,
-    ChartCandlestickFake,
-    ChartLineSeries,
     StockChart
 } from "../"
 import { toJS } from "mobx"
@@ -12,45 +9,73 @@ import {
     Button,
     Box,
     TextField,
+    Link
 } from "@material-ui/core"
 import { Skeleton } from "@material-ui/lab"
 import { makeStyles, createStyles } from "@material-ui/styles"
-
+import { useState } from "react"
 
 const AboutSection = () => {
-  return (
-      <Box mt={6}>
-          <Typography variant="subtitle2" gutterBottom>
-              <Box fontWeight="fontWeightBold">ABOUT</Box>
-          </Typography>
-          <Typography variant="h5" gutterBottom>
-              <Box fontWeight="fontWeightBold">
-                  Quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                  ea commodo consequat
-              </Box>
-          </Typography>
-          <Typography gutterBottom>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </Typography>
-          <Typography gutterBottom>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </Typography>
-      </Box>
-  );
+    const [expandedText, setExpandedText] = useState(false)
+    return (
+        <Box mt={6}>
+            <Typography variant="subtitle2" gutterBottom>
+                <Box fontWeight="fontWeightBold">ABOUT</Box>
+            </Typography>
+            <Typography variant="h5" gutterBottom>
+                <Box fontWeight="fontWeightBold">
+                    Quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+                    ea commodo consequat
+                </Box>
+            </Typography>
+            <Typography gutterBottom>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </Typography>
+            {expandedText ? (
+                <React.Fragment>
+                    <Typography gutterBottom>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu
+                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit
+                        anim id est laborum.
+                    </Typography>
+                    <Typography gutterBottom>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu
+                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit
+                        anim id est laborum.
+                    </Typography>
+                    <Link
+                        color="inherit"
+                        onClick={() => setExpandedText(false)}
+                    >
+                        <Box fontWeight="fontWeightBold">Hide...</Box>
+                    </Link>
+                </React.Fragment>
+            ) : (
+                <Link color="inherit" onClick={() => setExpandedText(true)}>
+                    <Box fontWeight="fontWeightBold">Read More...</Box>
+                </Link>
+            )}
+        </Box>
+    );
 }
-
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -112,7 +137,7 @@ export default props => {
                             <Skeleton variant="rect" height={300} />
                         </React.Fragment>
                     )}
-                    <AboutSection/>
+                    <AboutSection />
                 </Grid>
                 <Grid
                     container
@@ -276,5 +301,5 @@ export default props => {
                 }
             `}</style>
         </>
-    );
+    )
 }
