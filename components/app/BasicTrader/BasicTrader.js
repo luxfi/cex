@@ -8,7 +8,8 @@ import {
     Box,
     TextField,
     Link,
-    Divider
+    Divider,
+    Container
 } from "@material-ui/core"
 import { Skeleton } from "@material-ui/lab"
 import { makeStyles, createStyles } from "@material-ui/styles"
@@ -56,151 +57,152 @@ export default props => {
     } = props
     const stock = toJS(orderBook.stock)
     let { connected } = orderBook
-  const classes = useStyles()
-  if (orderBook.isReady) {
-      debugger;
-  }
-      return (
-          <>
-              <Grid justify="center" container spacing={8}>
-                  <Grid item xs={12} lg={7}>
-                      {orderBook.isReady ? (
-                          <StockChart
-                              stock={stock}
-                              stockName={stockName}
-                              connected={connected}
-                          />
-                      ) : (
-                          <React.Fragment>
-                              <Skeleton width="25%" />
-                              <Skeleton height={32} width="15%" />
-                              <Skeleton variant="rect" height={300} />
-                          </React.Fragment>
-                      )}
-                  </Grid>
-                  <Grid
-                      container
-                      direction="column"
-                      item
-                      lg={3}
-                      md={4}
-                      sm={6}
-                      xs={12}
-                      spacing={5}
-                  >
-                      <div className={classes.root}>
-                          <Paper className={classes.paper}>
-                              <Grid
-                                  container
-                                  direction="column"
-                                  justify="space-between"
-                                  spacing={3}
-                              >
-                                  <Grid item>
-                                      <Typography variant="h5">
-                                          Buy SAW9
-                                      </Typography>
-                                  </Grid>
-                                  <Grid
-                                      item
-                                      container
-                                      justify="space-between"
-                                      alignItems="center"
-                                  >
-                                      <Grid item xs={6}>
-                                          <Typography>Shares</Typography>
-                                      </Grid>
-                                      <Grid item xs={6}>
-                                          <TextField
-                                              required
-                                              id="shares"
-                                              name="shares"
-                                              fullWidth
-                                              placeholder="$0.00"
-                                              autoComplete="shares"
-                                              // onChange={evt =>
-                                              //     setValue(
-                                              //         evt.target.name,
-                                              //         evt.target.value
-                                              //     )
-                                              // }
-                                              margin="normal"
-                                              variant="outlined"
-                                              inputProps={{
-                                                  style: { textAlign: "right" }
-                                              }}
-                                              margin="dense"
-                                          />
-                                      </Grid>
-                                  </Grid>
-                                  <Grid item container justify="space-between">
-                                      <Grid item xs={6}>
-                                          <Typography>Market Price</Typography>
-                                      </Grid>
-                                      <Grid item xs={6}>
-                                          <Box textAlign="right">
-                                              <Typography>$262.05</Typography>
-                                          </Box>
-                                      </Grid>
-                                  </Grid>
-                                  <Grid item container justify="space-between">
-                                      <Grid item xs={6}>
-                                          <Typography>
-                                              Estimated Cost
-                                          </Typography>
-                                      </Grid>
-                                      <Grid item xs={6}>
-                                          <Box textAlign="right">
-                                              <Typography>$0.00</Typography>
-                                          </Box>
-                                      </Grid>
-                                  </Grid>
-                                  <Grid item>
-                                      <Button
-                                          className={classes.reviewButton}
-                                          fullWidth
-                                      >
-                                          <Typography
-                                              variant="body2"
-                                              className={
-                                                  classes.reviewButtonText
-                                              }
-                                          >
-                                              Review Order
-                                          </Typography>
-                                      </Button>
-                                  </Grid>
-                                  <Grid item xs={12}>
-                                      <Typography>
-                                          $0.00 Buying Power Available
-                                      </Typography>
-                                  </Grid>
-                              </Grid>
-                          </Paper>
-                          <Box mt={3}>
-                              <Button
-                                  className={``}
-                                  variant="outlined"
-                                  fullWidth
-                              >
-                                  <Typography variant="body2">
-                                      Buy Tickets
-                                  </Typography>
-                              </Button>
-                          </Box>
-                          <Box mt={3} justifyContent="center" display="flex">
-                              <Typography variant="body2">
-                                  Add to Watchlist
-                              </Typography>
-                          </Box>
-                      </div>
-                  </Grid>
-                  <Grid item xs={12} lg={7}>
-                      <AboutSection />
-                      <Divider />
-                  </Grid>
-                  {/* hide buy sell until there is a design for it */}
-                  {/* <Grid item xs={12} sm={6}>
+    const classes = useStyles()
+    return (
+        <>
+            <Grid justify="center" container spacing={8}>
+                <Grid item xs={12} lg={7}>
+                    {orderBook.isReady ? (
+                        <StockChart
+                            stock={stock}
+                            stockName={stockName}
+                            connected={connected}
+                        />
+                    ) : (
+                        <React.Fragment>
+                            <Skeleton width="25%" />
+                            <Skeleton height={32} width="15%" />
+                            <Skeleton variant="rect" height={300} />
+                        </React.Fragment>
+                    )}
+                </Grid>
+                <Grid
+                    container
+                    direction="column"
+                    item
+                    lg={3}
+                    md={4}
+                    sm={6}
+                    xs={12}
+                    spacing={5}
+                >
+                    <div className={classes.root}>
+                        <Paper className={classes.paper}>
+                            <Grid
+                                container
+                                direction="column"
+                                justify="space-between"
+                                spacing={3}
+                            >
+                                <Grid item>
+                                    <Typography variant="h5">
+                                        Buy SAW9
+                                    </Typography>
+                                </Grid>
+                                <Grid
+                                    item
+                                    container
+                                    justify="space-between"
+                                    alignItems="center"
+                                >
+                                    <Grid item xs={6}>
+                                        <Typography>Shares</Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <TextField
+                                            required
+                                            id="shares"
+                                            name="shares"
+                                            fullWidth
+                                            placeholder="$0.00"
+                                            autoComplete="shares"
+                                            // onChange={evt =>
+                                            //     setValue(
+                                            //         evt.target.name,
+                                            //         evt.target.value
+                                            //     )
+                                            // }
+                                            margin="normal"
+                                            variant="outlined"
+                                            inputProps={{
+                                                style: { textAlign: "right" }
+                                            }}
+                                            margin="dense"
+                                        />
+                                    </Grid>
+                                </Grid>
+                                <Grid item container justify="space-between">
+                                    <Grid item xs={6}>
+                                        <Typography>Market Price</Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Box textAlign="right">
+                                            <Typography>$262.05</Typography>
+                                        </Box>
+                                    </Grid>
+                                </Grid>
+                                <Grid item container justify="space-between">
+                                    <Grid item xs={6}>
+                                        <Typography>Estimated Cost</Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Box textAlign="right">
+                                            <Typography>$0.00</Typography>
+                                        </Box>
+                                    </Grid>
+                                </Grid>
+                                <Grid item>
+                                    <Button
+                                        className={classes.reviewButton}
+                                        fullWidth
+                                    >
+                                        <Typography
+                                            variant="body2"
+                                            className={classes.reviewButtonText}
+                                        >
+                                            Review Order
+                                        </Typography>
+                                    </Button>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Typography>
+                                        $0.00 Buying Power Available
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                        </Paper>
+                        <Box mt={3}>
+                            <Button className={``} variant="outlined" fullWidth>
+                                <Typography variant="body2">
+                                    Buy Tickets
+                                </Typography>
+                            </Button>
+                        </Box>
+                        <Box mt={3} justifyContent="center" display="flex">
+                            <Typography variant="body2">
+                                Add to Watchlist
+                            </Typography>
+                        </Box>
+                    </div>
+                </Grid>
+                <Grid item xs={12} lg={7}>
+                    <AboutSection />
+                    <Divider />
+                </Grid>
+                <Grid
+                    container
+                    direction="column"
+                    item
+                    lg={3}
+                    md={4}
+                    sm={6}
+                    xs={12}
+                    spacing={5}
+                >
+                </Grid>
+            </Grid>
+            {/* hide buy sell until there is a design for it */}
+            {/* <Grid item xs={12} sm={6}>
           <BuySellForm
             buttonColor="green"
             buttonText="BUY"
@@ -234,23 +236,6 @@ export default props => {
             accountBalance={accountBalance}
           />
         </Grid> */}
-              </Grid>
-              <style jsx>{`
-                .title {
-                    color: #2d92dd
-                    font-size: 32px
-                    margin-top: 30px
-                    font-weight: lighter
-                }
-                .posts-container {
-                    margin-top: 20px
-                    fill: transparent
-                }
-                .divider {
-                    margin-left: 20px
-                    margin-right: 20px
-                }
-            `}</style>
-          </>
-      );
+        </>
+    );
 }
