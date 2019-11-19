@@ -78,13 +78,12 @@ const financialMetrics = [
 const FinancialsSection = () => {
   return (
       <Box mb={3} mt={3}>
-          <Grid justify="flexStart" container spacing={4}>
-              {financialMetrics.map(metric => (
-                  <Grid item xs={6} lg={3} md={3} sm={4}>
-                      <Typography>
-                          <Box fontWeight="fontWeightBold">{metric.name}</Box>
-                      </Typography>
-
+          <Grid justify="flex-start" container spacing={4}>
+              {financialMetrics.map((metric, i) => (
+                  <Grid key={i} item xs={6} lg={3} md={3} sm={4}>
+                      <Box fontWeight="fontWeightBold">
+                          <Typography>{metric.name}</Typography>
+                      </Box>
                       <Typography>{metric.value}</Typography>
                   </Grid>
               ))}
