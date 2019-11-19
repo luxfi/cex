@@ -103,6 +103,7 @@ export default props => {
     buyOrders,
     sellOrders,
     orderBook,
+    book,
     ticker,
     movieCategories,
     onExecute,
@@ -118,7 +119,7 @@ export default props => {
   let { connected } = orderBook
   const classes = useStyles()
   window.orderBook = orderBook
-  const { meanPrice } = orderBook.book
+  const { meanPrice } = book
   const marketPrice = Number.parseFloat(meanPrice).toFixed(2)
   return (
     <>
