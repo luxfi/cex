@@ -5,7 +5,14 @@ import {
     StockChart
 } from "../"
 import { toJS } from "mobx"
-import { Grid, Typography, Paper, Button, Box } from "@material-ui/core"
+import {
+    Grid,
+    Typography,
+    Paper,
+    Button,
+    Box,
+    TextField
+} from "@material-ui/core"
 import { makeStyles, createStyles } from "@material-ui/styles"
 import { useState } from "react"
 
@@ -86,15 +93,45 @@ export default props => {
                                         Buy SAW9
                                     </Typography>
                                 </Grid>
-                                <Grid item container justify="space-between">
+                                <Grid
+                                    item
+                                    container
+                                    justify="space-between"
+                                    alignItems="center"
+                                >
                                     <Grid item xs={6}>
                                         <Typography>Shares</Typography>
                                     </Grid>
                                     <Grid item xs={6}>
+                                        <TextField
+                                            required
+                                            id="shares"
+                                            name="shares"
+                                            fullWidth
+                                            placeholder="$0.00"
+                                            autoComplete="shares"
+                                            // onChange={evt =>
+                                            //     setValue(
+                                            //         evt.target.name,
+                                            //         evt.target.value
+                                            //     )
+                                            // }
+                                            margin="normal"
+                                            variant="outlined"
+                                            inputProps={{
+                                                style: { textAlign: "right" }
+                                            }}
+                                            margin="dense"
+                                        />
+                                    </Grid>
+                                </Grid>
+                                <Grid item container justify="space-between">
+                                    <Grid item xs={6}>
+                                        <Typography>Market Price</Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
                                         <Typography>
-                                            <Box textAlign="right">
-                                                Dropdown Here
-                                            </Box>
+                                            <Box textAlign="right">$262.05</Box>
                                         </Typography>
                                     </Grid>
                                 </Grid>
@@ -128,6 +165,12 @@ export default props => {
                                 </Grid>
                             </Grid>
                         </Paper>
+                        <Button className={``} variant="outlined" size="large">
+                            <Typography variant="body2">Buy Tickets</Typography>
+                        </Button>
+                        <Typography variant="body2">
+                            Add to Watchlist
+                        </Typography>
                     </div>
                 </Grid>
                 {/* hide buy sell until there is a design for it */}
@@ -183,5 +226,5 @@ export default props => {
                 }
             `}</style>
         </>
-    )
+    );
 }
