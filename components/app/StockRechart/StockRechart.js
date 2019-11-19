@@ -181,7 +181,7 @@ class StockRechart extends React.Component {
       max,
       neg
     } = this.state.currData
-    let color = "#f3c463"
+    let color = "#FAC34D"
     if (neg === "-") {
       document.getElementsByTagName("body")[0].className = "negative"
     } else {
@@ -340,11 +340,11 @@ class StockRechart extends React.Component {
                     padding-bottom: 15px;
                 }
                 .chart-choice.active {
-                    color: #f3c463;
-                    border-bottom: 2px solid #f3c463;
+                    color: #FAC34D;
+                    border-bottom: 2px solid #FAC34D;
                 }
                 .chart-choice:hover {
-                    color: #f3c463;
+                    color: #FAC34D;
                 }
                 .chart {
                     padding: 0;
