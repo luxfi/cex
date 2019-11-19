@@ -7,9 +7,7 @@ import {
     Button,
     Box,
     TextField,
-    Link,
     Divider,
-    Container
 } from "@material-ui/core"
 import { Skeleton } from "@material-ui/lab"
 import { makeStyles, createStyles } from "@material-ui/styles"
@@ -33,6 +31,67 @@ const useStyles = makeStyles(theme => ({
         color: "#000"
     }
 }))
+
+const financialMetrics = [
+    {
+        name: "Market Cap",
+        value: "1.17T"
+    },
+    {
+        name: "Price-Earnings Ratio ",
+        value: "22.12"
+    },
+    {
+        name: "Dividend Yield",
+        value: "1.37"
+    },
+    {
+        name: "Average Volume",
+        value: "26.15M"
+    },
+    {
+        name: "High Today",
+        value: "$263.79"
+    },
+    {
+        name: "Low Today",
+        value: "$260.93"
+    },
+    {
+        name: "Open Prixe",
+        value: "$261.64"
+    },
+    {
+        name: "Volume",
+        value: "26.15M"
+    },
+    {
+        name: "52 Week High",
+        value: "$262.76"
+    },
+    {
+        name: "52 Week Low",
+        value: "$140.00"
+    }
+]
+
+const FinancialsSection = () => {
+  return (
+      <Box mb={3} mt={3}>
+          <Grid justify="flexStart" container spacing={4}>
+              {financialMetrics.map(metric => (
+                  <Grid item xs={12} lg={3}>
+                      <Typography>
+                          <Box fontWeight="fontWeightBold">{metric.name}</Box>
+                      </Typography>
+
+                      <Typography>{metric.value}</Typography>
+                  </Grid>
+              ))}
+          </Grid>
+      </Box>
+  );
+}
 
 export default props => {
     const {
@@ -188,6 +247,7 @@ export default props => {
                 <Grid item xs={12} lg={7}>
                     <AboutSection />
                     <Divider />
+                    <FinancialsSection />
                 </Grid>
                 <Grid
                     container
@@ -198,8 +258,7 @@ export default props => {
                     sm={6}
                     xs={12}
                     spacing={5}
-                >
-                </Grid>
+                />
             </Grid>
             {/* hide buy sell until there is a design for it */}
             {/* <Grid item xs={12} sm={6}>
@@ -237,5 +296,5 @@ export default props => {
           />
         </Grid> */}
         </>
-    );
+    )
 }
