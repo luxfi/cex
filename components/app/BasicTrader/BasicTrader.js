@@ -14,7 +14,6 @@ import {
     TextField
 } from "@material-ui/core"
 import { makeStyles, createStyles } from "@material-ui/styles"
-import { useState } from "react"
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -165,12 +164,18 @@ export default props => {
                                 </Grid>
                             </Grid>
                         </Paper>
-                        <Button className={``} variant="outlined" size="large">
-                            <Typography variant="body2">Buy Tickets</Typography>
-                        </Button>
-                        <Typography variant="body2">
-                            Add to Watchlist
-                        </Typography>
+                        <Box mt={3}>
+                            <Button className={``} variant="outlined" fullWidth>
+                                <Typography variant="body2">
+                                    Buy Tickets
+                                </Typography>
+                            </Button>
+                        </Box>
+                        <Box mt={3} justifyContent="center" display="flex">
+                            <Typography variant="body2">
+                                Add to Watchlist
+                            </Typography>
+                        </Box>
                     </div>
                 </Grid>
                 {/* hide buy sell until there is a design for it */}
