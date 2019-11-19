@@ -11,8 +11,9 @@ import {
     Paper,
     Button,
     Box,
-    TextField
+    TextField,
 } from "@material-ui/core"
+import { Skeleton } from "@material-ui/lab"
 import { makeStyles, createStyles } from "@material-ui/styles"
 
 const useStyles = makeStyles(theme => ({
@@ -58,16 +59,23 @@ export default props => {
     const stock = toJS(orderBook.stock)
     let { connected } = orderBook
     const classes = useStyles()
-    const bull = <span className={classes.bullet}>•</span>
     return (
         <>
             <Grid justify="center" container spacing={8}>
                 <Grid item xs={12} lg={7}>
-                    <StockChart
-                        stock={stock}
-                        stockName={stockName}
-                        connected={connected}
-                    />
+                    {orderBook.ready ? (
+                        <StockChart
+                            stock={stock}
+                            stockName={stockName}
+                            connected={connected}
+                        />
+                    ) : (
+                        <React.Fragment>
+                            <Skeleton width="25%" />
+                            <Skeleton height={32} width="15%" />
+                            <Skeleton variant="rect" height={300} />
+                        </React.Fragment>
+                    )}
                 </Grid>
                 <Grid
                     container
