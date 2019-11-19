@@ -25,7 +25,7 @@ class CustomStockTooltip extends React.Component {
       price.innerHTML = `$${padDollarAmount(parseFloat(this.props.payload[0].value))}`
       priceFlux.innerHTML = priceFluxString
     } else if (prevProps.priceFlux !== this.props.priceFlux) {
-      price.innerHTML = `$${prevProps.price}`
+      price.innerHTML = `$${prevProps.price}` 
       priceFlux.innerHTML = `${this.props.neg}$${this.props.priceFlux} (${this.props.priceFluxPercentage}%)`
     } else {
       price.innerHTML = `$${prevProps.price}`

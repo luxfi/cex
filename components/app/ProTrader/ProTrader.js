@@ -276,8 +276,8 @@ export default props => {
                   Quantity
                 </Grid>
               </Grid>
-              {visibleAsks.map((ask) =>
-                <Grid container style={{ color: 'red' }}>
+              {visibleAsks.map((ask, i ) =>
+                <Grid container style={{ color: 'red' }} key={i}>
                   <Grid item xs={6}>
                     ${parseFloat(ask[0]).toFixed(2)}
                   </Grid>
@@ -287,8 +287,8 @@ export default props => {
                 </Grid>
               )
               }
-              {visibleBids.map((bid) =>
-                <Grid container style={{ color: 'green' }}>
+              {visibleBids.map((bid, i) =>
+                <Grid container style={{ color: 'green' }} key={i}>
                   <Grid item xs={6}>
                     ${parseFloat(bid[0]).toFixed(2)}
                   </Grid>
