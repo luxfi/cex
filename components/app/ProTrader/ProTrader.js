@@ -112,18 +112,18 @@ export default props => {
     })
   }
 
-  if (book) {
-      let bids = book.orderBook.bids
-          .slice()
-          .reverse()
-          .slice(0, 5)
-      let asks = book.orderBook.asks
-          .slice()
-          .slice(0, 5)
-          .reverse()
-  }
-
-  if (orderBook.ready) {
+  if (orderBook.isReady) {
+    const { bids } = book.orderBook
+    const visibleBids = bids
+        .slice()
+        .reverse()
+        .slice(0, 5)
+    const { asks } = book.orderBook
+    const visibleAsks = bids
+        .slice()
+        .slice(0, 5)
+        .reverse()
+        
     return (
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={3}>
@@ -276,7 +276,7 @@ export default props => {
                   Quantity
                 </Grid>
               </Grid>
-              {asks.map((ask) =>
+              {visibleAsks.map((ask) =>
                 <Grid container style={{ color: 'red' }}>
                   <Grid item xs={6}>
                     ${parseFloat(ask[0]).toFixed(2)}
@@ -287,7 +287,7 @@ export default props => {
                 </Grid>
               )
               }
-              {bids.map((bid) =>
+              {visibleBids.map((bid) =>
                 <Grid container style={{ color: 'green' }}>
                   <Grid item xs={6}>
                     ${parseFloat(bid[0]).toFixed(2)}
