@@ -24,17 +24,6 @@ import NumberFormat from 'react-number-format'
 import { useState } from "react"
 import { MUIText } from '@hanzo/react'
 
-const TVChartContainer = dynamic(
-  async () => {
-    const mod = await import("../TVChartContainer")
-    return mod.TVChartContainer
-  },
-  {
-    ssr: false,
-    loading: () => <div style={{ color: "red" }}>This is loading</div>
-  }
-)
-
 function getActiveChart(activeChart, { chartData, yDomain, labels }) {
   switch (activeChart) {
     case "candlestick":

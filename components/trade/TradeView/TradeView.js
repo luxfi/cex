@@ -227,12 +227,6 @@ class Index extends React.Component {
             }
           </Box>
         </article>
-        <div
-          className={classNames(classes.container)}
-          style={{ paddingLeft: "0px", paddingRight: "0px" }}
-        >
-          {!userStore.token ? <InvestNow /> : ""}
-        </div>
       </>
     )
   }
