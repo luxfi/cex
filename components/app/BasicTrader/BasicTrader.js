@@ -117,6 +117,7 @@ export default props => {
     const stock = toJS(orderBook.stock)
     let { connected } = orderBook
     const classes = useStyles()
+    window.orderBook = orderBook
     return (
         <>
             <Grid justify="center" container spacing={4}>
@@ -165,7 +166,7 @@ export default props => {
                                                 id="shares"
                                                 name="shares"
                                                 fullWidth
-                                                placeholder="$0.00"
+                                                placeholder="0"
                                                 autoComplete="shares"
                                                 // onChange={evt =>
                                                 //     setValue(
