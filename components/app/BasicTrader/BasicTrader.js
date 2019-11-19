@@ -20,8 +20,8 @@ import { makeStyles, createStyles } from "@material-ui/styles"
 const AboutSection = () => {
   return (
       <Box mt={6}>
-          <Typography gutterBottom>
-              <Box fontWeight="fontWeightBold">About</Box>
+          <Typography variant="subtitle2" gutterBottom>
+              <Box fontWeight="fontWeightBold">ABOUT</Box>
           </Typography>
           <Typography variant="h5" gutterBottom>
               <Box fontWeight="fontWeightBold">
