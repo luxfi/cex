@@ -20,34 +20,10 @@ import {
   Typography,
   Box,
 } from "@material-ui/core"
+import { Skeleton } from "@material-ui/lab"
 import NumberFormat from 'react-number-format'
 import { useState } from "react"
 import { MUIText } from '@hanzo/react'
-
-function getActiveChart(activeChart, { chartData, yDomain, labels }) {
-  switch (activeChart) {
-    case "candlestick":
-      return (
-        <ChartCandlestickFake
-          data={chartData}
-          yDomain={yDomain}
-          labels={labels}
-        />
-      )
-    case "line-chart":
-      return (
-        <ChartLineSeries
-          data={chartData}
-          yDomain={yDomain}
-          labels={labels}
-        />
-      )
-    case 2:
-      return null
-    default:
-      return null
-  }
-}
 
 function DollarFormatCustom(props) {
   const { inputRef, onBlur, ...other } = props;
@@ -136,16 +112,24 @@ export default props => {
     })
   }
 
-  let bids = book.orderBook.bids.slice().reverse().slice(0, 5)
-  let asks = book.orderBook.asks.slice().slice(0, 5).reverse()
+  if (book) {
+      let bids = book.orderBook.bids
+          .slice()
+          .reverse()
+          .slice(0, 5)
+      let asks = book.orderBook.asks
+          .slice()
+          .slice(0, 5)
+          .reverse()
+  }
 
-  return (
-    <Element>
+  if (orderBook.ready) {
+    return (
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={3}>
           <br />
           <Paper>
-            <Tabs value={mode} onChange={ handleModeChange }>
+            <Tabs value={mode} onChange={handleModeChange}>
               <Tab label="BUY" />
               <Tab label="SELL" />
             </Tabs>
@@ -158,27 +142,27 @@ export default props => {
                         Balance
                       </Typography>
                       <Typography variant='h6'>
-                        ${ accountBalance } USD
+                        ${accountBalance} USD
                       </Typography>
                     </>
                   ) : (
-                    <>
-                      <Typography variant='body2'>
-                        Total Shares
+                      <>
+                        <Typography variant='body2'>
+                          Total Shares
                       </Typography>
-                      <Typography variant='h6'>
-                        { maxSell }
-                      </Typography>
-                    </>
-                  )
+                        <Typography variant='h6'>
+                          {maxSell}
+                        </Typography>
+                      </>
+                    )
                 }
                 <Typography variant='body2'>
                   Last Price
                 </Typography>
                 <Typography variant='h6'>
-                  ${ book.meanPrice } USD
+                  ${book.meanPrice} USD
                 </Typography>
-                <br/>
+                <br />
                 <MUIText
                   label='Order Type:'
                   variant='outlined'
@@ -187,36 +171,36 @@ export default props => {
                     limit: 'Limit',
                     market: 'Market',
                   }}
-                  value={ orderType }
-                  setValue={ setOrderType }
+                  value={orderType}
+                  setValue={setOrderType}
                   fullWidth
                 />
-                <br/>
+                <br />
                 <MUIText
                   label='Price:'
-                  placeholder={ '$' + ((orderType === 'market') ? book.meanPrice : '100.00') }
+                  placeholder={'$' + ((orderType === 'market') ? book.meanPrice : '100.00')}
                   variant='outlined'
-                  value={ (orderType === 'market') ? book.meanPrice : orderPrice }
-                  setValue={ setOrderPrice }
+                  value={(orderType === 'market') ? book.meanPrice : orderPrice}
+                  setValue={setOrderPrice}
                   InputProps={{
                     inputComponent: DollarFormatCustom,
                   }}
                   fullWidth
-                  disabled={ orderType === 'market' }
+                  disabled={orderType === 'market'}
                 />
-                <br/>
+                <br />
                 <MUIText
                   label='Quantity:'
                   placeholder='100'
                   variant='outlined'
-                  value={ orderQuantity }
-                  setValue={ setOrderQuantity }
+                  value={orderQuantity}
+                  setValue={setOrderQuantity}
                   InputProps={{
                     inputComponent: NumberFormatCustom,
                   }}
                   fullWidth
                 />
-                <br/>
+                <br />
                 <Grid container>
                   <Grid item xs={6}>
                     <Typography variant='body2'>
@@ -225,7 +209,7 @@ export default props => {
                   </Grid>
                   <Grid item xs={6}>
                     <Typography variant='body2' align='right'>
-                      ${ (orderPrice * orderQuantity).toFixed(2) }
+                      ${(orderPrice * orderQuantity).toFixed(2)}
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
@@ -235,7 +219,7 @@ export default props => {
                   </Grid>
                   <Grid item xs={6}>
                     <Typography variant='body2' align='right'>
-                      ${ (orderPrice * orderQuantity * 0.005).toFixed(2) }
+                      ${(orderPrice * orderQuantity * 0.005).toFixed(2)}
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
@@ -245,11 +229,11 @@ export default props => {
                   </Grid>
                   <Grid item xs={6}>
                     <Typography variant='body2' align='right'>
-                      ${ (orderPrice * orderQuantity * 1.005).toFixed(2) }
+                      ${(orderPrice * orderQuantity * 1.005).toFixed(2)}
                     </Typography>
                   </Grid>
                 </Grid>
-                <br/>
+                <br />
               </div>
               {
                 mode === 0 && (
@@ -292,35 +276,41 @@ export default props => {
                   Quantity
                 </Grid>
               </Grid>
-                { asks.map((ask) =>
-                    <Grid container style={{ color: 'red' }}>
-                      <Grid item xs={6}>
-                        ${parseFloat(ask[0]).toFixed(2)}
-                      </Grid>
-                      <Grid item xs={6}>
-                        {parseFloat(ask[1]).toFixed(0)}
-                      </Grid>
-                    </Grid>
-                  )
-                }
-                { bids.map((bid) =>
-                    <Grid container style={{ color: 'green' }}>
-                      <Grid item xs={6}>
-                        ${parseFloat(bid[0]).toFixed(2)}
-                      </Grid>
-                      <Grid item xs={6}>
-                        {parseFloat(bid[1]).toFixed(0)}
-                      </Grid>
-                    </Grid>
-                  )
-                }
+              {asks.map((ask) =>
+                <Grid container style={{ color: 'red' }}>
+                  <Grid item xs={6}>
+                    ${parseFloat(ask[0]).toFixed(2)}
+                  </Grid>
+                  <Grid item xs={6}>
+                    {parseFloat(ask[1]).toFixed(0)}
+                  </Grid>
+                </Grid>
+              )
+              }
+              {bids.map((bid) =>
+                <Grid container style={{ color: 'green' }}>
+                  <Grid item xs={6}>
+                    ${parseFloat(bid[0]).toFixed(2)}
+                  </Grid>
+                  <Grid item xs={6}>
+                    {parseFloat(bid[1]).toFixed(0)}
+                  </Grid>
+                </Grid>
+              )
+              }
             </Box>
           </Paper>
         </Grid>
       </Grid>
-
-      <style jsx>{`
-      `}</style>
-    </Element>
-  )
+    )
+  }
+  else {
+    return (
+        <React.Fragment>
+            <Skeleton width="25%" />
+            <Skeleton height={32} width="15%" />
+            <Skeleton variant="rect" height={300} />
+        </React.Fragment>
+    );
+  }
 }
