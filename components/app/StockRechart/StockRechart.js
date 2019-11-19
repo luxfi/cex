@@ -191,7 +191,7 @@ class StockRechart extends React.Component {
     priceFlux = padDollarAmount(Math.abs(parseFloat(priceFlux)))
     priceFluxPercentage = padDollarAmount(parseFloat(priceFluxPercentage))
     return (
-      <Box className="chart" mt={3}>
+      <div className="chart">
         <Typography variant="h5">
           <Box fontWeight="fontWeightBold">
             {this.props.stockName}
@@ -385,7 +385,7 @@ class StockRechart extends React.Component {
             content: "";
           }
         `}</style>
-      </Box>
+      </div>
     )
   }
 }
