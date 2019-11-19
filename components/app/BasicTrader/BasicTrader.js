@@ -1,6 +1,4 @@
-import {
-    StockChart
-} from "../"
+import { StockChart } from "../"
 import { toJS } from "mobx"
 import {
     Grid,
@@ -77,7 +75,7 @@ export default props => {
                         </React.Fragment>
                     )}
                     <AboutSection />
-                    <Divider/>
+                    <Divider />
                 </Grid>
                 <Grid
                     container
@@ -139,9 +137,9 @@ export default props => {
                                         <Typography>Market Price</Typography>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <Typography>
-                                            <Box textAlign="right">$262.05</Box>
-                                        </Typography>
+                                        <Box textAlign="right">
+                                            <Typography>$262.05</Typography>
+                                        </Box>
                                     </Grid>
                                 </Grid>
                                 <Grid item container justify="space-between">
@@ -149,9 +147,9 @@ export default props => {
                                         <Typography>Estimated Cost</Typography>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <Typography>
-                                            <Box textAlign="right">$0.00</Box>
-                                        </Typography>
+                                        <Box textAlign="right">
+                                            <Typography>$0.00</Typography>
+                                        </Box>
                                     </Grid>
                                 </Grid>
                                 <Grid item>
@@ -241,5 +239,5 @@ export default props => {
                 }
             `}</style>
         </>
-    );
+    )
 }
