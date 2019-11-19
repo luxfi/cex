@@ -136,8 +136,6 @@ export default props => {
     })
   }
 
-  window.orderBook = orderBook
-
   let bids = book.orderBook.bids.slice().reverse().slice(0, 5)
   let asks = book.orderBook.asks.slice().slice(0, 5).reverse()
 
