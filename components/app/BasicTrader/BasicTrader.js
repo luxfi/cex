@@ -8,6 +8,7 @@ import {
     Box,
     TextField,
     Divider,
+    CssBaseline
 } from "@material-ui/core"
 import { Skeleton } from "@material-ui/lab"
 import { makeStyles, createStyles } from "@material-ui/styles"
@@ -76,20 +77,20 @@ const financialMetrics = [
 ]
 
 const FinancialsSection = () => {
-  return (
-      <Box mb={3} mt={3}>
-          <Grid justify="flex-start" container spacing={4}>
-              {financialMetrics.map((metric, i) => (
-                  <Grid key={i} item xs={6} lg={3} md={3} sm={4}>
-                      <Box fontWeight="fontWeightBold">
-                          <Typography>{metric.name}</Typography>
-                      </Box>
-                      <Typography>{metric.value}</Typography>
-                  </Grid>
-              ))}
-          </Grid>
-      </Box>
-  );
+    return (
+        <Box mb={3} mt={3}>
+            <Grid justify="flex-start" container spacing={4}>
+                {financialMetrics.map((metric, i) => (
+                    <Grid key={i} item xs={6} lg={3} md={3} sm={4}>
+                        <Box fontWeight="fontWeightBold">
+                            <Typography>{metric.name}</Typography>
+                        </Box>
+                        <Typography>{metric.value}</Typography>
+                    </Grid>
+                ))}
+            </Grid>
+        </Box>
+    )
 }
 
 export default props => {
@@ -118,7 +119,7 @@ export default props => {
     const classes = useStyles()
     return (
         <>
-            <Grid justify="center" container spacing={8}>
+            <Grid justify="center" container spacing={4}>
                 <Grid item xs={12} lg={7}>
                     {orderBook.isReady ? (
                         <StockChart
@@ -134,130 +135,135 @@ export default props => {
                         </React.Fragment>
                     )}
                 </Grid>
-                <Grid
-                    container
-                    direction="column"
-                    item
-                    lg={3}
-                    md={4}
-                    sm={6}
-                    xs={12}
-                    spacing={5}
-                >
-                    <div className={classes.root}>
-                        <Paper className={classes.paper}>
-                            <Grid
-                                container
-                                direction="column"
-                                justify="space-between"
-                                spacing={3}
-                            >
-                                <Grid item>
-                                    <Typography variant="h5">
-                                        Buy SAW9
-                                    </Typography>
-                                </Grid>
+                <Grid item lg={3} md={4} sm={6} xs={12} spacing={5}>
+                    <Grid container direction="column">
+                        <div className={classes.root}>
+                            <Paper className={classes.paper}>
                                 <Grid
-                                    item
                                     container
+                                    direction="column"
                                     justify="space-between"
-                                    alignItems="center"
+                                    spacing={3}
                                 >
-                                    <Grid item xs={6}>
-                                        <Typography>Shares</Typography>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <TextField
-                                            required
-                                            id="shares"
-                                            name="shares"
-                                            fullWidth
-                                            placeholder="$0.00"
-                                            autoComplete="shares"
-                                            // onChange={evt =>
-                                            //     setValue(
-                                            //         evt.target.name,
-                                            //         evt.target.value
-                                            //     )
-                                            // }
-                                            margin="normal"
-                                            variant="outlined"
-                                            inputProps={{
-                                                style: { textAlign: "right" }
-                                            }}
-                                            margin="dense"
-                                        />
-                                    </Grid>
-                                </Grid>
-                                <Grid item container justify="space-between">
-                                    <Grid item xs={6}>
-                                        <Typography>Market Price</Typography>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <Box textAlign="right">
-                                            <Typography>$262.05</Typography>
-                                        </Box>
-                                    </Grid>
-                                </Grid>
-                                <Grid item container justify="space-between">
-                                    <Grid item xs={6}>
-                                        <Typography>Estimated Cost</Typography>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <Box textAlign="right">
-                                            <Typography>$0.00</Typography>
-                                        </Box>
-                                    </Grid>
-                                </Grid>
-                                <Grid item>
-                                    <Button
-                                        className={classes.reviewButton}
-                                        fullWidth
-                                    >
-                                        <Typography
-                                            variant="body2"
-                                            className={classes.reviewButtonText}
-                                        >
-                                            Review Order
+                                    <Grid item>
+                                        <Typography variant="h5">
+                                            Buy SAW9
                                         </Typography>
-                                    </Button>
+                                    </Grid>
+                                    <Grid
+                                        item
+                                        container
+                                        justify="space-between"
+                                        alignItems="center"
+                                    >
+                                        <Grid item xs={6}>
+                                            <Typography>Shares</Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                required
+                                                id="shares"
+                                                name="shares"
+                                                fullWidth
+                                                placeholder="$0.00"
+                                                autoComplete="shares"
+                                                // onChange={evt =>
+                                                //     setValue(
+                                                //         evt.target.name,
+                                                //         evt.target.value
+                                                //     )
+                                                // }
+                                                variant="outlined"
+                                                inputProps={{
+                                                    style: {
+                                                        textAlign: "right"
+                                                    }
+                                                }}
+                                                margin="dense"
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                    <Grid
+                                        item
+                                        container
+                                        justify="space-between"
+                                    >
+                                        <Grid item xs={6}>
+                                            <Typography>
+                                                Market Price
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Box textAlign="right">
+                                                <Typography>$262.05</Typography>
+                                            </Box>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid
+                                        item
+                                        container
+                                        justify="space-between"
+                                    >
+                                        <Grid item xs={6}>
+                                            <Typography>
+                                                Estimated Cost
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Box textAlign="right">
+                                                <Typography>$0.00</Typography>
+                                            </Box>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button
+                                            className={classes.reviewButton}
+                                            fullWidth
+                                        >
+                                            <Typography
+                                                variant="body2"
+                                                className={
+                                                    classes.reviewButtonText
+                                                }
+                                            >
+                                                Review Order
+                                            </Typography>
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Typography>
+                                            $0.00 Buying Power Available
+                                        </Typography>
+                                    </Grid>
                                 </Grid>
-                                <Grid item xs={12}>
-                                    <Typography>
-                                        $0.00 Buying Power Available
+                            </Paper>
+                            <Box mt={3}>
+                                <Button
+                                    className={``}
+                                    variant="outlined"
+                                    fullWidth
+                                >
+                                    <Typography variant="body2">
+                                        Buy Tickets
                                     </Typography>
-                                </Grid>
-                            </Grid>
-                        </Paper>
-                        <Box mt={3}>
-                            <Button className={``} variant="outlined" fullWidth>
+                                </Button>
+                            </Box>
+                            <Box mt={3} justifyContent="center" display="flex">
                                 <Typography variant="body2">
-                                    Buy Tickets
+                                    Add to Watchlist
                                 </Typography>
-                            </Button>
-                        </Box>
-                        <Box mt={3} justifyContent="center" display="flex">
-                            <Typography variant="body2">
-                                Add to Watchlist
-                            </Typography>
-                        </Box>
-                    </div>
+                            </Box>
+                        </div>
+                    </Grid>
                 </Grid>
+            </Grid>
+            <Grid justify="center" container spacing={4}>
                 <Grid item xs={12} lg={7}>
                     <AboutSection />
                     <Divider />
                     <FinancialsSection />
                 </Grid>
-                <Grid
-                    container
-                    direction="column"
-                    item
-                    lg={3}
-                    md={4}
-                    sm={6}
-                    xs={12}
-                    spacing={5}
-                />
+                <Grid item lg={3} md={4} sm={6} xs={12} />
             </Grid>
             {/* hide buy sell until there is a design for it */}
             {/* <Grid item xs={12} sm={6}>
@@ -295,5 +301,5 @@ export default props => {
           />
         </Grid> */}
         </>
-    )
+    );
 }
