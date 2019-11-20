@@ -1,4 +1,4 @@
-import {useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Grid,
   Typography,
@@ -8,9 +8,9 @@ import {
   TextField,
 } from '@material-ui/core'
 
-const errorNotEnoughFunds = ({total, shares, funds }) => {
-  return 
-  `
+const errorNotEnoughFunds = ({ total, shares, funds }) => {
+  return
+  ;`
 Not Enough Buying Power
 You don’t have enough buying power to buy 1 share of AAPL.
 
@@ -44,6 +44,24 @@ const BuySellWidget = ({
 
     setShares(0)
   }
+
+  const isInteger = stringInput => {
+    // match a digit one or more times
+    const rx = new RegExp(/^\d+(?:\.\d{1,2})?$/)
+    return rx.test(stringInput)
+  }
+
+  const handleInputChange = evt => {
+    evt.preventDefault()
+    const { value } = evt.target
+    if (value === "") {
+      setShares(value)
+    }
+    if (isInteger(value)) {
+      setShares(value)
+    }
+    console.log(shares)
+  }
   return (
     <Paper className={classes.paper}>
       <Grid container direction="column" justify="space-between" spacing={3}>
@@ -62,7 +80,7 @@ const BuySellWidget = ({
               fullWidth
               placeholder="0"
               autoComplete="shares"
-              onChange={evt => setShares(evt.target.value)}
+              onChange={evt => handleInputChange(evt)}
               value={shares}
               variant="outlined"
               inputProps={{
