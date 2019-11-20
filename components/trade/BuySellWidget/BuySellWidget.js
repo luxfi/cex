@@ -7,6 +7,31 @@ import {
   Box,
   TextField,
 } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles'
+
+const useStyles = makeStyles(theme => ({
+  paper: {
+    padding: theme.spacing(2),
+    margin: 'auto',
+    maxWidth: 500,
+  },
+  reviewButton: {
+    color: '#000',
+    backgroundColor: '#FBC43E',
+    padding: '12px 24px',
+  },
+  reviewButtonText: {
+    color: '#000',
+  },
+  backButton: {
+    color: 'transparent',
+    border: '1px solid #FBC43E',
+    padding: '11px 24px',
+  },
+  backButtonText: {
+    color: '#FBC43E',
+  },
+}))
 
 import ErrorIcon from '@material-ui/icons/Error'
 
@@ -36,7 +61,6 @@ $${totalPurchasePrice}`
 }
 
 const BuySellWidget = ({
-  classes,
   marketPrice,
   ticker,
   orderType,
@@ -48,6 +72,7 @@ const BuySellWidget = ({
   const [sharesPurchased, setSharesPurchased] = useState(0)
   const [totalPurchasePrice, setTotalPurchasePrice] = useState(0)
   const [activeStep, setActiveStep] = React.useState('initial')
+  const classes = useStyles()
   useEffect(() => {
     console.log('activeStep', activeStep)
   }, [activeStep])
@@ -111,7 +136,7 @@ const BuySellWidget = ({
   return (
     <Paper className={classes.paper}>
       <Grid container direction="column" justify="space-between" spacing={3}>
-        <Grid item>
+        <Grid item xs>
           <Typography variant="h5">Buy {ticker}</Typography>
         </Grid>
         <Grid item container justify="space-between" alignItems="center">
@@ -162,7 +187,7 @@ const BuySellWidget = ({
         </Grid>
         {/* show buy or review button if not showing successful order message */}
         {activeStep === 'initial' && (
-          <Grid item>
+          <Grid item xs>
             <Button
               className={classes.reviewButton}
               fullWidth
@@ -176,12 +201,12 @@ const BuySellWidget = ({
         )}
         {activeStep === 'review' && (
           <>
-            <Grid item>
+            <Grid item xs>
               <Typography id="info" variant="subtitle2">
                 <ErrorIcon fontSize="inherit" /> {reviewOrderText}
               </Typography>
             </Grid>
-            <Grid item>
+            <Grid item xs>
               <Button
                 className={classes.reviewButton}
                 fullWidth
@@ -195,7 +220,7 @@ const BuySellWidget = ({
                 </Typography>
               </Button>
             </Grid>
-            <Grid item>
+            <Grid item xs>
               <Button
                 className={classes.backButton}
                 fullWidth
@@ -210,7 +235,7 @@ const BuySellWidget = ({
         )}
         {activeStep === 'success' && (
           <>
-            <Grid item>
+            <Grid item xs>
               <Typography id="info" variant="subtitle2">
                 <SuccessText
                   sharesPurchased={sharesPurchased}
@@ -219,11 +244,14 @@ const BuySellWidget = ({
                 />
               </Typography>
             </Grid>
-            <Grid item>
+            <Grid item xs>
               <Button
                 className={classes.backButton}
-                fullWidth
-                onClick={() => setActiveStep('initial')}
+                // fullWidth
+                onClick={() => {
+                  console.log('button clicked')
+                  setActiveStep('initial')
+                }}
               >
                 <Typography variant="body2" className={classes.backButtonText}>
                   Back
