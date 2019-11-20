@@ -85,7 +85,12 @@ export default props => {
         <Grid item lg={3} md={4} sm={6} xs={12}>
           <Grid container direction="column">
             <div className={classes.root}>
-              <BuySellWidget classes={classes} marketPrice={marketPrice} />
+              <BuySellWidget
+                classes={classes}
+                marketPrice={marketPrice}
+                ticker={ticker}
+                orderType="bid"
+              />
               <Box mt={3}>
                 <Button className={``} variant="outlined" fullWidth>
                   <Typography variant="body2">Buy Tickets</Typography>
