@@ -19,7 +19,14 @@ Please deposit $${total} to purchase ${shares} share at market price (5% collar 
 Market orders on ESX are placed as limit orders up to 5% above the market price in order to protect customers from spending more than they have in their ESX account. If you want to use your full buying power of $${funds} you can place a limit order instead.`
 }
 
-const BuySellWidget = ({ classes, marketPrice, ticker, orderType, funds }) => {
+const BuySellWidget = ({
+  classes,
+  marketPrice,
+  ticker,
+  orderType,
+  funds,
+  createOrder,
+}) => {
   const [shares, setShares] = useState(0)
   const submitOrder = e => {
     e.preventDefault()
