@@ -23,13 +23,22 @@ class CustomStockTooltip extends React.Component {
       }
       let priceFluxString = `${neg}$${padDollarAmount(Math.abs(priceFluxCalc))} (${padDollarAmount(priceFluxPercentageCalc)}%)`
       price.innerHTML = `$${padDollarAmount(parseFloat(this.props.payload[0].value))}`
-      priceFlux.innerHTML = priceFluxString
+      priceFlux.innerHTML = priceFluxString 
     } else if (prevProps.priceFlux !== this.props.priceFlux) {
-      price.innerHTML = `$${prevProps.price}` 
+      price.innerHTML = `$${prevProps.price}`
       priceFlux.innerHTML = `${this.props.neg}$${this.props.priceFlux} (${this.props.priceFluxPercentage}%)`
     } else {
-      price.innerHTML = `$${prevProps.price}`
-      priceFlux.innerHTML = `${prevProps.neg}$${prevProps.priceFlux} (${prevProps.priceFluxPercentage}%)`
+      let priceFluxCalc =
+        parseFloat(prevProps.price) - parseFloat(prevProps.openPrice)
+      let priceFluxPercentageCalc = parseFloat(
+        (priceFluxCalc * 100) / parseFloat(prevProps.openPrice)
+      )
+      if (priceFluxCalc < 0) {
+        neg = "-"
+      }
+      let priceFluxString = `${neg}$${padDollarAmount(Math.abs(priceFluxCalc))} (${padDollarAmount(priceFluxPercentageCalc)}%)`
+      price.innerHTML = `$${padDollarAmount(parseFloat(prevProps.price))}`
+      priceFlux.innerHTML = priceFluxString 
     }
   }
 
