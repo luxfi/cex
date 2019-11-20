@@ -8,6 +8,8 @@ import {
   TextField,
 } from '@material-ui/core'
 
+import ErrorIcon from '@material-ui/icons/Error'
+
 const errorNotEnoughFunds = ({ total, shares, funds, ticker }) => {
   return `
 Not Enough Buying Power
@@ -23,10 +25,7 @@ const notValid = () => {
   Please enter a valid number of shares.`
 }
 
-const reviewOrder = () => {
-  return `
-The quote you see may not be the price at which your order is executed.`
-}
+const reviewOrderText = `The quote you see may not be the price at which your order is executed.`
 
 const BuySellWidget = ({
   classes,
@@ -88,7 +87,8 @@ const BuySellWidget = ({
     setQuote('')
   }
 
-  const estimatedCost = (shares * marketPrice).toFixed(2)
+  const price = quote ? quote : marketPrice
+  const estimatedCost = (shares * price).toFixed(2)
   return (
     <Paper className={classes.paper}>
       <Grid container direction="column" justify="space-between" spacing={3}>
@@ -139,6 +139,13 @@ const BuySellWidget = ({
             </Box>
           </Grid>
         </Grid>
+        {quote && (
+          <Grid item>
+            <Typography id="info" variant="subtitle2">
+              <ErrorIcon fontSize="inherit" /> {reviewOrderText}
+            </Typography>
+          </Grid>
+        )}
         <Grid item>
           <Button
             className={classes.reviewButton}
@@ -151,7 +158,6 @@ const BuySellWidget = ({
           </Button>
         </Grid>
         <Grid item>
-          {' '}
           {quote ? (
             <Button
               className={classes.backButton}
