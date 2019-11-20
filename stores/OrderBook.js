@@ -120,7 +120,9 @@ export default class OrderBook {
     })
 
     this.socket.on("candles.get.success", data => {
+      // console.log('candles', data)
       if (isEmpty(data) || isEmpty(data.candles)) { return }
+
       let { candles, type } = data
       let formattedData = candles.map(candle => {
         const [openTime, closeTime, open, high, low, close, notional, volume, numberOfTrades] = candle
@@ -164,6 +166,7 @@ export default class OrderBook {
         }
 
         this[type] = filteredData
+        console.log('fd', filteredData)
       } else {
         this[type] = formattedData
         this.previousDayClose = formattedData[formattedData.length - 2].close
@@ -176,6 +179,7 @@ export default class OrderBook {
     })
     this.socket.on("book.data", data => {
       this.book = data
+      // console.log(this.book)
     })
 
     this.socket.on('disconnect', () => {
@@ -216,7 +220,7 @@ export default class OrderBook {
     // const startTime = now.startOf('day').valueOf()
     // const endTime = now.endOf('day').valueOf()
     const startTime = moment(now).startOf('day').add(9, 'hours').valueOf()
-    const endTime = moment(now).startOf('day').add(16, 'hours').valueOf()
+    const endTime = moment(now).startOf('day').add(16, 'hours').add(5, 'minutes').valueOf()
     let opts = {
       "startTime": startTime,
       "endTime": endTime,
