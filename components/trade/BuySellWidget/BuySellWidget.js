@@ -27,7 +27,7 @@ const BuySellWidget = ({
   funds,
   createOrder,
 }) => {
-  const [shares, setShares] = useState(0)
+  const [shares, setShares] = useState(null)
   const submitOrder = e => {
     e.preventDefault()
     // Todo check if funds available - else snackbar insufficient funds
@@ -90,7 +90,7 @@ const BuySellWidget = ({
           </Grid>
           <Grid item xs={6}>
             <Box textAlign="right">
-              <Typography>${shares * marketPrice}</Typography>
+              <Typography>${(shares * marketPrice).toFixed(2)}</Typography>
             </Box>
           </Grid>
         </Grid>
