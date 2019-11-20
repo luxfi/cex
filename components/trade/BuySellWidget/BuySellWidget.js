@@ -11,13 +11,14 @@ import {
 import ErrorIcon from '@material-ui/icons/Error'
 
 const errorNotEnoughFunds = ({ total, shares, funds, ticker }) => {
+  const addPlural = parseInt(shares) > 1 ? 's' : ''
   return `
 Not Enough Buying Power
 You don’t have enough buying power to buy 1 share of ${ticker}.
 
-Please deposit $${total} to purchase ${shares} share at market price (5% collar included).
+Please deposit $${total} to purchase ${shares} share${addPlural} at market price (5% collar included).
 
-Market orders on ESX are placed as limit orders up to 5% above the market price in order to protect customers from spending more than they have in their ESX account. If you want to use your full buying power of $${funds} you can place a limit order instead.`
+Market orders on ESX are placed as limit orders up to 5% above the market price in order to protect customers from spending more than they have in their ESX account.`
 }
 
 const notValid = () => {
@@ -26,6 +27,13 @@ const notValid = () => {
 }
 
 const reviewOrderText = `The quote you see may not be the price at which your order is executed.`
+
+const SuccessText = ({ sharesPurchased, totalPurchasePrice, ticker }) => {
+  const addPlural = parseInt(sharesPurchased) > 1 ? 's' : ''
+  return `
+You have successfully purchased ${sharesPurchased} share${addPlural} of ${ticker} for 
+$${totalPurchasePrice}`
+}
 
 const BuySellWidget = ({
   classes,
@@ -37,7 +45,13 @@ const BuySellWidget = ({
 }) => {
   const [shares, setShares] = useState('')
   const [quote, setQuote] = useState('')
-  const submitOrder = () => {
+  const [sharesPurchased, setSharesPurchased] = useState(0)
+  const [totalPurchasePrice, setTotalPurchasePrice] = useState(0)
+  const [activeStep, setActiveStep] = React.useState('initial')
+  useEffect(() => {
+    console.log('activeStep', activeStep)
+  }, [activeStep])
+  const submitOrder = async () => {
     // Todo check if funds available at current market
     // If not, put message that market price has changed, currently insuffiecient funds
     if (!shares) return
@@ -49,10 +63,13 @@ const BuySellWidget = ({
       quantity: shares,
     }
 
-    createOrder(order)
+    await createOrder(order)
 
+    setSharesPurchased(shares)
+    setTotalPurchasePrice((shares * marketPrice).toFixed(2))
     setShares(0)
     setQuote('')
+    setActiveStep('success')
   }
 
   const reviewOrder = () => {
@@ -60,6 +77,7 @@ const BuySellWidget = ({
     if (!shares) return //need total funds if market order
 
     setQuote(marketPrice)
+    setActiveStep('review')
   }
 
   const isInteger = stringInput => {
@@ -80,13 +98,14 @@ const BuySellWidget = ({
   }
 
   const handleOrder = () => {
-    quote ? submitOrder() : reviewOrder()
+    if (activeStep === 'review') {
+      submitOrder()
+    } else if (activeStep === 'initial') {
+      reviewOrder()
+    }
   }
 
-  const handleBack = () => {
-    setQuote('')
-  }
-
+  // if there is a 'quote' we are in 'Review Mode'
   const price = quote ? quote : marketPrice
   const estimatedCost = (shares * price).toFixed(2)
   return (
@@ -115,6 +134,8 @@ const BuySellWidget = ({
                   textAlign: 'right',
                 },
               }}
+              // disable input if we are in review mode or showing successful order message
+              // disabled={activeStep !== 'initial'}
               margin="dense"
             />
           </Grid>
@@ -139,37 +160,78 @@ const BuySellWidget = ({
             </Box>
           </Grid>
         </Grid>
-        {quote && (
+        {/* show buy or review button if not showing successful order message */}
+        {activeStep === 'initial' && (
           <Grid item>
-            <Typography id="info" variant="subtitle2">
-              <ErrorIcon fontSize="inherit" /> {reviewOrderText}
-            </Typography>
-          </Grid>
-        )}
-        <Grid item>
-          <Button
-            className={classes.reviewButton}
-            fullWidth
-            onClick={() => handleOrder()}
-          >
-            <Typography variant="body2" className={classes.reviewButtonText}>
-              {quote ? `Buy ${estimatedCost}` : 'Review Order'}
-            </Typography>
-          </Button>
-        </Grid>
-        <Grid item>
-          {quote ? (
             <Button
-              className={classes.backButton}
+              className={classes.reviewButton}
               fullWidth
-              onClick={() => handleBack()}
+              onClick={() => handleOrder()}
             >
-              <Typography variant="body2" className={classes.backButtonText}>
-                Back
+              <Typography variant="body2" className={classes.reviewButtonText}>
+                {'Review Order'}
               </Typography>
             </Button>
-          ) : null}
-        </Grid>
+          </Grid>
+        )}
+        {activeStep === 'review' && (
+          <>
+            <Grid item>
+              <Typography id="info" variant="subtitle2">
+                <ErrorIcon fontSize="inherit" /> {reviewOrderText}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Button
+                className={classes.reviewButton}
+                fullWidth
+                onClick={() => handleOrder()}
+              >
+                <Typography
+                  variant="body2"
+                  className={classes.reviewButtonText}
+                >
+                  {`Buy ${estimatedCost}`}
+                </Typography>
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                className={classes.backButton}
+                fullWidth
+                onClick={() => setActiveStep('initial')}
+              >
+                <Typography variant="body2" className={classes.backButtonText}>
+                  Back
+                </Typography>
+              </Button>
+            </Grid>
+          </>
+        )}
+        {activeStep === 'success' && (
+          <>
+            <Grid item>
+              <Typography id="info" variant="subtitle2">
+                <SuccessText
+                  sharesPurchased={sharesPurchased}
+                  totalPurchasePrice={totalPurchasePrice}
+                  ticker={ticker}
+                />
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Button
+                className={classes.backButton}
+                fullWidth
+                onClick={() => setActiveStep('initial')}
+              >
+                <Typography variant="body2" className={classes.backButtonText}>
+                  Back
+                </Typography>
+              </Button>
+            </Grid>
+          </>
+        )}
         <Grid item xs={12}>
           <Typography>${funds.toFixed(2)} Buying Power Available</Typography>
         </Grid>

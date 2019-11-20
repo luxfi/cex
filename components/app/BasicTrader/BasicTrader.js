@@ -102,6 +102,7 @@ export default props => {
                 ticker={ticker}
                 orderType="bid"
                 funds={funds}
+                createOrder={createOrder}
               />
               <Box mt={3}>
                 <Button className={``} variant="outlined" fullWidth>
