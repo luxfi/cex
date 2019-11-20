@@ -119,7 +119,11 @@ export default props => {
   let { connected } = orderBook
   const classes = useStyles()
   window.orderBook = orderBook
-  const { meanPrice } = book
+  // temp fix - sometimes book is undefined...
+  let meanPrice = 0
+  if (book) {
+    meanPrice = book.meanPrice
+  }
   const marketPrice = Number.parseFloat(meanPrice).toFixed(2)
   return (
     <>

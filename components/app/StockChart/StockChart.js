@@ -162,7 +162,7 @@ class StockChart extends React.Component {
     }
     let max = Math.max(...prices)
     let min = Math.min(...prices)
-    let currPrice = Math.round(prevPrice * 100) / 100
+    let currPrice = marketPrice
     let priceFlux =
       Math.round((parseFloat(currPrice) - parseFloat(openPrice)) * 100) / 100
     let priceFluxPercentage =
@@ -206,12 +206,11 @@ class StockChart extends React.Component {
       time: d.time,
       price: d.price,
     }))
-
     return (
       <StockRechart
         stockName={stockName}
         openPrice={openPrice}
-        currPrice={currPrice}
+        currPrice={marketPrice}
         priceFlux={priceFlux}
         priceFluxPercentage={priceFluxPercentage}
         data={data}
