@@ -248,6 +248,7 @@ export default props => {
             stock={stock}
             stockName={stockName}
             connected={connected}
+            marketPrice={marketPrice}
           />
         </Grid>
         <Grid item xs={12}>
