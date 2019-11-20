@@ -8,15 +8,19 @@ import {
   TextField,
 } from '@material-ui/core'
 
-const errorNotEnoughFunds = ({ total, shares, funds }) => {
-  return
-  ;`
+const errorNotEnoughFunds = ({ total, shares, funds, ticker }) => {
+  return `
 Not Enough Buying Power
-You don’t have enough buying power to buy 1 share of AAPL.
+You don’t have enough buying power to buy 1 share of ${ticker}.
 
 Please deposit $${total} to purchase ${shares} share at market price (5% collar included).
 
 Market orders on ESX are placed as limit orders up to 5% above the market price in order to protect customers from spending more than they have in their ESX account. If you want to use your full buying power of $${funds} you can place a limit order instead.`
+}
+
+const notValid = () => {
+  return `Error
+  Please enter a valid number of shares.`
 }
 
 const BuySellWidget = ({
@@ -27,7 +31,7 @@ const BuySellWidget = ({
   funds,
   createOrder,
 }) => {
-  const [shares, setShares] = useState(null)
+  const [shares, setShares] = useState("")
   const submitOrder = e => {
     e.preventDefault()
     // Todo check if funds available - else snackbar insufficient funds
@@ -60,7 +64,6 @@ const BuySellWidget = ({
     if (isInteger(value)) {
       setShares(value)
     }
-    console.log(shares)
   }
   return (
     <Paper className={classes.paper}>
