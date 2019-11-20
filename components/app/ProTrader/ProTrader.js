@@ -1,15 +1,19 @@
 import {
+  useEffect,
+  useState,
+} from 'react'
+
+import {
   BuySellForm,
   ChartIntervalControls,
   ChartCandlestickFake,
   ChartLineSeries,
-  ToggleVisibleChart,
   StockChart
 } from "../"
 
 import { toJS } from "mobx"
 import { timelineLabels } from "../../../util/dateRange"
-import { Element } from "react-scroll"
+import { Element, scroller } from "react-scroll"
 import dynamic from "next/dynamic"
 
 import {
@@ -33,7 +37,9 @@ import {
 } from '@material-ui/core/colors'
 
 import NumberFormat from 'react-number-format'
-import { useState } from "react"
+
+import midstream from 'midstream'
+import { isRequired } from '@hanzo/middleware'
 import { MUIText } from '@hanzo/react'
 
 const TVChartContainer = dynamic(
@@ -115,6 +121,37 @@ function NumberFormatCustom(props) {
 
 const useStyles = makeStyles((theme) => {
   return {
+    orderBookPaperGrid: {
+      width: 400,
+    },
+    orderBookPaper: {
+      border: '1px solid',
+      borderColor: theme.palette.background.paper,
+      backgroundColor: theme.palette.background.default,
+      '& span': {
+        fontWeight: 600,
+      }
+    },
+    orderBook: {
+      maxHeight: 420,
+      overflowY: 'scroll',
+      position: 'relative',
+      '& > *': {
+        width: '100%',
+      }
+    },
+    orderBookSpread: {
+      border: '1px solid',
+      borderColor: theme.palette.background.paper,
+      borderLeft: 0,
+      borderRight: 0,
+      margin:  '0 ' + theme.spacing(2),
+      padding: '0 ' + theme.spacing(2),
+    },
+    orderBookHeader: {
+      borderBottom: '1px solid',
+      borderBottomColor: theme.palette.background.paper,
+    },
     tradePaper: {
       height: '100%',
     },
@@ -160,6 +197,19 @@ const useStyles = makeStyles((theme) => {
   }
 })
 
+const useMidstream = (middleware, defaults, dst) => {
+  const [ms] = useState(() => midstream(middleware, { defaults, dst }))
+  return ms
+}
+
+const greaterThan0 = (v) => {
+  if (v > 0) {
+    return v
+  }
+
+  throw new Error('Enter a value greater than 0.')
+}
+
 export default props => {
   const {
     chartData,
@@ -184,34 +234,82 @@ export default props => {
   } = props
   let labels = timelineLabels()
 
-  const [visible, setVisible] = useState(false)
   const [mode, setMode] = useState(0)
-  const [orderType, setOrderType] = useState('limit')
-  const [orderPrice, setOrderPrice] = useState(0)
-  const [orderQuantity, setOrderQuantity] = useState(0)
+  const [showError, setShowError] = useState(false)
 
   const stock = toJS(orderBook.stock)
   let { connected } = orderBook
+
+  const { src, dst, err, hooks } = useMidstream({
+    type: [isRequired, (v) => {
+      // side effects of setting the type if setting
+      if (v !== dst.type) {
+        console.log('reset', v, dst.type)
+        setShowError(false)
+        src.price = 0
+        dst.price = 0
+      }
+      return v
+    }],
+    price: (v) => dst.type === 'limit' ? greaterThan0(v) : v,
+    quantity: greaterThan0,
+  }, {
+    type: 'limit',
+    price: 0,
+    quantity: 0,
+  }, {
+    price: 0,
+    quantity: 0,
+  })
 
   const handleModeChange = (event, newValue) => {
     setMode(newValue)
   }
 
-  const executeTrade = (side) => {
-    createOrder({
-      side: side,
-      type: orderType,
-      price: orderPrice,
-      quantity: orderQuantity,
-    })
+  const executeTrade = async (side) => {
+    setShowError(true)
+    console.log('exec', src, dst, err, showError)
+
+    try {
+      await src.runAll()
+      setShowError(false)
+
+      console.log(src, err)
+
+      createOrder({
+        side: side,
+        type: dst.type,
+        price: dst.price,
+        quantity: dst.quantity,
+      })
+    } catch (e) {
+    }
   }
 
   window.orderBook = orderBook
 
-  let bids = book.orderBook.bids
-  let asks = book.orderBook.asks
+  const meanPrice = orderBook.book ? parseFloat(orderBook.book.meanPrice) : 0
+  const spread = orderBook.book ? parseFloat(orderBook.book.spread) : 0
+
+  const bids = book.orderBook.bids.slice()
+  const asks = book.orderBook.asks.slice()
+
+  bids.length = 100
+  asks.length = 100
 
   const classes = useStyles()
+  const isMarket = dst.type === 'market'
+
+  useEffect(() => {
+    requestAnimationFrame(() =>
+      scroller.scrollTo('spread', {
+        containerId: 'orderBookScroll',
+        duration: 0,
+        delay: 0,
+        offset: -200,
+      })
+    )
+  }, [])
 
   return (
     <Element>
@@ -288,31 +386,37 @@ export default props => {
                       limit: 'Limit',
                       market: 'Market',
                     }}
-                    value={ orderType }
-                    setValue={ setOrderType }
+                    showError={ showError }
+                    error={ err.type }
+                    value={ src.type }
+                    setValue={ hooks.type[1] }
                     fullWidth
                   />
                   <br/>
                   <MUIText
                     label='Price'
-                    placeholder={ '$' + ((orderType === 'market') ? book.meanPrice : '100.00') }
+                    placeholder={ '$' + (isMarket ? (meanPrice).toFixed(2) : '100.00') }
                     variant='outlined'
-                    value={ (orderType === 'market') ? book.meanPrice : orderPrice }
-                    setValue={ setOrderPrice }
+                    showError={ showError }
+                    error={ err.price }
+                    value={ isMarket ? meanPrice : src.price }
+                    setValue={ hooks.price[1] }
                     InputProps={{
                       inputComponent: DollarFormatCustom,
                       endAdornment: <InputAdornment position='end'>USD</InputAdornment>,
                     }}
                     fullWidth
-                    disabled={ orderType === 'market' }
+                    disabled={ isMarket }
                   />
                   <br/>
                   <MUIText
                     label='Quantity'
                     placeholder='100'
                     variant='outlined'
-                    value={ orderQuantity }
-                    setValue={ setOrderQuantity }
+                    showError={ showError }
+                    error={ err.quantity }
+                    value={ src.quantity }
+                    setValue={ hooks.quantity[1] }
                     InputProps={{
                       inputComponent: NumberFormatCustom,
                     }}
@@ -327,7 +431,7 @@ export default props => {
                     </Grid>
                     <Grid item xs={6} className='right-aligned'>
                       <Typography variant='body1' align='right'>
-                        ${ (orderPrice * orderQuantity).toFixed(2) }
+                        ${ (dst.price * dst.quantity).toFixed(2) }
                       </Typography>
                     </Grid>
                     <Grid item xs={6}>
@@ -337,7 +441,7 @@ export default props => {
                     </Grid>
                     <Grid item xs={6} className='right-aligned'>
                       <Typography variant='body1' align='right'>
-                        ${ (orderPrice * orderQuantity * 0.005).toFixed(2) }
+                        ${ (src.price * src.quantity * 0.005).toFixed(2) }
                       </Typography>
                     </Grid>
                     <Grid item xs={6}>
@@ -347,7 +451,7 @@ export default props => {
                     </Grid>
                     <Grid item xs={6} className='right-aligned'>
                       <Typography variant='body1' align='right'>
-                        ${ (orderPrice * orderQuantity * 1.005).toFixed(2) }
+                        ${ (src.price * src.quantity * 1.005).toFixed(2) }
                       </Typography>
                     </Grid>
                   </Grid>
@@ -385,39 +489,81 @@ export default props => {
           <Grid item xs={12} sm={6} md={9}>
             <StockChart stock={stock} stockName={stockName} connected={connected} />
           </Grid>
-          <Grid item xs={12}>
-            <Paper square={true}>
-              <Box p={2}>
-                <Grid container>
-                  <Grid item xs={6}>
-                    Price
+          <Grid item className={classes.orderBookPaperGrid}>
+            <Paper square={true} className={classes.orderBookPaper}>
+              <Box pt={1} pb={1}>
+                <Box pl={2} pr={2} className={classes.orderBookHeader}>
+                  <Grid container spacing={1}>
+                    <Grid item xs={6}>
+                      <Typography variant='caption'>
+                        Quantity
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography variant='caption'>
+                        Price
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography variant='caption'>
+                        My Orders
+                      </Typography>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={6}>
-                    Quantity
-                  </Grid>
-                </Grid>
-                  { asks.map((ask) =>
-                      <Grid container style={{ color: red[500] }}>
+                </Box>
+                <div className={classes.orderBook} id='orderBookScroll'>
+                  <Box pl={2} pr={2}>
+                    { asks.map((ask, i) =>
+                        <Grid key={i} container spacing={1} style={{ color: red[500] }}>
+                          <Grid item xs={6}>
+                            <Typography variant='caption'>
+                              {parseFloat(ask[1]).toFixed(0)}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={3}>
+                            <Typography variant='caption'>
+                              ${parseFloat(ask[0]).toFixed(2)}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={3}>
+                          </Grid>
+                        </Grid>
+                      )
+                    }
+                    <Element name='spread' className={classes.orderBookSpread}>
+                      <Grid container spacing={1}>
                         <Grid item xs={6}>
-                          ${parseFloat(ask[0]).toFixed(2)}
+                          <Typography variant='caption'>
+                            SPREAD
+                          </Typography>
                         </Grid>
                         <Grid item xs={6}>
-                          {parseFloat(ask[1]).toFixed(0)}
+                          <Typography variant='caption'>
+                            ${ spread.toFixed(2) } USD
+                          </Typography>
                         </Grid>
                       </Grid>
-                    )
-                  }
-                  { bids.map((bid) =>
-                      <Grid container style={{ color: green[500] }}>
-                        <Grid item xs={6}>
-                          ${parseFloat(bid[0]).toFixed(2)}
+                    </Element>
+
+                    { bids.map((bid, i) =>
+                        <Grid key={i} container spacing={1} style={{ color: green[500] }}>
+                          <Grid item xs={6}>
+                            <Typography variant='caption'>
+                              {parseFloat(bid[1]).toFixed(0)}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={3}>
+                            <Typography variant='caption'>
+                              ${parseFloat(bid[0]).toFixed(2)}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={3}>
+                          </Grid>
                         </Grid>
-                        <Grid item xs={6}>
-                          {parseFloat(bid[1]).toFixed(0)}
-                        </Grid>
-                      </Grid>
-                    )
-                  }
+                      )
+                    }
+                  </Box>
+                </div>
               </Box>
             </Paper>
           </Grid>
