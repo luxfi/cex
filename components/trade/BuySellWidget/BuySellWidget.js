@@ -149,13 +149,16 @@ const BuySellWidget = ({
               {quote ? `Buy ${estimatedCost}` : 'Review Order'}
             </Typography>
           </Button>
+        </Grid>
+        <Grid item>
+          {' '}
           {quote ? (
             <Button
-              className={classes.reviewButton}
+              className={classes.backButton}
               fullWidth
               onClick={() => handleBack()}
             >
-              <Typography variant="body2" className={classes.reviewButtonText}>
+              <Typography variant="body2" className={classes.backButtonText}>
                 Back
               </Typography>
             </Button>

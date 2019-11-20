@@ -29,6 +29,14 @@ const useStyles = makeStyles(theme => ({
   reviewButtonText: {
     color: '#000',
   },
+  backButton: {
+    color: 'transparent',
+    border: '1px solid #FBC43E',
+    padding: '11px 24px',
+  },
+  backButtonText: {
+    color: '#FBC43E',
+  },
 }))
 
 export default props => {
