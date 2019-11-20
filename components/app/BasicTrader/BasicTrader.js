@@ -52,17 +52,20 @@ export default props => {
     funds,
     stockName,
     accountBalance,
+    watchlist,
+    removeFromWatchlist,
+    addToWatchlist
   } = props
   const stock = toJS(orderBook.stock)
   let { connected } = orderBook
   const classes = useStyles()
-  window.orderBook = orderBook
   // temp fix - sometimes book is undefined...
   let meanPrice = 0
   if (book) {
     meanPrice = book.meanPrice
   }
   const marketPrice = Number.parseFloat(meanPrice).toFixed(2)
+  const inWatchlist = watchlist.includes(ticker)
   return (
     <>
       <Grid justify="center" container spacing={4}>
@@ -97,7 +100,16 @@ export default props => {
                 </Button>
               </Box>
               <Box mt={3} justifyContent="center" display="flex">
-                <Typography variant="body2">Add to Watchlist</Typography>
+                <Typography
+                  onClick={e => {
+                    inWatchlist
+                      ? removeFromWatchlist(ticker)
+                      : addToWatchlist(ticker)
+                  }}
+                  variant="body2"
+                >
+                  {inWatchlist ? 'Remove from Watchlist' : 'Add to WatchList'}
+                </Typography>
               </Box>
             </div>
           </Grid>
