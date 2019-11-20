@@ -102,7 +102,7 @@ const BuySellWidget = ({
           </Button>
         </Grid>
         <Grid item xs={12}>
-          <Typography>$0.00 Buying Power Available</Typography>
+          <Typography>${funds.toFixed(2)} Buying Power Available</Typography>
         </Grid>
       </Grid>
     </Paper>
