@@ -31,7 +31,7 @@ const financialMetrics = [
     value: '$260.93',
   },
   {
-    name: 'Open Prixe',
+    name: 'Open Price',
     value: '$261.64',
   },
   {
