@@ -23,6 +23,11 @@ const notValid = () => {
   Please enter a valid number of shares.`
 }
 
+const reviewOrder = () => {
+  return `
+The quote you see may not be the price at which your order is executed.`
+}
+
 const BuySellWidget = ({
   classes,
   marketPrice,
@@ -31,11 +36,12 @@ const BuySellWidget = ({
   funds,
   createOrder,
 }) => {
-  const [shares, setShares] = useState("")
-  const submitOrder = e => {
-    e.preventDefault()
-    // Todo check if funds available - else snackbar insufficient funds
-    if (!shares) return //need total funds if market order
+  const [shares, setShares] = useState('')
+  const [quote, setQuote] = useState('')
+  const submitOrder = () => {
+    // Todo check if funds available at current market
+    // If not, put message that market price has changed, currently insuffiecient funds
+    if (!shares) return
 
     const order = {
       side: orderType,
@@ -47,6 +53,14 @@ const BuySellWidget = ({
     createOrder(order)
 
     setShares(0)
+    setQuote('')
+  }
+
+  const reviewOrder = () => {
+    // Todo check if funds available - else error
+    if (!shares) return //need total funds if market order
+
+    setQuote(marketPrice)
   }
 
   const isInteger = stringInput => {
@@ -58,13 +72,23 @@ const BuySellWidget = ({
   const handleInputChange = evt => {
     evt.preventDefault()
     const { value } = evt.target
-    if (value === "") {
+    if (value === '') {
       setShares(value)
     }
     if (isInteger(value)) {
       setShares(value)
     }
   }
+
+  const handleOrder = () => {
+    quote ? submitOrder() : reviewOrder()
+  }
+
+  const handleBack = () => {
+    setQuote('')
+  }
+
+  const estimatedCost = (shares * marketPrice).toFixed(2)
   return (
     <Paper className={classes.paper}>
       <Grid container direction="column" justify="space-between" spacing={3}>
@@ -101,7 +125,7 @@ const BuySellWidget = ({
           </Grid>
           <Grid item xs={6}>
             <Box textAlign="right">
-              <Typography>${marketPrice}</Typography>
+              <Typography>${quote ? quote : marketPrice}</Typography>
             </Box>
           </Grid>
         </Grid>
@@ -111,16 +135,31 @@ const BuySellWidget = ({
           </Grid>
           <Grid item xs={6}>
             <Box textAlign="right">
-              <Typography>${(shares * marketPrice).toFixed(2)}</Typography>
+              <Typography>${estimatedCost}</Typography>
             </Box>
           </Grid>
         </Grid>
         <Grid item>
-          <Button className={classes.reviewButton} fullWidth>
+          <Button
+            className={classes.reviewButton}
+            fullWidth
+            onClick={() => handleOrder()}
+          >
             <Typography variant="body2" className={classes.reviewButtonText}>
-              Review Order
+              {quote ? `Buy ${estimatedCost}` : 'Review Order'}
             </Typography>
           </Button>
+          {quote ? (
+            <Button
+              className={classes.reviewButton}
+              fullWidth
+              onClick={() => handleBack()}
+            >
+              <Typography variant="body2" className={classes.reviewButtonText}>
+                Back
+              </Typography>
+            </Button>
+          ) : null}
         </Grid>
         <Grid item xs={12}>
           <Typography>${funds.toFixed(2)} Buying Power Available</Typography>
