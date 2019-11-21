@@ -16,6 +16,10 @@ import {
   TradeHistoryBook,
 } from '../../trade'
 
+import {
+  formatCurrency
+} from '../../../util/generic'
+
 import { toJS } from "mobx"
 import { timelineLabels } from "../../../util/dateRange"
 import { Element, scroller } from "react-scroll"
@@ -349,7 +353,7 @@ export default props => {
                           Available Cash to Trade:
                         </Typography>
                         <Typography variant='h6'>
-                          ${ accountBalance.toFixed(2) }
+                          { formatCurrency(Number.parseFloat(accountBalance).toFixed(2)) }
                         </Typography>
                       </>
                     ) : (
