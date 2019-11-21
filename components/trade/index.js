@@ -1,4 +1,5 @@
 export { default as AboutSection } from "./AboutSection"
+export { default as AnalystSection } from "./AnalystSection"
 export { default as BuySellWidget } from './BuySellWidget'
 export { default as EarningsSection } from './EarningsSection'
 export { default as FinancialsSection } from './FinancialsSection'

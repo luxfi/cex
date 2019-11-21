@@ -9,7 +9,8 @@ import {
   FinancialsSection,
   HistorySection,
   EarningsSection,
-  OtherFilmsTrading
+  OtherFilmsTrading,
+  AnalystSection,
 } from '../../trade'
 import { useState, useEffect } from 'react'
 
@@ -137,11 +138,13 @@ export default props => {
           <Divider />
           <FinancialsSection />
           <Divider />
+          <AnalystSection />
+          <Divider />
           <EarningsSection />
           <Divider />
           <HistorySection book={orderBook.book} />
           <Divider />
-          <OtherFilmsTrading movies={movies}/>
+          <OtherFilmsTrading movies={movies} />
         </Grid>
         <Grid item lg={3} md={4} sm={6} xs={12} />
       </Grid>
