@@ -17,7 +17,7 @@ config.autoAddCss = false
 import {
   CustomSnackbar,
   Header,
-  MobileNavMenu,
+  MobileNavMenu, 
   Footer,
   CustomModal,
   MobileAccountMenu
@@ -26,26 +26,8 @@ import {
 import ReactGA from 'react-ga'
 import initializeStore from "../stores/stores"
 import { darkTheme, lightTheme } from "../styles/esxThemes"
+import styles from "../styles/app.style.js"
 
-const styles = darkTheme => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    minHeight: '100vh',
-    paddingLeft: "200px",
-    paddingRight: "200px",
-  },
-  main: {
-    marginTop: darkTheme.spacing(8),
-    marginBottom: darkTheme.spacing(2),
-  },
-  footer: {
-    //padding: darkTheme.spacing(2),
-    //marginTop: 'auto',
-  },
-})
-
-// ****************
 @observer
 class MyMobxApp extends App {
   static async getInitialProps(appContext) {
