@@ -186,6 +186,7 @@ const useStyles = makeStyles((theme) => {
       borderColor: theme.palette.background.paper,
       backgroundColor: theme.palette.background.default,
       width: '50%',
+      minWidth: 0,
       '&.Mui-selected': {
         backgroundColor: theme.palette.background.paper,
       }
@@ -329,7 +330,7 @@ export default props => {
     <Element>
       <Box ml={-3} mr={-3} mt={2}>
         <Grid container spacing={0}>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={4} md={2}>
             <Paper square={true} className={ classes.tabsPaper }>
               <Tabs
                 value={mode}
@@ -347,7 +348,7 @@ export default props => {
               </Tabs>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={6} md={9}>
+          <Grid item xs={12} sm={8} md={10}>
             <Box
               p={1}
               pl={2}
@@ -366,7 +367,7 @@ export default props => {
               </Grid>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={4} md={2}>
             <Paper square={true} className={ classes.tradePaper }>
               <Box p={2} pl={4} pr={4}>
                 <div>
@@ -500,7 +501,7 @@ export default props => {
               </Box>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={6} md={9} className={classes.proChart}>
+          <Grid item xs={12} sm={8} md={10} className={classes.proChart}>
             <ProChart data={data} />
           </Grid>
           <Grid item className={classes.orderBookPaperGrid}>
