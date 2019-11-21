@@ -50,8 +50,7 @@ class Account extends React.Component {
     } = userStore
 
     const setErrorMessage = message => {
-      store.uiStore.errorMessage = message
-      store.uiStore.snackBarOpen = true
+      store.uiStore.setErrorMessage(message)
     }
 
     return (
