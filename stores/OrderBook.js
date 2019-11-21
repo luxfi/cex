@@ -76,6 +76,9 @@ export default class OrderBook {
   @observable trades = []
   @observable proChartData = []
 
+  tradesBuffer = []
+  lastTradeMerge = 0
+
   activeOrders = {}
 
   constructor(
@@ -237,13 +240,13 @@ export default class OrderBook {
     })
 
     this.socket.on("trade.data", data => {
-      let trades = this.trades.slice().reverse().concat(data)
+      this.tradesBuffer = this.tradesBuffer.concat(data).slice(-100)
 
-      if (trades.length > 100) {
-        trades.length = 100
+      let now = new Date().getTime()
+      if (now - this.lastTradeMerge > 1000) {
+        this.trades = this.tradesBuffer.reverse()
+        this.lastTradeMerge = now
       }
-
-      this.trades = trades
       // console.log('trade.data', this.trades)
     })
 
