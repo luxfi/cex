@@ -35,7 +35,8 @@ export default props => {
     accountBalance,
     watchlist,
     removeFromWatchlist,
-    addToWatchlist
+    addToWatchlist,
+    atomTicketsURL
   } = props
   const stock = toJS(orderBook.stock)
   let { connected } = orderBook
@@ -80,7 +81,13 @@ export default props => {
             </Grid>
             <Grid item xs={12}>
               <Box mt={3}>
-                <Button className={``} variant="outlined" fullWidth>
+                <Button
+                  href={atomTicketsURL}
+                  target="_blank"
+                  title="Tweet"
+                  variant="outlined"
+                  fullWidth
+                >
                   <Typography variant="body2">Buy Tickets</Typography>
                 </Button>
               </Box>
