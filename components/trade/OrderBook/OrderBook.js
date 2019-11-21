@@ -24,7 +24,7 @@ import {
 const useStyles = makeStyles((theme) => {
   return {
     orderBook: {
-      maxHeight: 420,
+      height: 420,
       overflowY: 'scroll',
       position: 'relative',
       '& > *': {
@@ -80,8 +80,6 @@ export default props => {
     )
   }, [])
 
-  console.log('props', props)
-
   return (
     <Box pt={1} pb={1}>
       <Box pl={2} pr={2} className={classes.orderBookHeader}>
@@ -107,11 +105,13 @@ export default props => {
         <Box pl={2} pr={2}>
           {
             asks.map((ask, i) =>
-              <Order
-                color={red[500]}
-                quantity={ask ? ask[1]: undefined}
-                price={ask ? ask[0] : undefined}
-              />
+              <div key={i}>
+                <Order
+                  color={red[500]}
+                  quantity={ask ? ask[1]: undefined}
+                  price={ask ? ask[0] : undefined}
+                />
+              </div>
             )
           }
           <Element name='spread' className={classes.orderBookSpread}>
@@ -130,11 +130,13 @@ export default props => {
           </Element>
           {
             bids.map((bid, i) =>
-              <Order
-                color={green[500]}
-                quantity={bid ? bid[1]: undefined}
-                price={bid ? bid[0] : undefined}
-              />
+              <div key={i}>
+                <Order
+                  color={green[500]}
+                  quantity={bid ? bid[1]: undefined}
+                  price={bid ? bid[0] : undefined}
+                />
+              </div>
             )
           }
         </Box>

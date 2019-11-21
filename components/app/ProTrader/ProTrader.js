@@ -12,7 +12,8 @@ import {
 } from "../"
 
 import {
-  OrderBook
+  OrderBook,
+  TradeHistoryBook,
 } from '../../trade'
 
 import { toJS } from "mobx"
@@ -135,6 +136,16 @@ const useStyles = makeStyles((theme) => {
       '& span': {
         fontWeight: 600,
       }
+    },
+    tradeHistoryBookPaper: {
+      // extend: 'orderBookPaper',
+      borderLeft: 0,
+      border: '1px solid',
+      borderColor: theme.palette.background.paper,
+      backgroundColor: theme.palette.background.default,
+      '& span': {
+        fontWeight: 600,
+      },
     },
     proChart: {
       '& tspan': {
@@ -279,6 +290,7 @@ export default props => {
 
   const bids = book.orderBook.bids
   const asks = book.orderBook.asks
+  const trades = orderBook.trades
 
   const classes = useStyles()
   const isMarket = dst.type === 'market'
@@ -466,6 +478,11 @@ export default props => {
           <Grid item className={classes.orderBookPaperGrid}>
             <Paper square={true} className={classes.orderBookPaper}>
               <OrderBook asks={asks} bids={bids} spread={spread}/>
+            </Paper>
+          </Grid>
+          <Grid item xs>
+            <Paper square={true} className={classes.tradeHistoryBookPaper}>
+              <TradeHistoryBook trades={trades}/>
             </Paper>
           </Grid>
         </Grid>
