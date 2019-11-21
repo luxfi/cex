@@ -10,9 +10,9 @@ const isEmpty = obj =>
 // import stock from "../assets/tempData/stocks"
 
 // import io from 'socket.io-client'
-const LimitOrder = require("limit-order-book").LimitOrder
-const MarketOrder = require("limit-order-book").MarketOrder
-const LimitOrderBook = require("limit-order-book").LimitOrderBook
+// const LimitOrder = require("limit-order-book").LimitOrder
+// const MarketOrder = require("limit-order-book").MarketOrder
+// const LimitOrderBook = require("limit-order-book").LimitOrderBook
 
 const SOCKET_STRING = "https://exchange.hanzo.ai"
 // const SOCKET_STRING = 'localhost:4000'
@@ -245,6 +245,19 @@ export default class OrderBook {
         const now = moment(/*'2019-11-13'*/).tz("America/New_York")
         // const startTime = now.startOf('day').valueOf()
         // const endTime = now.endOf('day').valueOf()
+              // check if between midnight and market open, get previous day
+        if (
+          now.isBetween(
+            now.clone().startOf('day'),
+            now
+              .clone()
+              .endOf('day')
+              .subtract(15, 'hours')
+              .subtract(30, 'minutes'),
+          )
+        ) {
+          now.subtract(1,'day')
+        }
         const startTime = moment(now)
             .startOf("day")
             .add(9, "hours")
@@ -264,14 +277,14 @@ export default class OrderBook {
     }
   
     @action getHistory(ticker) {
-      //todo
+      //todo need latest 10 orders...
     }
 
     @action getDailyData(ticker) {
         // day is 24 hr based on EST
         const now = moment().tz("America/New_York")
         const endTime = moment(now)
-            .endOf("day")
+            .endOf('day')
             .valueOf()
         const startTime = moment(now)
             .startOf("day")
