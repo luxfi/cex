@@ -58,6 +58,7 @@
     "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.11.0",
     "react-dropzone": "^10.1.10",
+    "react-financial-charts": "0.3.2",
     "react-ga": "^2.7.0",
     "react-html5-camera-photo": "^1.5.2",
     "react-number-format": "4.3.1",

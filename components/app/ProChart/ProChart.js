@@ -1,316 +1,184 @@
 import { format } from "d3-format";
 import { timeFormat } from "d3-time-format";
+import * as React from "react";
+import { Chart, ChartCanvas } from "react-financial-charts";
+import { XAxis, YAxis } from "react-financial-charts/lib/axes";
+import { CrossHairCursor, EdgeIndicator, MouseCoordinateX, MouseCoordinateY } from "react-financial-charts/lib/coordinates";
+import { elderRay, ema } from "react-financial-charts/lib/indicator";
+import { discontinuousTimeScaleProviderBuilder } from "react-financial-charts/lib/scale";
+import { BarSeries, CandlestickSeries, ElderRaySeries, LineSeries } from "react-financial-charts/lib/series";
+import { MovingAverageTooltip, OHLCTooltip, SingleValueTooltip } from "react-financial-charts/lib/tooltip";
+import { withDeviceRatio } from "react-financial-charts/lib/utils";
+import { lastVisibleItemBasedZoomAnchor } from "react-financial-charts/lib/utils/zoomBehavior";
 
-import React from "react";
+class StockChart extends React.Component {
 
-import { ChartCanvas, Chart } from "react-stockcharts";
-import {
-	BarSeries,
-	AreaSeries,
-	CandlestickSeries,
-	LineSeries,
-	MACDSeries,
-} from "react-stockcharts/lib/series";
-import { XAxis, YAxis } from "react-stockcharts/lib/axes";
-import {
-	CrossHairCursor,
-	EdgeIndicator,
-	CurrentCoordinate,
-	MouseCoordinateX,
-	MouseCoordinateY,
-} from "react-stockcharts/lib/coordinates";
+    margin = { left: 0, right: 48, top: 0, bottom: 24 };
+    pricesDisplayFormat = format(".2f");
+    timeDisplayFormat = timeFormat("%d %b");
+    xScaleProvider = discontinuousTimeScaleProviderBuilder()
+        .inputDateAccessor((d) => d.date);
 
-import { discontinuousTimeScaleProvider } from "react-stockcharts/lib/scale";
-import { OHLCTooltip, MovingAverageTooltip, MACDTooltip } from "react-stockcharts/lib/tooltip";
-import { ema, sma, macd } from "react-stockcharts/lib/indicator";
-import { fitWidth } from "react-stockcharts/lib/helper";
-import { Brush } from "react-stockcharts/lib/interactive";
-import { last, isDefined } from "react-stockcharts/lib/utils";
-import {
-	saveInteractiveNode,
-} from "./interactiveutils";
+    render() {
+        const {
+            data: initialData,
+            height,
+            ratio,
+            width,
+        } = this.props;
 
-import {
-  red,
-  green,
-} from '@material-ui/core/colors'
+        const ema12 = ema()
+            .id(1)
+            .options({ windowSize: 12 })
+            .merge((d, c) => { d.ema12 = c; })
+            .accessor((d) => d.ema12);
 
-const ema26 = ema()
-	.id(0)
-	.options({
-		windowSize: 26,
-	})
-	.merge((d, c) => { d.ema26 = c; })
-	.accessor(d => d.ema26);
+        const ema26 = ema()
+            .id(2)
+            .options({ windowSize: 26 })
+            .merge((d, c) => { d.ema26 = c; })
+            .accessor((d) => d.ema26);
 
-const ema12 = ema()
-	.id(1)
-	.options({
-		windowSize: 12,
-	})
-	.merge((d, c) => { d.ema12 = c; })
-	.accessor(d => d.ema12);
+        const elder = elderRay();
 
-const macdCalculator = macd()
-	.options({
-		fast: 12,
-		slow: 26,
-		signal: 9,
-	})
-	.merge((d, c) => { d.macd = c; })
-	.accessor(d => d.macd);
+        const calculatedData = elder(ema26(ema12(initialData)));
 
-const smaVolume50 = sma()
-	.id(3)
-	.options({
-		windowSize: 10,
-		sourcePath: "volume",
-	})
-	.merge((d, c) => { d.smaVolume50 = c; })
-	.accessor(d => d.smaVolume50);
+        const { margin, xScaleProvider } = this;
 
-const BRUSH_TYPE = "2D"; // Valid values = "2D", "1D"
-const macdAppearance = {
-	stroke: {
-		macd: "#FF0000",
-		signal: "#00F300",
-	},
-	fill: {
-		divergence: "#4682B4"
-	},
-};
+        const {
+            data,
+            xScale,
+            xAccessor,
+            displayXAccessor,
+        } = xScaleProvider(calculatedData);
 
-class CandlestickChart extends React.Component {
-	constructor(props) {
-		super(props);
-		this.handleBrush1 = this.handleBrush1.bind(this);
-		this.handleBrush3 = this.handleBrush3.bind(this);
-		this.onKeyPress = this.onKeyPress.bind(this);
-		this.saveInteractiveNode = saveInteractiveNode.bind(this);
+        const start = xAccessor(data[data.length - 1]);
+        const end = xAccessor(data[Math.max(0, data.length - 100)]);
+        const xExtents = [start, end];
 
-		const { data: initialData } = props;
+        const gridWidth = width - margin.left - margin.right;
+        const gridHeight = height - margin.top - margin.bottom;
 
-		const calculatedData = macdCalculator(smaVolume50(ema12(ema26(initialData))));
-		const xScaleProvider = discontinuousTimeScaleProvider
-			.inputDateAccessor(d => d.date);
-		const {
-			data,
-			xScale,
-			xAccessor,
-			displayXAccessor,
-		} = xScaleProvider(calculatedData);
+        const elderRayHeight = 100;
+        const elderRayOrigin = (_, h) => [0, h - elderRayHeight];
+        const barChartHeight = gridHeight / 4;
+        const barChartOrigin = (_, h) => [0, h - barChartHeight - elderRayHeight];
+        const chartHeight = gridHeight - elderRayHeight;
 
-		const start = xAccessor(last(data));
-		const end = xAccessor(data[Math.max(0, data.length - 150)]);
-		const xExtents = [start, end];
+        return (
+            <ChartCanvas
+                height={height}
+                ratio={ratio}
+                width={width}
+                margin={margin}
+                data={data}
+                displayXAccessor={displayXAccessor}
+                seriesName="Data"
+                xScale={xScale}
+                xAccessor={xAccessor}
+                xExtents={xExtents}
+                zoomAnchor={lastVisibleItemBasedZoomAnchor}>
+                <Chart
+                    id={1}
+                    height={chartHeight}
+                    yExtents={this.candleChartExtents}>
+                    <XAxis showTicks={false} />
+                    <YAxis
+                        innerTickSize={-1 * gridWidth}
+                        tickFormat={this.pricesDisplayFormat}
+                        tickStroke="#e0e3eb"
+                        ticks={5} />
+                    <OHLCTooltip origin={[8, 16]} />
+                </Chart>
+                <Chart
+                    id={2}
+                    height={barChartHeight}
+                    origin={barChartOrigin}
+                    yExtents={this.barChartExtents}>
+                    <BarSeries
+                        fill={this.openCloseColor}
+                        yAccessor={this.yBarSeries} />
+                </Chart>
+                <Chart
+                    id={3}
+                    height={chartHeight}
+                    yExtents={this.candleChartExtents}>
+                    <CandlestickSeries />
+                    <LineSeries yAccessor={ema26.accessor()} stroke={ema26.stroke()} />
+                    <LineSeries yAccessor={ema12.accessor()} stroke={ema12.stroke()} />
+                    <MouseCoordinateY
+                        displayFormat={this.pricesDisplayFormat} />
+                    <EdgeIndicator
+                        itemType="last"
+                        fill={this.openCloseColor}
+                        lineStroke={this.openCloseColor}
+                        displayFormat={this.pricesDisplayFormat}
+                        yAccessor={this.yEdgeIndicator} />
+                    <MovingAverageTooltip
+                        origin={[8, 24]}
+                        options={[
+                            {
+                                yAccessor: ema26.accessor(),
+                                type: "EMA",
+                                stroke: ema26.stroke(),
+                                windowSize: ema26.options().windowSize,
+                            },
+                            {
+                                yAccessor: ema12.accessor(),
+                                type: "EMA",
+                                stroke: ema12.stroke(),
+                                windowSize: ema12.options().windowSize,
+                            },
+                        ]}
+                    />
+                </Chart>
+                <Chart
+                    id={4}
+                    height={elderRayHeight}
+                    yExtents={[0, elder.accessor()]}
+                    origin={elderRayOrigin}
+                    padding={{ top: 8, bottom: 8 }}>
+                    <XAxis
+                        innerTickSize={-1 * gridHeight}
+                        tickStroke="#e0e3eb"
+                        ticks={6} />
+                    <YAxis ticks={4} tickFormat={this.pricesDisplayFormat} />
 
-		this.state = {
-			data, xScale, xAccessor, displayXAccessor,
-			xExtents,
-			brushEnabled: true,
-		};
-	}
-	componentDidMount() {
-		document.addEventListener("keyup", this.onKeyPress);
-	}
-	componentWillUnmount() {
-		document.removeEventListener("keyup", this.onKeyPress);
-	}
-	saveCanvasNode(node) {
-		this.canvasNode = node;
-	}
-	onKeyPress(e) {
-		const keyCode = e.which;
-		console.log(keyCode);
-		switch (keyCode) {
-		case 27: { // ESC
-			this.node_1.terminate();
-			this.node_3.terminate();
-			this.setState({
-				brushEnabled: false,
-			});
-		}
-		}
-	}
-	handleBrush1(brushCoords, moreProps) {
-		const { start, end } = brushCoords;
-		const left = Math.min(start.xValue, end.xValue);
-		const right = Math.max(start.xValue, end.xValue);
+                    <MouseCoordinateX displayFormat={this.timeDisplayFormat} />
+                    <MouseCoordinateY displayFormat={this.pricesDisplayFormat} />
 
-		const low = Math.min(start.yValue, end.yValue);
-		const high = Math.max(start.yValue, end.yValue);
+                    <ElderRaySeries yAccessor={elder.accessor()} />
 
-		// uncomment the line below to make the brush to zoom
-		this.setState({
-			xExtents: [left, right],
-			yExtents1: BRUSH_TYPE === "2D" ? [low, high] : this.state.yExtents1,
-			brushEnabled: false,
-		});
-	}
-	handleBrush3(brushCoords, moreProps) {
-		const { start, end } = brushCoords;
-		const left = Math.min(start.xValue, end.xValue);
-		const right = Math.max(start.xValue, end.xValue);
+                    <SingleValueTooltip
+                        yAccessor={elder.accessor()}
+                        yLabel="Elder Ray"
+                        yDisplayFormat={(d) => `${this.pricesDisplayFormat(d.bullPower)}, ${this.pricesDisplayFormat(d.bearPower)}`}
+                        origin={[8, 16]} />
+                </Chart>
+                <CrossHairCursor />
+            </ChartCanvas>
+        );
+    }
 
-		const low = Math.min(start.yValue, end.yValue);
-		const high = Math.max(start.yValue, end.yValue);
+    barChartExtents = (data) => {
+        return data.volume;
+    }
 
-		// uncomment the line below to make the brush to zoom
-		this.setState({
-			xExtents: [left, right],
-			yExtents3: BRUSH_TYPE === "2D" ? [low, high] : this.state.yExtents3,
-			brushEnabled: false,
-		});
-	}
-	render() {
-		const { type, width, ratio, showGrid } = this.props;
-		const { data, xExtents, xScale, xAccessor, displayXAccessor, brushEnabled } = this.state;
+    candleChartExtents = (data) => {
+        return [data.high, data.low];
+    }
 
-		const yExtents1 = isDefined(this.state.yExtents1)
-			? this.state.yExtents1
-			: [d => [d.high, d.low], ema26.accessor(), ema12.accessor()];
+    yBarSeries = (data) => {
+        return data.volume;
+    }
 
-		const yExtents3 = isDefined(this.state.yExtents3)
-			? this.state.yExtents3
-			: macdCalculator.accessor();
+    yEdgeIndicator = (data) => {
+        return data.close;
+    }
 
-	    const height = 400
-	    const margin = { left: 50, right: 50, top: 20, bottom: 30 }
-
-	    const gridHeight = height - margin.top - margin.bottom;
-		const gridWidth = width - margin.left - margin.right
-
-	    const yGrid = showGrid ? { innerTickSize: -1 * gridWidth, tickStrokeOpacity: 0.2 } : {}
-		const xGrid = showGrid ? { innerTickSize: -1 * gridHeight, tickStrokeOpacity: 0.2 } : {}
-
-		return (
-			<ChartCanvas
-				height={600}
-				width={width}
-				ratio={ratio}
-				margin={margin}
-				type={type}
-				seriesName="MSFT"
-				data={data}
-				xScale={xScale}
-				xAccessor={xAccessor}
-				displayXAccessor={displayXAccessor}
-				xExtents={xExtents}
-			>
-				<Chart id={1} height={height}
-					yPanEnabled={isDefined(this.state.yExtents1)}
-					yExtents={yExtents1}
-					padding={{ top: 10, bottom: 20 }}
-				>
-					<XAxis axisAt="bottom" orient="bottom" showTicks={false} outerTickSize={0} tickStroke="#FFFFFF" stroke="#FFFFFF" {...xGrid}/>
-					<YAxis axisAt="right" orient="right" ticks={5} tickStroke="#FFFFFF" stroke="#FFFFFF" {...yGrid}/>
-
-					<MouseCoordinateY
-						at="right"
-						orient="right"
-						displayFormat={format(".2f")} />
-
-                      <CandlestickSeries
-						stroke={d => d.close > d.open ? green[500] : red[500]}
-						wickStroke={d => d.close > d.open ? green[500] : red[500]}
-						fill={d => d.close > d.open ? green[500] : red[500]}
-		                widthRatio={0.5}
-		                opacity={1}
-		            />
-					<LineSeries yAccessor={ema26.accessor()} stroke={ema26.stroke()}/>
-					<LineSeries yAccessor={ema12.accessor()} stroke={ema12.stroke()}/>
-
-					<CurrentCoordinate yAccessor={ema26.accessor()} fill={ema26.stroke()} />
-					<CurrentCoordinate yAccessor={ema12.accessor()} fill={ema12.stroke()} />
-
-					<EdgeIndicator
-						itemType="last"
-						orient="right"
-						edgeAt="right"
-						yAccessor={d => d.close}
-						fill={d => d.close > d.open ? green[500] : red[500]}/>
-
-					<OHLCTooltip origin={[-40, 0]}/>
-
-					<MovingAverageTooltip
-						onClick={e => console.log(e)}
-						origin={[-38, 15]}
-						options={[
-							{
-								yAccessor: ema26.accessor(),
-								type: ema26.type(),
-								stroke: ema26.stroke(),
-								windowSize: ema26.options().windowSize,
-							},
-							{
-								yAccessor: ema12.accessor(),
-								type: ema12.type(),
-								stroke: ema12.stroke(),
-								windowSize: ema12.options().windowSize,
-							},
-						]}
-					/>
-					<Brush
-						ref={this.saveInteractiveNode(1)}
-						enabled={brushEnabled}
-						type={BRUSH_TYPE}
-						onBrush={this.handleBrush1}/>
-				</Chart>
-				<Chart id={2} height={150}
-					yExtents={[d => d.volume, smaVolume50.accessor()]}
-					origin={(w, h) => [0, h - 300]}
-				>
-					<YAxis axisAt="left" orient="left" ticks={5} tickFormat={format(".2s")} tickStroke="#FFFFFF"/>
-
-					<MouseCoordinateY
-						at="left"
-						orient="left"
-						displayFormat={format(".4s")} />
-
-					<BarSeries yAccessor={d => d.volume} fill={d => d.close > d.open ? green[500] : red[500]} opacity={0.5} strokeOpacity={0.5}/>
-					<AreaSeries yAccessor={smaVolume50.accessor()} stroke={smaVolume50.stroke()} fill={smaVolume50.fill()}/>
-				</Chart>
-				<Chart id={3} height={150}
-					yExtents={yExtents3}
-					yPanEnabled={isDefined(this.state.yExtents3)}
-					origin={(w, h) => [0, h - 150]} padding={{ top: 10, bottom: 10 }}
-				>
-					<XAxis axisAt="bottom" orient="bottom" tickStroke="#FFFFFF" stroke="#FFFFFF"/>
-					<YAxis axisAt="right" orient="right" ticks={2} tickStroke="#FFFFFF" stroke="#FFFFFF"/>
-					<MouseCoordinateX
-						at="bottom"
-						orient="bottom"
-						displayFormat={timeFormat("%Y-%m-%d")} />
-					<MouseCoordinateY
-						at="right"
-						orient="right"
-						displayFormat={format(".2f")} />
-					<Brush
-						ref={this.saveInteractiveNode(3)}
-						enabled={brushEnabled}
-						type={BRUSH_TYPE}
-						onBrush={this.handleBrush3}/>
-					<MACDSeries yAccessor={d => d.macd}
-						{...macdAppearance} />
-					<MACDTooltip
-						origin={[-38, 15]}
-						yAccessor={d => d.macd}
-						options={macdCalculator.options()}
-						appearance={macdAppearance}
-					/>
-				</Chart>
-				<CrossHairCursor />
-			</ChartCanvas>
-		);
-	}
+    openCloseColor = (data) => {
+        return data.close > data.open ? "#26a69a" : "#ef5350";
+    }
 }
 
-CandlestickChart.defaultProps = {
-	type: 'svg',
-	showGrid: true,
-};
-
-const CandleStickChartWithBrush = fitWidth(CandlestickChart);
-
-export default CandleStickChartWithBrush;
-
+export default withDeviceRatio()(StockChart)
