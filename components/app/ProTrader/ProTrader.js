@@ -8,7 +8,7 @@ import {
   ChartIntervalControls,
   ChartCandlestickFake,
   ChartLineSeries,
-  StockChart
+  ProChart,
 } from "../"
 
 import { toJS } from "mobx"
@@ -41,6 +41,10 @@ import NumberFormat from 'react-number-format'
 import midstream from 'midstream'
 import { isRequired } from '@hanzo/middleware'
 import { MUIText } from '@hanzo/react'
+
+import { timeParse } from "d3-time-format"
+
+const parseTime = timeParse("%Y-%m-%d")
 
 const TVChartContainer = dynamic(
   async () => {
@@ -145,12 +149,17 @@ const useStyles = makeStyles((theme) => {
       borderColor: theme.palette.background.paper,
       borderLeft: 0,
       borderRight: 0,
-      margin:  '0 ' + theme.spacing(2),
-      padding: '0 ' + theme.spacing(2),
+      margin:  `0 -${theme.spacing(2)}px`,
+      padding: `0 ${theme.spacing(2)}px`,
     },
     orderBookHeader: {
       borderBottom: '1px solid',
       borderBottomColor: theme.palette.background.paper,
+    },
+    proChart: {
+      '& tspan': {
+        fill: '#FFFFFF'
+      },
     },
     tradePaper: {
       height: '100%',
@@ -244,7 +253,6 @@ export default props => {
     type: [isRequired, (v) => {
       // side effects of setting the type if setting
       if (v !== dst.type) {
-        console.log('reset', v, dst.type)
         setShowError(false)
         src.price = 0
         dst.price = 0
@@ -268,13 +276,10 @@ export default props => {
 
   const executeTrade = async (side) => {
     setShowError(true)
-    console.log('exec', src, dst, err, showError)
 
     try {
       await src.runAll()
       setShowError(false)
-
-      console.log(src, err)
 
       createOrder({
         side: side,
@@ -291,11 +296,8 @@ export default props => {
   const meanPrice = orderBook.book ? parseFloat(orderBook.book.meanPrice) : 0
   const spread = orderBook.book ? parseFloat(orderBook.book.spread) : 0
 
-  const bids = book.orderBook.bids.slice()
-  const asks = book.orderBook.asks.slice()
-
-  bids.length = 100
-  asks.length = 100
+  const bids = book.orderBook.bids
+  const asks = book.orderBook.asks
 
   const classes = useStyles()
   const isMarket = dst.type === 'market'
@@ -310,6 +312,18 @@ export default props => {
       })
     )
   }, [])
+
+  let data = stock.dailyData.map((n) => {
+    let {open, high, low, close, volume, date} = n
+    return {
+      open: parseFloat(open),
+      high: parseFloat(high),
+      low: parseFloat(low),
+      close: parseFloat(close),
+      volume: parseFloat(volume),
+      date: parseTime(date),
+    }
+  })
 
   return (
     <Element>
@@ -333,7 +347,7 @@ export default props => {
               </Tabs>
             </Paper>
           </Grid>
-          <Grid item xs={0} sm={6} md={9}>
+          <Grid item xs={12} sm={6} md={9}>
             <Box
               p={1}
               pl={2}
@@ -486,8 +500,8 @@ export default props => {
               </Box>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={6} md={9}>
-            <StockChart stock={stock} stockName={stockName} connected={connected} />
+          <Grid item xs={12} sm={6} md={9} className={classes.proChart}>
+            <ProChart data={data} />
           </Grid>
           <Grid item className={classes.orderBookPaperGrid}>
             <Paper square={true} className={classes.orderBookPaper}>
@@ -517,12 +531,12 @@ export default props => {
                         <Grid key={i} container spacing={1} style={{ color: red[500] }}>
                           <Grid item xs={6}>
                             <Typography variant='caption'>
-                              {parseFloat(ask[1]).toFixed(0)}
+                              {ask ? parseFloat(ask[1]).toFixed(0) : '&nbsp;'}
                             </Typography>
                           </Grid>
                           <Grid item xs={3}>
                             <Typography variant='caption'>
-                              ${parseFloat(ask[0]).toFixed(2)}
+                              ${ask ? parseFloat(ask[0]).toFixed(2) : '&nbsp;'}
                             </Typography>
                           </Grid>
                           <Grid item xs={3}>
@@ -549,12 +563,12 @@ export default props => {
                         <Grid key={i} container spacing={1} style={{ color: green[500] }}>
                           <Grid item xs={6}>
                             <Typography variant='caption'>
-                              {parseFloat(bid[1]).toFixed(0)}
+                              {bid ? parseFloat(bid[1]).toFixed(0) : '&nbsp;'}
                             </Typography>
                           </Grid>
                           <Grid item xs={3}>
                             <Typography variant='caption'>
-                              ${parseFloat(bid[0]).toFixed(2)}
+                              ${bid ? parseFloat(bid[0]).toFixed(2) : '&nbsp;'}
                             </Typography>
                           </Grid>
                           <Grid item xs={3}>
