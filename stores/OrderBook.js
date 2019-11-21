@@ -161,7 +161,7 @@ export default class OrderBook {
                 }
             })
 
-            if (type === "intradayData") {
+          if (type === "intradayData") {
                 let filteredData = []
                 let lastData = formattedData
                 let targetTime = 930
@@ -246,7 +246,6 @@ export default class OrderBook {
         // const startTime = now.startOf('day').valueOf()
         // const endTime = now.endOf('day').valueOf()
               // check if between midnight and market open, get previous day
-      debugger
         if (
           now.isBetween(
             now.clone().startOf('day'),
