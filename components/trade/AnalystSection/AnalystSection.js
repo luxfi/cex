@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 import { lighten, makeStyles, withStyles } from '@material-ui/core/styles'
 import LinearProgress from '@material-ui/core/LinearProgress'
-import { Grid, Typography, Box, Divider } from '@material-ui/core'
+import { Grid, Typography, Box, Card, CardContent } from '@material-ui/core'
+
+const truncate = input =>
+  Array.from(input).length > 110 ? `${Array.from(input).slice(0,110).join('')}...` : input
 
 const analystRatings = [
   {
@@ -15,6 +18,24 @@ const analystRatings = [
   {
     type: 'Sell',
     rating: '12',
+  },
+]
+
+const analystSummary = [
+  {
+    title: 'Buy Summary',
+    text:
+      'Ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat. ',
+  },
+  {
+    title: 'Hold Summary',
+    text:
+      'Ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. ',
+  },
+  {
+    title: 'Sell Summary',
+    text:
+      'Ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. ',
   },
 ]
 
@@ -131,6 +152,49 @@ const AnalystSection = ({}) => {
           </Grid>
         </Grid>
       </Grid>
+      <Box mt={4}>
+        <Grid container spacing={2} direction="row">
+          {analystSummary.map((summary, i) => {
+            return (
+              <Grid item xs={12} sm={2} md={4}>
+                <Card
+                  style={{
+                    height: '200px',
+                  }}
+                >
+                  <CardContent>
+                    <Typography
+                      component="div"
+                      variant="subtitle1"
+                      gutterBottom
+                    >
+                      <Box fontWeight="fontWeightBold" mb={2}>
+                        {summary.title}
+                      </Box>
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      component="p"
+                      color="textPrimary"
+                    >
+                      <Box
+                        style={{
+                          color: 'grey',
+                        }}
+                        mb={2}
+                        textOverflow="ellipsis"
+                        component="div"
+                      >
+                        {truncate(summary.text)}
+                      </Box>
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            )
+          })}
+        </Grid>
+      </Box>
     </Box>
   )
 }
