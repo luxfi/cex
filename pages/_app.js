@@ -17,7 +17,7 @@ config.autoAddCss = false
 import {
   CustomSnackbar,
   Header,
-  MobileNavMenu,
+  MobileNavMenu, 
   Footer,
   CustomModal,
   MobileAccountMenu
@@ -26,24 +26,8 @@ import {
 import ReactGA from 'react-ga'
 import initializeStore from "../stores/stores"
 import { darkTheme, lightTheme } from "../styles/esxThemes"
+import styles from "../styles/app.style.js"
 
-const styles = darkTheme => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    minHeight: '100vh',
-  },
-  main: {
-    marginTop: darkTheme.spacing(8),
-    marginBottom: darkTheme.spacing(2),
-  },
-  footer: {
-    padding: darkTheme.spacing(2),
-    marginTop: 'auto',
-  },
-})
-
-// ****************
 @observer
 class MyMobxApp extends App {
   static async getInitialProps(appContext) {
@@ -138,9 +122,7 @@ class MyMobxApp extends App {
                 handleLogout={() => { this.mobxStore.userStore.logout() }}
                 handlePlaceholder={this.placeholder}
               />
-              <footer className={classes.footer}>
-                <Footer openModal={this.openModal} />
-              </footer>
+              <Footer rootClassName={classes.footer} handlePlaceholder={this.placeholder} />
             </NoSsr>
           </div>
         </MuiThemeProvider>
@@ -149,8 +131,8 @@ class MyMobxApp extends App {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.log("CUSTOM ERROR HANDLING", error)
-    // This is needed to render errors correctly in development / production
+    console.log("CUSTOM ERROR HANDLING: ", error)
+      // This is needed to render errors correctly in development / production
     super.componentDidCatch(error, errorInfo)
   }
 }
