@@ -33,6 +33,9 @@ const useStyles = makeStyles(theme => ({
   backButtonText: {
     color: '#FBC43E',
   },
+  label: {
+    textTransform: 'capitalize',
+  },
 }))
 
 import ErrorIcon from '@material-ui/icons/Error'
@@ -141,7 +144,9 @@ const BuySellWidget = ({
     <Paper className={classes.paper}>
       <Grid container direction="column" justify="space-between" spacing={3}>
         <Grid item xs>
-          <Typography variant="h5">{ticker}</Typography>
+          <Typography variant="h5" component="div">
+            <Box fontWeight="fontWeightBold">{ticker}</Box>
+          </Typography>
         </Grid>
         <Grid item xs>
           <Tabs value={mode} onChange={handleModeChange} variant="fullWidth">
@@ -180,11 +185,11 @@ const BuySellWidget = ({
             </Grid>
             <Grid item xs container justify="space-between">
               <Grid item xs={6}>
-                <Typography>Market Price</Typography>
+                <Typography color="secondary">Market Price</Typography>
               </Grid>
               <Grid item xs={6}>
                 <Box textAlign="right">
-                  <Typography>${marketPrice}</Typography>
+                  <Typography> ${marketPrice}</Typography>
                 </Box>
               </Grid>
             </Grid>
@@ -257,8 +262,14 @@ const BuySellWidget = ({
               className={classes.reviewButton}
               fullWidth
               onClick={() => handleOrder()}
+              classes={{
+                label: classes.label,
+              }}
             >
-              <Typography variant="body2" className={classes.reviewButtonText}>
+              <Typography
+                variant="subtitle1"
+                className={classes.reviewButtonText}
+              >
                 Review Order
               </Typography>
             </Button>
@@ -276,9 +287,12 @@ const BuySellWidget = ({
                 className={classes.reviewButton}
                 fullWidth
                 onClick={() => handleOrder()}
+                classes={{
+                  label: classes.label,
+                }}
               >
                 <Typography
-                  variant="body2"
+                  variant="subtitle1"
                   className={classes.reviewButtonText}
                 >
                   {`${orderType === 'bid' ? 'Buy' : 'Sell'} $${estimatedCost}`}
@@ -290,8 +304,14 @@ const BuySellWidget = ({
                 className={classes.backButton}
                 fullWidth
                 onClick={() => setActiveStep('initial')}
+                classes={{
+                  label: classes.label,
+                }}
               >
-                <Typography variant="body2" className={classes.backButtonText}>
+                <Typography
+                  variant="subtitle1"
+                  className={classes.backButtonText}
+                >
                   Back
                 </Typography>
               </Button>
@@ -313,8 +333,14 @@ const BuySellWidget = ({
                 className={classes.backButton}
                 fullWidth
                 onClick={() => setActiveStep('initial')}
+                classes={{
+                  label: classes.label,
+                }}
               >
-                <Typography variant="body2" className={classes.backButtonText}>
+                <Typography
+                  variant="subtitle1"
+                  className={classes.backButtonText}
+                >
                   Back
                 </Typography>
               </Button>
@@ -323,7 +349,9 @@ const BuySellWidget = ({
         )}
 
         <Grid item xs={12}>
-          <Typography>${funds.toFixed(2)} Buying Power Available</Typography>
+          <Typography color="secondary">
+            ${funds.toFixed(2)} Buying Power Available
+          </Typography>
         </Grid>
       </Grid>
     </Paper>
