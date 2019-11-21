@@ -17,7 +17,10 @@ export default (theme) => {
       minWidth: "0",
       whiteSpace: "nowrap"
     },
-
+    listButtonLink: {
+      color: "inherit", //theme.palette.primary.dark,
+      textDecoration: "none"
+    },
     listButtonSublist: {
       fontSize: "1rem",
       paddingLeft: theme.spacing(3),

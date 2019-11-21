@@ -64,7 +64,7 @@ const MyCarousel = ({ children }) => {
   React.useEffect(() => {
     const buttons = document.getElementsByClassName('control-arrow')
     // move zIndex down if on mobile to allow fo swipeable drawer component
-    const index = mobile ? "100" : "100000"
+    const index = mobile ? "100" : "1000"
     Array.from(buttons).forEach(button => button.style.zIndex = index)
   }, [mobile])
   return (
@@ -84,7 +84,7 @@ class Hero extends React.Component {
 
   componentDidMount() {
     const buttons = document.getElementsByClassName('control-arrow')
-    Array.from(buttons).forEach(button => button.style.zIndex = "100000")
+    Array.from(buttons).forEach(button => button.style.zIndex = "1000")
   }
 
   render() {
