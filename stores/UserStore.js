@@ -82,7 +82,7 @@ export default class UserStore {
 
   // ** Payment Method **
   @observable newPaymentMethodPublicToken = undefined;
-  @observable newPaymentMethodName = undefined;
+  @observable newPaymentMethodName = '';
   // Set to plaid for now
   @observable newPaymentMethodType = 'plaid';
   @observable newPaymentMethodMetadata = undefined;
@@ -635,7 +635,6 @@ export default class UserStore {
       return [esx]
 
     const accounts = this.account.paymentMethods.map(a => {
-      console.log(toJS(a))
       return {
         name: a.name,
         institution: toJS(a.Inputs.metadata.institution),
