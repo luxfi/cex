@@ -20,6 +20,7 @@ export { default as LimitOrders } from './LimitOrders'
 export { default as NestedMenu } from './NestedMenu'
 export { default as MobileAccountMenu } from './MobileAccountMenu'
 export { default as MobileNavMenu } from './MobileNavMenu'
+export { default as ProChart } from './ProChart'
 export { default as ProTrader } from './ProTrader'
 export { default as SideDrawer } from './SideDrawer'
 export { default as StockRechart } from "./StockRechart"

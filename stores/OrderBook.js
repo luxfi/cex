@@ -1,8 +1,9 @@
-import { action, observable, computed } from "mobx"
+import { action, observable, computed, extendObservable } from "mobx"
 import _ from "lodash"
 import uuid from "uuid"
 import io from "socket.io-client"
 import moment from 'moment-timezone'
+
 const isEmpty = obj => [Object, Array].includes((obj || {}).constructor) && !Object.entries((obj || {})).length;
 
 // import stock from "../assets/tempData/stocks"
@@ -12,8 +13,8 @@ const LimitOrder = require("limit-order-book").LimitOrder
 const MarketOrder = require("limit-order-book").MarketOrder
 const LimitOrderBook = require("limit-order-book").LimitOrderBook
 
-const SOCKET_STRING = 'https://exchange.hanzo.ai'
-// const SOCKET_STRING = 'localhost:4000'
+// const SOCKET_STRING = 'https://exchange.hanzo.ai'
+const SOCKET_STRING = 'localhost:4000'
 
 const bidAsk = () => {
   return Math.floor(Math.random() * 2) == 0 ? "bid" : "ask" // 50/50 chance of "bid" or "ask"
@@ -21,6 +22,14 @@ const bidAsk = () => {
 
 const generateOrderSize = () => {
   return parseInt((Math.random() * 100).toFixed(0)) + 1 // random 1 through 100
+}
+
+const padBids = (array, length, fill) => {
+  return length > array.length ? array.concat(Array(length - array.length).fill(fill)) : array;
+}
+
+const padAsks = (array, length, fill) => {
+  return length > array.length ? (Array(length - array.length).fill(fill)).concat(array) : array;
 }
 
 const firstTwentyKeys = (orders, orderType) => {
@@ -47,7 +56,7 @@ export default class OrderBook {
 
   @observable ticker = ""
   @observable price = 13.37
-  @observable book = undefined //new LimitOrderBook()
+  @observable book = {} //new LimitOrderBook()
   @observable buys = []
   @observable sells = []
   @observable takeResults = []
@@ -133,7 +142,20 @@ export default class OrderBook {
         const label = timestamp.format('LT')
         const average = notional / volume
         const id = parseInt(timestamp.format('HHmm'), 10)
-        return { id, date, minute, label, high, low, open, close, average, volume, notional, numberOfTrades }
+        return {
+          id,
+          date,
+          minute,
+          label,
+          high,
+          low,
+          open,
+          close,
+          average,
+          volume,
+          notional,
+          numberOfTrades,
+        }
       })
 
       if (type === 'intradayData') {
@@ -165,9 +187,10 @@ export default class OrderBook {
           lastData = data
         }
 
+        console.log('1m', formattedData)
         this[type] = filteredData
-        console.log('fd', filteredData)
       } else {
+        console.log('1d', formattedData)
         this[type] = formattedData
         this.previousDayClose = formattedData[formattedData.length - 2].close
       }
@@ -179,7 +202,8 @@ export default class OrderBook {
     })
     this.socket.on("book.data", data => {
       this.book = data
-      // console.log(this.book)
+      this.book.orderBook.bids = padBids(this.book.orderBook.bids, 100, undefined)
+      this.book.orderBook.asks = padAsks(this.book.orderBook.asks, 100, undefined)
     })
 
     this.socket.on('disconnect', () => {
@@ -475,7 +499,7 @@ export default class OrderBook {
   }
 
   @computed get isReady() {
-    return this.connected && this.book && this.intradayData.length > 0 && this.dailyData.length > 0
+    return this.connected && this.book.lastPrice && this.intradayData.length > 0 && this.dailyData.length > 0
   }
 
   generatefullDay(book) {
