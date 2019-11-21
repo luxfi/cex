@@ -3,7 +3,7 @@ import { Provider, observer } from "mobx-react"
 import { withRouter } from "next/router"
 import App from "next/app"
 import { withStyles } from "@material-ui/core/styles"
-
+import "react-html5-camera-photo/build/css/index.css"
 import { MuiThemeProvider } from "@material-ui/core/styles"
 import { NoSsr, CssBaseline } from '@material-ui/core'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
