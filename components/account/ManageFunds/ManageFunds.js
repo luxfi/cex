@@ -38,7 +38,7 @@ export default props => {
     <Grid item xs={12} style={{ minWidth: '60%' }}>
       <Card raised>
         <CardContent>
-          <Typography variant="h6" gutterBottom>Deposit Funds</Typography>
+          <Typography variant="h6" gutterBottom>{deposit ? 'Deposit Funds' : 'Withdrawal Funds'}</Typography>
           <Divider style={{ marginBottom: '10px' }} />
           <Grid container direction="column" spacing={2}>
             <Grid container item>
