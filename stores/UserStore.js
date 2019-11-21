@@ -153,7 +153,7 @@ export default class UserStore {
 
   updateFromJson(json, keys) {
     // make sure our changes aren't sent back to the server
-    keys.forEach(k => {
+    keys && keys.forEach(k => {
       if (json[k] === '0001-01-01T00:00:00Z') {
         // per request from David to detect date
       }
@@ -316,7 +316,7 @@ export default class UserStore {
 
     let ps = [];
 
-    docs.forEach(([data, name], i) => {
+    docs && docs.forEach(([data, name], i) => {
       ps[i] = this.updateKYCPhoto(data, name);
     });
 
