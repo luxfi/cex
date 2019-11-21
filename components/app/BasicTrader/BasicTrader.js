@@ -1,30 +1,29 @@
 import { StockChart } from '../'
 import { toJS } from 'mobx'
-import {
-  Grid,
-  Typography,
-  Button,
-  Box,
-  Divider,
-} from '@material-ui/core'
+import { Grid, Typography, Button, Box, Divider } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 import { makeStyles } from '@material-ui/styles'
-import { AboutSection, BuySellWidget, FinancialsSection, HistorySection } from '../../trade'
+import {
+  AboutSection,
+  BuySellWidget,
+  FinancialsSection,
+  HistorySection,
+  EarningsSection,
+} from '../../trade'
 import { useState, useEffect } from 'react'
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
-  buyTicketsButton: {
-  },
+  buyTicketsButton: {},
   buyTicketsText: {
-    color: "#fff",
-    padding: theme.spacing(1)
+    color: '#fff',
+    padding: theme.spacing(1),
   },
   label: {
-    textTransform: 'capitalize'
-  }
+    textTransform: 'capitalize',
+  },
 }))
 
 export default props => {
@@ -45,7 +44,7 @@ export default props => {
     watchlist,
     removeFromWatchlist,
     addToWatchlist,
-    atomTicketsURL
+    atomTicketsURL,
   } = props
   const stock = toJS(orderBook.stock)
   let { connected } = orderBook
@@ -136,7 +135,9 @@ export default props => {
           <Divider />
           <FinancialsSection />
           <Divider />
-          <HistorySection book={orderBook.book}/>
+          <EarningsSection />
+          <Divider />
+          <HistorySection book={orderBook.book} />
           <Divider />
         </Grid>
         <Grid item lg={3} md={4} sm={6} xs={12} />

@@ -62,7 +62,7 @@ const HistorySection = ({ book }) => {
                   <Typography>{data.date}</Typography>
                 </Grid>
                 <Grid item xs={6} lg={3} md={3} sm={4}>
-                  <Typography align="right">
+                  <Typography component="div" align="right">
                     <Box fontWeight="fontWeightBold">
                       {formatCurrency.format(data.total)}
                     </Box>
