@@ -15,8 +15,8 @@ const LimitOrder = require("limit-order-book").LimitOrder
 const MarketOrder = require("limit-order-book").MarketOrder
 const LimitOrderBook = require("limit-order-book").LimitOrderBook
 
-const SOCKET_STRING = 'https://exchange.hanzo.ai'
-// const SOCKET_STRING = 'localhost:4000'
+// const SOCKET_STRING = 'https://exchange.hanzo.ai'
+const SOCKET_STRING = 'localhost:4000'
 
 const bidAsk = () => {
   return Math.floor(Math.random() * 2) == 0 ? "bid" : "ask" // 50/50 chance of "bid" or "ask"
@@ -72,7 +72,8 @@ export default class OrderBook {
   @observable intradayData = []
   @observable dailyData = []
   @observable previousDayClose = []
-  @observable order = {}
+  @observable order  = {}
+  @observable trades = []
   @observable proChartData = []
 
   activeOrders = {}
@@ -123,6 +124,18 @@ export default class OrderBook {
     })
     this.socket.on("book.unsubscribe.error", err => {
       console.log("book.unsubscribe.error", err)
+    })
+    this.socket.on("trade.subscribe.success", data => {
+      console.log("trade.subscribe.success", data)
+    })
+    this.socket.on("trade.subscribe.error", err => {
+      console.log("trade.subscribe.error", err)
+    })
+    this.socket.on("trade.unsubscribe.success", data => {
+      console.log("trade.unsubscribe.success", data)
+    })
+    this.socket.on("trade.unsubscribe.error", err => {
+      console.log("trade.unsubscribe.error", err)
     })
     this.socket.on("order.create.success", data => {
       console.log("order.create.success", data)
@@ -223,6 +236,18 @@ export default class OrderBook {
       this.book.orderBook.asks = padAsks(this.book.orderBook.asks, 100, undefined)
     })
 
+    this.socket.on("trade.data", data => {
+      let trades = this.trades.slice().reverse().concat(data)
+
+      if (trades.length > 100) {
+        trades.length = 100
+      }
+
+      this.trades = trades
+
+      console.log('trade.data', this.trades)
+    })
+
     this.socket.on('disconnect', () => {
       this.connected = false
       const reconnect = setInterval(() => {
@@ -238,6 +263,7 @@ export default class OrderBook {
     // Initiate the connection to the correct book
     console.log("Subscribing to ", ticker)
     this.socket.emit("book.subscribe", { name: ticker })
+    this.socket.emit("trade.subscribe", { name: ticker })
   }
 
   @action disconnect() {
