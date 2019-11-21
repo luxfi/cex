@@ -66,52 +66,70 @@ const AnalystSection = ({}) => {
         </Box>
       </Typography>
       <Grid container spacing={4}>
-        {analystRatings.map((data, i) => {
-          const color = data.type === 'Buy' ? 'secondary' : 'inherit'
-          return (
-            <Grid item key={i} xs={12}>
-              <Box display="flex" p={1}>
-                <Box p={1}>
-                  <Typography
-                    component="div"
-                    align="right"
-                    display="inline"
-                    color={color}
-                  >
-                    <Box fontWeight="fontWeightBold">{data.type}</Box>
-                  </Typography>
-                </Box>
-                <Box p={1} flexGrow={1}>
-                  {data.type === 'Buy' ? (
-                    <BorderLinearProgress
-                      className={classes.margin}
-                      variant="determinate"
-                      color={color}
-                      value={parseInt(data.rating)}
-                    />
-                  ) : (
-                    <BorderLinearProgressWhite
-                      className={classes.margin}
-                      variant="determinate"
-                      color={color}
-                      value={parseInt(data.rating)}
-                    />
-                  )}
-                </Box>
-                <Box p={1}>
-                  <Typography
-                    component="div"
-                    align="right"
-                    display="inline"
-                    color={color}
-                  >
-                    <Box fontWeight="fontWeightBold">{data.rating}%</Box>
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-          )
-        })}
+        <Grid item xs={2}>
+          <Typography component="div" variant="h2">
+            <Box fontWeight="fontWeightBold" mt={1.5}>
+              51%
+            </Box>
+          </Typography>
+          <Typography component="div" variant="subtitle2">
+            <Box fontWeight="fontWeightBold">of 43 ratings</Box>
+          </Typography>
+        </Grid>
+        <Grid item xs={10}>
+          <Grid container spacing={0}>
+            {analystRatings.map((data, i) => {
+              const color = data.type === 'Buy' ? 'secondary' : 'inherit'
+              return (
+                <Grid item key={i} xs={12}>
+                  <Box display="flex">
+                    <Box p={1}>
+                      <Typography
+                        component="div"
+                        display="inline"
+                        color={color}
+                      >
+                        <Box
+                          fontWeight="fontWeightBold"
+                          style={{ width: '32px' }}
+                        >
+                          {data.type}
+                        </Box>
+                      </Typography>
+                    </Box>
+                    <Box p={1} flexGrow={1}>
+                      {data.type === 'Buy' ? (
+                        <BorderLinearProgress
+                          className={classes.margin}
+                          variant="determinate"
+                          color={color}
+                          value={parseInt(data.rating)}
+                        />
+                      ) : (
+                        <BorderLinearProgressWhite
+                          className={classes.margin}
+                          variant="determinate"
+                          color={color}
+                          value={parseInt(data.rating)}
+                        />
+                      )}
+                    </Box>
+                    <Box p={1}>
+                      <Typography
+                        component="div"
+                        align="right"
+                        display="inline"
+                        color={color}
+                      >
+                        <Box fontWeight="fontWeightBold">{data.rating}%</Box>
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Grid>
+              )
+            })}
+          </Grid>
+        </Grid>
       </Grid>
     </Box>
   )
