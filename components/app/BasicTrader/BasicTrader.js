@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 import { makeStyles } from '@material-ui/styles'
-import { AboutSection, BuySellWidget, FinancialsSection } from '../../trade'
+import { AboutSection, BuySellWidget, FinancialsSection, HistorySection } from '../../trade'
 import { useState, useEffect } from 'react'
 
 const useStyles = makeStyles(theme => ({
@@ -135,6 +135,8 @@ export default props => {
           <AboutSection />
           <Divider />
           <FinancialsSection />
+          <Divider />
+          <HistorySection />
         </Grid>
         <Grid item lg={3} md={4} sm={6} xs={12} />
       </Grid>
