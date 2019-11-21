@@ -250,7 +250,7 @@ const EarningsSection = () => {
           spacing={3}
         >
           <Grid item xs={3}>
-            <Grid container direction="row" alignItems="left" spacing={1}>
+            <Grid container direction="row" alignItems="flex-start" spacing={1}>
               <Grid item>
                 <Box mt={0.5}>
                   <LightCircle />
@@ -267,7 +267,7 @@ const EarningsSection = () => {
             </Grid>
           </Grid>
           <Grid item xs={3}>
-            <Grid container direction="row" alignItems="left" spacing={1}>
+            <Grid container direction="row" alignItems="flex-start" spacing={1}>
               <Grid item>
                 <Box mt={0.5}>
                   <Circle />
