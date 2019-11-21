@@ -68,6 +68,11 @@ class Account extends React.Component {
 
     return (
       <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
+        <AccountSection title="KYC" style={{ marginBottom: '3em' }}>
+          <Link component={CustomLink} href="/account/kyc">
+            Check your identify verification status
+          </Link>
+        </AccountSection>
         <AccountSection title="Linked Accounts" style={{ marginBottom: '3em' }}>
           <Grid container>
             <Grid item xs={8}>
@@ -144,9 +149,6 @@ class Account extends React.Component {
         </AccountSection>
       </Container>
     )
-    //         <Link component={CustomLink} href="/account/kyc">
-    //           Check your identify verification status
-    //         </Link>
   }
 }
 
