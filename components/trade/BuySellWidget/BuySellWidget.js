@@ -6,6 +6,8 @@ import {
   Button,
   Box,
   TextField,
+  Tabs,
+  Tab,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
@@ -56,10 +58,11 @@ const reviewOrderText = `The quote you see may not be the price at which your or
 const BuySellWidget = ({
   marketPrice,
   ticker,
-  orderType,
   funds,
   createOrder,
 }) => {
+  const [mode, setMode] = useState(0)
+  const [orderType, setOrderType] = useState("bid")
   const [shares, setShares] = useState('')
   const [quote, setQuote] = useState('')
   const [sharesPurchased, setSharesPurchased] = useState(0)
@@ -67,8 +70,13 @@ const BuySellWidget = ({
   const [activeStep, setActiveStep] = React.useState('initial')
   const classes = useStyles()
   useEffect(() => {
-    console.log('activeStep', activeStep)
-  }, [activeStep])
+    if (mode === 0 ) {
+      setOrderType("bid")
+    }
+    if (mode === 1) {
+      setOrderType('ask')
+    }
+  }, [mode])
   const submitOrder = async () => {
     // Todo check if funds available at current market
     // If not, put message that market price has changed, currently insuffiecient funds
@@ -122,6 +130,10 @@ const BuySellWidget = ({
     }
   }
 
+  const handleModeChange = (event, newValue) => {
+    setMode(newValue)
+  }
+
   // if there is a 'quote' we are in 'Review Mode'
   const price = quote ? quote : marketPrice
   const estimatedCost = (shares * price).toFixed(2)
@@ -129,7 +141,13 @@ const BuySellWidget = ({
     <Paper className={classes.paper}>
       <Grid container direction="column" justify="space-between" spacing={3}>
         <Grid item xs>
-          <Typography variant="h5">Buy {ticker}</Typography>
+          <Typography variant="h5">{ticker}</Typography>
+        </Grid>
+        <Grid item xs>
+          <Tabs value={mode} onChange={handleModeChange}>
+            <Tab label="BUY" />
+            <Tab label="SELL" />
+          </Tabs>
         </Grid>
 
         {activeStep === 'initial' && (
@@ -241,7 +259,7 @@ const BuySellWidget = ({
               onClick={() => handleOrder()}
             >
               <Typography variant="body2" className={classes.reviewButtonText}>
-                {'Review Order'}
+                Review Order
               </Typography>
             </Button>
           </Grid>
@@ -263,7 +281,7 @@ const BuySellWidget = ({
                   variant="body2"
                   className={classes.reviewButtonText}
                 >
-                  {`Buy $${estimatedCost}`}
+                  {`${orderType === 'bid' ? "Buy" : "Sell"} $${estimatedCost}`}
                 </Typography>
               </Button>
             </Grid>
@@ -284,8 +302,10 @@ const BuySellWidget = ({
           <>
             <Grid item xs={12}>
               <Typography variant="subtitle2">
-                You have successfully purchased {sharesPurchased} shares of{' '}
-                {ticker} for ${totalPurchasePrice}
+                <div></div>
+                You have successfully{' '}
+                {orderType === 'bid' ? 'purchased' : 'sold'} {sharesPurchased}{' '}
+                shares of {ticker} for ${totalPurchasePrice}
               </Typography>
             </Grid>
             <Grid item xs={12}>
