@@ -131,7 +131,7 @@ export default props => {
           {
             bids.map((bid, i) =>
               <Order
-                color={red[500]}
+                color={green[500]}
                 quantity={bid ? bid[1]: undefined}
                 price={bid ? bid[0] : undefined}
               />
