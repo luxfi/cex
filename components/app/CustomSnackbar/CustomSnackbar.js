@@ -1,6 +1,5 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import ErrorIcon from '@material-ui/icons/Error'
@@ -71,13 +70,6 @@ function MySnackbarContentWrapper(props) {
   )
 }
 
-// MySnackbarContentWrapper.propTypes = {
-//     className: PropTypes.string,
-//     message: PropTypes.string,
-//     onClose: PropTypes.func,
-//     variant: PropTypes.oneOf(["error", "info", "success", "warning"]).isRequired
-// }
-
 const useStyles2 = makeStyles(theme => ({
   margin: {
     margin: theme.spacing(1),
@@ -113,28 +105,6 @@ function CustomizedSnackbars({ setOpen, open, variant, message }) {
 
   return (
     <div>
-      {/* <Button
-        variant="outlined"
-        className={classes.margin}
-        onClick={handleClick}
-      >
-        Open success snackbar
-      </Button> */}
-      {/* <Snackbar
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left"
-        }}
-        open={open}
-        autoHideDuration={6000}
-        onClose={handleClose}
-      >
-        <MySnackbarContentWrapper
-          onClose={handleClose}
-          variant="success"
-          message="This is a success message!"
-        />
-      </Snackbar> */}
       <Snackbar
         anchorOrigin={{
           vertical: 'bottom',
@@ -160,11 +130,6 @@ function CustomizedSnackbars({ setOpen, open, variant, message }) {
         variant="info"
         className={classes.margin}
         message="This is an information message!"
-      /> */}
-      {/* <MySnackbarContentWrapper
-        variant="success"
-        className={classes.margin}
-        message="This is a success message!"
       /> */}
     </div>
   )
