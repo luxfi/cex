@@ -19,6 +19,8 @@ import {
   Grid,
 } from "@material-ui/core"
 
+import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth'
+
 import { CustomLink } from ".."
 
 const EXTERNAL_LINKS = {
@@ -112,24 +114,24 @@ const SocialIcons = ({ classes }) => (
   </div>
 )
 
-const AppDownload = ({ classes }) => (
-  <div className={classes.downloadAppOuter}>
-    <Typography variant="h6" className={classes.downloadTitle}>
+const AppStore = ({ classes }) => (
+  <div className={classes.appStoreOuter}>
+    <Typography variant="h6" className={classes.appStoreTitle}>
       Download the ESX app
     </Typography>
-    <div className={classes.appStoreButtons}>
+    <div className={classes.appStoreButtonsOuter}>
       <Link target="_blank" rel="noopener noreferrer" href={EXTERNAL_LINKS.itunes}>
         <img
-          height="48px"
-          className={classes.appleAppStore}
+          height="32px"
+          className={classes.appStoreApple}
           alt="Available in the App Store"
           src="/static/images/footer/app-store-badge.svg"
         />
       </Link>
       <Link target="_blank" rel="noopener noreferrer" href={EXTERNAL_LINKS.android}>
         <img
-          height="48px"
-          className={classes.androidAppStore}
+          height="32px"
+          className={classes.appStoreAndroid}
           alt="Download from Google Play"
           src="/static/images/footer/GoogleStoreBadge.png"
         />
@@ -158,56 +160,52 @@ const Copyright = ({ classes }) => {
   )
 }
 
-const FooterMiddleRow = ({ classes, handlePlaceholder }) => (
-  <Grid container className={classes.footerColumnsOuter}>
-    <Grid sm={12} item container>
-      {footerNav.map(element => (
-        <Grid item xs={12} sm={6} md={3} key={element.title} className={classes.footerColumn} >
-          <div className={classes.footerColumnInner}>
-            <Typography variant="h6" color="textPrimary" gutterBottom>
-              {element.title}
-            </Typography>
-            <ul>
-              {element.links.map(item => {
-                const activeLink = (typeof item === "object" && "link" in item)
-                const title = (typeof item === "object" && "title" in item) ? item.title : item
-                const link = activeLink ? item.link : `/#`
-                const key = activeLink ? item.link : title
-                const nextLink = item.external ? Link : CustomLink
-                return (
-                  <li key={key}>
-                    <Link
-                      href={link}
-                      variant="subtitle1"
-                      color="textSecondary"
-                      onClick={
-                        activeLink
-                          ? null
-                          : () => {
-                            handlePlaceholder(title)
-                          }
-                      }
-                      component={nextLink}
-                    >
-                      {title}
-                    </Link>
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
-        </Grid>
-      ))}
-    </Grid>
-    <Grid
-      xs={12}
-      item
-      container
-      className={classes.appArea}
-      spacing="center"
-    >
-      <AppDownload classes={classes} />
-    </Grid>
+const FooterNav = ({ classes, handlePlaceholder, centerNavTitle }) => (
+  <Grid container className={classes.navGridContainer}>
+  {footerNav.map(section => {
+    const title = (
+      <>
+        <Typography variant="h6" color="textPrimary" className={classes.navSectionTitle} >
+          {section.title}
+        </Typography>
+        <hr class={classes.navSectionHR} />
+      </>
+    )
+    return (
+      <Grid item xs={12} sm={6} md={3} key={section.title} className={classes.navSectionGridItem}>
+        {centerNavTitle && title}
+        <ul>
+        {!centerNavTitle && title /* yeah, it's a hack... so what */}
+        {section.links.map(item => {
+          const activeLink = (typeof item === "object" && "link" in item)
+          const title = (typeof item === "object" && "title" in item) ? item.title : item
+          const link = activeLink ? item.link : `/#`
+          const key = activeLink ? item.link : title
+          const nextLink = item.external ? Link : CustomLink
+          return (
+            <li key={key}>
+              <Link
+                href={link}
+                variant="subtitle1"
+                color="textSecondary"
+                onClick={
+                  activeLink
+                    ? null
+                    : () => {
+                      handlePlaceholder(title)
+                    }
+                }
+                component={nextLink}
+              >
+                {title}
+              </Link>
+            </li>
+          )
+        })}
+        </ul>
+      </Grid>
+    )}
+  )}
   </Grid>
 )
 
@@ -218,22 +216,52 @@ class Footer extends React.Component {
     return { ...mobxStore }
   }
   render() {
-    const { classes, rootClassName, handlePlaceholder } = this.props
+    const { 
+      classes, 
+      width,
+      rootClassName, 
+      handlePlaceholder 
+    } = this.props
+    
+    const socialAndAppLinksTogether = isWidthUp('lg', width)
+    const centerNavTitle = isWidthDown('xs', width)
+
+    const socialAndAppLinks = (
+      <>
+      <Grid item xs={12} className={classes.socialGridItem}>
+        <SocialIcons classes={classes} />
+      </Grid>
+      <Grid item xs={12} className={classes.appStoreGridItem} >
+        <AppStore classes={classes} />
+      </Grid>
+      </>
+    )           
+
     return (
       <footer className={classNames(rootClassName, classes.root)}>
-        <Grid container className={classes.mainGrid}>
-          <Grid item sm={12} md={6}>
+        <Grid container className={classes.gridContainer}>
+          <Grid item md={6} lg={12} className={classes.logoGridItem}>
             <Logo classes={classes} />
           </Grid>
-          <Grid item sm={12} md={6}>
-            <SocialIcons classes={classes} />
+          <Grid xs={12} lg={8} item className={classes.navGridItem}>
+            <FooterNav centerNavTitle={centerNavTitle} handlePlaceholder={handlePlaceholder} classes={classes} />
+          </Grid>
+          {(socialAndAppLinksTogether) ?
+            (
+              <Grid lg={4} container item className={classes.socialAndAppGridItem}>
+                {socialAndAppLinks}
+              </Grid>
+            ) : (
+              socialAndAppLinks
+            ) 
+          }
+          <Grid item xs={12} className={classes.copyrightGridItem}>
+            <Copyright classes={classes} />
           </Grid>
         </Grid>
-        <FooterMiddleRow handlePlaceholder={handlePlaceholder} classes={classes} />
-        <Copyright classes={classes} />
       </footer>
     )
   }
 }
 
-export default withStyles(styles)(Footer)
+export default withWidth()(withStyles(styles)(Footer))
