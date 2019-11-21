@@ -105,7 +105,7 @@ class Index extends React.Component {
   }
 
   render() {
-    const { classes, store } = this.props
+    const { classes } = this.props
 
     // get router slug and find article
     const { router } = this.props
@@ -139,7 +139,7 @@ class Index extends React.Component {
       orderBook.setMarketOrderType(marketOrder)
     }
 
-    const createOrder = (order) => {
+    const createOrder = (order, onSuccess, onError) => {
       orderBook.socketOrderCreate(
         order,
         (ticker, orderType) => {
@@ -149,7 +149,7 @@ class Index extends React.Component {
             else
               userStore.addBalance(val)
           }
-          userPortfolio.onOrderExecute(order, ticker, orderType, updateBalance)
+          userPortfolio.onOrderExecute(order, ticker, orderType, updateBalance, onSuccess, onError)
         }
       )
     }

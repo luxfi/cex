@@ -1,8 +1,11 @@
-import { action, observable, computed } from "mobx"
+import { action, observable, computed, extendObservable } from "mobx"
 import _ from "lodash"
 import uuid from "uuid"
 import io from "socket.io-client"
 import moment from 'moment-timezone'
+import { timeParse } from "d3-time-format"
+
+const parseTime = timeParse("%Y-%m-%d")
 const isEmpty = obj => [Object, Array].includes((obj || {}).constructor) && !Object.entries((obj || {})).length;
 
 // import stock from "../assets/tempData/stocks"
@@ -21,6 +24,14 @@ const bidAsk = () => {
 
 const generateOrderSize = () => {
   return parseInt((Math.random() * 100).toFixed(0)) + 1 // random 1 through 100
+}
+
+const padBids = (array, length, fill) => {
+  return length > array.length ? array.concat(Array(length - array.length).fill(fill)) : array;
+}
+
+const padAsks = (array, length, fill) => {
+  return length > array.length ? (Array(length - array.length).fill(fill)).concat(array) : array;
 }
 
 const firstTwentyKeys = (orders, orderType) => {
@@ -47,7 +58,7 @@ export default class OrderBook {
 
   @observable ticker = ""
   @observable price = 13.37
-  @observable book = undefined //new LimitOrderBook()
+  @observable book = {} //new LimitOrderBook()
   @observable buys = []
   @observable sells = []
   @observable takeResults = []
@@ -61,7 +72,12 @@ export default class OrderBook {
   @observable intradayData = []
   @observable dailyData = []
   @observable previousDayClose = []
-  @observable order = {}
+  @observable order  = {}
+  @observable trades = []
+  @observable proChartData = []
+
+  tradesBuffer = []
+  lastTradeMerge = 0
 
   activeOrders = {}
 
@@ -112,6 +128,18 @@ export default class OrderBook {
     this.socket.on("book.unsubscribe.error", err => {
       console.log("book.unsubscribe.error", err)
     })
+    this.socket.on("trade.subscribe.success", data => {
+      console.log("trade.subscribe.success", data)
+    })
+    this.socket.on("trade.subscribe.error", err => {
+      console.log("trade.subscribe.error", err)
+    })
+    this.socket.on("trade.unsubscribe.success", data => {
+      console.log("trade.unsubscribe.success", data)
+    })
+    this.socket.on("trade.unsubscribe.error", err => {
+      console.log("trade.unsubscribe.error", err)
+    })
     this.socket.on("order.create.success", data => {
       console.log("order.create.success", data)
     })
@@ -120,7 +148,9 @@ export default class OrderBook {
     })
 
     this.socket.on("candles.get.success", data => {
+      // console.log('candles', data)
       if (isEmpty(data) || isEmpty(data.candles)) { return }
+
       let { candles, type } = data
       let formattedData = candles.map(candle => {
         const [openTime, closeTime, open, high, low, close, notional, volume, numberOfTrades] = candle
@@ -131,7 +161,20 @@ export default class OrderBook {
         const label = timestamp.format('LT')
         const average = notional / volume
         const id = parseInt(timestamp.format('HHmm'), 10)
-        return { id, date, minute, label, high, low, open, close, average, volume, notional, numberOfTrades }
+        return {
+          id,
+          date,
+          minute,
+          label,
+          high,
+          low,
+          open,
+          close,
+          average,
+          volume,
+          notional,
+          numberOfTrades,
+        }
       })
 
       if (type === 'intradayData') {
@@ -163,8 +206,23 @@ export default class OrderBook {
           lastData = data
         }
 
+        console.log('1m', formattedData)
         this[type] = filteredData
       } else {
+        console.log('1d', formattedData)
+
+        this.proChartData = formattedData.map((n) => {
+          let {open, high, low, close, volume, date} = n
+          return {
+            open: parseFloat(open),
+            high: parseFloat(high),
+            low: parseFloat(low),
+            close: parseFloat(close),
+            volume: parseFloat(volume),
+            date: parseTime(date),
+          }
+        })
+
         this[type] = formattedData
         this.previousDayClose = formattedData[formattedData.length - 2].close
       }
@@ -174,8 +232,22 @@ export default class OrderBook {
     this.socket.on("candles.get.error", err => {
       console.log("candles.get.error", err)
     })
+
     this.socket.on("book.data", data => {
       this.book = data
+      this.book.orderBook.bids = padBids(this.book.orderBook.bids, 100, undefined)
+      this.book.orderBook.asks = padAsks(this.book.orderBook.asks, 100, undefined)
+    })
+
+    this.socket.on("trade.data", data => {
+      this.tradesBuffer = this.tradesBuffer.concat(data).slice(-100)
+
+      let now = new Date().getTime()
+      if (now - this.lastTradeMerge > 1000) {
+        this.trades = this.tradesBuffer.reverse()
+        this.lastTradeMerge = now
+      }
+      // console.log('trade.data', this.trades)
     })
 
     this.socket.on('disconnect', () => {
@@ -193,6 +265,7 @@ export default class OrderBook {
     // Initiate the connection to the correct book
     console.log("Subscribing to ", ticker)
     this.socket.emit("book.subscribe", { name: ticker })
+    this.socket.emit("trade.subscribe", { name: ticker })
   }
 
   @action disconnect() {
@@ -216,7 +289,7 @@ export default class OrderBook {
     // const startTime = now.startOf('day').valueOf()
     // const endTime = now.endOf('day').valueOf()
     const startTime = moment(now).startOf('day').add(9, 'hours').valueOf()
-    const endTime = moment(now).startOf('day').add(16, 'hours').valueOf()
+    const endTime = moment(now).startOf('day').add(16, 'hours').add(5, 'minutes').valueOf()
     let opts = {
       "startTime": startTime,
       "endTime": endTime,
@@ -467,11 +540,12 @@ export default class OrderBook {
     const intradayData = this.intradayData
     const dailyData = this.dailyData
     const previousDayClose = this.previousDayClose
-    return { intradayData, dailyData, previousDayClose }
+    const proChartData = this.proChartData
+    return { intradayData, dailyData, previousDayClose, proChartData }
   }
 
   @computed get isReady() {
-    return this.connected && this.book && this.intradayData.length > 0 && this.dailyData.length > 0
+    return this.connected && this.book.lastPrice && this.intradayData.length > 0 && this.dailyData.length > 0
   }
 
   generatefullDay(book) {

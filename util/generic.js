@@ -22,7 +22,7 @@ const googlePageView = () => {
 }
 
 const formatCurrency = (num, currency='USD') => {
-  return new Intl.NumberFormat('en-IN', { style: 'currency', currency }).format(num)
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(num)
 }
 
 export { padDollarAmount, googlePageView, formatCurrency }
