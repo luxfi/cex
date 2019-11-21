@@ -69,11 +69,11 @@ const estimatedData = [
   },
   {
     financialQuarter: 4,
-    earnings: 2.83,
+    earnings: 3.23,
   },
   {
     financialQuarter: 5,
-    earnings: 2.83,
+    earnings: 3.55,
   },
   {
     financialQuarter: 6,
@@ -100,11 +100,11 @@ const actualData = [
   },
   {
     financialQuarter: 4,
-    earnings: 3.49,
+    earnings: 3.21,
   },
   {
     financialQuarter: 5,
-    earnings: 3.49,
+    earnings: 3.1,
   },
   {
     financialQuarter: 6,
