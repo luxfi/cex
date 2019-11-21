@@ -74,7 +74,7 @@ export default props => {
         </Grid>
         <Grid item lg={3} md={4} sm={6} xs={12}>
           <Grid container direction="column">
-            <div className={classes.root}>
+            <Grid item xs={12}>
               <BuySellWidget
                 classes={classes}
                 marketPrice={marketPrice}
@@ -83,11 +83,15 @@ export default props => {
                 funds={funds}
                 createOrder={createOrder}
               />
+            </Grid>
+            <Grid item xs={12}>
               <Box mt={3}>
                 <Button className={``} variant="outlined" fullWidth>
                   <Typography variant="body2">Buy Tickets</Typography>
                 </Button>
               </Box>
+            </Grid>
+            <Grid item xs={12}>
               <Box mt={3} justifyContent="center" display="flex">
                 <Typography
                   onClick={e => {
@@ -100,7 +104,7 @@ export default props => {
                   {inWatchlist ? 'Remove from Watchlist' : 'Add to WatchList'}
                 </Typography>
               </Box>
-            </div>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
