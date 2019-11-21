@@ -78,18 +78,18 @@ const footerNav = [
   }
 ]
 
-const Logo = ({classes}) => (
+const Logo = ({ classes }) => (
   <Link href="/" className={classes.logoLink}>
     <img
       className={classes.logoImg}
       src="/static/images/esx/esx-white-logo.png"
       alt="ESX"
-      height="32px"
+      height="48px"
     />
   </Link>
 )
 
-const SocialIcons = ({classes}) => (
+const SocialIcons = ({ classes }) => (
   <div className={classes.socialIconRow}>
     <IconButton href={EXTERNAL_LINKS.facebook} className={classes.socialIcon} target="_blank">
       <FontAwesomeIcon icon={faFacebook} size="1x" />
@@ -112,7 +112,7 @@ const SocialIcons = ({classes}) => (
   </div>
 )
 
-const AppDownload = ({classes}) => (
+const AppDownload = ({ classes }) => (
   <div className={classes.downloadAppOuter}>
     <Typography variant="h6" className={classes.downloadTitle}>
       Download the ESX app
@@ -138,13 +138,13 @@ const AppDownload = ({classes}) => (
   </div>
 )
 
-const Copyright = ({classes}) => {
+const Copyright = ({ classes }) => {
 
   const firstYear = 2019
   const currentYear = new Date().getFullYear()
-  const yearString =  (currentYear > firstYear) ? `${firstYear}-${currentYear}` : firstYear
-  
-    // TODO Create Privacy and Terms of Use pages
+  const yearString = (currentYear > firstYear) ? `${firstYear}-${currentYear}` : firstYear
+
+  // TODO Create Privacy and Terms of Use pages
 
   return (
     <div className={classes.copyrightOuter}>
@@ -184,8 +184,8 @@ const FooterMiddleRow = ({ classes, handlePlaceholder }) => (
                         activeLink
                           ? null
                           : () => {
-                              handlePlaceholder(title)
-                            }
+                            handlePlaceholder(title)
+                          }
                       }
                       component={nextLink}
                     >
@@ -206,7 +206,7 @@ const FooterMiddleRow = ({ classes, handlePlaceholder }) => (
       className={classes.appArea}
       spacing="center"
     >
-      <AppDownload classes={classes} />   
+      <AppDownload classes={classes} />
     </Grid>
   </Grid>
 )
@@ -221,10 +221,16 @@ class Footer extends React.Component {
     const { classes, rootClassName, handlePlaceholder } = this.props
     return (
       <footer className={classNames(rootClassName, classes.root)}>
-        <Logo classes={classes}/>
-        <SocialIcons classes={classes} />
+        <Grid container className={classes.mainGrid}>
+          <Grid item sm={12} md={6}>
+            <Logo classes={classes} />
+          </Grid>
+          <Grid item sm={12} md={6}>
+            <SocialIcons classes={classes} />
+          </Grid>
+        </Grid>
         <FooterMiddleRow handlePlaceholder={handlePlaceholder} classes={classes} />
-        <Copyright classes={classes}/>
+        <Copyright classes={classes} />
       </footer>
     )
   }
