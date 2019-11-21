@@ -21,4 +21,8 @@ const googlePageView = () => {
  console.log('Page view',  window.location.pathname + window.location.search)
 }
 
-export { padDollarAmount, googlePageView }
+const formatCurrency = (num, currency='USD') => {
+  return new Intl.NumberFormat('en-IN', { style: 'currency', currency }).format(num)
+}
+
+export { padDollarAmount, googlePageView, formatCurrency }

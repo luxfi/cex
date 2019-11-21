@@ -27,8 +27,10 @@ class Login extends React.Component {
       validPassword
     } = userStore
     const setErrorMessage = message => {
-      store.uiStore.errorMessage = message
-      store.uiStore.snackBarOpen = true
+        store.uiStore.setErrorMessage(message)
+    }
+    const setSuccessMessage = message => {
+        store.uiStore.setSuccessMessage(message)
     }
     return (
       <LoginForm
@@ -44,6 +46,7 @@ class Login extends React.Component {
         validEmail={validEmail}
         validPassword={validPassword}
         setErrorMessage={setErrorMessage}
+        setSuccessMessage={setSuccessMessage}
       />
     )
   }

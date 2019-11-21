@@ -5,11 +5,15 @@ export default (theme) => {
     appBar: {
       color: "inherit",
       boxShadow: "none",
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
+      paddingLeft: theme.spacing(4),  // 32px
+      paddingRight: theme.spacing(4),
       [theme.breakpoints.down("xs")]: {
         paddingLeft: theme.spacing(1),
         paddingRight: theme.spacing(1),
+      },
+      [theme.breakpoints.up("lg")]: {
+        paddingLeft: theme.spacing(6),
+        paddingRight: theme.spacing(6),
       },
     },
 

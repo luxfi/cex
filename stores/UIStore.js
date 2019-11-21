@@ -1,33 +1,44 @@
-import { action, observable, computed } from "mobx"
+import { action, observable, computed } from 'mobx'
 
 export default class UIStore {
   @observable snackBarOpen = false
+  @observable snackBarVariant = 'error'
+  @observable snackBarMessage = ''
 
   @observable drawers = {
     left: false,
-    right: false
+    right: false,
   }
-  
-  @observable error = ""
+
   @observable modal = {
     open: false,
     title: null,
-    body: null
-  }
-  
-  @computed get open() {
-    return this.snackBarOpen
+    body: null,
   }
 
-  @computed get error() {
-    return this.snackBarOpen
-  }
-
-  @action setLeftDrawerOpen = (open) => {
+  @action setLeftDrawerOpen = open => {
     this.drawers.left = open
   }
 
-  @action setRightDrawerOpen = (open) => {
+  @action setErrorMessage = message => {
+    this.setSnackBarMessage(message, 'error')
+  }
+
+  @action setSuccessMessage = message => {
+    this.setSnackBarMessage(message, 'success')
+  }
+
+  @action setSnackBarMessage = (message, variant) => {
+    this.snackBarVariant = variant
+    this.snackBarMessage = message
+    this.snackBarOpen = true
+  }
+
+  @action setLeftDrawerOpen = open => {
+    this.drawers.left = open
+  }
+
+  @action setRightDrawerOpen = open => {
     this.drawers.right = open
   }
 

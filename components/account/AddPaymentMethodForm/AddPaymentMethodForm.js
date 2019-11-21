@@ -1,13 +1,13 @@
 import React from "react"
-import NextLink from "next/link"
-import Router from "next/router"
 import PlaidLink from "react-plaid-link"
 
 // Material Components
-import Button from "@material-ui/core/Button"
-import Container from "@material-ui/core/Container"
-import TextField from "@material-ui/core/TextField"
-import Typography from "@material-ui/core/Typography"
+import {
+  Grid,
+  TextField,
+  Typography,
+  Button
+} from '@material-ui/core'
 
 import { PLAID_PUBLIC_KEY } from "../../../src/settings.js"
 
@@ -15,6 +15,7 @@ class AddPaymentMethodForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = { displayErrors: false }
+    this.plaidRef = React.createRef()
   }
 
   handleSubmit(token, meta, addPaymentMethod, isValidNewPaymentMethod, setErrorMessage, refreshSession) {
@@ -48,58 +49,70 @@ class AddPaymentMethodForm extends React.Component {
 
   render() {
     const {
-      classes,
       setValue,
       addPaymentMethod,
       validateNewPaymentMethodName,
       validNewPaymentMethodName,
       validNewPaymentMethodPublicToken,
       setErrorMessage,
-      refreshSession
+      refreshSession,
+      newPaymentMethodName
     } = this.props
 
     return (
-      <Container component="main" maxWidth="xs">
-        <Typography component="h1" variant="h5">
-          Add Payment Method
-        </Typography>
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          name="newPaymentMethodName"
-          label="Name"
-          id="payment-method-name"
-          onBlur={validateNewPaymentMethodName}
-          onChange={evt => setValue(evt.target.name, evt.target.value)}
-          error={this.state.displayErrors && !validNewPaymentMethodName}
-          helperText={
-            this.state.displayErrors && !validNewPaymentMethodName
-              ? "please enter a name for this payment method"
-              : ""
-          }
-        />
-        <br />
-        <br />
-        <PlaidLink
-          clientName="ESX"
-          env="sandbox"
-          product={["auth", "transactions"]}
-          publicKey={PLAID_PUBLIC_KEY}
-          onSuccess={(pub_token, meta) => {
-            this.handleSubmit(pub_token, meta, addPaymentMethod, true, setErrorMessage, refreshSession)
-          }}
-        >
-          <Typography component="p" variant="body2">
+      <Grid container item xs={12} alignItems="center" justify="center" spacing={3}>
+        <Grid item xs={4}>
+          <Typography variant="h6">
+            Add Payment Method
+          </Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="newPaymentMethodName"
+            label="Name"
+            id="payment-method-name"
+            value={newPaymentMethodName}
+            onBlur={validateNewPaymentMethodName}
+            onChange={evt => setValue(evt.target.name, evt.target.value)}
+            error={this.state.displayErrors && !validNewPaymentMethodName}
+            helperText={
+              this.state.displayErrors && !validNewPaymentMethodName
+                ? "please enter a name for this payment method"
+                : ""
+            }
+          />
+        </Grid>
+        <Grid item xs={4} style={{ textAlign: 'center' }}>
+          <Button 
+            variant="outlined"
+            disabled={!newPaymentMethodName || !validNewPaymentMethodName}
+            onClick={() => {
+              this.plaidRef.current.handleOnClick() 
+            }}
+          >
             {
               validNewPaymentMethodPublicToken
-                ? "Link a Different Bank Account"
-                : "+Link a Bank Account"
+                ? "Add a Different Account"
+                : "Add Account"
             }
-          </Typography>
-        </PlaidLink>
-      </Container>
+          </Button>
+          <PlaidLink
+            clientName="ESX"
+            env="sandbox"
+            ref={this.plaidRef}
+            style={{ display: 'none' }}
+            product={["auth", "transactions"]}
+            publicKey={PLAID_PUBLIC_KEY}
+            onSuccess={(pub_token, meta) => {
+              this.handleSubmit(pub_token, meta, addPaymentMethod, true, setErrorMessage, refreshSession)
+            }}
+          />
+        </Grid>
+      </Grid>
     )
   }
 }

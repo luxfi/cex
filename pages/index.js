@@ -1,25 +1,19 @@
 import React from "react"
-// @material-ui/core components
-import { Container } from "@material-ui/core"
-import { withStyles } from "@material-ui/core/styles"
-
 import { inject, observer } from "mobx-react"
 
-// core components
-import Hero from "../components/landing/Hero/Hero"
+import { withStyles } from "@material-ui/core/styles"
 
-// styles
-import styles from "../styles/pages/landing.style.js"
-
-// Sections for this page
-import { 
-  TrailerSlider, 
-  StudioSlider, 
-  CategorySlider, 
-  ForYouSlider 
+import {
+  Hero,
+  TrailerSlider,
+  StudioSlider,
+  CategorySlider,
+  ForYouSlider
 } from "../components/landing"
 
 import { googlePageView } from '../util/generic'
+
+import styles from "../styles/pages/landing.style.js"
 
 @inject("store")
 @observer
@@ -31,13 +25,12 @@ class Index extends React.Component {
   }
 
   render() {
-    const { movieStore } = this.props.store
-    const { classes, store } = this.props
+    const { store } = this.props
     const loggedIn = store.userStore.loggedIn
     return (
       <>
         <Hero loggedIn={loggedIn} />
-        <Container maxWidth="xl"
+        <div
           style={{
             transform: "translate(0, -52vh)"
           }}
@@ -48,7 +41,7 @@ class Index extends React.Component {
           <div style={{ marginBottom: "-52vh" }}>
             <CategorySlider />
           </div>
-        </Container>
+        </div>
       </>
     )
   }

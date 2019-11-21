@@ -182,12 +182,15 @@ export default class UserPortfolio {
     let holdingIndex = _.findIndex(this.investments, { ticker })
     console.log('onOrderExecute', holdingIndex, this.investments, order, orderType)
 
+    const quantity = Number.parseInt(order.quantity)
+    const price = Number.parseFloat(order.price)
+
     if (orderType === "bid") {
       // Add the order to the user portfolio after checking their account balance
       if (holdingIndex > -1) {
         // Then we have a holding
-        this.investments[holdingIndex].amount += order.quantity
-        this.investments[holdingIndex].price = order.price
+        this.investments[holdingIndex].amount += quantity
+        this.investments[holdingIndex].price = price
       } else {
         holdingIndex = this.investments.length
         this.investments.push(order)
@@ -196,11 +199,11 @@ export default class UserPortfolio {
       // Make sure the user owns enough shares to sell?
       if (
         holdingIndex > -1 &&
-        this.investments[holdingIndex].amount >= order.quantity
+        this.investments[holdingIndex].amount >= quantity
       ) {
         // Then we have a holding
-        this.investments[holdingIndex].amount -= order.quantity
-        this.investments[holdingIndex].price = order.price
+        this.investments[holdingIndex].amount -= quantity
+        this.investments[holdingIndex].price = price
 
         if (this.investments[holdingIndex].amount <= 0)
           this.investments.splice(holdingIndex, 1)
@@ -209,7 +212,7 @@ export default class UserPortfolio {
       }
     }
 
-    updateBalance(orderType, order.price * order.quantity)
+    updateBalance(orderType, price * quantity)
 
     // Add transaction array
     if (!this.investments[holdingIndex].transactions) {
