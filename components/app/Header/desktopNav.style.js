@@ -2,8 +2,7 @@ export default (theme) => {
   return {
     logo: {
       display: "inline-block",
-      marginLeft: theme.spacing(1),
-      marginTop: "-15px",
+      marginTop: "-8px",
       cursor: "pointer"
     },
 
@@ -36,7 +35,10 @@ export default (theme) => {
         marginRight: theme.spacing(1)
       },
       minWidth: "0",
-      whiteSpace: "nowrap"
+      whiteSpace: "nowrap",
+      "&:last-child": {
+        marginRight: 0
+      }
     },
 
     accountOuter: {
@@ -44,15 +46,11 @@ export default (theme) => {
       flexDirection: "row",
       marginLeft: "auto",
       alignItems: "center",
-      paddingRight: theme.spacing(6),
-      [theme.breakpoints.down("sm")]: {
-        paddingRight: 0
-      }
     },
 
     accountIcon: {
       width: "36px",
       height: "36px"
     }
-  };
+  }
 }

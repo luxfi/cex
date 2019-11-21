@@ -98,39 +98,52 @@ class Hero extends React.Component {
               console.log('hrefLink', hrefLink)
               return <HeroImg key={i} {...rest} img={movieExtendedMap[movie.movieSlug].img}>
                 <div className={classes.container}>
-                  <Grid container>
-                    <Grid item xs={12} sm={12} md={6} style={{ textAlign: 'left' }}>
-                      <Box lineHeight={1} letterSpacing={2}>
-                        <Typography className="esx-initial-offering" variant="h5">
-                          <Box fontWeight='bold' fontSize={24}>
-                            ESX
+                  <Grid
+                    container
+                    spacing={1}
+                    direction="row"
+                    justify="flex-start"
+                  >
+                    <Grid justify="flex-start" container item spacing={1} item xs={10} md={6} style={{ textAlign: 'left' }} >
+                      <Grid item xs>
+                        <Box lineHeight={1} letterSpacing={2}>
+                          <Typography className="esx-initial-offering" variant="h5">
+                            <Box fontWeight='bold' fontSize={24}>
+                              ESX
                           </Box>
-                          <Box fontWeight={100} fontSize={20}>
-                            INITIAL OFFERING
+                            <Box fontWeight={100} fontSize={20}>
+                              INITIAL OFFERING
                           </Box>
-                        </Typography>
-                        <br />
-                        {movieExtendedMap[movie.movieSlug].logo}
-                        <br />
-                        <br />
-                        <Typography variant="body2">
-                          {movie.shortDescription}
-                        </Typography>
-                        <br />
-                      </Box>
-                      <br />
-                      <TrailerModal movie={movie} />
-                      <Button
-                        className="invest-button button"
-                        size="large"
-                        startIcon={<MonetizationOnIcon />}
-                      >
-                        <a href={hrefLink}>
-                          <Typography variant="body2">
-                            INVEST IN {movie.name}
                           </Typography>
-                        </a>
-                      </Button>
+                          <br />
+                          {movieExtendedMap[movie.movieSlug].logo}
+                          <br />
+                          <br />
+                          <Typography variant="body2">
+                            {movie.shortDescription}
+                          </Typography>
+                          <br />
+                        </Box>
+                      </Grid>
+                      <br />
+                      <Grid container item spacing={2} justify="flex-start">
+                        <Grid item >
+                          <TrailerModal movie={movie} buttonClass={classes.watchTrailerButton} />
+                        </Grid>
+                        <Grid item >
+                          <Button
+                            className={classes.investButton}
+                            size="large"
+                            startIcon={<MonetizationOnIcon />}
+                          >
+                            <NextLink href={hrefLink}>
+                              <Typography variant="body2" className={classes.watchTrailerButtonText}>
+                                INVEST IN {movie.name}
+                              </Typography>
+                            </NextLink>
+                          </Button>
+                        </Grid>
+                      </Grid>
                       <br />
                       <br />
                       <br />
@@ -145,7 +158,6 @@ class Hero extends React.Component {
           .hero-container {
             position: relative;
             overflow: hidden;
-            // margin-top: -64px;
             margin-top: -233px // -64px + -169px from slider
           }
 
@@ -162,24 +174,7 @@ class Hero extends React.Component {
           }
 
           .hero-container :global(p) {
-            color: #FFF !important;
-          }
-
-          .hero-container :global(.watch-trailer-button) {
-            color: #FFF !important;
-            border: 1px solid #FFF;
-            padding: 11px 24px;
-          }
-
-          .hero-container :global(.invest-button p) {
-            color: #000 !important;
-          }
-
-          .hero-container :global(.invest-button) {
-            color: #000 !important;
-            background-color: #FBC43E;
-            margin-left: 16px;
-            padding: 12px 24px;
+            color: #FFF;
           }
 
           .hero-container :global(.control-dots) {
@@ -187,16 +182,16 @@ class Hero extends React.Component {
             display: none:
           }
 
-          @media (max-width: 768px) {
-            .hero-container :global(.button) {
-              margin: 0 0;
-              width: 100%;
-            }
+          // @media (max-width: 768px) {
+          //   .hero-container :global(.button) {
+          //     margin: 0 0;
+          //     width: 100%;
+          //   }
 
-            .hero-container :global(.watch-trailer-button) {
-              margin: 0 0 16px;
-            }
-          }
+          //   .hero-container :global(.watch-trailer-button) {
+          //     margin: 0 0 16px;
+          //   }
+          // }
 
           a {
             color: #FFF;

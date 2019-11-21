@@ -51,8 +51,7 @@ class KYC extends React.Component {
       activeStep
     } = userStore
     const setErrorMessage = message => {
-      store.uiStore.errorMessage = message
-      store.uiStore.snackBarOpen = true
+        store.uiStore.setErrorMessage(message)
     }
     return (
       <main className="account" id="account-index">

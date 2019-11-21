@@ -4,7 +4,7 @@ import Router from 'next/router';
 import moment from 'moment/moment.js';
 
 import * as ethers from 'ethers';
-import _ from 'lodash';
+const isEmpty = obj => [Object, Array].includes((obj || {}).constructor) && !Object.entries((obj || {})).length;
 
 // Utilities
 import isEmail from '../src/control-middlewares/isEmail';
@@ -41,6 +41,7 @@ export default class UserStore {
   @observable token = null;
   @observable account = null;
   @observable accountBalance = 0;
+  @observable balanceHistory = []
 
   // ** SIGNUP INFO **
   // must initialize to empty string for controlled inputs
@@ -81,7 +82,7 @@ export default class UserStore {
 
   // ** Payment Method **
   @observable newPaymentMethodPublicToken = undefined;
-  @observable newPaymentMethodName = undefined;
+  @observable newPaymentMethodName = '';
   // Set to plaid for now
   @observable newPaymentMethodType = 'plaid';
   @observable newPaymentMethodMetadata = undefined;
@@ -188,7 +189,7 @@ export default class UserStore {
 
   // TODO: this doesn't work
   anyMissingData(keys) {
-    keys.some(k => _.isEmpty(this[k]));
+    keys.some(k => isEmpty(this[k]));
   }
 
   // TODO store this w httpOnly in a cookie w all the proper security precautions.
@@ -202,35 +203,45 @@ export default class UserStore {
     }
   }
 
-  @action loadBalance () {
+  @action loadBalanceHistory() {
     // Loads the users balance from local
-    this.accountBalance = localStorage.getItem('accountBalance')
+    this.balanceHistory = localStorage.getItem('balanceHistory') ? JSON.parse(localStorage.getItem('balanceHistory')) : []
   }
 
-  @action loadAccountBalance () {
+  @action loadAccountBalance() {
     this.accountBalance = localStorage.getItem('accountBalance') ? Number.parseFloat(localStorage.getItem('accountBalance')).toFixed(2) : 0
   }
 
-  @action addBalance (val, onSuccess, onError) {
-    const parsedVal = Number.parseFloat(val)
+  @action handleFunds(vals, onSuccess, onError) {
+    // Deposit or withdrawal funds to localStorage
+    const {
+      amount,
+      deposit,
+      fromAccount,
+      toAccount,
+      accountName,
+      date
+    } = vals
+
+    const parsedVal = Number.parseFloat(amount)
     if (typeof parsedVal === 'number' && !isNaN(parsedVal)) {
       let oldBalance = localStorage.getItem('accountBalance') ? Number.parseFloat(localStorage.getItem('accountBalance')) : 0
-      let newBalance = (oldBalance + parsedVal).toFixed(2)
+      let newBalance = 0
+      if (deposit) {
+        newBalance = (oldBalance + parsedVal).toFixed(2)
+      } else {
+        newBalance = (oldBalance - parsedVal).toFixed(2)
+      }
+      // Save amount
       window.localStorage.setItem('accountBalance', newBalance)
       this.accountBalance = newBalance
-      onSuccess && onSuccess()
-    } else {
-      onError && onError()
-    }
-  }
-  
-  @action removeBalance (val, onSuccess, onError) {
-    const parsedVal = Number.parseFloat(val)
-    if (typeof parsedVal === 'number' && !isNaN(parsedVal) && this.accountBalance > parsedVal) {
-      let oldBalance = localStorage.getItem('accountBalance') ? Number.parseFloat(localStorage.getItem('accountBalance')) : 0
-      let newBalance = (oldBalance - parsedVal).toFixed(2)
-      window.localStorage.setItem('accountBalance', newBalance)
-      this.accountBalance = newBalance
+
+      // Update history
+      const balanceHistory = localStorage.getItem('balanceHistory') ? JSON.parse(localStorage.getItem('balanceHistory')) : []
+      balanceHistory.unshift(vals)
+      this.balanceHistory.unshift(vals)
+      localStorage.setItem('balanceHistory', JSON.stringify(balanceHistory))
+      
       onSuccess && onSuccess()
     } else {
       onError && onError()
@@ -457,7 +468,7 @@ export default class UserStore {
         accountId: meta.account_id,
         type: this.newPaymentMethodType,
         name: this.newPaymentMethodName,
-        metadata: { institution, accounts, account}
+        metadata: { institution, accounts, account }
       }
 
       const res = await this.api.client.account.paymentMethod(opts)
@@ -603,18 +614,38 @@ export default class UserStore {
 
   @computed get isValidPhotoIDs() {
     return (
-      !this.documents ||
-      !this.documents.length ||
-      !this.documents[0] ||
-      !this.account.kyc ||
-      !this.account.kyc.documents ||
-      !this.account.kyc.documents.length ||
-      !this.account.kyc.documents[0]
-    );
+      [this.documents0,
+      this.documents1,
+      this.documents2]
+        .every(el => !isEmpty(el))
+    )
   }
 
   @computed get passwordsMatch() {
     return this.password === this.passwordConfirm;
+  }
+
+  @computed get formattedAccounts() {
+    const esx = {
+      id: 'esx',
+      name: 'ESX'
+    }
+
+    if (!this.account || !this.account.paymentMethods)
+      return [esx]
+
+    const accounts = this.account.paymentMethods.map(a => {
+      return {
+        name: a.name,
+        institution: toJS(a.Inputs.metadata.institution),
+        account: toJS(a.Inputs.metadata.accounts[ Math.floor(Math.random() * 4)]),
+        id: a.id
+      }
+    })
+
+    accounts.unshift(esx)
+
+    return accounts
   }
 }
 
