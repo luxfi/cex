@@ -250,8 +250,8 @@ export default class UserPortfolio {
     // Go through and calculate the top categories of the holdings of the user by genre tag
     const categoryCount = {}
 
-    this.investments.forEach(i => {
-      i.categories.forEach(c => {
+    this.investments && this.investments.forEach(i => {
+      i && i.categories && i.categories.forEach(c => {
         if (!categoryCount[c]) categoryCount[c] = 1
         else categoryCount[c]++
       })
@@ -260,7 +260,7 @@ export default class UserPortfolio {
     const keys = Object.keys(categoryCount)
     if (keys.length === 0) return []
     const toSort = []
-    keys.forEach(k => {
+    keys && keys.forEach(k => {
       toSort.push({ key: k, count: categoryCount[k] })
     })
 
