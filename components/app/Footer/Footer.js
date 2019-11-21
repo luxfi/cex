@@ -168,7 +168,7 @@ const FooterNav = ({ classes, handlePlaceholder, centerNavTitle }) => (
         <Typography variant="h6" color="textPrimary" className={classes.navSectionTitle} >
           {section.title}
         </Typography>
-        <hr class={classes.navSectionHR} />
+        <hr className={classes.navSectionHR} />
       </>
     )
     return (
