@@ -1,8 +1,8 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
+import classNames from "classnames"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-
 import {
   faFacebook,
   faTwitter,
@@ -15,86 +15,29 @@ import {
 import {
   Typography,
   Link,
-  Button,
   IconButton,
   Grid,
-  Box,
 } from "@material-ui/core"
 
 import { CustomLink } from ".."
 
 const EXTERNAL_LINKS = {
+
+  facebook: "https://www.facebook.com/", // TODO
+  twitter: "https://twitter.com/EntertainStock",
+  instagram: "https://www.instagram.com/",  // TODO
+  youtube: "https://www.youtube.com/", // TODO
   medium: "https://medium.com/entertainment-stock-x",
   reddit: "https://www.reddit.com/r/EntertainmentStockX/",
-  twitter: "https://twitter.com/EntertainStock"
+
+  itunes: "https://itunes.apple.com", // TODO
+  android: "https://play.google.com/", // TODO
 }
 
 import { withStyles } from "@material-ui/core/styles"
 import styles from "./footer.style.js"
 
-const Partnerships = ({ classes, openModal }) => {
-  const body = (
-    <>
-      <p>
-        Proxicoin - $750 million in capacity 8-10 films per year at scale 1-4
-        television properties per year
-      </p>{" "}
-      <p>
-        Twisted Pictures - Horror / Urban production company led by Mark Burg,
-        producer of the Saw franchise
-      </p>{" "}
-      <p>
-        Centauri Media - $250mm film production fund with potential of up to 5
-        studio released films a year
-      </p>
-    </>
-  )
-  const title = "Partnerships"
-  return (
-    <Button
-      className={classes.menuButton}
-      onClick={() => {
-        openModal(title, body)
-      }}
-    >
-      Partnerships
-    </Button>
-  )
-}
-
-const ContactUs = ({ classes, openModal }) => {
-  const body = (
-    <>
-      <p>Put Contact Infomation Here</p>{" "}
-    </>
-  )
-  const title = "Contact Us"
-  return (
-    <Button
-      className={classes.menuButton}
-      onClick={() => {
-        openModal(title, body)
-      }}
-    >
-      Contact Us
-    </Button>
-  )
-}
-
-const Copyright = (props) => {
-  return (
-    <div className={props.classes.copyrightOuter}>
-      <Typography variant="body2" color="textSecondary">
-        Privacy Policy / Terms of Use
-      </Typography>
-      <Typography variant="body2" color="textSecondary">
-        Copyright © 2019 ESX. All rights reserved.
-      </Typography>
-    </div>
-  )
-}
-
-const footers = [
+const footerNav = [
   {
     title: "Company",
     links: [
@@ -135,80 +78,123 @@ const footers = [
   }
 ]
 
-const FooterTopRow = ({ classes }) => (
-  <div className={classes.topRow}>
-    <Grid container justify="center" alignItems="center">
-      <Grid item xs='auto' md={8}>
-        <Link href="/" className={classes.logoLink}>
-          <img
-            className={classes.logoImg}
-            src="/static/images/esx/esx-white-logo.png"
-            alt="ESX"
-            height="52px"
-          />
-        </Link>
-      </Grid>
-      <Grid item xs={12} sm={12} md={4} className={classes.socialIconRow}>
-        <IconButton href="https://www.facebook.com/" className={classes.socialIcon} target="_blank">
-          <FontAwesomeIcon icon={faFacebook} size="1x" />
-        </IconButton>
-        <IconButton href={EXTERNAL_LINKS.twitter} className={classes.socialIcon} target="_blank" title="Tweet">
-          <FontAwesomeIcon icon={faTwitter} size="1x" />
-        </IconButton>
-        <IconButton href="https://www.instagram.com/" className={classes.socialIcon} target="_blank">
-          <FontAwesomeIcon icon={faInstagram} size="1x" />
-        </IconButton>
-        <IconButton href="https://www.youtube.com/" className={classes.socialIcon} target="_blank">
-          <FontAwesomeIcon icon={faYoutube} size="1x" />
-        </IconButton>
-        <IconButton href={EXTERNAL_LINKS.medium} className={classes.socialIcon} target="_blank">
-          <FontAwesomeIcon icon={faMedium} size="1x" />
-        </IconButton>
-        <IconButton href={EXTERNAL_LINKS.reddit} className={classes.socialIcon} target="_blank">
-          <FontAwesomeIcon icon={faReddit} size="1x" />
-        </IconButton>
-      </Grid>
-    </Grid>
+const Logo = ({classes}) => (
+  <Link href="/" className={classes.logoLink}>
+    <img
+      className={classes.logoImg}
+      src="/static/images/esx/esx-white-logo.png"
+      alt="ESX"
+      height="32px"
+    />
+  </Link>
+)
+
+const SocialIcons = ({classes}) => (
+  <div className={classes.socialIconRow}>
+    <IconButton href={EXTERNAL_LINKS.facebook} className={classes.socialIcon} target="_blank">
+      <FontAwesomeIcon icon={faFacebook} size="1x" />
+    </IconButton>
+    <IconButton href={EXTERNAL_LINKS.twitter} className={classes.socialIcon} target="_blank">
+      <FontAwesomeIcon icon={faTwitter} size="1x" />
+    </IconButton>
+    <IconButton href={EXTERNAL_LINKS.instagram} className={classes.socialIcon} target="_blank">
+      <FontAwesomeIcon icon={faInstagram} size="1x" />
+    </IconButton>
+    <IconButton href={EXTERNAL_LINKS.youtube} className={classes.socialIcon} target="_blank">
+      <FontAwesomeIcon icon={faYoutube} size="1x" />
+    </IconButton>
+    <IconButton href={EXTERNAL_LINKS.medium} className={classes.socialIcon} target="_blank">
+      <FontAwesomeIcon icon={faMedium} size="1x" />
+    </IconButton>
+    <IconButton href={EXTERNAL_LINKS.reddit} className={classes.socialIcon} target="_blank">
+      <FontAwesomeIcon icon={faReddit} size="1x" />
+    </IconButton>
   </div>
 )
 
-const FooterMiddleRow = ({ classes, openModal }) => (
+const AppDownload = ({classes}) => (
+  <div className={classes.downloadAppOuter}>
+    <Typography variant="h6" className={classes.downloadTitle}>
+      Download the ESX app
+    </Typography>
+    <div className={classes.appStoreButtons}>
+      <Link target="_blank" rel="noopener noreferrer" href={EXTERNAL_LINKS.itunes}>
+        <img
+          height="48px"
+          className={classes.appleAppStore}
+          alt="Available in the App Store"
+          src="/static/images/footer/app-store-badge.svg"
+        />
+      </Link>
+      <Link target="_blank" rel="noopener noreferrer" href={EXTERNAL_LINKS.android}>
+        <img
+          height="48px"
+          className={classes.androidAppStore}
+          alt="Download from Google Play"
+          src="/static/images/footer/GoogleStoreBadge.png"
+        />
+      </Link>
+    </div>
+  </div>
+)
+
+const Copyright = ({classes}) => {
+
+  const firstYear = 2019
+  const currentYear = new Date().getFullYear()
+  const yearString =  (currentYear > firstYear) ? `${firstYear}-${currentYear}` : firstYear
+  
+    // TODO Create Privacy and Terms of Use pages
+
+  return (
+    <div className={classes.copyrightOuter}>
+      <Typography variant="body2" color="textSecondary">
+        Privacy Policy / Terms of Use
+      </Typography>
+      <Typography variant="body2" color="textSecondary">
+        {`© ${yearString} ESX. All rights reserved.`}
+      </Typography>
+    </div>
+  )
+}
+
+const FooterMiddleRow = ({ classes, handlePlaceholder }) => (
   <Grid container className={classes.footerColumnsOuter}>
     <Grid sm={12} item container>
-      {footers.map(footer => (
-        <Grid item xs={12} sm={6} md={3} key={footer.title} className={classes.footerColumn} >
+      {footerNav.map(element => (
+        <Grid item xs={12} sm={6} md={3} key={element.title} className={classes.footerColumn} >
           <div className={classes.footerColumnInner}>
-          <Typography variant="h6" color="textPrimary" gutterBottom>
-            {footer.title}
-          </Typography>
-          <ul>
-            {footer.links.map(item => {
-              const activeLink = item.hasOwnProperty("link")
-              const title = item.hasOwnProperty("title") ? item.title : item
-              const link = activeLink ? item.link : `/#`
-              const key = activeLink ? item.link : title
-              const nextLink = item.external ? Link : CustomLink
-              return (
-                <li key={key}>
-                  <Link
-                    href={link}
-                    variant="subtitle1"
-                    color="textSecondary"
-                    onClick={
-                      activeLink
-                        ? null
-                        : () => {
-                            openModal(title)
-                          }
-                    }
-                    component={nextLink}
-                  >
-                    {title}
-                  </Link>
-                </li>
-              )
-            })}
-          </ul>
+            <Typography variant="h6" color="textPrimary" gutterBottom>
+              {element.title}
+            </Typography>
+            <ul>
+              {element.links.map(item => {
+                const activeLink = (typeof item === "object" && "link" in item)
+                const title = (typeof item === "object" && "title" in item) ? item.title : item
+                const link = activeLink ? item.link : `/#`
+                const key = activeLink ? item.link : title
+                const nextLink = item.external ? Link : CustomLink
+                return (
+                  <li key={key}>
+                    <Link
+                      href={link}
+                      variant="subtitle1"
+                      color="textSecondary"
+                      onClick={
+                        activeLink
+                          ? null
+                          : () => {
+                              handlePlaceholder(title)
+                            }
+                      }
+                      component={nextLink}
+                    >
+                      {title}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
           </div>
         </Grid>
       ))}
@@ -218,42 +204,9 @@ const FooterMiddleRow = ({ classes, openModal }) => (
       item
       container
       className={classes.appArea}
+      spacing="center"
     >
-      <Grid item sm={12} xs={12}>
-        <Typography variant="h6" align="center">
-          {"Download the ESX app"}
-        </Typography>
-      </Grid>
-      <Grid item container justify="center" className={classes.appStoreButtons}>
-        <Grid item  justify="center">
-          <Link
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://itunes.apple.com"
-          >
-            <img
-              height= "48px"
-              className={classes.appleAppStore}
-              alt="Available on the App Store"
-              src="/static/images/footer/app-store-badge.svg"
-            />
-          </Link>
-        </Grid>
-        <Grid item justify="center">
-          <Link
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://play.google.com/"
-          >
-            <img
-              height="48px"
-              className={classes.androidAppStore}
-              alt="Download on Google Play"
-              src="/static/images/footer/GoogleStoreBadge.png"
-            />
-          </Link>
-        </Grid>
-      </Grid>
+      <AppDownload classes={classes} />   
     </Grid>
   </Grid>
 )
@@ -265,17 +218,16 @@ class Footer extends React.Component {
     return { ...mobxStore }
   }
   render() {
-    const { classes, store, openModal } = this.props
-    const loggedIn = store.userStore.loggedIn
+    const { classes, rootClassName, handlePlaceholder } = this.props
     return (
-      <div className={classes.root}>
-        <FooterTopRow classes={classes} />
-        <FooterMiddleRow openModal={openModal} classes={classes} />
+      <footer className={classNames(rootClassName, classes.root)}>
+        <Logo classes={classes}/>
+        <SocialIcons classes={classes} />
+        <FooterMiddleRow handlePlaceholder={handlePlaceholder} classes={classes} />
         <Copyright classes={classes}/>
-      </div>
+      </footer>
     )
   }
 }
-
 
 export default withStyles(styles)(Footer)

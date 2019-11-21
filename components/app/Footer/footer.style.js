@@ -9,9 +9,39 @@ export default theme => {
         listStyle: "none"
       }
     },
-    topRow: {
-      marginBottom: theme.spacing(3)
+
+    root: {
+      //flexGrow: 1,
+      //padding: theme.spacing(4),
+
+      margin: "0 auto",
+      
+      [theme.breakpoints.down("xs")]: {
+        width: "98%",
+      },
+      [theme.breakpoints.down("sm")]: {
+        width: "90%",
+      },
+      [theme.breakpoints.down("md")]: {
+        width: "80%",
+      },
+      [theme.breakpoints.down("xl")]: {
+        width: "100%",
+      }
     },
+
+    logoLink: {
+//      display: "block",
+//      width: "auto",
+    },
+    logoImg: {
+      display: "block",
+      position: "relative",
+      top: "-10px"
+    },
+
+
+    
     socialIconRow: {
       display: "flex",
       flexDirection: "row",
@@ -25,13 +55,7 @@ export default theme => {
       padding: 0,
       paddingRight: theme.spacing(2)
     },
-    root: {
-      flexGrow: 1,
-      padding: theme.spacing(4)
-    },
-    menuButton: {
-      marginRight: theme.spacing(2)
-    },
+
     footerColumnsOuter: {
       display: "flex",
       flexDirection: "column",
@@ -61,19 +85,6 @@ export default theme => {
         alignItems: "center",
       }
     },
-    logoImg: {
-      display: "block",
-      position: "relative",
-      top: "-15px"
-    },
-    logoLink: {
-      display: "block",
-      width: "auto",
-      marginLeft: theme.spacing(8),
-      [theme.breakpoints.down("sm")]: {
-        marginLeft: 0
-      }
-    },
     appArea: {
       display: "flex",
       flexDirection: "column",
@@ -93,21 +104,6 @@ export default theme => {
     },
 
 
-    root: {
-      margin: "0 auto",
-      [theme.breakpoints.down("xs")]: {
-        width: "98%",
-      },
-      [theme.breakpoints.down("sm")]: {
-        width: "90%",
-      },
-      [theme.breakpoints.down("md")]: {
-        width: "80%",
-      },
-      [theme.breakpoints.down("xl")]: {
-        width: "65%",
-      }
-    },
     copyrightOuter: {
       display: "flex",
       flexDirection: "row",
