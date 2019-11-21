@@ -246,6 +246,7 @@ export default class OrderBook {
         // const startTime = now.startOf('day').valueOf()
         // const endTime = now.endOf('day').valueOf()
               // check if between midnight and market open, get previous day
+      debugger
         if (
           now.isBetween(
             now.clone().startOf('day'),
@@ -258,11 +259,11 @@ export default class OrderBook {
         ) {
           now.subtract(1,'day')
         }
-        const startTime = moment(now)
+        const startTime = now.clone()
             .startOf("day")
             .add(9, "hours")
             .valueOf()
-        const endTime = moment(now)
+        const endTime = now.clone()
             .startOf("day")
             .add(16, "hours")
             .valueOf()
