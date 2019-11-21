@@ -46,7 +46,7 @@ const columns = [
   },
   {
     title: 'Current Value',
-    render: (row) => renderCurrency(parseFloat(row.price) * parseFloat(row.amount).toFixed(2))
+    render: (row) => renderCurrency((parseFloat(row.price) * parseFloat(row.quantity)).toFixed(2))
   },
   {
     title: 'P/L Day',
@@ -77,7 +77,7 @@ const historyColumns = [
   },
   {
     title: 'Amount',
-    render: (row) => parseFloat(row.amount).toFixed(2)
+    render: (row) => parseInt(row.quantity)
   },
 ]
 
