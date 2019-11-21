@@ -244,8 +244,7 @@ export default class OrderBook {
       }
 
       this.trades = trades
-
-      console.log('trade.data', this.trades)
+      // console.log('trade.data', this.trades)
     })
 
     this.socket.on('disconnect', () => {
