@@ -9,6 +9,7 @@ import {
   FinancialsSection,
   HistorySection,
   EarningsSection,
+  OtherFilmsTrading
 } from '../../trade'
 import { useState, useEffect } from 'react'
 
@@ -45,6 +46,7 @@ export default props => {
     removeFromWatchlist,
     addToWatchlist,
     atomTicketsURL,
+    movies,
   } = props
   const stock = toJS(orderBook.stock)
   let { connected } = orderBook
@@ -139,6 +141,7 @@ export default props => {
           <Divider />
           <HistorySection book={orderBook.book} />
           <Divider />
+          <OtherFilmsTrading movies={movies}/>
         </Grid>
         <Grid item lg={3} md={4} sm={6} xs={12} />
       </Grid>
