@@ -53,13 +53,6 @@ const notValid = () => {
 
 const reviewOrderText = `The quote you see may not be the price at which your order is executed.`
 
-const SuccessText = ({ sharesPurchased, totalPurchasePrice, ticker }) => {
-  const addPlural = parseInt(sharesPurchased) > 1 ? 's' : ''
-  return `
-You have successfully purchased ${sharesPurchased} share${addPlural} of ${ticker} for 
-$${totalPurchasePrice}`
-}
-
 const BuySellWidget = ({
   marketPrice,
   ticker,
@@ -80,18 +73,17 @@ const BuySellWidget = ({
     // Todo check if funds available at current market
     // If not, put message that market price has changed, currently insuffiecient funds
     if (!shares) return
-
+    const price = parseFloat(marketPrice)
     const order = {
       side: orderType,
       type: 'market',
-      price: marketPrice,
+      price,
       quantity: shares,
     }
 
     await createOrder(order)
-
     setSharesPurchased(shares)
-    setTotalPurchasePrice((shares * marketPrice).toFixed(2))
+    setTotalPurchasePrice((price * shares).toFixed(2))
     setShares(0)
     setQuote('')
     setActiveStep('success')
@@ -118,7 +110,7 @@ const BuySellWidget = ({
       setShares(value)
     }
     if (isInteger(value)) {
-      setShares(value)
+      setShares(parseInt(value))
     }
   }
 
@@ -139,52 +131,107 @@ const BuySellWidget = ({
         <Grid item xs>
           <Typography variant="h5">Buy {ticker}</Typography>
         </Grid>
-        <Grid item container justify="space-between" alignItems="center">
-          <Grid item xs={6}>
-            <Typography>Shares</Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              required
-              id="shares"
-              name="shares"
-              fullWidth
-              placeholder="0"
-              autoComplete="shares"
-              onChange={evt => handleInputChange(evt)}
-              value={shares}
-              variant="outlined"
-              inputProps={{
-                style: {
-                  textAlign: 'right',
-                },
-              }}
-              // disable input if we are in review mode or showing successful order message
-              // disabled={activeStep !== 'initial'}
-              margin="dense"
-            />
-          </Grid>
-        </Grid>
-        <Grid item container justify="space-between">
-          <Grid item xs={6}>
-            <Typography>Market Price</Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Box textAlign="right">
-              <Typography>${quote ? quote : marketPrice}</Typography>
-            </Box>
-          </Grid>
-        </Grid>
-        <Grid item container justify="space-between">
-          <Grid item xs={6}>
-            <Typography>Estimated Cost</Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Box textAlign="right">
-              <Typography>${estimatedCost}</Typography>
-            </Box>
-          </Grid>
-        </Grid>
+
+        {activeStep === 'initial' && (
+          <>
+            <Grid item xs container justify="space-between" alignItems="center">
+              <Grid item xs={6}>
+                <Typography>Shares</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  required
+                  id="shares"
+                  name="shares"
+                  fullWidth
+                  placeholder="0"
+                  autoComplete="shares"
+                  onChange={evt => handleInputChange(evt)}
+                  value={shares}
+                  variant="outlined"
+                  inputProps={{
+                    style: {
+                      textAlign: 'right',
+                    },
+                  }}
+                  // disable input if we are in review mode or showing successful order message
+                  // disabled={activeStep !== 'initial'}
+                  margin="dense"
+                />
+              </Grid>
+            </Grid>
+            <Grid item xs container justify="space-between">
+              <Grid item xs={6}>
+                <Typography>Market Price</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Box textAlign="right">
+                  <Typography>${marketPrice}</Typography>
+                </Box>
+              </Grid>
+            </Grid>
+            <Grid item xs container justify="space-between">
+              <Grid item xs={6}>
+                <Typography>Estimated Cost</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Box textAlign="right">
+                  <Typography>${estimatedCost}</Typography>
+                </Box>
+              </Grid>
+            </Grid>
+          </>
+        )}
+        {activeStep === 'review' && (
+          <>
+            <Grid item xs container justify="space-between" alignItems="center">
+              <Grid item xs={6}>
+                <Typography>Shares</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  required
+                  id="shares"
+                  name="shares"
+                  fullWidth
+                  placeholder="0"
+                  autoComplete="shares"
+                  onChange={evt => handleInputChange(evt)}
+                  value={shares}
+                  variant="outlined"
+                  inputProps={{
+                    style: {
+                      textAlign: 'right',
+                    },
+                  }}
+                  // disable input if we are in review mode or showing successful order message
+                  // disabled={activeStep !== 'initial'}
+                  margin="dense"
+                />
+              </Grid>
+            </Grid>
+            <Grid item xs container justify="space-between">
+              <Grid item xs={6}>
+                <Typography>Quote Price</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Box textAlign="right">
+                  <Typography>${quote}</Typography>
+                </Box>
+              </Grid>
+            </Grid>
+            <Grid item xs container justify="space-between">
+              <Grid item xs={6}>
+                <Typography>Estimated Cost</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Box textAlign="right">
+                  <Typography>${estimatedCost}</Typography>
+                </Box>
+              </Grid>
+            </Grid>
+          </>
+        )}
         {/* show buy or review button if not showing successful order message */}
         {activeStep === 'initial' && (
           <Grid item xs>
@@ -216,7 +263,7 @@ const BuySellWidget = ({
                   variant="body2"
                   className={classes.reviewButtonText}
                 >
-                  {`Buy ${estimatedCost}`}
+                  {`Buy $${estimatedCost}`}
                 </Typography>
               </Button>
             </Grid>
@@ -235,23 +282,17 @@ const BuySellWidget = ({
         )}
         {activeStep === 'success' && (
           <>
-            <Grid item xs>
-              <Typography id="info" variant="subtitle2">
-                <SuccessText
-                  sharesPurchased={sharesPurchased}
-                  totalPurchasePrice={totalPurchasePrice}
-                  ticker={ticker}
-                />
+            <Grid item xs={12}>
+              <Typography variant="subtitle2">
+                You have successfully purchased {sharesPurchased} shares of{' '}
+                {ticker} for ${totalPurchasePrice}
               </Typography>
             </Grid>
-            <Grid item xs>
+            <Grid item xs={12}>
               <Button
                 className={classes.backButton}
-                // fullWidth
-                onClick={() => {
-                  console.log('button clicked')
-                  setActiveStep('initial')
-                }}
+                fullWidth
+                onClick={() => setActiveStep('initial')}
               >
                 <Typography variant="body2" className={classes.backButtonText}>
                   Back
@@ -260,6 +301,7 @@ const BuySellWidget = ({
             </Grid>
           </>
         )}
+
         <Grid item xs={12}>
           <Typography>${funds.toFixed(2)} Buying Power Available</Typography>
         </Grid>
