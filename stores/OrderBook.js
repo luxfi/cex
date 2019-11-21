@@ -3,7 +3,9 @@ import _ from "lodash"
 import uuid from "uuid"
 import io from "socket.io-client"
 import moment from 'moment-timezone'
+import { timeParse } from "d3-time-format"
 
+const parseTime = timeParse("%Y-%m-%d")
 const isEmpty = obj => [Object, Array].includes((obj || {}).constructor) && !Object.entries((obj || {})).length;
 
 // import stock from "../assets/tempData/stocks"
@@ -13,8 +15,8 @@ const LimitOrder = require("limit-order-book").LimitOrder
 const MarketOrder = require("limit-order-book").MarketOrder
 const LimitOrderBook = require("limit-order-book").LimitOrderBook
 
-// const SOCKET_STRING = 'https://exchange.hanzo.ai'
-const SOCKET_STRING = 'localhost:4000'
+const SOCKET_STRING = 'https://exchange.hanzo.ai'
+// const SOCKET_STRING = 'localhost:4000'
 
 const bidAsk = () => {
   return Math.floor(Math.random() * 2) == 0 ? "bid" : "ask" // 50/50 chance of "bid" or "ask"
@@ -71,6 +73,7 @@ export default class OrderBook {
   @observable dailyData = []
   @observable previousDayClose = []
   @observable order = {}
+  @observable proChartData = []
 
   activeOrders = {}
 
@@ -191,6 +194,19 @@ export default class OrderBook {
         this[type] = filteredData
       } else {
         console.log('1d', formattedData)
+
+        this.proChartData = formattedData.map((n) => {
+          let {open, high, low, close, volume, date} = n
+          return {
+            open: parseFloat(open),
+            high: parseFloat(high),
+            low: parseFloat(low),
+            close: parseFloat(close),
+            volume: parseFloat(volume),
+            date: parseTime(date),
+          }
+        })
+
         this[type] = formattedData
         this.previousDayClose = formattedData[formattedData.length - 2].close
       }
@@ -200,6 +216,7 @@ export default class OrderBook {
     this.socket.on("candles.get.error", err => {
       console.log("candles.get.error", err)
     })
+
     this.socket.on("book.data", data => {
       this.book = data
       this.book.orderBook.bids = padBids(this.book.orderBook.bids, 100, undefined)
@@ -495,7 +512,8 @@ export default class OrderBook {
     const intradayData = this.intradayData
     const dailyData = this.dailyData
     const previousDayClose = this.previousDayClose
-    return { intradayData, dailyData, previousDayClose }
+    const proChartData = this.proChartData
+    return { intradayData, dailyData, previousDayClose, proChartData }
   }
 
   @computed get isReady() {

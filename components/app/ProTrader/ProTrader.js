@@ -42,9 +42,6 @@ import midstream from 'midstream'
 import { isRequired } from '@hanzo/middleware'
 import { MUIText } from '@hanzo/react'
 
-import { timeParse } from "d3-time-format"
-
-const parseTime = timeParse("%Y-%m-%d")
 
 const TVChartContainer = dynamic(
   async () => {
@@ -314,17 +311,7 @@ export default props => {
     )
   }, [])
 
-  let data = stock.dailyData.map((n) => {
-    let {open, high, low, close, volume, date} = n
-    return {
-      open: parseFloat(open),
-      high: parseFloat(high),
-      low: parseFloat(low),
-      close: parseFloat(close),
-      volume: parseFloat(volume),
-      date: parseTime(date),
-    }
-  })
+  let data = stock.proChartData
 
   return (
     <Element>
