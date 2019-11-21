@@ -25,7 +25,7 @@ export default (props) => {
   return (
     <>
       <Link href="/">
-        <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.logo} height="52px" />
+        <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.logo} height="64px" />
       </Link>
       <div className={classes.navOuter}>
         <div className={classes.navSpacer} />
