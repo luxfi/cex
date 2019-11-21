@@ -4,24 +4,24 @@ import { Grid, Typography, Box, Divider } from '@material-ui/core'
 const historyData = [
   {
     type: 'Market Sell',
-    date: 'June 21 2018',
+    date: 'Nov 20, 2019',
     total: '18000',
+    shares: '99',
+    price: '187.00',
+  },
+  {
+    type: 'Market Buy',
+    date: 'Nov 20, 2019',
+    total: '108',
     shares: '2',
-    price: '39000',
+    price: '54.00',
   },
   {
     type: 'Market Sell',
-    date: 'June 21 2018',
-    total: '18000',
-    shares: '2',
-    price: '39000',
-  },
-  {
-    type: 'Market Sell',
-    date: 'June 21 2018',
-    total: '18000',
-    shares: '2',
-    price: '39000',
+    date: 'Nov 20, 2019',
+    total: '186.44',
+    shares: '1',
+    price: '186.44',
   },
 ]
 
@@ -42,7 +42,7 @@ const formatCurrency = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2,
 })
 
-const HistorySection = ({}) => {
+const HistorySection = ({ book }) => {
   return (
     <Box mb={4.5} mt={3}>
       <Typography component="div" variant="subtitle2" gutterBottom>
