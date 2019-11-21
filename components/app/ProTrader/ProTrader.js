@@ -282,6 +282,8 @@ export default props => {
         type: dst.type,
         price: dst.price,
         quantity: dst.quantity,
+        categories: movieCategories,
+        ticker
       })
     } catch (e) {
     }

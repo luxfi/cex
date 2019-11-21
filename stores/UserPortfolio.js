@@ -164,7 +164,7 @@ export default class UserPortfolio {
     }
   }
 
-  @action onOrderExecute(order, ticker, orderType, updateBalance) {
+  @action onOrderExecute(order, ticker, orderType, updateBalance, onSuccess, onError) {
     // order is the thing movie that was bought or sold
     // orderType is buy/sell
 
@@ -183,7 +183,7 @@ export default class UserPortfolio {
 
     let holdingIndex = _.findIndex(this.investments, { ticker })
     console.log('onOrderExecute', holdingIndex, this.investments, order, orderType)
-    debugger
+
     const quantity = Number.parseInt(order.quantity)
     const price = Number.parseFloat(order.price)
 
@@ -229,6 +229,7 @@ export default class UserPortfolio {
 
     this.updateHoldings()
     localStorage.setItem("investments", JSON.stringify(toJS(this.investments)))
+    onSuccess && onSuccess()
     return true
   }
 

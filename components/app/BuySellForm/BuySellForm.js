@@ -58,7 +58,9 @@ export default class BuySellForm extends React.Component {
       price: `${price}`,
       quantity: `${size}`,
       side: orderType,
-      type: "market"
+      type: "market",
+      categories: movieCategories,
+      ticker
     }
 
     createOrder(order)
