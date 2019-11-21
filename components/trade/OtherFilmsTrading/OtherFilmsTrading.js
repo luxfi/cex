@@ -34,21 +34,3 @@ const OtherFilmsTrading = ({ movies }) => {
 }
 
 export default OtherFilmsTrading
-
-// <Grid item>
-//   <Button
-//     className={classes.investButton}
-//     size="large"
-//     startIcon={<MonetizationOnIcon />}
-//   >
-//     <NextLink href={hrefLink}>
-//       <Typography
-//         variant="body2"
-//         className={classes.watchTrailerButtonText}
-//       >
-//         INVEST IN {movie.name}
-//       </Typography>
-//     </NextLink>
-//   </Button>
-//   const hrefLink = '/film/' + movie.movieSlug
-// </Grid>
