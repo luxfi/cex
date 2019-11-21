@@ -32,14 +32,16 @@ const styles = darkTheme => ({
     display: 'flex',
     flexDirection: 'column',
     minHeight: '100vh',
+    paddingLeft: "200px",
+    paddingRight: "200px",
   },
   main: {
     marginTop: darkTheme.spacing(8),
     marginBottom: darkTheme.spacing(2),
   },
   footer: {
-    padding: darkTheme.spacing(2),
-    marginTop: 'auto',
+    //padding: darkTheme.spacing(2),
+    //marginTop: 'auto',
   },
 })
 
@@ -138,9 +140,7 @@ class MyMobxApp extends App {
                 handleLogout={() => { this.mobxStore.userStore.logout() }}
                 handlePlaceholder={this.placeholder}
               />
-              <footer className={classes.footer}>
-                <Footer openModal={this.openModal} />
-              </footer>
+              <Footer rootClassName={classes.footer} handlePlaceholder={this.placeholder} />
             </NoSsr>
           </div>
         </MuiThemeProvider>
@@ -149,8 +149,8 @@ class MyMobxApp extends App {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.log("CUSTOM ERROR HANDLING", error)
-    // This is needed to render errors correctly in development / production
+    console.log("CUSTOM ERROR HANDLING: ", error)
+      // This is needed to render errors correctly in development / production
     super.componentDidCatch(error, errorInfo)
   }
 }
