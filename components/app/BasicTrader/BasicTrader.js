@@ -16,6 +16,15 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
+  buyTicketsButton: {
+  },
+  buyTicketsText: {
+    color: "#fff",
+    padding: theme.spacing(1)
+  },
+  label: {
+    textTransform: 'capitalize'
+  }
 }))
 
 export default props => {
@@ -80,15 +89,26 @@ export default props => {
               />
             </Grid>
             <Grid item xs={12}>
-              <Box mt={3}>
+              <Box mt={3} pl={4} pr={4}>
                 <Button
                   href={atomTicketsURL}
                   target="_blank"
                   title="Tweet"
                   variant="outlined"
                   fullWidth
+                  color="secondary"
+                  size="large"
+                  className={classes.buyTicketsButton}
+                  classes={{
+                    label: classes.label,
+                  }}
                 >
-                  <Typography variant="body2">Buy Tickets</Typography>
+                  <Typography
+                    variant="subtitle1"
+                    className={classes.buyTicketsText}
+                  >
+                    Buy Tickets
+                  </Typography>
                 </Button>
               </Box>
             </Grid>
@@ -100,7 +120,8 @@ export default props => {
                       ? removeFromWatchlist(ticker)
                       : addToWatchlist(ticker)
                   }}
-                  variant="body2"
+                  variant="subtitle1"
+                  color="secondary"
                 >
                   {inWatchlist ? 'Remove from Watchlist' : 'Add to WatchList'}
                 </Typography>
