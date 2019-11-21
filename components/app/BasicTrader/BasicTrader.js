@@ -137,6 +137,7 @@ export default props => {
           <FinancialsSection />
           <Divider />
           <HistorySection />
+          <Divider />
         </Grid>
         <Grid item lg={3} md={4} sm={6} xs={12} />
       </Grid>

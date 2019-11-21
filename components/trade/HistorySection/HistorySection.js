@@ -44,7 +44,7 @@ const formatCurrency = new Intl.NumberFormat('en-US', {
 
 const HistorySection = ({}) => {
   return (
-    <Box mb={3} mt={3}>
+    <Box mb={4.5} mt={3}>
       <Typography component="div" variant="subtitle2" gutterBottom>
         <Box fontWeight="fontWeightBold" mb={2}>
           HISTORY
@@ -74,7 +74,7 @@ const HistorySection = ({}) => {
                 </Grid>
               </Grid>
             </Box>
-            <Divider />
+            {historyData.length - 1 !== i && <Divider />}
           </Grid>
         ))}
       </Grid>
