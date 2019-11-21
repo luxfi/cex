@@ -144,7 +144,7 @@ const BuySellWidget = ({
           <Typography variant="h5">{ticker}</Typography>
         </Grid>
         <Grid item xs>
-          <Tabs value={mode} onChange={handleModeChange}>
+          <Tabs value={mode} onChange={handleModeChange} variant="fullWidth">
             <Tab label="BUY" />
             <Tab label="SELL" />
           </Tabs>
@@ -281,7 +281,7 @@ const BuySellWidget = ({
                   variant="body2"
                   className={classes.reviewButtonText}
                 >
-                  {`${orderType === 'bid' ? "Buy" : "Sell"} $${estimatedCost}`}
+                  {`${orderType === 'bid' ? 'Buy' : 'Sell'} $${estimatedCost}`}
                 </Typography>
               </Button>
             </Grid>
