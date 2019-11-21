@@ -532,7 +532,7 @@ export default class OrderBook {
         return (
             this.connected &&
             this.book &&
-            this.intradayData.length > 0 &&
+            // this.intradayData.length > 0 &&
             this.dailyData.length > 0
         )
     }
