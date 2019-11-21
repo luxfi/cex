@@ -11,6 +11,10 @@ import {
   ProChart,
 } from "../"
 
+import {
+  OrderBook
+} from '../../trade'
+
 import { toJS } from "mobx"
 import { timelineLabels } from "../../../util/dateRange"
 import { Element, scroller } from "react-scroll"
@@ -42,7 +46,6 @@ import midstream from 'midstream'
 import { isRequired } from '@hanzo/middleware'
 import { MUIText } from '@hanzo/react'
 
-
 const TVChartContainer = dynamic(
   async () => {
     const mod = await import("../TVChartContainer")
@@ -54,7 +57,7 @@ const TVChartContainer = dynamic(
   }
 )
 
-function getActiveChart(activeChart, { chartData, yDomain, labels }) {
+const getActiveChart = (activeChart, { chartData, yDomain, labels }) => {
   switch (activeChart) {
     case "candlestick":
       return (
@@ -79,7 +82,7 @@ function getActiveChart(activeChart, { chartData, yDomain, labels }) {
   }
 }
 
-function DollarFormatCustom(props) {
+const DollarFormatCustom = (props) => {
   const { inputRef, onBlur, ...other } = props;
 
   return (
@@ -100,7 +103,7 @@ function DollarFormatCustom(props) {
   );
 }
 
-function NumberFormatCustom(props) {
+const NumberFormatCustom = (props) => {
   const { inputRef, onBlur, ...other } = props;
 
   return (
@@ -132,26 +135,6 @@ const useStyles = makeStyles((theme) => {
       '& span': {
         fontWeight: 600,
       }
-    },
-    orderBook: {
-      maxHeight: 420,
-      overflowY: 'scroll',
-      position: 'relative',
-      '& > *': {
-        width: '100%',
-      }
-    },
-    orderBookSpread: {
-      border: '1px solid',
-      borderColor: theme.palette.background.paper,
-      borderLeft: 0,
-      borderRight: 0,
-      margin:  `0 -${theme.spacing(2)}px`,
-      padding: `0 ${theme.spacing(2)}px`,
-    },
-    orderBookHeader: {
-      borderBottom: '1px solid',
-      borderBottomColor: theme.palette.background.paper,
     },
     proChart: {
       '& tspan': {
@@ -299,17 +282,6 @@ export default props => {
 
   const classes = useStyles()
   const isMarket = dst.type === 'market'
-
-  useEffect(() => {
-    requestAnimationFrame(() =>
-      scroller.scrollTo('spread', {
-        containerId: 'orderBookScroll',
-        duration: 0,
-        delay: 0,
-        offset: -200,
-      })
-    )
-  }, [])
 
   let data = stock.proChartData
 
@@ -493,80 +465,7 @@ export default props => {
           </Grid>
           <Grid item className={classes.orderBookPaperGrid}>
             <Paper square={true} className={classes.orderBookPaper}>
-              <Box pt={1} pb={1}>
-                <Box pl={2} pr={2} className={classes.orderBookHeader}>
-                  <Grid container spacing={1}>
-                    <Grid item xs={6}>
-                      <Typography variant='caption'>
-                        Quantity
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={3}>
-                      <Typography variant='caption'>
-                        Price
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={3}>
-                      <Typography variant='caption'>
-                        My Orders
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Box>
-                <div className={classes.orderBook} id='orderBookScroll'>
-                  <Box pl={2} pr={2}>
-                    { asks.map((ask, i) =>
-                        <Grid key={i} container spacing={1} style={{ color: red[500] }}>
-                          <Grid item xs={6}>
-                            <Typography variant='caption'>
-                              {ask ? parseFloat(ask[1]).toFixed(0) : '&nbsp;'}
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={3}>
-                            <Typography variant='caption'>
-                              ${ask ? parseFloat(ask[0]).toFixed(2) : '&nbsp;'}
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={3}>
-                          </Grid>
-                        </Grid>
-                      )
-                    }
-                    <Element name='spread' className={classes.orderBookSpread}>
-                      <Grid container spacing={1}>
-                        <Grid item xs={6}>
-                          <Typography variant='caption'>
-                            SPREAD
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Typography variant='caption'>
-                            ${ spread.toFixed(2) } USD
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </Element>
-
-                    { bids.map((bid, i) =>
-                        <Grid key={i} container spacing={1} style={{ color: green[500] }}>
-                          <Grid item xs={6}>
-                            <Typography variant='caption'>
-                              {bid ? parseFloat(bid[1]).toFixed(0) : '&nbsp;'}
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={3}>
-                            <Typography variant='caption'>
-                              ${bid ? parseFloat(bid[0]).toFixed(2) : '&nbsp;'}
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={3}>
-                          </Grid>
-                        </Grid>
-                      )
-                    }
-                  </Box>
-                </div>
-              </Box>
+              <OrderBook asks={asks} bids={bids} spread={spread}/>
             </Paper>
           </Grid>
         </Grid>
