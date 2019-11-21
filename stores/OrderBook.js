@@ -262,6 +262,10 @@ export default class OrderBook {
         }
         this.socket.emit("candles.get", opts)
     }
+  
+    @action getHistory(ticker) {
+      //todo
+    }
 
     @action getDailyData(ticker) {
         // day is 24 hr based on EST
