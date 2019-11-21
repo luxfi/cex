@@ -144,6 +144,7 @@ class Index extends React.Component {
         order,
         (ticker, orderType) => {
           const updateBalance = (side, val) => {
+            debugger
             if (side === 'bid')
               userStore.removeBalance(val)
             else
