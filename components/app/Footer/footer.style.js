@@ -155,6 +155,7 @@ export default theme => {
       display: "flex",
       flexDirection: "row",
       justifyContent: "center",
+      flexWrap: "wrap",
       marginTop: theme.spacing(2),
       [theme.breakpoints.up("lg")]: {
         justifyContent: "flex-start",

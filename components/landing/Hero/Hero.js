@@ -104,7 +104,7 @@ class Hero extends React.Component {
                     direction="row"
                     justify="flex-start"
                   >
-                    <Grid justify="flex-start" spacing={1} item xs={10} md={6} style={{ textAlign: 'left' }} >
+                    <Grid justify="flex-start" container item spacing={1} item xs={10} md={6} style={{ textAlign: 'left' }} >
                       <Grid item xs>
                         <Box lineHeight={1} letterSpacing={2}>
                           <Typography className="esx-initial-offering" variant="h5">
