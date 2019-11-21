@@ -134,7 +134,9 @@ export default class UserPortfolio {
   updateHoldings() {
     let holdings = 0.0
     this.investments.map(h => {
-      holdings += h.amount * parseFloat(h.price).toFixed(2)
+      const price = parseFloat(h.price)
+      if (!isNaN(price))
+        holdings += h.amount * parseFloat(h.price).toFixed(2)
     })
     this.holdings = holdings
   }
