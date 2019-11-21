@@ -68,7 +68,7 @@ class Account extends React.Component {
 
     return (
       <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
-        <AccountSection title="Linked Accounts">
+        <AccountSection title="Linked Accounts" style={{ marginBottom: '3em' }}>
           <Grid container>
             <Grid item xs={8}>
               <Grid container direction="column">
