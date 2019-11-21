@@ -56,7 +56,7 @@ const HistorySection = ({ book }) => {
             <Box mb={2}>
               <Grid container justify="space-between">
                 <Grid item xs={6} lg={3} md={3} sm={4}>
-                  <Typography>
+                  <Typography component="div">
                     <Box fontWeight="fontWeightBold">{data.type}</Box>
                   </Typography>
                   <Typography>{data.date}</Typography>
