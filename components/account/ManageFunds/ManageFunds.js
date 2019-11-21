@@ -2,7 +2,6 @@ import React from 'react'
 import {
   Button,
   Card,
-  CardActions,
   CardContent,
   Divider,
   Grid,
@@ -11,9 +10,9 @@ import {
   TextField,
   Typography,
  } from '@material-ui/core'
-import moment from '../../../../../Library/Caches/typescript/3.6/node_modules/moment/moment'
+import moment from 'moment'
 
-//  import {AddIcon} from "@material-ui/icons/Backup"
+import { formatCurrency } from '../../../util/generic'
 
 export default props => {
   const {
@@ -110,7 +109,7 @@ export default props => {
                 label="Amount ($)"
                 id="add-new-funds"
                 disabled={!accountList || accountList.length < 2}
-                value={amount}
+                value={formatCurrency(amount)}
                 onBlur={() => {
                   const newAmount = Number.parseFloat(amount)
                   setAmount(!isNaN(newAmount) ? `${newAmount.toFixed(2)}` : '')
