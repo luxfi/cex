@@ -183,7 +183,7 @@ export default class UserPortfolio {
 
     let holdingIndex = _.findIndex(this.investments, { ticker })
     console.log('onOrderExecute', holdingIndex, this.investments, order, orderType)
-
+    debugger
     const quantity = Number.parseInt(order.quantity)
     const price = Number.parseFloat(order.price)
 
