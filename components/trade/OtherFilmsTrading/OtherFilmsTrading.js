@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Grid, Typography, Box } from '@material-ui/core'
-import Router from 'next/Router'
+import Router from 'next/router'
 
 const OtherFilmsTrading = ({ movies }) => {
   const selectedMovies = movies.slice(0, 5)
