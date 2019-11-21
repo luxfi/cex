@@ -14,7 +14,10 @@ import {
   Divider
 } from "@material-ui/core"
 
-import SideDrawer from "../SideDrawer"
+import { 
+  SideDrawer, 
+  CustomLink 
+} from ".."
 
 import { makeStyles } from "@material-ui/core/styles"
 import styles from './mobileNavMenu.style.js'
@@ -79,9 +82,9 @@ const NavElements = (props) => {
     else if ('link' in elementDef) {
       result.push(
         <ListItem className={classes.listButton} button key={elementDef.link}>
-          <NextLink href={elementDef.link} >
+          <CustomLink href={elementDef.link} className={classes.listButtonLink}>
             {elementDef.title}
-          </NextLink>
+          </CustomLink>
         </ListItem>
       )
     }
@@ -140,9 +143,9 @@ const SubNav = (props) => {
                     button
                     key={item.link}
                   >
-                    <NextLink href={item.link} >
+                    <CustomLink href={item.link} className={classes.listButtonLink}>
                       <ListItemText primary={item.title} />
-                    </NextLink>
+                    </CustomLink>
                   </ListItem>
 
                 ) : (
