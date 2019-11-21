@@ -289,7 +289,7 @@ export default props => {
     <Element>
       <Box ml={-3} mr={-3} mt={2}>
         <Grid container spacing={0}>
-          <Grid item xs={12} sm={4} md={2}>
+          <Grid item xs={12} sm={4} md={3}>
             <Paper square={true} className={ classes.tabsPaper }>
               <Tabs
                 value={mode}
@@ -307,7 +307,7 @@ export default props => {
               </Tabs>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={8} md={10}>
+          <Grid item xs={12} sm={8} md={9}>
             <Box
               p={1}
               pl={2}
@@ -326,7 +326,7 @@ export default props => {
               </Grid>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={4} md={2}>
+          <Grid item xs={12} sm={4} md={3}>
             <Paper square={true} className={ classes.tradePaper }>
               <Box p={2} pl={4} pr={4}>
                 <div>
@@ -460,7 +460,7 @@ export default props => {
               </Box>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={8} md={10} className={classes.proChart}>
+          <Grid item xs={12} sm={8} md={9} className={classes.proChart}>
             <ProChart data={data} />
           </Grid>
           <Grid item className={classes.orderBookPaperGrid}>
