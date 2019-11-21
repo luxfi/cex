@@ -43,7 +43,7 @@ const Trade = memo(({fillPrice, fillQuantity, executedAt, executingOrder}) => {
     <Grid container spacing={1} style={{ color: executingOrder.side === 'ask' ? red[500] : green[500] }}>
       <Grid item xs={2}>
         <Typography variant='caption'>
-          { moment(executedAt).format('ll hh:MM:SSA') }
+          { moment(executedAt).format('ll hh:mm:ssA') }
         </Typography>
       </Grid>
       <Grid item xs={2}>
