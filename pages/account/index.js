@@ -37,6 +37,7 @@ class Account extends React.Component {
 
   componentDidMount() {
     googlePageView()
+    this.props.store.userStore.loadAccountBalance()
     this.props.store.userStore.loadBalanceHistory()
   }
 
@@ -46,6 +47,7 @@ class Account extends React.Component {
     const {
       setValue,
       account,
+      accountBalance,
       formattedAccounts,
       balanceHistory,
       addPaymentMethod,
@@ -55,7 +57,8 @@ class Account extends React.Component {
       validateNewPaymentMethodName,
       validateNewPaymentMethodPublicToken,
       validateNewPaymentMethodMetadata,
-      handleFunds
+      handleFunds,
+      newPaymentMethodName
     } = userStore
 
     const setErrorMessage = message => {
@@ -80,16 +83,33 @@ class Account extends React.Component {
                         accountType={a.account.type}
                         institution={a.institution.name}
                         subtype={a.account.subtype}
-                        removeAccount={() => { console.log('Removing the account!', a.id) }}
+                        removeAccount={() => { 
+                          alert('Remove doesn\'t work in dev mode!')
+                          console.log('Removing the account!', a.id) 
+                        }}
                       />
                     )
                   })
                 }
+                <AddPaymentMethodForm
+                  addPaymentMethod={addPaymentMethod.bind(userStore)}
+                  validateNewPaymentMethodName={validateNewPaymentMethodName.bind(userStore)}
+                  validateNewPaymentMethodPublicToken={validateNewPaymentMethodPublicToken.bind(userStore)}
+                  validateNewPaymentMethodMetadata={validateNewPaymentMethodMetadata.bind(userStore)}
+                  isValidNewPaymentMethod={isValidNewPaymentMethod}
+                  validNewPaymentMethodName={validNewPaymentMethodName}
+                  validNewPaymentMethodPublicToken={validNewPaymentMethodPublicToken}
+                  setValue={setValue.bind(userStore)}
+                  setErrorMessage={setErrorMessage}
+                  refreshSession={() => { userStore.loadSession() }}
+                  newPaymentMethodName={newPaymentMethodName}
+                />
               </Grid>
             </Grid>
             <Grid item xs={4}>
               <Grid container direction="column" alignItems="center">
                 <ManageFunds
+                  accountBalance={accountBalance}
                   accountList={formattedAccounts}
                   handleFunds={handleFunds.bind(userStore)}
                 />
@@ -108,7 +128,7 @@ class Account extends React.Component {
                       return (
                         <BalanceHistoryItem
                           key={`history_${i}`}
-                          name={r.name}
+                          name={r.accountName}
                           amount={r.amount}
                           date={r.date}
                           deposit={r.deposit}
@@ -124,106 +144,9 @@ class Account extends React.Component {
         </AccountSection>
       </Container>
     )
-
-    // return (
-    //   <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
-    //     <Grid
-    //       container
-    //       spacing={3}
-    //       direction="column"
-    //       justify="center"
-    //       alignItems="center"
-    //     >
-    //       <Grid item xs={12} sm={4}>
-    //         <Card>
-    //           <CardContent>
-    //             <AddPaymentMethodForm
-    //               addPaymentMethod={addPaymentMethod.bind(userStore)}
-    //               validateNewPaymentMethodName={validateNewPaymentMethodName.bind(userStore)}
-    //               validateNewPaymentMethodPublicToken={validateNewPaymentMethodPublicToken.bind(userStore)}
-    //               validateNewPaymentMethodMetadata={validateNewPaymentMethodMetadata.bind(userStore)}
-    //               isValidNewPaymentMethod={isValidNewPaymentMethod}
-    //               validNewPaymentMethodName={validNewPaymentMethodName}
-    //               validNewPaymentMethodPublicToken={validNewPaymentMethodPublicToken}
-    //               setValue={setValue.bind(userStore)}
-    //               setErrorMessage={setErrorMessage}
-    //               refreshSession={() => { userStore.loadSession() }}
-    //             />
-    //           </CardContent>
-    //         </Card>
-    //       </Grid>
-    //       {
-    //         !!account && !!account.paymentMethods ?
-    //           <Grid item xs={12} sm={8}>
-    //             {
-    //               account.paymentMethods.map((m, i) => {
-    //                 return (
-    //                   <Card key={`m+${i}`} style={{ marginBottom: 20 }}>
-    //                     <CardContent>
-    //                       <Typography variant="body1">
-    //                         {m.name}
-    //                       </Typography>
-    //                       <Typography variant="body2">
-    //                         {(m.Inputs && m.Inputs.metadata.institution) ? m.Inputs.metadata.institution.name : ""}
-    //                       </Typography>
-    //                       <Grid container>
-    //                         <Grid item xs={4}>
-    //                           <TextField
-    //                             variant="outlined"
-    //                             margin="normal"
-    //                             required
-    //                             fullWidth
-    //                             name="newFunds"
-    //                             label="Add Funds"
-    //                             id="add-new-funds"
-    //                             value={this.state[`${m.name}-newFunds`] || ""}
-    //                             onChange={evt => {
-    //                               this.setState({
-    //                                 [`${m.name}-newFunds`]: evt.target.value,
-    //                                 [`${m.name}-newFunds-error`]: null
-    //                               })
-    //                             }}
-    //                             helperText={this.state[`${m.name}-newFunds-error`]}
-    //                             error={this.state[`${m.name}-newFunds-error`] && this.state[`${m.name}-newFunds-error`].length > 0}
-    //                           />
-    //                         </Grid>
-    //                       </Grid>
-    //                       <Button
-    //                         variant="outlined"
-    //                         onClick={
-    //                           () => {
-    //                             addBalance(
-    //                               this.state[`${m.name}-newFunds`],
-    //                               () => { this.setState({ [`${m.name}-newFunds`]: "" }) },
-    //                               () => {
-    //                                 this.setState({
-    //                                   [`${m.name}-newFunds`]: "",
-    //                                   [`${m.name}-newFunds-error`]: `Error adding funds from ${m.name}`
-    //                                 })
-    //                               }
-    //                             )
-    //                           }
-    //                         }
-    //                       >
-    //                         Add Funds
-    //                       </Button>
-    //                       <Divider variant="inset" style={{ marginTop: '10px' }} />
-    //                     </CardContent>
-    //                   </Card>
-    //                 )
-    //               })
-    //             }
-    //           </Grid>
-    //           : null
-    //       }
-    //       <Grid item xs={12} sm={4}>
     //         <Link component={CustomLink} href="/account/kyc">
     //           Check your identify verification status
     //         </Link>
-    //       </Grid>
-    //     </Grid>
-    //   </Container>
-    // )
   }
 }
 

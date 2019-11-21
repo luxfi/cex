@@ -18,7 +18,8 @@ import moment from '../../../../../Library/Caches/typescript/3.6/node_modules/mo
 export default props => {
   const {
     accountList,
-    handleFunds
+    handleFunds,
+    accountBalance
   } = props
 
   const [amount, setAmount] = React.useState('')
@@ -31,6 +32,8 @@ export default props => {
       setfromAccountId(accountList[1].id)
     }
   })
+
+  const overdraw = !deposit && Number.parseFloat(amount) > Number.parseFloat(accountBalance)
 
   return (
     <Grid item xs={12} style={{ minWidth: '60%' }}>
@@ -106,6 +109,7 @@ export default props => {
                 name="newFunds"
                 label="Amount ($)"
                 id="add-new-funds"
+                disabled={!accountList || accountList.length < 2}
                 value={amount}
                 onBlur={() => {
                   const newAmount = Number.parseFloat(amount)
@@ -119,40 +123,45 @@ export default props => {
               />
             </Grid>
           </Grid>
-        </CardContent>
-        <CardActions>
-          <Button 
-            variant="outlined" 
-            style={{ marginLeft: 'auto' }} 
-            onClick={
-              () => {
-                let a = { id: 'DEFAULT', account: { mask: 'DEFAULT' } }
-                if (deposit) {
-                  a = accountList.find(i => i.id === fromAccountId)
-                } else {
-                  a = accountList.find(i => i.id === toAccountId)
-                }
-                const accountName = `${a.name} - ${a.account.mask}`
-                handleFunds(
-                  {
-                    amount,
-                    deposit,
-                    name,
-                    fromAccountId,
-                    toAccountId,
-                    accountName,
-                    date: moment().format('MMM DD')
-                  },
+          <Grid container item justify="center" alignItems="center">
+            <Grid item xs={6}>
+              <Typography variant='h6'>Balance ${accountBalance}</Typography>
+            </Grid>
+            <Grid item xs={6} style={{ textAlign: 'right' }}>
+              <Button 
+                variant="outlined" 
+                disabled={!amount || !accountList || accountList.length < 2 || overdraw}
+                onClick={
                   () => {
-                    setAmount('')
+                    let a = { id: 'DEFAULT', account: { mask: 'DEFAULT' } }
+                    if (deposit) {
+                      a = accountList.find(i => i.id === fromAccountId)
+                    } else {
+                      a = accountList.find(i => i.id === toAccountId)
+                    }
+                    const accountName = `${a.name} - ${a.account.mask}`
+                    handleFunds(
+                      {
+                        amount,
+                        deposit,
+                        name,
+                        fromAccountId,
+                        toAccountId,
+                        accountName,
+                        date: moment().format('MMM DD')
+                      },
+                      () => {
+                        setAmount('')
+                      }
+                    )
                   }
-                )
-              }
-            }
-          >
-              {deposit ? 'Deposit' : 'Withdraw'}
-            </Button>
-        </CardActions>
+                }
+              >
+                {deposit ? 'Deposit' : 'Withdraw'}
+              </Button>
+            </Grid>
+          </Grid>
+        </CardContent>
       </Card>
     </Grid>
   )
