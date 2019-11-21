@@ -15,8 +15,8 @@ const LimitOrder = require("limit-order-book").LimitOrder
 const MarketOrder = require("limit-order-book").MarketOrder
 const LimitOrderBook = require("limit-order-book").LimitOrderBook
 
-// const SOCKET_STRING = 'https://exchange.hanzo.ai'
-const SOCKET_STRING = 'localhost:4000'
+const SOCKET_STRING = 'https://exchange.hanzo.ai'
+// const SOCKET_STRING = 'localhost:4000'
 
 const bidAsk = () => {
   return Math.floor(Math.random() * 2) == 0 ? "bid" : "ask" // 50/50 chance of "bid" or "ask"
