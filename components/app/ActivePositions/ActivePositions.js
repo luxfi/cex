@@ -58,7 +58,7 @@ const columns = [
   },
   {
     title: 'Cost Basis',
-    render: (row) => row.transactions ? renderCurrency(row.transactions.reduce((asc, transaction) => asc += parseFloat(transaction.price) * parseFloat(transaction.amount), 0)) : 0
+    render: (row) => row.transactions ? renderCurrency(row.transactions.reduce((asc, transaction) => asc += parseFloat(transaction.price) * parseFloat(transaction.quantity), 0)) : 0
   },
 ]
 
@@ -69,14 +69,14 @@ const historyColumns = [
   },
   {
     title: 'Action',
-    render: (row) => row.type == 'bid' ? 'OPEN' : 'CLOSE'
+    render: (row) => row.side == 'bid' ? 'BUY' : 'SELL'
   },
   {
     title: 'Fill Price',
     render: (row) => renderCurrency(parseFloat(row.price))
   },
   {
-    title: 'Amount',
+    title: 'Quantity',
     render: (row) => parseInt(row.quantity)
   },
 ]

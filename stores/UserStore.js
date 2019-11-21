@@ -203,6 +203,32 @@ export default class UserStore {
     }
   }
 
+  @action addBalance(val, onSuccess, onError) {
+    const parsedVal = Number.parseFloat(val)
+    if (typeof parsedVal === 'number' && !isNaN(parsedVal)) {
+      let oldBalance = localStorage.getItem('accountBalance') ? Number.parseFloat(localStorage.getItem('accountBalance')) : 0
+      let newBalance = (oldBalance + parsedVal).toFixed(2)
+      window.localStorage.setItem('accountBalance', newBalance)
+      this.accountBalance = newBalance
+      onSuccess && onSuccess()
+    } else {
+      onError && onError()
+    }
+  }
+
+  @action removeBalance(val, onSuccess, onError) {
+    const parsedVal = Number.parseFloat(val)
+    if (typeof parsedVal === 'number' && !isNaN(parsedVal) && this.accountBalance > parsedVal) {
+      let oldBalance = localStorage.getItem('accountBalance') ? Number.parseFloat(localStorage.getItem('accountBalance')) : 0
+      let newBalance = (oldBalance - parsedVal).toFixed(2)
+      window.localStorage.setItem('accountBalance', newBalance)
+      this.accountBalance = newBalance
+      onSuccess && onSuccess()
+    } else {
+      onError && onError()
+    }
+  }
+
   @action loadBalanceHistory() {
     // Loads the users balance from local
     this.balanceHistory = localStorage.getItem('balanceHistory') ? JSON.parse(localStorage.getItem('balanceHistory')) : []
