@@ -191,6 +191,7 @@ class Index extends React.Component {
                 watchlist={userPortfolio.watchlist}
                 removeFromWatchlist={removeFromWatchlist}
                 addToWatchlist={addToWatchlist}
+                movies={movieStore.movies}
               />
             ) : (
               <ProTrader

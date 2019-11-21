@@ -44,7 +44,7 @@ const formatCurrency = new Intl.NumberFormat('en-US', {
 
 const HistorySection = ({ book }) => {
   return (
-    <Box mb={4.5} mt={3}>
+    <Box mb={4.5} mt={6.5}>
       <Typography component="div" variant="subtitle2" gutterBottom>
         <Box fontWeight="fontWeightBold" mb={2}>
           HISTORY
