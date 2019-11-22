@@ -81,7 +81,9 @@ const NavElements = (props) => {
     }
     else if ('link' in elementDef) {
       result.push(
-        <ListItem className={classes.listButton} button key={elementDef.link}>
+        <ListItem className={classes.listButton} button key={elementDef.link} onClick={() => {
+          handleClose()
+        }}>
           <CustomLink href={elementDef.link} className={classes.listButtonLink}>
             {elementDef.title}
           </CustomLink>
@@ -94,6 +96,7 @@ const NavElements = (props) => {
           menuDefinition={elementDef}
           classes={classes}
           handlePlaceHolder={handlePlaceHolderAndClose}
+          handleClose={handleClose}
           key={elementDef.link}
         />
       )
@@ -116,7 +119,8 @@ const SubNav = (props) => {
   const {
     classes,
     menuDefinition,
-    handlePlaceHolder
+    handlePlaceHolder,
+    handleClose
   } = props
 
   const [open, setOpen] = React.useState(false)
@@ -142,6 +146,9 @@ const SubNav = (props) => {
                     className={classes.listButtonSublist}
                     button
                     key={item.link}
+                    onClick={() => {
+                      handleClose()
+                    }}
                   >
                     <CustomLink href={item.link} className={classes.listButtonLink}>
                       <ListItemText primary={item.title} />
