@@ -79,8 +79,6 @@ class MyMobxApp extends App {
     } = this.props
 
 
-    console.log("PATH: " + router.route)
-
     const showDesktopNav = isWidthUp('md', width)
     const showDesktopProfileMenu = isWidthUp('sm', width)
 
