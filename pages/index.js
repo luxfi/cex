@@ -48,18 +48,3 @@ export default inject("store")(observer((props) => {
     </>
   )
 }))
-
-/*
-      <div
-        style={{
-          transform: "translate(0, -52vh)"
-        }}
-      >
-        <TrailerSlider />
-        <ForYouSlider />
-        <StudioSlider />
-        <div style={{ marginBottom: "-52vh" }}>
-          <CategorySlider />
-        </div>
-      </div>
-*/
