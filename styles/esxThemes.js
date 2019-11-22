@@ -6,8 +6,8 @@ const baseTheme = {
   breakpoints: {
     xs: 0,
     sm: 600,
-    md: 900,
-    lg: 1150,
+    md: 960,
+    lg: 1280,
     xl: 1920
   },
 
@@ -35,7 +35,7 @@ export const darkTheme = createMuiTheme({
   ...baseTheme,
   palette: {
     primary: {
-      main: "#5fb8ff", // desaturaed logo blue per material recommendations for dark mod
+      main: "#5fb8ff", // desaturaed logo blue per Material recommendations for dark mode
     },
     secondary: {
       main: "#FAC34D",  // logo yellow
@@ -64,31 +64,3 @@ export const lightTheme = createMuiTheme({
   },
   defaultSVGColor: "black"
 })
-
-// example of page film.js
-// import React from "react"
-
-// import { MuiThemeProvider } from "@material-ui/core/styles"
-// import { withRouter } from "next/router"
-// import { withStyles } from "@material-ui/core/styles"
-// import FilmPage from "../views/FilmPage/FilmPage"
-// import { inject, observer } from "mobx-react"
-// import { darkTheme } from "../themes"
-
-//import styles from ".././filmPage.js"
-
-//const FilmPage = () => (
-//<MuiThemeProvider theme={darkTheme}>
-//  <FilmPage />
-//</MuiThemeProvider>
-// );
-
-
-
-// export default withRouter(withStyles(styles)(Index))
-
-// resources
-// https://css-tricks.com/a-dark-mode-toggle-with-react-and-themeprovider/
-// switch theme based on local storage
-// https://markoskon.com/dark-mode-in-react/
-// https://github.com/4nubhav/Todo/blob/8c18e32769d8dc4a34c9fef41fe93a1294ac10ce/src/components/contexts/ThemeContext.js
