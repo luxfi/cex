@@ -107,63 +107,61 @@ const NavElements = (props) => {
   const classes = useStyles()
   const base = (isLoggedIn) ? menuElements.loggedIn : menuElements.guest
 
-  let result = []
-  base.forEach((elementDef) => {
-
-    if ('placeholder' in elementDef) {
-      result.push(
-        <ListItem
-          className={classes.listButton}
-          onClick={() => {
-            handlePlaceHolderAndClose(elementDef.placeholder)
-          }}
-          key={elementDef.placeholder}
-          button
-        >
-          {elementDef.title}
-        </ListItem>
-      )
-    }
-    else if ('handler' in elementDef) {
-      result.push(
-        <ListItem
-          className={classes.listButton}
-          onClick={() => {
-            callHandlerAndClose(elementDef.handler)
-          }}
-          key={elementDef.handler}
-          button
-        >
-          {elementDef.title}
-        </ListItem>
-      )
-    }
-    else if ('link' in elementDef) {
-      result.push(
-          <NextLink href={elementDef.link} >
-          <ListItem className={classes.listButton} onClick={() => handleClose()} button key={elementDef.link}>
-              {elementDef.title}
-            </ListItem>
-          </NextLink>
-      )
-    }
-    else {
-      result.push(
-        <SubNav
-          menuDefinition={elementDef}
-          classes={classes}
-          handlePlaceHolder={handlePlaceHolderAndClose}
-          callHandler={callHandlerAndClose}
-          handleClose={handleClose}
-          key={elementDef.link}
-        />
-      )
-    }
-  })
-
   return (
     <List>
-      {result}
+      {
+        base.map((elementDef) => {
+          if ('placeholder' in elementDef) {
+            return (
+              <ListItem
+                className={classes.listButton}
+                onClick={() => {
+                  handlePlaceHolderAndClose(elementDef.placeholder)
+                }}
+                key={elementDef.placeholder}
+                button
+              >
+                {elementDef.title}
+              </ListItem>
+            )
+          } else if ('handler' in elementDef) {
+            return (
+              <ListItem
+                className={classes.listButton}
+                onClick={() => {
+                  callHandlerAndClose(elementDef.handler)
+                }}
+                key={elementDef.handler}
+                button
+              >
+                {elementDef.title}
+              </ListItem>
+            )
+          } else if ('link' in elementDef) {
+            return (
+              <NextLink
+                href={elementDef.link}
+                key={elementDef.link}
+              >
+                <ListItem className={classes.listButton} onClick={() => handleClose()} button key={elementDef.link}>
+                  {elementDef.title}
+                </ListItem>
+              </NextLink>
+            )
+          } else {
+            return (
+              <SubNav
+                menuDefinition={elementDef}
+                classes={classes}
+                handlePlaceHolder={handlePlaceHolderAndClose}
+                callHandler={callHandlerAndClose}
+                handleClose={handleClose}
+                key={elementDef.link}
+              />
+            )
+          }
+        })
+      }
     </List>
   )
 }
@@ -192,7 +190,7 @@ const SubNav = (props) => {
           className={classes.listButtonSublist}
           button
           key={item.link}
-          onClick={() => handleClose()} 
+          onClick={() => handleClose()}
         >
             <ListItemText primary={item.title} />
         </ListItem>
