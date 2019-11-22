@@ -18,8 +18,16 @@ import {
   VALID_SHARES_ERROR,
   QUOTE_NOT_MARKET_WARNING,
 } from './widgetMessages'
+import { AccountBalance } from '@material-ui/icons'
 
-const BuySellWidget = ({ marketPrice, ticker, funds, createOrder, redirectLogin }) => {
+const BuySellWidget = ({
+  marketPrice,
+  ticker,
+  funds,
+  createOrder,
+  redirectLogin,
+  movieCategories,
+}) => {
   const [mode, setMode] = useState(0)
   const [orderType, setOrderType] = useState('bid')
   const [shares, setShares] = useState('')
@@ -43,6 +51,7 @@ const BuySellWidget = ({ marketPrice, ticker, funds, createOrder, redirectLogin 
       type: 'market',
       price,
       quantity: shares,
+      categories: movieCategories,
     }
 
     await createOrder(order)
@@ -298,7 +307,7 @@ const BuySellWidget = ({ marketPrice, ticker, funds, createOrder, redirectLogin 
 
         <Grid item xs={12}>
           <Typography color="secondary">
-            ${parseFloat(funds).toFixed(2)} Buying Power Available
+            ${parseFloat(accountBalance).toFixed(2)} Buying Power Available
           </Typography>
         </Grid>
       </Grid>

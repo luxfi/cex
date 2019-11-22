@@ -197,7 +197,6 @@ export default props => {
     setActiveChart,
     setMarketOrderType,
     marketOrderType,
-    funds,
     stockName,
     accountBalance,
   } = props
