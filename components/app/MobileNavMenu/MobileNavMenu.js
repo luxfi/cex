@@ -14,9 +14,9 @@ import {
   Divider
 } from "@material-ui/core"
 
-import { 
-  SideDrawer, 
-  CustomLink 
+import {
+  SideDrawer,
+  CustomLink
 } from ".."
 
 import { makeStyles } from "@material-ui/core/styles"
@@ -50,14 +50,14 @@ export default (props) => {
 
 const NavElements = (props) => {
 
-  const { 
+  const {
     handlePlaceholder,
-    handleClose 
+    handleClose
   } = props
 
   const handlePlaceHolderAndClose = (text) => {
     handlePlaceholder(text)
-    handleClose() 
+    handleClose()
   }
 
   const classes = useStyles()
@@ -92,7 +92,7 @@ const NavElements = (props) => {
     }
     else {
       result.push(
-        <SubNav 
+        <SubNav
           menuDefinition={elementDef}
           classes={classes}
           handlePlaceHolder={handlePlaceHolderAndClose}
@@ -179,8 +179,10 @@ const SubNav = (props) => {
 const Logo = (props) => {
   const {classes} = props
   return (
-    <NextLink href="/" className={classes.logoLink}>
-      <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.logoImg}/>
-    </NextLink>
+    <div className={classes.logoLink}>
+      <NextLink href="/">
+        <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.logoImg}/>
+      </NextLink>
+    </div>
   )
 }
