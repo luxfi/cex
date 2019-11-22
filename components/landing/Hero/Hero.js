@@ -64,7 +64,7 @@ const MyCarousel = ({ children }) => {
   React.useEffect(() => {
     const buttons = document.getElementsByClassName('control-arrow')
     // move zIndex down if on mobile to allow fo swipeable drawer component
-    const index = mobile ? "100" : "100000"
+    const index = mobile ? "100" : "1000"
     Array.from(buttons).forEach(button => button.style.zIndex = index)
   }, [mobile])
   return (
@@ -84,7 +84,7 @@ class Hero extends React.Component {
 
   componentDidMount() {
     const buttons = document.getElementsByClassName('control-arrow')
-    Array.from(buttons).forEach(button => button.style.zIndex = "100000")
+    Array.from(buttons).forEach(button => button.style.zIndex = "1000")
   }
 
   render() {
@@ -95,7 +95,6 @@ class Hero extends React.Component {
           <MyCarousel>
             {this.props.store.movieStore.movies.map((movie, i) => {
               const hrefLink = '/film/' + movie.movieSlug
-              console.log('hrefLink', hrefLink)
               return <HeroImg key={i} {...rest} img={movieExtendedMap[movie.movieSlug].img}>
                 <div className={classes.container}>
                   <Grid
@@ -104,7 +103,7 @@ class Hero extends React.Component {
                     direction="row"
                     justify="flex-start"
                   >
-                    <Grid justify="flex-start" spacing={1} item xs={10} md={6} style={{ textAlign: 'left' }} >
+                    <Grid justify="flex-start" container item spacing={1} item xs={10} md={6} style={{ textAlign: 'left' }} >
                       <Grid item xs>
                         <Box lineHeight={1} letterSpacing={2}>
                           <Typography className="esx-initial-offering" variant="h5">

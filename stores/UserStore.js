@@ -41,6 +41,7 @@ export default class UserStore {
   @observable token = null;
   @observable account = null;
   @observable accountBalance = 0;
+  @observable balanceHistory = []
 
   // ** SIGNUP INFO **
   // must initialize to empty string for controlled inputs
@@ -81,7 +82,7 @@ export default class UserStore {
 
   // ** Payment Method **
   @observable newPaymentMethodPublicToken = undefined;
-  @observable newPaymentMethodName = undefined;
+  @observable newPaymentMethodName = '';
   // Set to plaid for now
   @observable newPaymentMethodType = 'plaid';
   @observable newPaymentMethodMetadata = undefined;
@@ -152,7 +153,7 @@ export default class UserStore {
 
   updateFromJson(json, keys) {
     // make sure our changes aren't sent back to the server
-    keys.forEach(k => {
+    keys && keys.forEach(k => {
       if (json[k] === '0001-01-01T00:00:00Z') {
         // per request from David to detect date
       }
@@ -202,15 +203,6 @@ export default class UserStore {
     }
   }
 
-  @action loadBalance() {
-    // Loads the users balance from local
-    this.accountBalance = localStorage.getItem('accountBalance')
-  }
-
-  @action loadAccountBalance() {
-    this.accountBalance = localStorage.getItem('accountBalance') ? Number.parseFloat(localStorage.getItem('accountBalance')).toFixed(2) : 0
-  }
-
   @action addBalance(val, onSuccess, onError) {
     const parsedVal = Number.parseFloat(val)
     if (typeof parsedVal === 'number' && !isNaN(parsedVal)) {
@@ -231,6 +223,51 @@ export default class UserStore {
       let newBalance = (oldBalance - parsedVal).toFixed(2)
       window.localStorage.setItem('accountBalance', newBalance)
       this.accountBalance = newBalance
+      onSuccess && onSuccess()
+    } else {
+      onError && onError()
+    }
+  }
+
+  @action loadBalanceHistory() {
+    // Loads the users balance from local
+    this.balanceHistory = localStorage.getItem('balanceHistory') ? JSON.parse(localStorage.getItem('balanceHistory')) : []
+  }
+
+  @action loadAccountBalance() {
+    this.accountBalance = localStorage.getItem('accountBalance') ? Number.parseFloat(localStorage.getItem('accountBalance')).toFixed(2) : 0
+  }
+
+  @action handleFunds(vals, onSuccess, onError) {
+    // Deposit or withdrawal funds to localStorage
+    const {
+      amount,
+      deposit,
+      fromAccount,
+      toAccount,
+      accountName,
+      date
+    } = vals
+
+    const parsedVal = Number.parseFloat(amount)
+    if (typeof parsedVal === 'number' && !isNaN(parsedVal)) {
+      let oldBalance = localStorage.getItem('accountBalance') ? Number.parseFloat(localStorage.getItem('accountBalance')) : 0
+      let newBalance = 0
+      if (deposit) {
+        newBalance = (oldBalance + parsedVal).toFixed(2)
+      } else {
+        newBalance = (oldBalance - parsedVal).toFixed(2)
+      }
+      // Save amount
+      window.localStorage.setItem('accountBalance', newBalance)
+      this.accountBalance = newBalance
+
+      // Update history
+      const balanceHistory = localStorage.getItem('balanceHistory') ? JSON.parse(localStorage.getItem('balanceHistory')) : []
+      balanceHistory.unshift(vals)
+      this.balanceHistory.unshift(vals)
+      localStorage.setItem('balanceHistory', JSON.stringify(balanceHistory))
+      
       onSuccess && onSuccess()
     } else {
       onError && onError()
@@ -305,7 +342,7 @@ export default class UserStore {
 
     let ps = [];
 
-    docs.forEach(([data, name], i) => {
+    docs && docs.forEach(([data, name], i) => {
       ps[i] = this.updateKYCPhoto(data, name);
     });
 
@@ -612,6 +649,29 @@ export default class UserStore {
 
   @computed get passwordsMatch() {
     return this.password === this.passwordConfirm;
+  }
+
+  @computed get formattedAccounts() {
+    const esx = {
+      id: 'esx',
+      name: 'ESX'
+    }
+
+    if (!this.account || !this.account.paymentMethods)
+      return [esx]
+
+    const accounts = this.account.paymentMethods.map(a => {
+      return {
+        name: a.name,
+        institution: toJS(a.Inputs.metadata.institution),
+        account: toJS(a.Inputs.metadata.accounts[ Math.floor(Math.random() * 4)]),
+        id: a.id
+      }
+    })
+
+    accounts.unshift(esx)
+
+    return accounts
   }
 }
 

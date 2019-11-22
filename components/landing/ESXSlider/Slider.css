@@ -16,29 +16,13 @@
 }
 
 .slider:not(.no-hover):not(.slider--open) .item:hover {
-  transform: scale(1.5) !important;
+  transform: scale(1.2) !important;
 }
 
 .slider:not(.no-hover):not(.slider--open):hover .item {
-  transform: translateX(-25%);
+  transform: translateX(-10%);
 }
 
 .slider:not(.no-hover):not(.slider--open) .item:hover~.item {
-  transform: translateX(25%);
+  transform: translateX(10%);
 }
-
-/* .slider:not(.no-hover) .item:hover .show-details-button {
-  opacity: 1;
-}
-
-.slider:not(.no-hover) .item:hover {
-  transform: scale(1.5) !important;
-}
-
-.slider:not(.no-hover):hover .item {
-  transform: translateX(-25%);
-}
-
-.slider:not(.no-hover) .item:hover~.item {
-  transform: translateX(25%);
-} */

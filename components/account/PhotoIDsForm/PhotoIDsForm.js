@@ -2,7 +2,6 @@ import React, { useCallback, createRef, useState, useEffect } from "react"
 import Typography from "@material-ui/core/Typography"
 import List from "@material-ui/core/List"
 import { CustomModal } from "../../app"
-import "react-html5-camera-photo/build/css/index.css"
 import Camera, { FACING_MODES, IMAGE_TYPES } from "react-html5-camera-photo"
 import { PhotoIDRow } from "../"
 
