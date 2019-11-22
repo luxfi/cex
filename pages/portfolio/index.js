@@ -1,22 +1,19 @@
 import React from "react"
-
-// @material-ui/core components
+import { inject, observer } from "mobx-react"
 import { withStyles } from "@material-ui/core/styles"
 
-import { inject, observer } from "mobx-react"
+import {
+  PortfolioView,
+  TradeView,
+  RewardsView,
+  NewsFeedView,
+  ProTraderCTA,
+  PillsTabs
+} from "../../components/portfolio"
 
-// core components
-import { PillsTabs } from "../components/portfolio"
+import styles from "../../styles/pages/portfolio.style.js"
 
-import styles from "../styles/pages/portfolio.style.js"
-
-// Sections for this page
-import PortfolioView from "../components/portfolio/PortfolioView/PortfolioView"
-import TradeView from "../components/portfolio/TradeView/TradeView"
-import RewardsView from "../components/portfolio/RewardsView/RewardsView"
-import NewsFeedView from "../components/portfolio/NewsFeedView"
-import ProTraderCTA from "../components/portfolio/ProTraderCTA/ProTraderCTA"
-import { googlePageView } from "../util/generic.js"
+import { googlePageView } from "../../util/generic.js"
 
 const isServer = typeof window === "undefined"
 
@@ -31,7 +28,8 @@ class Portfolio extends React.Component {
     super(props)
 
     if (!isServer) {
-      let tabIdx = localStorage.getItem("portfolio-index")
+
+      let tabIdx = ("tab" in props) ? props.tab : localStorage.getItem("portfolio-index")
 
       if (tabIdx) {
         tabIdx = JSON.parse(tabIdx)

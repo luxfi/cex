@@ -8,7 +8,7 @@ export default (theme) => {
     logoLink: {
       display: "block",
       padding: theme.spacing(1),
-      paddingLeft: theme.spacing(2),
+      // paddingLeft: theme.spacing(2),
     },
 
     listButton: {
