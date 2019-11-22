@@ -1,45 +1,40 @@
-import React from "react"
-import Link from "next/link"
-import { toJS } from "mobx"
-import { inject, observer } from "mobx-react"
-import { withRouter, Router } from "next/router"
+import React from 'react'
+import Link from 'next/link'
+import { toJS } from 'mobx'
+import { inject, observer } from 'mobx-react'
+import { withRouter, Router } from 'next/router'
 import { MUISwitch } from '@hanzo/react'
 
-import classNames from "classnames"
+import classNames from 'classnames'
 
 // orderbook
-import { formatTakeResults } from "../../../util/formatOrderBookDataForChart"
+import { formatTakeResults } from '../../../util/formatOrderBookDataForChart'
 
 // @material-ui/core components
-import { Box, Button, Grid, Typography } from "@material-ui/core"
-import { withStyles } from "@material-ui/core/styles"
+import { Box, Button, Grid, Typography } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
 
 // core components
-import {
-  CustomBreadcrumbs,
-  BasicTrader,
-  InvestNow,
-  ProTrader,
-} from "../../app"
-import { TrailerModal } from "../../landing"
+import { CustomBreadcrumbs, BasicTrader, InvestNow, ProTrader } from '../../app'
+import { TrailerModal } from '../../landing'
 
 // section
-import { padDollarAmount } from "../../../util/generic"
+import { padDollarAmount } from '../../../util/generic'
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // the nice looking double chevrons are part of the "pro" package that costs money
-import { faPlay } from "@fortawesome/free-solid-svg-icons"
+import { faPlay } from '@fortawesome/free-solid-svg-icons'
 
-import styles from "./trade.style.js"
+import styles from './trade.style.js'
 
-import { isObservableArray } from "mobx"
+import { isObservableArray } from 'mobx'
 
 const ButtonLink = React.forwardRef(
   ({ className, href, hrefAs, children }, ref) => (
-    <Link ref={ref} href={href || ""} as={hrefAs}>
+    <Link ref={ref} href={href || ''} as={hrefAs}>
       <a className={className}>{children}</a>
     </Link>
-  )
+  ),
 )
 
 const ExternalLink = React.forwardRef(
@@ -47,32 +42,32 @@ const ExternalLink = React.forwardRef(
     <a
       className={className}
       ref={ref}
-      href={href || ""}
+      href={href || ''}
       as={hrefAs}
       target="_blank"
     >
       {children}
     </a>
-  )
+  ),
 )
 
 const formatMonthlyStats = (price, valueDelta) => {
   return (
-    (valueDelta > 0 ? "+ " : "- ") +
+    (valueDelta > 0 ? '+ ' : '- ') +
     Math.abs(valueDelta) +
-    " (" +
+    ' (' +
     ((valueDelta / price) * 100).toFixed(2) +
-    "%) "
+    '%) '
   )
 }
 
-@inject("store")
+@inject('store')
 @observer
 class Index extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedMode: localStorage.getItem("tradeMode") || "basic",
+      selectedMode: localStorage.getItem('tradeMode') || 'basic',
     }
   }
 
@@ -87,6 +82,7 @@ class Index extends React.Component {
     userPortfolio.getInvestments()
     orderBook.connect(movie.ticker)
     this.props.store.orderBook.fetchStockData(movie.ticker)
+    window.store = this.props.store
   }
 
   componentWillUnmount() {
@@ -97,9 +93,9 @@ class Index extends React.Component {
   onModeSelected(tab) {
     if (this.state.selectedMode !== tab) {
       // if going to a new tab, collapse the view as well.
-      localStorage.setItem("tradeMode", tab)
+      localStorage.setItem('tradeMode', tab)
       this.setState({
-        selectedMode: tab || "pro",
+        selectedMode: tab || 'pro',
       })
     }
   }
@@ -110,12 +106,7 @@ class Index extends React.Component {
     // get router slug and find article
     const { router } = this.props
     const { slug } = router.query
-    const {
-      movieStore,
-      orderBook,
-      userStore,
-      userPortfolio
-    } = this.props.store
+    const { movieStore, orderBook, userStore, userPortfolio } = this.props.store
     const movie = movieStore.getMovieBySlug(slug)
     // orderBook stuff
     let takeResultsArray = orderBook.takeResults.slice(0)
@@ -124,7 +115,7 @@ class Index extends React.Component {
       buyOrders,
       sellOrders,
       activeChart,
-      marketOrderType
+      marketOrderType,
     } = orderBook
     const funds = userStore.accountBalance
     const chartData = formatTakeResults(takeResultsArray, printInterval)
@@ -139,19 +130,17 @@ class Index extends React.Component {
       orderBook.setMarketOrderType(marketOrder)
     }
 
-    const createOrder = (order, onSuccess, onError) => {
-      orderBook.socketOrderCreate(
-        order,
-        (ticker, orderType) => {
-          const updateBalance = (side, val) => {
-            if (side === 'bid')
-              userStore.removeBalance(val)
-            else
-              userStore.addBalance(val)
+    const createOrder = order => {
+      orderBook.socketOrderCreate(order, (ticker, orderType) => {
+        const updateBalance = (side, val) => {
+          if (side === 'bid') {
+            userStore.removeBalance(val)
+          } else {
+            userStore.addBalance(val)
           }
-          userPortfolio.onOrderExecute(order, ticker, orderType, updateBalance, onSuccess, onError)
         }
-      )
+        userPortfolio.onOrderExecute(order, ticker, orderType, updateBalance)
+      })
     }
 
     // Load necessary user data
@@ -161,78 +150,80 @@ class Index extends React.Component {
       userPortfolio.addToWatchlist(t)
     }
 
+    const removeFromWatchlist = t => {
+      userPortfolio.removeFromWatchlist(t)
+    }
+
     return (
       <>
         <article>
           <Box p={3} pt={8}>
             <MUISwitch
               label="Professional"
-              value={this.state.selectedMode == "pro"}
-              setValue={ (val) => this.onModeSelected(val ? "pro" : "basic") }
+              value={this.state.selectedMode == 'pro'}
+              setValue={val => this.onModeSelected(val ? 'pro' : 'basic')}
             />
-            { orderBook.isReady ?
-              this.state.selectedMode === "basic" ? (
-                <BasicTrader
-                  chartData={chartData}
-                  yDomain={yDomain}
-                  updatePrintInterval={updatePrintInterval}
-                  setActiveChart={setActiveChart}
-                  setMarketOrderType={setMarketOrderType}
-                  marketOrderType={marketOrderType}
-                  funds={funds}
-                  printInterval={printInterval}
-                  activeChart={activeChart}
-                  buyOrders={buyOrders}
-                  sellOrders={sellOrders}
-                  orderBook={orderBook}
-                  book={orderBook.book}
-                  ticker={movie.ticker}
-                  createOrder={createOrder}
-                  onExecute={(order, orderType) => {
-                    return userPortfolio.onOrderExecute(order, orderType)
-                  }}
-                  movieCategories={toJS(movie.genre)}
-                  maxSell={maxSell}
-                  stockName={movie.name}
-                  accountBalance={userStore.accountBalance}
-                />
-              ) : (
-                <ProTrader
-                  chartData={chartData}
-                  yDomain={yDomain}
-                  updatePrintInterval={updatePrintInterval}
-                  setActiveChart={setActiveChart}
-                  setMarketOrderType={setMarketOrderType}
-                  marketOrderType={marketOrderType}
-                  funds={funds}
-                  printInterval={printInterval}
-                  activeChart={activeChart}
-                  buyOrders={buyOrders}
-                  sellOrders={sellOrders}
-                  orderBook={orderBook}
-                  book={orderBook.book}
-                  ticker={movie.ticker}
-                  createOrder={createOrder}
-                  onExecute={(order, orderType) => {
-                    return userPortfolio.onOrderExecute(order, orderType)
-                  }}
-                  movieCategories={toJS(movie.genre)}
-                  maxSell={maxSell}
-                  stockName={movie.name}
-                  accountBalance={userStore.accountBalance}
-                />
-              ) : (
-                <Typography>Loading chart...</Typography>
-              )
-            }
+            {this.state.selectedMode === 'basic' ? (
+              <BasicTrader
+                chartData={chartData}
+                yDomain={yDomain}
+                updatePrintInterval={updatePrintInterval}
+                setActiveChart={setActiveChart}
+                setMarketOrderType={setMarketOrderType}
+                marketOrderType={marketOrderType}
+                funds={funds}
+                printInterval={printInterval}
+                activeChart={activeChart}
+                buyOrders={buyOrders}
+                sellOrders={sellOrders}
+                orderBook={orderBook}
+                book={orderBook.book}
+                ticker={movie.ticker}
+                atomTicketsURL={
+                  'https://www.atomtickets.com/movies/' + movie.atomTicketsSlug
+                }
+                createOrder={createOrder}
+                onExecute={(order, orderType) => {
+                  return userPortfolio.onOrderExecute(order, orderType)
+                }}
+                movieCategories={toJS(movie.genre)}
+                maxSell={maxSell}
+                stockName={movie.name}
+                accountBalance={userStore.accountBalance}
+                userStore={userStore}
+                watchlist={userPortfolio.watchlist}
+                removeFromWatchlist={removeFromWatchlist}
+                addToWatchlist={addToWatchlist}
+                movies={movieStore.movies}
+              />
+            ) : (
+              <ProTrader
+                chartData={chartData}
+                yDomain={yDomain}
+                updatePrintInterval={updatePrintInterval}
+                setActiveChart={setActiveChart}
+                setMarketOrderType={setMarketOrderType}
+                marketOrderType={marketOrderType}
+                funds={funds}
+                printInterval={printInterval}
+                activeChart={activeChart}
+                buyOrders={buyOrders}
+                sellOrders={sellOrders}
+                orderBook={orderBook}
+                book={orderBook.book}
+                ticker={movie.ticker}
+                createOrder={createOrder}
+                onExecute={(order, orderType) => {
+                  return userPortfolio.onOrderExecute(order, orderType)
+                }}
+                movieCategories={toJS(movie.genre)}
+                maxSell={maxSell}
+                stockName={movie.name}
+                accountBalance={userStore.accountBalance}
+              />
+            )}
           </Box>
         </article>
-        <div
-          className={classNames(classes.container)}
-          style={{ paddingLeft: "0px", paddingRight: "0px" }}
-        >
-          {!userStore.token ? <InvestNow /> : ""}
-        </div>
       </>
     )
   }

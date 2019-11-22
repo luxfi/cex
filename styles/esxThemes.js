@@ -38,7 +38,7 @@ export const darkTheme = createMuiTheme({
       main: "#5fb8ff", // desaturaed logo blue per Material recommendations for dark mode
     },
     secondary: {
-      main: "#ffbb66",  // logo yellow
+      main: "#FAC34D",  // logo yellow
     },
     type: "dark",
     text: {
