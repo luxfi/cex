@@ -1,3 +1,10 @@
+export { default as AboutSection } from "./AboutSection"
+export { default as AnalystSection } from "./AnalystSection"
+export { default as BuySellWidget } from './BuySellWidget'
+export { default as EarningsSection } from './EarningsSection'
+export { default as FinancialsSection } from './FinancialsSection'
+export { default as HistorySection } from './HistorySection'
+export { default as OtherFilmsTrading } from './OtherFilmsTrading'
 export { default as TradeView } from './TradeView'
 export { default as OrderBook } from './OrderBook'
 export { default as TradeHistoryBook } from './TradeHistoryBook'
