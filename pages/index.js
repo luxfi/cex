@@ -1,7 +1,7 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { inject, observer } from "mobx-react"
 
-import { withStyles } from "@material-ui/core/styles"
+import { makeStyles } from "@material-ui/core/styles"
 
 import {
   Hero,
@@ -13,38 +13,38 @@ import {
 
 import { googlePageView } from '../util/generic'
 
-import styles from "../styles/pages/landing.style.js"
+const heroMaxHeight = 800
+const heroMinHeight = 600
 
-@inject("store")
-@observer
-class Index extends React.Component {
+const useStyles = makeStyles((theme) => {
+  return {
+    hero: {
+      height: '90vh',
+      maxHeight: heroMaxHeight,
+      minHeight: heroMinHeight,
+    }
+  }
+})
 
-  componentDidMount() {
-    this.props.store.userPortfolio.getWatchlist()
+export default inject("store")(observer((props) => {
+  const classes = useStyles()
+  const { store } = props
+  // const loggedIn = store.userStore.loggedIn
+
+  useEffect(() => {
+    props.store.userPortfolio.getWatchlist()
     googlePageView()
-  }
+  }, [])
 
-  render() {
-    const { store } = this.props
-    const loggedIn = store.userStore.loggedIn
-    return (
-      <>
-        <Hero loggedIn={loggedIn} />
-        <div
-          style={{
-            transform: "translate(0, -52vh)"
-          }}
-        >
-          <TrailerSlider />
-          <ForYouSlider />
-          <StudioSlider />
-          <div style={{ marginBottom: "-52vh" }}>
-            <CategorySlider />
-          </div>
-        </div>
-      </>
-    )
-  }
-}
-
-export default withStyles(styles)(Index)
+  return (
+    <>
+      <Hero className={classes.hero} maxHeight={heroMaxHeight} minHeight={heroMinHeight}/>
+      <div style={{ marginTop: -80, position: 'relative' }}>
+        <TrailerSlider/>
+        <ForYouSlider />
+        <StudioSlider />
+        <CategorySlider />
+      </div>
+    </>
+  )
+}))
