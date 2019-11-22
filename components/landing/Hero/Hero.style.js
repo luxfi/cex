@@ -22,7 +22,7 @@ export default theme => ({
     padding: "11px 24px"
   },
   watchTrailerButtonText: {
-    color: "#000",
+    color: "inherit !important",
   }
 })
 
