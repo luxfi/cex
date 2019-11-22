@@ -144,9 +144,6 @@ export default inject("store")(observer((props) => {
                         </Button>
                       </Grid>
                     </Grid>
-                    <br />
-                    <br />
-                    <br />
                   </Grid>
                 </Grid>
               </HeroImg>
