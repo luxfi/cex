@@ -12,6 +12,7 @@ export default theme => ({
 
     '& .slide-button': {
       margin: 0,
+      background: 'transparent !important',
     }
   },
 })
