@@ -1,50 +1,65 @@
 import React from "react"
 import { Parallax, Background } from 'react-parallax'
 
+import { makeStyles } from "@material-ui/core/styles"
+
+const strength = 300
+
+const useStyles = makeStyles((theme) => {
+  return {
+    heroImageContainer: {
+      overflow: 'hidden',
+      backgroundColor: theme.palette.common.black,
+      height: '100%',
+      minHeight: props => props.minHeight,
+      margin: 0,
+      padding: 0,
+      border: 0,
+      display: 'flex',
+      alignItems: 'center',
+      '& .react-parallax': {
+        height: '100%',
+        width: '100%',
+      },
+      '& .react-parallax-content': {
+        height: '100%',
+      },
+    },
+    heroImage: {
+      '& img': {
+        minHeight: props => props.minHeight,
+        maxHeight: props => props.maxHeight,
+        height: `calc(100%)`,
+        width: 'auto !important',
+      }
+    },
+    heroImageContent: {
+      width: '100%',
+      height: '100%',
+    },
+  }
+})
+
 export default props => {
-  const { className, children, img } = props
+  const { children, img } = props
+
+  const classes = useStyles(props)
+
   return (
     <>
-      <div className={`hero-image-container ${className}`}>
-        <Parallax strength={300}>
+      <div className={classes.heroImageContainer}>
+        <Parallax>
           <Background>
-            <div className='hero-image'>
+            <div className={classes.heroImage}>
               { img }
             </div>
           </Background>
-          <div className='hero-image-content'>
+          <div className={classes.heroImageContent}>
             {children}
           </div>
         </Parallax>
       </div>
       <style jsx>{`
-        .hero-image-container {
-          overflow: hidden;
-          background-color: #000;
-          height: 115vh;
-          min-height: 600px;
-          margin: 0px;
-          padding: 0px;
-          border: 0px;
-          display: flex;
-          align-items: center;
-        }
-
-        .hero-image-container :global(.react-parallax) {
-          height: 100%;
-        }
-
-        .hero-image :global(img) {
-          min-height: 800px;
-          height: 130vh;
-          margin-left: 50vw;
-          margin-top: 5vh;
-          width: auto !important;
-        }
-
-        .hero-image-content {
-          width: 100vw;
-        }
       `}</style>
     </>
   )
