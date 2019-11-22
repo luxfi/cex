@@ -1,6 +1,6 @@
 export default [
    {
-      title: "Discover",
+      title: "discover",
       link: "/"
        /*items: [
        {
@@ -26,10 +26,10 @@ export default [
     },
     {
      title: "earn",
-     placeholder: "Earn"
+     link: "/portfolio/rewards"
     },
    {
      title: "trade",
-     placeholder: "Trade"
+     link: "/trade/terminator-dark-fate"
    }
 ]

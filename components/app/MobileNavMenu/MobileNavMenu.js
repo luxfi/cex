@@ -14,9 +14,9 @@ import {
   Divider
 } from "@material-ui/core"
 
-import { 
-  SideDrawer, 
-  CustomLink 
+import {
+  SideDrawer,
+  CustomLink
 } from ".."
 
 import { makeStyles } from "@material-ui/core/styles"
@@ -50,14 +50,14 @@ export default (props) => {
 
 const NavElements = (props) => {
 
-  const { 
+  const {
     handlePlaceholder,
-    handleClose 
+    handleClose
   } = props
 
   const handlePlaceHolderAndClose = (text) => {
     handlePlaceholder(text)
-    handleClose() 
+    handleClose()
   }
 
   const classes = useStyles()
@@ -81,7 +81,9 @@ const NavElements = (props) => {
     }
     else if ('link' in elementDef) {
       result.push(
-        <ListItem className={classes.listButton} button key={elementDef.link}>
+        <ListItem className={classes.listButton} button key={elementDef.link} onClick={() => {
+          handleClose()
+        }}>
           <CustomLink href={elementDef.link} className={classes.listButtonLink}>
             {elementDef.title}
           </CustomLink>
@@ -90,10 +92,11 @@ const NavElements = (props) => {
     }
     else {
       result.push(
-        <SubNav 
+        <SubNav
           menuDefinition={elementDef}
           classes={classes}
           handlePlaceHolder={handlePlaceHolderAndClose}
+          handleClose={handleClose}
           key={elementDef.link}
         />
       )
@@ -116,7 +119,8 @@ const SubNav = (props) => {
   const {
     classes,
     menuDefinition,
-    handlePlaceHolder
+    handlePlaceHolder,
+    handleClose
   } = props
 
   const [open, setOpen] = React.useState(false)
@@ -142,6 +146,9 @@ const SubNav = (props) => {
                     className={classes.listButtonSublist}
                     button
                     key={item.link}
+                    onClick={() => {
+                      handleClose()
+                    }}
                   >
                     <CustomLink href={item.link} className={classes.listButtonLink}>
                       <ListItemText primary={item.title} />
@@ -172,8 +179,10 @@ const SubNav = (props) => {
 const Logo = (props) => {
   const {classes} = props
   return (
-    <NextLink href="/" className={classes.logoLink}>
-      <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.logoImg}/>
-    </NextLink>
+    <div className={classes.logoLink}>
+      <NextLink href="/">
+        <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.logoImg}/>
+      </NextLink>
+    </div>
   )
 }
