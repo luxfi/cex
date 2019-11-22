@@ -51,42 +51,6 @@ import midstream from 'midstream'
 import { isRequired } from '@hanzo/middleware'
 import { MUIText } from '@hanzo/react'
 
-const TVChartContainer = dynamic(
-  async () => {
-    const mod = await import("../TVChartContainer")
-    return mod.TVChartContainer
-  },
-  {
-    ssr: false,
-    loading: () => <div style={{ color: "red" }}>This is loading</div>
-  }
-)
-
-const getActiveChart = (activeChart, { chartData, yDomain, labels }) => {
-  switch (activeChart) {
-    case "candlestick":
-      return (
-        <ChartCandlestickFake
-          data={chartData}
-          yDomain={yDomain}
-          labels={labels}
-        />
-      )
-    case "line-chart":
-      return (
-        <ChartLineSeries
-          data={chartData}
-          yDomain={yDomain}
-          labels={labels}
-        />
-      )
-    case 2:
-      return null
-    default:
-      return null
-  }
-}
-
 const DollarFormatCustom = (props) => {
   const { inputRef, onBlur, ...other } = props;
 
@@ -98,14 +62,14 @@ const DollarFormatCustom = (props) => {
         let n = parseFloat(values.value)
         onBlur({
           target: {
-            value: isNaN(n) ? 0 : n
+            value: isNaN(n) ? 0 : n,
           },
-        });
+        })
       }}
       isNumericString
       prefix="$"
     />
-  );
+  )
 }
 
 const NumberFormatCustom = (props) => {
@@ -119,13 +83,13 @@ const NumberFormatCustom = (props) => {
         let n = parseFloat(values.value)
         onBlur({
           target: {
-            value: isNaN(n) ? 0 : n
+            value: isNaN(n) ? 0 : n,
           },
-        });
+        })
       }}
       isNumericString
     />
-  );
+  )
 }
 
 const useStyles = makeStyles((theme) => {
@@ -237,6 +201,11 @@ export default props => {
     stockName,
     accountBalance,
   } = props
+
+  if (!orderBook.isReady) {
+    return <Typography>Loading chart...</Typography>
+  }
+
   let labels = timelineLabels()
 
   const [mode, setMode] = useState(0)
@@ -288,8 +257,6 @@ export default props => {
     } catch (e) {
     }
   }
-
-  window.orderBook = orderBook
 
   const meanPrice = orderBook.book ? parseFloat(orderBook.book.meanPrice) : 0
   const spread = orderBook.book ? parseFloat(orderBook.book.spread) : 0
