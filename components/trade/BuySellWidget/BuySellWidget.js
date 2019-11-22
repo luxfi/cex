@@ -25,7 +25,7 @@ const BuySellWidget = ({
   createOrder,
   redirectLogin,
   movieCategories,
-  accountBalance
+  accountBalance,
 }) => {
   const [mode, setMode] = useState(0)
   const [orderType, setOrderType] = useState('bid')
@@ -41,7 +41,7 @@ const BuySellWidget = ({
     mode === 0 ? setOrderType('bid') : setOrderType('ask')
   }, [mode])
 
-  const insufficientFunds = (totalCost) => {
+  const insufficientFunds = totalCost => {
     if (totalCost > accountBalance) {
       const message = errorNotEnoughFunds(totalCost, shares, ticker)
       setErrorMessage(message)
@@ -53,7 +53,7 @@ const BuySellWidget = ({
   const submitOrder = async () => {
     if (!shares) return
     const price = parseFloat(marketPrice)
-    const totalCost = price * shares
+    const totalCost = (price * shares).toFixed(2)
     if (insufficientFunds(totalCost)) return
     const order = {
       side: orderType,
@@ -75,7 +75,7 @@ const BuySellWidget = ({
   const reviewOrder = () => {
     if (!shares) return
     const price = parseFloat(marketPrice)
-    const totalCost = price * shares
+    const totalCost = (price * shares).toFixed(2)
     if (insufficientFunds(totalCost)) return
     setQuote(price)
     setActiveStep('review')
@@ -226,12 +226,21 @@ const BuySellWidget = ({
         )}
         {errorMessage && (
           <Grid item xs>
-            <Typography>{errorMessage.title}</Typography>
-            {errorMessage.body.map((text, i) => (
-              <Typography component='p'>
-                {text}
+            <Box mt={2}>
+              <Typography variant="subtitle1" gutterBottom>
+                <Box component="span" mr={0.5}>
+                  <ErrorIcon fontSize="inherit" />
+                </Box>
+                <Box component="span" fontWeight="fontWeightBold">
+                  {errorMessage.title}
+                </Box>
               </Typography>
-            ))}
+              {errorMessage.body.map((text, i) => (
+                <Typography component="p" variant="body2" gutterBottom>
+                  <Box mb={2}>{text}</Box>
+                </Typography>
+              ))}
+            </Box>
           </Grid>
         )}
         {activeStep === 'initial' && (
