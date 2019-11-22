@@ -51,16 +51,6 @@ const ExternalLink = React.forwardRef(
   ),
 )
 
-const formatMonthlyStats = (price, valueDelta) => {
-  return (
-    (valueDelta > 0 ? '+ ' : '- ') +
-    Math.abs(valueDelta) +
-    ' (' +
-    ((valueDelta / price) * 100).toFixed(2) +
-    '%) '
-  )
-}
-
 @inject('store')
 @observer
 class Index extends React.Component {
@@ -107,6 +97,12 @@ class Index extends React.Component {
     const { router } = this.props
     const { slug } = router.query
     const { movieStore, orderBook, userStore, userPortfolio } = this.props.store
+    const { loggedIn } = userStore
+    const redirectLogin = () => {
+      if (!loggedIn) {
+        return router.push('/login')
+      }
+    }
     const movie = movieStore.getMovieBySlug(slug)
     // orderBook stuff
     let takeResultsArray = orderBook.takeResults.slice(0)
@@ -147,10 +143,12 @@ class Index extends React.Component {
     const maxSell = userPortfolio.getMaxSell(movie.ticker)
 
     const addToWatchlist = t => {
+      redirectLogin()
       userPortfolio.addToWatchlist(t)
     }
 
     const removeFromWatchlist = t => {
+      redirectLogin()
       userPortfolio.removeFromWatchlist(t)
     }
 
@@ -195,6 +193,7 @@ class Index extends React.Component {
                 removeFromWatchlist={removeFromWatchlist}
                 addToWatchlist={addToWatchlist}
                 movies={movieStore.movies}
+                redirectLogin={redirectLogin}
               />
             ) : (
               <ProTrader

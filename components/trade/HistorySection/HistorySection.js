@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Grid, Typography, Box, Divider } from '@material-ui/core'
+import { pluralize } from '../../../util/generic'
 
 const historyData = [
   {
@@ -24,17 +25,6 @@ const historyData = [
     price: '186.44',
   },
 ]
-
-// pluralize(0, 'apple'); // 'apples'
-// pluralize(1, 'apple'); // 'apple'
-// pluralize(2, 'apple'); // 'apples'
-const pluralize = (val, word, plural = word + 's') => {
-  const _pluralize = (num, word, plural = word + 's') =>
-    [1, -1].includes(Number(num)) ? word : plural
-  if (typeof val === 'object')
-    return (num, word) => _pluralize(num, word, val[word])
-  return _pluralize(val, word, plural)
-}
 
 const formatCurrency = new Intl.NumberFormat('en-US', {
   style: 'currency',

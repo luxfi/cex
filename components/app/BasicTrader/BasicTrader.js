@@ -48,6 +48,7 @@ export default props => {
     addToWatchlist,
     atomTicketsURL,
     movies,
+    redirectLogin,
   } = props
   const stock = toJS(orderBook.stock)
   let { connected } = orderBook
@@ -88,6 +89,7 @@ export default props => {
                 orderType="bid"
                 funds={funds}
                 createOrder={createOrder}
+                redirectLogin={redirectLogin}
               />
             </Grid>
             <Grid item xs={12}>
