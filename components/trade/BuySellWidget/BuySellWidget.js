@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Router from 'next/router'
 import {
   Grid,
   Typography,
@@ -9,77 +10,29 @@ import {
   Tabs,
   Tab,
 } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
-
-const useStyles = makeStyles(theme => ({
-  paper: {
-    padding: theme.spacing(2),
-    margin: 'auto',
-    maxWidth: 500,
-  },
-  reviewButton: {
-    color: '#000',
-    backgroundColor: '#FBC43E',
-    padding: '12px 24px',
-  },
-  reviewButtonText: {
-    color: '#000',
-  },
-  backButton: {
-    color: 'transparent',
-    border: '1px solid #FBC43E',
-    padding: '11px 24px',
-  },
-  backButtonText: {
-    color: '#FBC43E',
-  },
-  label: {
-    textTransform: 'capitalize',
-  },
-}))
-
 import ErrorIcon from '@material-ui/icons/Error'
+import useStyles from './buySellWidget.style'
+import { isStringInteger } from '../../../util/generic'
+import {
+  errorNotEnoughFunds,
+  VALID_SHARES_ERROR,
+  QUOTE_NOT_MARKET_WARNING,
+} from './widgetMessages'
 
-const errorNotEnoughFunds = ({ total, shares, funds, ticker }) => {
-  const addPlural = parseInt(shares) > 1 ? 's' : ''
-  return `
-Not Enough Buying Power
-You don’t have enough buying power to buy 1 share of ${ticker}.
-
-Please deposit $${total} to purchase ${shares} share${addPlural} at market price (5% collar included).
-
-Market orders on ESX are placed as limit orders up to 5% above the market price in order to protect customers from spending more than they have in their ESX account.`
-}
-
-const notValid = () => {
-  return `Error
-  Please enter a valid number of shares.`
-}
-
-const reviewOrderText = `The quote you see may not be the price at which your order is executed.`
-
-const BuySellWidget = ({
-  marketPrice,
-  ticker,
-  funds,
-  createOrder,
-}) => {
+const BuySellWidget = ({ marketPrice, ticker, funds, createOrder, redirectLogin }) => {
   const [mode, setMode] = useState(0)
-  const [orderType, setOrderType] = useState("bid")
+  const [orderType, setOrderType] = useState('bid')
   const [shares, setShares] = useState('')
   const [quote, setQuote] = useState('')
   const [sharesPurchased, setSharesPurchased] = useState(0)
   const [totalPurchasePrice, setTotalPurchasePrice] = useState(0)
   const [activeStep, setActiveStep] = React.useState('initial')
   const classes = useStyles()
+
   useEffect(() => {
-    if (mode === 0 ) {
-      setOrderType("bid")
-    }
-    if (mode === 1) {
-      setOrderType('ask')
-    }
+    mode === 0 ? setOrderType('bid') : setOrderType('ask')
   }, [mode])
+
   const submitOrder = async () => {
     // Todo check if funds available at current market
     // If not, put message that market price has changed, currently insuffiecient funds
@@ -108,24 +61,19 @@ const BuySellWidget = ({
     setActiveStep('review')
   }
 
-  const isInteger = stringInput => {
-    // match a digit one or more times
-    const rx = new RegExp(/^\d+(?:\.\d{1,2})?$/)
-    return rx.test(stringInput)
-  }
-
   const handleInputChange = evt => {
     evt.preventDefault()
     const { value } = evt.target
     if (value === '') {
       setShares(value)
     }
-    if (isInteger(value)) {
+    if (isStringInteger(value)) {
       setShares(parseInt(value))
     }
   }
 
   const handleOrder = () => {
+    redirectLogin()
     if (activeStep === 'review') {
       submitOrder()
     } else if (activeStep === 'initial') {
@@ -279,7 +227,7 @@ const BuySellWidget = ({
           <>
             <Grid item xs>
               <Typography id="info" variant="subtitle2">
-                <ErrorIcon fontSize="inherit" /> {reviewOrderText}
+                <ErrorIcon fontSize="inherit" /> {QUOTE_NOT_MARKET_WARNING}
               </Typography>
             </Grid>
             <Grid item xs>
