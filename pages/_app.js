@@ -74,8 +74,12 @@ class MyMobxApp extends App {
       Component,
       pageProps,
       width,
-      classes
+      classes,
+      router
     } = this.props
+
+
+    console.log("PATH: " + router.route)
 
     const showDesktopNav = isWidthUp('md', width)
     const showDesktopProfileMenu = isWidthUp('sm', width)
@@ -101,11 +105,7 @@ class MyMobxApp extends App {
                 handlePlaceholder={this.placeholder}
               />
               <div component="main" className={classes.main}>
-                <Component
-                  {...pageProps}
-                  darkTheme={darkTheme}
-                  lightTheme={lightTheme}
-                />
+                <Component {...pageProps} pathName={router.route}/>
               </div>
               <CustomModal
                 open={this.mobxStore.uiStore.modal.open}

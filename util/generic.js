@@ -18,7 +18,7 @@ const padDollarAmount = (amount) => {
 
 const googlePageView = () => {
  ReactGA.pageview(window.location.pathname + window.location.search);
- console.log('Page view',  window.location.pathname + window.location.search)
+ //console.log('Page view',  window.location.pathname + window.location.search)
 }
 
 const formatCurrency = (num, currency='USD') => {
