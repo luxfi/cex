@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "next/link"
+import CustomLink from "../../app/CustomLink"
 import { toJS } from "mobx"
 import { inject, observer } from "mobx-react"
 import { withRouter, Router } from "next/router"
@@ -32,14 +33,6 @@ import { faPlay } from "@fortawesome/free-solid-svg-icons"
 import styles from "./film.style.js"
 
 import { isObservableArray } from "mobx"
-
-const ButtonLink = React.forwardRef(
-  ({ className, href, hrefAs, children }, ref) => (
-    <Link ref={ref} href={href || ""} as={hrefAs}>
-      <a className={className}>{children}</a>
-    </Link>
-  )
-)
 
 const ExternalLink = React.forwardRef(
   ({ className, href, hrefAs, children }, ref) => (
@@ -120,9 +113,7 @@ class Index extends React.Component {
   renderInvestButton(className, movie, text, onClick) {
     return (
       <Button
-        component={ButtonLink}
-        target="_blank"
-        rel="noopener noreferrer"
+        component={CustomLink}
         style={{
           color: "black",
           height: "48px"
@@ -172,7 +163,7 @@ class Index extends React.Component {
           <div>
             <TrailerModal movie={movie} />
             <Button
-              href={ "/trade/" + movie.movieSlug }
+              href={"/trade/" + movie.movieSlug}
               rel="noopener noreferrer"
               variant="contained"
               className={classes.movieButton}
@@ -438,22 +429,22 @@ class Index extends React.Component {
 
     return (
       <>
-        { this.state.selectedTab === "about" &&
+        {this.state.selectedTab === "about" &&
           <article
             className={classNames(classes.container, classes.outermost)}
           >
-            { this.renderUpperRow(
+            {this.renderUpperRow(
               classes,
               this.state.selectedTab,
               movie
             )}
-            { this.renderAboutMain(classes, movie, addToWatchlist) }
-            { this.renderAboutMore(classes, movie) }
+            {this.renderAboutMain(classes, movie, addToWatchlist)}
+            {this.renderAboutMore(classes, movie)}
           </article>
         }
-        { this.state.selectedTab === "invest" && this.state.selectedTrader === "basic" &&
+        {this.state.selectedTab === "invest" && this.state.selectedTrader === "basic" &&
           <article>
-            { this.renderInvestMain(
+            {this.renderInvestMain(
               classes,
               movie,
               orderBook.price,
@@ -480,9 +471,9 @@ class Index extends React.Component {
             )}
           </article>
         }
-        { this.state.selectedTab === "invest" && this.state.selectedTrader === "pro" &&
+        {this.state.selectedTab === "invest" && this.state.selectedTrader === "pro" &&
           <article>
-            { this.renderInvestMain(
+            {this.renderInvestMain(
               classes,
               movie,
               orderBook.price,
