@@ -154,50 +154,6 @@ export default inject("store")(observer((props) => {
           })}
         </MyCarousel>
       </div>
-      <style jsx>{`
-        // .hero-container {
-        //   position: relative;
-        //   overflow: hidden;
-        //   margin-top: -233px
-        // }
-
-        // .hero-container :global(.logo) {
-        //   width: 100%;
-        //   margin: 0;
-        //   font-size: 64px;
-        // }
-
-        // .esx-logo {
-        //   height: 2rem;
-        //   position: relative;
-        //   top: 1px;
-        // }
-
-        // .hero-container :global(p) {
-        //   color: #FFF;
-        // }
-
-        // .hero-container :global(.control-dots) {
-        //   bottom: 15vh;
-        //   display: none:
-        // }
-
-        // // @media (max-width: 768px) {
-        // //   .hero-container :global(.button) {
-        // //     margin: 0 0;
-        // //     width: 100%;
-        // //   }
-
-        // //   .hero-container :global(.watch-trailer-button) {
-        // //     margin: 0 0 16px;
-        // //   }
-        // // }
-
-        // a {
-        //   color: #FFF;
-        //   text-decoration: none;
-        // }
-      `}</style>
     </div>
   )
 }))
