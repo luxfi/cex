@@ -9,5 +9,9 @@ export default theme => ({
     flexGrow: 1,
     marginTop: theme.spacing(8),
     marginBottom: theme.spacing(2),
+
+    '& .slide-button': {
+      margin: 0,
+    }
   },
 })

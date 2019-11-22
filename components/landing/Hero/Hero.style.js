@@ -1,24 +1,55 @@
-import { container, title } from "../../../styles/esxStyles.js"
-
 export default theme => ({
   container: {
-    ...container,
-    marginTop: '30vh',
     zIndex: "12",
-    color: "#FFFFFF",
-    marginLeft: theme.spacing(4),
-    "@media (max-width: 573px)": {
-      marginTop: '20vh',
+    color: theme.palette.common.white,
+    marginTop: -64,
+    height: '100%',
+    '& > *': {
+      height: '100%',
+    },
+    '& .carousel': {
+      height: '100%',
+    },
+    '& .slider': {
+      height: '100%',
+    },
+    '& .slider-wrapper': {
+      height: '100%',
+      padding: 0,
+    },
+    '& .logo': {
+      maxHeight: 100,
+      width: 'initial',
+    },
+  },
+  gridContainer: {
+    maxWidth: theme.breakpoints.lg,
+    width: '100%',
+    height: '100%',
+    padding: theme.spacing(3),
+    paddingBottom: 110,
+    [theme.breakpoints.up('lg')]: {
+      margin: `0 calc((100% - ${theme.breakpoints.lg}px) / 2)`,
+    },
+  },
+  buttonGridContainer: {
+    [theme.breakpoints.down('sm')]: {
+      '& > *': {
+        width: '100%',
+      },
+      '& button': {
+        width: '100%',
+      },
     },
   },
   investButton: {
-    color: "#000",
+    color: theme.palette.common.black,
     backgroundColor: "#FBC43E",
     padding: "12px 24px"
   },
   watchTrailerButton: {
-    color: "#FFF",
-    border: "1px solid #FFF",
+    color: theme.palette.common.white,
+    border: `1px solid ${theme.palette.common.white}`,
     padding: "11px 24px"
   },
   watchTrailerButtonText: {
