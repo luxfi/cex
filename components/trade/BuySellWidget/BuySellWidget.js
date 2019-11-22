@@ -18,34 +18,43 @@ import {
   VALID_SHARES_ERROR,
   QUOTE_NOT_MARKET_WARNING,
 } from './widgetMessages'
-import { AccountBalance } from '@material-ui/icons'
 
 const BuySellWidget = ({
   marketPrice,
   ticker,
-  funds,
   createOrder,
   redirectLogin,
   movieCategories,
+  accountBalance
 }) => {
   const [mode, setMode] = useState(0)
   const [orderType, setOrderType] = useState('bid')
   const [shares, setShares] = useState('')
   const [quote, setQuote] = useState('')
-  const [sharesPurchased, setSharesPurchased] = useState(0)
-  const [totalPurchasePrice, setTotalPurchasePrice] = useState(0)
+  const [sharesPurchased, setSharesPurchased] = useState('')
+  const [totalPurchasePrice, setTotalPurchasePrice] = useState('')
   const [activeStep, setActiveStep] = React.useState('initial')
+  const [errorMessage, setErrorMessage] = useState(null)
   const classes = useStyles()
 
   useEffect(() => {
     mode === 0 ? setOrderType('bid') : setOrderType('ask')
   }, [mode])
 
+  const insufficientFunds = (totalCost) => {
+    if (totalCost > accountBalance) {
+      const message = errorNotEnoughFunds(totalCost, shares, ticker)
+      setErrorMessage(message)
+      return true
+    }
+    return false
+  }
+
   const submitOrder = async () => {
-    // Todo check if funds available at current market
-    // If not, put message that market price has changed, currently insuffiecient funds
     if (!shares) return
     const price = parseFloat(marketPrice)
+    const totalCost = price * shares
+    if (insufficientFunds(totalCost)) return
     const order = {
       side: orderType,
       type: 'market',
@@ -56,18 +65,21 @@ const BuySellWidget = ({
 
     await createOrder(order)
     setSharesPurchased(shares)
-    setTotalPurchasePrice((price * shares).toFixed(2))
+    setTotalPurchasePrice(totalCost)
+    setActiveStep('success')
     setShares(0)
     setQuote('')
-    setActiveStep('success')
+    setErrorMessage(null)
   }
 
   const reviewOrder = () => {
-    // Todo check if funds available - else error
-    if (!shares) return //need total funds if market order
-
-    setQuote(marketPrice)
+    if (!shares) return
+    const price = parseFloat(marketPrice)
+    const totalCost = price * shares
+    if (insufficientFunds(totalCost)) return
+    setQuote(price)
     setActiveStep('review')
+    setErrorMessage(null)
   }
 
   const handleInputChange = evt => {
@@ -212,7 +224,16 @@ const BuySellWidget = ({
             </Grid>
           </>
         )}
-        {/* show buy or review button if not showing successful order message */}
+        {errorMessage && (
+          <Grid item xs>
+            <Typography>{errorMessage.title}</Typography>
+            {errorMessage.body.map((text, i) => (
+              <Typography component='p'>
+                {text}
+              </Typography>
+            ))}
+          </Grid>
+        )}
         {activeStep === 'initial' && (
           <Grid item xs>
             <Button
