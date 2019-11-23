@@ -15,6 +15,7 @@ import useStyles from './buySellWidget.style'
 import { isStringInteger } from '../../../util/generic'
 import {
   errorNotEnoughFunds,
+  errorNotEnoughShares,
   validNumberOfShares,
   QUOTE_NOT_MARKET_WARNING,
 } from './widgetMessages'
@@ -26,6 +27,7 @@ const BuySellWidget = ({
   redirectLogin,
   movieCategories,
   accountBalance,
+  maxSell,
 }) => {
   const [mode, setMode] = useState(0)
   const [orderType, setOrderType] = useState('bid')
@@ -42,7 +44,7 @@ const BuySellWidget = ({
   }, [mode])
 
   const insufficientFunds = totalCost => {
-    if (totalCost > accountBalance) {
+    if (parseFloat(totalCost) > parseFloat(accountBalance)) {
       const message = errorNotEnoughFunds(totalCost, shares, ticker)
       setErrorMessage(message)
       return true
@@ -59,11 +61,24 @@ const BuySellWidget = ({
     return false
   }
 
+  const notEnoughShares = () => {
+    if (shares > maxSell) {
+      const message = errorNotEnoughShares(maxSell, ticker)
+      setErrorMessage(message)
+      return true
+    }
+    return false
+  }
+
   const submitOrder = async () => {
     if (sharesNotValid()) return
     const price = parseFloat(marketPrice)
     const totalCost = (price * shares).toFixed(2)
-    if (insufficientFunds(totalCost)) return
+    if (orderType === 'bid') {
+      if (insufficientFunds(totalCost)) return
+    } else {
+      if (notEnoughShares()) return
+    }
     const order = {
       side: orderType,
       type: 'market',
@@ -85,7 +100,11 @@ const BuySellWidget = ({
     if (sharesNotValid()) return
     const price = parseFloat(marketPrice)
     const totalCost = (price * shares).toFixed(2)
-    if (insufficientFunds(totalCost)) return
+    if (orderType === 'bid') {
+      if (insufficientFunds(totalCost)) return
+    } else {
+      if (notEnoughShares()) return
+    }
     setQuote(price)
     setActiveStep('review')
     setErrorMessage(null)
