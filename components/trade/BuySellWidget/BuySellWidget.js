@@ -264,8 +264,10 @@ const BuySellWidget = ({
                 </Box>
               </Typography>
               {errorMessage.body.map((text, i) => (
-                <Typography component="p" variant="body2" gutterBottom>
-                  <Box mb={2}>{text}</Box>
+                <Typography key={i} component="p" variant="body2" gutterBottom>
+                  <Box mb={2} component="span">
+                    {text}
+                  </Box>
                 </Typography>
               ))}
             </Box>
