@@ -15,7 +15,7 @@ import useStyles from './buySellWidget.style'
 import { isStringInteger } from '../../../util/generic'
 import {
   errorNotEnoughFunds,
-  VALID_SHARES_ERROR,
+  validNumberOfShares,
   QUOTE_NOT_MARKET_WARNING,
 } from './widgetMessages'
 
@@ -50,8 +50,17 @@ const BuySellWidget = ({
     return false
   }
 
+  const sharesNotValid = () => {
+    if (!shares) {
+      const message = validNumberOfShares()
+      setErrorMessage(message)
+      return true
+    }
+    return false
+  }
+
   const submitOrder = async () => {
-    if (!shares) return
+    if (sharesNotValid()) return
     const price = parseFloat(marketPrice)
     const totalCost = (price * shares).toFixed(2)
     if (insufficientFunds(totalCost)) return
@@ -73,7 +82,7 @@ const BuySellWidget = ({
   }
 
   const reviewOrder = () => {
-    if (!shares) return
+    if (sharesNotValid()) return
     const price = parseFloat(marketPrice)
     const totalCost = (price * shares).toFixed(2)
     if (insufficientFunds(totalCost)) return

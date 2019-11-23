@@ -16,9 +16,13 @@ const errorNotEnoughFunds = (total, shares, ticker) => {
   return { title, body }
 }
 
-const VALID_SHARES_ERROR = `Error
-  Please enter a valid number of shares.`
+const validNumberOfShares = (total, shares, ticker) => {
+  const title = 'Error'
+  const p1 = `Please enter a valid number of shares.`
+  const body = [p1]
+  return { title, body }
+}
 
 const QUOTE_NOT_MARKET_WARNING = `The quote you see may not be the price at which your order is executed.`
 
-export { errorNotEnoughFunds, VALID_SHARES_ERROR, QUOTE_NOT_MARKET_WARNING }
+export { errorNotEnoughFunds, validNumberOfShares, QUOTE_NOT_MARKET_WARNING }
