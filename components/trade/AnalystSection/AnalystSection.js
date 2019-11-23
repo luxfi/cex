@@ -156,7 +156,7 @@ const AnalystSection = ({}) => {
         <Grid container spacing={2} direction="row">
           {analystSummary.map((summary, i) => {
             return (
-              <Grid item xs={12} sm={2} md={4}>
+              <Grid item xs={12} sm={2} md={4} key={i}>
                 <Card
                   style={{
                     height: '200px',
