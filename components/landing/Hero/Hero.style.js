@@ -26,10 +26,12 @@ export default theme => ({
     maxWidth: theme.breakpoints.lg,
     width: '100%',
     height: '100%',
-    padding: theme.spacing(3),
+    padding: `${theme.spacing(3)}px 0`,
     paddingBottom: 110,
-    [theme.breakpoints.up('lg')]: {
-      margin: `0 calc((100% - ${theme.breakpoints.lg}px) / 2)`,
+    margin: '0 60px',
+    [theme.breakpoints.up('xl')]: {
+      maxWidth: 1800,
+      margin: '0 auto',
     },
   },
   buttonGridContainer: {
