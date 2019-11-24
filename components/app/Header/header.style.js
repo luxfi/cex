@@ -8,8 +8,8 @@ export default (theme) => {
       paddingLeft: theme.spacing(4),  // 32px
       paddingRight: theme.spacing(4),
       [theme.breakpoints.down("xs")]: {
-        paddingLeft: theme.spacing(1),
-        paddingRight: theme.spacing(1),
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2),
       },
       [theme.breakpoints.up("lg")]: {
         paddingLeft: theme.spacing(6),
@@ -32,12 +32,16 @@ export default (theme) => {
       alignItems: "center",
       justifyContent: "space-between"
     },
-
+    menuButton: {
+      paddingLeft: 0
+    },
     mobileLogo : {
       height: "26px",
       display: "block",
     },
-
+    accountMenuButton: {
+      paddingRight: 0
+    },
     mobile: {
       display: "flex",
       flexDirection: "row",
