@@ -271,7 +271,7 @@ export default props => {
 
   return (
     <Element>
-      <Box ml={-3} mr={-3} mt={2}>
+      <Box ml={-3} mr={-3} mt={-8}>
         <Grid container spacing={0}>
           <Grid item xs={12} sm={4} md={3}>
             <Paper square={true} className={ classes.tabsPaper }>
