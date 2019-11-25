@@ -174,7 +174,8 @@ export default class UserPortfolio {
     //   price: number,
     //   categories: array[string]
     // }
-
+    debugger
+    order = {...order, ticker}
     const _investments = localStorage.getItem("investments")
 
     if (_investments !== null) {
@@ -216,16 +217,23 @@ export default class UserPortfolio {
 
     updateBalance(orderType, price * quantity)
 
-    // Add transaction array
-    if (!this.investments[holdingIndex].transactions) {
-      this.investments[holdingIndex].transactions = []
-    }
+    if (this.investments[holdingIndex]) {
+      if (!this.investments[holdingIndex].transactions) {
+        // Add transaction array
+        this.investments[holdingIndex].transactions = []
+      }
 
-    // Add order to transaction array
-    this.investments[holdingIndex].transactions.unshift(Object.assign({
-      type: orderType,
-      date: moment().format('LLL'),
-    }, order))
+      // Add order to transaction array
+      this.investments[holdingIndex].transactions.unshift(
+        Object.assign(
+          {
+            type: orderType,
+            date: moment().format('LLL'),
+          },
+          order,
+        ),
+      )
+    }
 
     this.updateHoldings()
     localStorage.setItem("investments", JSON.stringify(toJS(this.investments)))
