@@ -1,6 +1,3 @@
-const hrOpacity = "0.4"
-const fadedTextOpacity = "0.6"
-
 export default theme => {
   return {
     root: {
