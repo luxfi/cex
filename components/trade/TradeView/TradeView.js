@@ -72,8 +72,7 @@ class Index extends React.Component {
     userPortfolio.getInvestments()
     orderBook.connect(movie.ticker)
     this.props.store.orderBook.fetchStockData(movie.ticker)
-    window.store = this.props.store
-  }
+}
 
   componentWillUnmount() {
     // Disconnect socket
