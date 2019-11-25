@@ -25,7 +25,7 @@ export default (props) => {
   return (
     <>
       <Link href="/">
-        <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.logo} height="64px" />
+        <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.logo} height="42px" />
       </Link>
       <div className={classes.navOuter}>
         <div className={classes.navSpacer} />
@@ -51,9 +51,9 @@ const MainNavDropdown = (props) => {
     <PopupState variant="popover" popupId="menu-popover">
       {(popupState) => (
         <>
-        <Button 
+        <Button
           {...bindTrigger(popupState)}
-          className={classes.navButton} 
+          className={classes.navButton}
         >
           {menuDefinition.title}
         </Button >
@@ -90,7 +90,7 @@ const MainNavDropdown = (props) => {
 const DesktopMainNav = (props) => {
 
   const {
-    navStructure, 
+    navStructure,
     handlePlaceholder,
     classes
   } = props
@@ -100,7 +100,7 @@ const DesktopMainNav = (props) => {
 
     if ('placeholder' in navElement) {
       result.push(
-        <Button 
+        <Button
           className={classes.navButton}
           onClick={() => {
             handlePlaceholder(navElement.placeholder)
@@ -109,7 +109,7 @@ const DesktopMainNav = (props) => {
         >
           {navElement.title}
         </Button>
-      ) 
+      )
     }
     else if ('link' in navElement) {
       result.push(
@@ -120,13 +120,13 @@ const DesktopMainNav = (props) => {
             {navElement.title}
           </Button>
         </Link>
-      ) 
+      )
     }
     else /* menu */ {
       result.push(
-        <MainNavDropdown 
-          classes={classes} 
-          menuDefinition={navElement} 
+        <MainNavDropdown
+          classes={classes}
+          menuDefinition={navElement}
           handlePlaceholder={handlePlaceholder}
           key={`dropdown+${i}`}
         />
@@ -136,6 +136,6 @@ const DesktopMainNav = (props) => {
   return (
     <>
       {result}
-    </> 
+    </>
   )
 }
