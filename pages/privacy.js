@@ -8,7 +8,9 @@ class Privacy extends React.Component {
 
   render() {
     return (
-      <h1>Privacy Policy/h1>
+      <Container component="main" maxWidth="xl">
+        <h1>Privacy Policy</h1>
+      </Container>
     )
   }
 }
