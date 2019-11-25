@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { pluralize } from '../../../util/generic'
 import Router from 'next/router'
 import {
   Grid,
@@ -367,7 +368,15 @@ const BuySellWidget = ({
 
         <Grid item xs={12}>
           <Typography color="secondary">
-            ${parseFloat(accountBalance).toFixed(2)} Buying Power Available
+            {orderType === 'bid' ? (
+              <>
+                ${parseFloat(accountBalance).toFixed(2)} Buying Power Available
+              </>
+            ) : (
+              <>
+                You currently own {maxSell} {pluralize(maxSell, 'share')}
+              </>
+            )}
           </Typography>
         </Grid>
       </Grid>
