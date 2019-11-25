@@ -90,7 +90,8 @@ module.exports = withBundleAnalyzer(
             "/projectFaq": { page: "/projectFaq" },
             "/risks": { page: "/risks" },
             "/contact": { page: "/contact" },
-            "/about": { page: "/about" }
+            "/about": { page: "/about" },
+            "/placeholder": { page: "/placeholder" }
           });
         }
       })
