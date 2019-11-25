@@ -17,7 +17,7 @@ config.autoAddCss = false
 import {
   CustomSnackbar,
   Header,
-  MobileNavMenu, 
+  MobileNavMenu,
   Footer,
   CustomModal,
   MobileAccountMenu

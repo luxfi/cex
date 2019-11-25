@@ -13,6 +13,10 @@ export default theme => ({
     '& .slide-button': {
       margin: 0,
       background: 'transparent !important',
+    },
+    // TODO: Temp fix, needs to be done for all sliders
+    '& .slider-wrapper': {
+      width: '100%',
     }
   },
 })
