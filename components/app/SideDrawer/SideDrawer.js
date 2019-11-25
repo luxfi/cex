@@ -45,6 +45,7 @@ export default (props) => {
     <SwipeableDrawer 
       disableBackdropTransition={!iOS} 
       disableDiscovery={iOS} 
+      disableSwipeToOpen={true}
       className={className}
       open={open}
       onOpen={(ignore) => setOpen(true)}
