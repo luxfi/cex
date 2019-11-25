@@ -295,7 +295,6 @@ export default class OrderBook {
     // const { externalId, side, type, quantity, price, name } = order
     let externalId = uuid.v4()
     let name = this.ticker
-
     this.activeOrders[externalId] = true
     console.log("socketOrderCreate", order)
     this.socket.emit(

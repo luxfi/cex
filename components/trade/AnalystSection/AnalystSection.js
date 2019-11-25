@@ -47,6 +47,7 @@ const BorderLinearProgress = withStyles(theme => ({
   },
   bar: {
     borderRadius: 20,
+    backgroundColor: theme.palette.secondary.main,
   },
 }))(LinearProgress)
 
@@ -73,7 +74,6 @@ const useStyles = makeStyles(theme => ({
 
 const AnalystSection = ({}) => {
   const classes = useStyles()
-
   return (
     <Box mb={4.5} mt={6.5}>
       <Typography component="div" variant="subtitle2" gutterBottom>
@@ -120,14 +120,12 @@ const AnalystSection = ({}) => {
                         <BorderLinearProgress
                           className={classes.margin}
                           variant="determinate"
-                          color={color}
                           value={parseInt(data.rating)}
                         />
                       ) : (
                         <BorderLinearProgressWhite
                           className={classes.margin}
                           variant="determinate"
-                          color={color}
                           value={parseInt(data.rating)}
                         />
                       )}
@@ -153,7 +151,7 @@ const AnalystSection = ({}) => {
         <Grid container spacing={2} direction="row">
           {analystSummary.map((summary, i) => {
             return (
-              <Grid item xs={12} sm={2} md={4} key={i}>
+              <Grid item key={i} xs={12} sm={2} md={4}>
                 <Card
                   style={{
                     height: '200px',
@@ -171,7 +169,7 @@ const AnalystSection = ({}) => {
                     </Typography>
                     <Typography
                       variant="body2"
-                      component="span"
+                      component="div"
                       color="textPrimary"
                     >
                       <Box
