@@ -40,7 +40,6 @@ export default props => {
     createOrder,
     maxSell,
     marketOrderType,
-    funds,
     stockName,
     accountBalance,
     watchlist,
@@ -48,6 +47,7 @@ export default props => {
     addToWatchlist,
     atomTicketsURL,
     movies,
+    redirectLogin,
   } = props
   const stock = toJS(orderBook.stock)
   let { connected } = orderBook
@@ -86,8 +86,11 @@ export default props => {
                 marketPrice={marketPrice}
                 ticker={ticker}
                 orderType="bid"
-                funds={funds}
+                accountBalance={accountBalance}
                 createOrder={createOrder}
+                redirectLogin={redirectLogin}
+                movieCategories={movieCategories}
+                maxSell={maxSell}
               />
             </Grid>
             <Grid item xs={12}>
@@ -148,43 +151,6 @@ export default props => {
         </Grid>
         <Grid item lg={3} md={4} sm={6} xs={12} />
       </Grid>
-      {/* hide buy sell until there is a design for it */}
-      {/* <Grid item xs={12} sm={6}>
-          <BuySellForm
-            buttonColor="green"
-            buttonText="BUY"
-            orderType="bid"
-            ticker={ticker}
-            createOrder={createOrder}
-            orders={buyOrders}
-            orderBook={orderBook}
-            onExecute={onExecute}
-            createOrder={createOrder}
-            movieCategories={movieCategories}
-            marketOrderType={marketOrderType}
-            funds={funds}
-            connected={connected}
-            accountBalance={accountBalance}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <BuySellForm
-            buttonColor="red"
-            buttonText="SELL"
-            orderType="ask"
-            ticker={ticker}
-            orders={sellOrders}
-            orderBook={orderBook}
-            createOrder={createOrder}
-            onExecute={onExecute}
-            createOrder={createOrder}
-            movieCategories={movieCategories}
-            maxSell={maxSell}
-            marketOrderType={marketOrderType}
-            funds={funds}
-            accountBalance={accountBalance}
-          />
-        </Grid> */}
     </>
   )
 }

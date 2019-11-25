@@ -25,7 +25,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // the nice looking double chevrons are part of the "pro" package that costs money
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
 
-import styles from './trade.style.js'
+import styles from './proTrade.style.js'
 
 import { isObservableArray } from 'mobx'
 
@@ -72,7 +72,7 @@ class Index extends React.Component {
     userPortfolio.getInvestments()
     orderBook.connect(movie.ticker)
     this.props.store.orderBook.fetchStockData(movie.ticker)
-}
+  }
 
   componentWillUnmount() {
     // Disconnect socket
@@ -154,7 +154,7 @@ class Index extends React.Component {
       <>
         <article>
           <Box p={3} pt={8}>
-              <BasicTrader
+              <ProTrader
                 chartData={chartData}
                 yDomain={yDomain}
                 updatePrintInterval={updatePrintInterval}
@@ -168,9 +168,6 @@ class Index extends React.Component {
                 orderBook={orderBook}
                 book={orderBook.book}
                 ticker={movie.ticker}
-                atomTicketsURL={
-                  'https://www.atomtickets.com/movies/' + movie.atomTicketsSlug
-                }
                 createOrder={createOrder}
                 onExecute={(order, orderType) => {
                   return userPortfolio.onOrderExecute(order, orderType)
@@ -179,12 +176,6 @@ class Index extends React.Component {
                 maxSell={maxSell}
                 stockName={movie.name}
                 accountBalance={userStore.accountBalance}
-                userStore={userStore}
-                watchlist={userPortfolio.watchlist}
-                removeFromWatchlist={removeFromWatchlist}
-                addToWatchlist={addToWatchlist}
-                movies={movieStore.movies}
-                redirectLogin={redirectLogin}
               />
           </Box>
         </article>
