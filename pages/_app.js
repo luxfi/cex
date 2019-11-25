@@ -82,8 +82,6 @@ class MyMobxApp extends App {
     const showDesktopNav = isWidthUp('md', width)
     const showDesktopProfileMenu = isWidthUp('sm', width)
 
-    console.log('darkTheme', darkTheme)
-
     return (
       <Provider store={this.mobxStore}>
         <MuiThemeProvider theme={darkTheme}>
