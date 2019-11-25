@@ -174,7 +174,6 @@ export default class UserPortfolio {
     //   price: number,
     //   categories: array[string]
     // }
-    debugger
     order = {...order, ticker}
     const _investments = localStorage.getItem("investments")
 
