@@ -30,7 +30,6 @@ export default (props) => {
   const {
     open,
     setOpen,
-    handlePlaceholder,
   } = props
 
   return (
@@ -41,7 +40,6 @@ export default (props) => {
       anchor="left"
     >
       <NavElements
-        handlePlaceholder={handlePlaceholder}
         handleClose={() => setOpen(false)}
       />
     </SideDrawer>
@@ -51,40 +49,25 @@ export default (props) => {
 const NavElements = (props) => {
 
   const {
-    handlePlaceholder,
     handleClose
   } = props
-
-  const handlePlaceHolderAndClose = (text) => {
-    handlePlaceholder(text)
-    handleClose()
-  }
 
   const classes = useStyles()
 
   let result = []
-  navStructure.forEach((elementDef) => {
+  navStructure.forEach((elementDef, i) => {
 
+    let href = null
     if ('placeholder' in elementDef) {
-      result.push(
-        <ListItem
-          className={classes.listButton}
-          onClick={() => {
-            handlePlaceHolderAndClose(elementDef.placeholder)
-          }}
-          key={elementDef.placeholder}
-          button
-        >
-          {elementDef.title}
-        </ListItem>
-      )
+      href = { pathname: "/placeholder", query: { title: elementDef.title, body: "coming soon" } }
     }
     else if ('link' in elementDef) {
+      href = elementDef.link 
+    }
+    if (href) {
       result.push(
-        <ListItem className={classes.listButton} button key={elementDef.link} onClick={() => {
-          handleClose()
-        }}>
-          <CustomLink href={elementDef.link} className={classes.listButtonLink}>
+        <ListItem className={classes.listButton} button key={i} onClick={() => handleClose()}>
+          <CustomLink href={href} className={classes.listButtonLink}>
             {elementDef.title}
           </CustomLink>
         </ListItem>
@@ -95,14 +78,12 @@ const NavElements = (props) => {
         <SubNav
           menuDefinition={elementDef}
           classes={classes}
-          handlePlaceHolder={handlePlaceHolderAndClose}
           handleClose={handleClose}
           key={elementDef.link}
         />
       )
     }
   })
-
 
   return (
     <>
@@ -119,7 +100,6 @@ const SubNav = (props) => {
   const {
     classes,
     menuDefinition,
-    handlePlaceHolder,
     handleClose
   } = props
 
@@ -139,34 +119,26 @@ const SubNav = (props) => {
         <Divider light />
         <List component="div" disablePadding>
           {menuDefinition.items.map(
-            (item) => {
-              return ('link' in item)
-                ? (
-                  <ListItem
-                    className={classes.listButtonSublist}
-                    button
-                    key={item.link}
-                    onClick={() => {
-                      handleClose()
-                    }}
-                  >
-                    <CustomLink href={item.link} className={classes.listButtonLink}>
-                      <ListItemText primary={item.title} />
-                    </CustomLink>
-                  </ListItem>
+            (item, i) => {
+              const href = ('link' in item) 
+                            ? 
+                            item.link 
+                            :
+                            { pathname: "/placeholder", query: { title: elementDef.title, body: "coming soon" } } 
 
-                ) : (
-                  <ListItem
-                    className={classes.listButtonSublist}
-                    onClick={() => {
-                      handlePlaceHolder(item.placeholder)
-                    }}
-                    key={item.placeholder}
-                    button
-                  >
+              return (
+                <ListItem
+                  className={classes.listButtonSublist}
+                  button
+                  key={i}
+                  onClick={() => handleClose()}
+                >
+                <CustomLink href={href} className={classes.listButtonLink}>
                     <ListItemText primary={item.title} />
-                  </ListItem>
-                )
+                  </CustomLink>
+                </ListItem>
+
+              )
             }
           )}
         </List>

@@ -67,7 +67,6 @@ export default (props) => {
     setOpen,
     isLoggedIn,
     handleLogout,
-    handlePlaceholder,
   } = props
 
   return (
@@ -79,7 +78,6 @@ export default (props) => {
     >
       <NavElements
         isLoggedIn={isLoggedIn}
-        handlePlaceholder={handlePlaceholder}
         handleLogout={handleLogout}
         handleClose={() => setOpen(false)}
       />
@@ -91,14 +89,9 @@ const NavElements = (props) => {
 
   const {
     isLoggedIn,
-    handlePlaceholder,
     handleClose
   } = props
 
-  const handlePlaceHolderAndClose = (text) => {
-    handlePlaceholder(text)
-    handleClose()
-  }
   const callHandlerAndClose = (handlerName) => {
     props[handlerName]()
     handleClose()
@@ -109,59 +102,53 @@ const NavElements = (props) => {
 
   return (
     <List>
-      {
-        base.map((elementDef) => {
-          if ('placeholder' in elementDef) {
-            return (
-              <ListItem
-                className={classes.listButton}
-                onClick={() => {
-                  handlePlaceHolderAndClose(elementDef.placeholder)
-                }}
-                key={elementDef.placeholder}
-                button
-              >
+      {base.map((elementDef, i) => {
+        if ('handler' in elementDef) {
+          return (
+            <ListItem
+              className={classes.listButton}
+              onClick={() => {
+                callHandlerAndClose(elementDef.handler)
+              }}
+              key={elementDef.handler}
+              button
+            >
+              {elementDef.title}
+            </ListItem>
+          )
+        }
+
+        let href = null
+        if ('placeholder' in elementDef) {
+          href = { pathname: "/placeholder", query: { title: elementDef.title, body: "coming soon" } }
+        }
+        else if ('link' in elementDef) {
+          href = elementDef.link
+        }
+
+        if (href) {
+          return (
+            <NextLink
+              href={href}
+              key={i}
+            >
+              <ListItem className={classes.listButton} onClick={() => handleClose()} button key={elementDef.link}>
                 {elementDef.title}
               </ListItem>
-            )
-          } else if ('handler' in elementDef) {
-            return (
-              <ListItem
-                className={classes.listButton}
-                onClick={() => {
-                  callHandlerAndClose(elementDef.handler)
-                }}
-                key={elementDef.handler}
-                button
-              >
-                {elementDef.title}
-              </ListItem>
-            )
-          } else if ('link' in elementDef) {
-            return (
-              <NextLink
-                href={elementDef.link}
-                key={elementDef.link}
-              >
-                <ListItem className={classes.listButton} onClick={() => handleClose()} button key={elementDef.link}>
-                  {elementDef.title}
-                </ListItem>
-              </NextLink>
-            )
-          } else {
-            return (
-              <SubNav
-                menuDefinition={elementDef}
-                classes={classes}
-                handlePlaceHolder={handlePlaceHolderAndClose}
-                callHandler={callHandlerAndClose}
-                handleClose={handleClose}
-                key={elementDef.link}
-              />
-            )
-          }
-        })
-      }
+            </NextLink>
+          )
+        }
+
+        return (
+          <SubNav
+            menuDefinition={elementDef}
+            classes={classes}
+            callHandler={callHandlerAndClose}
+            handleClose={handleClose}
+            key={elementDef.link}
+          />
+        )
+      })}
     </List>
   )
 }
@@ -171,7 +158,6 @@ const SubNav = (props) => {
   const {
     classes,
     menuDefinition,
-    handlePlaceHolder,
     handleClose,
     callHandler
   } = props
@@ -183,44 +169,38 @@ const SubNav = (props) => {
   }
 
   const renderItem = (item) => {
+    if ('handler' in item) {
+      return(
+        <ListItem
+          className={classes.listButtonSublist}
+          onClick={() => {
+            callHandler(item.handler)
+          }}
+          key={item.callHandler}
+          button
+        >
+          <ListItemText primary={item.title} />
+        </ListItem>
+      )
+    }
+    let href = null
     if ('link' in item) {
-      return (
-        <NextLink href={item.link} >
+      href = item.link
+    }
+    else if ('placeholder' in item) {
+      href = { pathname: "/placeholder", query: { title: item.title, body: "coming soon" } }
+    }
+    return (
+      <NextLink href={href} >
         <ListItem
           className={classes.listButtonSublist}
           button
-          key={item.link}
           onClick={() => handleClose()}
         >
-            <ListItemText primary={item.title} />
+          <ListItemText primary={item.title} />
         </ListItem>
-        </NextLink>
-      )
-    }
-    else if ('placeholder' in item) {
-      <ListItem
-        className={classes.listButtonSublist}
-        onClick={() => {
-          handlePlaceHolder(item.placeholder)
-        }}
-        key={item.placeholder}
-        button
-      >
-        <ListItemText primary={item.title} />
-      </ListItem>
-    }
-    else if ('handler' in item) {
-      <ListItem
-        className={classes.listButtonSublist}
-        onClick={() => {
-          callHandler(item.handler)
-        }}
-        key={item.callHandler}
-        button
-      >
-        <ListItemText primary={item.title} />
-      </ListItem>
-    }
+      </NextLink>
+    )
   }
 
   return (
