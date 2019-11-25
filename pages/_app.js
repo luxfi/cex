@@ -17,7 +17,7 @@ config.autoAddCss = false
 import {
   CustomSnackbar,
   Header,
-  MobileNavMenu, 
+  MobileNavMenu,
   Footer,
   CustomModal,
   MobileAccountMenu
@@ -25,7 +25,7 @@ import {
 
 import ReactGA from 'react-ga'
 import initializeStore from "../stores/stores"
-import { darkTheme, lightTheme } from "../styles/esxThemes"
+import { darkTheme } from "../styles/esxThemes"
 import styles from "../styles/app.style.js"
 
 @observer
