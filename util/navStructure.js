@@ -7,7 +7,7 @@ export default [
          title: "Movies",
          link: "/film"
        },
-  
+
        {
          title: "TV Series",
          placeholder: "TV Series"
@@ -20,7 +20,7 @@ export default [
          title: "Gaming",
          placeholder: "Gaming"
        }
-       
+
      ]
      */
   },
@@ -29,11 +29,11 @@ export default [
     link: '/portfolio/rewards',
   },
   {
-    title: 'trade',
+    title: 'invest',
     link: '/trade/terminator-dark-fate',
   },
   {
-    title: 'pro trade',
+    title: 'exchange',
     link: '/pro/terminator-dark-fate',
   },
 ]
