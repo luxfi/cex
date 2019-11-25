@@ -17,7 +17,6 @@ import { useState, useEffect } from 'react'
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    temp: console.log('t', theme),
   },
   buyTicketsButton: {},
   buyTicketsText: {
