@@ -10,7 +10,7 @@ export default (theme) => {
       display: "flex",
       flexWrap: "noWrap",
       justifyContent: "space-between",
-      flexDirection: "row"
+      flexDirection: "row",
     },
 
     navSpacer: {
@@ -35,6 +35,7 @@ export default (theme) => {
         marginRight: theme.spacing(1)
       },
       minWidth: "0",
+      fontWeight: 600,
       whiteSpace: "nowrap",
       "&:last-child": {
         marginRight: 0
