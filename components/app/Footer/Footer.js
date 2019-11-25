@@ -36,7 +36,7 @@ const EXTERNAL_LINKS = {
   android: "https://play.google.com/", // TODO
 }
 
-const BYLINE = "Giving everyone access to media investing"
+const BYLINE = "Own your entertainment"
 
 import { withStyles } from "@material-ui/core/styles"
 import styles from "./footer.style.js"
