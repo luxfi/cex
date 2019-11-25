@@ -2,7 +2,7 @@ export default (theme) => {
   return {
     logo: {
       display: "inline-block",
-      marginTop: "-8px",
+      marginTop: "-16px",
       cursor: "pointer"
     },
 
