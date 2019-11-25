@@ -104,7 +104,7 @@ export default props => {
       <div className={classes.orderBook} id='orderBookScroll'>
         <Box pl={2} pr={2}>
           {
-            asks.map((ask, i) =>
+            asks.slice(0, 8).map((ask, i) =>
               <div key={i}>
                 <Order
                   color={red[500]}
@@ -129,7 +129,7 @@ export default props => {
             </Grid>
           </Element>
           {
-            bids.map((bid, i) =>
+            bids.slice(0, 8).map((bid, i) =>
               <div key={i}>
                 <Order
                   color={green[500]}
