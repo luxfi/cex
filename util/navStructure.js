@@ -1,8 +1,8 @@
 export default [
-   {
-      title: "discover",
-      link: "/"
-       /*items: [
+  {
+    title: 'discover',
+    link: '/',
+    /*items: [
        {
          title: "Movies",
          link: "/film"
@@ -23,13 +23,17 @@ export default [
        
      ]
      */
-    },
-    {
-     title: "earn",
-     link: "/portfolio/rewards"
-    },
-   {
-     title: "trade",
-     link: "/trade/terminator-dark-fate"
-   }
+  },
+  {
+    title: 'earn',
+    link: '/portfolio/rewards',
+  },
+  {
+    title: 'trade',
+    link: '/trade/terminator-dark-fate',
+  },
+  {
+    title: 'pro trade',
+    link: '/pro/terminator-dark-fate',
+  },
 ]
