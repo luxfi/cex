@@ -47,7 +47,7 @@ export default props => {
         {showDesktopNav ? (
           <DesktopNav handlePlaceholder={handlePlaceholder} />
         ) : (
-          <IconButton onClick={openLeftDrawer}>
+          <IconButton onClick={openLeftDrawer} className={classes.menuButton}>
             <MenuRounded className={classes.mobileHamburgerIcon} />
           </IconButton>
         )}
@@ -85,6 +85,7 @@ const AccountMenu = (props) => {
         aria-controls="menu"
         aria-haspopup="true"
         onClick={openAccountMenu}
+        className={classes.accountMenuButton}
       >
         <AccountCircle style={{ fontSize: "2rem" }} />
       </IconButton>
