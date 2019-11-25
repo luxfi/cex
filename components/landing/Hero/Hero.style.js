@@ -26,10 +26,17 @@ export default theme => ({
     maxWidth: theme.breakpoints.lg,
     width: '100%',
     height: '100%',
-    padding: theme.spacing(3),
+    padding: `${theme.spacing(3)}px ${theme.spacing(8)}px 110px`,
     paddingBottom: 110,
-    [theme.breakpoints.up('lg')]: {
-      margin: `0 calc((100% - ${theme.breakpoints.lg}px) / 2)`,
+    [theme.breakpoints.down('md')]: {
+      padding: `${theme.spacing(3)}px ${theme.spacing(4)}px 110px`,
+    },
+    [theme.breakpoints.down('xs')]: {
+      padding: `${theme.spacing(3)}px ${theme.spacing(3)}px 110px`,
+    },
+    [theme.breakpoints.up('xl')]: {
+      maxWidth: 1800,
+      margin: '0 auto',
     },
   },
   buttonGridContainer: {

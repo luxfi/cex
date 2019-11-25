@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => {
       },
     },
     heroImage: {
+      backgroundColor: '#000',
       '& img': {
         minHeight: props => props.minHeight,
         maxHeight: props => props.maxHeight,

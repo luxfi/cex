@@ -216,10 +216,10 @@ class Footer extends React.Component {
     return { ...mobxStore }
   }
   render() {
-    const { 
-      classes, 
-      rootClassName, 
-      handlePlaceholder 
+    const {
+      classes,
+      rootClassName,
+      handlePlaceholder
     } = this.props
 
     return (
@@ -239,7 +239,7 @@ class Footer extends React.Component {
             <hr className={classes.appStoreSectionHR} />
           </Grid>
         </Grid>
-        <Typography variant="body2" color="textSecondary">
+        <Typography variant="body2" color="textSecondary" component="span">
           <FinePrint className={classes.finePrint} />
         </Typography>
       </footer>
