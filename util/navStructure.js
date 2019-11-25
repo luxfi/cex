@@ -25,15 +25,15 @@ export default [
      */
   },
   {
-    title: 'earn',
-    link: '/portfolio/rewards',
-  },
-  {
     title: 'invest',
     link: '/trade/terminator-dark-fate',
   },
   {
-    title: 'exchange',
+    title: 'rewards',
+    link: '/portfolio/rewards',
+  },
+  {
+    title: 'trade',
     link: '/pro/terminator-dark-fate',
   },
 ]
