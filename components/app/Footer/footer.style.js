@@ -2,7 +2,7 @@ export default theme => {
   return {
     root: {
       [theme.breakpoints.up("xl")]: {
-        width: "1250px",
+        width: "1800px",
         margin: "0 auto",
       },
       [theme.breakpoints.up("md")]: {
