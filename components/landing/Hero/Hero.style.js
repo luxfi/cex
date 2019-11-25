@@ -26,9 +26,14 @@ export default theme => ({
     maxWidth: theme.breakpoints.lg,
     width: '100%',
     height: '100%',
-    padding: `${theme.spacing(3)}px 0`,
+    padding: `${theme.spacing(3)}px ${theme.spacing(8)}px 110px`,
     paddingBottom: 110,
-    margin: '0 60px',
+    [theme.breakpoints.down('md')]: {
+      padding: `${theme.spacing(3)}px ${theme.spacing(4)}px 110px`,
+    },
+    [theme.breakpoints.down('xs')]: {
+      padding: `${theme.spacing(3)}px ${theme.spacing(3)}px 110px`,
+    },
     [theme.breakpoints.up('xl')]: {
       maxWidth: 1800,
       margin: '0 auto',
