@@ -52,7 +52,6 @@ export default class TrailerSlider extends React.Component {
           </Slider>
         </div>
         <style jsx>{`
-
           // #newest-picks :global(.MuiCard-root) {
           //   margin-bottom: 32px;
           // }
