@@ -118,7 +118,7 @@ export default props => {
       <div className={classes.tradeHistoryBook} id='tradeHistoryBookScroll'>
         <Box pl={2} pr={2}>
           {
-            trades.map((trade, i) =>
+            trades.slice(0, 20).map((trade, i) =>
               <div key={i}>
                 <Trade {...trade}/>
               </div>
