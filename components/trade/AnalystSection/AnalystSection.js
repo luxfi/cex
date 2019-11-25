@@ -95,7 +95,9 @@ const AnalystSection = ({}) => {
         <Grid item xs={10}>
           <Grid container spacing={0}>
             {analystRatings.map((data, i) => {
-              const color = data.type === 'Buy' ? 'secondary' : 'inherit'
+              // TODO: Figure out how to fix this with themes
+              // const color = data.type === 'Buy' ? 'secondary' : 'inherit'
+              const color = 'secondary'
               return (
                 <Grid item key={i} xs={12}>
                   <Box display="flex">
