@@ -4,19 +4,19 @@ const fadedTextOpacity = "0.6"
 export default theme => {
   return {
     root: {
-      [theme.breakpoints.up("lg")]: {
-        width: "1050px",
+      [theme.breakpoints.up("xl")]: {
+        width: "1250px",
         margin: "0 auto",
       },
-      [theme.breakpoints.down("md")]: {
+      [theme.breakpoints.up("md")]: {
         paddingLeft: theme.spacing(8),
         paddingRight: theme.spacing(8),
       },
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.only("sm")]: {
         paddingLeft: theme.spacing(4),
         paddingRight: theme.spacing(4),
       },
-      [theme.breakpoints.down("xs")]: {
+      [theme.breakpoints.only("xs")]: {
         paddingLeft: theme.spacing(3),
         paddingRight: theme.spacing(3),
       },
@@ -84,15 +84,20 @@ export default theme => {
     },
     navSectionTitle: {
       fontSize: "1.3rem",
-      opacity: fadedTextOpacity
+    },
+    footerNavLink: {
+      "&:hover": {
+        textDecoration: "none",
+        color: "#fac54c" // :aa TODO theme.palette.secondary.main isn't working for some reason
+      } 
     },
     navSectionHR: {
-        margin: 0,
-        marginBottom: theme.spacing(3),
-        display: "block",
-        width: "90%",
-        borderWidth: "0 0 1px 0",
-        opacity: hrOpacity
+      margin: 0,
+      marginBottom: theme.spacing(3),
+      display: "block",
+      width: "90%",
+      borderWidth: "0 0 1px 0",
+      borderColor: theme.palette.divider
     },
     appStoreSectionHR: {
       margin: 0,
@@ -100,7 +105,7 @@ export default theme => {
       display: "block",
       width: "100%",
       borderWidth: "0 0 1px 0",
-      opacity: hrOpacity
+      borderColor: theme.palette.divider
     },
     appStoreOuter: {
       display: "flex",
@@ -109,10 +114,7 @@ export default theme => {
       alignItems: "center",
     },
     appStoreTitle: {
-      fontSize: "0.6rem",
       marginBottom: theme.spacing(0.5)
-    },
-    appStoreButtonsOuter: {
     },
     appStoreApple: {
       width: "110px",
@@ -124,7 +126,7 @@ export default theme => {
       flexDirection: "row",
       justifyContent: "center",
       flexWrap: "wrap",
-      opacity: fadedTextOpacity,
+      color: theme.palette.text.secondary,
       "& p": {
         marginRight: theme.spacing(1)
       },
@@ -132,8 +134,7 @@ export default theme => {
     },
 
     finePrint: {
-      opacity: fadedTextOpacity,
-      fontSize: "0.8rem"
+      color: theme.palette.text.disabled,
     },
 
     "@global": {

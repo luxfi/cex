@@ -92,7 +92,7 @@ const LogoAndByline = ({ classes }) => (
       height="32px"
     />
   </Link>
-  <Typography variant="body2" color="textSecondary" className={classes.byline}>
+  <Typography variant="body1" color="textPrimary" className={classes.byline}>
     {BYLINE}
   </Typography>
   </>
@@ -141,7 +141,8 @@ const FooterNav = ({ classes, handlePlaceholder}) => (
               <Link
                 href={link}
                 variant="subtitle1"
-                color="textSecondary"
+                color="textPrimary"
+                className={classes.footerNavLink}
                 onClick={
                   activeLink
                     ? null
@@ -165,7 +166,7 @@ const FooterNav = ({ classes, handlePlaceholder}) => (
 
 const AppStore = ({ classes }) => (
   <div className={classes.appStoreOuter}>
-    <Typography variant="h6" className={classes.appStoreTitle}>
+    <Typography variant="body1" className={classes.appStoreTitle}>
       Download the ESX app
     </Typography>
     <div className={classes.appStoreButtonsOuter}>
@@ -238,7 +239,9 @@ class Footer extends React.Component {
             <hr className={classes.appStoreSectionHR} />
           </Grid>
         </Grid>
-        <FinePrint className={classes.finePrint}/>
+        <Typography variant="body2" color="textSecondary">
+          <FinePrint className={classes.finePrint} />
+        </Typography>
       </footer>
     )
   }
