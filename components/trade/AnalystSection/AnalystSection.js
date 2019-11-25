@@ -39,11 +39,6 @@ const analystSummary = [
   },
 ]
 
-const hello = makeStyles(theme => {
-  console.log('theme', theme)
-  return {}
-})
-
 const BorderLinearProgress = withStyles(theme => ({
   root: {
     height: 10,
@@ -78,7 +73,7 @@ const useStyles = makeStyles(theme => ({
 
 const AnalystSection = ({}) => {
   const classes = useStyles()
-  const c = hello()
+
   return (
     <Box mb={4.5} mt={6.5}>
       <Typography component="div" variant="subtitle2" gutterBottom>
@@ -100,7 +95,9 @@ const AnalystSection = ({}) => {
         <Grid item xs={10}>
           <Grid container spacing={0}>
             {analystRatings.map((data, i) => {
-              const color = data.type === 'Buy' ? 'secondary' : 'inherit'
+              // TODO: Figure out how to fix this with themes
+              // const color = data.type === 'Buy' ? 'secondary' : 'inherit'
+              const color = 'secondary'
               return (
                 <Grid item key={i} xs={12}>
                   <Box display="flex">
@@ -156,7 +153,7 @@ const AnalystSection = ({}) => {
         <Grid container spacing={2} direction="row">
           {analystSummary.map((summary, i) => {
             return (
-              <Grid item xs={12} sm={2} md={4}>
+              <Grid item xs={12} sm={2} md={4} key={i}>
                 <Card
                   style={{
                     height: '200px',
@@ -174,7 +171,7 @@ const AnalystSection = ({}) => {
                     </Typography>
                     <Typography
                       variant="body2"
-                      component="p"
+                      component="span"
                       color="textPrimary"
                     >
                       <Box
