@@ -79,7 +79,7 @@ export default class OrderBook {
   @observable proChartData = []
 
   tradesBuffer = []
-  lastTradeMerge = 0
+  lastDataMerge = 0
 
   activeOrders = {}
 
@@ -248,19 +248,25 @@ export default class OrderBook {
     })
 
     this.socket.on("book.data", data => {
-      this.book = data
-      this.book.orderBook.bids = padBids(this.book.orderBook.bids, 100, undefined)
-      this.book.orderBook.asks = padAsks(this.book.orderBook.asks, 100, undefined)
+      let now = new Date().getTime()
+
+      if (now - this.lastDataMerge > 400) {
+        this.book = data
+        this.book.orderBook.bids = padBids(this.book.orderBook.bids, 100, undefined)
+        this.book.orderBook.asks = padAsks(this.book.orderBook.asks, 100, undefined)
+        this.trades = this.tradesBuffer.reverse()
+        this.lastDataMerge = now
+      }
     })
 
     this.socket.on("trade.data", data => {
       this.tradesBuffer = this.tradesBuffer.concat(data).slice(-100)
 
-      let now = new Date().getTime()
-      if (now - this.lastTradeMerge > 1000) {
-        this.trades = this.tradesBuffer.reverse()
-        this.lastTradeMerge = now
-      }
+      // let now = new Date().getTime()
+      // if (now - this.lastDataMerge > 1000) {
+      //   this.trades = this.tradesBuffer.reverse()
+      //   this.lastDataMerge = now
+      // }
       // console.log('trade.data', this.trades)
     })
 
@@ -289,7 +295,6 @@ export default class OrderBook {
     // const { externalId, side, type, quantity, price, name } = order
     let externalId = uuid.v4()
     let name = this.ticker
-
     this.activeOrders[externalId] = true
     console.log("socketOrderCreate", order)
     this.socket.emit(

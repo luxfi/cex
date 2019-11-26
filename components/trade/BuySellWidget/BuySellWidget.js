@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { pluralize } from '../../../util/generic'
+import Router from 'next/router'
 import {
   Grid,
   Typography,
@@ -9,109 +11,104 @@ import {
   Tabs,
   Tab,
 } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
-
-const useStyles = makeStyles(theme => ({
-  paper: {
-    padding: theme.spacing(2),
-    margin: 'auto',
-    maxWidth: 500,
-  },
-  reviewButton: {
-    color: '#000',
-    backgroundColor: '#FBC43E',
-    padding: '12px 24px',
-  },
-  reviewButtonText: {
-    color: '#000',
-  },
-  backButton: {
-    color: 'transparent',
-    border: '1px solid #FBC43E',
-    padding: '11px 24px',
-  },
-  backButtonText: {
-    color: '#FBC43E',
-  },
-  label: {
-    textTransform: 'capitalize',
-  },
-}))
-
 import ErrorIcon from '@material-ui/icons/Error'
-
-const errorNotEnoughFunds = ({ total, shares, funds, ticker }) => {
-  const addPlural = parseInt(shares) > 1 ? 's' : ''
-  return `
-Not Enough Buying Power
-You don’t have enough buying power to buy 1 share of ${ticker}.
-
-Please deposit $${total} to purchase ${shares} share${addPlural} at market price (5% collar included).
-
-Market orders on ESX are placed as limit orders up to 5% above the market price in order to protect customers from spending more than they have in their ESX account.`
-}
-
-const notValid = () => {
-  return `Error
-  Please enter a valid number of shares.`
-}
-
-const reviewOrderText = `The quote you see may not be the price at which your order is executed.`
+import useStyles from './buySellWidget.style'
+import { isStringInteger } from '../../../util/generic'
+import {
+  errorNotEnoughFunds,
+  errorNotEnoughShares,
+  validNumberOfShares,
+  QUOTE_NOT_MARKET_WARNING,
+} from './widgetMessages'
 
 const BuySellWidget = ({
   marketPrice,
   ticker,
-  funds,
   createOrder,
+  redirectLogin,
+  movieCategories,
+  accountBalance,
+  maxSell,
 }) => {
   const [mode, setMode] = useState(0)
-  const [orderType, setOrderType] = useState("bid")
+  const [orderType, setOrderType] = useState('bid')
   const [shares, setShares] = useState('')
   const [quote, setQuote] = useState('')
-  const [sharesPurchased, setSharesPurchased] = useState(0)
-  const [totalPurchasePrice, setTotalPurchasePrice] = useState(0)
+  const [sharesPurchased, setSharesPurchased] = useState('')
+  const [totalPurchasePrice, setTotalPurchasePrice] = useState('')
   const [activeStep, setActiveStep] = React.useState('initial')
+  const [errorMessage, setErrorMessage] = useState(null)
   const classes = useStyles()
+
   useEffect(() => {
-    if (mode === 0 ) {
-      setOrderType("bid")
-    }
-    if (mode === 1) {
-      setOrderType('ask')
-    }
+    mode === 0 ? setOrderType('bid') : setOrderType('ask')
   }, [mode])
+
+  const insufficientFunds = totalCost => {
+    if (parseFloat(totalCost) > parseFloat(accountBalance)) {
+      const message = errorNotEnoughFunds(totalCost, shares, ticker)
+      setErrorMessage(message)
+      return true
+    }
+    return false
+  }
+
+  const sharesNotValid = () => {
+    if (!shares) {
+      const message = validNumberOfShares()
+      setErrorMessage(message)
+      return true
+    }
+    return false
+  }
+
+  const notEnoughShares = () => {
+    if (shares > maxSell) {
+      const message = errorNotEnoughShares(maxSell, ticker)
+      setErrorMessage(message)
+      return true
+    }
+    return false
+  }
+
   const submitOrder = async () => {
-    // Todo check if funds available at current market
-    // If not, put message that market price has changed, currently insuffiecient funds
-    if (!shares) return
+    if (sharesNotValid()) return
     const price = parseFloat(marketPrice)
+    const totalCost = (price * shares).toFixed(2)
+    if (orderType === 'bid') {
+      if (insufficientFunds(totalCost)) return
+    } else {
+      if (notEnoughShares()) return
+    }
     const order = {
       side: orderType,
       type: 'market',
       price,
       quantity: shares,
+      categories: movieCategories,
     }
 
     await createOrder(order)
     setSharesPurchased(shares)
-    setTotalPurchasePrice((price * shares).toFixed(2))
+    setTotalPurchasePrice(totalCost)
+    setActiveStep('success')
     setShares(0)
     setQuote('')
-    setActiveStep('success')
+    setErrorMessage(null)
   }
 
   const reviewOrder = () => {
-    // Todo check if funds available - else error
-    if (!shares) return //need total funds if market order
-
-    setQuote(marketPrice)
+    if (sharesNotValid()) return
+    const price = parseFloat(marketPrice)
+    const totalCost = (price * shares).toFixed(2)
+    if (orderType === 'bid') {
+      if (insufficientFunds(totalCost)) return
+    } else {
+      if (notEnoughShares()) return
+    }
+    setQuote(price)
     setActiveStep('review')
-  }
-
-  const isInteger = stringInput => {
-    // match a digit one or more times
-    const rx = new RegExp(/^\d+(?:\.\d{1,2})?$/)
-    return rx.test(stringInput)
+    setErrorMessage(null)
   }
 
   const handleInputChange = evt => {
@@ -120,12 +117,13 @@ const BuySellWidget = ({
     if (value === '') {
       setShares(value)
     }
-    if (isInteger(value)) {
+    if (isStringInteger(value)) {
       setShares(parseInt(value))
     }
   }
 
   const handleOrder = () => {
+    redirectLogin()
     if (activeStep === 'review') {
       submitOrder()
     } else if (activeStep === 'initial') {
@@ -255,7 +253,27 @@ const BuySellWidget = ({
             </Grid>
           </>
         )}
-        {/* show buy or review button if not showing successful order message */}
+        {errorMessage && (
+          <Grid item xs>
+            <Box mt={2}>
+              <Typography variant="subtitle1" gutterBottom>
+                <Box component="span" mr={0.5}>
+                  <ErrorIcon fontSize="inherit" />
+                </Box>
+                <Box component="span" fontWeight="fontWeightBold">
+                  {errorMessage.title}
+                </Box>
+              </Typography>
+              {errorMessage.body.map((text, i) => (
+                <Typography key={i} component="p" variant="body2" gutterBottom>
+                  <Box mb={2} component="span">
+                    {text}
+                  </Box>
+                </Typography>
+              ))}
+            </Box>
+          </Grid>
+        )}
         {activeStep === 'initial' && (
           <Grid item xs>
             <Button
@@ -279,7 +297,7 @@ const BuySellWidget = ({
           <>
             <Grid item xs>
               <Typography id="info" variant="subtitle2">
-                <ErrorIcon fontSize="inherit" /> {reviewOrderText}
+                <ErrorIcon fontSize="inherit" /> {QUOTE_NOT_MARKET_WARNING}
               </Typography>
             </Grid>
             <Grid item xs>
@@ -350,7 +368,15 @@ const BuySellWidget = ({
 
         <Grid item xs={12}>
           <Typography color="secondary">
-            ${parseFloat(funds).toFixed(2)} Buying Power Available
+            {orderType === 'bid' ? (
+              <>
+                ${parseFloat(accountBalance).toFixed(2)} Buying Power Available
+              </>
+            ) : (
+              <>
+                You currently own {maxSell} {pluralize(maxSell, 'share')}
+              </>
+            )}
           </Typography>
         </Grid>
       </Grid>
