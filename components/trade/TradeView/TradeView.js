@@ -72,6 +72,7 @@ class Index extends React.Component {
     userPortfolio.getInvestments()
     orderBook.connect(movie.ticker)
     this.props.store.orderBook.fetchStockData(movie.ticker)
+    window.store = this.props.store
 }
 
   componentWillUnmount() {
@@ -139,6 +140,7 @@ class Index extends React.Component {
 
     // Load necessary user data
     const maxSell = userPortfolio.getMaxSell(movie.ticker)
+    const investmentHistory = userPortfolio.getInvestmentHistory(movie.ticker)
 
     const addToWatchlist = t => {
       redirectLogin()
@@ -177,6 +179,7 @@ class Index extends React.Component {
               }}
               movieCategories={toJS(movie.genre)}
               maxSell={maxSell}
+              investmentHistory={investmentHistory}
               stockName={movie.name}
               accountBalance={userStore.accountBalance}
               userStore={userStore}

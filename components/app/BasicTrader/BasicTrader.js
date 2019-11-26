@@ -39,6 +39,7 @@ export default props => {
     onExecute,
     createOrder,
     maxSell,
+    investmentHistory,
     marketOrderType,
     stockName,
     accountBalance,
@@ -158,7 +159,7 @@ export default props => {
           <Divider />
           <EarningsSection />
           <Divider />
-          <HistorySection book={orderBook.book} />
+          <HistorySection investmentHistory={investmentHistory} ticker={ticker} />
           <Divider />
           <OtherFilmsTrading movies={movies} />
         </Grid>
