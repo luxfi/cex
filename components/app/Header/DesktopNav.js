@@ -1,5 +1,5 @@
 import React from "react"
-import Link from "next/link"
+import NextLink from "next/link"
 
 import {
   Button,
@@ -19,19 +19,17 @@ import navStructure from "../../../util/navStructure"
 
 export default (props) => {
 
-  const { handlePlaceholder } = props
   const classes = useStyles()
 
   return (
     <>
-      <Link href="/">
-        <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.logo} height="42px" />
-      </Link>
+      <NextLink href="/">
+        <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.logo} height="64px" />
+      </NextLink>
       <div className={classes.navOuter}>
         <div className={classes.navSpacer} />
         <DesktopMainNav
           navStructure={navStructure}
-          handlePlaceholder={handlePlaceholder}
           classes={classes}
         />
       </div>
@@ -43,7 +41,6 @@ const MainNavDropdown = (props) => {
 
   const {
     menuDefinition,
-    handlePlaceholder,
     classes
   } = props
 
@@ -65,18 +62,17 @@ const MainNavDropdown = (props) => {
         >
           {menuDefinition.items.map(
             (item, i) => {
-              return ('link' in item)
-                ? (
-                  <Link href={item.link} key={i} >
+              const href = ('link' in item) ? 
+                item.link 
+                :
+                ({
+                  pathname: "/placeholder",
+                  query: { title: item.placeholder }
+                })
+                return (
+                  <NextLink href={href} key={i} >
                     <MenuItem onClick={popupState.close}><span className={classes.subMenuItemText}>{item.title}</span></MenuItem>
-                  </Link>
-                ) : (
-                  <MenuItem key={i} onClick={() => {
-                    handlePlaceholder(item.placeholder)
-                    popupState.close()
-                  }}>
-                    <span className={classes.subMenuItemText}>{item.title}</span>
-                  </MenuItem>
+                  </NextLink>
                 )
             }
           )}
@@ -90,44 +86,37 @@ const MainNavDropdown = (props) => {
 const DesktopMainNav = (props) => {
 
   const {
-    navStructure,
-    handlePlaceholder,
+    navStructure, 
     classes
   } = props
 
   let result = []
   navStructure.forEach((navElement, i) => {
 
+    let href = null
     if ('placeholder' in navElement) {
-      result.push(
-        <Button
-          className={classes.navButton}
-          onClick={() => {
-            handlePlaceholder(navElement.placeholder)
-          }}
-          key={`button+${i}`}
-        >
-          {navElement.title}
-        </Button>
-      )
+      href = { pathname: "/placeholder", query: { title: navElement.title } }
     }
     else if ('link' in navElement) {
+      href = navElement.link
+    }
+
+    if (href) {
       result.push(
-        <Link href={navElement.link} key={`link+${i}`}>
+        <NextLink href={href} key={`link+${i}`}>
           <Button
             className={classes.navButton}
           >
             {navElement.title}
           </Button>
-        </Link>
-      )
+        </NextLink>
+      ) 
     }
-    else /* menu */ {
+    else {
       result.push(
         <MainNavDropdown
           classes={classes}
           menuDefinition={navElement}
-          handlePlaceholder={handlePlaceholder}
           key={`dropdown+${i}`}
         />
       )
