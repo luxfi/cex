@@ -15,6 +15,8 @@ const useStyles = makeStyles({
 	},
 })
 
+const DEFAULT_BODY = "coming soon"
+
 // https://stackoverflow.com/questions/43862600/how-to-get-query-string-parameters-from-url-in-next-js
 export default (props) => {
 
@@ -24,13 +26,9 @@ export default (props) => {
 	return (
 		<div className={classes.container}>
 			<Typography variant="h4">{query.title}</Typography>
-			{('body' in query && query.body) ? (
-				<Typography variant="body1" color="textPrimary">
-					{query.body}
-				</Typography>
-				) : null
-			}
+			<Typography variant="body1" color="textPrimary">
+				{('body' in query && query.message) ? query.message : DEFAULT_BODY}
+			</Typography>
 		</div>
 	)
 }
-

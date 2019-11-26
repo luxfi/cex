@@ -120,7 +120,7 @@ const NavElements = (props) => {
 
         let href = null
         if ('placeholder' in elementDef) {
-          href = { pathname: "/placeholder", query: { title: elementDef.title, body: "coming soon" } }
+          href = { pathname: "/placeholder", query: { title: elementDef.title } }
         }
         else if ('link' in elementDef) {
           href = elementDef.link
@@ -188,7 +188,7 @@ const SubNav = (props) => {
       href = item.link
     }
     else if ('placeholder' in item) {
-      href = { pathname: "/placeholder", query: { title: item.title, body: "coming soon" } }
+      href = { pathname: "/placeholder", query: { title: item.title } }
     }
     return (
       <NextLink href={href} >

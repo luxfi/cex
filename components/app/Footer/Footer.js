@@ -133,7 +133,7 @@ const FooterNav = ({ classes}) => (
         {section.links.map((item, i) => {
           const activeLink = (typeof item === "object" && "link" in item)
           const title = (typeof item === "object" && "title" in item) ? item.title : item
-          const href = (activeLink) ? item.link : { pathname: "/placeholder", query: { title : title, body: "coming soon"}}
+          const href = (activeLink) ? item.link : { pathname: "/placeholder", query: { title : title}}
             // cannot use external links with NextLinks
           const component = (activeLink && 'external' in item) ? 'a' : CustomLink
 

@@ -67,10 +67,7 @@ const MainNavDropdown = (props) => {
                 :
                 ({
                   pathname: "/placeholder",
-                  query: {
-                    title: item.placeholder,
-                    body: "coming soon"
-                  }
+                  query: { title: item.placeholder }
                 })
                 return (
                   <NextLink href={href} key={i} >
@@ -98,7 +95,7 @@ const DesktopMainNav = (props) => {
 
     let href = null
     if ('placeholder' in navElement) {
-      href = { pathname: "/placeholder", query: { title: navElement.title, body: "coming soon" } }
+      href = { pathname: "/placeholder", query: { title: navElement.title } }
     }
     else if ('link' in navElement) {
       href = navElement.link

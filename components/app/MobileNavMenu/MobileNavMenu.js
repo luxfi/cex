@@ -59,7 +59,7 @@ const NavElements = (props) => {
 
     let href = null
     if ('placeholder' in elementDef) {
-      href = { pathname: "/placeholder", query: { title: elementDef.title, body: "coming soon" } }
+      href = { pathname: "/placeholder", query: { title: elementDef.title } }
     }
     else if ('link' in elementDef) {
       href = elementDef.link 
@@ -120,11 +120,12 @@ const SubNav = (props) => {
         <List component="div" disablePadding>
           {menuDefinition.items.map(
             (item, i) => {
-              const href = ('link' in item) 
-                            ? 
-                            item.link 
-                            :
-                            { pathname: "/placeholder", query: { title: elementDef.title, body: "coming soon" } } 
+              const href = 
+                ('link' in item) 
+                ? 
+                item.link 
+                :
+                ({ pathname: "/placeholder", query: { title: elementDef.title } }) 
 
               return (
                 <ListItem
