@@ -518,7 +518,7 @@ const BuySellWidget = ({
             {orderType === 'bid' ? (
               <>
                 ${parseFloat(accountBalance).toFixed(2)} Buying Power Available{' '}
-                <HelpOutlineIcon fontSize="inherit" />
+                {/* <HelpOutlineIcon fontSize="inherit" /> */}
               </>
             ) : (
               <>
