@@ -27,7 +27,6 @@ export default props => {
     showDesktopProfileMenu,
     openLeftDrawer,
     openRightDrawer,
-    handlePlaceholder,
     handleLogout,
     isLoggedIn
   } = props;
@@ -45,7 +44,7 @@ export default props => {
     >
       <Toolbar disableGutters className={classes.toolbar}>
         {showDesktopNav ? (
-          <DesktopNav handlePlaceholder={handlePlaceholder} />
+          <DesktopNav />
         ) : (
           <IconButton onClick={openLeftDrawer} className={classes.menuButton}>
             <MenuRounded className={classes.mobileHamburgerIcon} />

@@ -1,3 +1,5 @@
+import { inherits } from "util";
+
 export default theme => {
   return {
     root: {
@@ -86,7 +88,11 @@ export default theme => {
       "&:hover": {
         textDecoration: "none",
         color: "#fac54c" // :aa TODO theme.palette.secondary.main isn't working for some reason
+<<<<<<< HEAD
       } 
+=======
+      }
+>>>>>>> 86f51ca7e39fb14290c43c930c09245789fa4d2e
     },
     navSectionHR: {
       margin: 0,
@@ -128,10 +134,26 @@ export default theme => {
         marginRight: theme.spacing(1)
       },
       marginBottom: theme.spacing(1),
+<<<<<<< HEAD
     },
 
     finePrint: {
       color: theme.palette.text.disabled,
+=======
+
+      "& a": {
+        color: "inherit"
+      }
+    },
+
+    finePrint: {
+      fontSize: '0.8rem',
+      color: theme.palette.text.disabled,
+
+      "& a": {
+        color: "inherit"
+      }
+>>>>>>> 86f51ca7e39fb14290c43c930c09245789fa4d2e
     },
 
     "@global": {
