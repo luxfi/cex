@@ -7,6 +7,7 @@ export default theme => ({
   },
   main: {
     flexGrow: 1,
+    minHeight: '50vh',
     marginTop: theme.spacing(8),
     marginBottom: theme.spacing(2),
 

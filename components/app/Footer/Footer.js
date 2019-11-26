@@ -121,7 +121,7 @@ const SocialIcons = ({ classes }) => (
   </div>
 )
 
-const FooterNav = ({ classes, handlePlaceholder}) => (
+const FooterNav = ({ classes}) => (
   <Grid container className={classes.navGridContainer}>
   {footerNav.map(section => (
       <Grid item xs={6} md={3} key={section.title} className={classes.navSectionGridItem}>
@@ -130,27 +130,21 @@ const FooterNav = ({ classes, handlePlaceholder}) => (
         </Typography>
         <hr className={classes.navSectionHR} />
         <ul>
-        {section.links.map(item => {
+        {section.links.map((item, i) => {
           const activeLink = (typeof item === "object" && "link" in item)
           const title = (typeof item === "object" && "title" in item) ? item.title : item
-          const link = activeLink ? item.link : `/#`
-          const key = activeLink ? item.link : title
-          const nextLink = item.external ? Link : CustomLink
+          const href = (activeLink) ? item.link : { pathname: "/placeholder", query: { title : title}}
+            // cannot use external links with NextLinks
+          const component = (activeLink && 'external' in item) ? 'a' : CustomLink
+
           return (
-            <li key={key}>
+            <li key={`list+${i}`}>
               <Link
-                href={link}
+                href={href}
                 variant="subtitle1"
                 color="textPrimary"
                 className={classes.footerNavLink}
-                onClick={
-                  activeLink
-                    ? null
-                    : () => {
-                      handlePlaceholder(title)
-                    }
-                }
-                component={nextLink}
+                component={component}
               >
                 {title}
               </Link>
@@ -218,8 +212,7 @@ class Footer extends React.Component {
   render() {
     const {
       classes,
-      rootClassName,
-      handlePlaceholder
+      rootClassName
     } = this.props
 
     return (
@@ -230,7 +223,7 @@ class Footer extends React.Component {
             <SocialIcons classes={classes} />
           </Grid>
           <Grid item xs={12} lg={9} className={classes.navGridItem}>
-            <FooterNav handlePlaceholder={handlePlaceholder} classes={classes} />
+            <FooterNav classes={classes} />
           </Grid>
           <Grid item xs={12} className={classes.copyrightGridItem}>
             <hr className={classes.appStoreSectionHR} />
