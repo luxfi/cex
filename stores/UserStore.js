@@ -91,6 +91,10 @@ export default class UserStore {
   @observable validNewPaymentMethodName = false;
   @observable validNewPaymentMethodMetadata = false;
 
+  // Tax Documents and forms
+  @observable taxDocuments = []
+  @observable accountStatements = []
+
   constructor(initialData = {}, hanzoApi) {
     // TODO Do we still need this?
     // :aa I don't think so.... why would we?
@@ -149,6 +153,42 @@ export default class UserStore {
     this.updateFromJson(kyc, kycFields);
     this.updateFromJson(address, addressFields);
     this.checkCurrentStatus();
+  }
+
+  @action generateFakeDocs () {
+    this.taxDocuments = [
+      {
+        date: '2019',
+        link: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+      },
+      {
+        date: '2018',
+        link: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+      }
+    ]
+    // https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf
+    this.accountStatements = [
+      {
+        date: 'Nov 2019',
+        link: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+      },
+      {
+        date: 'Oct 2019',
+        link: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+      },
+      {
+        date: 'Sep 2019',
+        link: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+      },
+      {
+        date: 'Aug 2019',
+        link: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+      },
+      {
+        date: 'Jul 2019',
+        link: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+      }
+    ]
   }
 
   updateFromJson(json, keys) {
@@ -672,6 +712,14 @@ export default class UserStore {
     accounts.unshift(esx)
 
     return accounts
+  }
+
+  @computed get getFullName () {
+    let fullName = ''
+    if (this.account && this.account.firstName) {
+      fullName = `${this.account.firstName} ${this.account.lastName}`
+    }
+    return fullName
   }
 }
 
