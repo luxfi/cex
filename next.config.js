@@ -77,6 +77,10 @@ module.exports = withBundleAnalyzer(
                   page: '/pro',
                   query: { slug: movie.movieSlug },
                 },
+                [`/offering/${movie.movieSlug}`]: {
+                  page: '/offering',
+                  query: { slug: movie.movieSlug },
+                },
               }),
             {},
           )
