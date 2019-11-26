@@ -86,7 +86,7 @@ export default theme => {
       "&:hover": {
         textDecoration: "none",
         color: "#fac54c" // :aa TODO theme.palette.secondary.main isn't working for some reason
-      } 
+      }
     },
     navSectionHR: {
       margin: 0,
@@ -131,6 +131,7 @@ export default theme => {
     },
 
     finePrint: {
+      fontSize: '0.8rem',
       color: theme.palette.text.disabled,
     },
 

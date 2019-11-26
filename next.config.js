@@ -73,8 +73,12 @@ module.exports = withBundleAnalyzer(
                   page: '/trade',
                   query: { slug: movie.movieSlug },
                 },
+                [`/pro/${movie.movieSlug}`]: {
+                  page: '/pro',
+                  query: { slug: movie.movieSlug },
+                },
               }),
-            {}
+            {},
           )
 
           // combine the map of post pages with the home

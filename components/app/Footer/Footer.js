@@ -36,7 +36,7 @@ const EXTERNAL_LINKS = {
   android: "https://play.google.com/", // TODO
 }
 
-const BYLINE = "Giving everyone access to media investing"
+const BYLINE = "Own your entertainment"
 
 import { withStyles } from "@material-ui/core/styles"
 import styles from "./footer.style.js"
@@ -194,10 +194,10 @@ const Copyright = ({ classes }) => {
   return (
     <div className={classes.copyrightOuter}>
       <Typography variant="body2" color="textSecondary">
-        Privacy Policy / Terms of Use
+        <a href="/privacy">Privacy Policy</a> / <a href="/terms">Terms of Use</a>
       </Typography>
       <Typography variant="body2" color="textSecondary">
-        {`© ${yearString} ESX. All rights reserved.`}
+        {`© ${yearString} Entertainment Stock X LLC. All rights reserved.`}
       </Typography>
     </div>
   )

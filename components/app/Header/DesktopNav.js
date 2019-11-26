@@ -48,9 +48,9 @@ const MainNavDropdown = (props) => {
     <PopupState variant="popover" popupId="menu-popover">
       {(popupState) => (
         <>
-        <Button 
+        <Button
           {...bindTrigger(popupState)}
-          className={classes.navButton} 
+          className={classes.navButton}
         >
           {menuDefinition.title}
         </Button >
@@ -128,6 +128,6 @@ const DesktopMainNav = (props) => {
   return (
     <>
       {result}
-    </> 
+    </>
   )
 }
