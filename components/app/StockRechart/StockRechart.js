@@ -12,6 +12,8 @@ import { ScaleLoader } from 'react-spinners'
 import { Typography, Box, Chip } from '@material-ui/core'
 import grey from '@material-ui/core/colors/grey'
 import { makeStyles } from '@material-ui/core/styles'
+import LocalOfferIcon from '@material-ui/icons/LocalOffer'
+import PeopleIcon from '@material-ui/icons/People'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,6 +25,9 @@ const useStyles = makeStyles(theme => ({
   },
   chip: {
     background: grey[800],
+  },
+  spacer: {
+    flexGrow: 1,
   },
 }))
 
@@ -36,6 +41,27 @@ const CustomHeading = ({ ticker, stockName }) => {
       <Typography variant="h5" component="div">
         <Box fontWeight="fontWeightBold">
           <Chip size="small" label={ticker} className={classes.chip} />
+        </Box>
+      </Typography>
+      <div className={classes.spacer}></div>
+      <Typography variant="h5" component="div">
+        <Box fontWeight="fontWeightBold">
+          <Chip
+            size="small"
+            icon={<LocalOfferIcon />}
+            label={'51% Buy'}
+            className={classes.chip}
+          />
+        </Box>
+      </Typography>
+      <Typography variant="h5" component="div">
+        <Box fontWeight="fontWeightBold">
+          <Chip
+            size="small"
+            icon={<PeopleIcon />}
+            label={'204,868'}
+            className={classes.chip}
+          />
         </Box>
       </Typography>
     </div>
