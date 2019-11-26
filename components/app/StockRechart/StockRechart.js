@@ -1,38 +1,68 @@
-import React from "react"
+import React from 'react'
 import {
   LineChart,
   Line,
   ResponsiveContainer,
   ReferenceLine,
   YAxis,
-  Tooltip
-} from "recharts"
-import CustomStockTooltip from "../CustomStockTooltip"
-import { ScaleLoader } from "react-spinners"
-import { Typography, Box } from "@material-ui/core"
-import { padDollarAmount } from "../../../util/generic"
+  Tooltip,
+} from 'recharts'
+import CustomStockTooltip from '../CustomStockTooltip'
+import { ScaleLoader } from 'react-spinners'
+import { Typography, Box, Chip } from '@material-ui/core'
+import grey from '@material-ui/core/colors/grey'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  chip: {
+    background: grey[800],
+  },
+}))
+
+const CustomHeading = ({ ticker, stockName }) => {
+  const classes = useStyles()
+  return (
+    <div className={classes.root}>
+      <Typography variant="h5">
+        <Box fontWeight="fontWeightBold">{stockName}</Box>
+      </Typography>
+      <Typography variant="h5" component="div">
+        <Box fontWeight="fontWeightBold">
+          <Chip size="small" label={ticker} className={classes.chip} />
+        </Box>
+      </Typography>
+    </div>
+  )
+}
 
 const RANGES = {
-  "1W": { length: 5, increment: 1 },
-  "1M": { length: 23, increment: 1 },
-  "3M": { length: 66, increment: 1 },
-  "1Y": { length: 251, increment: 1 },
-  "5Y": { length: 1265, increment: 5 }
+  '1W': { length: 5, increment: 1 },
+  '1M': { length: 23, increment: 1 },
+  '3M': { length: 66, increment: 1 },
+  '1Y': { length: 251, increment: 1 },
+  '5Y': { length: 1265, increment: 5 },
 }
 
 const MONTHS = {
-  1: "JAN",
-  2: "FEB",
-  3: "MAR",
-  4: "APR",
-  5: "MAY",
-  6: "JUN",
-  7: "JUL",
-  8: "AUG",
-  9: "SEP",
-  10: "OCT",
-  11: "NOV",
-  12: "DEC"
+  1: 'JAN',
+  2: 'FEB',
+  3: 'MAR',
+  4: 'APR',
+  5: 'MAY',
+  6: 'JUN',
+  7: 'JUL',
+  8: 'AUG',
+  9: 'SEP',
+  10: 'OCT',
+  11: 'NOV',
+  12: 'DEC',
 }
 
 class StockRechart extends React.Component {
@@ -41,8 +71,8 @@ class StockRechart extends React.Component {
     this.state = {
       currData: this.props,
       initialData: this.props,
-      active: "1D",
-      fetched5Y: false
+      active: '1D',
+      fetched5Y: false,
     }
     this.render1DChart = this.render1DChart.bind(this)
     this.render5YChart = this.render5YChart.bind(this)
@@ -50,7 +80,7 @@ class StockRechart extends React.Component {
 
   calculateDailyPriceData(data, startIdx) {
     let dailyData = this.props.dailyData
-    let neg = "+"
+    let neg = '+'
     const prices = []
 
     if (startIdx < 0) startIdx = 0
@@ -69,10 +99,10 @@ class StockRechart extends React.Component {
       Math.round(
         ((parseFloat(currPrice) - parseFloat(openPrice)) /
           parseFloat(openPrice)) *
-        10000
+          10000,
       ) / 100
     if (priceFlux < 0) {
-      neg = "-"
+      neg = '-'
     }
 
     return {
@@ -82,36 +112,36 @@ class StockRechart extends React.Component {
       currPrice,
       openPrice,
       priceFlux,
-      priceFluxPercentage
+      priceFluxPercentage,
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      this.state.active === "5Y" &&
-      prevState.active !== "5Y" &&
+      this.state.active === '5Y' &&
+      prevState.active !== '5Y' &&
       !prevState.fetched5Y
     ) {
-      this.renderChart("5Y")
+      this.renderChart('5Y')
     }
   }
 
   render1DChart() {
-    this.setState({ currData: this.state.initialData, active: "1D" })
+    this.setState({ currData: this.state.initialData, active: '1D' })
   }
 
   render5YChart() {
     if (!this.state.fetched5Y) {
       this.props.fetchStock5yData(this.props.stock.ticker).then(() => {
-        this.setState({ fetched5Y: true, active: "5Y" })
+        this.setState({ fetched5Y: true, active: '5Y' })
       })
     } else {
-      this.renderChart("5Y")
+      this.renderChart('5Y')
     }
   }
 
   formatDate(date) {
-    let [year, month, day] = date.split("-")
+    let [year, month, day] = date.split('-')
     return `${MONTHS[parseInt(month)]} ${day}, ${year}`
   }
 
@@ -131,7 +161,7 @@ class StockRechart extends React.Component {
       let time = this.formatDate(dailyData[i].date)
       data.push({
         time,
-        price: dailyData[i].close
+        price: dailyData[i].close,
       })
       lastIdx = i
     }
@@ -141,7 +171,7 @@ class StockRechart extends React.Component {
       let time = this.formatDate(dailyData[dailyData.length - 1].date)
       data.push({
         time,
-        price: dailyData[dailyData.length - 1].close
+        price: dailyData[dailyData.length - 1].close,
       })
     }
 
@@ -152,7 +182,7 @@ class StockRechart extends React.Component {
       currPrice,
       openPrice,
       priceFlux,
-      priceFluxPercentage
+      priceFluxPercentage,
     } = this.calculateDailyPriceData(data, dailyData.length - startIdx - 1)
     this.setState({
       currData: {
@@ -164,9 +194,9 @@ class StockRechart extends React.Component {
         min,
         max,
         neg,
-        dailyData
+        dailyData,
       },
-      active: range
+      active: range,
     })
   }
 
@@ -179,148 +209,147 @@ class StockRechart extends React.Component {
       data,
       min,
       max,
-      neg
+      neg,
     } = this.state.currData
-    let color = "#FAC34D"
-    if (neg === "-") {
-      document.getElementsByTagName("body")[0].className = "negative"
+    let color = '#FAC34D'
+    if (neg === '-') {
+      document.getElementsByTagName('body')[0].className = 'negative'
     } else {
-      document.getElementsByTagName("body")[0].className = ""
+      document.getElementsByTagName('body')[0].className = ''
     }
     // currPrice = padDollarAmount(parseFloat(currPrice))
     // priceFlux = padDollarAmount(Math.abs(parseFloat(priceFlux)))
     // priceFluxPercentage = padDollarAmount(parseFloat(priceFluxPercentage))
     return (
-        <div className="chart">
-            <Typography variant="h5">
-                <Box fontWeight="fontWeightBold">{this.props.stockName}</Box>
-            </Typography>
+      <div className="chart">
+        <CustomHeading
+          stockName={this.props.stockName}
+          ticker={this.props.ticker}
+        />
 
-            <Box fontWeight="fontWeightLight" mt={2}>
-                <Typography variant="h3">
-                    <span id="stock-price">${this.props.marketPrice}</span>
-                </Typography>
-            </Box>
+        <Box fontWeight="fontWeightLight" mt={2}>
+          <Typography variant="h3">
+            <span id="stock-price">${this.props.marketPrice}</span>
+          </Typography>
+        </Box>
 
-            <Typography>
-                <span id="stock-price-flux">
-                    {neg}${priceFlux} ({priceFluxPercentage}%)
-                </span>
-            </Typography>
-            <div className="stock-chart">
-                {this.props.loading ? (
-                    <div className="chart-loading">
-                        <ScaleLoader
-                            sizeUnit={"px"}
-                            size={20}
-                            color={"#21ce99"}
-                            loading={true}
-                        />
-                    </div>
-                ) : (
-                    <ResponsiveContainer width="100%" height={300}>
-                        <LineChart
-                            // width={710}
-                            // height={195}
-                            data={data}
-                            margin={{ top: 5, right: 0, left: 0, bottom: 5 }}
-                        >
-                            <YAxis hide={true} domain={[min, max]} />
-                            <Tooltip
-                                content={
-                                    <CustomStockTooltip
-                                        price={this.props.marketPrice}
-                                        priceFlux={priceFlux}
-                                        priceFluxPercentage={
-                                            priceFluxPercentage
-                                        }
-                                        openPrice={openPrice}
-                                        neg={neg}
-                                    />
-                                }
-                                offset={-40}
-                                position={{ y: -20 }}
-                                isAnimationActive={false}
-                            />
-                            <Line
-                                type="linear"
-                                dataKey="price"
-                                stroke={color}
-                                dot={false}
-                                strokeWidth={2}
-                            />
-                            {this.state.active === "1D" && (
-                                <ReferenceLine
-                                    y={this.props.previousDayClose}
-                                    stroke="white"
-                                    strokeDasharray="1 6"
-                                />
-                            )}
-                        </LineChart>
-                    </ResponsiveContainer>
+        <Typography>
+          <span id="stock-price-flux">
+            {neg}${priceFlux} ({priceFluxPercentage}%)
+          </span>
+        </Typography>
+        <div className="stock-chart">
+          {this.props.loading ? (
+            <div className="chart-loading">
+              <ScaleLoader
+                sizeUnit={'px'}
+                size={20}
+                color={'#21ce99'}
+                loading={true}
+              />
+            </div>
+          ) : (
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart
+                // width={710}
+                // height={195}
+                data={data}
+                margin={{ top: 5, right: 0, left: 0, bottom: 5 }}
+              >
+                <YAxis hide={true} domain={[min, max]} />
+                <Tooltip
+                  content={
+                    <CustomStockTooltip
+                      price={this.props.marketPrice}
+                      priceFlux={priceFlux}
+                      priceFluxPercentage={priceFluxPercentage}
+                      openPrice={openPrice}
+                      neg={neg}
+                    />
+                  }
+                  offset={-40}
+                  position={{ y: -20 }}
+                  isAnimationActive={false}
+                />
+                <Line
+                  type="linear"
+                  dataKey="price"
+                  stroke={color}
+                  dot={false}
+                  strokeWidth={2}
+                />
+                {this.state.active === '1D' && (
+                  <ReferenceLine
+                    y={this.props.previousDayClose}
+                    stroke="white"
+                    strokeDasharray="1 6"
+                  />
                 )}
-                <ul className="chart-range stock">
-                    <li>
-                        <a
-                            className={
-                                this.state.active === "1D"
-                                    ? "chart-choice active"
-                                    : "chart-choice"
-                            }
-                            onClick={this.render1DChart}
-                        >
-                            1D
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            className={
-                                this.state.active === "1W"
-                                    ? "chart-choice active"
-                                    : "chart-choice"
-                            }
-                            onClick={() => this.renderChart("1W")}
-                        >
-                            1W
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            className={
-                                this.state.active === "1M"
-                                    ? "chart-choice active"
-                                    : "chart-choice"
-                            }
-                            onClick={() => this.renderChart("1M")}
-                        >
-                            1M
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            className={
-                                this.state.active === "3M"
-                                    ? "chart-choice active"
-                                    : "chart-choice"
-                            }
-                            onClick={() => this.renderChart("3M")}
-                        >
-                            3M
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            className={
-                                this.state.active === "1Y"
-                                    ? "chart-choice active"
-                                    : "chart-choice"
-                            }
-                            onClick={() => this.renderChart("1Y")}
-                        >
-                            1Y
-                        </a>
-                    </li>
-                    {/* <li>
+              </LineChart>
+            </ResponsiveContainer>
+          )}
+          <ul className="chart-range stock">
+            <li>
+              <a
+                className={
+                  this.state.active === '1D'
+                    ? 'chart-choice active'
+                    : 'chart-choice'
+                }
+                onClick={this.render1DChart}
+              >
+                1D
+              </a>
+            </li>
+            <li>
+              <a
+                className={
+                  this.state.active === '1W'
+                    ? 'chart-choice active'
+                    : 'chart-choice'
+                }
+                onClick={() => this.renderChart('1W')}
+              >
+                1W
+              </a>
+            </li>
+            <li>
+              <a
+                className={
+                  this.state.active === '1M'
+                    ? 'chart-choice active'
+                    : 'chart-choice'
+                }
+                onClick={() => this.renderChart('1M')}
+              >
+                1M
+              </a>
+            </li>
+            <li>
+              <a
+                className={
+                  this.state.active === '3M'
+                    ? 'chart-choice active'
+                    : 'chart-choice'
+                }
+                onClick={() => this.renderChart('3M')}
+              >
+                3M
+              </a>
+            </li>
+            <li>
+              <a
+                className={
+                  this.state.active === '1Y'
+                    ? 'chart-choice active'
+                    : 'chart-choice'
+                }
+                onClick={() => this.renderChart('1Y')}
+              >
+                1Y
+              </a>
+            </li>
+            {/* <li>
               <a
                 className={
                   this.state.active === "5Y"
@@ -332,63 +361,63 @@ class StockRechart extends React.Component {
                 5Y
               </a>
             </li> */}
-                </ul>
-            </div>
-            <style jsx>{`
-                .chart-choice {
-                    cursor: pointer;
-                    padding-bottom: 15px;
-                }
-                .chart-choice.active {
-                    color: #FAC34D;
-                    border-bottom: 2px solid #FAC34D;
-                }
-                .chart-choice:hover {
-                    color: #FAC34D;
-                }
-                .chart {
-                    padding: 0;
-                    padding-left: -20px;
-                    margin: 0 5px;
-                }
-                .stock-chart {
-                    margin-top: 32px;
-                }
-                .chart-range {
-                    display: flex;
-                    margin-top: 26px;
-                    font-size: 14px;
-                    font-weight: 700;
-                    padding-bottom: 15px;
-                    // margin-right: 35px;
-                    border-bottom: 1px solid #eee;
-                }
-                .chart-range li {
-                    margin: 0 22px 0 0;
-                }
-                // .chart-range.stock {
-                //   margin-right: 55px;
-                // }
-                body.negative .chart-choice:hover {
-                    color: #f45531;
-                }
-                body.negative .chart-choice.active {
-                    color: #f45531;
-                    border-bottom: 2px solid #f45531;
-                }
-                .chart-loading {
-                    width: 710px;
-                    height: 195px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
-                .chart-loading::after {
-                    content: "";
-                }
-            `}</style>
+          </ul>
         </div>
-    );
+        <style jsx>{`
+          .chart-choice {
+            cursor: pointer;
+            padding-bottom: 15px;
+          }
+          .chart-choice.active {
+            color: #fac34d;
+            border-bottom: 2px solid #fac34d;
+          }
+          .chart-choice:hover {
+            color: #fac34d;
+          }
+          .chart {
+            padding: 0;
+            padding-left: -20px;
+            margin: 0 5px;
+          }
+          .stock-chart {
+            margin-top: 32px;
+          }
+          .chart-range {
+            display: flex;
+            margin-top: 26px;
+            font-size: 14px;
+            font-weight: 700;
+            padding-bottom: 15px;
+            // margin-right: 35px;
+            border-bottom: 1px solid #eee;
+          }
+          .chart-range li {
+            margin: 0 22px 0 0;
+          }
+          // .chart-range.stock {
+          //   margin-right: 55px;
+          // }
+          body.negative .chart-choice:hover {
+            color: #f45531;
+          }
+          body.negative .chart-choice.active {
+            color: #f45531;
+            border-bottom: 2px solid #f45531;
+          }
+          .chart-loading {
+            width: 710px;
+            height: 195px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+          .chart-loading::after {
+            content: '';
+          }
+        `}</style>
+      </div>
+    )
   }
 }
 

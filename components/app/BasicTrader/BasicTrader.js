@@ -67,6 +67,7 @@ export default props => {
             <StockChart
               stock={stock}
               stockName={stockName}
+              ticker={ticker}
               connected={connected}
               marketPrice={marketPrice}
             />

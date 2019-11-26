@@ -139,17 +139,30 @@ const BuySellWidget = ({
   const price = quote ? quote : marketPrice
   const estimatedCost = (shares * price).toFixed(2)
   return (
-    <Paper className={classes.paper}>
-      <Grid container direction="column" justify="space-between" spacing={3}>
-        <Grid item xs>
+    <Paper
+      className={classes.paper}
+      style={{ paddingLeft: '12px', paddingRight: '12px' }}
+    >
+      <Grid
+        container
+        direction="column"
+        justify="space-between"
+        spacing={3}
+        style={{ marginTop: '-15px' }}
+      >
+        {/* <Grid item xs>
           <Typography variant="h5" component="div">
-            <Box fontWeight="fontWeightBold">{ticker}</Box>
+            <Box fontWeight="fontWeightBold">BUY {ticker}</Box>
           </Typography>
-        </Grid>
-        <Grid item xs>
-          <Tabs value={mode} onChange={handleModeChange} variant="fullWidth">
-            <Tab label="BUY" />
-            <Tab label="SELL" />
+        </Grid> */}
+        <Grid item xs style={{ padding: '0px' }}>
+          <Tabs
+            value={mode}
+            onChange={handleModeChange}
+            className={classes.tabs}
+          >
+            <Tab label="Buy" className={classes.tab} />
+            <Tab label="Sell" className={classes.tab} />
           </Tabs>
         </Grid>
 
@@ -365,7 +378,6 @@ const BuySellWidget = ({
             </Grid>
           </>
         )}
-
         <Grid item xs={12}>
           <Typography color="secondary">
             {orderType === 'bid' ? (
