@@ -92,6 +92,7 @@ export default props => {
                 redirectLogin={redirectLogin}
                 movieCategories={movieCategories}
                 maxSell={maxSell}
+                book={book}
               />
             </Grid>
             <Grid item xs={12}>

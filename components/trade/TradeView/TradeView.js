@@ -154,38 +154,38 @@ class Index extends React.Component {
       <>
         <article>
           <Box p={3} pt={8}>
-              <BasicTrader
-                chartData={chartData}
-                yDomain={yDomain}
-                updatePrintInterval={updatePrintInterval}
-                setActiveChart={setActiveChart}
-                setMarketOrderType={setMarketOrderType}
-                marketOrderType={marketOrderType}
-                printInterval={printInterval}
-                activeChart={activeChart}
-                buyOrders={buyOrders}
-                sellOrders={sellOrders}
-                orderBook={orderBook}
-                book={orderBook.book}
-                ticker={movie.ticker}
-                atomTicketsURL={
-                  'https://www.atomtickets.com/movies/' + movie.atomTicketsSlug
-                }
-                createOrder={createOrder}
-                onExecute={(order, orderType) => {
-                  return userPortfolio.onOrderExecute(order, orderType)
-                }}
-                movieCategories={toJS(movie.genre)}
-                maxSell={maxSell}
-                stockName={movie.name}
-                accountBalance={userStore.accountBalance}
-                userStore={userStore}
-                watchlist={userPortfolio.watchlist}
-                removeFromWatchlist={removeFromWatchlist}
-                addToWatchlist={addToWatchlist}
-                movies={movieStore.movies}
-                redirectLogin={redirectLogin}
-              />
+            <BasicTrader
+              chartData={chartData}
+              yDomain={yDomain}
+              updatePrintInterval={updatePrintInterval}
+              setActiveChart={setActiveChart}
+              setMarketOrderType={setMarketOrderType}
+              marketOrderType={marketOrderType}
+              printInterval={printInterval}
+              activeChart={activeChart}
+              buyOrders={buyOrders}
+              sellOrders={sellOrders}
+              orderBook={orderBook}
+              book={orderBook.book}
+              ticker={movie.ticker}
+              atomTicketsURL={
+                'https://www.atomtickets.com/movies/' + movie.atomTicketsSlug
+              }
+              createOrder={createOrder}
+              onExecute={(order, orderType) => {
+                return userPortfolio.onOrderExecute(order, orderType)
+              }}
+              movieCategories={toJS(movie.genre)}
+              maxSell={maxSell}
+              stockName={movie.name}
+              accountBalance={userStore.accountBalance}
+              userStore={userStore}
+              watchlist={userPortfolio.watchlist}
+              removeFromWatchlist={removeFromWatchlist}
+              addToWatchlist={addToWatchlist}
+              movies={movieStore.movies}
+              redirectLogin={redirectLogin}
+            />
           </Box>
         </article>
       </>

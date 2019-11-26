@@ -26,6 +26,7 @@ import {
   validNumberOfShares,
   QUOTE_NOT_MARKET_WARNING,
 } from './widgetMessages'
+import { formatCurrency } from '../../../util/generic'
 
 const useMarketPriceStyles = makeStyles(theme => ({
   container: {
@@ -33,12 +34,22 @@ const useMarketPriceStyles = makeStyles(theme => ({
   },
   divider: {
     marginLeft: '12px',
-    marginRight: '12px'
-  }
+    marginRight: '12px',
+  },
 }))
 
-const MarketPrice = ({ ticker }) => {
+const MarketPrice = ({ ticker, book }) => {
   const classes = useMarketPriceStyles()
+
+  let highestBid = 0
+  let lowestAsk = 0
+  if (book.orderBook) {
+    const bids = book.orderBook.bids
+    const asks = book.orderBook.asks
+    highestBid = bids[0][0]
+    lowestAsk = asks[asks.length - 1][0]
+  }
+
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   const handleClick = event => {
@@ -99,7 +110,7 @@ const MarketPrice = ({ ticker }) => {
               </Grid>
               <Grid item xs={6}>
                 <Box textAlign="right">
-                  <Typography>$222.22</Typography>
+                  <Typography>{formatCurrency(book.lastPrice)}</Typography>
                 </Box>
               </Grid>
             </Grid>
@@ -110,7 +121,7 @@ const MarketPrice = ({ ticker }) => {
               </Grid>
               <Grid item xs={6}>
                 <Box textAlign="right">
-                  <Typography>$222.22</Typography>
+                  <Typography>{formatCurrency(highestBid)}</Typography>
                 </Box>
               </Grid>
             </Grid>
@@ -121,7 +132,7 @@ const MarketPrice = ({ ticker }) => {
               </Grid>
               <Grid item xs={6}>
                 <Box textAlign="right">
-                  <Typography>$222.22</Typography>
+                  <Typography>{formatCurrency(lowestAsk)}</Typography>
                 </Box>
               </Grid>
             </Grid>
@@ -152,6 +163,7 @@ const BuySellWidget = ({
   movieCategories,
   accountBalance,
   maxSell,
+  book,
 }) => {
   const [mode, setMode] = useState(0)
   const [orderType, setOrderType] = useState('bid')
@@ -319,7 +331,7 @@ const BuySellWidget = ({
             </Grid>
             <Grid item xs container justify="space-between">
               <Grid item xs={6}>
-                <MarketPrice ticker={ticker} />
+                <MarketPrice ticker={ticker} book={book} />
               </Grid>
               <Grid item xs={6}>
                 <Box textAlign="right">

@@ -294,4 +294,5 @@ export default class UserPortfolio {
     const investment = _.find(this.investments, i => i.ticker === ticker)
     return investment ? investment.quantity : 0
   }
+  
 }
