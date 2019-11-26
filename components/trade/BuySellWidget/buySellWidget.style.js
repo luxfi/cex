@@ -25,4 +25,28 @@ export default makeStyles(theme => ({
   label: {
     textTransform: 'capitalize',
   },
+  tabs: {
+    height: '70px',
+    '& > *': {
+      height: '70px',
+      '& > :first-child': {
+        height: '70px',
+      },
+      '& > :last-child': {
+        top: 0,
+      },
+    },
+  },
+  tab: {
+    height: '100%',
+    fontSize: '1.25rem',
+    // border: '1px solid',
+    // borderColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
+    width: '50%',
+    minWidth: 0,
+    '&.Mui-selected': {
+      backgroundColor: theme.palette.background.paper,
+    },
+  },
 }))

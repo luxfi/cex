@@ -39,6 +39,7 @@ export default props => {
     onExecute,
     createOrder,
     maxSell,
+    investmentHistory,
     marketOrderType,
     stockName,
     accountBalance,
@@ -67,6 +68,7 @@ export default props => {
             <StockChart
               stock={stock}
               stockName={stockName}
+              ticker={ticker}
               connected={connected}
               marketPrice={marketPrice}
             />
@@ -91,6 +93,7 @@ export default props => {
                 redirectLogin={redirectLogin}
                 movieCategories={movieCategories}
                 maxSell={maxSell}
+                book={book}
               />
             </Grid>
             <Grid item xs={12}>
@@ -117,19 +120,30 @@ export default props => {
                 </Button>
               </Box>
             </Grid>
-            <Grid item xs={12}>
-              <Box mt={3} justifyContent="center" display="flex">
-                <Typography
+            <Grid item xs>
+              <Box mt={3} pl={4} pr={4}>
+                <Button
                   onClick={e => {
                     inWatchlist
                       ? removeFromWatchlist(ticker)
                       : addToWatchlist(ticker)
                   }}
-                  variant="subtitle1"
+                  variant="outlined"
+                  fullWidth
                   color="secondary"
+                  size="large"
+                  className={classes.buyTicketsButton}
+                  classes={{
+                    label: classes.label,
+                  }}
                 >
-                  {inWatchlist ? 'Remove from Watchlist' : 'Add to WatchList'}
-                </Typography>
+                  <Typography
+                    variant="subtitle1"
+                    className={classes.buyTicketsText}
+                  >
+                    {inWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}
+                  </Typography>
+                </Button>
               </Box>
             </Grid>
           </Grid>
@@ -145,7 +159,7 @@ export default props => {
           <Divider />
           <EarningsSection />
           <Divider />
-          <HistorySection book={orderBook.book} />
+          <HistorySection investmentHistory={investmentHistory} ticker={ticker} />
           <Divider />
           <OtherFilmsTrading movies={movies} />
         </Grid>
