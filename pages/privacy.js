@@ -1,5 +1,8 @@
 import React from 'react'
+import { Container, Box } from "@material-ui/core"
+
 import { googlePageView } from '../util/generic'
+
 
 class Privacy extends React.Component {
   componentDidMount() {
