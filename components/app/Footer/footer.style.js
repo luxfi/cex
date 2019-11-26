@@ -1,3 +1,5 @@
+import { inherits } from "util";
+
 export default theme => {
   return {
     root: {
@@ -128,11 +130,19 @@ export default theme => {
         marginRight: theme.spacing(1)
       },
       marginBottom: theme.spacing(1),
+
+      "& a": {
+        color: "inherit"
+      }
     },
 
     finePrint: {
       fontSize: '0.8rem',
       color: theme.palette.text.disabled,
+
+      "& a": {
+        color: "inherit"
+      }
     },
 
     "@global": {
