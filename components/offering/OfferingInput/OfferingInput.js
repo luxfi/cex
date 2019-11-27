@@ -16,7 +16,6 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     width: '100%',
     height: '64px',
-    paddingRight: '160px', // hack until figure out a better way
     borderTopRightRadius: '0',
     borderBottomRightRadius: '0',
   },
@@ -54,10 +53,7 @@ export default function CustomizedInputBase() {
         >
           <Box fontWeight="fontWeightBold">$</Box>
         </Typography>
-        <InputBase
-          placeholder="1,000"
-          inputProps={{ 'aria-label': 'search google maps' }}
-        />
+        <InputBase placeholder="1,000" />
       </Paper>
       <Button color="secondary" variant="contained" className={classes.button}>
         <Typography variant="subtitle1">Invest</Typography>
