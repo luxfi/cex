@@ -24,7 +24,7 @@ class KYC extends React.Component {
 
   render() {
     const { store } = this.props
-    const { userStore } = this.props.store
+    const { userStore, uiStore } = store
     const {
       phone,
       taxId,
@@ -57,7 +57,7 @@ class KYC extends React.Component {
       activeStep
     } = userStore
     const setErrorMessage = message => {
-        store.uiStore.setErrorMessage(message)
+        uiStore.setErrorMessage(message)
     }
     return (
       <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
