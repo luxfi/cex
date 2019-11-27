@@ -18,7 +18,7 @@ class Login extends React.Component {
 
   render() {
     const { store } = this.props
-    const { userStore } = this.props.store
+    const { userStore, uiStore } = store
     const {
       email,
       password,
@@ -27,10 +27,10 @@ class Login extends React.Component {
       validPassword
     } = userStore
     const setErrorMessage = message => {
-        store.uiStore.setErrorMessage(message)
+        uiStore.setErrorMessage(message)
     }
     const setSuccessMessage = message => {
-        store.uiStore.setSuccessMessage(message)
+        uiStore.setSuccessMessage(message)
     }
     return (
       <LoginForm

@@ -44,7 +44,7 @@ class Account extends React.Component {
 
   render() {
     const store = this.props.store
-    const { userStore } = store
+    const { userStore, uiStore } = store
     const {
       setValue,
       account,
@@ -63,7 +63,7 @@ class Account extends React.Component {
     } = userStore
 
     const setErrorMessage = message => {
-      store.uiStore.setErrorMessage(message)
+      uiStore.setErrorMessage(message)
     }
 
     return (
