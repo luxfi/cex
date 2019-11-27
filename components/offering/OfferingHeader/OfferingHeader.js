@@ -6,7 +6,7 @@ import grey from '@material-ui/core/colors/grey'
 const movie = {
   title: 'SAW 9: The Organ Donor',
   highlightedTags: ['New Release'],
-  tags: [ '2019', 'Paramount Pictures'],
+  tags: ['2019', 'Paramount Pictures'],
   media: [
     'https://www.youtube.com/embed/uiisFYRu0DQ',
     'https://www.youtube.com/embed/rSn6TIfbOj8',
@@ -18,7 +18,7 @@ const movie = {
   ],
 }
 
-const useStyles = makeStyles(theme => ({
+const useTitleStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Title = ({ title, tags, highlightedTags }) => {
-  const classes = useStyles()
+  const classes = useTitleStyles()
   return (
     <div className={classes.root}>
       <Typography variant="h5">
@@ -45,7 +45,11 @@ const Title = ({ title, tags, highlightedTags }) => {
       {highlightedTags.map((tag, i) => (
         <Typography key={i} variant="h5" component="div">
           <Box fontWeight="fontWeightBold">
-            <Chip size="small" label={tag} className={classes.highlightedChip} />
+            <Chip
+              size="small"
+              label={tag}
+              className={classes.highlightedChip}
+            />
           </Box>
         </Typography>
       ))}
@@ -60,17 +64,49 @@ const Title = ({ title, tags, highlightedTags }) => {
   )
 }
 
+const Trailer = ({ trailer }) => {
+  return (
+    <div
+      className="video"
+      style={{
+        position: 'relative',
+        paddingBottom: '56.25%' /* 16:9 */,
+        paddingTop: 25,
+        height: 0,
+      }}
+    >
+      <iframe
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+        }}
+        src={trailer}
+        frameBorder="0"
+        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      />
+    </div>
+  )
+}
+
 const OfferingHeader = () => {
   return (
-    <>
+    <Box mb={40}>
       <Grid justify="center" container spacing={4}>
-        <Grid item xs={12} id="offering-title">
+        <Grid item xs={12} lg={10} id="offering-title">
           <Grid container direction="column" id="offering-tags-container">
-            <Title title={movie.title} tags={movie.tags} highlightedTags={movie.highlightedTags} />
+            <Title
+              title={movie.title}
+              tags={movie.tags}
+              highlightedTags={movie.highlightedTags}
+            />
           </Grid>
         </Grid>
         <Grid item xs={12} lg={7}>
-          {/* trailers */}
+          <Trailer trailer={movie.media[0]} />
         </Grid>
         <Grid item lg={3} md={4} sm={6} xs={12}>
           {/* sidebar */}
@@ -81,7 +117,7 @@ const OfferingHeader = () => {
           </Grid>
         </Grid>
       </Grid>
-    </>
+    </Box>
   )
 }
 
