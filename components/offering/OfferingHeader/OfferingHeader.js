@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import grey from '@material-ui/core/colors/grey'
 import { formatCurrency } from '../../../util/generic'
 import LinearProgressBar from '../../app/LinearProgressBar'
+import { OfferingInput } from '../'
 
 const movie = {
   title: 'SAW 9: The Organ Donor',
@@ -25,13 +26,6 @@ const movie = {
 }
 
 const useTitleStyles = makeStyles(theme => ({
-  // root: {
-  //   display: 'flex',
-  //   flexWrap: 'wrap',
-  //   '& > *': {
-  //     margin: theme.spacing(1),
-  //   },
-  // },
   chip: {
     background: grey[800],
   },
@@ -102,6 +96,12 @@ const Trailer = ({ trailer }) => {
   )
 }
 
+const useRaisingStyles = makeStyles(theme => ({
+  spacer: {
+    flexGrow: 1,
+  },
+}))
+
 const RaisingInformation = ({
   raisedAmount,
   fundingGoal,
@@ -115,6 +115,7 @@ const RaisingInformation = ({
       maximumFractionDigits: 0,
     },
   )
+  const classes = useRaisingStyles()
   return (
     <Grid container direction="column" spacing={2}>
       <Grid item xs={12}>
@@ -123,11 +124,17 @@ const RaisingInformation = ({
         </Typography>
         <Box mt={1} mb={1}>
           <Typography variant="subtitle1">
-            ({percentFunded}%) of {fundingGoal.toLocaleString()} funded
+            <Typography component="span" color="secondary">
+              ({percentFunded}%)
+            </Typography>{' '}
+            of {fundingGoal.toLocaleString()} funded
           </Typography>
         </Box>
         <Box mt={1} mb={1}>
-          <LinearProgressBar variant="determinate" value={percentFunded} />
+          <LinearProgressBar
+            variant="determinate"
+            value={parseInt(percentFunded)}
+          />
         </Box>
       </Grid>
       <Grid item xs={12}>
@@ -144,7 +151,24 @@ const RaisingInformation = ({
         </Typography>
         <Typography variant="subtitle1">Days to go</Typography>
       </Grid>
-      <Divider light />
+      <Box mb={2} mt={2}>
+        <Divider light />
+      </Box>
+      <Grid item container xs={12}>
+        <Typography variant="subtitle2">
+          Minimum Investment: (Dollars)
+        </Typography>
+        <div className={classes.spacer}></div>
+        <Typography variant="subtitle2" component="span" color="textSecondary">
+          Estimated Cost: $0.00
+        </Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <OfferingInput />
+      </Grid>
+      <Box mb={2} mt={2}>
+        <Divider light />
+      </Box>
     </Grid>
   )
 }
