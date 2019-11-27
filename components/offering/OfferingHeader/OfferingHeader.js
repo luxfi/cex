@@ -5,6 +5,7 @@ import grey from '@material-ui/core/colors/grey'
 import { formatCurrency } from '../../../util/generic'
 import LinearProgressBar from '../../app/LinearProgressBar'
 import { OfferingInput } from '../'
+import Icon from '@material-ui/core/Icon'
 
 const movie = {
   title: 'SAW 9: The Organ Donor',
@@ -166,9 +167,47 @@ const RaisingInformation = ({
       <Grid item xs={12}>
         <OfferingInput />
       </Grid>
-      <Box mb={2} mt={2}>
+      <Box mb={2} mt={3}>
         <Divider light />
       </Box>
+      <Grid item container xs={12} spacing={3} justify="flex-end">
+        <Grid item>
+          <Typography component="span" variant="subtitle2">
+            <Box component="span" pt={0.5}>
+              <Icon color="disabled" fontSize="inherit" component="span">
+                email_outline
+              </Icon>
+            </Box>
+            <Box component="span" ml={1}>
+              Email Me
+            </Box>
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography component="span" variant="subtitle2">
+            <Box component="span" pt={0.5}>
+              <Icon color="disabled" fontSize="inherit" component="span">
+                share
+              </Icon>
+            </Box>
+            <Box component="span" ml={1}>
+              Share
+            </Box>
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography component="span" variant="subtitle2">
+            <Box component="span" pt={0.5}>
+              <Icon color="disabled" fontSize="inherit" component="span">
+                bookmark_border
+              </Icon>
+            </Box>
+            <Box component="span" ml={1}>
+              Follow
+            </Box>
+          </Typography>
+        </Grid>
+      </Grid>
     </Grid>
   )
 }
