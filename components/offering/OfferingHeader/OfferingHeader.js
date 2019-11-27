@@ -1,7 +1,9 @@
 import React from 'react'
-import { Grid, Typography, Box, Chip } from '@material-ui/core'
+import { Grid, Typography, Box, Chip, Divider } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import grey from '@material-ui/core/colors/grey'
+import { formatCurrency } from '../../../util/generic'
+import LinearProgressBar from '../../app/LinearProgressBar'
 
 const movie = {
   title: 'SAW 9: The Organ Donor',
@@ -16,16 +18,20 @@ const movie = {
     'https://www.youtube.com/embed/BZDhyjk7LrE',
     'https://www.youtube.com/embed/zEu9M1fuTxA',
   ],
+  raisedAmount: 2123201.44,
+  amountOfInvestors: 1614,
+  daysLeft: 11,
+  fundingGoal: 3000000,
 }
 
 const useTitleStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
+  // root: {
+  //   display: 'flex',
+  //   flexWrap: 'wrap',
+  //   '& > *': {
+  //     margin: theme.spacing(1),
+  //   },
+  // },
   chip: {
     background: grey[800],
   },
@@ -38,29 +44,33 @@ const useTitleStyles = makeStyles(theme => ({
 const Title = ({ title, tags, highlightedTags }) => {
   const classes = useTitleStyles()
   return (
-    <div className={classes.root}>
-      <Typography variant="h5">
-        <Box fontWeight="fontWeightBold">{title}</Box>
-      </Typography>
-      {highlightedTags.map((tag, i) => (
-        <Typography key={i} variant="h5" component="div">
-          <Box fontWeight="fontWeightBold">
-            <Chip
-              size="small"
-              label={tag}
-              className={classes.highlightedChip}
-            />
-          </Box>
+    <Grid container direction="column" spacing={0}>
+      <Grid item xs={12}>
+        <Typography variant="h4" gutterBottom>
+          <Box fontWeight="fontWeightBold">{title}</Box>
         </Typography>
-      ))}
-      {tags.map((tag, i) => (
-        <Typography key={i} variant="h5" component="div">
-          <Box fontWeight="fontWeightBold">
-            <Chip size="small" label={tag} className={classes.chip} />
-          </Box>
-        </Typography>
-      ))}
-    </div>
+      </Grid>
+      <Grid item container xs={12} direction="row">
+        {highlightedTags.map((tag, i) => (
+          <Typography key={i} variant="h5" component="div">
+            <Box fontWeight="fontWeightBold" mr={0.5}>
+              <Chip
+                size="small"
+                label={tag}
+                className={classes.highlightedChip}
+              />
+            </Box>
+          </Typography>
+        ))}
+        {tags.map((tag, i) => (
+          <Typography key={i} variant="h5" component="div">
+            <Box fontWeight="fontWeightBold" mr={0.5}>
+              <Chip size="small" label={tag} className={classes.chip} />
+            </Box>
+          </Typography>
+        ))}
+      </Grid>
+    </Grid>
   )
 }
 
@@ -92,17 +102,66 @@ const Trailer = ({ trailer }) => {
   )
 }
 
+const RaisingInformation = ({
+  raisedAmount,
+  fundingGoal,
+  amountOfInvestors,
+  daysLeft,
+}) => {
+  // note, in future we will use moment(dateFundingEnds).toNow() to caculate relative time
+  const percentFunded = ((raisedAmount / fundingGoal) * 100).toLocaleString(
+    undefined,
+    {
+      maximumFractionDigits: 0,
+    },
+  )
+  return (
+    <Grid container direction="column" spacing={2}>
+      <Grid item xs={12}>
+        <Typography variant="h3">
+          <Box fontWeight="fontWeightBold">{formatCurrency(raisedAmount)}</Box>
+        </Typography>
+        <Box mt={1} mb={1}>
+          <Typography variant="subtitle1">
+            ({percentFunded}%) of {fundingGoal.toLocaleString()} funded
+          </Typography>
+        </Box>
+        <Box mt={1} mb={1}>
+          <LinearProgressBar variant="determinate" value={percentFunded} />
+        </Box>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography variant="h3">
+          <Box fontWeight="fontWeightBold">
+            {amountOfInvestors.toLocaleString()}
+          </Box>
+        </Typography>
+        <Typography variant="subtitle1">Investors support this film</Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography variant="h3">
+          <Box fontWeight="fontWeightBold">{daysLeft}</Box>
+        </Typography>
+        <Typography variant="subtitle1">Days to go</Typography>
+      </Grid>
+      <Divider light />
+    </Grid>
+  )
+}
+
 const OfferingHeader = () => {
   return (
     <Box mb={40}>
       <Grid justify="center" container spacing={4}>
         <Grid item xs={12} lg={10} id="offering-title">
           <Grid container direction="column" id="offering-tags-container">
-            <Title
-              title={movie.title}
-              tags={movie.tags}
-              highlightedTags={movie.highlightedTags}
-            />
+            <Box mb={-1}>
+              <Title
+                title={movie.title}
+                tags={movie.tags}
+                highlightedTags={movie.highlightedTags}
+              />
+            </Box>
           </Grid>
         </Grid>
         <Grid item xs={12} lg={7}>
@@ -110,11 +169,12 @@ const OfferingHeader = () => {
         </Grid>
         <Grid item lg={3} md={4} sm={6} xs={12}>
           {/* sidebar */}
-          <Grid container direction="column">
-            <Grid item xs={12}></Grid>
-            <Grid item xs={12}></Grid>
-            <Grid item xs={12}></Grid>
-          </Grid>
+          <RaisingInformation
+            raisedAmount={movie.raisedAmount}
+            fundingGoal={movie.fundingGoal}
+            amountOfInvestors={movie.amountOfInvestors}
+            daysLeft={movie.daysLeft}
+          />
         </Grid>
       </Grid>
     </Box>
