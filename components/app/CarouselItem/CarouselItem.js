@@ -21,12 +21,11 @@ const CarouselItem = ({ ...props }) => {
   // }
 
   const classes = useStyles()
-  const slidesPerRow = props.slidesPerRow ? props.slidesPerRow : 1
-
+  let width = props.width || `calc(100% / ${5}`
   return (
     <li
       className={classes.item}
-      style={{ width: `calc(100% / ${slidesPerRow}` }}
+      style={{ width: `${width}` }}
       // className={classname('CarouselItem', {
       // 'CarouselItem--clickable': props.clickable,
       // 'CarouselItem--active': props.index === props.currentSlideIndex,

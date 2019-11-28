@@ -1,10 +1,4 @@
-import {
-  useState,
-  useRef,
-  useEffect,
-  useCallback,
-  useLayoutEffect,
-} from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Fab } from '@material-ui/core'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
@@ -14,6 +8,9 @@ import throttle from 'lodash/throttle'
 
 // CustomHook - https://usehooks.com/useEventListener/
 function useEventListener(eventName, handler, element = window) {
+  console.log('eventName', eventName)
+  console.log('handler', handler)
+  console.log('element', element)
   // Create a ref that stores handler
   const savedHandler = useRef()
 
@@ -85,6 +82,12 @@ export const Carousel = ({ slides, ...props }) => {
   const carouselRef = useRef()
   const listRef = useRef()
 
+  /**
+   * Default props
+   */
+  const slidesPerScroll = props.slidesPerScroll || props.slidesPerRow
+  const animationSpeed = props.animationSpeed || 500
+
   const getChildren = () => {
     if (!props.children) {
       if (slides) {
@@ -106,49 +109,68 @@ export const Carousel = ({ slides, ...props }) => {
   const [transitionEnabled, setTransitionEnabled] = useState(false)
   const [slideIndex, setSlideIndex] = useState(0)
   const [carouselWidth, setCarouselWidth] = useState(0)
-  useLayoutEffect(() => {
-    if (carouselRef.current) {
-      setCarouselWidth(carouselRef.current.offsetWidth)
-      setResizedCarousel(carouselRef.current.offsetWidth)
-    }
-  }, [])
-  const [resizedCarousel, setResizedCarousel] = useState(0)
-  const throttledWidth = useRef(throttle(width => setCarouselWidth(width), 300))
-
-  useEffect(() => throttledWidth.current(resizedCarousel), [resizedCarousel])
-  // const [dragStart, setDragStart] = useState(null)
-
+  const [carouselItemWidth, setCarouselItemWidth] = useState(0)
+  const [transformOffset, setTransformOffest] = useState(0)
   /**
-   * Handlers and Initial Setup
+   * Handlers
    */
-  // adding listener to remove transition when animation finished
-  // Event handler utilizing useCallback ...
-  // ... so that reference never changes.
-  const transitionHandler = useCallback(() => {
+  const transitionHandler = () => {
     // remove transition when animation finished
     setTransitionEnabled(false)
-  }, [setTransitionEnabled])
+  }
 
-  const resizeHandler = useCallback(() => {
-    setResizedCarousel(carouselRef.offsetWidth)
-  }, [setResizedCarousel])
+  /* ========== positioning ========== */
+  /**
+   * Calculates width of a single slide in a carousel
+   * @return {number} width of a slide in px
+   */
+
+  useEffect(() => {
+    setTransitionEnabled(true)
+    setCarouselItemWidth(carouselWidth / props.slidesPerRow)
+  }, [carouselWidth, props.slidesPerRow])
+
+  /**
+   * Calculates offset in pixels to be applied to Track element in order to show current slide correctly (centered or aligned to the left)
+   * @return {number} offset in px
+   */
+  useEffect(() => {
+    setTransitionEnabled(true)
+    const elementWidthWithOffset = carouselItemWidth
+    setTransformOffest(0 - slideIndex * elementWidthWithOffset)
+  }, [slideIndex])
+  // const [dragStart, setDragStart] = useState(null)
 
   // Add event listener using our hook
   useEventListener('transitionend', transitionHandler, listRef)
-  useEventListener('resize', resizeHandler, carouselRef)
+  useEffect(() => {
+    const element = carouselRef.current
+    debugger
+    if (!(element instanceof Element)) {
+      return
+    }
+
+    const observer = new ResizeObserver(entries => {
+      if (!Array.isArray(entries)) {
+        return
+      }
+      if (!entries.length) {
+        return
+      }
+      const entry = entries[0]
+      const newWidth = entry.target.offsetWidth
+      //todo throttle setting of width
+      if (carouselWidth !== newWidth) {
+        setCarouselWidth(newWidth)
+      }
+    })
+
+    observer.observe(element)
+    return () => observer.unobserve(element)
+  }, [carouselRef])
 
   /**
-   * Default props
-   */
-  const slidesPerScroll = props.slidesPerScroll || props.slidesPerRow
-  const animationSpeed = props.animationSpeed || 500
-
-  /* ========== tools ========== */
-
-  /* ========== control ========== */
-
-  /**
-   * Limit number between 0 and last slide index.
+   * Limit number between 0 and last slide index - amount of slides
    * @param {number} index to be limited
    * @return {number} new index
    */
@@ -170,34 +192,6 @@ export const Carousel = ({ slides, ...props }) => {
   const nextSlide = () => changeSlide(slideIndex + slidesPerScroll)
   const prevSlide = () => changeSlide(slideIndex - slidesPerScroll)
 
-  /* ========== positioning ========== */
-  /**
-   * Calculates width of a single slide in a carousel
-   * @return {number} width of a slide in px
-   */
-  const getCarouselElementWidth = () => {
-    return carouselWidth / props.slidesPerRow
-  }
-
-  /**
-   * Calculates offset in pixels to be applied to Track element in order to show current slide correctly (centered or aligned to the left)
-   * @return {number} offset in px
-   */
-  const [transformOffset, setTransformOffest] = useState(0)
-  useEffect(() => {
-    setTransitionEnabled(true)
-    const elementWidthWithOffset = getCarouselElementWidth()
-    setTransformOffest(0 - slideIndex * elementWidthWithOffset)
-  }, [slideIndex])
-
-  /* ========== rendering ========== */
-  const trackStyles = {
-    transform: `translateX(${transformOffset}px)`,
-    transitionDuration: transitionEnabled
-      ? `${animationSpeed}ms, ${animationSpeed}ms`
-      : null,
-  }
-
   const classes = useStyles()
   return (
     <div className={classes.container} ref={carouselRef}>
@@ -218,13 +212,21 @@ export const Carousel = ({ slides, ...props }) => {
         </Fab>
       </div>
       <div className={classes.sliderWrapper}>
-        <ul className={classes.list} ref={listRef} style={trackStyles}>
+        <ul
+          className={classes.list}
+          ref={listRef}
+          style={{
+            transform: `translateX(${transformOffset}px)`,
+            transitionDuration: `${animationSpeed}ms, ${animationSpeed}ms`,
+          }}
+        >
           {children.map((carouselItem, index) => (
             <CarouselItem
               key={index}
               // currentSlideIndex={getActiveSlideIndex()}
               index={index}
               slidesPerRow={props.slidesPerRow}
+              width={carouselItemWidth}
               // onMouseDown={onMouseDown}
               // onTouchStart={onTouchStart}
             >
