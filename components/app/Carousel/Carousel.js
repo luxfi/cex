@@ -17,7 +17,7 @@ function useEventListener(eventName, handler, element = window) {
   // Create a ref that stores handler
   const savedHandler = useRef()
 
-  // Update ref.current value if handler changes.
+  // Update ref.current index if handler changes.
   // This allows our effect below to always get latest handler ...
   // ... without us needing to pass it in effect deps array ...
   // ... and potentially cause effect to re-run every render.
@@ -149,21 +149,21 @@ export const Carousel = ({ slides, ...props }) => {
 
   /**
    * Limit number between 0 and last slide index.
-   * @param {number} value to be limited
-   * @return {number} new value
+   * @param {number} index to be limited
+   * @return {number} new index
    */
-  const Limit = value => {
-    const maxValue = children.length - 1
-    if (value > maxValue) {
-      return maxValue
+  const Limit = index => {
+    const maxIndex = children.length - 1 - props.slidesPerRow
+    if (index > maxIndex) {
+      return maxIndex
     }
-    if (value < 0) {
+    if (index < 0) {
       return 0
     }
-    return value
+    return index
   }
   /**
-   * Limit provided value and trigger setSlideIndex
+   * Limit provided index and trigger setSlideIndex
    * @param {number} index desired index to change current index to
    */
   const changeSlide = index => setSlideIndex(Limit(index))
