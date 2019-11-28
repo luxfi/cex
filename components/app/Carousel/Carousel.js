@@ -175,7 +175,7 @@ export const Carousel = ({ slides, ...props }) => {
    * @return {number} new index
    */
   const Limit = index => {
-    const maxIndex = children.length - 1 - props.slidesPerRow
+    const maxIndex = children.length - props.slidesPerRow
     if (index > maxIndex) {
       return maxIndex
     }
