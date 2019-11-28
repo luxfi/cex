@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import grey from '@material-ui/core/colors/grey'
 import { formatCurrency } from '../../../util/generic'
 import LinearProgressBar from '../../app/LinearProgressBar'
-import { OfferingInput } from '../'
+import { OfferingInput, MediaSlider } from '../'
 import Icon from '@material-ui/core/Icon'
 
 const movie = {
@@ -229,6 +229,7 @@ const OfferingHeader = () => {
         </Grid>
         <Grid item xs={12} lg={7}>
           <Trailer trailer={movie.media[0]} />
+          <MediaSlider />
         </Grid>
         <Grid item lg={3} md={4} sm={6} xs={12}>
           {/* sidebar */}
