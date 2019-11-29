@@ -49,8 +49,8 @@ export const Carousel = ({ slides, ...props }) => {
    * Default props
    */
   const slidesPerScroll = props.slidesPerScroll || props.slidesPerRow
-  const animationSpeed = props.animationSpeed || 50 || 500
-  const clickDragThreshold = props.animationSpeed || 10
+  const animationSpeed = props.animationSpeed || 500
+  // const clickDragThreshold = props.animationSpeed || 10
 
   const getChildren = () => {
     if (!props.children) {
@@ -75,9 +75,9 @@ export const Carousel = ({ slides, ...props }) => {
   const [carouselWidth, setCarouselWidth] = useState(0)
   const [carouselItemWidth, setCarouselItemWidth] = useState(0)
   const [transformOffset, setTransformOffest] = useState(0)
-  const [dragStart, setDragStart] = useState(null)
-  const [dragOffset, setDragOffset] = useState(0)
-  const [clickedIndex, setClickedIndex] = useState(null)
+  // const [dragStart, setDragStart] = useState(null)
+  // const [dragOffset, setDragOffset] = useState(0)
+  // const [clickedIndex, setClickedIndex] = useState(null)
   /**
    * Handlers
    */
@@ -88,35 +88,35 @@ export const Carousel = ({ slides, ...props }) => {
    * @param {event} e event
    * @param {number} index of the element drag started on
    */
-  const onMouseDown = (e, index) => {
-    e.preventDefault()
-    e.stopPropagation()
-    const { pageX } = e
-    setDragStart(pageX)
-    setClickedIndex(index)
-  }
+  // const onMouseDown = (e, index) => {
+  //   e.preventDefault()
+  //   e.stopPropagation()
+  //   const { pageX } = e
+  //   setDragStart(pageX)
+  //   setClickedIndex(index)
+  // }
 
   /**
    * Function handling mouse move if drag has started. Sets dragOffset in the state.
    * @param {event} e event
    */
-  const onMouseMove = e => {
-    const { pageX } = e
-    if (dragStart !== null) {
-      setDragOffset(pageX - dragStart)
-    }
-  }
+  // const onMouseMove = e => {
+  //   const { pageX } = e
+  //   if (dragStart !== null) {
+  //     setDragOffset(pageX - dragStart)
+  //   }
+  // }
 
   /**
    * Function handling beginning of touch drag by setting index of touched item and coordinates of touch in the state
    * @param {event} e event
    * @param {number} index of the element drag started on
    */
-  const onTouchStart = (e, index) => {
-    const { changedTouches } = e
-    setDragStart(changedTouches[0].pageX)
-    setClickedIndex(index)
-  }
+  // const onTouchStart = (e, index) => {
+  //   const { changedTouches } = e
+  //   setDragStart(changedTouches[0].pageX)
+  //   setClickedIndex(index)
+  // }
 
   /**
    * Function handling touch move if drag has started. Sets dragOffset in the state.
@@ -139,44 +139,44 @@ export const Carousel = ({ slides, ...props }) => {
    * It resets clicked index, dragOffset and dragStart values in state.
    * @param {event} e event
    */
-  const onMouseUpTouchEnd = e => {
-    if (dragStart !== null) {
-      e.preventDefault()
-      if (Math.abs(dragOffset) > clickDragThreshold) {
-        changeSlide(getNearestSlideIndex())
-      } else {
-        changeSlide(clickedIndex)
-      }
-      setDragStart(null)
-      setDragOffset(0)
-      setClickedIndex(null)
-    }
-  }
+  // const onMouseUpTouchEnd = e => {
+  //   if (dragStart !== null) {
+  //     e.preventDefault()
+  //     if (Math.abs(dragOffset) > clickDragThreshold) {
+  //       changeSlide(getNearestSlideIndex())
+  //     } else {
+  //       changeSlide(clickedIndex)
+  //     }
+  //     setDragStart(null)
+  //     setDragOffset(0)
+  //     setClickedIndex(null)
+  //   }
+  // }
 
   /**
    * Simulates mouse events when touch events occur
    * @param {event} e A touch event
    */
-  const simulateEvent = e => {
-    const touch = e.changedTouches[0]
-    const { screenX, screenY, clientX, clientY } = touch
-    const touchEventMap = {
-      touchstart: 'mousedown',
-      touchmove: 'mousemove',
-      touchend: 'mouseup',
-    }
-    const simulatedEvent = new MouseEvent(touchEventMap[e.type], {
-      bubbles: true,
-      cancelable: true,
-      view: window,
-      detail: 1,
-      screenX,
-      screenY,
-      clientX,
-      clientY,
-    })
-    touch.target.dispatchEvent(simulatedEvent)
-  }
+  // const simulateEvent = e => {
+  //   const touch = e.changedTouches[0]
+  //   const { screenX, screenY, clientX, clientY } = touch
+  //   const touchEventMap = {
+  //     touchstart: 'mousedown',
+  //     touchmove: 'mousemove',
+  //     touchend: 'mouseup',
+  //   }
+  //   const simulatedEvent = new MouseEvent(touchEventMap[e.type], {
+  //     bubbles: true,
+  //     cancelable: true,
+  //     view: window,
+  //     detail: 1,
+  //     screenX,
+  //     screenY,
+  //     clientX,
+  //     clientY,
+  //   })
+  //   touch.target.dispatchEvent(simulatedEvent)
+  // }
 
   const transitionHandler = () => {
     // remove transition when animation finished
@@ -188,19 +188,19 @@ export const Carousel = ({ slides, ...props }) => {
    * Checks what slide index is the nearest to the current position (to calculate the result of dragging the slider)
    * @return {number} index
    */
-  const getNearestSlideIndex = () => {
-    let slideIndexOffset = 0
-    if (props.keepDirectionWhenDragging) {
-      if (dragOffset > 0) {
-        slideIndexOffset = -Math.ceil(dragOffset / carouselWidth)
-      } else {
-        slideIndexOffset = -Math.floor(dragOffset / carouselWidth)
-      }
-    } else {
-      slideIndexOffset = -Math.round(dragOffset / carouselWidth)
-    }
-    return slideIndex + slideIndexOffset
-  }
+  // const getNearestSlideIndex = () => {
+  //   let slideIndexOffset = 0
+  //   if (props.keepDirectionWhenDragging) {
+  //     if (dragOffset > 0) {
+  //       slideIndexOffset = -Math.ceil(dragOffset / carouselWidth)
+  //     } else {
+  //       slideIndexOffset = -Math.floor(dragOffset / carouselWidth)
+  //     }
+  //   } else {
+  //     slideIndexOffset = -Math.round(dragOffset / carouselWidth)
+  //   }
+  //   return slideIndex + slideIndexOffset
+  // }
 
   /**
    * Calculates width of a single slide in a carousel
@@ -222,15 +222,15 @@ export const Carousel = ({ slides, ...props }) => {
   }, [slideIndex])
 
   // Add event listener using our hook
-  useEventListener('transitionend', transitionHandler, listRef)
+  useEventListener('transitionend', transitionHandler, listRef.current)
   // adding event listeners for swipe
-  useEventListener('mousemove', onMouseMove, carouselRef.current, true)
-  useEventListener('mouseup', onMouseUpTouchEnd, carouselRef.current, true)
-  useEventListener('touchstart', simulateEvent, carouselRef.current, true)
-  useEventListener('touchmove', simulateEvent, carouselRef.current, {
-    passive: false,
-  })
-  useEventListener('touchend', simulateEvent, carouselRef.current, true)
+  // useEventListener('mousemove', onMouseMove, carouselRef.current, true)
+  // useEventListener('mouseup', onMouseUpTouchEnd, carouselRef.current, true)
+  // useEventListener('touchstart', simulateEvent, carouselRef.current, true)
+  // useEventListener('touchmove', simulateEvent, carouselRef.current, {
+  //   passive: false,
+  // })
+  // useEventListener('touchend', simulateEvent, carouselRef.current, true)
   useEffect(() => {
     const element = carouselRef.current
     if (!(element instanceof Element)) {
@@ -303,7 +303,7 @@ export const Carousel = ({ slides, ...props }) => {
           className={classes.list}
           ref={listRef}
           style={{
-            transform: `translateX(${transformOffset + dragOffset}px)`,
+            transform: `translateX(${transformOffset}px)`,
             transitionDuration: `${animationSpeed}ms, ${animationSpeed}ms`,
           }}
         >
@@ -314,8 +314,8 @@ export const Carousel = ({ slides, ...props }) => {
               index={index}
               slidesPerRow={props.slidesPerRow}
               width={carouselItemWidth}
-              onMouseDown={onMouseDown}
-              onTouchStart={onTouchStart}
+              // onMouseDown={onMouseDown}
+              // onTouchStart={onTouchStart}
             >
               {carouselItem}
             </CarouselItem>
