@@ -1,89 +1,72 @@
-import {
-  useEffect,
-  useState,
-} from 'react'
+import { isRequired } from '@hanzo/middleware'
+import { MUIText } from '@hanzo/react'
 
 import {
-  BuySellForm,
-  ChartIntervalControls,
-  ChartCandlestickFake,
-  ChartLineSeries,
-  ProChart,
-} from "../"
+  Box,
+  Button,
+  Grid,
+  InputAdornment,
+  Paper,
+  Tab,
+  Tabs,
+  Typography,
+} from '@material-ui/core'
+
+import {
+  green,
+  red,
+} from '@material-ui/core/colors'
+
+import { makeStyles } from '@material-ui/core/styles'
+
+import midstream from 'midstream'
+import { toJS } from 'mobx'
+import { useState } from 'react'
+import NumberFormat from 'react-number-format'
+import { Element } from 'react-scroll'
+
+import { formatCurrency } from '../../../util/generic'
 
 import {
   OrderBook,
   TradeHistoryBook,
 } from '../../trade'
 
-import {
-  formatCurrency
-} from '../../../util/generic'
-
-import { toJS } from "mobx"
-import { timelineLabels } from "../../../util/dateRange"
-import { Element, scroller } from "react-scroll"
-import dynamic from "next/dynamic"
-
-import {
-  Grid,
-  Button,
-  Tabs,
-  Tab,
-  Paper,
-  Typography,
-  Box,
-  InputAdornment,
-} from "@material-ui/core"
-
-import {
-  makeStyles
-} from '@material-ui/core/styles'
-
-import {
-  red,
-  green,
-} from '@material-ui/core/colors'
-
-import NumberFormat from 'react-number-format'
-
-import midstream from 'midstream'
-import { isRequired } from '@hanzo/middleware'
-import { MUIText } from '@hanzo/react'
+import { ProChart } from '..'
 
 const DollarFormatCustom = (props) => {
-  const { inputRef, onBlur, ...other } = props;
+  const { inputRef, onBlur, ...other } = props
 
   return (
     <NumberFormat
       {...other}
       getInputRef={inputRef}
-      onValueChange={values => {
-        let n = parseFloat(values.value)
+      onValueChange={(values) => {
+        const n = parseFloat(values.value)
         onBlur({
           target: {
-            value: isNaN(n) ? 0 : n,
+            value: Number.isNaN(n) ? 0 : n,
           },
         })
       }}
       isNumericString
-      prefix="$"
+      prefix='$'
     />
   )
 }
 
 const NumberFormatCustom = (props) => {
-  const { inputRef, onBlur, ...other } = props;
+  const { inputRef, onBlur, ...other } = props
 
   return (
     <NumberFormat
       {...other}
       getInputRef={inputRef}
-      onValueChange={values => {
-        let n = parseFloat(values.value)
+      onValueChange={(values) => {
+        const n = parseFloat(values.value)
         onBlur({
           target: {
-            value: isNaN(n) ? 0 : n,
+            value: Number.isNaN(n) ? 0 : n,
           },
         })
       }}
@@ -92,79 +75,77 @@ const NumberFormatCustom = (props) => {
   )
 }
 
-const useStyles = makeStyles((theme) => {
-  return {
-    orderBookPaperGrid: {
-      width: 400,
+const useStyles = makeStyles((theme) => ({
+  orderBookPaperGrid: {
+    width: 400,
+  },
+  orderBookPaper: {
+    border: '1px solid',
+    borderColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
+    '& span': {
+      fontWeight: 600,
     },
-    orderBookPaper: {
-      border: '1px solid',
-      borderColor: theme.palette.background.paper,
-      backgroundColor: theme.palette.background.default,
-      '& span': {
-        fontWeight: 600,
-      }
+  },
+  tradeHistoryBookPaper: {
+    // extend: 'orderBookPaper',
+    borderLeft: 0,
+    border: '1px solid',
+    borderColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
+    '& span': {
+      fontWeight: 600,
     },
-    tradeHistoryBookPaper: {
-      // extend: 'orderBookPaper',
-      borderLeft: 0,
-      border: '1px solid',
-      borderColor: theme.palette.background.paper,
-      backgroundColor: theme.palette.background.default,
-      '& span': {
-        fontWeight: 600,
-      },
+  },
+  proChart: {
+    '& tspan': {
+      fill: '#FFFFFF',
     },
-    proChart: {
-      '& tspan': {
-        fill: '#FFFFFF'
-      },
-    },
-    tradePaper: {
+  },
+  tradePaper: {
+    height: '100%',
+  },
+  tabsPaper: {
+    height: '100%',
+  },
+  tabs: {
+    height: '100%',
+    '& > *': {
       height: '100%',
-    },
-    tabsPaper: {
-      height: '100%',
-    },
-    tabs: {
-      height: '100%',
-      '& > *' : {
+      '& > :first-child': {
         height: '100%',
-        '& > :first-child' : {
-          height: '100%',
-        },
-        '& > :last-child' : {
-          top: 0,
-        },
-      }
+      },
+      '& > :last-child': {
+        top: 0,
+      },
     },
-    tab: {
-      height: '100%',
-      fontSize: '1.25rem',
-      border: '1px solid',
-      borderColor: theme.palette.background.paper,
-      backgroundColor: theme.palette.background.default,
-      width: '50%',
-      minWidth: 0,
-      '&.Mui-selected': {
-        backgroundColor: theme.palette.background.paper,
-      }
+  },
+  tab: {
+    height: '100%',
+    fontSize: '1.25rem',
+    border: '1px solid',
+    borderColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
+    width: '50%',
+    minWidth: 0,
+    '&.Mui-selected': {
+      backgroundColor: theme.palette.background.paper,
     },
-    bordered: {
-      border: '1px solid',
-      borderColor: theme.palette.background.paper,
-      borderLeft: '0',
-    },
-    buyButton: {
-      backgroundColor: green[500],
-      color: theme.palette.common.white,
-    },
-    sellButton: {
-      backgroundColor: red[500],
-      color: theme.palette.common.white,
-    },
-  }
-})
+  },
+  bordered: {
+    border: '1px solid',
+    borderColor: theme.palette.background.paper,
+    borderLeft: '0',
+  },
+  buyButton: {
+    backgroundColor: green[500],
+    color: theme.palette.common.white,
+  },
+  sellButton: {
+    backgroundColor: red[500],
+    color: theme.palette.common.white,
+  },
+}))
 
 const useMidstream = (middleware, defaults, dst) => {
   const [ms] = useState(() => midstream(middleware, { defaults, dst }))
@@ -179,25 +160,14 @@ const greaterThan0 = (v) => {
   throw new Error('Enter a value greater than 0.')
 }
 
-export default props => {
+export default (props) => {
   const {
-    chartData,
-    yDomain,
-    updatePrintInterval,
-    activeChart,
-    buyOrders,
-    sellOrders,
     orderBook,
     book,
     ticker,
     movieCategories,
     createOrder,
-    onExecute,
     maxSell,
-    setActiveChart,
-    setMarketOrderType,
-    marketOrderType,
-    stockName,
     accountBalance,
   } = props
 
@@ -205,15 +175,17 @@ export default props => {
     return <Typography>Loading chart...</Typography>
   }
 
-  let labels = timelineLabels()
-
   const [mode, setMode] = useState(0)
   const [showError, setShowError] = useState(false)
 
   const stock = toJS(orderBook.stock)
-  let { connected } = orderBook
 
-  const { src, dst, err, hooks } = useMidstream({
+  const {
+    src,
+    dst,
+    err,
+    hooks,
+  } = useMidstream({
     type: [isRequired, (v) => {
       // side effects of setting the type if setting
       if (v !== dst.type) {
@@ -223,7 +195,7 @@ export default props => {
       }
       return v
     }],
-    price: (v) => dst.type === 'limit' ? greaterThan0(v) : v,
+    price: (v) => (dst.type === 'limit' ? greaterThan0(v) : v),
     quantity: greaterThan0,
   }, {
     type: 'limit',
@@ -246,35 +218,39 @@ export default props => {
       setShowError(false)
 
       createOrder({
-        side: side,
+        side,
         type: dst.type,
         price: dst.price,
         quantity: dst.quantity,
         categories: movieCategories,
-        ticker
+        ticker,
       })
     } catch (e) {
+      // continue
     }
   }
 
   const meanPrice = orderBook.book ? parseFloat(orderBook.book.meanPrice) : 0
   const spread = orderBook.book ? parseFloat(orderBook.book.spread) : 0
 
-  const bids = book.orderBook.bids
-  const asks = book.orderBook.asks
-  const trades = orderBook.trades
+  const {
+    bids,
+    asks,
+  } = book.orderBook
+
+  const { trades } = orderBook
 
   const classes = useStyles()
   const isMarket = dst.type === 'market'
 
-  let data = stock.proChartData
+  const data = stock.proChartData
 
   return (
     <Element>
       <Box ml={-3} mr={-3} mt={-8}>
         <Grid container spacing={0}>
           <Grid item xs={12} sm={4} md={3}>
-            <Paper square={true} className={ classes.tabsPaper }>
+            <Paper square className={ classes.tabsPaper }>
               <Tabs
                 value={mode}
                 onChange={ handleModeChange }
@@ -311,7 +287,7 @@ export default props => {
             </Box>
           </Grid>
           <Grid item xs={12} sm={4} md={3}>
-            <Paper square={true} className={ classes.tradePaper }>
+            <Paper square className={ classes.tradePaper }>
               <Box p={2} pl={4} pr={4}>
                 <div>
                   {
@@ -353,7 +329,7 @@ export default props => {
                   <br/>
                   <MUIText
                     label='Price'
-                    placeholder={ '$' + (isMarket ? (meanPrice).toFixed(2) : '100.00') }
+                    placeholder={ `$${(isMarket ? (meanPrice).toFixed(2) : '100.00')}` }
                     variant='outlined'
                     showError={ showError }
                     error={ err.price }
@@ -448,12 +424,12 @@ export default props => {
             <ProChart data={data} />
           </Grid>
           <Grid item className={classes.orderBookPaperGrid}>
-            <Paper square={true} className={classes.orderBookPaper}>
+            <Paper square className={classes.orderBookPaper}>
               <OrderBook asks={asks} bids={bids} spread={spread}/>
             </Paper>
           </Grid>
           <Grid item xs>
-            <Paper square={true} className={classes.tradeHistoryBookPaper}>
+            <Paper square className={classes.tradeHistoryBookPaper}>
               <TradeHistoryBook trades={trades}/>
             </Paper>
           </Grid>
