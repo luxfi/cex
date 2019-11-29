@@ -1,45 +1,10 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import { Fab } from '@material-ui/core'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import { CarouselItem } from '../'
 import { useEventListener } from '../../../util/customHooks'
-import throttle from 'lodash/throttle'
-
-const useStyles = makeStyles(theme => ({
-  container: {
-    display: 'flex',
-    height: '110px',
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-    position: 'relative',
-  },
-  prevButton: {
-    left: 0,
-    '& > *': { transform: 'translateX(-50%)' },
-  },
-  nextButton: {
-    right: 0,
-    '& > *': { transform: 'translateX(50%)' },
-  },
-  sliderButton: {
-    height: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    position: 'absolute',
-    zIndex: 4,
-  },
-  sliderWrapper: {
-    overflow: 'hidden',
-  },
-  list: {
-    whiteSpace: 'nowrap',
-    margin: 0,
-    padding: 0,
-    listStyleType: 'none',
-  },
-}))
+import useStyles from './Carousel.style'
 
 export const Carousel = ({ slides, ...props }) => {
   const carouselRef = useRef()
@@ -78,12 +43,11 @@ export const Carousel = ({ slides, ...props }) => {
   // const [dragStart, setDragStart] = useState(null)
   // const [dragOffset, setDragOffset] = useState(0)
   // const [clickedIndex, setClickedIndex] = useState(null)
+
   /**
    * Handlers
    */
   /**
-     
-     
    * Function handling beginning of mouse drag by setting index of clicked item and coordinates of click in the state
    * @param {event} e event
    * @param {number} index of the element drag started on
