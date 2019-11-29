@@ -282,19 +282,13 @@ export const Carousel = ({ slides, ...props }) => {
   const classes = useStyles()
   return (
     <div className={classes.container} ref={carouselRef}>
-      <div
-        className={`${classes.sliderButton} ${classes.prevButton}`}
-        onClick={prevSlide}
-      >
-        <Fab size="small" color="white" aria-label="add">
+      <div className={`${classes.sliderButton} ${classes.prevButton}`}>
+        <Fab size="small" color="white" aria-label="add" onClick={prevSlide}>
           <ChevronLeftIcon />
         </Fab>
       </div>
-      <div
-        className={`${classes.sliderButton} ${classes.nextButton}`}
-        onClick={nextSlide}
-      >
-        <Fab size="small" color="white" aria-label="add">
+      <div className={`${classes.sliderButton} ${classes.nextButton}`}>
+        <Fab size="small" color="white" aria-label="add" onClick={nextSlide}>
           <ChevronRightIcon />
         </Fab>
       </div>
