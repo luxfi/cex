@@ -236,8 +236,9 @@ export default (props) => {
   const {
     bids,
     asks,
-    trades,
   } = book.orderBook
+
+  const { trades } = orderBook
 
   const classes = useStyles()
   const isMarket = dst.type === 'market'
