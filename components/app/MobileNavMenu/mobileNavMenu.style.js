@@ -8,7 +8,7 @@ export default (theme) => {
     logoLink: {
       display: "block",
       padding: theme.spacing(1),
-      paddingLeft: theme.spacing(2),
+      // paddingLeft: theme.spacing(2),
     },
 
     listButton: {
@@ -17,7 +17,10 @@ export default (theme) => {
       minWidth: "0",
       whiteSpace: "nowrap"
     },
-
+    listButtonLink: {
+      color: "inherit", //theme.palette.primary.dark,
+      textDecoration: "none"
+    },
     listButtonSublist: {
       fontSize: "1rem",
       paddingLeft: theme.spacing(3),

@@ -1,0 +1,71 @@
+import React from "react"
+import { inject, observer } from "mobx-react"
+
+import {
+  Container,
+  Typography,
+} from "@material-ui/core"
+
+import { 
+  AccountSection,
+  AccountTabs,
+  TaxDocument
+} from "../../components/account"
+
+import { googlePageView } from '../../util/generic'
+
+@inject("store")
+@observer
+class Documents extends React.Component {
+  static async getInitialProps({ mobxStore }) {
+    return { ...mobxStore }
+  }
+
+  componentDidMount() {
+    googlePageView()
+    this.props.store.userStore.generateFakeDocs()
+  }
+
+  render() {
+    const store = this.props.store
+    const { userStore } = store
+
+    return (
+      <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
+        <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
+          <AccountTabs tab='documents' />
+        </AccountSection>
+        <AccountSection title="Tax Documents" style={{ marginBottom: '3em' }}>
+          {
+            userStore.taxDocuments && userStore.taxDocuments.length > 0 ?
+            userStore.taxDocuments.map((d, i) => (
+              <TaxDocument 
+                key={`apex_${i}`} 
+                type='Apex Clearing 1099' 
+                link={d.link}
+                showDivider={i < userStore.taxDocuments.length - 1}
+                date={d.date} />
+            ))
+            : <Typography variant='body2'>There are no tax documents for you!</Typography>
+          }
+        </AccountSection>
+        <AccountSection title="Account Statements">
+          {
+            userStore.accountStatements && userStore.accountStatements.length > 0 ?
+            userStore.accountStatements.map((d, i) => (
+              <TaxDocument 
+                key={`statement_${i}`} 
+                type='ESX Securities Account Statement' 
+                link={d.link}
+                showDivider={i < userStore.accountStatements.length - 1}
+                date={d.date} />
+            ))
+            : <Typography variant='body2'>There are no account statements for you!</Typography>
+          }
+        </AccountSection>
+      </Container>
+    )
+  }
+}
+
+export default Documents

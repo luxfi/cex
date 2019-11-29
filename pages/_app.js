@@ -1,7 +1,9 @@
 import React from "react"
 import { Provider, observer } from "mobx-react"
-import { withRouter } from "next/router"
+
 import App from "next/app"
+import { withRouter } from "next/router"
+
 import { withStyles } from "@material-ui/core/styles"
 import "react-html5-camera-photo/build/css/index.css"
 import { MuiThemeProvider } from "@material-ui/core/styles"
@@ -17,7 +19,7 @@ config.autoAddCss = false
 import {
   CustomSnackbar,
   Header,
-  MobileNavMenu, 
+  MobileNavMenu,
   Footer,
   CustomModal,
   MobileAccountMenu
@@ -25,7 +27,7 @@ import {
 
 import ReactGA from 'react-ga'
 import initializeStore from "../stores/stores"
-import { darkTheme, lightTheme } from "../styles/esxThemes"
+import { darkTheme } from "../styles/esxThemes"
 import styles from "../styles/app.style.js"
 
 @observer
@@ -65,17 +67,15 @@ class MyMobxApp extends App {
     ReactGA.initialize('UA-151184093-1')
   }
 
-  placeholder = (title, body) => {
-    this.mobxStore.uiStore.openModal(title, body)
-  }
-
   render() {
     const {
       Component,
       pageProps,
       width,
-      classes
+      classes,
+      router
     } = this.props
+
 
     const showDesktopNav = isWidthUp('md', width)
     const showDesktopProfileMenu = isWidthUp('sm', width)
@@ -89,7 +89,6 @@ class MyMobxApp extends App {
               <Header
                 showDesktopNav={showDesktopNav}
                 showDesktopProfileMenu={showDesktopProfileMenu}
-                handlePlaceholder={this.placeholder}
                 isLoggedIn={this.mobxStore.userStore.loggedIn}
                 openLeftDrawer={() => this.mobxStore.uiStore.setLeftDrawerOpen(true)}
                 openRightDrawer={() => this.mobxStore.uiStore.setRightDrawerOpen(true)}
@@ -98,14 +97,9 @@ class MyMobxApp extends App {
               <MobileNavMenu
                 open={this.mobxStore.uiStore.drawers.left}
                 setOpen={this.mobxStore.uiStore.setLeftDrawerOpen}
-                handlePlaceholder={this.placeholder}
               />
               <div component="main" className={classes.main}>
-                <Component
-                  {...pageProps}
-                  darkTheme={darkTheme}
-                  lightTheme={lightTheme}
-                />
+                <Component {...pageProps} pathName={router.route}/>
               </div>
               <CustomModal
                 open={this.mobxStore.uiStore.modal.open}
@@ -120,9 +114,8 @@ class MyMobxApp extends App {
                 setOpen={this.mobxStore.uiStore.setRightDrawerOpen}
                 isLoggedIn={this.mobxStore.userStore.loggedIn}
                 handleLogout={() => { this.mobxStore.userStore.logout() }}
-                handlePlaceholder={this.placeholder}
               />
-              <Footer rootClassName={classes.footer} handlePlaceholder={this.placeholder} />
+              <Footer rootClassName={classes.footer} />
             </NoSsr>
           </div>
         </MuiThemeProvider>

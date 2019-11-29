@@ -1,58 +1,94 @@
-import React from "react"
+import React from 'react'
 import {
   LineChart,
   Line,
   ResponsiveContainer,
   ReferenceLine,
-  XAxis,
   YAxis,
-  Tooltip
-} from "recharts"
-import CustomStockTooltip from "../CustomStockTooltip"
-import { BeatLoader, ScaleLoader } from "react-spinners"
+  Tooltip,
+} from 'recharts'
+import CustomStockTooltip from '../CustomStockTooltip'
+import { ScaleLoader } from 'react-spinners'
+import { Typography, Box, Chip } from '@material-ui/core'
+import grey from '@material-ui/core/colors/grey'
+import { makeStyles } from '@material-ui/core/styles'
+import LocalOfferIcon from '@material-ui/icons/LocalOffer'
+import PeopleIcon from '@material-ui/icons/People'
 
-Number.prototype.formatMoney = function (c, d, t) {
-  var n = this,
-    c = isNaN((c = Math.abs(c))) ? 2 : c,
-    d = d == undefined ? "." : d,
-    t = t == undefined ? "," : t,
-    s = n < 0 ? "-" : "",
-    i = String(parseInt((n = Math.abs(Number(n) || 0).toFixed(c)))),
-    j = (j = i.length) > 3 ? j % 3 : 0
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  chip: {
+    background: grey[800],
+  },
+  spacer: {
+    flexGrow: 1,
+  },
+}))
+
+const CustomHeading = ({ ticker, stockName }) => {
+  const classes = useStyles()
   return (
-    s +
-    (j ? i.substr(0, j) + t : "") +
-    i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) +
-    (c
-      ? d +
-      Math.abs(n - i)
-        .toFixed(c)
-        .slice(2)
-      : "")
+    <div className={classes.root}>
+      <Typography variant="h5">
+        <Box fontWeight="fontWeightBold">{stockName}</Box>
+      </Typography>
+      <Typography variant="h5" component="div">
+        <Box fontWeight="fontWeightBold">
+          <Chip size="small" label={ticker} className={classes.chip} />
+        </Box>
+      </Typography>
+      <div className={classes.spacer}></div>
+      <Typography variant="h5" component="div">
+        <Box fontWeight="fontWeightBold">
+          <Chip
+            size="small"
+            icon={<LocalOfferIcon />}
+            label={'51% Buy'}
+            className={classes.chip}
+          />
+        </Box>
+      </Typography>
+      <Typography variant="h5" component="div">
+        <Box fontWeight="fontWeightBold">
+          <Chip
+            size="small"
+            icon={<PeopleIcon />}
+            label={'204,868'}
+            className={classes.chip}
+          />
+        </Box>
+      </Typography>
+    </div>
   )
 }
 
 const RANGES = {
-  "1W": { length: 5, increment: 1 },
-  "1M": { length: 23, increment: 1 },
-  "3M": { length: 66, increment: 1 },
-  "1Y": { length: 251, increment: 1 },
-  "5Y": { length: 1265, increment: 5 }
+  '1W': { length: 5, increment: 1 },
+  '1M': { length: 23, increment: 1 },
+  '3M': { length: 66, increment: 1 },
+  '1Y': { length: 251, increment: 1 },
+  '5Y': { length: 1265, increment: 5 },
 }
 
 const MONTHS = {
-  1: "JAN",
-  2: "FEB",
-  3: "MAR",
-  4: "APR",
-  5: "MAY",
-  6: "JUN",
-  7: "JUL",
-  8: "AUG",
-  9: "SEP",
-  10: "OCT",
-  11: "NOV",
-  12: "DEC"
+  1: 'JAN',
+  2: 'FEB',
+  3: 'MAR',
+  4: 'APR',
+  5: 'MAY',
+  6: 'JUN',
+  7: 'JUL',
+  8: 'AUG',
+  9: 'SEP',
+  10: 'OCT',
+  11: 'NOV',
+  12: 'DEC',
 }
 
 class StockRechart extends React.Component {
@@ -61,8 +97,8 @@ class StockRechart extends React.Component {
     this.state = {
       currData: this.props,
       initialData: this.props,
-      active: "1D",
-      fetched5Y: false
+      active: '1D',
+      fetched5Y: false,
     }
     this.render1DChart = this.render1DChart.bind(this)
     this.render5YChart = this.render5YChart.bind(this)
@@ -70,7 +106,7 @@ class StockRechart extends React.Component {
 
   calculateDailyPriceData(data, startIdx) {
     let dailyData = this.props.dailyData
-    let neg = "+"
+    let neg = '+'
     const prices = []
 
     if (startIdx < 0) startIdx = 0
@@ -81,7 +117,7 @@ class StockRechart extends React.Component {
     // calculate key price data points
     const max = Math.max(...prices)
     const min = Math.min(...prices)
-    const currPrice = this.state.initialData.currPrice
+    const currPrice = this.props.marketPrice
     const openPrice = prices[0]
     const priceFlux =
       Math.round((parseFloat(currPrice) - parseFloat(openPrice)) * 100) / 100
@@ -89,10 +125,10 @@ class StockRechart extends React.Component {
       Math.round(
         ((parseFloat(currPrice) - parseFloat(openPrice)) /
           parseFloat(openPrice)) *
-        10000
+          10000,
       ) / 100
     if (priceFlux < 0) {
-      neg = "-"
+      neg = '-'
     }
 
     return {
@@ -102,36 +138,36 @@ class StockRechart extends React.Component {
       currPrice,
       openPrice,
       priceFlux,
-      priceFluxPercentage
+      priceFluxPercentage,
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      this.state.active === "5Y" &&
-      prevState.active !== "5Y" &&
+      this.state.active === '5Y' &&
+      prevState.active !== '5Y' &&
       !prevState.fetched5Y
     ) {
-      this.renderChart("5Y")
+      this.renderChart('5Y')
     }
   }
 
   render1DChart() {
-    this.setState({ currData: this.state.initialData, active: "1D" })
+    this.setState({ currData: this.state.initialData, active: '1D' })
   }
 
   render5YChart() {
     if (!this.state.fetched5Y) {
       this.props.fetchStock5yData(this.props.stock.ticker).then(() => {
-        this.setState({ fetched5Y: true, active: "5Y" })
+        this.setState({ fetched5Y: true, active: '5Y' })
       })
     } else {
-      this.renderChart("5Y")
+      this.renderChart('5Y')
     }
   }
 
   formatDate(date) {
-    let [year, month, day] = date.split("-")
+    let [year, month, day] = date.split('-')
     return `${MONTHS[parseInt(month)]} ${day}, ${year}`
   }
 
@@ -151,7 +187,7 @@ class StockRechart extends React.Component {
       let time = this.formatDate(dailyData[i].date)
       data.push({
         time,
-        price: dailyData[i].close
+        price: dailyData[i].close,
       })
       lastIdx = i
     }
@@ -161,7 +197,7 @@ class StockRechart extends React.Component {
       let time = this.formatDate(dailyData[dailyData.length - 1].date)
       data.push({
         time,
-        price: dailyData[dailyData.length - 1].close
+        price: dailyData[dailyData.length - 1].close,
       })
     }
 
@@ -172,7 +208,7 @@ class StockRechart extends React.Component {
       currPrice,
       openPrice,
       priceFlux,
-      priceFluxPercentage
+      priceFluxPercentage,
     } = this.calculateDailyPriceData(data, dailyData.length - startIdx - 1)
     this.setState({
       currData: {
@@ -184,9 +220,9 @@ class StockRechart extends React.Component {
         min,
         max,
         neg,
-        dailyData
+        dailyData,
       },
-      active: range
+      active: range,
     })
   }
 
@@ -199,81 +235,92 @@ class StockRechart extends React.Component {
       data,
       min,
       max,
-      neg
+      neg,
     } = this.state.currData
-    let color = neg === "+" ? "#82ca9d" : "#f45531"
-    if (neg === "-") {
-      document.getElementsByTagName("body")[0].className = "negative"
+    let color = '#FAC34D'
+    if (neg === '-') {
+      document.getElementsByTagName('body')[0].className = 'negative'
     } else {
-      document.getElementsByTagName("body")[0].className = ""
+      document.getElementsByTagName('body')[0].className = ''
     }
-    currPrice = parseFloat(currPrice).formatMoney(2)
-    priceFlux = Math.abs(parseFloat(priceFlux)).formatMoney(2)
-    priceFluxPercentage = parseFloat(priceFluxPercentage).formatMoney(2)
+    // currPrice = padDollarAmount(parseFloat(currPrice))
+    // priceFlux = padDollarAmount(Math.abs(parseFloat(priceFlux)))
+    // priceFluxPercentage = padDollarAmount(parseFloat(priceFluxPercentage))
     return (
       <div className="chart">
-        <h1>{this.props.stockName}</h1>
-        <h2 id="stock-price">${currPrice}</h2>
-        <h3 id="stock-price-flux">
-          {neg}${priceFlux} ({priceFluxPercentage}%)
-        </h3>
+        <CustomHeading
+          stockName={this.props.stockName}
+          ticker={this.props.ticker}
+        />
+
+        <Box fontWeight="fontWeightLight" mt={2}>
+          <Typography variant="h3">
+            <span id="stock-price">${this.props.marketPrice}</span>
+          </Typography>
+        </Box>
+
+        <Typography>
+          <span id="stock-price-flux">
+            {neg}${priceFlux} ({priceFluxPercentage}%)
+          </span>
+        </Typography>
         <div className="stock-chart">
           {this.props.loading ? (
             <div className="chart-loading">
               <ScaleLoader
-                sizeUnit={"px"}
+                sizeUnit={'px'}
                 size={20}
-                color={"#21ce99"}
+                color={'#21ce99'}
                 loading={true}
               />
             </div>
           ) : (
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart
-                  // width={710}
-                  // height={195}
-                  data={data}
-                  margin={{ top: 5, right: 0, left: 0, bottom: 5 }}
-                >
-                  <YAxis hide={true} domain={[min, max]} />
-                  <Tooltip
-                    content={
-                      <CustomStockTooltip
-                        price={currPrice}
-                        priceFlux={priceFlux}
-                        priceFluxPercentage={priceFluxPercentage}
-                        openPrice={openPrice}
-                        neg={neg}
-                      />
-                    }
-                    offset={-40}
-                    position={{ y: -20 }}
-                    isAnimationActive={false}
-                  />
-                  <Line
-                    type="linear"
-                    dataKey="price"
-                    stroke={color}
-                    dot={false}
-                    strokeWidth={2}
-                  />
-                  {this.state.active === "1D" &&
-                    <ReferenceLine
-                      y={this.props.previousDayClose}
-                      stroke="white"
-                      strokeDasharray="3 3"
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart
+                // width={710}
+                // height={195}
+                data={data}
+                margin={{ top: 5, right: 0, left: 0, bottom: 5 }}
+              >
+                <YAxis hide={true} domain={[min, max]} />
+                <Tooltip
+                  content={
+                    <CustomStockTooltip
+                      price={this.props.marketPrice}
+                      priceFlux={priceFlux}
+                      priceFluxPercentage={priceFluxPercentage}
+                      openPrice={openPrice}
+                      neg={neg}
                     />
                   }
-                </LineChart>
-              </ResponsiveContainer>
-            )}
+                  offset={-40}
+                  position={{ y: -20 }}
+                  isAnimationActive={false}
+                />
+                <Line
+                  type="linear"
+                  dataKey="price"
+                  stroke={color}
+                  dot={false}
+                  strokeWidth={2}
+                />
+                {this.state.active === '1D' && (
+                  <ReferenceLine
+                    y={this.props.previousDayClose}
+                    stroke="white"
+                    strokeDasharray="1 6"
+                  />
+                )}
+              </LineChart>
+            </ResponsiveContainer>
+          )}
           <ul className="chart-range stock">
             <li>
               <a
                 className={
-                  this.state.active === "1D"
-                    ? "chart-choice active"
-                    : "chart-choice"
+                  this.state.active === '1D'
+                    ? 'chart-choice active'
+                    : 'chart-choice'
                 }
                 onClick={this.render1DChart}
               >
@@ -283,11 +330,11 @@ class StockRechart extends React.Component {
             <li>
               <a
                 className={
-                  this.state.active === "1W"
-                    ? "chart-choice active"
-                    : "chart-choice"
+                  this.state.active === '1W'
+                    ? 'chart-choice active'
+                    : 'chart-choice'
                 }
-                onClick={() => this.renderChart("1W")}
+                onClick={() => this.renderChart('1W')}
               >
                 1W
               </a>
@@ -295,11 +342,11 @@ class StockRechart extends React.Component {
             <li>
               <a
                 className={
-                  this.state.active === "1M"
-                    ? "chart-choice active"
-                    : "chart-choice"
+                  this.state.active === '1M'
+                    ? 'chart-choice active'
+                    : 'chart-choice'
                 }
-                onClick={() => this.renderChart("1M")}
+                onClick={() => this.renderChart('1M')}
               >
                 1M
               </a>
@@ -307,11 +354,11 @@ class StockRechart extends React.Component {
             <li>
               <a
                 className={
-                  this.state.active === "3M"
-                    ? "chart-choice active"
-                    : "chart-choice"
+                  this.state.active === '3M'
+                    ? 'chart-choice active'
+                    : 'chart-choice'
                 }
-                onClick={() => this.renderChart("3M")}
+                onClick={() => this.renderChart('3M')}
               >
                 3M
               </a>
@@ -319,11 +366,11 @@ class StockRechart extends React.Component {
             <li>
               <a
                 className={
-                  this.state.active === "1Y"
-                    ? "chart-choice active"
-                    : "chart-choice"
+                  this.state.active === '1Y'
+                    ? 'chart-choice active'
+                    : 'chart-choice'
                 }
-                onClick={() => this.renderChart("1Y")}
+                onClick={() => this.renderChart('1Y')}
               >
                 1Y
               </a>
@@ -348,11 +395,11 @@ class StockRechart extends React.Component {
             padding-bottom: 15px;
           }
           .chart-choice.active {
-            color: #21ce99;
-            border-bottom: 2px solid #21ce99;
+            color: #fac34d;
+            border-bottom: 2px solid #fac34d;
           }
           .chart-choice:hover {
-            color: #21ce99;
+            color: #fac34d;
           }
           .chart {
             padding: 0;
@@ -392,7 +439,7 @@ class StockRechart extends React.Component {
             align-items: center;
           }
           .chart-loading::after {
-            content: "";
+            content: '';
           }
         `}</style>
       </div>

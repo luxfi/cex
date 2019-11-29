@@ -1,4 +1,5 @@
 export { default as AccountSection } from './AccountSection'
+export { default as AccountTabs } from './AccountTabs'
 export { default as AddPaymentMethodForm } from './AddPaymentMethodForm'
 export { default as BalanceHistoryItem } from './BalanceHistoryItem'
 export { default as BankAccountItem } from './BankAccountItem'
@@ -8,3 +9,4 @@ export { default as PersonalDetailsForm } from './PersonalDetailsForm'
 export { default as PhotoIDsForm } from './PhotoIDsForm'
 export { default as PhotoIDRow } from "./PhotoIDRow"
 export { default as PrimaryAddressForm } from './PrimaryAddressForm'
+export { default as TaxDocument } from './TaxDocument'

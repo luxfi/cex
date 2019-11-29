@@ -91,6 +91,10 @@ export default class UserStore {
   @observable validNewPaymentMethodName = false;
   @observable validNewPaymentMethodMetadata = false;
 
+  // Tax Documents and forms
+  @observable taxDocuments = []
+  @observable accountStatements = []
+
   constructor(initialData = {}, hanzoApi) {
     // TODO Do we still need this?
     // :aa I don't think so.... why would we?
@@ -151,9 +155,45 @@ export default class UserStore {
     this.checkCurrentStatus();
   }
 
+  @action generateFakeDocs () {
+    this.taxDocuments = [
+      {
+        date: '2019',
+        link: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+      },
+      {
+        date: '2018',
+        link: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+      }
+    ]
+    // https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf
+    this.accountStatements = [
+      {
+        date: 'Nov 2019',
+        link: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+      },
+      {
+        date: 'Oct 2019',
+        link: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+      },
+      {
+        date: 'Sep 2019',
+        link: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+      },
+      {
+        date: 'Aug 2019',
+        link: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+      },
+      {
+        date: 'Jul 2019',
+        link: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+      }
+    ]
+  }
+
   updateFromJson(json, keys) {
     // make sure our changes aren't sent back to the server
-    keys.forEach(k => {
+    keys && keys.forEach(k => {
       if (json[k] === '0001-01-01T00:00:00Z') {
         // per request from David to detect date
       }
@@ -200,6 +240,32 @@ export default class UserStore {
     } else {
       this.token = undefined;
       window.localStorage.removeItem('token');
+    }
+  }
+
+  @action addBalance(val, onSuccess, onError) {
+    const parsedVal = Number.parseFloat(val)
+    if (typeof parsedVal === 'number' && !isNaN(parsedVal)) {
+      let oldBalance = localStorage.getItem('accountBalance') ? Number.parseFloat(localStorage.getItem('accountBalance')) : 0
+      let newBalance = (oldBalance + parsedVal).toFixed(2)
+      window.localStorage.setItem('accountBalance', newBalance)
+      this.accountBalance = newBalance
+      onSuccess && onSuccess()
+    } else {
+      onError && onError()
+    }
+  }
+
+  @action removeBalance(val, onSuccess, onError) {
+    const parsedVal = Number.parseFloat(val)
+    if (typeof parsedVal === 'number' && !isNaN(parsedVal) && this.accountBalance > parsedVal) {
+      let oldBalance = localStorage.getItem('accountBalance') ? Number.parseFloat(localStorage.getItem('accountBalance')) : 0
+      let newBalance = (oldBalance - parsedVal).toFixed(2)
+      window.localStorage.setItem('accountBalance', newBalance)
+      this.accountBalance = newBalance
+      onSuccess && onSuccess()
+    } else {
+      onError && onError()
     }
   }
 
@@ -316,7 +382,7 @@ export default class UserStore {
 
     let ps = [];
 
-    docs.forEach(([data, name], i) => {
+    docs && docs.forEach(([data, name], i) => {
       ps[i] = this.updateKYCPhoto(data, name);
     });
 
@@ -646,6 +712,14 @@ export default class UserStore {
     accounts.unshift(esx)
 
     return accounts
+  }
+
+  @computed get getFullName () {
+    let fullName = ''
+    if (this.account && this.account.firstName) {
+      fullName = `${this.account.firstName} ${this.account.lastName}`
+    }
+    return fullName
   }
 }
 

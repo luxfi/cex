@@ -2,20 +2,22 @@ import { action, observable, computed, extendObservable } from "mobx"
 import _ from "lodash"
 import uuid from "uuid"
 import io from "socket.io-client"
-import moment from 'moment-timezone'
+import moment from "moment-timezone"
 import { timeParse } from "d3-time-format"
 
 const parseTime = timeParse("%Y-%m-%d")
-const isEmpty = obj => [Object, Array].includes((obj || {}).constructor) && !Object.entries((obj || {})).length;
+const isEmpty = obj =>
+  [Object, Array].includes((obj || {}).constructor) &&
+  !Object.entries(obj || {}).length
 
 // import stock from "../assets/tempData/stocks"
 
 // import io from 'socket.io-client'
-const LimitOrder = require("limit-order-book").LimitOrder
-const MarketOrder = require("limit-order-book").MarketOrder
-const LimitOrderBook = require("limit-order-book").LimitOrderBook
+// const LimitOrder = require("limit-order-book").LimitOrder
+// const MarketOrder = require("limit-order-book").MarketOrder
+// const LimitOrderBook = require("limit-order-book").LimitOrderBook
 
-const SOCKET_STRING = 'https://exchange.hanzo.ai'
+const SOCKET_STRING = "https://exchange.hanzo.ai"
 // const SOCKET_STRING = 'localhost:4000'
 
 const bidAsk = () => {
@@ -39,12 +41,12 @@ const firstTwentyKeys = (orders, orderType) => {
   // list orders for sells('ask') at lowest price first
   const sortFn =
     orderType === "bid"
-      ? function (a, b) {
-        return b - a
-      }
-      : function (a, b) {
-        return a - b
-      }
+      ? function(a, b) {
+          return b - a
+        }
+      : function(a, b) {
+          return a - b
+        }
   return Object.keys(orders)
     .sort(sortFn)
     .slice(0, 20) // take first 20
@@ -77,7 +79,7 @@ export default class OrderBook {
   @observable proChartData = []
 
   tradesBuffer = []
-  lastTradeMerge = 0
+  lastDataMerge = 0
 
   activeOrders = {}
 
@@ -112,7 +114,7 @@ export default class OrderBook {
   @action connect(ticker) {
     this.ticker = ticker
     this.socket = io(SOCKET_STRING, {
-      transports: ['websocket'],
+      transports: ["websocket"]
     })
     // To handle responses:
     this.socket.on("book.subscribe.success", data => {
@@ -148,19 +150,30 @@ export default class OrderBook {
     })
 
     this.socket.on("candles.get.success", data => {
-      // console.log('candles', data)
-      if (isEmpty(data) || isEmpty(data.candles)) { return }
+      if (isEmpty(data) || isEmpty(data.candles)) {
+        return
+      }
 
       let { candles, type } = data
       let formattedData = candles.map(candle => {
-        const [openTime, closeTime, open, high, low, close, notional, volume, numberOfTrades] = candle
-        const timestamp = moment(closeTime).tz('America/New_York')
+        const [
+          openTime,
+          closeTime,
+          open,
+          high,
+          low,
+          close,
+          notional,
+          volume,
+          numberOfTrades
+        ] = candle
+        const timestamp = moment(closeTime).tz("America/New_York")
 
-        const date = timestamp.format('YYYY-MM-DD')
-        const minute = timestamp.format('HH:mm')
-        const label = timestamp.format('LT')
+        const date = timestamp.format("YYYY-MM-DD")
+        const minute = timestamp.format("HH:mm")
+        const label = timestamp.format("LT")
         const average = notional / volume
-        const id = parseInt(timestamp.format('HHmm'), 10)
+        const id = parseInt(timestamp.format("HHmm"), 10)
         return {
           id,
           date,
@@ -177,18 +190,18 @@ export default class OrderBook {
         }
       })
 
-      if (type === 'intradayData') {
+      if (type === "intradayData") {
         let filteredData = []
         let lastData = formattedData
         let targetTime = 930
 
         for (let data of formattedData) {
           while (targetTime < data.id) {
-            let timestamp = moment('' + targetTime, 'Hmm')
+            let timestamp = moment("" + targetTime, "Hmm")
 
-            lastData.date = timestamp.format('YYYY-MM-DD')
-            lastData.minute = timestamp.format('HH:mm')
-            lastData.label = timestamp.format('LT')
+            lastData.date = timestamp.format("YYYY-MM-DD")
+            lastData.minute = timestamp.format("HH:mm")
+            lastData.label = timestamp.format("LT")
 
             filteredData.push(lastData)
             // console.log('push', lastData.id)
@@ -224,7 +237,8 @@ export default class OrderBook {
         })
 
         this[type] = formattedData
-        this.previousDayClose = formattedData[formattedData.length - 2].close
+        this.previousDayClose =
+          formattedData[formattedData.length - 2].close
       }
 
       // console.log("candles.get.success", this[type], type)
@@ -234,27 +248,32 @@ export default class OrderBook {
     })
 
     this.socket.on("book.data", data => {
-      this.book = data
-      this.book.orderBook.bids = padBids(this.book.orderBook.bids, 100, undefined)
-      this.book.orderBook.asks = padAsks(this.book.orderBook.asks, 100, undefined)
+      let now = new Date().getTime()
+
+      if (now - this.lastDataMerge > 400) {
+        this.book = data
+        this.book.orderBook.bids = padBids(this.book.orderBook.bids, 100, undefined)
+        this.book.orderBook.asks = padAsks(this.book.orderBook.asks, 100, undefined)
+        this.trades = this.tradesBuffer.reverse()
+        this.lastDataMerge = now
+      }
     })
 
     this.socket.on("trade.data", data => {
       this.tradesBuffer = this.tradesBuffer.concat(data).slice(-100)
 
-      let now = new Date().getTime()
-      if (now - this.lastTradeMerge > 1000) {
-        this.trades = this.tradesBuffer.reverse()
-        this.lastTradeMerge = now
-      }
+      // let now = new Date().getTime()
+      // if (now - this.lastDataMerge > 1000) {
+      //   this.trades = this.tradesBuffer.reverse()
+      //   this.lastDataMerge = now
+      // }
       // console.log('trade.data', this.trades)
     })
 
-    this.socket.on('disconnect', () => {
+    this.socket.on("disconnect", () => {
       this.connected = false
       const reconnect = setInterval(() => {
-        if (!this.connected)
-          this.connect(ticker)
+        if (!this.connected) this.connect(ticker)
         else {
           this.connected = true
           clearInterval(reconnect)
@@ -276,43 +295,74 @@ export default class OrderBook {
     // const { externalId, side, type, quantity, price, name } = order
     let externalId = uuid.v4()
     let name = this.ticker
-
     this.activeOrders[externalId] = true
-    console.log('socketOrderCreate', order)
-    this.socket.emit("order.create", Object.assign({ externalId, name }, order))
+    console.log("socketOrderCreate", order)
+    this.socket.emit(
+      "order.create",
+      Object.assign({ externalId, name }, order)
+    )
     updateBalance(name, order.side)
   }
 
   @action getIntradayData(ticker) {
     // day is 24 hr based on EST
-    const now = moment(/*'2019-11-13'*/).tz('America/New_York')
+    const now = moment(/*'2019-11-13'*/).tz("America/New_York")
     // const startTime = now.startOf('day').valueOf()
     // const endTime = now.endOf('day').valueOf()
-    const startTime = moment(now).startOf('day').add(9, 'hours').valueOf()
-    const endTime = moment(now).startOf('day').add(16, 'hours').add(5, 'minutes').valueOf()
-    let opts = {
-      "startTime": startTime,
-      "endTime": endTime,
-      "interval": "1m",
-      "name": ticker,
-      "type": "intradayData"
+        // check if between midnight and market open, get previous day
+    if (
+      now.isBetween(
+      now.clone().startOf('day'),
+      now
+        .clone()
+        .endOf('day')
+        .subtract(15, 'hours')
+        .subtract(30, 'minutes'),
+      )
+    ) {
+      now.subtract(1,'day')
     }
-    this.socket.emit('candles.get', opts)
+    const startTime = now.clone()
+      .startOf("day")
+      .add(9, "hours")
+      .valueOf()
+    const endTime = now.clone()
+      .startOf("day")
+      .add(16, "hours")
+      .add(5, 'minutes')
+      .valueOf()
+    let opts = {
+      startTime: startTime,
+      endTime: endTime,
+      interval: "1m",
+      name: ticker,
+      type: "intradayData"
+    }
+    this.socket.emit("candles.get", opts)
+  }
+
+  @action getHistory(ticker) {
+    //todo need latest 10 orders...
   }
 
   @action getDailyData(ticker) {
     // day is 24 hr based on EST
-    const now = moment().tz('America/New_York')
-    const endTime = moment(now).endOf('day').valueOf()
-    const startTime = moment(now).startOf('day').subtract(1, 'year').valueOf()
+    const now = moment().tz("America/New_York")
+    const endTime = moment(now)
+      .endOf('day')
+      .valueOf()
+    const startTime = moment(now)
+      .startOf("day")
+      .subtract(1, "year")
+      .valueOf()
     let opts = {
-      "startTime": startTime,
-      "endTime": endTime,
-      "interval": "1d",
-      "name": ticker,
-      "type": "dailyData"
+      startTime: startTime,
+      endTime: endTime,
+      interval: "1d",
+      name: ticker,
+      type: "dailyData"
     }
-    this.socket.emit('candles.get', opts)
+    this.socket.emit("candles.get", opts)
   }
 
   @action clearData() {
@@ -545,6 +595,12 @@ export default class OrderBook {
   }
 
   @computed get isReady() {
+    return (
+      this.connected &&
+      this.book.lastPrice &&
+      // this.intradayData.length > 0 &&
+      this.dailyData.length > 0
+    )
     return this.connected && this.book.lastPrice && this.intradayData.length > 0 && this.dailyData.length > 0
   }
 
@@ -556,7 +612,7 @@ export default class OrderBook {
     //
   }
 
-  generatefullMonth(book) { }
+  generatefullMonth(book) {}
 
   // For later
   // @action setupSocket () {

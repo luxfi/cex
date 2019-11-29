@@ -16,11 +16,14 @@ module.exports = {
     'react/prop-types': 'off',
     'jsx-quotes': ['warn', 'prefer-single'],
     'import-order-alphabetical/order': 'warn',
+<<<<<<< HEAD
     "import/no-extraneous-dependencies": ["error", {
       "devDependencies": true,
       "optionalDependencies": false,
       "peerDependencies": false
     }],
+=======
+>>>>>>> master
     "sort-imports": ["warn", {
         "ignoreCase": false,
         "ignoreDeclarationSort": true,

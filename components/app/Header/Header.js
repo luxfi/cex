@@ -27,7 +27,6 @@ export default props => {
     showDesktopProfileMenu,
     openLeftDrawer,
     openRightDrawer,
-    handlePlaceholder,
     handleLogout,
     isLoggedIn
   } = props;
@@ -45,9 +44,9 @@ export default props => {
     >
       <Toolbar disableGutters className={classes.toolbar}>
         {showDesktopNav ? (
-          <DesktopNav handlePlaceholder={handlePlaceholder} />
+          <DesktopNav />
         ) : (
-          <IconButton onClick={openLeftDrawer}>
+          <IconButton onClick={openLeftDrawer} className={classes.menuButton}>
             <MenuRounded className={classes.mobileHamburgerIcon} />
           </IconButton>
         )}
@@ -85,6 +84,7 @@ const AccountMenu = (props) => {
         aria-controls="menu"
         aria-haspopup="true"
         onClick={openAccountMenu}
+        className={classes.accountMenuButton}
       >
         <AccountCircle style={{ fontSize: "2rem" }} />
       </IconButton>

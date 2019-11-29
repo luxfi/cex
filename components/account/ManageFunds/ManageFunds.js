@@ -38,7 +38,7 @@ export default props => {
     <Grid item xs={12} style={{ minWidth: '60%' }}>
       <Card raised>
         <CardContent>
-          <Typography variant="h6" gutterBottom>Deposit Funds</Typography>
+          <Typography variant="h6" gutterBottom>{deposit ? 'Deposit Funds' : 'Withdrawal Funds'}</Typography>
           <Divider style={{ marginBottom: '10px' }} />
           <Grid container direction="column" spacing={2}>
             <Grid container item>
@@ -109,7 +109,7 @@ export default props => {
                 label="Amount ($)"
                 id="add-new-funds"
                 disabled={!accountList || accountList.length < 2}
-                value={formatCurrency(amount)}
+                value={amount}
                 onBlur={() => {
                   const newAmount = Number.parseFloat(amount)
                   setAmount(!isNaN(newAmount) ? `${newAmount.toFixed(2)}` : '')
@@ -124,7 +124,7 @@ export default props => {
           </Grid>
           <Grid container item justify="center" alignItems="center">
             <Grid item xs={6}>
-              <Typography variant='h6'>Balance ${accountBalance}</Typography>
+              <Typography variant='h6'>Balance {formatCurrency(accountBalance)}</Typography>
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
               <Button 

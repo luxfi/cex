@@ -1,13 +1,12 @@
 export default [
-   {
-      title: "Discover",
-      link: "/"
-       /*items: [
+  {
+    title: 'discover',
+    link: '/',
+    /*items: [
        {
          title: "Movies",
          link: "/film"
        },
-  
        {
          title: "TV Series",
          placeholder: "TV Series"
@@ -20,16 +19,19 @@ export default [
          title: "Gaming",
          placeholder: "Gaming"
        }
-       
      ]
      */
-    },
-    {
-     title: "earn",
-     placeholder: "Earn"
-    },
-   {
-     title: "trade",
-     placeholder: "Trade"
-   }
+  },
+  {
+    title: 'invest',
+    link: '/trade/terminator-dark-fate',
+  },
+  {
+    title: 'rewards',
+    link: '/portfolio/rewards',
+  },
+  {
+    title: 'trade',
+    link: '/pro/terminator-dark-fate',
+  },
 ]

@@ -1,74 +1,61 @@
+import { inherits } from "util";
+
 export default theme => {
   return {
     root: {
-      paddingLeft: theme.spacing(4),  // 32px
-      paddingRight: theme.spacing(4),
+      [theme.breakpoints.up("xl")]: {
+        width: "1800px",
+        margin: "0 auto",
+      },
+      [theme.breakpoints.up("md")]: {
+        paddingLeft: theme.spacing(8),
+        paddingRight: theme.spacing(8),
+      },
+      [theme.breakpoints.only("sm")]: {
+        paddingLeft: theme.spacing(4),
+        paddingRight: theme.spacing(4),
+      },
+      [theme.breakpoints.only("xs")]: {
+        paddingLeft: theme.spacing(3),
+        paddingRight: theme.spacing(3),
+      },
+    },
 
+    logoAreaGridItem: {
       [theme.breakpoints.up("lg")]: {
-        paddingLeft: theme.spacing(6),
-        paddingRight: theme.spacing(6),
-      },
-      [theme.breakpoints.down("xs")]: {
-        paddingLeft: theme.spacing(1),
-        paddingRight: theme.spacing(1),
+        paddingRight: theme.spacing(3),
       },
     },
-
-    logoGridItem: {
-      order: 0,
-      [theme.breakpoints.down("md")]: {
-        display: "none"
-      },
-    },
-
     navGridItem: {
-      order: 2,
       [theme.breakpoints.up("lg")]: {
-        order: 1,
+        paddingLeft: theme.spacing(2),
       },
-      [theme.breakpoints.down("sm")]: {
-        order: 3,
-      },
-    },
-
-    socialAndAppGridItem: {
-      order: 2,
     },
 
     logoImg: {
       display: "block",
       position: "relative",
       top: "-10px",
-      [theme.breakpoints.only("md")]: {
-        height: "32px !important"
-      },
-
     },
-
-    socialGridItem: {
-      order: 1,
-      marginBottom: theme.spacing(2),
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "center",
-      [theme.breakpoints.up("lg")]: {
-        justifyContent: "flex-end",
-        order: 0, // arbitrary, doesn't factor into main ordering
-      },
+    byline: {
+      marginBottom: theme.spacing(2)
     },
 
     socialIconRow: {
       display: "flex",
       flexDirection: "row",
-      justifyContent: "flex-end",
+      justifyContent: "flex-start",
       alignItems: "center",
+      [theme.breakpoints.down("md")]: {
+        marginBottom: theme.spacing(3),
+      },
     },
     socialIcon: {
       display: "block",
       padding: 0,
-      paddingRight: theme.spacing(3),
+      marginRight: theme.spacing(2),
       "&:last-child": {
-        paddingRight: 0
+        marginRight: 0
       }
     },
 
@@ -92,63 +79,45 @@ export default theme => {
       display: "flex",
       flexDirection: "column",
       alignItems: "flex-start",
-      [theme.breakpoints.down("md")]: {
-        alignItems: "center",
-      },
-      marginBottom: theme.spacing(2),
+      marginBottom: theme.spacing(3),
     },
     navSectionTitle: {
-      fontSize: "1.3rem"
+      fontSize: "1.3rem",
     },
-    navSectionHR: {
-      display: "none",
-      [theme.breakpoints.only("xs")]: {
-        margin: 0,
-        marginBottom: "4px",
-        display: "block",
-        width: "17%",
-        borderBottom: "none",
-        opacity: "0.7"
+    footerNavLink: {
+      "&:hover": {
+        textDecoration: "none",
+        color: "#fac54c" // :aa TODO theme.palette.secondary.main isn't working for some reason
       }
     },
-
-    appStoreGridItem: {
-      order: 3,
-      display: "flex",
-      flexDirection: "row",
-      [theme.breakpoints.down("sm")]: {
-        marginBottom: theme.spacing(3),
-        order: 2
-      },
-      [theme.breakpoints.up("lg")]: {
-        justifyContent: "flex-end",
-      },
-      [theme.breakpoints.down("md")]: {
-        justifyContent: "center",
-      },
+    navSectionHR: {
+      margin: 0,
+      marginBottom: theme.spacing(3),
+      display: "block",
+      width: "90%",
+      borderWidth: "0 0 1px 0",
+      borderColor: theme.palette.divider
+    },
+    appStoreSectionHR: {
+      margin: 0,
+      marginBottom: theme.spacing(2),
+      display: "block",
+      width: "100%",
+      borderWidth: "0 0 1px 0",
+      borderColor: theme.palette.divider
     },
     appStoreOuter: {
       display: "flex",
+      flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
-      flexDirection: "column",
-      [theme.breakpoints.up("lg")]: {
-        alignItems: "flex-end",
-      },
     },
     appStoreTitle: {
-      fontSize: "0.9rem",
-      marginBottom: theme.spacing(1)
-    },
-    appStoreButtonsOuter: {
+      marginBottom: theme.spacing(0.5)
     },
     appStoreApple: {
       width: "110px",
       paddingRight: theme.spacing(1)
-    },
-
-    copyrightGridItem: {
-      order: 4,
     },
 
     copyrightOuter: {
@@ -156,15 +125,24 @@ export default theme => {
       flexDirection: "row",
       justifyContent: "center",
       flexWrap: "wrap",
-      marginTop: theme.spacing(2),
-      [theme.breakpoints.up("lg")]: {
-        justifyContent: "flex-start",
-        marginTop: theme.spacing(1),
-      },
+      color: theme.palette.text.secondary,
       "& p": {
         marginRight: theme.spacing(1)
       },
-      marginBottom: theme.spacing(2),
+      marginBottom: theme.spacing(1),
+
+      "& a": {
+        color: "inherit"
+      }
+    },
+
+    finePrint: {
+      fontSize: '0.8rem',
+      color: theme.palette.text.disabled,
+
+      "& a": {
+        color: "inherit"
+      }
     },
 
     "@global": {

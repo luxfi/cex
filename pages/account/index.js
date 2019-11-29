@@ -14,7 +14,8 @@ import {
 } from "@material-ui/core"
 
 import { 
-  AccountSection ,
+  AccountSection,
+  AccountTabs,
   AddPaymentMethodForm,
   BankAccountItem,
   ManageFunds,
@@ -43,7 +44,7 @@ class Account extends React.Component {
 
   render() {
     const store = this.props.store
-    const { userStore } = store
+    const { userStore, uiStore } = store
     const {
       setValue,
       account,
@@ -62,15 +63,22 @@ class Account extends React.Component {
     } = userStore
 
     const setErrorMessage = message => {
-      store.uiStore.setErrorMessage(message)
+      uiStore.setErrorMessage(message)
     }
 
     return (
       <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
+        <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
+          <AccountTabs tab='' />
+        </AccountSection>
         <AccountSection title="KYC" style={{ marginBottom: '3em' }}>
-          <Link component={CustomLink} href="/account/kyc">
-            Check your identify verification status
-          </Link>
+          <Grid container>
+            <Grid item xs={8}>
+              <CustomLink href="/account/kyc" to="/account/kyc">
+                Check your identify verification status
+              </CustomLink>
+            </Grid>
+          </Grid>
         </AccountSection>
         <AccountSection title="Linked Accounts" style={{ marginBottom: '3em' }}>
           <Grid container>

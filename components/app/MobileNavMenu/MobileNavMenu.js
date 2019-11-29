@@ -14,7 +14,10 @@ import {
   Divider
 } from "@material-ui/core"
 
-import SideDrawer from "../SideDrawer"
+import {
+  SideDrawer,
+  CustomLink
+} from ".."
 
 import { makeStyles } from "@material-ui/core/styles"
 import styles from './mobileNavMenu.style.js'
@@ -27,7 +30,6 @@ export default (props) => {
   const {
     open,
     setOpen,
-    handlePlaceholder,
   } = props
 
   return (
@@ -38,7 +40,6 @@ export default (props) => {
       anchor="left"
     >
       <NavElements
-        handlePlaceholder={handlePlaceholder}
         handleClose={() => setOpen(false)}
       />
     </SideDrawer>
@@ -47,56 +48,42 @@ export default (props) => {
 
 const NavElements = (props) => {
 
-  const { 
-    handlePlaceholder,
-    handleClose 
+  const {
+    handleClose
   } = props
-
-  const handlePlaceHolderAndClose = (text) => {
-    handlePlaceholder(text)
-    handleClose() 
-  }
 
   const classes = useStyles()
 
   let result = []
-  navStructure.forEach((elementDef) => {
+  navStructure.forEach((elementDef, i) => {
 
+    let href = null
     if ('placeholder' in elementDef) {
-      result.push(
-        <ListItem
-          className={classes.listButton}
-          onClick={() => {
-            handlePlaceHolderAndClose(elementDef.placeholder)
-          }}
-          key={elementDef.placeholder}
-          button
-        >
-          {elementDef.title}
-        </ListItem>
-      )
+      href = { pathname: "/placeholder", query: { title: elementDef.title } }
     }
     else if ('link' in elementDef) {
+      href = elementDef.link 
+    }
+    if (href) {
       result.push(
-        <ListItem className={classes.listButton} button key={elementDef.link}>
-          <NextLink href={elementDef.link} >
+        <ListItem className={classes.listButton} button key={i} onClick={() => handleClose()}>
+          <CustomLink href={href} className={classes.listButtonLink}>
             {elementDef.title}
-          </NextLink>
+          </CustomLink>
         </ListItem>
       )
     }
     else {
       result.push(
-        <SubNav 
+        <SubNav
           menuDefinition={elementDef}
           classes={classes}
-          handlePlaceHolder={handlePlaceHolderAndClose}
+          handleClose={handleClose}
           key={elementDef.link}
         />
       )
     }
   })
-
 
   return (
     <>
@@ -113,7 +100,7 @@ const SubNav = (props) => {
   const {
     classes,
     menuDefinition,
-    handlePlaceHolder
+    handleClose
   } = props
 
   const [open, setOpen] = React.useState(false)
@@ -132,31 +119,27 @@ const SubNav = (props) => {
         <Divider light />
         <List component="div" disablePadding>
           {menuDefinition.items.map(
-            (item) => {
-              return ('link' in item)
-                ? (
-                  <ListItem
-                    className={classes.listButtonSublist}
-                    button
-                    key={item.link}
-                  >
-                    <NextLink href={item.link} >
-                      <ListItemText primary={item.title} />
-                    </NextLink>
-                  </ListItem>
+            (item, i) => {
+              const href = 
+                ('link' in item) 
+                ? 
+                item.link 
+                :
+                ({ pathname: "/placeholder", query: { title: elementDef.title } }) 
 
-                ) : (
-                  <ListItem
-                    className={classes.listButtonSublist}
-                    onClick={() => {
-                      handlePlaceHolder(item.placeholder)
-                    }}
-                    key={item.placeholder}
-                    button
-                  >
+              return (
+                <ListItem
+                  className={classes.listButtonSublist}
+                  button
+                  key={i}
+                  onClick={() => handleClose()}
+                >
+                <CustomLink href={href} className={classes.listButtonLink}>
                     <ListItemText primary={item.title} />
-                  </ListItem>
-                )
+                  </CustomLink>
+                </ListItem>
+
+              )
             }
           )}
         </List>
@@ -169,8 +152,10 @@ const SubNav = (props) => {
 const Logo = (props) => {
   const {classes} = props
   return (
-    <NextLink href="/" className={classes.logoLink}>
-      <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.logoImg}/>
-    </NextLink>
+    <div className={classes.logoLink}>
+      <NextLink href="/">
+        <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.logoImg}/>
+      </NextLink>
+    </div>
   )
 }

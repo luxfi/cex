@@ -32,7 +32,7 @@ export default class TrailerSlider extends React.Component {
     const { store } = this.props
     const { movies } = store.movieStore
     return (
-      <div id="trailer-slider" style={{ padding: "48px 0px"}} >
+      <div id="trailer-slider">
         <Typography variant="h5" style={{ marginLeft: "56px" }} gutterBottom>
           <Box fontWeight={100} fontSize={20}>
             NEWEST TRAILERS
@@ -52,7 +52,6 @@ export default class TrailerSlider extends React.Component {
           </Slider>
         </div>
         <style jsx>{`
-
           // #newest-picks :global(.MuiCard-root) {
           //   margin-bottom: 32px;
           // }
