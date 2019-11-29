@@ -12,13 +12,13 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const CarouselItem = ({ ...props }) => {
-  // const onMouseDown = event => {
-  //   props.onMouseDown(event, props.index)
-  // }
+  const onMouseDown = event => {
+    props.onMouseDown(event, props.index)
+  }
 
-  // const onTouchStart = event => {
-  //   props.onTouchStart(event, props.index)
-  // }
+  const onTouchStart = event => {
+    props.onTouchStart(event, props.index)
+  }
 
   const classes = useStyles()
   let width = props.width || `calc(100% / ${5}`
@@ -30,8 +30,8 @@ const CarouselItem = ({ ...props }) => {
       // 'CarouselItem--clickable': props.clickable,
       // 'CarouselItem--active': props.index === props.currentSlideIndex,
       // })}
-      // onMouseDown={onMouseDown}
-      // onTouchStart={onTouchStart}
+      onMouseDown={onMouseDown}
+      onTouchStart={onTouchStart}
     >
       {props.children}
     </li>

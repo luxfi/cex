@@ -1,48 +1,11 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Fab } from '@material-ui/core'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import { CarouselItem } from '../'
+import { useEventListener } from '../../../util/customHooks'
 import throttle from 'lodash/throttle'
-
-// CustomHook - https://usehooks.com/useEventListener/
-function useEventListener(eventName, handler, element = window) {
-  console.log('eventName', eventName)
-  console.log('handler', handler)
-  console.log('element', element)
-  // Create a ref that stores handler
-  const savedHandler = useRef()
-
-  // Update ref.current index if handler changes.
-  // This allows our effect below to always get latest handler ...
-  // ... without us needing to pass it in effect deps array ...
-  // ... and potentially cause effect to re-run every render.
-  useEffect(() => {
-    savedHandler.current = handler
-  }, [handler])
-
-  useEffect(
-    () => {
-      // Make sure element supports addEventListener
-      // On
-      const isSupported = element && element.addEventListener
-      if (!isSupported) return
-
-      // Create event listener that calls handler function stored in ref
-      const eventListener = event => savedHandler.current(event)
-
-      // Add event listener
-      element.addEventListener(eventName, eventListener)
-
-      // Remove event listener on cleanup
-      return () => {
-        element.removeEventListener(eventName, eventListener)
-      }
-    },
-    [eventName, element], // Re-run if eventName or element changes
-  )
-}
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -86,7 +49,8 @@ export const Carousel = ({ slides, ...props }) => {
    * Default props
    */
   const slidesPerScroll = props.slidesPerScroll || props.slidesPerRow
-  const animationSpeed = props.animationSpeed || 500
+  const animationSpeed = props.animationSpeed || 50 || 500
+  const clickDragThreshold = props.animationSpeed || 10
 
   const getChildren = () => {
     if (!props.children) {
@@ -111,15 +75,133 @@ export const Carousel = ({ slides, ...props }) => {
   const [carouselWidth, setCarouselWidth] = useState(0)
   const [carouselItemWidth, setCarouselItemWidth] = useState(0)
   const [transformOffset, setTransformOffest] = useState(0)
+  const [dragStart, setDragStart] = useState(null)
+  const [dragOffset, setDragOffset] = useState(0)
+  const [clickedIndex, setClickedIndex] = useState(null)
   /**
    * Handlers
    */
+  /**
+     
+     
+   * Function handling beginning of mouse drag by setting index of clicked item and coordinates of click in the state
+   * @param {event} e event
+   * @param {number} index of the element drag started on
+   */
+  const onMouseDown = (e, index) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const { pageX } = e
+    setDragStart(pageX)
+    setClickedIndex(index)
+  }
+
+  /**
+   * Function handling mouse move if drag has started. Sets dragOffset in the state.
+   * @param {event} e event
+   */
+  const onMouseMove = e => {
+    const { pageX } = e
+    if (dragStart !== null) {
+      setDragOffset(pageX - dragStart)
+    }
+  }
+
+  /**
+   * Function handling beginning of touch drag by setting index of touched item and coordinates of touch in the state
+   * @param {event} e event
+   * @param {number} index of the element drag started on
+   */
+  const onTouchStart = (e, index) => {
+    const { changedTouches } = e
+    setDragStart(changedTouches[0].pageX)
+    setClickedIndex(index)
+  }
+
+  /**
+   * Function handling touch move if drag has started. Sets dragOffset in the state.
+   * @param {event} e event
+   */
+  // const onTouchMove = e => {
+  //   if (Math.abs(dragOffset) > 10) {
+  //     e.preventDefault()
+  //     e.stopPropagation()
+  //   }
+  //   const { changedTouches } = e
+  //   if (dragStart !== null) {
+  //     setDragOffset(changedTouches[0].pageX - dragStart)
+  //   }
+  // }
+
+  /**
+   * Function handling end of touch or mouse drag. If drag was long it changes current slide to the nearest one,
+   * if drag was short (or it was just a click) it changes slide to the clicked (or touched) one.
+   * It resets clicked index, dragOffset and dragStart values in state.
+   * @param {event} e event
+   */
+  const onMouseUpTouchEnd = e => {
+    if (dragStart !== null) {
+      e.preventDefault()
+      if (Math.abs(dragOffset) > clickDragThreshold) {
+        changeSlide(getNearestSlideIndex())
+      } else {
+        changeSlide(clickedIndex)
+      }
+      setDragStart(null)
+      setDragOffset(0)
+      setClickedIndex(null)
+    }
+  }
+
+  /**
+   * Simulates mouse events when touch events occur
+   * @param {event} e A touch event
+   */
+  const simulateEvent = e => {
+    const touch = e.changedTouches[0]
+    const { screenX, screenY, clientX, clientY } = touch
+    const touchEventMap = {
+      touchstart: 'mousedown',
+      touchmove: 'mousemove',
+      touchend: 'mouseup',
+    }
+    const simulatedEvent = new MouseEvent(touchEventMap[e.type], {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+      detail: 1,
+      screenX,
+      screenY,
+      clientX,
+      clientY,
+    })
+    touch.target.dispatchEvent(simulatedEvent)
+  }
+
   const transitionHandler = () => {
     // remove transition when animation finished
     setTransitionEnabled(false)
   }
 
   /* ========== positioning ========== */
+  /**
+   * Checks what slide index is the nearest to the current position (to calculate the result of dragging the slider)
+   * @return {number} index
+   */
+  const getNearestSlideIndex = () => {
+    let slideIndexOffset = 0
+    if (props.keepDirectionWhenDragging) {
+      if (dragOffset > 0) {
+        slideIndexOffset = -Math.ceil(dragOffset / carouselWidth)
+      } else {
+        slideIndexOffset = -Math.floor(dragOffset / carouselWidth)
+      }
+    } else {
+      slideIndexOffset = -Math.round(dragOffset / carouselWidth)
+    }
+    return slideIndex + slideIndexOffset
+  }
+
   /**
    * Calculates width of a single slide in a carousel
    * @return {number} width of a slide in px
@@ -131,21 +213,26 @@ export const Carousel = ({ slides, ...props }) => {
   }, [carouselWidth, props.slidesPerRow])
 
   /**
-   * Calculates offset in pixels to be applied to Track element in order to show current slide correctly (centered or aligned to the left)
-   * @return {number} offset in px
+   * Calculates offset in pixels to be move track when dragging
    */
   useEffect(() => {
     setTransitionEnabled(true)
     const elementWidthWithOffset = carouselItemWidth
     setTransformOffest(0 - slideIndex * elementWidthWithOffset)
   }, [slideIndex])
-  // const [dragStart, setDragStart] = useState(null)
 
   // Add event listener using our hook
   useEventListener('transitionend', transitionHandler, listRef)
+  // adding event listeners for swipe
+  useEventListener('mousemove', onMouseMove, carouselRef.current, true)
+  useEventListener('mouseup', onMouseUpTouchEnd, carouselRef.current, true)
+  useEventListener('touchstart', simulateEvent, carouselRef.current, true)
+  useEventListener('touchmove', simulateEvent, carouselRef.current, {
+    passive: false,
+  })
+  useEventListener('touchend', simulateEvent, carouselRef.current, true)
   useEffect(() => {
     const element = carouselRef.current
-    debugger
     if (!(element instanceof Element)) {
       return
     }
@@ -216,19 +303,19 @@ export const Carousel = ({ slides, ...props }) => {
           className={classes.list}
           ref={listRef}
           style={{
-            transform: `translateX(${transformOffset}px)`,
+            transform: `translateX(${transformOffset + dragOffset}px)`,
             transitionDuration: `${animationSpeed}ms, ${animationSpeed}ms`,
           }}
         >
           {children.map((carouselItem, index) => (
             <CarouselItem
               key={index}
-              // currentSlideIndex={getActiveSlideIndex()}
+              currentSlideIndex={slideIndex}
               index={index}
               slidesPerRow={props.slidesPerRow}
               width={carouselItemWidth}
-              // onMouseDown={onMouseDown}
-              // onTouchStart={onTouchStart}
+              onMouseDown={onMouseDown}
+              onTouchStart={onTouchStart}
             >
               {carouselItem}
             </CarouselItem>
