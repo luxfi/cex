@@ -31,6 +31,9 @@ const useStyles = makeStyles(theme => ({
     padding: 0,
     listStyleType: 'none',
   },
+  fab: {
+    backgroundColor: '#fff',
+  },
 }))
 
 export default useStyles

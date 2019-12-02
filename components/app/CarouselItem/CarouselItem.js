@@ -21,7 +21,8 @@ const CarouselItem = ({ ...props }) => {
   // }
 
   const classes = useStyles()
-  let width = props.width || `calc(100% / ${5}`
+  // TODO: figure out why
+  let width = props.width || `calc(100% / ${props.slidesPerRow}`
   return (
     <li
       className={classes.item}

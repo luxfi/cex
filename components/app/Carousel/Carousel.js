@@ -6,15 +6,14 @@ import { CarouselItem } from '../'
 import { useEventListener } from '../../../util/customHooks'
 import useStyles from './Carousel.style'
 
-export const Carousel = ({ slides, ...props }) => {
+export const Carousel = ({ slides, animationSpeed = 500, ...props }) => {
   const carouselRef = useRef()
   const listRef = useRef()
 
   /**
    * Default props
    */
-  const slidesPerScroll = props.slidesPerScroll || props.slidesPerRow
-  const animationSpeed = props.animationSpeed || 500
+  const slidesPerScroll = props.slidesPerScroll || props.slidesPerRow || 1
   // const clickDragThreshold = props.animationSpeed || 10
 
   const getChildren = () => {
@@ -174,7 +173,7 @@ export const Carousel = ({ slides, ...props }) => {
   useEffect(() => {
     setTransitionEnabled(true)
     setCarouselItemWidth(carouselWidth / props.slidesPerRow)
-  }, [carouselWidth, props.slidesPerRow])
+  }, [carouselWidth])
 
   /**
    * Calculates offset in pixels to be move track when dragging
@@ -247,12 +246,22 @@ export const Carousel = ({ slides, ...props }) => {
   return (
     <div className={classes.container} ref={carouselRef}>
       <div className={`${classes.sliderButton} ${classes.prevButton}`}>
-        <Fab size="small" color="white" aria-label="add" onClick={prevSlide}>
+        <Fab
+          size="small"
+          className={classes.fab}
+          aria-label="add"
+          onClick={prevSlide}
+        >
           <ChevronLeftIcon />
         </Fab>
       </div>
       <div className={`${classes.sliderButton} ${classes.nextButton}`}>
-        <Fab size="small" color="white" aria-label="add" onClick={nextSlide}>
+        <Fab
+          size="small"
+          className={classes.fab}
+          aria-label="add"
+          onClick={nextSlide}
+        >
           <ChevronRightIcon />
         </Fab>
       </div>
