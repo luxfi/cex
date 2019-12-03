@@ -6,7 +6,7 @@ import { CarouselItem } from '../'
 import { useEventListener } from '../../../util/customHooks'
 import useStyles from './Carousel.style'
 
-export const Carousel = ({ slides, animationSpeed = 500, ...props }) => {
+export const Carousel = ({ animationSpeed = 500, ...props }) => {
   const carouselRef = useRef()
   const listRef = useRef()
 
@@ -14,12 +14,12 @@ export const Carousel = ({ slides, animationSpeed = 500, ...props }) => {
    * Default props
    */
   const slidesPerScroll = props.slidesPerScroll || props.slidesPerRow || 1
-  // const clickDragThreshold = props.animationSpeed || 10
+  // const clickDragThreshold = props.clickDragThreshold || 10
 
   const getChildren = () => {
     if (!props.children) {
-      if (slides) {
-        return slides
+      if (prop.slides) {
+        return prop.slides
       }
       return []
     }
@@ -39,9 +39,6 @@ export const Carousel = ({ slides, animationSpeed = 500, ...props }) => {
   const [carouselWidth, setCarouselWidth] = useState(0)
   const [carouselItemWidth, setCarouselItemWidth] = useState(0)
   const [transformOffset, setTransformOffest] = useState(0)
-  // const [dragStart, setDragStart] = useState(null)
-  // const [dragOffset, setDragOffset] = useState(0)
-  // const [clickedIndex, setClickedIndex] = useState(null)
 
   /**
    * Handlers
@@ -161,8 +158,6 @@ export const Carousel = ({ slides, animationSpeed = 500, ...props }) => {
               index={index}
               slidesPerRow={props.slidesPerRow}
               width={carouselItemWidth}
-              // onMouseDown={onMouseDown}
-              // onTouchStart={onTouchStart}
             >
               {carouselItem}
             </CarouselItem>
