@@ -101,6 +101,10 @@ export const Carousel = ({ animationSpeed = 500, ...props }) => {
     return () => observer.unobserve(element)
   }, [carouselRef])
 
+  // useEffect(() => {
+  //   console.log('useEffect transformOffset', transformOffset)
+  // }, [transformOffset])
+
   /**
    * Limit number between 0 and last slide index - amount of slides
    * @param {number} index to be limited
@@ -152,6 +156,7 @@ export const Carousel = ({ animationSpeed = 500, ...props }) => {
           className={classes.list}
           ref={listRef}
           style={{
+            width: `${carouselWidth * props.slidesPerRow}px`,
             transform: `translateX(${transformOffset}px)`,
             transitionDuration: `${animationSpeed}ms, ${animationSpeed}ms`,
           }}

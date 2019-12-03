@@ -11,30 +11,10 @@ import {
 } from '@material-ui/core'
 
 import { Carousel, Image } from '../../app'
+import useSliderHook from './useSliderHook'
 
 export default function MediaSlider({ youtubeIDs }) {
-  const matchesExtraSmall = useMediaQuery(theme => theme.breakpoints.up('xs'))
-  const matchesSmall = useMediaQuery(theme => theme.breakpoints.up('sm'))
-  const matchesMedium = useMediaQuery(theme => theme.breakpoints.up('md'))
-  const matchesLarge = useMediaQuery(theme => theme.breakpoints.up('lg'))
-  const matchesExtraLarge = useMediaQuery(theme => theme.breakpoints.up('xl'))
-  const [slidesPerRow, setSlidesPerRow] = useState(5)
-  useEffect(() => {
-    setSlidesPerRow(Reducer())
-  }, [
-    matchesExtraSmall,
-    matchesSmall,
-    matchesMedium,
-    matchesLarge,
-    matchesExtraLarge,
-  ])
-  const Reducer = exp => {
-    if (matchesExtraLarge) return 6
-    if (matchesLarge) return 5
-    if (matchesMedium) return 6
-    if (matchesSmall) return 4
-    if (matchesExtraSmall) return 2
-  }
+  const slidesPerRow = useSliderHook()
   return (
     <Carousel slidesPerRow={slidesPerRow}>
       {youtubeIDs.map((id, i) => (
