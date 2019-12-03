@@ -147,17 +147,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const useMidstream = (middleware, defaults, dst) => {
-  const [ms] = useState(() => midstream(middleware, { defaults, dst }))
-  return ms
-}
-
 const greaterThan0 = (v) => {
   if (v > 0) {
     return v
   }
 
   throw new Error('Enter a value greater than 0.')
+}
+
+// Simple hook for Midstream
+const useMidstream = (config) => {
+  const dst = {}
+  const err = {}
+
+  // standard force rerender hack
+  const [tick, setTick] = useState(0)
+
+  const [ms] = useState(() => (
+    midstream(config, {
+      dst: (name, value) => {
+        dst[name] = value
+        setTick(tick + 1)
+      },
+      // err behaves just like dst
+      err: (name, value) => {
+        err[name] = value
+        setTick(tick + 1)
+      },
+    })
+  ))
+
+  return ms
 }
 
 export default (props) => {
@@ -175,35 +195,31 @@ export default (props) => {
     return <Typography>Loading chart...</Typography>
   }
 
-  const [mode, setMode] = useState(0)
-  const [showError, setShowError] = useState(false)
-
   const stock = toJS(orderBook.stock)
 
   const {
     src,
+    mode, setMode,
+    type, setType,
+    price, setPrice,
+    quantity, setQuantity,
+    showError, setShowError,
     dst,
     err,
-    hooks,
   } = useMidstream({
-    type: [isRequired, (v) => {
+    mode: [0],
+    showError: [false],
+    type: ['limit', isRequired, (v) => {
       // side effects of setting the type if setting
-      if (v !== dst.type) {
+      if (v !== type) {
         setShowError(false)
-        src.price = 0
+        setPrice(0)
         dst.price = 0
       }
       return v
     }],
-    price: (v) => (dst.type === 'limit' ? greaterThan0(v) : v),
-    quantity: greaterThan0,
-  }, {
-    type: 'limit',
-    price: 0,
-    quantity: 0,
-  }, {
-    price: 0,
-    quantity: 0,
+    price: [0, (v) => (type === 'limit' ? greaterThan0(v) : v)],
+    quantity: [0, greaterThan0],
   })
 
   const handleModeChange = (event, newValue) => {
@@ -219,9 +235,9 @@ export default (props) => {
 
       createOrder({
         side,
-        type: dst.type,
-        price: dst.price,
-        quantity: dst.quantity,
+        type,
+        price,
+        quantity,
         categories: movieCategories,
         ticker,
       })
@@ -241,7 +257,7 @@ export default (props) => {
   const { trades } = orderBook
 
   const classes = useStyles()
-  const isMarket = dst.type === 'market'
+  const isMarket = type === 'market'
 
   const data = stock.proChartData
 
@@ -322,8 +338,8 @@ export default (props) => {
                     }}
                     showError={ showError }
                     error={ err.type }
-                    value={ src.type }
-                    setValue={ hooks.type[1] }
+                    value={ type }
+                    setValue={ setType }
                     fullWidth
                   />
                   <br/>
@@ -333,8 +349,8 @@ export default (props) => {
                     variant='outlined'
                     showError={ showError }
                     error={ err.price }
-                    value={ isMarket ? meanPrice : src.price }
-                    setValue={ hooks.price[1] }
+                    value={ isMarket ? meanPrice : price }
+                    setValue={ setPrice }
                     InputProps={{
                       inputComponent: DollarFormatCustom,
                       endAdornment: <InputAdornment position='end'>USD</InputAdornment>,
@@ -349,8 +365,8 @@ export default (props) => {
                     variant='outlined'
                     showError={ showError }
                     error={ err.quantity }
-                    value={ src.quantity }
-                    setValue={ hooks.quantity[1] }
+                    value={ quantity }
+                    setValue={ setQuantity }
                     InputProps={{
                       inputComponent: NumberFormatCustom,
                     }}
@@ -365,7 +381,7 @@ export default (props) => {
                     </Grid>
                     <Grid item xs={6} className='right-aligned'>
                       <Typography variant='body1' align='right'>
-                        ${ (dst.price * dst.quantity).toFixed(2) }
+                        ${ (price * quantity).toFixed(2) }
                       </Typography>
                     </Grid>
                     <Grid item xs={6}>
@@ -375,7 +391,7 @@ export default (props) => {
                     </Grid>
                     <Grid item xs={6} className='right-aligned'>
                       <Typography variant='body1' align='right'>
-                        ${ (src.price * src.quantity * 0.005).toFixed(2) }
+                        ${ (price * quantity * 0.005).toFixed(2) }
                       </Typography>
                     </Grid>
                     <Grid item xs={6}>
@@ -385,7 +401,7 @@ export default (props) => {
                     </Grid>
                     <Grid item xs={6} className='right-aligned'>
                       <Typography variant='body1' align='right'>
-                        ${ (src.price * src.quantity * 1.005).toFixed(2) }
+                        ${ (price * quantity * 1.005).toFixed(2) }
                       </Typography>
                     </Grid>
                   </Grid>
