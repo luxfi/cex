@@ -89,6 +89,7 @@ module.exports = withBundleAnalyzer(
           '/portfolio/rewards': { page: '/portfolio/rewards' },
           '/account': { page: '/account' },
           '/account/kyc': { page: '/account/kyc' },
+          '/account/documents': { page: '/account/documents' },
           '/investorFaq': { page: '/investorFaq' },
           '/projectFaq': { page: '/projectFaq' },
           '/risks': { page: '/risks' },
