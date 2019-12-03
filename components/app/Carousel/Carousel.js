@@ -46,124 +46,11 @@ export const Carousel = ({ slides, animationSpeed = 500, ...props }) => {
   /**
    * Handlers
    */
-  /**
-   * Function handling beginning of mouse drag by setting index of clicked item and coordinates of click in the state
-   * @param {event} e event
-   * @param {number} index of the element drag started on
-   */
-  // const onMouseDown = (e, index) => {
-  //   e.preventDefault()
-  //   e.stopPropagation()
-  //   const { pageX } = e
-  //   setDragStart(pageX)
-  //   setClickedIndex(index)
-  // }
-
-  /**
-   * Function handling mouse move if drag has started. Sets dragOffset in the state.
-   * @param {event} e event
-   */
-  // const onMouseMove = e => {
-  //   const { pageX } = e
-  //   if (dragStart !== null) {
-  //     setDragOffset(pageX - dragStart)
-  //   }
-  // }
-
-  /**
-   * Function handling beginning of touch drag by setting index of touched item and coordinates of touch in the state
-   * @param {event} e event
-   * @param {number} index of the element drag started on
-   */
-  // const onTouchStart = (e, index) => {
-  //   const { changedTouches } = e
-  //   setDragStart(changedTouches[0].pageX)
-  //   setClickedIndex(index)
-  // }
-
-  /**
-   * Function handling touch move if drag has started. Sets dragOffset in the state.
-   * @param {event} e event
-   */
-  // const onTouchMove = e => {
-  //   if (Math.abs(dragOffset) > 10) {
-  //     e.preventDefault()
-  //     e.stopPropagation()
-  //   }
-  //   const { changedTouches } = e
-  //   if (dragStart !== null) {
-  //     setDragOffset(changedTouches[0].pageX - dragStart)
-  //   }
-  // }
-
-  /**
-   * Function handling end of touch or mouse drag. If drag was long it changes current slide to the nearest one,
-   * if drag was short (or it was just a click) it changes slide to the clicked (or touched) one.
-   * It resets clicked index, dragOffset and dragStart values in state.
-   * @param {event} e event
-   */
-  // const onMouseUpTouchEnd = e => {
-  //   if (dragStart !== null) {
-  //     e.preventDefault()
-  //     if (Math.abs(dragOffset) > clickDragThreshold) {
-  //       changeSlide(getNearestSlideIndex())
-  //     } else {
-  //       changeSlide(clickedIndex)
-  //     }
-  //     setDragStart(null)
-  //     setDragOffset(0)
-  //     setClickedIndex(null)
-  //   }
-  // }
-
-  /**
-   * Simulates mouse events when touch events occur
-   * @param {event} e A touch event
-   */
-  // const simulateEvent = e => {
-  //   const touch = e.changedTouches[0]
-  //   const { screenX, screenY, clientX, clientY } = touch
-  //   const touchEventMap = {
-  //     touchstart: 'mousedown',
-  //     touchmove: 'mousemove',
-  //     touchend: 'mouseup',
-  //   }
-  //   const simulatedEvent = new MouseEvent(touchEventMap[e.type], {
-  //     bubbles: true,
-  //     cancelable: true,
-  //     view: window,
-  //     detail: 1,
-  //     screenX,
-  //     screenY,
-  //     clientX,
-  //     clientY,
-  //   })
-  //   touch.target.dispatchEvent(simulatedEvent)
-  // }
 
   const transitionHandler = () => {
     // remove transition when animation finished
     setTransitionEnabled(false)
   }
-
-  /* ========== positioning ========== */
-  /**
-   * Checks what slide index is the nearest to the current position (to calculate the result of dragging the slider)
-   * @return {number} index
-   */
-  // const getNearestSlideIndex = () => {
-  //   let slideIndexOffset = 0
-  //   if (props.keepDirectionWhenDragging) {
-  //     if (dragOffset > 0) {
-  //       slideIndexOffset = -Math.ceil(dragOffset / carouselWidth)
-  //     } else {
-  //       slideIndexOffset = -Math.floor(dragOffset / carouselWidth)
-  //     }
-  //   } else {
-  //     slideIndexOffset = -Math.round(dragOffset / carouselWidth)
-  //   }
-  //   return slideIndex + slideIndexOffset
-  // }
 
   /**
    * Calculates width of a single slide in a carousel
@@ -186,14 +73,7 @@ export const Carousel = ({ slides, animationSpeed = 500, ...props }) => {
 
   // Add event listener using our hook
   useEventListener('transitionend', transitionHandler, listRef.current)
-  // adding event listeners for swipe
-  // useEventListener('mousemove', onMouseMove, carouselRef.current, true)
-  // useEventListener('mouseup', onMouseUpTouchEnd, carouselRef.current, true)
-  // useEventListener('touchstart', simulateEvent, carouselRef.current, true)
-  // useEventListener('touchmove', simulateEvent, carouselRef.current, {
-  //   passive: false,
-  // })
-  // useEventListener('touchend', simulateEvent, carouselRef.current, true)
+  // Add custom event listener for resizing of carousel width
   useEffect(() => {
     const element = carouselRef.current
     if (!(element instanceof Element)) {
