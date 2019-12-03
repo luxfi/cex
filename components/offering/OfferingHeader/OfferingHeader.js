@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Grid, Typography, Box, Chip, Divider } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import grey from '@material-ui/core/colors/grey'
@@ -218,6 +218,7 @@ const RaisingInformation = ({
 }
 
 const OfferingHeader = () => {
+  const [currentMedia, setCurrentMedia] = useState(movie.youtubeIDs[0])
   return (
     <Box mb={40}>
       <Grid justify="center" container spacing={4}>
@@ -233,10 +234,11 @@ const OfferingHeader = () => {
           </Grid>
         </Grid>
         <Grid item xs={12} lg={7}>
-          <Trailer
-            trailer={'https://www.youtube.com/embed/' + movie.youtubeIDs[0]}
+          <Trailer trailer={'https://www.youtube.com/embed/' + currentMedia} />
+          <MediaSlider
+            youtubeIDs={movie.youtubeIDs}
+            setCurrentMedia={setCurrentMedia}
           />
-          <MediaSlider youtubeIDs={movie.youtubeIDs} />
         </Grid>
         <Grid item lg={3} md={4} sm={6} xs={12}>
           {/* sidebar */}
