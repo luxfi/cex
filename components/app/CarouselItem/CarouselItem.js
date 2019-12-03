@@ -12,14 +12,6 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const CarouselItem = ({ ...props }) => {
-  // const onMouseDown = event => {
-  //   props.onMouseDown(event, props.index)
-  // }
-
-  // const onTouchStart = event => {
-  //   props.onTouchStart(event, props.index)
-  // }
-
   const classes = useStyles()
   // TODO: figure out why
   let width = props.width || `calc(100% / ${props.slidesPerRow}`
@@ -27,12 +19,6 @@ const CarouselItem = ({ ...props }) => {
     <li
       className={classes.item}
       style={{ width: `${width}`, padding: '0 2px' }}
-      // className={classname('CarouselItem', {
-      // 'CarouselItem--clickable': props.clickable,
-      // 'CarouselItem--active': props.index === props.currentSlideIndex,
-      // })}
-      // onMouseDown={onMouseDown}
-      // onTouchStart={onTouchStart}
     >
       {props.children}
     </li>
