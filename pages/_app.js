@@ -30,6 +30,16 @@ import initializeStore from "../stores/stores"
 import { darkTheme } from "../styles/esxThemes"
 import styles from "../styles/app.style.js"
 
+const hideFooter = (page) => {
+  const noFooterPages = ['pro']
+  let hide = false
+  noFooterPages.forEach(p => {
+    if (hide) return
+    hide = page.indexOf(p) > -1
+  })
+  return hide
+}
+
 @observer
 class MyMobxApp extends App {
   static async getInitialProps(appContext) {
@@ -75,8 +85,7 @@ class MyMobxApp extends App {
       classes,
       router
     } = this.props
-
-
+    
     const showDesktopNav = isWidthUp('md', width)
     const showDesktopProfileMenu = isWidthUp('sm', width)
 
@@ -115,7 +124,10 @@ class MyMobxApp extends App {
                 isLoggedIn={this.mobxStore.userStore.loggedIn}
                 handleLogout={() => { this.mobxStore.userStore.logout() }}
               />
-              <Footer rootClassName={classes.footer} />
+              {
+                !hideFooter(router.route) ?
+                  <Footer rootClassName={classes.footer} /> : null
+              }
             </NoSsr>
           </div>
         </MuiThemeProvider>
