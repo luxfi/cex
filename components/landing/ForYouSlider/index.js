@@ -1,1 +1,1 @@
-export { default } from "./ForYouSlider.js"
+export { default } from './ForYouSlider'

@@ -1,35 +1,31 @@
-import React, { useEffect } from "react"
-import { inject, observer } from "mobx-react"
+import { makeStyles } from '@material-ui/core/styles'
+import { inject, observer } from 'mobx-react'
 
-import { makeStyles } from "@material-ui/core/styles"
+import React, { useEffect } from 'react'
 
 import {
-  Hero,
-  TrailerSlider,
-  StudioSlider,
   CategorySlider,
-  ForYouSlider
-} from "../components/landing"
+  ForYouSlider,
+  Hero,
+  StudioSlider,
+  TrailerSlider,
+} from '../components/landing'
 
 import { googlePageView } from '../util/generic'
 
 const heroMaxHeight = 800
 const heroMinHeight = 600
 
-const useStyles = makeStyles((theme) => {
-  return {
-    hero: {
-      height: '90vh',
-      maxHeight: heroMaxHeight,
-      minHeight: heroMinHeight,
-    }
-  }
-})
+const useStyles = makeStyles(() => ({
+  hero: {
+    height: '90vh',
+    maxHeight: heroMaxHeight,
+    minHeight: heroMinHeight,
+  },
+}))
 
-export default inject("store")(observer((props) => {
+export default inject('store')(observer((props) => {
   const classes = useStyles()
-  const { store } = props
-  // const loggedIn = store.userStore.loggedIn
 
   useEffect(() => {
     props.store.userPortfolio.getWatchlist()
@@ -38,8 +34,12 @@ export default inject("store")(observer((props) => {
 
   return (
     <>
-      <Hero className={classes.hero} maxHeight={heroMaxHeight} minHeight={heroMinHeight}/>
-      <div style={{ marginTop: -80, position: 'relative' }}>
+      <Hero
+        className={classes.hero}
+        maxHeight={heroMaxHeight}
+        minHeight={heroMinHeight}
+      />
+      <div style={{ marginTop: -120, position: 'relative' }}>
         <TrailerSlider/>
         <ForYouSlider />
         <StudioSlider />

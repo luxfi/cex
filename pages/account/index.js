@@ -74,7 +74,7 @@ class Account extends React.Component {
         <AccountSection title="KYC" style={{ marginBottom: '3em' }}>
           <Grid container>
             <Grid item xs={8}>
-              <CustomLink href="/account/kyc" to="/account/kyc">
+              <CustomLink href="/account/kyc" to="/account/kyc" style={{ color: "inherit", textDecoration: "none" }}>
                 Check your identify verification status
               </CustomLink>
             </Grid>
