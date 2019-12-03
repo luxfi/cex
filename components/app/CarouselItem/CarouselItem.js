@@ -26,7 +26,7 @@ const CarouselItem = ({ ...props }) => {
   return (
     <li
       className={classes.item}
-      style={{ width: `${width}` }}
+      style={{ width: `${width}`, padding: '0 2px' }}
       // className={classname('CarouselItem', {
       // 'CarouselItem--clickable': props.clickable,
       // 'CarouselItem--active': props.index === props.currentSlideIndex,

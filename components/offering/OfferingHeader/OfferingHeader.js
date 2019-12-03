@@ -11,14 +11,19 @@ const movie = {
   title: 'SAW 9: The Organ Donor',
   highlightedTags: ['New Release'],
   tags: ['2019', 'Paramount Pictures'],
-  media: [
-    'https://www.youtube.com/embed/uiisFYRu0DQ',
-    'https://www.youtube.com/embed/rSn6TIfbOj8',
-    'https://www.youtube.com/embed/2RRkauL6Igs',
-    'https://www.youtube.com/embed/_3pEEpORjXo',
-    'https://www.youtube.com/embed/yVpDn9NSg6s',
-    'https://www.youtube.com/embed/BZDhyjk7LrE',
-    'https://www.youtube.com/embed/zEu9M1fuTxA',
+  youtubeIDs: [
+    'uiisFYRu0DQ',
+    '2RRkauL6Igs',
+    '_3pEEpORjXo',
+    'yVpDn9NSg6s',
+    'BZDhyjk7LrE',
+    'zEu9M1fuTxA',
+    'uiisFYRu0DQ', // repeating the ids until finding more content
+    '2RRkauL6Igs',
+    '_3pEEpORjXo',
+    'yVpDn9NSg6s',
+    'BZDhyjk7LrE',
+    'zEu9M1fuTxA',
   ],
   raisedAmount: 2123201.44,
   amountOfInvestors: 1614,
@@ -228,8 +233,10 @@ const OfferingHeader = () => {
           </Grid>
         </Grid>
         <Grid item xs={12} lg={7}>
-          <Trailer trailer={movie.media[0]} />
-          <MediaSlider />
+          <Trailer
+            trailer={'https://www.youtube.com/embed/' + movie.youtubeIDs[0]}
+          />
+          <MediaSlider youtubeIDs={movie.youtubeIDs} />
         </Grid>
         <Grid item lg={3} md={4} sm={6} xs={12}>
           {/* sidebar */}

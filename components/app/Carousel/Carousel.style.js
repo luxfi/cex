@@ -2,10 +2,11 @@ import { makeStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
-    height: '110px',
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
     position: 'relative',
+    marginRight: '-2px',
+    marginLeft: '-2px',
   },
   prevButton: {
     left: 0,

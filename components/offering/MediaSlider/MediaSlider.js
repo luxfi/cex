@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useTheme } from '@material-ui/core/styles'
 import {
   InputBase,
   Paper,
@@ -8,12 +7,12 @@ import {
   Typography,
   Box,
   useMediaQuery,
+  Link,
 } from '@material-ui/core'
 
-import { Carousel } from '../../app'
+import { Carousel, Image } from '../../app'
 
-export default function MediaSlider() {
-  const theme = useTheme()
+export default function MediaSlider({ youtubeIDs }) {
   const matchesExtraSmall = useMediaQuery(theme => theme.breakpoints.up('xs'))
   const matchesSmall = useMediaQuery(theme => theme.breakpoints.up('sm'))
   const matchesMedium = useMediaQuery(theme => theme.breakpoints.up('md'))
@@ -21,7 +20,6 @@ export default function MediaSlider() {
   const matchesExtraLarge = useMediaQuery(theme => theme.breakpoints.up('xl'))
   const [slidesPerRow, setSlidesPerRow] = useState(5)
   useEffect(() => {
-    console.log(Reducer())
     setSlidesPerRow(Reducer())
   }, [
     matchesExtraSmall,
@@ -39,20 +37,19 @@ export default function MediaSlider() {
   }
   // padding: 0px 2px;
   // width: 100%
+  // https://img.youtube.com/vi/{id}/maxresdefault.jpg
   return (
     <Carousel slidesPerRow={slidesPerRow}>
-      <img src="https://placekitten.com/172/110" />
-      <img src="https://placekitten.com/172/110" />
-      <img src="https://placekitten.com/172/110" />
-      <img src="https://placekitten.com/172/110" />
-      <img src="https://placekitten.com/172/110" />
-      <img src="https://placekitten.com/172/110" />
-      <img src="https://placekitten.com/172/110" />
-      <img src="https://placekitten.com/172/110" />
-      <img src="https://placekitten.com/172/110" />
-      <img src="https://placekitten.com/172/110" />
-      <img src="https://placekitten.com/172/110" />
-      <img src="https://placekitten.com/172/110" />
+      {youtubeIDs.map((id, i) => (
+        <Image
+          key={i}
+          src={`https://img.youtube.com/vi/${id}/maxresdefault.jpg`}
+          onClick={() => console.log('onClick')}
+          // style={{ height: 172 }}
+          // aspectRatio={1.56}
+          disableSpinner
+        />
+      ))}
     </Carousel>
   )
 }
