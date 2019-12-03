@@ -56,8 +56,13 @@ export const Carousel = ({ animationSpeed = 500, ...props }) => {
 
   useEffect(() => {
     setTransitionEnabled(true)
+    console.count('-----------')
+    console.log(
+      'setCarouselItemWidth(carouselWidth / props.slidesPerRow)',
+      carouselWidth / props.slidesPerRow,
+    )
     setCarouselItemWidth(carouselWidth / props.slidesPerRow)
-  }, [carouselWidth])
+  }, [carouselWidth, props.slidesPerRow])
 
   /**
    * Calculates offset in pixels to be move track when dragging

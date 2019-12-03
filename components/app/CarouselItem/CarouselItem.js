@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import classname from 'classnames'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -13,12 +13,10 @@ const useStyles = makeStyles(theme => ({
 
 const CarouselItem = ({ ...props }) => {
   const classes = useStyles()
-  // TODO: figure out why
-  let width = props.width || `calc(100% / ${props.slidesPerRow}`
   return (
     <li
       className={classes.item}
-      style={{ width: `${width}`, padding: '0 2px' }}
+      style={{ width: `${props.width}px`, padding: '0 2px' }}
     >
       {props.children}
     </li>

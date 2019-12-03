@@ -35,9 +35,6 @@ export default function MediaSlider({ youtubeIDs }) {
     if (matchesSmall) return 4
     if (matchesExtraSmall) return 2
   }
-  // padding: 0px 2px;
-  // width: 100%
-  // https://img.youtube.com/vi/{id}/maxresdefault.jpg
   return (
     <Carousel slidesPerRow={slidesPerRow}>
       {youtubeIDs.map((id, i) => (
