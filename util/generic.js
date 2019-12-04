@@ -1,6 +1,6 @@
 import ReactGA from 'react-ga'
 
-const padDollarAmount = (amount) => {
+const padDollarAmount = amount => {
   let _amount = amount
   if (typeof _amount === 'number') _amount = _amount.toString()
   if (_amount.indexOf('.') === -1) {
@@ -17,16 +17,24 @@ const padDollarAmount = (amount) => {
 }
 
 const googlePageView = () => {
-  ReactGA.pageview(window.location.pathname + window.location.search);
+  ReactGA.pageview(window.location.pathname + window.location.search)
 }
 
-const formatCurrency = (num, currency='USD') => {
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(num)
+const formatCurrency = (num, currency = 'USD') => {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(
+    num,
+  )
 }
 
 const isStringInteger = stringInput => {
   // match a digit one or more times
   const rx = new RegExp(/^\d+(?:\.\d{1,2})?$/)
+  return rx.test(stringInput)
+}
+
+const isStringUSCurrency = stringInput => {
+  // match a digit one or more times
+  const rx = new RegExp(/^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:\.[0-9]{2})?$/)
   return rx.test(stringInput)
 }
 
@@ -46,5 +54,6 @@ export {
   googlePageView,
   formatCurrency,
   isStringInteger,
+  isStringUSCurrency,
   pluralize,
 }

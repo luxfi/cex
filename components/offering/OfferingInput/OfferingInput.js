@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   InputBase,
@@ -8,6 +8,7 @@ import {
   Typography,
   Box,
 } from '@material-ui/core'
+import { isStringUSCurrency } from '../../../util/generic'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,8 +46,45 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function CustomizedInputBase() {
+export default function CustomizedInputBase({
+  funds,
+  addOfferingInvestment,
+  setErrorMessage,
+  setSuccessMessage,
+  checkIfLoggedIn,
+}) {
   const classes = useStyles()
+  const [investmentAmount, setInvestmentAmount] = useState(null)
+
+  const handleSubmit = async () => {
+    checkIfLoggedIn()
+    const sufficientFunds = investmentAmount <= funds
+    if (sufficientFunds) {
+      await addOfferingInvestment(
+        investmentAmount,
+        () => {
+          setSuccessMessage('Your investment was successul')
+        },
+        ex => {
+          setErrorMessage(ex)
+        },
+      )
+      setInvestmentAmount(null)
+    } else {
+      setErrorMessage('Insufficient funds')
+    }
+  }
+
+  const handleInputChange = evt => {
+    evt.preventDefault()
+    const { value } = evt.target
+    if (value === '') {
+      setInvestmentAmount(value)
+    }
+    if (isStringUSCurrency(value)) {
+      setInvestmentAmount(parseFloat(value))
+    }
+  }
 
   return (
     <div className={classes.container}>
@@ -62,16 +100,23 @@ export default function CustomizedInputBase() {
         <Typography variant="h5">
           <Box fontWeight="fontWeightBold">
             <InputBase
-              placeholder="1,000"
+              placeholder="50"
               classes={{
                 root: classes.inputText,
                 input: classes.inputText,
               }}
+              onChange={evt => handleInputChange(evt)}
+              value={investmentAmount}
             />
           </Box>
         </Typography>
       </Paper>
-      <Button color="secondary" variant="contained" className={classes.button}>
+      <Button
+        color="secondary"
+        variant="contained"
+        className={classes.button}
+        onClick={() => handleSubmit()}
+      >
         <Typography variant="subtitle1">Invest</Typography>
       </Button>
     </div>

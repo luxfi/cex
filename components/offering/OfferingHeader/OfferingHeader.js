@@ -113,6 +113,11 @@ const RaisingInformation = ({
   fundingGoal,
   amountOfInvestors,
   daysLeft,
+  addOfferingInvestment,
+  funds,
+  setErrorMessage,
+  setSuccessMessage,
+  checkIfLoggedIn,
 }) => {
   // note, in future we will use moment(dateFundingEnds).toNow() to caculate relative time
   const percentFunded = ((raisedAmount / fundingGoal) * 100).toLocaleString(
@@ -168,13 +173,19 @@ const RaisingInformation = ({
         <Typography variant="subtitle2">
           Minimum Investment: (Dollars)
         </Typography>
-        <div className={classes.spacer}></div>
+        {/* <div className={classes.spacer}></div>
         <Typography variant="subtitle2" component="span" color="textSecondary">
           Estimated Cost: $0.00
-        </Typography>
+        </Typography> */}
       </Grid>
       <Grid item xs={12}>
-        <OfferingInput />
+        <OfferingInput
+          addOfferingInvestment={addOfferingInvestment}
+          funds={funds}
+          setErrorMessage={setErrorMessage}
+          setSuccessMessage={setSuccessMessage}
+          checkIfLoggedIn={checkIfLoggedIn}
+        />
       </Grid>
       <Box mb={2} mt={3}>
         <Divider light />
@@ -221,7 +232,13 @@ const RaisingInformation = ({
   )
 }
 
-const OfferingHeader = () => {
+const OfferingHeader = ({
+  funds,
+  addOfferingInvestment,
+  setErrorMessage,
+  setSuccessMessage,
+  checkIfLoggedIn,
+}) => {
   const [currentMedia, setCurrentMedia] = useState(movie.youtubeIDs[0])
   return (
     <Box mb={40}>
@@ -251,6 +268,11 @@ const OfferingHeader = () => {
             fundingGoal={movie.fundingGoal}
             amountOfInvestors={movie.amountOfInvestors}
             daysLeft={movie.daysLeft}
+            addOfferingInvestment={addOfferingInvestment}
+            funds={funds}
+            setErrorMessage={setErrorMessage}
+            setSuccessMessage={setSuccessMessage}
+            checkIfLoggedIn={checkIfLoggedIn}
           />
         </Grid>
       </Grid>
