@@ -54,6 +54,7 @@ export default function CustomizedInputBase({
   checkIfLoggedIn,
 }) {
   const classes = useStyles()
+  const minimumInvestment = 50
   const [investmentAmount, setInvestmentAmount] = useState(null)
 
   const handleSubmit = async () => {
@@ -70,6 +71,8 @@ export default function CustomizedInputBase({
         },
       )
       setInvestmentAmount(null)
+    } else if (investmentAmount < minimumInvestment) {
+      setErrorMessage('Please enter the miminum investment amount or greater')
     } else {
       setErrorMessage('Insufficient funds')
     }
@@ -100,7 +103,7 @@ export default function CustomizedInputBase({
         <Typography variant="h5">
           <Box fontWeight="fontWeightBold">
             <InputBase
-              placeholder="50"
+              placeholder={minimumInvestment}
               classes={{
                 root: classes.inputText,
                 input: classes.inputText,
