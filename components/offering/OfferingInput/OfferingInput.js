@@ -36,6 +36,12 @@ const useStyles = makeStyles(theme => ({
   container: {
     display: 'inline-flex',
     borderRadius: theme.shape.borderRadius,
+    width: '100%',
+  },
+  inputText: {
+    fontSize: 'inherit',
+    color: theme.palette.common.white,
+    '&::placeholder': { opacity: 1 },
   },
 }))
 
@@ -53,7 +59,17 @@ export default function CustomizedInputBase() {
         >
           <Box fontWeight="fontWeightBold">$</Box>
         </Typography>
-        <InputBase placeholder="1,000" />
+        <Typography variant="h5">
+          <Box fontWeight="fontWeightBold">
+            <InputBase
+              placeholder="1,000"
+              classes={{
+                root: classes.inputText,
+                input: classes.inputText,
+              }}
+            />
+          </Box>
+        </Typography>
       </Paper>
       <Button color="secondary" variant="contained" className={classes.button}>
         <Typography variant="subtitle1">Invest</Typography>

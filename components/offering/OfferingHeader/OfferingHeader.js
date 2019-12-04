@@ -143,19 +143,23 @@ const RaisingInformation = ({
           />
         </Box>
       </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h3">
-          <Box fontWeight="fontWeightBold">
-            {amountOfInvestors.toLocaleString()}
-          </Box>
-        </Typography>
-        <Typography variant="subtitle1">Investors support this film</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h3">
-          <Box fontWeight="fontWeightBold">{daysLeft}</Box>
-        </Typography>
-        <Typography variant="subtitle1">Days to go</Typography>
+      <Grid item container>
+        <Grid item xs={6} sm={12}>
+          <Typography variant="h3">
+            <Box fontWeight="fontWeightBold">
+              {amountOfInvestors.toLocaleString()}
+            </Box>
+          </Typography>
+          <Typography variant="subtitle1">
+            Investors support this film
+          </Typography>
+        </Grid>
+        <Grid item xs={6} sm={12}>
+          <Typography variant="h3">
+            <Box fontWeight="fontWeightBold">{daysLeft}</Box>
+          </Typography>
+          <Typography variant="subtitle1">Days to go</Typography>
+        </Grid>
       </Grid>
       <Box mb={2} mt={2}>
         <Divider light />

@@ -10,7 +10,7 @@ class OfferingView extends Component {
     const { store } = this.props
     return (
       <Box m={3} mt={8}>
-        <OfferingHeader/>
+        <OfferingHeader />
       </Box>
     )
   }
