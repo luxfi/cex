@@ -110,8 +110,9 @@ export const Carousel = ({ animationSpeed = 500, ...props }) => {
    * @param {number} index to be limited
    * @return {number} new index
    */
+  const maxIndex = children.length - props.slidesPerRow
+
   const Limit = index => {
-    const maxIndex = children.length - props.slidesPerRow
     if (index > maxIndex) {
       return maxIndex
     }
@@ -128,10 +129,18 @@ export const Carousel = ({ animationSpeed = 500, ...props }) => {
   const nextSlide = () => changeSlide(slideIndex + slidesPerScroll)
   const prevSlide = () => changeSlide(slideIndex - slidesPerScroll)
 
+  const noSlidesLeft = slideIndex === 0
+  const noSlidesRight = slideIndex === maxIndex
+  const leftButtonStyle = { display: noSlidesLeft ? 'none' : '' }
+  const rightButtonStyle = { display: noSlidesRight ? 'none' : '' }
+
   const classes = useStyles()
   return (
     <div className={classes.container} ref={carouselRef}>
-      <div className={`${classes.sliderButton} ${classes.prevButton}`}>
+      <div
+        className={`${classes.sliderButton} ${classes.prevButton}`}
+        style={leftButtonStyle}
+      >
         <Fab
           size="small"
           className={classes.fab}
@@ -141,7 +150,10 @@ export const Carousel = ({ animationSpeed = 500, ...props }) => {
           <ChevronLeftIcon />
         </Fab>
       </div>
-      <div className={`${classes.sliderButton} ${classes.nextButton}`}>
+      <div
+        className={`${classes.sliderButton} ${classes.nextButton}`}
+        style={rightButtonStyle}
+      >
         <Fab
           size="small"
           className={classes.fab}
@@ -156,7 +168,6 @@ export const Carousel = ({ animationSpeed = 500, ...props }) => {
           className={classes.list}
           ref={listRef}
           style={{
-            width: `${carouselWidth * props.slidesPerRow}px`,
             transform: `translateX(${transformOffset}px)`,
             transitionDuration: `${animationSpeed}ms, ${animationSpeed}ms`,
           }}
@@ -167,7 +178,6 @@ export const Carousel = ({ animationSpeed = 500, ...props }) => {
               currentSlideIndex={slideIndex}
               index={index}
               slidesPerRow={props.slidesPerRow}
-              width={carouselItemWidth}
             >
               {carouselItem}
             </CarouselItem>
