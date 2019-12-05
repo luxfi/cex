@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     zIndex: 4,
   },
   sliderWrapper: {
-    overflow: 'hidden',
+    overflowX: 'hidden',
   },
   list: {
     whiteSpace: 'nowrap',

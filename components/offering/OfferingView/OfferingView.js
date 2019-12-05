@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import { Box } from '@material-ui/core'
-import { OfferingHeader } from '../'
+import { OfferingHeader, OfferingNavBar } from '../'
 import { googlePageView } from '../../../util/generic'
 import { withRouter } from 'next/router'
 
@@ -37,7 +37,7 @@ class OfferingView extends Component {
     }
 
     return (
-      <Box m={3} mt={8}>
+      <Box m={3} mt={8} mb={40}>
         <OfferingHeader
           funds={accountBalance}
           movie={movie}
@@ -46,6 +46,7 @@ class OfferingView extends Component {
           addOfferingInvestment={addOfferingInvestment}
           checkIfLoggedIn={checkIfLoggedIn}
         />
+        <OfferingNavBar />
       </Box>
     )
   }
