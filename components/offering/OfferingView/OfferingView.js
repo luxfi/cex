@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import { Box } from '@material-ui/core'
-import { OfferingHeader, OfferingNavBar } from '../'
+import { OfferingHeader, OfferingNavBar, OfferingContent } from '../'
 import { googlePageView } from '../../../util/generic'
 import { withRouter } from 'next/router'
 
@@ -47,6 +47,7 @@ class OfferingView extends Component {
           checkIfLoggedIn={checkIfLoggedIn}
         />
         <OfferingNavBar />
+        <OfferingContent />
       </Box>
     )
   }
