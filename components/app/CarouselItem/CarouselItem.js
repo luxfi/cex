@@ -10,10 +10,10 @@ const useStyles = makeStyles(theme => ({
     transition: '0.5s opacity ease-in',
     transition: 'transform 300ms ease 100ms',
     zIndex: 1,
-    '&:hover': {
-      transform: 'scale(1.2) !important',
-      zIndex: 10000,
-    },
+    // '&:hover': {
+    //   transform: 'scale(1.2) !important',
+    //   zIndex: 10000,
+    // },
   },
 }))
 

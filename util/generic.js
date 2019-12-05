@@ -38,6 +38,8 @@ const isStringUSCurrency = stringInput => {
   return rx.test(stringInput)
 }
 
+const isNumber = val => typeof val === 'number' && val === val
+
 // pluralize(0, 'apple'); // 'apples'
 // pluralize(1, 'apple'); // 'apple'
 // pluralize(2, 'apple'); // 'apples'
@@ -55,5 +57,6 @@ export {
   formatCurrency,
   isStringInteger,
   isStringUSCurrency,
+  isNumber,
   pluralize,
 }
