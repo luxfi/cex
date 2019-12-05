@@ -9,7 +9,7 @@ const OfferingNavBar = () => {
   const navStyles = navStylesHook.useNav()
   return (
     <div className={navStyles.root}>
-      <Grid container xs={12} justify="center" className={navStyles.navBar}>
+      <Grid container justify="center" className={navStyles.navBar}>
         <Grid item container lg={7} justify="center">
           <Tabs
             classes={tabsStyles}

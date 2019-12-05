@@ -56,11 +56,11 @@ export const Carousel = ({ animationSpeed = 500, ...props }) => {
 
   useEffect(() => {
     setTransitionEnabled(true)
-    console.count('-----------')
-    console.log(
-      'setCarouselItemWidth(carouselWidth / props.slidesPerRow)',
-      carouselWidth / props.slidesPerRow,
-    )
+    // console.count('-----------')
+    // console.log(
+    //   'setCarouselItemWidth(carouselWidth / props.slidesPerRow)',
+    //   carouselWidth / props.slidesPerRow,
+    // )
     setCarouselItemWidth(carouselWidth / props.slidesPerRow)
   }, [carouselWidth, props.slidesPerRow])
 
