@@ -95,7 +95,8 @@ module.exports = withBundleAnalyzer(
             "/risks": { page: "/risks" },
             "/contact": { page: "/contact" },
             "/about": { page: "/about" },
-            "/placeholder": { page: "/placeholder" }
+            "/placeholder": { page: "/placeholder" },
+            "/investor": { page: "/investor" }
           });
         }
       })

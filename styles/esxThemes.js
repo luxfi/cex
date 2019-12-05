@@ -48,7 +48,7 @@ export const darkTheme = createMuiTheme(Object.assign({}, baseTheme, {
     divider: "rgba(255, 255, 255, 0.20)",
     background: {
       default: "#090909", // "black" (from Jeff's spec)
-      paper: "#2f2f2f"    // slightly lighter
+      paper: "#222"    // slightly lighter
     },
   }),
   defaultSVGColor: "#F0f0f0"
