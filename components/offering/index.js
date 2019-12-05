@@ -1,3 +1,5 @@
+export { default as DealTermsSection } from './DealTermsSection'
+export { default as DocumentsSection } from './DocumentsSection'
 export { default as Divider } from './Divider'
 export { default as MediaSlider } from './MediaSlider'
 export { default as OfferingContent } from './OfferingContent'
