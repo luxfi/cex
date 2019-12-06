@@ -218,4 +218,4 @@ class StockChart extends React.Component {
   }
 }
 
-export default withSize(600)(withDeviceRatio()(StockChart))
+export default withSize(300)(withDeviceRatio()(StockChart))

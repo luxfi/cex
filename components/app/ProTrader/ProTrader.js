@@ -75,9 +75,47 @@ const NumberFormatCustom = (props) => {
   )
 }
 
+// manually measured
+const headerHeight = 64
+const topBarHeight = 53
+const tradingAreaWidth = 240
+const tradingAreaHeight = 364
+
 const useStyles = makeStyles((theme) => ({
-  orderBookPaperGrid: {
+  proTrader: {
+    height: `calc(100vh - ${headerHeight}px)`,
+    // fonts
+    '& *': {
+      fontSize: '.7rem',
+    },
+    // labels
+    '& .MuiInputLabel-root': {
+      fontSize: 'calc(.7rem / .75)',
+      fontWeight: 600,
+      textTransform: 'uppercase',
+      color: theme.palette.common.white,
+    },
+    // inputs
+    '& .MuiInput-root': {
+      padding: '3px 12px',
+    },
+    '& .MuiSelect-icon': {
+      top: 'calc(50% - 6px)',
+      right: 8,
+    },
+  },
+  proTraderLabel: {
+    textTransform: 'uppercase',
+    fontWeight: 600,
+  },
+  orderBookArea: {
     width: 400,
+    height: '100%',
+    overflow: 'auto',
+  },
+  tradeHistoryArea: {
+    height: '100%',
+    overflow: 'auto',
   },
   orderBookPaper: {
     border: '1px solid',
@@ -91,6 +129,8 @@ const useStyles = makeStyles((theme) => ({
     // extend: 'orderBookPaper',
     borderLeft: 0,
     border: '1px solid',
+    height: '100%',
+    overflow: 'auto',
     borderColor: theme.palette.background.paper,
     backgroundColor: theme.palette.background.default,
     '& span': {
@@ -128,6 +168,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.default,
     width: '50%',
     minWidth: 0,
+    textTransform: 'uppercase',
+    fontWeight: 600,
     '&.Mui-selected': {
       backgroundColor: theme.palette.background.paper,
     },
@@ -262,11 +304,15 @@ export default (props) => {
   const data = stock.proChartData
 
   return (
-    <Element>
-      <Box ml={-3} mr={-3} mt={-8}>
+    <Element className={ classes.proTrader }>
+      <div>
         <Grid container spacing={0}>
-          <Grid item xs={12} sm={4} md={3}>
-            <Paper square className={ classes.tabsPaper }>
+          <Grid item xs style={{ minWidth: tradingAreaWidth, maxWidth: tradingAreaWidth }}>
+            <Paper
+              square
+              className={ classes.tabsPaper }
+              style={{ minHeight: topBarHeight }}
+            >
               <Tabs
                 value={mode}
                 onChange={ handleModeChange }
@@ -283,34 +329,47 @@ export default (props) => {
               </Tabs>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={8} md={9}>
+          <Grid item xs>
             <Box
               p={1}
               pl={2}
               pr={2}
               className={ classes.bordered }
+              style={{ minHeight: topBarHeight }}
             >
               <Grid container spacing={2}>
                 <Grid item>
                   <Typography variant='caption'>
                     Current Price:
                   </Typography>
-                  <Typography variant='h6'>
+                  <Typography variant='h6' className={ classes.proTraderLabel }>
                     1 { ticker } / ${ parseFloat(book.lastPrice).toFixed(2) }
                   </Typography>
                 </Grid>
               </Grid>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={4} md={3}>
+        </Grid>
+        <Grid
+          container
+          spacing={0}
+          style={{
+            minHeight: tradingAreaHeight,
+            height: `calc(55vh - (${headerHeight}px + ${topBarHeight}px) / 2)`,
+          }}
+        >
+          <Grid item xs style={{
+            minWidth: tradingAreaWidth,
+            maxWidth: tradingAreaWidth,
+          }}>
             <Paper square className={ classes.tradePaper }>
-              <Box p={2} pl={4} pr={4}>
+              <Box p={1.5} pl={1} pr={1}>
                 <div>
                   {
                     mode === 0 ? (
                       <>
-                        <Typography variant='body2'>
-                          Available Cash to Trade:
+                        <Typography variant='body2' className={ classes.proTraderLabel }>
+                          Available Cash to Trade
                         </Typography>
                         <Typography variant='h6'>
                           { formatCurrency(Number.parseFloat(accountBalance).toFixed(2)) }
@@ -318,8 +377,8 @@ export default (props) => {
                       </>
                     ) : (
                       <>
-                        <Typography variant='body2'>
-                          Available Share to Trade:
+                        <Typography variant='body2' className={ classes.proTraderLabel }>
+                          Available Share to Trade
                         </Typography>
                         <Typography variant='h6'>
                           { maxSell }
@@ -330,7 +389,6 @@ export default (props) => {
                   <br/>
                   <MUIText
                     label='Order Type'
-                    variant='outlined'
                     select
                     options={{
                       limit: 'Limit',
@@ -346,7 +404,6 @@ export default (props) => {
                   <MUIText
                     label='Price'
                     placeholder={ `$${(isMarket ? (meanPrice).toFixed(2) : '100.00')}` }
-                    variant='outlined'
                     showError={ showError }
                     error={ err.price }
                     value={ isMarket ? meanPrice : price }
@@ -362,7 +419,6 @@ export default (props) => {
                   <MUIText
                     label='Quantity'
                     placeholder='100'
-                    variant='outlined'
                     showError={ showError }
                     error={ err.quantity }
                     value={ quantity }
@@ -436,21 +492,29 @@ export default (props) => {
               </Box>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={8} md={9} className={classes.proChart}>
+          <Grid item xs className={classes.proChart}>
             <ProChart data={data} />
           </Grid>
-          <Grid item className={classes.orderBookPaperGrid}>
-            <Paper square className={classes.orderBookPaper}>
-              <OrderBook asks={asks} bids={bids} spread={spread}/>
-            </Paper>
-          </Grid>
-          <Grid item xs>
-            <Paper square className={classes.tradeHistoryBookPaper}>
-              <TradeHistoryBook trades={trades}/>
-            </Paper>
-          </Grid>
         </Grid>
-      </Box>
+      </div>
+      <Grid
+        container
+        spacing={0}
+        style={{
+          height: `calc(45vh - (${headerHeight}px + ${topBarHeight}px) / 2)`,
+        }}
+      >
+        <Grid item className={classes.orderBookArea}>
+          <Paper square className={classes.orderBookPaper}>
+            <OrderBook asks={asks} bids={bids} spread={spread}/>
+          </Paper>
+        </Grid>
+        <Grid item xs className={classes.tradeHistoryArea}>
+          <Paper square className={classes.tradeHistoryBookPaper}>
+            <TradeHistoryBook trades={trades}/>
+          </Paper>
+        </Grid>
+      </Grid>
     </Element>
   )
 }

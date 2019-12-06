@@ -1,39 +1,44 @@
-import React from "react"
-import { Provider, observer } from "mobx-react"
+import { config } from '@fortawesome/fontawesome-svg-core'
 
-import App from "next/app"
-import { withRouter } from "next/router"
-
-import { withStyles } from "@material-ui/core/styles"
-import "react-html5-camera-photo/build/css/index.css"
-import { MuiThemeProvider } from "@material-ui/core/styles"
-import { NoSsr, CssBaseline } from '@material-ui/core'
+import { CssBaseline, NoSsr } from '@material-ui/core'
+import { MuiThemeProvider, withStyles } from '@material-ui/core/styles'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 
-// This ensures that the icon CSS is loaded immediately before attempting to render icons
-import "@fortawesome/fontawesome-svg-core/styles.css"
-import { config } from "@fortawesome/fontawesome-svg-core"
-// Prevent fontawesome from dynamically adding its css since we did it manually above
-config.autoAddCss = false
+import { Provider, observer } from 'mobx-react'
+
+import App from 'next/app'
+import { withRouter } from 'next/router'
+
+import React from 'react'
+import ReactGA from 'react-ga'
+
+import 'react-html5-camera-photo/build/css/index.css'
+
+// This ensures that the icon CSS is loaded immediately before attempting
+// to render icons
+import '@fortawesome/fontawesome-svg-core/styles.css'
+// Prevent fontawesome from dynamically adding its css since we did it
+// manually above
 
 import {
-  CustomSnackbar,
-  Header,
-  MobileNavMenu,
-  Footer,
   CustomModal,
-  MobileAccountMenu
-} from "../components/app"
+  CustomSnackbar,
+  Footer,
+  Header,
+  MobileAccountMenu,
+  MobileNavMenu,
+} from '../components/app'
 
-import ReactGA from 'react-ga'
-import initializeStore from "../stores/stores"
-import { darkTheme } from "../styles/esxThemes"
-import styles from "../styles/app.style.js"
+import initializeStore from '../stores/stores'
+import styles from '../styles/app.style'
+import { darkTheme } from '../styles/esxThemes'
+
+config.autoAddCss = false
 
 const hideFooter = (page) => {
   const noFooterPages = ['pro']
   let hide = false
-  noFooterPages.forEach(p => {
+  noFooterPages.forEach((p) => {
     if (hide) return
     hide = page.indexOf(p) > -1
   })
@@ -48,7 +53,7 @@ class MyMobxApp extends App {
     // we can initialize our store (nextJS DOCS)
     //
 
-    const isServer = typeof window === "undefined"
+    const isServer = typeof window === 'undefined'
     const mobxStore = initializeStore()
     appContext.ctx.mobxStore = mobxStore
 
@@ -67,7 +72,7 @@ class MyMobxApp extends App {
   constructor(props) {
     super(props)
 
-    const isServer = typeof window === "undefined"
+    const isServer = typeof window === 'undefined'
     this.mobxStore = isServer
       ? props.initialMobxState
       : initializeStore(props.initialMobxState)
@@ -83,9 +88,9 @@ class MyMobxApp extends App {
       pageProps,
       width,
       classes,
-      router
+      router,
     } = this.props
-    
+
     const showDesktopNav = isWidthUp('md', width)
     const showDesktopProfileMenu = isWidthUp('sm', width)
 
@@ -99,15 +104,19 @@ class MyMobxApp extends App {
                 showDesktopNav={showDesktopNav}
                 showDesktopProfileMenu={showDesktopProfileMenu}
                 isLoggedIn={this.mobxStore.userStore.loggedIn}
-                openLeftDrawer={() => this.mobxStore.uiStore.setLeftDrawerOpen(true)}
-                openRightDrawer={() => this.mobxStore.uiStore.setRightDrawerOpen(true)}
+                openLeftDrawer={() => (
+                  this.mobxStore.uiStore.setLeftDrawerOpen(true)
+                )}
+                openRightDrawer={() => (
+                  this.mobxStore.uiStore.setRightDrawerOpen(true)
+                )}
                 handleLogout={() => { this.mobxStore.userStore.logout() }}
               />
               <MobileNavMenu
                 open={this.mobxStore.uiStore.drawers.left}
                 setOpen={this.mobxStore.uiStore.setLeftDrawerOpen}
               />
-              <div component="main" className={classes.main}>
+              <div component='main' className={classes.main}>
                 <Component {...pageProps} pathName={router.route}/>
               </div>
               <CustomModal
@@ -125,8 +134,8 @@ class MyMobxApp extends App {
                 handleLogout={() => { this.mobxStore.userStore.logout() }}
               />
               {
-                !hideFooter(router.route) ?
-                  <Footer rootClassName={classes.footer} /> : null
+                !hideFooter(router.route)
+                  ? <Footer rootClassName={classes.footer} /> : null
               }
             </NoSsr>
           </div>
@@ -136,8 +145,8 @@ class MyMobxApp extends App {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.log("CUSTOM ERROR HANDLING: ", error)
-      // This is needed to render errors correctly in development / production
+    console.log('CUSTOM ERROR HANDLING: ', error)
+    // This is needed to render errors correctly in development / production
     super.componentDidCatch(error, errorInfo)
   }
 }

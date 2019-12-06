@@ -24,7 +24,6 @@ import {
 const useStyles = makeStyles((theme) => {
   return {
     orderBook: {
-      height: 420,
       overflowY: 'scroll',
       position: 'relative',
       '& > *': {
