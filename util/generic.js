@@ -51,6 +51,25 @@ const pluralize = (val, word, plural = word + 's') => {
   return _pluralize(val, word, plural)
 }
 
+const textTruncate = (str, length, ending) => {
+  if (length == null) {
+    length = 48
+  }
+  if (ending == null) {
+    ending = '...'
+  }
+  if (Array.from(str).length > length) {
+    return (
+      str
+        .split(' ')
+        .slice(0, length)
+        .join(' ') + ending
+    )
+  } else {
+    return str
+  }
+}
+
 export {
   padDollarAmount,
   googlePageView,
@@ -59,4 +78,5 @@ export {
   isStringUSCurrency,
   isNumber,
   pluralize,
+  textTruncate,
 }
