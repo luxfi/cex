@@ -7,6 +7,7 @@ import {
   NewsSection,
   RisksDisclosuresSection,
   SummarySection,
+  UpdatesDiscussionsSection,
 } from '../'
 
 const OfferingContent = () => {
@@ -27,6 +28,7 @@ const OfferingContent = () => {
         <Divider />
         <NewsSection />
         <RisksDisclosuresSection />
+        <UpdatesDiscussionsSection />
       </Grid>
       <Grid item lg={3} md={4} sm={6} xs={12}></Grid>
     </Grid>
