@@ -51,5 +51,25 @@ export const darkTheme = createMuiTheme(Object.assign({}, baseTheme, {
       paper: "#222"    // slightly lighter
     },
   }),
-  defaultSVGColor: "#F0f0f0"
+  defaultSVGColor: "#F0f0f0",
+  overrides: {
+    MuiTabs: {
+      indicator: {
+        width: "140px !important"
+      }
+    },
+    MuiTab: {
+      root: {
+        paddingLeft: 0
+      },
+      wrapper: {
+        alignItems: "flex-start"
+      },
+    },
+    MuiContainer: {
+      root: {
+        width: "90%",
+      }
+    }
+  },
 }))

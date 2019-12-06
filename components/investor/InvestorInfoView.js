@@ -31,7 +31,7 @@ const SectionTitle = ({ label, classes }) => {
 }
 
 export default (props) => {
-	const classes = {props}
+	const {classes} = props
 	return (
 		<ViewSection title={data.name} >
 			<table className={classes.investorInfoTable}><tbody>

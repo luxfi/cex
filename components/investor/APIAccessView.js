@@ -18,13 +18,20 @@ const labels = {
 const FillableSection = (props) => {
 	const { classes, title, noneYetTitle, noneYetCopy} = props
 
-	const AddButton = <IconButton className={classes.apiSectionAddButton}><Icon color="primary">add_circle</Icon></IconButton>
+	const AddButton = 
+		<IconButton className={classes.apiSectionAddButton}>
+			<span className={classes.controlUILabel}>Add</span>
+			<Icon color="primary" className={classes.controlUIIcon}>add_circle</Icon>
+		</IconButton>
+
 	return (
 		<ViewSection title={title} controlUI={AddButton}>
-			<Icon className={classes.apiSectionListInfoIcon} color="primary">info_circle</Icon>
-			<div className={classes.apiSectionListNoneOuter} >
-					<span className={classes.apiSectionListNoneTitle}>{noneYetTitle}</span>
-					<span className={classes.apiSectionListNoneCopy}>{noneYetCopy}</span>
+			<div className={classes.viewSectionBody}>
+				<Icon className={classes.apiSectionListInfoIcon} color="primary">info_circle</Icon>
+				<div className={classes.apiSectionListNoneOuter} >
+					<p className={classes.apiSectionListNoneTitle}>{noneYetTitle}</p>
+					<p className={classes.apiSectionListNoneCopy}>{noneYetCopy}</p>
+				</div>
 			</div>
 		</ViewSection>
 	)
@@ -44,7 +51,7 @@ const APIVersionAndNotifications = (props) => {
 			</p>
 			<div className={classes.apiApiUpgradeOuter} >
 				<strong className={classes.apiUpgradeVersion}>API Version: 2019-03-26</strong>
-				<Button className={classes.apiUpgradeLink} href="#">Upgrade</Button>
+				<Button className={classes.apiUpgradeLink} variant="outlined" >Upgrade</Button>
 			</div>
 		</ViewSection>
 	)

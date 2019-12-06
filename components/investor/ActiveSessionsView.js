@@ -11,7 +11,7 @@ const ThirdPartyApps = (props) => {
 
 	const AppsTableHeader = (props) => {
 		return (
-			<tr>
+			<tr className={classes.sessionsHeaderRow}>
 				<th className={classes.sessionsAppsAppNameColumn}>Application</th>
 				<th className={classes.sessionsAppsPermissionsColumn}>Permissions</th>
 				<th className={classes.sessionsAppsActivityColumn}>Recent activity</th>
@@ -49,7 +49,7 @@ const ActiveSessions = (props) => {
 
 	const SessionsTableHeader = (props) => {
 		return (
-			<tr>
+			<tr className={classes.sessionsHeaderRow}>
 				<th className={classes.sessionsSessionsDateColumn}>Signed In</th>
 				<th className={classes.sessionsSessionsBrowserColumn}>Browser</th>
 				<th className={classes.sessionsSessionsIPColumn}>IP Address</th>
@@ -91,7 +91,7 @@ const CloseAccount = (props) => {
 			<p>
 				Withdraw funds and close your ESX Accounts - <span className={classes.warning}>this cannot be undone</span>
 			</p>
-			<Button>Close Account</Button>
+			<Button variant="outlined">Close Account</Button>
 		</ViewSection>
 	)
 }

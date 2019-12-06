@@ -1,5 +1,5 @@
 import React from "react"
-import { Tab, Tabs } from "@material-ui/core"
+import { Tab, Tabs, makeStyles } from "@material-ui/core"
 
 import { toDashString, isServer } from '../../../util/generic'
 
@@ -70,7 +70,11 @@ export default class TabbedView extends React.Component {
 				<Tabs value={tabIndex} onChange={this.setTabIndex} >
 					{React.Children.map(children, (child, i) => {
 						return (
-							<Tab label={child.props.tabTitle} disableFocusRipple key={`${toDashString(child.props.tabTitle)}-tab-key-${i}`} />
+							<Tab
+								label={child.props.tabTitle}
+								disableFocusRipple
+								key={`${toDashString(child.props.tabTitle)}-tab-key-${i}`}
+							/>
 						)
 					})}
 				</Tabs>

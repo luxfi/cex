@@ -1,6 +1,6 @@
 import React from "react"
-import { inject, observer } from "mobx-react"
-import { makeStyles } from "@material-ui/core"
+import { inject, observer } from "mobx-react" // TODO when removing fake data
+import { Container, makeStyles } from "@material-ui/core"
 
 import { TabbedView } from "../../components/app"
 import {
@@ -10,7 +10,7 @@ import {
 	ActiveSessionsView
 } from "../../components/investor"
 
-import { googlePageView } from "../../util/generic.js"
+import { googlePageView } from "../../util/generic.js" // TODO
 
 import myStyles from "../../styles/pages/investor.style.js"
 const styles = makeStyles(myStyles)
@@ -19,13 +19,13 @@ const styles = makeStyles(myStyles)
 export default (props) => {
 	const classes = styles()
 	return (
-		<div>
+		<Container className={classes.root}>
 			<TabbedView persistenceKey="investor-info">
 				<InvestorInfoView tabTitle="Profile" classes={classes}/>
 				<APIAccessView tabTitle="API Access" classes={classes} />
 				<SecurityView tabTitle="Security" classes={classes} />
 				<ActiveSessionsView tabTitle="Account Activity" classes={classes} />
 			</TabbedView>
-		</div>
+		</Container>
 	)
 }
