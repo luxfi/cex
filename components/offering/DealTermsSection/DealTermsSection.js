@@ -27,6 +27,10 @@ const useStyles = makeStyles(theme => ({
 const useExpansionPanelStyles = makeStyles({
   root: {
     backgroundColor: 'transparent',
+    '&:before': {
+      opacity: '1 !important',
+      display: 'inline !important',
+    },
   },
 })
 
