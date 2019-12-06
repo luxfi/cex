@@ -58,7 +58,7 @@ const toDashString = (str) => {
 const toDashString_test = () => {
   const test = "This  Iis itA-tBt"
   console.log(`Original string  |${test}|`)
-  console.log(`Converted string |${makeKeyString(test)}|`) // expected: this-iis-it-a-t-bt
+  console.log(`Converted string |${toDashString(test)}|`) // expected: this-iis-it-a-t-bt
 }
 
 const isServer = () => {

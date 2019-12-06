@@ -1,4 +1,4 @@
-const { formatDistanceToNow } = require('date-fns')
+import moment from 'moment'
 
 const faker = require('faker')
 
@@ -38,13 +38,13 @@ const apiUsage = () =>  {
 	return {
 		application: faker.commerce.productName(),
 		permissions: `access your ${permissionGranted[randomIndex(permissionGranted.length-1)]}`,
-		date: formatDistanceToNow(faker.date.recent(180)) + " ago"
+		date: moment(faker.date.recent(180)).toNow() + " ago"
 	}
 }
 
 const webSession = () => {
 	return {
-		date: formatDistanceToNow(faker.date.recent(180)) + " ago",
+		date: moment(faker.date.recent(180)).toNow() + " ago",
 		browser: browsers[randomIndex(browsers.length - 1)] + " ",
 		ip: faker.internet.ip(),
 		location: faker.address.country() + ", " + faker.address.city()

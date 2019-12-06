@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import { Button, Typography } from '@material-ui/core'
 
 import ViewSection from './ViewSection'
 import fakeData from './fixture/fakeActiveSessions'
@@ -88,9 +88,9 @@ const CloseAccount = (props) => {
 	
 	return (
 		<ViewSection title='Close Account' >
-			<p>
+			<Typography>
 				Withdraw funds and close your ESX Accounts - <span className={classes.warning}>this cannot be undone</span>
-			</p>
+			</Typography>
 			<Button variant="outlined">Close Account</Button>
 		</ViewSection>
 	)

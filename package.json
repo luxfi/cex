@@ -31,7 +31,6 @@
     "classnames": "2.2.6",
     "d3-format": "1.4.2",
     "d3-time-format": "2.2.2",
-    "date-fns": "^2.8.1",
     "eosjs": "20.0.0",
     "eosjs-ecc": "4.0.7",
     "es-xhr-promise": "^1.2.17",
