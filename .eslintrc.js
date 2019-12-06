@@ -1,4 +1,10 @@
 module.exports = {
+  parser: 'babel-eslint',
+  parserOptions: {
+    ecmaFeatures: {
+      legacyDecorators: true
+    }
+  },
   extends: ['airbnb', 'prettier/react'],
   plugins: ['autofix', 'import-order-alphabetical'],
   env: {
@@ -16,11 +22,17 @@ module.exports = {
     'react/prop-types': 'off',
     'jsx-quotes': ['warn', 'prefer-single'],
     'import-order-alphabetical/order': 'warn',
-    "sort-imports": ["warn", {
-        "ignoreCase": false,
-        "ignoreDeclarationSort": true,
-        "ignoreMemberSort": false,
-        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+    'no-param-reassign': ['error', { props: false }],
+    'import/no-extraneous-dependencies': ['error', {
+      'devDependencies': true,
+      'optionalDependencies': false,
+      'peerDependencies': false
+    }],
+    'sort-imports': ['warn', {
+        'ignoreCase': false,
+        'ignoreDeclarationSort': true,
+        'ignoreMemberSort': false,
+        'memberSyntaxSortOrder': ['none', 'all', 'multiple', 'single']
     }],
     'max-len': [
       'warn',
