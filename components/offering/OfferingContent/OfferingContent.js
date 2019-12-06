@@ -1,10 +1,11 @@
 import React from 'react'
 import { Tabs, Tab, Grid, Box, Typography } from '@material-ui/core'
 import {
-  SummarySection,
-  Divider,
   DealTermsSection,
+  Divider,
   DocumentsSection,
+  RisksDisclosuresSection,
+  SummarySection,
 } from '../'
 
 const OfferingContent = () => {
@@ -21,6 +22,8 @@ const OfferingContent = () => {
             <DocumentsSection />
           </Grid>
         </Grid>
+        <Divider />
+        <RisksDisclosuresSection />
       </Grid>
       <Grid item lg={3} md={4} sm={6} xs={12}></Grid>
     </Grid>

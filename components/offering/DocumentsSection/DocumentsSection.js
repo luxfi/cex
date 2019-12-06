@@ -41,7 +41,7 @@ const DocumentsSection = () => {
   return (
     <Box mb={4}>
       <Typography variant="h5">
-        <Box mb={2} mt={4} fontWeight="fontWeightBold">
+        <Box mb={3} mt={5} fontWeight="fontWeightBold">
           Documents
         </Box>
       </Typography>
