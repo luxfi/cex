@@ -11,18 +11,17 @@ import {
 
 const OfferingContent = () => {
   return (
-    <Grid justify="center" container spacing={4}>
-      <Grid item xs={12} lg={7}>
+    <Grid container justify="center" spacing={4}>
+      {/* https://material-ui.com/components/grid/ See negative margin for overflow issue */}
+      <Grid item xs={12} lg={7} style={{ overflowX: 'hidden' }}>
         <SummarySection />
         <Divider />
-        <Grid container>
-          <Grid item container justify="space-between" spacing={8}>
-            <Grid item lg={7}>
-              <DealTermsSection />
-            </Grid>
-            <Grid item lg={5}>
-              <DocumentsSection />
-            </Grid>
+        <Grid container justify="space-between" spacing={8}>
+          <Grid item lg={7}>
+            <DealTermsSection />
+          </Grid>
+          <Grid item lg={5}>
+            <DocumentsSection />
           </Grid>
         </Grid>
         <Divider />
