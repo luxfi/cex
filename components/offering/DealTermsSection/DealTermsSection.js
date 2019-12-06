@@ -176,7 +176,12 @@ const DealTermsSection = () => {
                       )
                     } else {
                       return (
-                        <Collapse in={open} timeout="auto" unmountOnExit>
+                        <Collapse
+                          key={i}
+                          in={open}
+                          timeout="auto"
+                          unmountOnExit
+                        >
                           <Typography variant="subtitle1" color="textSecondary">
                             <Box mb={2} mt={2}>
                               {str}{' '}

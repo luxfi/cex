@@ -53,7 +53,12 @@ const DocumentsSection = () => {
         </Box>
       </Typography>
       {documents.map((doc, i) => (
-        <ListItem component="a" disableGutters className={classes.listItem}>
+        <ListItem
+          key={i}
+          component="a"
+          disableGutters
+          className={classes.listItem}
+        >
           <ListItemIcon className={classes.listItemIcon}>
             <DescriptionOutlinedIcon />
           </ListItemIcon>
