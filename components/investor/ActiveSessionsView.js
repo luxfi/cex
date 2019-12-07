@@ -1,6 +1,6 @@
 import { Button, Typography } from '@material-ui/core'
 
-import ViewSection from './ViewSection'
+import { ViewCard } from '../app'
 import fakeData from './fixture/fakeActiveSessions'
 
 const data = fakeData()
@@ -30,7 +30,7 @@ const ThirdPartyApps = (props) => {
 	}
 
 	return (
-		<ViewSection title='Third-Party Applications' >
+		<ViewCard title='Third-Party Applications' >
 			<table className={classes.sessionsThirdPartyAppsTable}><tbody>
 				<AppsTableHeader />
 				{data.thirdPartyApps.map((item, i) => {
@@ -39,7 +39,7 @@ const ThirdPartyApps = (props) => {
 					)
 				})}
 			</tbody></table>
-		</ViewSection>
+		</ViewCard>
 	)
 }
 
@@ -69,7 +69,7 @@ const ActiveSessions = (props) => {
 	}
 
 	return (
-		<ViewSection title='Active Sessions' >
+		<ViewCard title='Active Sessions' >
 			<table className={classes.sessionsSessionsTable}><tbody>
 				<SessionsTableHeader />
 				{data.webSessions.map((item, i) => {
@@ -78,7 +78,7 @@ const ActiveSessions = (props) => {
 					)
 				})}
 			</tbody></table>
-		</ViewSection>
+		</ViewCard>
 	)
 }
 
@@ -87,12 +87,12 @@ const CloseAccount = (props) => {
 	const { classes } = props
 	
 	return (
-		<ViewSection title='Close Account' >
+		<ViewCard title='Close Account' >
 			<Typography>
 				Withdraw funds and close your ESX Accounts - <span className={classes.warning}>this cannot be undone</span>
 			</Typography>
 			<Button variant="outlined">Close Account</Button>
-		</ViewSection>
+		</ViewCard>
 	)
 }
 

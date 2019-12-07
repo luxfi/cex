@@ -1,6 +1,6 @@
 import { Button, IconButton, Icon, Typography } from '@material-ui/core'
 
-import ViewSection from './ViewSection'
+import { ViewCard } from '../app'
 
 const labels = {
 	apiKeys: {
@@ -25,7 +25,7 @@ const FillableSection = (props) => {
 		</IconButton>
 
 	return (
-		<ViewSection title={title} controlUI={AddButton}>
+		<ViewCard title={title} controlUI={AddButton}>
 			<div className={classes.viewSectionBody}>
 				<Icon className={classes.apiSectionListInfoIcon} color="primary">info_circle</Icon>
 				<div className={classes.apiSectionListNoneOuter} >
@@ -33,7 +33,7 @@ const FillableSection = (props) => {
 					<Typography className={classes.apiSectionListNoneCopy}>{noneYetCopy}</Typography>
 				</div>
 			</div>
-		</ViewSection>
+		</ViewCard>
 	)
 }
 
@@ -41,7 +41,7 @@ const APIVersionAndNotifications = (props) => {
 
 	const { classes } = props
 	return (
-		<ViewSection title='API Versions and Notifications' >
+		<ViewCard title='API Versions and Notifications' >
 			<Typography>
 				API version is generally passed as a <code>CB-VERSION</code> header. If the API version is moitted, the version displayed below will be used. Learn more about API versioning.
 			</Typography>
@@ -53,7 +53,7 @@ const APIVersionAndNotifications = (props) => {
 				<strong className={classes.apiUpgradeVersion}>API Version: 2019-03-26</strong>
 				<Button className={classes.apiUpgradeLink} variant="outlined" >Upgrade</Button>
 			</div>
-		</ViewSection>
+		</ViewCard>
 	)
 
 }

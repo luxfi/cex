@@ -1,4 +1,4 @@
-import ViewSection from './ViewSection'
+import { ViewCard } from '../app'
 
 const data = {
 	name: 'Zach Kelling',
@@ -33,7 +33,7 @@ const SectionTitle = ({ label, classes }) => {
 export default (props) => {
 	const {classes} = props
 	return (
-		<ViewSection title={data.name} >
+		<ViewCard title={data.name} >
 			<table className={classes.investorInfoTable}><tbody>
 				<FieldRow label='Address' contents={data.address} classes={classes} />
 				<FieldRow label='Phone' contents={data.phone} classes={classes} />
@@ -54,6 +54,6 @@ export default (props) => {
 				<FieldRow label='Risk Tolerence' contents={data.riskTolerence} classes={classes} />
 				<FieldRow label='Liquidity' contents={data.liquidity} classes={classes} />
 			</tbody></table>
-		</ViewSection>
+		</ViewCard>
 	)
 }

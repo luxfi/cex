@@ -5,7 +5,7 @@ import {
 	Typography 
 } from '@material-ui/core'
 
-import ViewSection from './ViewSection'
+import { ViewCard } from '../app'
 
 const PhoneNumberDisplay  = (props) => {
 	const { number, className } = props
@@ -40,26 +40,26 @@ const PhoneSection = (props) => {
 		</IconButton>
 
 	return (
-		<ViewSection title='Phone Number' controlUI={AddButton}>
+		<ViewCard title='Phone Number' controlUI={AddButton}>
 			<IconInfoArea classes={classes} iconName='phone_iphone' buttonText='Manage' buttonAction={() => {}} >
 				<PhoneNumberDisplay number={phoneNumber} className={classes.securityNumber} />
 				<Typography color='textPrimary' className={classes.securityPhoneNumberSuggestion}>Keep your primary phone number up-to-date</Typography>
 				<Typography color='primary' className={classes.okLabel}>Required</Typography>
 			</IconInfoArea>
-		</ViewSection>
+		</ViewCard>
 	)
 }
 
 const TwoStepVerification = (props) => {
 	const { classes } = props
 	return (
-		<ViewSection title='2-step verification' >
+		<ViewCard title='2-step verification' >
 			<IconInfoArea classes={classes} iconName='verified_user' buttonText='Install' buttonAction={() => { }} >
 				<Typography color='textPrimary' variant='h6' className={classes.securityAuthenticatorTitle}>Authenticator</Typography>
 				<Typography color='textPrimary' className={classes.securityAuthenticatorSuggestion}>Install and authenticator app on your phone</Typography>
 				<Typography color='primary' className={classes.okLabel}>Secure</Typography>
 			</IconInfoArea>
-		</ViewSection>
+		</ViewCard>
 	)
 }
 
