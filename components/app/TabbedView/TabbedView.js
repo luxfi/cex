@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Tab, Tabs } from "@material-ui/core"
+import { Tab, Tabs, makeStyles } from "@material-ui/core"
 
 import { toDashString } from '../../../util/generic'
 
@@ -18,22 +18,49 @@ import { toDashString } from '../../../util/generic'
 
 */
 
+
+const useStyles = makeStyles({
+	indicator: {
+		width: "140px !important"
+	},
+	root: {
+		paddingLeft: 0
+	},
+	wrapper: {
+		alignItems: "flex-start"
+	},
+});
+
+
 export default (props) => {
 
 	const [tabIndex, setTabIndex] = useState(('currentTab' in props) ? props.currentTab : 0)
 	const { children } = props
 
+	const classes = useStyles();
+
+		// https://material-ui.com/customization/components/
+	const tabsClasses = {
+		indicator: classes.indicator
+	}
+
+	const tabClasses = {
+		root: classes.root,
+		wrapper: classes.wrapper
+	}
+
 	// Only the content associated with the currently Tab
 	// is rendered below the <Tabs> component
 	return (
 		<>
-		<Tabs value={tabIndex} onChange={(ignore, i) => { setTabIndex(i) }} >
+			<Tabs value={tabIndex} onChange={(ignore, i) => { setTabIndex(i) }} classes={tabsClasses}>
 			{React.Children.map(children, (child, i) => {
 				return (
 					<Tab
 						label={child.props.tabTitle}
 						disableFocusRipple
 						key={`${toDashString(child.props.tabTitle)}-tab-key-${i}`}
+						classes={tabClasses}
 					/>
 				)
 			})}

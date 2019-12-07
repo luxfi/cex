@@ -15,7 +15,6 @@ import { googlePageView } from "../util/generic.js" // TODO
 import myStyles from "../styles/pages/investor.style.js"
 const styles = makeStyles(myStyles)
 
-
 export default (props) => {
 	const classes = styles()
 	return (

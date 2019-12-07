@@ -1,7 +1,8 @@
 
 export default theme => ({
 	root: {
-		padding: 0
+		padding: 0,
+		width: "90%",
 	},
 	apiSectionAddButton: {
 		padding: 0,
