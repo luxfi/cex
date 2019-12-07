@@ -29,8 +29,8 @@ const FillableSection = (props) => {
 			<div className={classes.viewSectionBody}>
 				<Icon className={classes.apiSectionListInfoIcon} color="primary">info_circle</Icon>
 				<div className={classes.apiSectionListNoneOuter} >
-					<p className={classes.apiSectionListNoneTitle}>{noneYetTitle}</p>
-					<p className={classes.apiSectionListNoneCopy}>{noneYetCopy}</p>
+					<Typography className={classes.apiSectionListNoneTitle}>{noneYetTitle}</Typography>
+					<Typography className={classes.apiSectionListNoneCopy}>{noneYetCopy}</Typography>
 				</div>
 			</div>
 		</ViewSection>

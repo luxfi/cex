@@ -33,9 +33,9 @@ const ThirdPartyApps = (props) => {
 		<ViewSection title='Third-Party Applications' >
 			<table className={classes.sessionsThirdPartyAppsTable}><tbody>
 				<AppsTableHeader />
-				{data.thirdPartyApps.map((item) => {
+				{data.thirdPartyApps.map((item, i) => {
 					return(
-						<AppsTableRow appName={item.application} permissions={item.permissions} time={item.date} /> 	
+						<AppsTableRow appName={item.application} permissions={item.permissions} time={item.date} key={`apps-table-key${i}`}/> 	
 					)
 				})}
 			</tbody></table>
@@ -72,9 +72,9 @@ const ActiveSessions = (props) => {
 		<ViewSection title='Active Sessions' >
 			<table className={classes.sessionsSessionsTable}><tbody>
 				<SessionsTableHeader />
-				{data.webSessions.map((item) => {
+				{data.webSessions.map((item, i) => {
 					return (
-						<SessionsTableRow date={item.date} browser={item.browser} ip={item.ip} location={item.location}/>
+						<SessionsTableRow date={item.date} browser={item.browser} ip={item.ip} location={item.location} key={`sessions-table-key${i}`}/>
 					)
 				})}
 			</tbody></table>
