@@ -44,21 +44,35 @@ export default theme => ({
 		"& td": {
 			paddingTop: theme.spacing(1),
 			paddingRight: theme.spacing(8),
+			borderBottom: "none",
+		},
+		maxWidth: "1000px"
+	},
+	tableSectionRow : {
+		"& td": {
+			paddingTop: theme.spacing(2) + "px !important",
+			borderBottom: "1px solid #444 !important",
 		}
 	},
 	sessionsSessionsTable: {
 		borderCollapse: "collapse", 
 		"& td": {
 			paddingTop: theme.spacing(1),
+			borderBottom: "none",
 			paddingRight: theme.spacing(8),
-		}
+		},
+		maxWidth: "1000px"
+
 	},
 	sessionsThirdPartyAppsTable: {
 		borderCollapse: "collapse",
 		"& td": {
+			borderBottom: "none",
 			paddingTop: theme.spacing(1),
 			paddingRight: theme.spacing(8),
-		}
+		},
+		maxWidth: "1000px"
+
 	},
 
 	sessionsHeaderRow: {

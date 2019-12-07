@@ -1,3 +1,10 @@
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableRow,
+} from '@material-ui/core'
+
 import { ViewCard } from '../app'
 
 const data = {
@@ -23,18 +30,27 @@ const data = {
 }
 
 const FieldRow = ({ label, contents, classes }) => {
-	return (<tr><td className={classes.tableLabelColumn}>{label}</td><td className={classes.tableContentsColumn}>{contents}</td></tr>)
+	return (
+		<TableRow>
+			<TableCell className={classes.tableLabelColumn}>{label}</TableCell>
+			<TableCell className={classes.tableContentsColumn}>{contents}</TableCell>
+		</TableRow>
+	)
 }
 
 const SectionTitle = ({ label, classes }) => {
-	return (<tr><td colSpan="2" className={classes.tableSectionRow}>{label}</td></tr>)
+	return (
+		<TableRow className={classes.tableSectionRow}>
+			<TableCell colSpan="2" >{label}</TableCell>
+		</TableRow>	
+	)
 }
 
 export default (props) => {
 	const {classes} = props
 	return (
 		<ViewCard title={data.name} >
-			<table className={classes.investorInfoTable}><tbody>
+			<Table className={classes.investorInfoTable} padding='none'><TableBody>
 				<FieldRow label='Address' contents={data.address} classes={classes} />
 				<FieldRow label='Phone' contents={data.phone} classes={classes} />
 				<FieldRow label='Pattern Day Trade Protection' contents={data.dayTradeProtection ? "yes" : "no"} classes={classes} />
@@ -53,7 +69,7 @@ export default (props) => {
 				<FieldRow label='Experience' contents={data.experience} classes={classes} />
 				<FieldRow label='Risk Tolerence' contents={data.riskTolerence} classes={classes} />
 				<FieldRow label='Liquidity' contents={data.liquidity} classes={classes} />
-			</tbody></table>
+			</TableBody></Table>
 		</ViewCard>
 	)
 }

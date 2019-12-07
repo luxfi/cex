@@ -1,91 +1,99 @@
-import { Button, Typography } from '@material-ui/core'
+import { 
+	Button,
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableRow, 
+	Typography 
+} from '@material-ui/core'
 
 import { ViewCard } from '../app'
 import fakeData from './fixture/fakeActiveSessions'
-
 const data = fakeData()
 
 const ThirdPartyApps = (props) => {
-
 	const { classes } = props
-
 	const AppsTableHeader = (props) => {
 		return (
-			<tr className={classes.sessionsHeaderRow}>
-				<th className={classes.sessionsAppsAppNameColumn}>Application</th>
-				<th className={classes.sessionsAppsPermissionsColumn}>Permissions</th>
-				<th className={classes.sessionsAppsActivityColumn}>Recent activity</th>
-			</tr>
+			<TableHead>
+				<TableRow className={classes.sessionsHeaderRow}>
+					<TableCell className={classes.sessionsAppsAppNameColumn}>Application</TableCell>
+					<TableCell className={classes.sessionsAppsPermissionsColumn}>Permissions</TableCell>
+					<TableCell className={classes.sessionsAppsActivityColumn}>Recent activity</TableCell>
+				</TableRow>
+			</TableHead>
 		)
 	} 
 
 	const AppsTableRow = ({ appName, renderedIcon, permissions, time }) => {
-
 		const icon = (!renderedIcon) ? null : renderedIcon + '&nbsp;'
-		return (<tr>
-			<td className={classes.sessionsAppsAppName}>{icon}{appName}</td>
-			<td className={classes.sessionsAppsPermissions}>{permissions}</td>
-			<td className={classes.sessionsAppsPermissions}>{time}</td>
-		</tr>)
+		return (<TableRow>
+			<TableCell className={classes.sessionsAppsAppName}>{icon}{appName}</TableCell>
+			<TableCell className={classes.sessionsAppsPermissions}>{permissions}</TableCell>
+			<TableCell className={classes.sessionsAppsPermissions}>{time}</TableCell>
+		</TableRow>)
 	}
 
 	return (
 		<ViewCard title='Third-Party Applications' >
-			<table className={classes.sessionsThirdPartyAppsTable}><tbody>
+			<Table className={classes.sessionsThirdPartyAppsTable} padding='none'>
 				<AppsTableHeader />
+				<TableBody>
 				{data.thirdPartyApps.map((item, i) => {
 					return(
 						<AppsTableRow appName={item.application} permissions={item.permissions} time={item.date} key={`apps-table-key${i}`}/> 	
 					)
 				})}
-			</tbody></table>
+				</TableBody>
+			</Table>
 		</ViewCard>
 	)
 }
 
 const ActiveSessions = (props) => {
-
 	const { classes } = props
-
 	const SessionsTableHeader = (props) => {
 		return (
-			<tr className={classes.sessionsHeaderRow}>
-				<th className={classes.sessionsSessionsDateColumn}>Signed In</th>
-				<th className={classes.sessionsSessionsBrowserColumn}>Browser</th>
-				<th className={classes.sessionsSessionsIPColumn}>IP Address</th>
-				<th className={classes.sessionsSessionsLocationColumn}>Near</th>
-			</tr>
+			<TableHead>
+				<TableRow className={classes.sessionsHeaderRow}>
+					<TableCell className={classes.sessionsSessionsDateColumn}>Signed In</TableCell>
+					<TableCell className={classes.sessionsSessionsBrowserColumn}>Browser</TableCell>
+					<TableCell className={classes.sessionsSessionsIPColumn}>IP Address</TableCell>
+					<TableCell className={classes.sessionsSessionsLocationColumn}>Near</TableCell>
+				</TableRow>
+			</TableHead>
 		)
 	}
 
 	const SessionsTableRow = ({ date, browser, ip, location }) => {
 
-		return (<tr>
-			<td className={classes.sessionsSessionsDate}>{date}</td>
-			<td className={classes.sessionsSessionsBrowser}>{browser}</td>
-			<td className={classes.sessionsSessionsIP}>{ip}</td>
-			<td className={classes.sessionsSessionsLocation}>{location}</td>
-		</tr>)
+		return (<TableRow>
+			<TableCell className={classes.sessionsSessionsDate}>{date}</TableCell>
+			<TableCell className={classes.sessionsSessionsBrowser}>{browser}</TableCell>
+			<TableCell className={classes.sessionsSessionsIP}>{ip}</TableCell>
+			<TableCell className={classes.sessionsSessionsLocation}>{location}</TableCell>
+		</TableRow>)
 	}
 
 	return (
 		<ViewCard title='Active Sessions' >
-			<table className={classes.sessionsSessionsTable}><tbody>
+			<Table className={classes.sessionsSessionsTable} padding='none'>
 				<SessionsTableHeader />
-				{data.webSessions.map((item, i) => {
-					return (
-						<SessionsTableRow date={item.date} browser={item.browser} ip={item.ip} location={item.location} key={`sessions-table-key${i}`}/>
-					)
-				})}
-			</tbody></table>
+				<TableBody>
+					{data.webSessions.map((item, i) => {
+						return (
+							<SessionsTableRow date={item.date} browser={item.browser} ip={item.ip} location={item.location} key={`sessions-table-key${i}`} />
+						)
+					})}
+				</TableBody>
+			</Table>
 		</ViewCard>
 	)
 }
 
 const CloseAccount = (props) => {
-
 	const { classes } = props
-	
 	return (
 		<ViewCard title='Close Account' >
 			<Typography>
@@ -97,9 +105,7 @@ const CloseAccount = (props) => {
 }
 
 export default (props) => {
-
 	const { classes } = props
-
 	return (
 		<>
 			<ThirdPartyApps classes={classes} />
