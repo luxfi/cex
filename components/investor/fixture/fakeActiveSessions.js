@@ -38,13 +38,13 @@ const apiUsage = () =>  {
 	return {
 		application: faker.commerce.productName(),
 		permissions: `access your ${permissionGranted[randomIndex(permissionGranted.length-1)]}`,
-		date: moment(faker.date.recent(180)).toNow() + " ago"
+		date: moment(faker.date.recent(180)).toNow(true) + " ago"
 	}
 }
 
 const webSession = () => {
 	return {
-		date: moment(faker.date.recent(180)).toNow() + " ago",
+		date: moment(faker.date.recent(180)).toNow(true) + " ago",
 		browser: browsers[randomIndex(browsers.length - 1)] + " ",
 		ip: faker.internet.ip(),
 		location: faker.address.country() + ", " + faker.address.city()
