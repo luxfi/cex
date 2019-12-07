@@ -25,6 +25,7 @@ const useStyles = makeStyles(theme => ({
   },
   root: {
     ...theme.typography.subtitle1,
+    border: `2px solid ${theme.palette.secondary.main}`,
     fontWeight: 'bold',
     height: 40,
     padding: `${theme.spacing(0)}px ${theme.spacing(3)}px`,
