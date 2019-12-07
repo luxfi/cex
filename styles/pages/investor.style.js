@@ -1,4 +1,3 @@
-
 export default (theme) => ({
   root: {
     padding: 0,
@@ -104,5 +103,4 @@ export default (theme) => ({
   warning: {
     color: theme.palette.error.dark,
   },
-
 })
