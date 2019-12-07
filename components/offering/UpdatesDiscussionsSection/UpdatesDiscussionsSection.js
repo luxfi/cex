@@ -24,6 +24,11 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: 'transparent',
   },
   root: {
+    ...theme.typography.subtitle1,
+    fontWeight: 'bold',
+    height: 40,
+    padding: `${theme.spacing(0)}px ${theme.spacing(3)}px`,
+    fontSize: theme.typography.pxToRem(11),
     '&$selected': {
       color: theme.palette.secondary.contrastText,
       backgroundColor: theme.palette.secondary.main,
@@ -85,7 +90,6 @@ const UpdatesDiscussionsSection = () => {
         </Box>
         <Box flexShrink={1}>
           <ToggleButtonGroup
-            size="medium"
             value={toggle}
             exclusive
             onChange={handleChange}
@@ -96,14 +100,14 @@ const UpdatesDiscussionsSection = () => {
               key={1}
               value="updates"
             >
-              One
+              Updates
             </ToggleButton>
             <ToggleButton
               classes={{ root: classes.root, selected: classes.selected }}
               key={2}
               value="discussions"
             >
-              Two
+              Discussions
             </ToggleButton>
           </ToggleButtonGroup>
         </Box>
