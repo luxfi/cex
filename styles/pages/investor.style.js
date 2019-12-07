@@ -87,6 +87,8 @@ export default theme => ({
 	iconInfoAreaButtonOuter: {
 		flexGrow: 0
 	},
-
+	warning: {
+		color: theme.palette.error.dark
+	}
 
 })
