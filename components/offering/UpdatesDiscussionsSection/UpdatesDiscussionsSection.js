@@ -1,6 +1,15 @@
 import { useState } from 'react'
 import classNames from 'classnames'
-import { Box, Typography, Divider, Fab } from '@material-ui/core'
+import {
+  Box,
+  Typography,
+  Divider,
+  Fab,
+  ButtonGroup,
+  Button,
+} from '@material-ui/core'
+import { fade } from '@material-ui/core/styles'
+import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab'
 import { makeStyles } from '@material-ui/core/styles'
 import EventNoteIcon from '@material-ui/icons/EventNote'
 
@@ -11,6 +20,31 @@ const useStyles = makeStyles(theme => ({
   pointer: {
     cursor: 'pointer',
   },
+  toggleButtonGroup: {
+    backgroundColor: 'transparent',
+  },
+  root: {
+    '&$selected': {
+      color: theme.palette.secondary.contrastText,
+      backgroundColor: theme.palette.secondary.main,
+      '&:hover': {
+        backgroundColor: theme.palette.secondary.dark,
+        // Reset on touch devices, it doesn't add specificity
+        '@media (hover: none)': {
+          backgroundColor: theme.palette.secondary.main,
+        },
+      },
+    },
+    '&:hover': {
+      textDecoration: 'none',
+      // Reset on mouse devices
+      backgroundColor: fade(theme.palette.secondary.main, 0.05),
+      '@media (hover: none)': {
+        backgroundColor: 'transparent',
+      },
+    },
+  },
+  selected: {},
 }))
 
 const Updates = [
@@ -34,16 +68,46 @@ const Updates = [
   },
 ]
 
-const NewsSection = () => {
+const UpdatesDiscussionsSection = () => {
+  const [toggle, setToggle] = React.useState('updates')
+
+  const handleChange = (event, newToggle) => {
+    if (newToggle) setToggle(newToggle)
+  }
   const classes = useStyles()
   return (
     <Box mb={4}>
-      <Typography variant="h4">
-        <Box mb={3} mt={5} fontWeight="fontWeightBold">
-          Updates &amp; Discussions
+      <Box display="flex" mb={3} mt={5}>
+        <Box width="100%">
+          <Typography variant="h4">
+            <Box fontWeight="fontWeightBold">Updates &amp; Discussions</Box>
+          </Typography>
         </Box>
-      </Typography>
-      <Divider />
+        <Box flexShrink={1}>
+          <ToggleButtonGroup
+            size="medium"
+            value={toggle}
+            exclusive
+            onChange={handleChange}
+            className={classes.toggleButtonGroup}
+          >
+            <ToggleButton
+              classes={{ root: classes.root, selected: classes.selected }}
+              key={1}
+              value="updates"
+            >
+              One
+            </ToggleButton>
+            <ToggleButton
+              classes={{ root: classes.root, selected: classes.selected }}
+              key={2}
+              value="discussions"
+            >
+              Two
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Box>
+      </Box>
       {Updates.map(({ title, date, heading, details }, i) => {
         const [hover, setHover] = useState(false)
         const handleMouseOver = () => {
@@ -99,4 +163,4 @@ const NewsSection = () => {
   )
 }
 
-export default NewsSection
+export default UpdatesDiscussionsSection
