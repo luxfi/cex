@@ -185,6 +185,13 @@ class StockChart extends React.Component {
     )
   }
 }
+// non elder ray xaxis
+          // <XAxis
+          //   stroke={textColor}
+          //   tickLabelFill={textColor}
+          //   showTicks={false}
+          // />
+
 // Elder Ray
 /*
         <Chart

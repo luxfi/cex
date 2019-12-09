@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: '1px solid',
     borderBottomColor: theme.palette.background.paper,
     position: 'absolute',
+    left: 0,
     width: '100%',
     backgroundColor: theme.palette.common.black,
     zIndex: 1,
@@ -89,6 +90,7 @@ export default (props) => {
   return (
     <Box pt={1} className={classes.orderBookContainer}>
       <Box pl={2} pr={2} className={classes.orderBookHeader}>
+        <Typography variant='h2'>My Orders</Typography>
         <Grid container spacing={1}>
           <Grid item xs={6}>
             <Typography variant='caption'>

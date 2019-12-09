@@ -20,6 +20,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
+    'no-plusplus': 'off',
     'jsx-quotes': ['warn', 'prefer-single'],
     'import-order-alphabetical/order': 'warn',
     'no-param-reassign': ['error', { props: false }],

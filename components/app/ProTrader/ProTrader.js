@@ -30,6 +30,7 @@ import { formatCurrency } from '../../../util/generic'
 import {
   OrderBook,
   TradeHistoryBook,
+  ExchangeHistoryBook,
 } from '../../trade'
 
 import { ProChart } from '..'
@@ -82,7 +83,7 @@ const longDash = '—'
 const headerHeight = 64
 const topBarHeight = 53
 const tradingAreaWidth = 240
-const tradingAreaHeight = 400
+const tradingAreaHeight = 360
 
 const useStyles = makeStyles((theme) => ({
   coloredLink: {
@@ -129,11 +130,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
   },
   orderBookArea: {
-    width: 400,
-    height: '100%',
-    overflow: 'auto',
-  },
-  tradeHistoryArea: {
+    width: 280,
     height: '100%',
     overflow: 'auto',
   },
@@ -147,7 +144,28 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: 600,
     },
   },
+  tradeHistoryArea: {
+    width: 400,
+    height: '100%',
+    overflow: 'auto',
+  },
   tradeHistoryBookPaper: {
+    // extend: 'orderBookPaper',
+    borderLeft: 0,
+    border: '1px solid',
+    height: '100%',
+    overflow: 'hidden',
+    borderColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
+    '& span': {
+      fontWeight: 600,
+    },
+  },
+  exchangeHistoryArea: {
+    height: '100%',
+    overflow: 'auto',
+  },
+  exchangeHistoryBookPaper: {
     // extend: 'orderBookPaper',
     borderLeft: 0,
     border: '1px solid',
@@ -253,6 +271,7 @@ export default (props) => {
     createOrder,
     maxSell,
     accountBalance,
+    orders,
   } = props
 
   if (!orderBook.isReady) {
@@ -579,14 +598,19 @@ export default (props) => {
           height: `calc(40vh - (${headerHeight}px + ${topBarHeight}px) / 2)`,
         }}
       >
-        <Grid item xs className={classes.tradeHistoryArea}>
+        <Grid item className={classes.tradeHistoryArea}>
           <Paper square className={classes.tradeHistoryBookPaper}>
-            <TradeHistoryBook trades={trades}/>
+            <TradeHistoryBook orders={orders}/>
           </Paper>
         </Grid>
         <Grid item className={classes.orderBookArea}>
           <Paper square className={classes.orderBookPaper}>
             <OrderBook asks={asks} bids={bids} spread={spread}/>
+          </Paper>
+        </Grid>
+        <Grid item xs className={classes.exchangeHistoryArea}>
+          <Paper square className={classes.exchangeHistoryBookPaper}>
+            <ExchangeHistoryBook trades={trades}/>
           </Paper>
         </Grid>
       </Grid>

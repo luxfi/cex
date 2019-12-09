@@ -21,11 +21,11 @@ import {
 } from 'react'
 
 const useStyles = makeStyles((theme) => ({
-  orderHistoryBookContainer: {
+  tradeHistoryBookContainer: {
     position: 'relative',
     height: '100%',
   },
-  orderHistoryBook: {
+  tradeHistoryBook: {
     height: '100%',
     overflowY: 'scroll',
     position: 'relative',
@@ -33,39 +33,49 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
     },
   },
-  orderHistoryBookHeader: {
+  tradeHistoryBookHeader: {
     borderBottom: '1px solid',
     borderBottomColor: theme.palette.background.paper,
   },
 }))
 
-const Order = memo(
+const Trade = memo(
   ({
-    price,
-    quantity,
+    fillPrice,
+    fillQuantity,
     executedAt,
-    side,
+    executingOrder,
   }) => (
     <Fade in timeout={1000}>
-      <Grid container spacing={1} style={{ color: side === 'ask' ? red[500] : green[500] }}>
-        <Grid item xs={4}>
+      <Grid container spacing={1} style={{ color: executingOrder.side === 'ask' ? red[500] : green[500] }}>
+        <Grid item xs={2}>
           <Typography variant='caption'>
             { moment(executedAt).format('MMM D Y hh:mm:ssA') }
           </Typography>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={2}>
           <Typography variant='caption'>
-            ${ price.toFixed(2) } USD
+            ${ fillPrice } USD
           </Typography>
         </Grid>
         <Grid item xs={2}>
           <Typography variant='caption'>
-            { quantity }
+            { fillQuantity }
           </Typography>
         </Grid>
         <Grid item xs={2}>
           <Typography variant='caption'>
-            { side.toUpperCase() }
+            { executingOrder.type.toUpperCase() }
+          </Typography>
+        </Grid>
+        <Grid item xs={2}>
+          <Typography variant='caption'>
+            { executingOrder.side.toUpperCase() }
+          </Typography>
+        </Grid>
+        <Grid item xs={2}>
+          <Typography variant='caption'>
+            { executingOrder.status.replace('-', ' ').toUpperCase() }
           </Typography>
         </Grid>
       </Grid>
@@ -75,26 +85,31 @@ const Order = memo(
 
 export default (props) => {
   const classes = useStyles()
-  const { orders } = props
+  const { trades } = props
 
   return (
-    <Box pt={1} className={classes.orderHistoryBookContainer}>
-      <Box pl={2} pr={2} className={classes.orderHistoryBookHeader}>
-        <Typography variant='h2'>My Orders</Typography>
+    <Box pt={1} className={classes.tradeHistoryBookContainer}>
+      <Box pl={2} pr={2} className={classes.tradeHistoryBookHeader}>
+        <Typography variant='h2'>Exchange Activity</Typography>
         <Grid container spacing={1}>
-          <Grid item xs={4}>
+          <Grid item xs={2}>
             <Typography variant='caption'>
               Date
             </Typography>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={2}>
             <Typography variant='caption'>
-              Price
+              Filled Price
             </Typography>
           </Grid>
           <Grid item xs={2}>
             <Typography variant='caption'>
-              Quantity
+              Fill Quantity
+            </Typography>
+          </Grid>
+          <Grid item xs={2}>
+            <Typography variant='caption'>
+              Type
             </Typography>
           </Grid>
           <Grid item xs={2}>
@@ -102,23 +117,22 @@ export default (props) => {
               Side
             </Typography>
           </Grid>
+          <Grid item xs={2}>
+            <Typography variant='caption'>
+              Status
+            </Typography>
+          </Grid>
         </Grid>
       </Box>
-      <div className={classes.orderHistoryBook} id='orderHistoryBookScroll'>
+      <div className={classes.tradeHistoryBook} id='tradeHistoryBookScroll'>
         <Box pl={2} pr={2}>
-          { orders.length > 0 ? (
-            orders.slice(0, 40).map((order) => (
-              <div key={order.id}>
-                <Order {...order}/>
+          {
+            trades.slice(0, 40).map((trade) => (
+              <div key={trade.id}>
+                <Trade {...trade}/>
               </div>
             ))
-          ) : (
-            <Box p={2}>
-              <Typography variant='body2' align='center'>
-                No orders found.
-              </Typography>
-            </Box>
-          )}
+          }
         </Box>
       </div>
     </Box>

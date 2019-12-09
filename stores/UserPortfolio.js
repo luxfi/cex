@@ -1,7 +1,13 @@
 // Generic Libraries
-import { action, observable, computed, toJS } from 'mobx'
+import {
+  action,
+  computed,
+  observable,
+  toJS,
+} from 'mobx'
 import _ from 'lodash'
 import moment from 'moment-timezone'
+import uuid from 'uuid'
 
 import { padDollarAmount } from '../util/generic'
 /**
@@ -44,6 +50,7 @@ export default class UserPortfolio {
   // ** Investments  **
   // What the user owns
   @observable investments = []
+  @observable orders = []
   /*
   Each invetment looks like:
   {
@@ -154,10 +161,15 @@ export default class UserPortfolio {
     try {
       // Using localStorage for now
       const _investments = localStorage.getItem('investments')
+      const _orders = localStorage.getItem('orders')
 
       if (_investments !== null) {
         this.investments = JSON.parse(_investments)
         this.updateHoldings()
+      }
+
+      if (_orders !== null) {
+        this.orders = JSON.parse(_orders)
       }
 
       onSuccess && onSuccess()
@@ -188,12 +200,18 @@ export default class UserPortfolio {
     // }
     order = { ...order, ticker }
     const _investments = localStorage.getItem('investments')
+    const _orders = localStorage.getItem('orders')
 
     if (_investments !== null) {
       this.investments = JSON.parse(_investments)
     }
 
+    if (_orders !== null) {
+      this.orders = JSON.parse(_orders)
+    }
+
     let holdingIndex = _.findIndex(this.investments, { ticker })
+
     console.log(
       'onOrderExecute',
       holdingIndex,
@@ -202,11 +220,21 @@ export default class UserPortfolio {
       orderType,
     )
 
-    const quantity = Number.parseInt(order.quantity)
+    const quantity = Number.parseInt(order.quantity, 10)
     const price = Number.parseFloat(order.price)
 
+    this.orders.push({
+      id: uuid.v4(),
+      ticker: holdingIndex,
+      quantity,
+      price,
+      side: orderType,
+      executedAt: moment().format(),
+    })
+
     if (orderType === 'bid') {
-      // Add the order to the user portfolio after checking their account balance
+      // Add the order to the user portfolio after checking their
+      // account balance
       if (holdingIndex > -1) {
         // Then we have a holding
         this.investments[holdingIndex].quantity += quantity
@@ -215,21 +243,19 @@ export default class UserPortfolio {
         holdingIndex = this.investments.length
         this.investments.push(order)
       }
-    } else {
       // Make sure the user owns enough shares to sell?
-      if (
-        holdingIndex > -1 &&
-        this.investments[holdingIndex].quantity >= quantity
-      ) {
-        // Then we have a holding
-        this.investments[holdingIndex].quantity -= quantity
-        this.investments[holdingIndex].price = price
+    } else if (holdingIndex > -1
+      && this.investments[holdingIndex].quantity >= quantity
+    ) {
+      // Then we have a holding
+      this.investments[holdingIndex].quantity -= quantity
+      this.investments[holdingIndex].price = price
 
-        if (this.investments[holdingIndex].quantity <= 0)
-          this.investments.splice(holdingIndex, 1)
-      } else {
-        return false
+      if (this.investments[holdingIndex].quantity <= 0) {
+        this.investments.splice(holdingIndex, 1)
       }
+    } else {
+      return false
     }
 
     updateBalance(orderType, price * quantity)
@@ -241,19 +267,16 @@ export default class UserPortfolio {
       }
 
       // Add order to transaction array
-      this.investments[holdingIndex].transactions.unshift(
-        Object.assign(
-          {
-            type: orderType,
-            date: moment().format('LLL'),
-          },
-          order,
-        ),
-      )
+      this.investments[holdingIndex].transactions.unshift({
+        ...order,
+        type: orderType,
+        date: moment().format('LLL'),
+      })
     }
 
     this.updateHoldings()
     localStorage.setItem('investments', JSON.stringify(toJS(this.investments)))
+    localStorage.setItem('orders', JSON.stringify(toJS(this.orders)))
     onSuccess && onSuccess()
     return true
   }
@@ -273,26 +296,32 @@ export default class UserPortfolio {
   }
 
   @computed get topPortfolioCategories() {
-    // Go through and calculate the top categories of the holdings of the user by genre tag
+    // Go through and calculate the top categories of the holdings of the
+    // user by genre tag
     const categoryCount = {}
 
-    this.investments &&
-      this.investments.forEach(i => {
-        i &&
-          i.categories &&
-          i.categories.forEach(c => {
-            if (!categoryCount[c]) categoryCount[c] = 1
-            else categoryCount[c]++
+    if (this.investments) {
+      this.investments.forEach((i) => {
+        if (i && i.categories) {
+          i.categories.forEach((c) => {
+            if (!categoryCount[c]) {
+              categoryCount[c] = 1
+            } else {
+              categoryCount[c]++
+            }
           })
+        }
       })
+    }
 
     const keys = Object.keys(categoryCount)
     if (keys.length === 0) return []
     const toSort = []
-    keys &&
-      keys.forEach(k => {
+    if (keys) {
+      keys.forEach((k) => {
         toSort.push({ key: k, count: categoryCount[k] })
       })
+    }
 
     return _.sortBy(toSort, 'count')
       .reverse()
