@@ -2,10 +2,10 @@ import React from 'react'
 import {
   Box,
   Typography,
-  Divider,
   ListItem,
   ListItemIcon,
   ListItemText,
+  RootRef,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined'
@@ -34,38 +34,40 @@ const documents = [
   'Terms&Agreements',
 ]
 
-const DocumentsSection = () => {
+const DocumentsSection = ({ documentsRef }) => {
   const classes = useStyles()
   const bull = <span className={classes.bullet}>•</span>
 
   return (
-    <Box mb={4}>
-      <Typography variant="h5">
-        <Box mb={3} mt={5} fontWeight="fontWeightBold">
-          Documents
-        </Box>
-      </Typography>
-      <Typography variant="subtitle1" color="textSecondary">
-        <Box mb={2} mt={2}>
-          Temporibus autem quibusdam et aut officiis debitis aut rerum
-          necessitatibus saepe eveniet ut et voluptates repudiandae sint et
-          molestiae non recusandae.
-        </Box>
-      </Typography>
-      {documents.map((doc, i) => (
-        <ListItem
-          key={i}
-          component="a"
-          disableGutters
-          className={classes.listItem}
-        >
-          <ListItemIcon className={classes.listItemIcon}>
-            <DescriptionOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText primary={doc} />
-        </ListItem>
-      ))}
-    </Box>
+    <RootRef rootRef={documentsRef}>
+      <Box mb={4}>
+        <Typography variant="h5">
+          <Box mb={3} mt={5} fontWeight="fontWeightBold">
+            Documents
+          </Box>
+        </Typography>
+        <Typography variant="subtitle1" color="textSecondary">
+          <Box mb={2} mt={2}>
+            Temporibus autem quibusdam et aut officiis debitis aut rerum
+            necessitatibus saepe eveniet ut et voluptates repudiandae sint et
+            molestiae non recusandae.
+          </Box>
+        </Typography>
+        {documents.map((doc, i) => (
+          <ListItem
+            key={i}
+            component="a"
+            disableGutters
+            className={classes.listItem}
+          >
+            <ListItemIcon className={classes.listItemIcon}>
+              <DescriptionOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText primary={doc} />
+          </ListItem>
+        ))}
+      </Box>
+    </RootRef>
   )
 }
 

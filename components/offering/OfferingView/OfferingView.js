@@ -1,9 +1,34 @@
-import React, { Component } from 'react'
+import React, { Component, useRef } from 'react'
 import { inject, observer } from 'mobx-react'
 import { Box } from '@material-ui/core'
 import { OfferingHeader, OfferingNavBar, OfferingContent } from '../'
 import { googlePageView } from '../../../util/generic'
 import { withRouter } from 'next/router'
+
+const OfferingBody = () => {
+  const summaryRef = useRef(null)
+  const dealTermsRef = useRef(null)
+  const documentsRef = useRef(null)
+  const teamRef = useRef(null)
+  const newsRef = useRef(null)
+  const risksDisclosuresRef = useRef(null)
+  const updatesDiscussionsRef = useRef(null)
+  const refs = {
+    summaryRef,
+    dealTermsRef,
+    documentsRef,
+    teamRef,
+    newsRef,
+    risksDisclosuresRef,
+    updatesDiscussionsRef,
+  }
+  return (
+    <>
+      <OfferingNavBar {...refs} />
+      <OfferingContent {...refs} />
+    </>
+  )
+}
 
 @inject('store')
 @observer
@@ -46,8 +71,7 @@ class OfferingView extends Component {
           addOfferingInvestment={addOfferingInvestment}
           checkIfLoggedIn={checkIfLoggedIn}
         />
-        <OfferingNavBar />
-        <OfferingContent />
+        <OfferingBody />
       </Box>
     )
   }

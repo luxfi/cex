@@ -8,6 +8,7 @@ import {
   ExpansionPanelDetails,
   Link,
   Collapse,
+  RootRef,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
@@ -90,115 +91,121 @@ const RISKS_DISCLOSURES = [
   },
 ]
 
-const RisksDisclosuresSection = () => {
+const RisksDisclosuresSection = ({ risksDisclosuresRef }) => {
   const classes = useStyles()
   const expansionClasses = useExpansionPanelStyles()
   return (
-    <Box mb={4}>
-      <Typography variant="h5">
-        <Box mb={3} mt={5} fontWeight="fontWeightBold">
-          Risks &amp; Disclosures
-        </Box>
-      </Typography>
-      <Divider />
-      <div className={classes.root}>
-        {RISKS_DISCLOSURES.map(({ heading, value, details }, i) => {
-          let limit = 48
-          const [open, setOpen] = React.useState(false)
+    <RootRef rootRef={risksDisclosuresRef}>
+      <Box mb={4}>
+        <Typography variant="h5">
+          <Box mb={3} mt={5} fontWeight="fontWeightBold">
+            Risks &amp; Disclosures
+          </Box>
+        </Typography>
+        <Divider />
+        <div className={classes.root}>
+          {RISKS_DISCLOSURES.map(({ heading, value, details }, i) => {
+            let limit = 48
+            const [open, setOpen] = React.useState(false)
 
-          const handleClick = () => {
-            setOpen(!open)
-          }
+            const handleClick = () => {
+              setOpen(!open)
+            }
 
-          return (
-            <ExpansionPanel key={i} classes={{ root: expansionClasses.root }}>
-              <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-                className={classes.removePadding}
-              >
-                <div className={classes.container}>
-                  <Typography gutterBottom variant="h6">
-                    <Box mb={1} mt={1}>
-                      {heading}
-                    </Box>
-                  </Typography>
-                </div>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails className={classes.removePadding}>
-                <div className={classes.container}>
-                  {details.map((str, i, array) => {
-                    const last = array.length - 1 === i
-                    const currentLimit = limit
-                    const body = str
-                      .split(' ')
-                      .slice(0, limit)
-                      .join(' ')
-                    const restOfBody = str
-                      .split(' ')
-                      .slice(limit)
-                      .join(' ')
-                    const ending = body[body.length - 1] === '.' ? null : '...'
-                    limit = limit - str.length
-                    if (currentLimit > 0) {
-                      return (
-                        <Typography
-                          key={i}
-                          variant="subtitle1"
-                          color="textSecondary"
-                        >
-                          <Box mb={2} mt={2}>
-                            {body}
-                            {!open && restOfBody && (
-                              <span>
-                                {ending}{' '}
-                                <Link color="secondary" onClick={handleClick}>
-                                  Learn More
-                                </Link>
-                              </span>
-                            )}
-                            <Collapse in={open} timeout="auto" unmountOnExit>
-                              {restOfBody}
-                              {open && last && (
-                                <Link color="secondary" onClick={handleClick}>
-                                  <ExpandLessIcon />
-                                </Link>
-                              )}
-                            </Collapse>
-                          </Box>
-                        </Typography>
-                      )
-                    } else {
-                      return (
-                        <Collapse
-                          key={i}
-                          in={open}
-                          timeout="auto"
-                          unmountOnExit
-                        >
-                          <Typography variant="subtitle1" color="textSecondary">
+            return (
+              <ExpansionPanel key={i} classes={{ root: expansionClasses.root }}>
+                <ExpansionPanelSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                  className={classes.removePadding}
+                >
+                  <div className={classes.container}>
+                    <Typography gutterBottom variant="h6">
+                      <Box mb={1} mt={1}>
+                        {heading}
+                      </Box>
+                    </Typography>
+                  </div>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails className={classes.removePadding}>
+                  <div className={classes.container}>
+                    {details.map((str, i, array) => {
+                      const last = array.length - 1 === i
+                      const currentLimit = limit
+                      const body = str
+                        .split(' ')
+                        .slice(0, limit)
+                        .join(' ')
+                      const restOfBody = str
+                        .split(' ')
+                        .slice(limit)
+                        .join(' ')
+                      const ending =
+                        body[body.length - 1] === '.' ? null : '...'
+                      limit = limit - str.length
+                      if (currentLimit > 0) {
+                        return (
+                          <Typography
+                            key={i}
+                            variant="subtitle1"
+                            color="textSecondary"
+                          >
                             <Box mb={2} mt={2}>
-                              {str}{' '}
-                              {open && last && (
-                                <Link color="secondary" onClick={handleClick}>
-                                  <ExpandLessIcon />
-                                </Link>
+                              {body}
+                              {!open && restOfBody && (
+                                <span>
+                                  {ending}{' '}
+                                  <Link color="secondary" onClick={handleClick}>
+                                    Learn More
+                                  </Link>
+                                </span>
                               )}
+                              <Collapse in={open} timeout="auto" unmountOnExit>
+                                {restOfBody}
+                                {open && last && (
+                                  <Link color="secondary" onClick={handleClick}>
+                                    <ExpandLessIcon />
+                                  </Link>
+                                )}
+                              </Collapse>
                             </Box>
                           </Typography>
-                        </Collapse>
-                      )
-                    }
-                  })}
-                </div>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-          )
-        })}
-      </div>
-      <Divider />
-    </Box>
+                        )
+                      } else {
+                        return (
+                          <Collapse
+                            key={i}
+                            in={open}
+                            timeout="auto"
+                            unmountOnExit
+                          >
+                            <Typography
+                              variant="subtitle1"
+                              color="textSecondary"
+                            >
+                              <Box mb={2} mt={2}>
+                                {str}{' '}
+                                {open && last && (
+                                  <Link color="secondary" onClick={handleClick}>
+                                    <ExpandLessIcon />
+                                  </Link>
+                                )}
+                              </Box>
+                            </Typography>
+                          </Collapse>
+                        )
+                      }
+                    })}
+                  </div>
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+            )
+          })}
+        </div>
+        <Divider />
+      </Box>
+    </RootRef>
   )
 }
 

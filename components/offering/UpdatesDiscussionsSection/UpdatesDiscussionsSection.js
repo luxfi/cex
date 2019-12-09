@@ -1,4 +1,4 @@
-import { Box, Typography, Divider, Fab } from '@material-ui/core'
+import { Box, Typography, RootRef } from '@material-ui/core'
 import { fade } from '@material-ui/core/styles'
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab'
 import { makeStyles } from '@material-ui/core/styles'
@@ -85,7 +85,7 @@ const DISCUSSIONS = [
   },
 ]
 
-const UpdatesDiscussionsSection = () => {
+const UpdatesDiscussionsSection = ({ updatesDiscussionsRef }) => {
   const [view, toggleView] = React.useState('updates')
 
   const handleChange = (event, newToggle) => {
@@ -93,44 +93,46 @@ const UpdatesDiscussionsSection = () => {
   }
   const classes = useStyles()
   return (
-    <Box mb={4}>
-      <Box display="flex" mb={3} mt={5}>
-        <Box width="100%">
-          <Typography variant="h4">
-            <Box fontWeight="fontWeightBold">Updates &amp; Discussions</Box>
-          </Typography>
-        </Box>
-        <Box flexShrink={1}>
-          <ToggleButtonGroup
-            value={view}
-            exclusive
-            onChange={handleChange}
-            className={classes.viewButtonGroup}
-          >
-            <ToggleButton
-              classes={{ root: classes.root, selected: classes.selected }}
-              key={1}
-              value="updates"
+    <RootRef rootRef={updatesDiscussionsRef}>
+      <Box mb={4}>
+        <Box display="flex" mb={3} mt={5}>
+          <Box width="100%">
+            <Typography variant="h4">
+              <Box fontWeight="fontWeightBold">Updates &amp; Discussions</Box>
+            </Typography>
+          </Box>
+          <Box flexShrink={1}>
+            <ToggleButtonGroup
+              value={view}
+              exclusive
+              onChange={handleChange}
+              className={classes.viewButtonGroup}
             >
-              Updates
-            </ToggleButton>
-            <ToggleButton
-              classes={{ root: classes.root, selected: classes.selected }}
-              key={2}
-              value="discussions"
-            >
-              Discussions
-            </ToggleButton>
-          </ToggleButtonGroup>
+              <ToggleButton
+                classes={{ root: classes.root, selected: classes.selected }}
+                key={1}
+                value="updates"
+              >
+                Updates
+              </ToggleButton>
+              <ToggleButton
+                classes={{ root: classes.root, selected: classes.selected }}
+                key={2}
+                value="discussions"
+              >
+                Discussions
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </Box>
         </Box>
+        <Collapse in={view === 'updates'}>
+          <UpdatesContainer updates={UPDATES} />
+        </Collapse>
+        <Collapse in={view === 'discussions'}>
+          <DiscussionsContainer discussions={DISCUSSIONS} />
+        </Collapse>
       </Box>
-      <Collapse in={view === 'updates'}>
-        <UpdatesContainer updates={UPDATES} />
-      </Collapse>
-      <Collapse in={view === 'discussions'}>
-        <DiscussionsContainer discussions={DISCUSSIONS} />
-      </Collapse>
-    </Box>
+    </RootRef>
   )
 }
 
