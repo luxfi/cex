@@ -579,14 +579,14 @@ export default (props) => {
           height: `calc(40vh - (${headerHeight}px + ${topBarHeight}px) / 2)`,
         }}
       >
-        <Grid item className={classes.orderBookArea}>
-          <Paper square className={classes.orderBookPaper}>
-            <OrderBook asks={asks} bids={bids} spread={spread}/>
-          </Paper>
-        </Grid>
         <Grid item xs className={classes.tradeHistoryArea}>
           <Paper square className={classes.tradeHistoryBookPaper}>
             <TradeHistoryBook trades={trades}/>
+          </Paper>
+        </Grid>
+        <Grid item className={classes.orderBookArea}>
+          <Paper square className={classes.orderBookPaper}>
+            <OrderBook asks={asks} bids={bids} spread={spread}/>
           </Paper>
         </Grid>
       </Grid>
