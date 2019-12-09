@@ -94,6 +94,9 @@ const useStyles = makeStyles((theme) => ({
   },
   proTrader: {
     height: `calc(100vh - ${headerHeight}px)`,
+    background: 'linear-gradient(to bottom, rgba(26,26,26,1) 0%,rgba(9,9,9,1) 100%)',
+    marginTop: -64,
+    paddingTop: 64,
     // fonts
     '& *': {
       fontSize: '.7rem',
@@ -372,7 +375,7 @@ export default (props) => {
               <Grid container spacing={6}>
                 <Grid item>
                   <Typography variant='caption' className={ classes.tickerLabel }>
-                    Current Price
+                    Current price
                   </Typography>
                   <Typography variant='h6' className={ classes.tickerNumber }>
                     1 { ticker } / ${ parseFloat(book.lastPrice).toFixed(2) }
