@@ -68,6 +68,28 @@ const textTruncate = (str, length, ending) => {
   } else {
     return str
   }
+
+const toDashString = (str) => {
+
+  if (!str) {
+    throw "toDashString str parameter is undefined!"
+  }
+
+  const arr = str.split(' ')
+    .filter(x => x)
+    .map(x => (x.charAt(0).toLowerCase() + x.slice(1)))
+
+  return arr.join('-').replace(/[A-Z]/g, m => "-" + m.toLowerCase())
+}
+
+const toDashString_test = () => {
+  const test = "This  Iis itA-tBt"
+  console.log(`Original string  |${test}|`)
+  console.log(`Converted string |${toDashString(test)}|`) // expected: this-iis-it-a-t-bt
+}
+
+const isServer = () => {
+  (typeof window === "undefined")
 }
 
 export {
@@ -79,4 +101,6 @@ export {
   isNumber,
   pluralize,
   textTruncate,
+  toDashString,
+  isServer,
 }

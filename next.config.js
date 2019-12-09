@@ -82,6 +82,7 @@ module.exports = withBundleAnalyzer(
           {},
         )
 
+
         // combine the map of post pages with the home
         return {
           ...articles,
@@ -101,6 +102,7 @@ module.exports = withBundleAnalyzer(
           '/contact': { page: '/contact' },
           '/about': { page: '/about' },
           '/placeholder': { page: '/placeholder' },
+          "/investor": { page: "/investor" }        
         }
       },
     }),
