@@ -185,12 +185,11 @@ const AppStore = ({ classes }) => (
 )
 
 const Copyright = ({ classes }) => {
-
   const firstYear = 2019
   const currentYear = new Date().getFullYear()
   const yearString = (currentYear > firstYear) ? `${firstYear}-${currentYear}` : firstYear
 
-    // TODO Create Privacy and Terms of Use pages
+  // TODO Create Privacy and Terms of Use pages
   return (
     <div className={classes.copyrightOuter}>
       <Typography variant="body2" color="textSecondary">
