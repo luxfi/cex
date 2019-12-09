@@ -75,6 +75,9 @@ const NumberFormatCustom = (props) => {
   )
 }
 
+// long dash symbols
+const longDash = '—'
+
 // manually measured
 const headerHeight = 64
 const topBarHeight = 53
@@ -321,11 +324,13 @@ export default (props) => {
   const lastCandle = data[data.length - 1]
   const secondLastCandle = data[data.length - 2]
 
-  console.log('lc', lastCandle)
-  console.log('slc', secondLastCandle)
-
   const dailyDelta = (lastCandle.close - secondLastCandle.close).toFixed(2)
-  const dailyDeltaPercent = ((lastCandle.close - secondLastCandle.close) / secondLastCandle.close * 100).toFixed(2)
+  const dailyDeltaPercent = (
+    ((lastCandle.close - secondLastCandle.close) * 100)
+    / secondLastCandle.close
+  ).toFixed(2)
+
+  const subtotal = price * quantity
 
   return (
     <Element className={ classes.proTrader }>
@@ -493,32 +498,38 @@ export default (props) => {
                   <Grid container>
                     <Grid item xs={6}>
                       <Typography variant='body1'>
-                        Subtotal:
+                        Subtotal
                       </Typography>
                     </Grid>
                     <Grid item xs={6} className='right-aligned'>
                       <Typography variant='body1' align='right'>
-                        { `$${(price * quantity).toFixed(2)}` }
+                        {
+                          subtotal > 0 ? `$${(subtotal).toFixed(2)}` : longDash
+                        }
                       </Typography>
                     </Grid>
                     <Grid item xs={6}>
                       <Typography variant='body1'>
-                        Fee:
+                        Fee
                       </Typography>
                     </Grid>
                     <Grid item xs={6} className='right-aligned'>
                       <Typography variant='body1' align='right'>
-                        { `$${(price * quantity * 0.005).toFixed(2)}` }
+                        {
+                          subtotal > 0 ? `$${(price * quantity * 0.005).toFixed(2)}` : longDash
+                        }
                       </Typography>
                     </Grid>
                     <Grid item xs={6}>
                       <Typography variant='body1'>
-                        Total:
+                        Total
                       </Typography>
                     </Grid>
                     <Grid item xs={6} className='right-aligned'>
                       <Typography variant='body1' align='right'>
-                        { `$${(price * quantity * 1.005).toFixed(2)}` }
+                        {
+                          subtotal > 0 ? `$${(price * quantity * 1.005).toFixed(2)}` : longDash
+                        }
                       </Typography>
                     </Grid>
                   </Grid>
