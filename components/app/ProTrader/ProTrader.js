@@ -79,9 +79,16 @@ const NumberFormatCustom = (props) => {
 const headerHeight = 64
 const topBarHeight = 53
 const tradingAreaWidth = 240
-const tradingAreaHeight = 364
+const tradingAreaHeight = 400
 
 const useStyles = makeStyles((theme) => ({
+  coloredLink: {
+    color: theme.palette.primary.main,
+    textDecoration: 'none',
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  },
   proTrader: {
     height: `calc(100vh - ${headerHeight}px)`,
     // fonts
@@ -104,6 +111,13 @@ const useStyles = makeStyles((theme) => ({
       right: 8,
     },
   },
+  tickerLabel: {
+    color: 'rgba(255,255,255,.5)',
+  },
+  tickerNumber: {
+    textTransform: 'uppercase',
+    fontWeight: 600,
+  },
   proTraderLabel: {
     textTransform: 'uppercase',
     fontWeight: 600,
@@ -121,6 +135,8 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid',
     borderColor: theme.palette.background.paper,
     backgroundColor: theme.palette.background.default,
+    height: '100%',
+    overflow: 'hidden',
     '& span': {
       fontWeight: 600,
     },
@@ -130,7 +146,7 @@ const useStyles = makeStyles((theme) => ({
     borderLeft: 0,
     border: '1px solid',
     height: '100%',
-    overflow: 'auto',
+    overflow: 'hidden',
     borderColor: theme.palette.background.paper,
     backgroundColor: theme.palette.background.default,
     '& span': {
@@ -302,12 +318,23 @@ export default (props) => {
   const isMarket = type === 'market'
 
   const data = stock.proChartData
+  const lastCandle = data[data.length - 1]
+  const secondLastCandle = data[data.length - 2]
+
+  console.log('lc', lastCandle)
+  console.log('slc', secondLastCandle)
+
+  const dailyDelta = (lastCandle.close - secondLastCandle.close).toFixed(2)
+  const dailyDeltaPercent = ((lastCandle.close - secondLastCandle.close) / secondLastCandle.close * 100).toFixed(2)
 
   return (
     <Element className={ classes.proTrader }>
       <div>
         <Grid container spacing={0}>
-          <Grid item xs style={{ minWidth: tradingAreaWidth, maxWidth: tradingAreaWidth }}>
+          <Grid item xs style={{
+            minWidth: tradingAreaWidth,
+            maxWidth: tradingAreaWidth,
+          }}>
             <Paper
               square
               className={ classes.tabsPaper }
@@ -337,13 +364,41 @@ export default (props) => {
               className={ classes.bordered }
               style={{ minHeight: topBarHeight }}
             >
-              <Grid container spacing={2}>
+              <Grid container spacing={6}>
                 <Grid item>
-                  <Typography variant='caption'>
-                    Current Price:
+                  <Typography variant='caption' className={ classes.tickerLabel }>
+                    Current Price
                   </Typography>
-                  <Typography variant='h6' className={ classes.proTraderLabel }>
+                  <Typography variant='h6' className={ classes.tickerNumber }>
                     1 { ticker } / ${ parseFloat(book.lastPrice).toFixed(2) }
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant='caption' className={ classes.tickerLabel }>
+                    Bid-Ask
+                  </Typography>
+                  <Typography variant='h6' className={ classes.tickerNumber }>
+                    ${ parseFloat(bids[0][0]).toFixed(2) } - ${ parseFloat(asks[0][0]).toFixed(2) }
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant='caption' className={ classes.tickerLabel }>
+                    24hr change
+                  </Typography>
+                  <Typography
+                    variant='h6'
+                    className={ classes.tickerNumber }
+                    style={{ color: dailyDelta < 0 ? red[500] : green[500] }}
+                  >
+                    { dailyDelta < 0 ? '-' : ''}${ Math.abs(dailyDelta) } ({dailyDeltaPercent}%)
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant='caption' className={ classes.tickerLabel }>
+                    24hr range
+                  </Typography>
+                  <Typography variant='h6' className={ classes.tickerNumber }>
+                    ${ lastCandle.low } - ${ lastCandle.high }
                   </Typography>
                 </Grid>
               </Grid>
@@ -355,7 +410,7 @@ export default (props) => {
           spacing={0}
           style={{
             minHeight: tradingAreaHeight,
-            height: `calc(55vh - (${headerHeight}px + ${topBarHeight}px) / 2)`,
+            height: `calc(60vh - (${headerHeight}px + ${topBarHeight}px) / 2)`,
           }}
         >
           <Grid item xs style={{
@@ -372,7 +427,9 @@ export default (props) => {
                           Available Cash to Trade
                         </Typography>
                         <Typography variant='h6'>
-                          { formatCurrency(Number.parseFloat(accountBalance).toFixed(2)) }
+                          { formatCurrency(
+                            Number.parseFloat(accountBalance).toFixed(2),
+                          )}
                         </Typography>
                       </>
                     ) : (
@@ -386,7 +443,11 @@ export default (props) => {
                       </>
                     )
                   }
-                  <br/>
+                  <Box mt={1} mb={2}>
+                    <a href='/account' target='_blank' className={ classes.coloredLink }>+ Add funds</a>
+                    &nbsp;|&nbsp;
+                    <a href='/portfolio' target='_blank' className={ classes.coloredLink }>See all balances</a>
+                  </Box>
                   <MUIText
                     label='Order Type'
                     select
@@ -437,7 +498,7 @@ export default (props) => {
                     </Grid>
                     <Grid item xs={6} className='right-aligned'>
                       <Typography variant='body1' align='right'>
-                        ${ (price * quantity).toFixed(2) }
+                        { `$${(price * quantity).toFixed(2)}` }
                       </Typography>
                     </Grid>
                     <Grid item xs={6}>
@@ -447,7 +508,7 @@ export default (props) => {
                     </Grid>
                     <Grid item xs={6} className='right-aligned'>
                       <Typography variant='body1' align='right'>
-                        ${ (price * quantity * 0.005).toFixed(2) }
+                        { `$${(price * quantity * 0.005).toFixed(2)}` }
                       </Typography>
                     </Grid>
                     <Grid item xs={6}>
@@ -457,7 +518,7 @@ export default (props) => {
                     </Grid>
                     <Grid item xs={6} className='right-aligned'>
                       <Typography variant='body1' align='right'>
-                        ${ (price * quantity * 1.005).toFixed(2) }
+                        { `$${(price * quantity * 1.005).toFixed(2)}` }
                       </Typography>
                     </Grid>
                   </Grid>
@@ -501,7 +562,7 @@ export default (props) => {
         container
         spacing={0}
         style={{
-          height: `calc(45vh - (${headerHeight}px + ${topBarHeight}px) / 2)`,
+          height: `calc(40vh - (${headerHeight}px + ${topBarHeight}px) / 2)`,
         }}
       >
         <Grid item className={classes.orderBookArea}>

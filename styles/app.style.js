@@ -4,6 +4,7 @@ export default (theme) => ({
     display: 'flex',
     flexDirection: 'column',
     minHeight: '100vh',
+    overflowX: 'hidden',
     // Default Filled Input Changes
     '& .MuiInput-underline': {
       borderRadius: 4,

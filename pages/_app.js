@@ -36,11 +36,12 @@ import { darkTheme } from '../styles/esxThemes'
 config.autoAddCss = false
 
 const hideFooter = (page) => {
-  const noFooterPages = ['pro']
+  const noFooterPages = ['/pro']
   let hide = false
   noFooterPages.forEach((p) => {
+    console.log('p', p)
     if (hide) return
-    hide = page.indexOf(p) > -1
+    hide = page === '/pro'
   })
   return hide
 }
