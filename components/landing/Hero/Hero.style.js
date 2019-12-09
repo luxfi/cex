@@ -1,6 +1,6 @@
-export default theme => ({
+export default (theme) => ({
   container: {
-    zIndex: "12",
+    zIndex: 12,
     color: theme.palette.common.white,
     marginTop: -64,
     height: '100%',
@@ -26,13 +26,12 @@ export default theme => ({
     maxWidth: theme.breakpoints.lg,
     width: '100%',
     height: '100%',
-    padding: `${theme.spacing(3)}px ${theme.spacing(8)}px 110px`,
-    paddingBottom: 110,
+    padding: `${theme.spacing(3)}px ${theme.spacing(8)}px 150px`,
     [theme.breakpoints.down('md')]: {
-      padding: `${theme.spacing(3)}px ${theme.spacing(4)}px 110px`,
+      padding: `${theme.spacing(3)}px ${theme.spacing(4)}px 150px`,
     },
     [theme.breakpoints.down('xs')]: {
-      padding: `${theme.spacing(3)}px ${theme.spacing(3)}px 110px`,
+      padding: `${theme.spacing(3)}px ${theme.spacing(3)}px 150px`,
     },
     [theme.breakpoints.up('xl')]: {
       maxWidth: 1800,
@@ -51,16 +50,15 @@ export default theme => ({
   },
   investButton: {
     color: theme.palette.common.black,
-    backgroundColor: "#FBC43E",
-    padding: "12px 24px"
+    backgroundColor: '#FBC43E',
+    padding: '12px 24px',
   },
   watchTrailerButton: {
     color: theme.palette.common.white,
     border: `1px solid ${theme.palette.common.white}`,
-    padding: "11px 24px"
+    padding: '11px 24px',
   },
   watchTrailerButtonText: {
-    color: "inherit !important",
-  }
+    color: 'inherit !important',
+  },
 })
-

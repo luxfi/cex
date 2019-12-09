@@ -5,12 +5,12 @@ import NextLink from "next/link"
 // <Button component={CustomLink} href={'/foo'}>bar</Button>
 
 const CustomLink = React.forwardRef(
-  ({ className, href, hrefAs, children, download, target }, ref) => (
+  ({ className, href, hrefAs, children, download, target, style }, ref) => (
     <NextLink ref={ref} href={href} as={hrefAs}>
       {
         download ?
-        <a className={className} download target={target}>{children}</a>
-        : <a className={className} target={target}>{children}</a>
+        <a className={className} style={style} download target={target}>{children}</a>
+        : <a className={className} style={style} target={target}>{children}</a>
       }
     </NextLink>
   )

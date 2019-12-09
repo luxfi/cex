@@ -24,7 +24,7 @@ export default (props) => {
   return (
     <>
       <NextLink href="/">
-        <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.logo} height="64px" />
+        <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.logo} height="42px" />
       </NextLink>
       <div className={classes.navOuter}>
         <div className={classes.navSpacer} />
@@ -62,8 +62,8 @@ const MainNavDropdown = (props) => {
         >
           {menuDefinition.items.map(
             (item, i) => {
-              const href = ('link' in item) ? 
-                item.link 
+              const href = ('link' in item) ?
+                item.link
                 :
                 ({
                   pathname: "/placeholder",
@@ -86,7 +86,7 @@ const MainNavDropdown = (props) => {
 const DesktopMainNav = (props) => {
 
   const {
-    navStructure, 
+    navStructure,
     classes
   } = props
 
@@ -110,7 +110,7 @@ const DesktopMainNav = (props) => {
             {navElement.title}
           </Button>
         </NextLink>
-      ) 
+      )
     }
     else {
       result.push(

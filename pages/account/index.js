@@ -33,7 +33,7 @@ class Account extends React.Component {
 
   render() {
     const store = this.props.store
-    const { userStore } = store
+    const { userStore, uiStore } = store
     const {
       setValue,
       account,
@@ -52,7 +52,7 @@ class Account extends React.Component {
     } = userStore
 
     const setErrorMessage = message => {
-      store.uiStore.setErrorMessage(message)
+      uiStore.setErrorMessage(message)
     }
 
     return (
@@ -69,7 +69,7 @@ class Account extends React.Component {
         <AccountSection title="KYC" style={{ marginBottom: '3em' }}>
           <Grid container>
             <Grid item xs={8}>
-              <CustomLink href="/account/kyc" to="/account/kyc">
+              <CustomLink href="/account/kyc" to="/account/kyc" style={{ color: "inherit", textDecoration: "none" }}>
                 Check your identify verification status
               </CustomLink>
             </Grid>

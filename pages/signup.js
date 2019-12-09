@@ -27,7 +27,7 @@ class SignUp extends React.Component {
       isValidSignUp
     } = userStore
     const setErrorMessage = message => {
-        store.uiStore.setErrorMessage(message)
+        uiStore.setErrorMessage(message)
     }
     return (
       <SignUpForm
