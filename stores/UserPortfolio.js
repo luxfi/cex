@@ -225,7 +225,7 @@ export default class UserPortfolio {
 
     this.orders.push({
       id: uuid.v4(),
-      ticker: holdingIndex,
+      ticker,
       quantity,
       price,
       side: orderType,

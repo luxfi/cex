@@ -148,7 +148,12 @@ class Index extends React.Component {
           )}
           slug={slug}
           movies={movieStore.movies}
-          orders={userPortfolio.orders}
+          orders={userPortfolio
+            .orders
+            .filter((o) => o.ticker === movie.ticker)
+            .slice(0)
+            .reverse(() => {})
+          }
           movieCategories={toJS(movie.genre)}
           maxSell={maxSell}
           stockName={movie.name}
