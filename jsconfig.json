@@ -1,5 +1,5 @@
-// allow Experimental Decorators for VSCode
 {
+  "$comments": "allow Experimental Decorators for VSCode",
   "compilerOptions": {
     "experimentalDecorators": true
   }
