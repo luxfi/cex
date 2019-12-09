@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/styles'
+import common from '@material-ui/core/colors/common'
 
 const tabsStyles = ({ palette }) => ({
   root: {
@@ -30,6 +31,14 @@ const navStyles = ({ spacing, palette, breakpoints }) => ({
   navBar: {
     boxShadow: `inset 0 -1px 0 0 ${palette.divider}`,
   },
+  sticky: {
+    position: 'sticky',
+    top: 64,
+    left: 0,
+    right: 0,
+    zIndex: 10,
+    background: palette.background.default,
+  },
   root: {
     marginTop: spacing(7),
     [breakpoints.up('xl')]: {
@@ -48,6 +57,9 @@ const navStyles = ({ spacing, palette, breakpoints }) => ({
       paddingLeft: spacing(0),
       paddingRight: spacing(0),
     },
+  },
+  container: {
+    backgroundColor: palette.background.default,
   },
 })
 
