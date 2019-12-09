@@ -21,6 +21,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import midstream from 'midstream'
 import { toJS } from 'mobx'
+import Router from "next/router"
 import { useState } from 'react'
 import NumberFormat from 'react-number-format'
 import { Element } from 'react-scroll'
@@ -28,9 +29,9 @@ import { Element } from 'react-scroll'
 import { formatCurrency } from '../../../util/generic'
 
 import {
+  ExchangeHistoryBook,
   OrderBook,
   TradeHistoryBook,
-  ExchangeHistoryBook,
 } from '../../trade'
 
 import { ProChart } from '..'
@@ -145,7 +146,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   tradeHistoryArea: {
-    width: 400,
+    width: 480,
     height: '100%',
     overflow: 'auto',
   },
@@ -271,6 +272,8 @@ export default (props) => {
     createOrder,
     maxSell,
     accountBalance,
+    slug,
+    movies,
     orders,
   } = props
 
@@ -352,6 +355,12 @@ export default (props) => {
     / secondLastCandle.close
   ).toFixed(2)
 
+  const marketOpts = {}
+
+  for (let movie of movies) {
+    marketOpts[movie.movieSlug] = movie.ticker
+  }
+
   const subtotal = price * quantity
 
   return (
@@ -427,6 +436,22 @@ export default (props) => {
                   <Typography variant='h6' className={ classes.tickerNumber }>
                     ${ lastCandle.low } - ${ lastCandle.high }
                   </Typography>
+                </Grid>
+                <Grid item xs/>
+                <Grid item>
+                  <MUIText
+                    select
+                    options={marketOpts}
+                    showError={ showError }
+                    value={slug}
+                    setValue={(v) => {
+                      if (v != slug) {
+                        Router.push(`/pro/${v}`)
+                      }
+                    }}
+                    fullWidth
+                    placeholder='Select a market'
+                  />
                 </Grid>
               </Grid>
             </Box>

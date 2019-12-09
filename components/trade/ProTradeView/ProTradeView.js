@@ -146,6 +146,8 @@ class Index extends React.Component {
           onExecute={(order, orderType) => (
             userPortfolio.onOrderExecute(order, orderType)
           )}
+          slug={slug}
+          movies={movieStore.movies}
           orders={userPortfolio.orders}
           movieCategories={toJS(movie.genre)}
           maxSell={maxSell}
