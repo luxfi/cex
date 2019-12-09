@@ -24,7 +24,7 @@ module.exports = withBundleAnalyzer(
           ]),
         ],
       },
-      webpack: (config) => {
+      webpack: config => {
         config.module.rules.push({
           test: /\.mjs$/,
           type: 'javascript/auto',
@@ -59,30 +59,6 @@ module.exports = withBundleAnalyzer(
           {},
         )
 
-<<<<<<< HEAD
-          const movies = moviesFromJson.reduce(
-            (movies, movie) =>
-              Object.assign({}, movies, {
-                [`/film/${movie.movieSlug}`]: {
-                  page: '/film',
-                  query: { slug: movie.movieSlug },
-                },
-                [`/trade/${movie.movieSlug}`]: {
-                  page: '/trade',
-                  query: { slug: movie.movieSlug },
-                },
-                [`/pro/${movie.movieSlug}`]: {
-                  page: '/pro',
-                  query: { slug: movie.movieSlug },
-                },
-                [`/offering/${movie.movieSlug}`]: {
-                  page: '/offering',
-                  query: { slug: movie.movieSlug },
-                },
-              }),
-            {},
-          )
-=======
         const movies = moviesFromJson.reduce(
           (ms, m) => ({
             ...ms,
@@ -101,7 +77,6 @@ module.exports = withBundleAnalyzer(
           }),
           {},
         )
->>>>>>> master
 
         // combine the map of post pages with the home
         return {
