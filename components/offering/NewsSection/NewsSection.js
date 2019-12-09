@@ -103,7 +103,7 @@ const NewsSection = ({ newsRef }) => {
                       className={classNames(classes.pointer)}
                       onMouseOver={() => handleMouseOver()}
                       onMouseOut={() => handleMouseOut()}
-                      src={`https://placekitten.com/260/170`}
+                      src={`https://picsum.photos/id/866/260/170`}
                       disableSpinner
                     />
                   </Box>

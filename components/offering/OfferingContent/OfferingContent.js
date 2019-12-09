@@ -8,6 +8,7 @@ import {
   RisksDisclosuresSection,
   SummarySection,
   UpdatesDiscussionsSection,
+  TeamSection,
 } from '../'
 
 const OfferingContent = ({
@@ -34,6 +35,7 @@ const OfferingContent = ({
           </Grid>
         </Grid>
         <Divider />
+        <TeamSection teamRef={teamRef} />
         <NewsSection newsRef={newsRef} />
         <RisksDisclosuresSection risksDisclosuresRef={risksDisclosuresRef} />
         <UpdatesDiscussionsSection
