@@ -39,9 +39,8 @@ const hideFooter = (page) => {
   const noFooterPages = ['/pro']
   let hide = false
   noFooterPages.forEach((p) => {
-    console.log('p', p)
     if (hide) return
-    hide = page === '/pro'
+    hide = page === p
   })
   return hide
 }
@@ -111,14 +110,16 @@ class MyMobxApp extends App {
                 openRightDrawer={() => (
                   this.mobxStore.uiStore.setRightDrawerOpen(true)
                 )}
-                handleLogout={() => { this.mobxStore.userStore.logout() }}
+                handleLogout={() => {
+                  this.mobxStore.userStore.logout()
+                }}
               />
               <MobileNavMenu
                 open={this.mobxStore.uiStore.drawers.left}
                 setOpen={this.mobxStore.uiStore.setLeftDrawerOpen}
               />
-              <div component='main' className={classes.main}>
-                <Component {...pageProps} pathName={router.route}/>
+              <div component="main" className={classes.main}>
+                <Component {...pageProps} pathName={router.route} />
               </div>
               <CustomModal
                 open={this.mobxStore.uiStore.modal.open}
@@ -132,7 +133,9 @@ class MyMobxApp extends App {
                 open={this.mobxStore.uiStore.drawers.right}
                 setOpen={this.mobxStore.uiStore.setRightDrawerOpen}
                 isLoggedIn={this.mobxStore.userStore.loggedIn}
-                handleLogout={() => { this.mobxStore.userStore.logout() }}
+                handleLogout={() => {
+                  this.mobxStore.userStore.logout()
+                }}
               />
               {
                 !hideFooter(router.route)

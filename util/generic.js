@@ -1,6 +1,6 @@
 import ReactGA from 'react-ga'
 
-const padDollarAmount = (amount) => {
+const padDollarAmount = amount => {
   let _amount = amount
   if (typeof _amount === 'number') _amount = _amount.toString()
   if (_amount.indexOf('.') === -1) {
@@ -17,11 +17,13 @@ const padDollarAmount = (amount) => {
 }
 
 const googlePageView = () => {
-  ReactGA.pageview(window.location.pathname + window.location.search);
+  ReactGA.pageview(window.location.pathname + window.location.search)
 }
 
-const formatCurrency = (num, currency='USD') => {
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(num)
+const formatCurrency = (num, currency = 'USD') => {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(
+    num,
+  )
 }
 
 const isStringInteger = stringInput => {
@@ -29,6 +31,14 @@ const isStringInteger = stringInput => {
   const rx = new RegExp(/^\d+(?:\.\d{1,2})?$/)
   return rx.test(stringInput)
 }
+
+const isStringUSCurrency = stringInput => {
+  // match a digit one or more times
+  const rx = new RegExp(/^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:\.[0-9]{2})?$/)
+  return rx.test(stringInput)
+}
+
+const isNumber = val => typeof val === 'number' && val === val
 
 // pluralize(0, 'apple'); // 'apples'
 // pluralize(1, 'apple'); // 'apple'
@@ -41,28 +51,46 @@ const pluralize = (val, word, plural = word + 's') => {
   return _pluralize(val, word, plural)
 }
 
+const textTruncate = (str, length, ending) => {
+  if (length == null) {
+    length = 48
+  }
+  if (ending == null) {
+    ending = '...'
+  }
+  if (Array.from(str).length > length) {
+    return (
+      str
+        .split(' ')
+        .slice(0, length)
+        .join(' ') + ending
+    )
+  } else {
+    return str
+  }
+}
 
-const toDashString = (str) => {
-
+const toDashString = str => {
   if (!str) {
-    throw "toDashString str parameter is undefined!"
+    throw 'toDashString str parameter is undefined!'
   }
 
-  const arr = str.split(' ')
+  const arr = str
+    .split(' ')
     .filter(x => x)
-    .map(x => (x.charAt(0).toLowerCase() + x.slice(1)))
+    .map(x => x.charAt(0).toLowerCase() + x.slice(1))
 
-  return arr.join('-').replace(/[A-Z]/g, m => "-" + m.toLowerCase())
+  return arr.join('-').replace(/[A-Z]/g, m => '-' + m.toLowerCase())
 }
 
 const toDashString_test = () => {
-  const test = "This  Iis itA-tBt"
+  const test = 'This  Iis itA-tBt'
   console.log(`Original string  |${test}|`)
   console.log(`Converted string |${toDashString(test)}|`) // expected: this-iis-it-a-t-bt
 }
 
 const isServer = () => {
-  (typeof window === "undefined")
+  typeof window === 'undefined'
 }
 
 export {
@@ -70,7 +98,10 @@ export {
   googlePageView,
   formatCurrency,
   isStringInteger,
+  isStringUSCurrency,
+  isNumber,
   pluralize,
+  textTruncate,
   toDashString,
   isServer,
 }
