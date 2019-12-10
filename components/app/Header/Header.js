@@ -1,25 +1,22 @@
-import React from "react";
+import React from 'react'
 
 import {
   AppBar,
   Toolbar,
   IconButton,
-  useScrollTrigger
-} from "@material-ui/core";
+  useScrollTrigger,
+} from '@material-ui/core'
 
-import {
-  MenuRounded, 
-  AccountCircle
-} from "@material-ui/icons";
+import { MenuRounded, AccountCircle } from '@material-ui/icons'
 
-import DesktopNav from "./DesktopNav";
-import DesktopProfileAndSearch from "./DesktopProfileAndSearch";
+import DesktopNav from './DesktopNav'
+import DesktopProfileAndSearch from './DesktopProfileAndSearch'
 
-import { makeStyles } from "@material-ui/core/styles";
-import classNames from "classnames";
-import styles from "./header.style.js";
+import { makeStyles } from '@material-ui/core/styles'
+import classNames from 'classnames'
+import styles from './header.style.js'
 
-const useStyles = makeStyles(styles);
+const useStyles = makeStyles(styles)
 
 export default props => {
   const {
@@ -28,18 +25,19 @@ export default props => {
     openLeftDrawer,
     openRightDrawer,
     handleLogout,
-    isLoggedIn
-  } = props;
+    isLoggedIn,
+  } = props
 
-  const trigger = useScrollTrigger({ threshold: 0, disableHysteresis: true });
-  const classes = useStyles();
+  const trigger = useScrollTrigger({ threshold: 0, disableHysteresis: true })
+  const classes = useStyles()
 
   return (
     <AppBar
       className={classNames(
         classes.appBar,
-        !showDesktopNav || trigger ? classes.translucent : classes.transparent,
-        showDesktopProfileMenu ? classes.mobile : ""
+        showDesktopNav && trigger ? classes.solid : classes.transparent,
+        !showDesktopNav ? classes.translucent : null,
+        showDesktopProfileMenu ? classes.mobile : '',
       )}
     >
       <Toolbar disableGutters className={classes.toolbar}>
@@ -63,19 +61,15 @@ export default props => {
               className={classes.mobileLogo}
               height="26px"
             />
-            <AccountMenu
-              openAccountMenu={openRightDrawer}
-              classes={classes}
-            />
+            <AccountMenu openAccountMenu={openRightDrawer} classes={classes} />
           </>
         )}
       </Toolbar>
     </AppBar>
-  );
-};
+  )
+}
 
-const AccountMenu = (props) => {
-
+const AccountMenu = props => {
   const { openAccountMenu, classes } = props
 
   return (
@@ -86,7 +80,7 @@ const AccountMenu = (props) => {
         onClick={openAccountMenu}
         className={classes.accountMenuButton}
       >
-        <AccountCircle style={{ fontSize: "2rem" }} />
+        <AccountCircle style={{ fontSize: '2rem' }} />
       </IconButton>
     </div>
   )

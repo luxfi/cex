@@ -24,7 +24,7 @@ module.exports = withBundleAnalyzer(
           ]),
         ],
       },
-      webpack: (config) => {
+      webpack: config => {
         config.module.rules.push({
           test: /\.mjs$/,
           type: 'javascript/auto',
@@ -70,6 +70,10 @@ module.exports = withBundleAnalyzer(
               page: '/trade',
               query: { slug: m.movieSlug },
             },
+            [`/offering/${m.movieSlug}`]: {
+              page: '/offering',
+              query: { slug: m.movieSlug },
+            },
             [`/pro/${m.movieSlug}`]: {
               page: '/pro',
               query: { slug: m.movieSlug },
@@ -92,6 +96,7 @@ module.exports = withBundleAnalyzer(
           '/account/kyc': { page: '/account/kyc' },
           '/account/documents': { page: '/account/documents' },
           '/investorFaq': { page: '/investorFaq' },
+          '/offering': { page: '/offering' },
           '/projectFaq': { page: '/projectFaq' },
           '/risks': { page: '/risks' },
           '/contact': { page: '/contact' },
