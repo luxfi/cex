@@ -118,7 +118,7 @@ class MyMobxApp extends App {
                 open={this.mobxStore.uiStore.drawers.left}
                 setOpen={this.mobxStore.uiStore.setLeftDrawerOpen}
               />
-              <div component="main" className={classes.main}>
+              <div component='main' className={classes.main}>
                 <Component {...pageProps} pathName={router.route} />
               </div>
               <CustomModal
@@ -138,8 +138,14 @@ class MyMobxApp extends App {
                 }}
               />
               {
-                !hideFooter(router.route)
-                  ? <Footer rootClassName={classes.footer} /> : null
+                !hideFooter(router.route) ? (
+                  <Footer
+                    rootClassName={classes.footer}
+                    isLoggedIn={this.mobxStore.userStore.loggedIn}
+                    handleLogout={() => {
+                      this.mobxStore.userStore.logout()
+                    }}
+                  />) : null
               }
             </NoSsr>
           </div>

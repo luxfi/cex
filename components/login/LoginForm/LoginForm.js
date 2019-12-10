@@ -1,46 +1,34 @@
-import React from "react"
-import NextLink from "next/link"
-import Router from "next/router"
+import React from 'react'
+import Router from 'next/router'
 
 // Material Components
-import Button from "@material-ui/core/Button"
-import CssBaseline from "@material-ui/core/CssBaseline"
-import TextField from "@material-ui/core/TextField"
-import FormControlLabel from "@material-ui/core/FormControlLabel"
-import Checkbox from "@material-ui/core/Checkbox"
-import Link from "@material-ui/core/Link"
-import Grid from "@material-ui/core/Grid"
-import Typography from "@material-ui/core/Typography"
-import { withStyles } from "@material-ui/core/styles"
-import Container from "@material-ui/core/Container"
+import Button from '@material-ui/core/Button'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import TextField from '@material-ui/core/TextField'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+import Link from '@material-ui/core/Link'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import { withStyles } from '@material-ui/core/styles'
+import Container from '@material-ui/core/Container'
 
-const CustomLink = React.forwardRef(
-  ({ className, href, hrefAs, children }, ref) => (
-    <NextLink ref={ref} href={href} as={hrefAs}>
-      <a className={className}>{children}</a>
-    </NextLink>
-  )
-)
+import CustomLink from '../../app/CustomLink'
 
-const styles = theme => ({
-  // "@global": {
-  //   body: {
-  //     backgroundColor: theme.palette.common.white
-  //   }
-  // },
+const styles = (theme) => ({
   paper: {
     marginTop: theme.spacing(12),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 })
 
 class LoginForm extends React.Component {
@@ -53,7 +41,7 @@ class LoginForm extends React.Component {
 
   // submitLogin(e) {
   //   e.preventDefault()
-  //   if (this.state.email === "" || this.password === "")
+  //   if (this.state.email === '' || this.password === '')
   //     return
   //   // clear errors for logic flow
   //   this.setState({ emailError: false })
@@ -81,31 +69,31 @@ class LoginForm extends React.Component {
   // }
 
   handleKeypress(e) {
-    var key = e.which || e.keyCode
+    const key = e.which || e.keyCode
     if (key === 13) {
       // 13 is enter
-      document.getElementById("login-submit-button").click()
+      document.getElementById('login-submit-button').click()
     }
   }
 
   componentDidMount() {
-    window.addEventListener("keypress", this.handleKeypress)
+    window.addEventListener('keypress', this.handleKeypress)
   }
 
   componentWillUnmount() {
-    window.removeEventListener("keypress", this.handleKeypress)
+    window.removeEventListener('keypress', this.handleKeypress)
   }
 
-  handleSubmit(login, isValidLogin, setErrorMessage, setSuccessMessage) {
+  handleSubmit(login, isValidLogin, setErrorMessage) {
     if (isValidLogin) {
       login(
         () => {
-          // setSuccessMessage("You have successfully logged in!")
-          Router.push("/portfolio")
+          // setSuccessMessage('You have successfully logged in!')
+          Router.push('/portfolio')
         },
-        ex => {
+        (ex) => {
           setErrorMessage(ex)
-        }
+        },
       )
     } else {
       this.setState({ displayErrors: true })
@@ -123,79 +111,84 @@ class LoginForm extends React.Component {
       validPassword,
       login,
       setErrorMessage,
-      setSuccessMessage
+      setSuccessMessage,
     } = this.props
 
     return (
-      <Container component="main" maxWidth="xs">
+      <Container component='main' maxWidth='xs'>
         <CssBaseline />
         <div className={classes.paper}>
-          <Typography component="h1" variant="h5">
+          <Typography component='h1' variant='h5'>
             Sign in
           </Typography>
           <TextField
-            variant="outlined"
-            margin="normal"
+            variant='outlined'
+            margin='normal'
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
+            id='email'
+            label='Email Address'
+            name='email'
             autoFocus
             error={this.state.displayErrors && !validEmail}
             helperText={
               this.state.displayErrors && !validEmail
-                ? "please enter valid email address"
-                : ""
+                ? 'please enter valid email address'
+                : ''
             }
             value={email}
-            onChange={evt => setValue(evt.target.name, evt.target.value)}
+            onChange={(evt) => setValue(evt.target.name, evt.target.value)}
           />
           <TextField
-            variant="outlined"
-            margin="normal"
+            variant='outlined'
+            margin='normal'
             required
             fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            error={this.state.displayErrors && !validPassword}
+            name='password'
+            label='Password'
+            type='password'
+            id='password'
+            error={ this.state.displayErrors && !validPassword }
             helperText={
               this.state.displayErrors && !validPassword
-                ? "please make sure the password is long enough"
-                : ""
+                ? 'please make sure the password is long enough'
+                : ''
             }
             value={password}
-            onChange={evt => setValue(evt.target.name, evt.target.value)}
+            onChange={(evt) => setValue(evt.target.name, evt.target.value)}
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            control={<Checkbox value='remember' color='primary' />}
+            label='Remember me'
           />
           <Button
-            id="login-submit-button"
-            type="submit"
+            id='login-submit-button'
+            type='submit'
             fullWidth
-            variant="contained"
-            color="primary"
+            variant='contained'
+            color='primary'
             className={classes.submit}
             // disabled={}
-            onClick={() =>
-              this.handleSubmit(login, isValidLogin, setErrorMessage, setSuccessMessage)
-            }
+            onClick={() => (
+              this.handleSubmit(
+                login,
+                isValidLogin,
+                setErrorMessage,
+                setSuccessMessage,
+              )
+            )}
           >
             Sign In
           </Button>
           <Grid container>
             <Grid item xs>
-              {/* <Link href="#" variant="body2"> */}
+              {/* <Link href='#' variant='body2'> */}
               Forgot password? [NYI]
               {/* </Link> */}
             </Grid>
             <Grid item>
-              <Link component={CustomLink} href="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
+              <Link component={CustomLink} href='/signup' variant='body2'>
+                Need an account? Sign Up
               </Link>
             </Grid>
           </Grid>

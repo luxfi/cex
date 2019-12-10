@@ -18,7 +18,7 @@ import styles from './header.style.js'
 
 const useStyles = makeStyles(styles)
 
-export default props => {
+export default (props) => {
   const {
     showDesktopNav,
     showDesktopProfileMenu,
@@ -56,10 +56,10 @@ export default props => {
         ) : (
           <>
             <img
-              src="/static/images/esx/esx-white-logo.png"
-              alt="ESX"
+              src='/static/images/esx/esx-white-logo.png'
+              alt='ESX'
               className={classes.mobileLogo}
-              height="26px"
+              height='26px'
             />
             <AccountMenu openAccountMenu={openRightDrawer} classes={classes} />
           </>
@@ -69,14 +69,14 @@ export default props => {
   )
 }
 
-const AccountMenu = props => {
+const AccountMenu = (props) => {
   const { openAccountMenu, classes } = props
 
   return (
     <div className={classes.accountOuter}>
       <IconButton
-        aria-controls="menu"
-        aria-haspopup="true"
+        aria-controls='menu'
+        aria-haspopup='true'
         onClick={openAccountMenu}
         className={classes.accountMenuButton}
       >

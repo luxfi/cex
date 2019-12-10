@@ -1,11 +1,11 @@
-import React from "react"
-import Router from "next/router"
-import { inject, observer } from "mobx-react"
+import React from 'react'
+import Router from 'next/router'
+import { inject, observer } from 'mobx-react'
 
-import LoginForm from "../components/login/LoginForm"
-import { googlePageView } from "../util/generic.js"
+import LoginForm from '../components/login/LoginForm'
+import { googlePageView } from '../util/generic.js'
 
-@inject("store")
+@inject('store')
 @observer
 class Login extends React.Component {
   static async getInitialProps({ mobxStore }) {
@@ -24,13 +24,13 @@ class Login extends React.Component {
       password,
       isValidLogin,
       validEmail,
-      validPassword
+      validPassword,
     } = userStore
-    const setErrorMessage = message => {
-        uiStore.setErrorMessage(message)
+    const setErrorMessage = (message) => {
+      uiStore.setErrorMessage(message)
     }
-    const setSuccessMessage = message => {
-        uiStore.setSuccessMessage(message)
+    const setSuccessMessage = (message) => {
+      uiStore.setSuccessMessage(message)
     }
     return (
       <LoginForm

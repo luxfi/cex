@@ -1,21 +1,21 @@
-import React from "react"
-import NextLink from "next/link"
+import React from 'react'
+import NextLink from 'next/link'
 
 import {
   Button,
   Popover,
   MenuItem,
-} from "@material-ui/core"
+} from '@material-ui/core'
 
   // This one is recommended in the MUI docs themselves :)
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state'
 
-import { makeStyles } from "@material-ui/core/styles"
+import { makeStyles } from '@material-ui/core/styles'
 import styles from './desktopNav.style.js'
 
 const useStyles = makeStyles(styles)
 
-import navStructure from "../../../util/navStructure"
+import navStructure from '../../../util/navStructure'
 
 export default (props) => {
 
@@ -23,8 +23,8 @@ export default (props) => {
 
   return (
     <>
-      <NextLink href="/">
-        <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.logo} height="42px" />
+      <NextLink href='/'>
+        <img src='/static/images/esx/esx-white-logo.png' alt='ESX' className={classes.logo} height='42px' />
       </NextLink>
       <div className={classes.navOuter}>
         <div className={classes.navSpacer} />
@@ -45,7 +45,7 @@ const MainNavDropdown = (props) => {
   } = props
 
   return (
-    <PopupState variant="popover" popupId="menu-popover">
+    <PopupState variant='popover' popupId='menu-popover'>
       {(popupState) => (
         <>
         <Button
@@ -56,8 +56,8 @@ const MainNavDropdown = (props) => {
         </Button >
         <Popover
           {...bindPopover(popupState)}
-          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-          transformOrigin={{ vertical: "top", horizontal: "left" }}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+          transformOrigin={{ vertical: 'top', horizontal: 'left' }}
           className={classes.menu}
         >
           {menuDefinition.items.map(
@@ -66,7 +66,7 @@ const MainNavDropdown = (props) => {
                 item.link
                 :
                 ({
-                  pathname: "/placeholder",
+                  pathname: '/placeholder',
                   query: { title: item.placeholder }
                 })
                 return (
@@ -91,35 +91,31 @@ const DesktopMainNav = (props) => {
   } = props
 
   let result = []
-  navStructure.forEach((navElement, i) => {
+  navStructure.forEach((navElement) => {
 
     let href = null
     if ('placeholder' in navElement) {
-      href = { pathname: "/placeholder", query: { title: navElement.title } }
-    }
-    else if ('link' in navElement) {
+      href = { pathname: '/placeholder', query: { title: navElement.title } }
+    } else if ('link' in navElement) {
       href = navElement.link
     }
 
     if (href) {
       result.push(
-        <NextLink href={href} key={`link+${i}`}>
+        <NextLink href={href} key={`link+${navElement.title}`}>
           <Button
             className={classes.navButton}
           >
             {navElement.title}
           </Button>
-        </NextLink>
-      )
-    }
-    else {
+        </NextLink>)
+    } else {
       result.push(
         <MainNavDropdown
           classes={classes}
           menuDefinition={navElement}
-          key={`dropdown+${i}`}
-        />
-      )
+          key={`dropdown+${navElement.title}`}
+        />)
     }
   })
   return (
