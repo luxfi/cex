@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Tabs, Tab, Grid, Box, Typography } from '@material-ui/core'
 import { tabsStylesHook, navStylesHook } from './offeringNavBar.style.js'
 import classNames from 'classnames'
@@ -22,20 +22,63 @@ const OfferingNavBar = ({
   risksDisclosuresRef,
   updatesDiscussionsRef,
 }) => {
+  const sectionRefs = [
+    { section: 'Summary', ref: summaryRef, index: 0 },
+    { section: 'DealTerms', ref: dealTermsRef, index: 1 },
+    { section: 'Documents', ref: documentsRef, index: 2 },
+    { section: 'Team', ref: teamRef, index: 3 },
+    { section: 'News', ref: newsRef, index: 4 },
+    { section: 'RisksDisclosures', ref: risksDisclosuresRef, index: 5 },
+    { section: 'UpdatesDiscussions', ref: updatesDiscussionsRef, index: 6 },
+  ]
+  console.log(sectionRefs)
   const [tabIndex, setTabIndex] = React.useState(0)
   const tabsStyles = tabsStylesHook.useTabs()
   const tabItemStyles = tabsStylesHook.useTabItem()
   const navStyles = navStylesHook.useNav()
   useEffect(() => {
-    const handleScroll = () => {}
+    const handleScroll = () => {
+      const { height: headerHeight } = getDimensions(headerRef.current)
+      const scrollPosition = window.scrollY + headerHeight
+      const selected = sectionRefs.find(({ section, ref }) => {
+        const element = ref.current
+        if (element) {
+          const { offsetBottom, offsetTop } = getDimensions(element)
+          return scrollPosition > offsetTop && scrollPosition < offsetBottom
+        }
+      })
+      if (selected && selected.section !== visibleSection) {
+        setVisibleSection(selected.section)
+        setTabIndex(selected.index)
+      } else if (!selected && visibleSection) {
+        setVisibleSection(undefined)
+      }
+    }
     window.addEventListener('scroll', handleScroll)
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [])
+  }, [visibleSection])
+
+  const getDimensions = element => {
+    const { height } = element.getBoundingClientRect()
+    const offsetTop = element.offsetTop - 100 // navbar heights
+    const offsetBottom = offsetTop + height
+    return {
+      height,
+      offsetTop,
+      offsetBottom,
+    }
+  }
+
+  const [visibleSection, setVisibleSection] = useState()
+  const headerRef = useRef(null)
 
   return (
-    <div className={classNames(navStyles.container, navStyles.sticky)}>
+    <div
+      className={classNames(navStyles.container, navStyles.sticky)}
+      ref={headerRef}
+    >
       <div className={classNames(navStyles.root)}>
         <Grid container justify="center" className={navStyles.navBar}>
           <Grid item container lg={7} justify="center">
