@@ -1,1 +1,1 @@
-export { default } from './ESXLinearProgressBarBar'
+export { default } from './ESXLinearProgressBar'
