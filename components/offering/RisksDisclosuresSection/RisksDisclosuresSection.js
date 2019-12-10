@@ -170,7 +170,6 @@ const RisksDisclosuresSection = ({ risksDisclosuresRef }) => {
                                 unmountOnExit
                                 component="span"
                                 classes={{
-                                  root: classes.collapseRoot,
                                   wrapper: classes.collapseWrapper,
                                   wrapperInner: classes.collapseWrapperInner,
                                 }}
@@ -194,7 +193,6 @@ const RisksDisclosuresSection = ({ risksDisclosuresRef }) => {
                             unmountOnExit
                             component="span"
                             classes={{
-                              root: classes.collapseRoot,
                               wrapper: classes.collapseWrapper,
                               wrapperInner: classes.collapseWrapperInner,
                             }}

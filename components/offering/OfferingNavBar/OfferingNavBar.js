@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Tabs, Tab, Grid, Box, Typography } from '@material-ui/core'
 import { tabsStylesHook, navStylesHook } from './offeringNavBar.style.js'
 import classNames from 'classnames'
+import { SpeakerNotesOff } from '@material-ui/icons'
 
 const scrollTo = element => {
   // account for navbar heights on scrollintoview
@@ -22,20 +23,88 @@ const OfferingNavBar = ({
   risksDisclosuresRef,
   updatesDiscussionsRef,
 }) => {
+  const sectionRefs = [
+    { section: 'Summary', ref: summaryRef, index: 0 },
+    { section: 'DealTerms', ref: dealTermsRef, index: 1 },
+    { section: 'Documents', ref: documentsRef, index: 2 },
+    { section: 'Team', ref: teamRef, index: 3 },
+    { section: 'News', ref: newsRef, index: 4 },
+    { section: 'RisksDisclosures', ref: risksDisclosuresRef, index: 5 },
+    { section: 'UpdatesDiscussions', ref: updatesDiscussionsRef, index: 6 },
+  ]
   const [tabIndex, setTabIndex] = React.useState(0)
+  const [index, setIndex] = React.useState(0)
+  const [scrolling, setScrolling] = React.useState(0)
   const tabsStyles = tabsStylesHook.useTabs()
   const tabItemStyles = tabsStylesHook.useTabItem()
   const navStyles = navStylesHook.useNav()
+  const handleScroll = () => {
+    const { height: headerHeight } = getDimensions(headerRef.current)
+    const scrollPosition = window.scrollY + headerHeight
+    const selected = sectionRefs.find(({ section, ref }) => {
+      const element = ref.current
+      if (element) {
+        const { offsetBottom, offsetTop } = getDimensions(element)
+        return scrollPosition > offsetTop && scrollPosition < offsetBottom
+      }
+    })
+    if (selected && selected.section !== visibleSection) {
+      setVisibleSection(selected.section)
+      setIndex(selected.index)
+    } else if (!selected && visibleSection) {
+      setVisibleSection(undefined)
+    }
+  }
+
   useEffect(() => {
-    const handleScroll = () => {}
     window.addEventListener('scroll', handleScroll)
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [])
+  }, [visibleSection])
+
+  useEffect(() => {
+    if (!scrolling) {
+      setTabIndex(index)
+    } else if (scrolling && index === tabIndex) {
+      setScrolling(false)
+    }
+  }, [index])
+
+  const scrollTo = element => {
+    setScrolling(true)
+    // account for navbar heights on scrollintoview
+    const padding = 24
+    const navBarHeights = 64 + 56 + padding
+    window.scrollTo({
+      behavior: 'smooth',
+      top: element.offsetTop - navBarHeights,
+    })
+    // if user clicks and stops the section for reaching its destination, this will eventually reset the flag
+    setTimeout(() => {
+      setScrolling(false)
+    }, 1000)
+  }
+
+  const getDimensions = element => {
+    const { height } = element.getBoundingClientRect()
+    const offsetTop = element.offsetTop - 100 // navbar heights
+    const offsetBottom = offsetTop + height
+    return {
+      height,
+      offsetTop,
+      offsetBottom,
+    }
+  }
+
+  const [visibleSection, setVisibleSection] = useState()
+  const headerRef = useRef(null)
 
   return (
-    <div className={classNames(navStyles.container, navStyles.sticky)}>
+    <div
+      className={classNames(navStyles.container, navStyles.sticky)}
+      ref={headerRef}
+    >
       <div className={classNames(navStyles.root)}>
         <Grid container justify="center" className={navStyles.navBar}>
           <Grid item container lg={7} justify="center">
@@ -43,7 +112,9 @@ const OfferingNavBar = ({
               classes={tabsStyles}
               variant="fullWidth"
               value={tabIndex}
-              onChange={(e, index) => setTabIndex(index)}
+              onChange={(e, index) => {
+                setTabIndex(index)
+              }}
             >
               <Tab
                 onClick={() => {

@@ -175,7 +175,6 @@ const DealTermsSection = ({ dealTermsRef }) => {
                                 unmountOnExit
                                 component="span"
                                 classes={{
-                                  root: classes.collapseRoot,
                                   wrapper: classes.collapseWrapper,
                                   wrapperInner: classes.collapseWrapperInner,
                                 }}
@@ -199,7 +198,6 @@ const DealTermsSection = ({ dealTermsRef }) => {
                             unmountOnExit
                             component="span"
                             classes={{
-                              root: classes.collapseRoot,
                               wrapper: classes.collapseWrapper,
                               wrapperInner: classes.collapseWrapperInner,
                             }}
