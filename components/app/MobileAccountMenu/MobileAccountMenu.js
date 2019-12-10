@@ -1,95 +1,95 @@
-import React from "react"
-import NextLink from "next/link"
+import React, { useState } from 'react'
+import NextLink from 'next/link'
 
 import {
   ExpandLess,
-  ExpandMore
-} from "@material-ui/icons"
+  ExpandMore,
+} from '@material-ui/icons'
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import {
   faAddressCard,
   faChartArea,
+  faIdCard,
   faSignOutAlt,
-} from "@fortawesome/free-solid-svg-icons"
+} from '@fortawesome/free-solid-svg-icons'
 
 import {
+  Collapse,
+  Divider,
   List,
   ListItem,
   ListItemText,
-  Collapse,
-  Divider
-} from "@material-ui/core"
+} from '@material-ui/core'
 
-import SideDrawer from "../SideDrawer"
+import { makeStyles } from '@material-ui/core/styles'
 
-import { makeStyles } from "@material-ui/core/styles"
-import styles from './mobileAccountMenu.style.js'
+import SideDrawer from '../SideDrawer'
+import styles from './mobileAccountMenu.style'
+
 const useStyles = makeStyles(styles)
-
 
 const menuElements = {
   loggedIn: [
     {
-      title: "Account",
-      link: "/account",
-      icon: (className) => <FontAwesomeIcon icon={faAddressCard} size="1x" className={className} />
+      title: 'My Account',
+      link: '/account',
+      icon: (className) => <FontAwesomeIcon icon={faAddressCard} size='1x' className={className} />,
     },
     {
-      title: "Portfolio",
-      link: "/portfolio",
-      icon: (className) => <FontAwesomeIcon icon={faChartArea} size="1x" className={className} />
+      title: 'Investor Profile',
+      link: '/account/kyc',
+      icon: (className) => <FontAwesomeIcon icon={faIdCard} size='1x' className={className} />,
     },
     {
-      title: "Logout",
-      handler: "handleLogout",
-      icon: (className) => <FontAwesomeIcon icon={faSignOutAlt} size="1x" className={className} />
+      title: 'Portfolio',
+      link: '/portfolio',
+      icon: (className) => <FontAwesomeIcon icon={faChartArea} size='1x' className={className} />,
+    },
+    {
+      title: 'Logout',
+      handler: 'handleLogout',
+      icon: (className) => <FontAwesomeIcon icon={faSignOutAlt} size='1x' className={className} />,
     },
   ],
   guest: [
     {
-      title: "Login",
-      link: "/login"
+      title: 'Login',
+      link: '/login',
     },
     {
-      title: "Sign Up",
-      link: "/signup"
-    }
-  ]
+      title: 'Sign Up',
+      link: '/signup',
+    },
+  ],
 }
 
 
-export default (props) => {
-
-  const {
-    open,
-    setOpen,
-    isLoggedIn,
-    handleLogout,
-  } = props
-
-  return (
-    <SideDrawer
-      open={open}
-      setOpen={setOpen}
-      width="85vw"
-      anchor="right"
-    >
-      <NavElements
-        isLoggedIn={isLoggedIn}
-        handleLogout={handleLogout}
-        handleClose={() => setOpen(false)}
-      />
-    </SideDrawer>
-  )
-}
+export default ({
+  open,
+  setOpen,
+  isLoggedIn,
+  handleLogout,
+}) => (
+  <SideDrawer
+    open={open}
+    setOpen={setOpen}
+    width='85vw'
+    anchor='right'
+  >
+    <NavElements
+      isLoggedIn={isLoggedIn}
+      handleLogout={handleLogout}
+      handleClose={() => setOpen(false)}
+    />
+  </SideDrawer>
+)
 
 const NavElements = (props) => {
-
   const {
     isLoggedIn,
-    handleClose
+    handleClose,
   } = props
 
   const callHandlerAndClose = (handlerName) => {
@@ -102,7 +102,7 @@ const NavElements = (props) => {
 
   return (
     <List>
-      {base.map((elementDef, i) => {
+      {base.map((elementDef) => {
         if ('handler' in elementDef) {
           return (
             <ListItem
@@ -120,9 +120,8 @@ const NavElements = (props) => {
 
         let href = null
         if ('placeholder' in elementDef) {
-          href = { pathname: "/placeholder", query: { title: elementDef.title } }
-        }
-        else if ('link' in elementDef) {
+          href = { pathname: '/placeholder', query: { title: elementDef.title } }
+        } else if ('link' in elementDef) {
           href = elementDef.link
         }
 
@@ -130,9 +129,14 @@ const NavElements = (props) => {
           return (
             <NextLink
               href={href}
-              key={i}
+              key={elementDef.title}
             >
-              <ListItem className={classes.listButton} onClick={() => handleClose()} button key={elementDef.link}>
+              <ListItem
+                className={classes.listButton}
+                onClick={() => handleClose()}
+                button
+                key={elementDef.link}
+              >
                 {elementDef.title}
               </ListItem>
             </NextLink>
@@ -154,23 +158,22 @@ const NavElements = (props) => {
 }
 
 const SubNav = (props) => {
-
   const {
     classes,
     menuDefinition,
     handleClose,
-    callHandler
+    callHandler,
   } = props
 
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
 
   const toggleOpen = () => {
-    setOpen(!open);
+    setOpen(!open)
   }
 
   const renderItem = (item) => {
     if ('handler' in item) {
-      return(
+      return (
         <ListItem
           className={classes.listButtonSublist}
           onClick={() => {
@@ -186,9 +189,8 @@ const SubNav = (props) => {
     let href = null
     if ('link' in item) {
       href = item.link
-    }
-    else if ('placeholder' in item) {
-      href = { pathname: "/placeholder", query: { title: item.title } }
+    } else if ('placeholder' in item) {
+      href = { pathname: '/placeholder', query: { title: item.title } }
     }
     return (
       <NextLink href={href} >
@@ -209,10 +211,10 @@ const SubNav = (props) => {
         <ListItemText primary={menuDefinition.title} />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
-      <Collapse in={open} timeout="auto" unmountOnExit>
+      <Collapse in={open} timeout='auto' unmountOnExit>
         <Divider light />
-        <List component="div" disablePadding>
-          {menuDefinition.items.map((item) => { return renderItem(item) })}
+        <List component='div' disablePadding>
+          {menuDefinition.items.map((item) => renderItem(item))}
         </List>
         <Divider light />
       </Collapse>

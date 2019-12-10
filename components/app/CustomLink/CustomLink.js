@@ -1,19 +1,40 @@
-import React from "react"
-import NextLink from "next/link"
+import NextLink from 'next/link'
+import React from 'react'
 
-// import Button from "@material-ui/core/Button"
+// import Button from '@material-ui/core/Button'
 // <Button component={CustomLink} href={'/foo'}>bar</Button>
 
 const CustomLink = React.forwardRef(
-  ({ className, href, hrefAs, children, download, target, style }, ref) => (
+  ({
+    className,
+    href,
+    hrefAs,
+    children,
+    download,
+    target,
+    style,
+  }, ref) => (
     <NextLink ref={ref} href={href} as={hrefAs}>
       {
-        download ?
-        <a className={className} style={style} download target={target}>{children}</a>
-        : <a className={className} style={style} target={target}>{children}</a>
+        download
+          ? <a
+              className={className}
+              style={style}
+              download
+              target={target}
+            >
+              {children}
+            </a>
+          : <a
+              className={className}
+              style={style}
+              target={target}
+            >
+              {children}
+            </a>
       }
     </NextLink>
-  )
+  ),
 )
 
 export default CustomLink
