@@ -19,11 +19,13 @@ const REWARDS = [
       "$1 allows you to stay informed on our progress and make a decision before the campaign ends. Plus, you'll receive infinite love + appreciation from our team. $1 allows you to stay informed on our progress and make a decision before the campaign ends. Plus, you'll receive infinite love + appreciation from our team.",
       "Plus, you'll receive infinite love + appreciation from our team. $1 allows you to stay informed on our progress and make a decision before the campaign ends. Plus, you'll receive infinite love + appreciation from.",
     ],
+    investorsAmount: 150,
     estimatedDelivery: 'Dec 2019',
     disabled: false,
   },
   {
     amount: 5000,
+    investorsAmount: 100,
     description: [
       "$1 allows you to stay informed on our progress and make a decision before the campaign ends. Plus, you'll receive infinite love + appreciation from our team. $1 allows you to stay informed on our progress and make a decision before the campaign ends. Plus, you'll receive infinite love + appreciation from our team.",
       "Plus, you'll receive infinite love + appreciation from our team. $1 allows you to stay informed on our progress and make a decision before the campaign ends. Plus, you'll receive infinite love + appreciation from.",

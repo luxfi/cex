@@ -1,6 +1,9 @@
 import { makeStyles } from '@material-ui/styles'
 
 export default makeStyles(theme => ({
+  container: {
+    width: '291px',
+  },
   paper: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(7),
