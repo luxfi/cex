@@ -9,7 +9,14 @@ import {
 import { googlePageView } from '../util/generic'
 import { withRouter } from 'next/router'
 
-const OfferingBody = () => {
+const OfferingBody = ({
+  funds,
+  movie,
+  setErrorMessage,
+  setSuccessMessage,
+  addOfferingInvestment,
+  checkIfLoggedIn,
+}) => {
   const summaryRef = useRef(null)
   const dealTermsRef = useRef(null)
   const documentsRef = useRef(null)
@@ -29,7 +36,15 @@ const OfferingBody = () => {
   return (
     <>
       <OfferingNavBar {...refs} />
-      <OfferingContent {...refs} />
+      <OfferingContent
+        funds={funds}
+        movie={movie}
+        setErrorMessage={setErrorMessage}
+        setSuccessMessage={setSuccessMessage}
+        addOfferingInvestment={addOfferingInvestment}
+        checkIfLoggedIn={checkIfLoggedIn}
+        {...refs}
+      />
     </>
   )
 }
@@ -75,7 +90,14 @@ class Offering extends Component {
           addOfferingInvestment={addOfferingInvestment}
           checkIfLoggedIn={checkIfLoggedIn}
         />
-        <OfferingBody />
+        <OfferingBody
+          funds={accountBalance}
+          movie={movie}
+          setErrorMessage={setErrorMessage}
+          setSuccessMessage={setSuccessMessage}
+          addOfferingInvestment={addOfferingInvestment}
+          checkIfLoggedIn={checkIfLoggedIn}
+        />
       </Box>
     )
   }

@@ -9,6 +9,7 @@ import {
   SummarySection,
   UpdatesDiscussionsSection,
   TeamSection,
+  RewardsSection,
 } from '../'
 
 const OfferingContent = ({
@@ -19,6 +20,12 @@ const OfferingContent = ({
   newsRef,
   risksDisclosuresRef,
   updatesDiscussionsRef,
+  funds,
+  movie,
+  setErrorMessage,
+  setSuccessMessage,
+  addOfferingInvestment,
+  checkIfLoggedIn,
 }) => {
   return (
     <Grid container justify="center" spacing={4}>
@@ -42,7 +49,16 @@ const OfferingContent = ({
           updatesDiscussionsRef={updatesDiscussionsRef}
         />
       </Grid>
-      <Grid item lg={3} md={4} sm={6} xs={12}></Grid>
+      <Grid item lg={3} md={4} sm={6} xs={12}>
+        <RewardsSection
+          funds={funds}
+          movie={movie}
+          setErrorMessage={setErrorMessage}
+          setSuccessMessage={setSuccessMessage}
+          addOfferingInvestment={addOfferingInvestment}
+          checkIfLoggedIn={checkIfLoggedIn}
+        />
+      </Grid>
     </Grid>
   )
 }
