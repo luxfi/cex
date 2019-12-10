@@ -62,7 +62,7 @@ class OfferingView extends Component {
     }
 
     return (
-      <Box m={3} mt={8} mb={40}>
+      <Box m={3} mt={8} mb={20}>
         <OfferingHeader
           funds={accountBalance}
           movie={movie}
