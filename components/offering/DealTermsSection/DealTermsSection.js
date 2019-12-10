@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 import { formatCurrency, isNumber } from '../../../util/generic'
+import { Wrapper } from '@material-ui/pickers/wrappers/Wrapper'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,6 +24,9 @@ const useStyles = makeStyles(theme => ({
   removePadding: {
     padding: 0,
   },
+  collapseRoot: { display: 'inline' },
+  collapseWrapper: { display: 'inline' },
+  collapseWrapperInner: { display: 'inline' },
 }))
 
 const useExpansionPanelStyles = makeStyles({
@@ -166,7 +170,17 @@ const DealTermsSection = ({ dealTermsRef }) => {
                                   </Link>
                                 </span>
                               )}
-                              <Collapse in={open} timeout="auto" unmountOnExit>
+                              <Collapse
+                                in={open}
+                                timeout="auto"
+                                unmountOnExit
+                                component="span"
+                                classes={{
+                                  root: classes.collapseRoot,
+                                  wrapper: classes.collapseWrapper,
+                                  wrapperInner: classes.collapseWrapperInner,
+                                }}
+                              >
                                 {restOfBody}
                                 {open && last && (
                                   <Link color="secondary" onClick={handleClick}>
@@ -184,6 +198,12 @@ const DealTermsSection = ({ dealTermsRef }) => {
                             in={open}
                             timeout="auto"
                             unmountOnExit
+                            component="span"
+                            classes={{
+                              root: classes.collapseRoot,
+                              wrapper: classes.collapseWrapper,
+                              wrapperInner: classes.collapseWrapperInner,
+                            }}
                           >
                             <Typography
                               variant="subtitle1"

@@ -22,6 +22,9 @@ const useStyles = makeStyles(theme => ({
   removePadding: {
     padding: 0,
   },
+  collapseRoot: { display: 'inline' },
+  collapseWrapper: { display: 'inline' },
+  collapseWrapperInner: { display: 'inline' },
 }))
 
 const useExpansionPanelStyles = makeStyles({
@@ -161,7 +164,17 @@ const RisksDisclosuresSection = ({ risksDisclosuresRef }) => {
                                   </Link>
                                 </span>
                               )}
-                              <Collapse in={open} timeout="auto" unmountOnExit>
+                              <Collapse
+                                in={open}
+                                timeout="auto"
+                                unmountOnExit
+                                component="span"
+                                classes={{
+                                  root: classes.collapseRoot,
+                                  wrapper: classes.collapseWrapper,
+                                  wrapperInner: classes.collapseWrapperInner,
+                                }}
+                              >
                                 {restOfBody}
                                 {open && last && (
                                   <Link color="secondary" onClick={handleClick}>
@@ -179,6 +192,12 @@ const RisksDisclosuresSection = ({ risksDisclosuresRef }) => {
                             in={open}
                             timeout="auto"
                             unmountOnExit
+                            component="span"
+                            classes={{
+                              root: classes.collapseRoot,
+                              wrapper: classes.collapseWrapper,
+                              wrapperInner: classes.collapseWrapperInner,
+                            }}
                           >
                             <Typography
                               variant="subtitle1"
