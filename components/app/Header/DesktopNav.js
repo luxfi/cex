@@ -17,8 +17,7 @@ const useStyles = makeStyles(styles)
 
 import navStructure from '../../../util/navStructure'
 
-export default (props) => {
-
+export default () => {
   const classes = useStyles()
 
   return (
@@ -29,7 +28,7 @@ export default (props) => {
       <div className={classes.navOuter}>
         <div className={classes.navSpacer} />
         <DesktopMainNav
-          navStructure={navStructure}
+          nav={navStructure}
           classes={classes}
         />
       </div>
@@ -37,62 +36,49 @@ export default (props) => {
   )
 }
 
-const MainNavDropdown = (props) => {
+const MainNavDropdown = ({ menuDefinition, classes }) => (
+  <PopupState variant='popover' popupId='menu-popover'>
+    {(popupState) => (
+      <>
+      <Button
+        {...bindTrigger(popupState)}
+        className={classes.navButton}
+      >
+        {menuDefinition.title}
+      </Button >
+      <Popover
+        {...bindPopover(popupState)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+        className={classes.menu}
+      >
+        {menuDefinition.items.map(
+          (item) => {
+            const href = ('link' in item)
+              ? item.link
+              : ({
+                pathname: '/placeholder',
+                query: { title: item.placeholder },
+              })
+            return (
+              <NextLink href={href} key={item.title}>
+                <MenuItem onClick={popupState.close}>
+                  <span className={classes.subMenuItemText}>
+                    {item.title}
+                  </span>
+                </MenuItem>
+              </NextLink>
+            )
+          },
+        )}
+      </Popover>
+      </>
+    )}
+  </PopupState>
+)
 
-  const {
-    menuDefinition,
-    classes
-  } = props
-
-  return (
-    <PopupState variant='popover' popupId='menu-popover'>
-      {(popupState) => (
-        <>
-        <Button
-          {...bindTrigger(popupState)}
-          className={classes.navButton}
-        >
-          {menuDefinition.title}
-        </Button >
-        <Popover
-          {...bindPopover(popupState)}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-          transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-          className={classes.menu}
-        >
-          {menuDefinition.items.map(
-            (item, i) => {
-              const href = ('link' in item) ?
-                item.link
-                :
-                ({
-                  pathname: '/placeholder',
-                  query: { title: item.placeholder }
-                })
-                return (
-                  <NextLink href={href} key={i} >
-                    <MenuItem onClick={popupState.close}><span className={classes.subMenuItemText}>{item.title}</span></MenuItem>
-                  </NextLink>
-                )
-            }
-          )}
-        </Popover>
-        </>
-      )}
-    </PopupState>
-  )
-}
-
-const DesktopMainNav = (props) => {
-
-  const {
-    navStructure,
-    classes
-  } = props
-
-  let result = []
-  navStructure.forEach((navElement) => {
-
+const DesktopMainNav = ({ nav, classes }) => (
+  nav.map((navElement) => {
     let href = null
     if ('placeholder' in navElement) {
       href = { pathname: '/placeholder', query: { title: navElement.title } }
@@ -101,26 +87,23 @@ const DesktopMainNav = (props) => {
     }
 
     if (href) {
-      result.push(
+      return (
         <NextLink href={href} key={`link+${navElement.title}`}>
           <Button
             className={classes.navButton}
           >
             {navElement.title}
           </Button>
-        </NextLink>)
-    } else {
-      result.push(
-        <MainNavDropdown
-          classes={classes}
-          menuDefinition={navElement}
-          key={`dropdown+${navElement.title}`}
-        />)
+        </NextLink>
+      )
     }
+
+    return (
+      <MainNavDropdown
+        classes={classes}
+        menuDefinition={navElement}
+        key={`dropdown+${navElement.title}`}
+      />
+    )
   })
-  return (
-    <>
-      {result}
-    </>
-  )
-}
+)

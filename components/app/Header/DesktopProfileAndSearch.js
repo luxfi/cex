@@ -1,111 +1,122 @@
-import React from "react"
-import Link from "next/link"
+import React from 'react'
+import Link from 'next/link'
 
 import {
   Button,
   IconButton,
   Popover,
   MenuItem,
-} from "@material-ui/core"
+} from '@material-ui/core'
 
 import {
   AccountCircle,
-  Search,
-} from "@material-ui/icons"
+} from '@material-ui/icons'
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import {
   faAddressCard,
   faChartArea,
+  faIdCard,
   faSignOutAlt,
-} from "@fortawesome/free-solid-svg-icons"
-
-import { AutoCompleteSearch } from ".."
-
+} from '@fortawesome/free-solid-svg-icons'
 
 // This one is recommended in the MUI docs themselves :)
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state'
 
-import { makeStyles } from "@material-ui/core/styles"
+import { makeStyles } from '@material-ui/core/styles'
 
-import mainStyles from './desktopNav.style.js'
-import searchStyles from './searchWidget.style.js'
+import mainStyles from './desktopNav.style'
 
 const useMainStyles = makeStyles(mainStyles)
-const useSearchStyles = makeStyles(searchStyles)
 
 export default (props) => {
-
   const {
-    isLoggedIn, handleLogout
+    isLoggedIn,
+    handleLogout,
   } = props
 
   const classes = useMainStyles()
-  const searchClasses = useSearchStyles()
 
   return (
     <div className={classes.accountOuter}>
       {/* <div className={searchClasses.search}>
         <Search className={searchClasses.searchIcon}/>
         <AutoCompleteSearch
-          placeholder="Search…"
+          placeholder='Search…'
           classes={searchClasses}
         />
       </div> */}
-      {isLoggedIn ? (
-        <PopupState variant="popover" popupId="menu-popover">
-          {(popupState) => {
-            return (
+      {isLoggedIn
+        ? (
+          <PopupState variant='popover' popupId='menu-popover'>
+            {(popupState) => (
               <>
                 <IconButton
-                  aria-controls="menu"
-                  aria-haspopup="true"
+                  aria-controls='menu'
+                  aria-haspopup='true'
                   {...bindTrigger(popupState)}
                 >
                   <AccountCircle className={classes.accountIcon} />
                 </IconButton>
                 <Popover
                   {...bindPopover(popupState)}
-                  anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                  transformOrigin={{ vertical: "top", horizontal: "right" }}
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                 >
-                  <Link href="/account">
-                    <MenuItem className={classes.menuItem} onClick={popupState.close}>
-                      <span className={classes.menuItemText}>Account</span>
-                      <FontAwesomeIcon icon={faAddressCard} size="1x" className={classes.menuItem} />
+                  <Link href='/account'>
+                    <MenuItem
+                      className={classes.menuItem}
+                      onClick={popupState.close}
+                    >
+                      <span className={classes.menuItemText}>My Account</span>
+                      <FontAwesomeIcon icon={faAddressCard} size='1x' className={classes.menuItem} />
                     </MenuItem>
                   </Link>
-                  <Link href="/portfolio">
-                    <MenuItem className={classes.menuItem} onClick={popupState.close}>
+                  <Link href='/account/kyc'>
+                    <MenuItem
+                      className={classes.menuItem}
+                      onClick={popupState.close}
+                    >
+                      <span className={classes.menuItemText}>Investor Profile</span>
+                      <FontAwesomeIcon icon={faIdCard} size='1x' className={classes.menuItem} />
+                    </MenuItem>
+                  </Link>
+                  <Link href='/portfolio'>
+                    <MenuItem
+                      className={classes.menuItem}
+                      onClick={popupState.close}
+                    >
                       <span className={classes.menuItemText}>Portfolio</span>
-                      <FontAwesomeIcon icon={faChartArea} size="1x" className={classes.menuItem} />
+                      <FontAwesomeIcon icon={faChartArea} size='1x' className={classes.menuItem} />
                     </MenuItem>
                   </Link>
-                  <MenuItem onClick={handleLogout} className={classes.menuItem} >
+                  <MenuItem
+                    onClick={handleLogout}
+                    className={classes.menuItem}
+                  >
                     <span className={classes.menuItemText}>Logout</span>
-                    <FontAwesomeIcon icon={faSignOutAlt} size="1x" />
+                    <FontAwesomeIcon icon={faSignOutAlt} size='1x' />
                   </MenuItem>
                 </Popover>
               </>
-            )
-          }
-          }
-        </PopupState>
-      ) : (
+            )}
+          </PopupState>
+        ) : (
           <>
-            <Link href={"/login"} >
+            <Link href='/login' >
               <Button className={classes.navButton}>
                 Login
-          </Button>
+              </Button>
             </Link>
-            <Link href={"/signup"} >
-              <Button variant="outlined" className={classes.navButton}>
+            <Link href='/signup' >
+              <Button variant='outlined' className={classes.navButton}>
                 Sign Up
-          </Button>
+              </Button>
             </Link>
           </>
-        )}
+        )
+      }
     </div>
   )
 }
