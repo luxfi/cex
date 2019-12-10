@@ -1,41 +1,46 @@
-import React from 'react'
+import { config } from '@fortawesome/fontawesome-svg-core'
+
+import { CssBaseline, NoSsr } from '@material-ui/core'
+import { MuiThemeProvider, withStyles } from '@material-ui/core/styles'
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
+
 import { Provider, observer } from 'mobx-react'
 
 import App from 'next/app'
 import { withRouter } from 'next/router'
 
-import { withStyles } from '@material-ui/core/styles'
-import 'react-html5-camera-photo/build/css/index.css'
-import { MuiThemeProvider } from '@material-ui/core/styles'
-import { NoSsr, CssBaseline } from '@material-ui/core'
-import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
+import React from 'react'
+import ReactGA from 'react-ga'
 
-// This ensures that the icon CSS is loaded immediately before attempting to render icons
+import 'react-html5-camera-photo/build/css/index.css'
+
+// This ensures that the icon CSS is loaded immediately before attempting
+// to render icons
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import { config } from '@fortawesome/fontawesome-svg-core'
-// Prevent fontawesome from dynamically adding its css since we did it manually above
-config.autoAddCss = false
+// Prevent fontawesome from dynamically adding its css since we did it
+// manually above
 
 import {
-  CustomSnackbar,
-  Header,
-  MobileNavMenu,
-  Footer,
   CustomModal,
+  CustomSnackbar,
+  Footer,
+  Header,
   MobileAccountMenu,
+  MobileNavMenu,
 } from '../components/app'
 
-import ReactGA from 'react-ga'
 import initializeStore from '../stores/stores'
+import styles from '../styles/app.style'
 import { darkTheme } from '../styles/esxThemes'
-import styles from '../styles/app.style.js'
 
-const hideFooter = page => {
-  const noFooterPages = ['pro']
+config.autoAddCss = false
+
+const hideFooter = (page) => {
+  const noFooterPages = ['/pro']
   let hide = false
-  noFooterPages.forEach(p => {
+  noFooterPages.forEach((p) => {
     if (hide) return
-    hide = page.indexOf(p) > -1
+    hide = page === p
   })
   return hide
 }
@@ -78,7 +83,13 @@ class MyMobxApp extends App {
   }
 
   render() {
-    const { Component, pageProps, width, classes, router } = this.props
+    const {
+      Component,
+      pageProps,
+      width,
+      classes,
+      router,
+    } = this.props
 
     const showDesktopNav = isWidthUp('md', width)
     const showDesktopProfileMenu = isWidthUp('sm', width)
@@ -93,12 +104,12 @@ class MyMobxApp extends App {
                 showDesktopNav={showDesktopNav}
                 showDesktopProfileMenu={showDesktopProfileMenu}
                 isLoggedIn={this.mobxStore.userStore.loggedIn}
-                openLeftDrawer={() =>
+                openLeftDrawer={() => (
                   this.mobxStore.uiStore.setLeftDrawerOpen(true)
-                }
-                openRightDrawer={() =>
+                )}
+                openRightDrawer={() => (
                   this.mobxStore.uiStore.setRightDrawerOpen(true)
-                }
+                )}
                 handleLogout={() => {
                   this.mobxStore.userStore.logout()
                 }}
@@ -126,9 +137,10 @@ class MyMobxApp extends App {
                   this.mobxStore.userStore.logout()
                 }}
               />
-              {!hideFooter(router.route) ? (
-                <Footer rootClassName={classes.footer} />
-              ) : null}
+              {
+                !hideFooter(router.route)
+                  ? <Footer rootClassName={classes.footer} /> : null
+              }
             </NoSsr>
           </div>
         </MuiThemeProvider>

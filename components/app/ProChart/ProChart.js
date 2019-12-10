@@ -95,8 +95,9 @@ class StockChart extends React.Component {
     const gridWidth = width - margin.left - margin.right
     const gridHeight = height - margin.top - margin.bottom
 
-    const elderRayHeight = 100
-    const elderRayOrigin = (_, h) => [0, h - elderRayHeight]
+    // const elderRayHeight = 100
+    const elderRayHeight = 0
+    // const elderRayOrigin = (_, h) => [0, h - elderRayHeight]
     const barChartHeight = gridHeight / 4
     const barChartOrigin = (_, h) => [0, h - barChartHeight - elderRayHeight]
     const chartHeight = gridHeight - elderRayHeight
@@ -121,8 +122,9 @@ class StockChart extends React.Component {
           <XAxis
             stroke={textColor}
             tickLabelFill={textColor}
-            showTicks={false}
-          />
+            innerTickSize={-1 * gridHeight}
+            tickStroke={gridColor}
+            ticks={6} />
           <YAxis
             stroke={textColor}
             innerTickSize={-1 * gridWidth}
@@ -178,6 +180,20 @@ class StockChart extends React.Component {
             ]}
           />
         </Chart>
+        <CrossHairCursor />
+      </ChartCanvas>
+    )
+  }
+}
+// non elder ray xaxis
+          // <XAxis
+          //   stroke={textColor}
+          //   tickLabelFill={textColor}
+          //   showTicks={false}
+          // />
+
+// Elder Ray
+/*
         <Chart
           id={4}
           height={elderRayHeight}
@@ -212,10 +228,6 @@ class StockChart extends React.Component {
             yDisplayFormat={(d) => `${this.pricesDisplayFormat(d.bullPower)}, ${this.pricesDisplayFormat(d.bearPower)}`}
             origin={[8, 16]} />
         </Chart>
-        <CrossHairCursor />
-      </ChartCanvas>
-    )
-  }
-}
+ */
 
-export default withSize(600)(withDeviceRatio()(StockChart))
+export default withSize(300)(withDeviceRatio()(StockChart))

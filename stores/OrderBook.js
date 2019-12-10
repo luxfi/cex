@@ -254,7 +254,7 @@ export default class OrderBook {
         this.book = data
         this.book.orderBook.bids = padBids(this.book.orderBook.bids, 100, undefined)
         this.book.orderBook.asks = padAsks(this.book.orderBook.asks, 100, undefined)
-        this.trades = this.tradesBuffer.reverse()
+        this.trades = this.tradesBuffer.slice(0).reverse()
         this.lastDataMerge = now
       }
     })

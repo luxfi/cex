@@ -21,6 +21,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import midstream from 'midstream'
 import { toJS } from 'mobx'
+import Router from "next/router"
 import { useState } from 'react'
 import NumberFormat from 'react-number-format'
 import { Element } from 'react-scroll'
@@ -28,6 +29,7 @@ import { Element } from 'react-scroll'
 import { formatCurrency } from '../../../util/generic'
 
 import {
+  ExchangeHistoryBook,
   OrderBook,
   TradeHistoryBook,
 } from '../../trade'
@@ -75,22 +77,101 @@ const NumberFormatCustom = (props) => {
   )
 }
 
+// long dash symbols
+const longDash = '—'
+
+// manually measured
+const headerHeight = 64
+const topBarHeight = 53
+const tradingAreaWidth = 240
+const tradingAreaHeight = 360
+
 const useStyles = makeStyles((theme) => ({
-  orderBookPaperGrid: {
-    width: 400,
+  coloredLink: {
+    color: theme.palette.primary.main,
+    textDecoration: 'none',
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  },
+  proTrader: {
+    height: `calc(100vh - ${headerHeight}px)`,
+    background: 'linear-gradient(to bottom, rgba(26,26,26,1) 0%,rgba(9,9,9,1) 100%)',
+    marginTop: -64,
+    paddingTop: 64,
+    // fonts
+    '& *': {
+      fontSize: '.7rem',
+    },
+    // labels
+    '& .MuiInputLabel-root': {
+      fontSize: 'calc(.7rem / .75)',
+      fontWeight: 600,
+      textTransform: 'uppercase',
+      color: theme.palette.common.white,
+    },
+    // inputs
+    '& .MuiInput-root': {
+      padding: '3px 12px',
+    },
+    '& .MuiSelect-icon': {
+      top: 'calc(50% - 6px)',
+      right: 8,
+    },
+  },
+  tickerLabel: {
+    color: 'rgba(255,255,255,.5)',
+  },
+  tickerNumber: {
+    textTransform: 'uppercase',
+    fontWeight: 600,
+  },
+  proTraderLabel: {
+    textTransform: 'uppercase',
+    fontWeight: 600,
+  },
+  orderBookArea: {
+    width: 280,
+    height: '100%',
+    overflow: 'auto',
   },
   orderBookPaper: {
     border: '1px solid',
+    borderColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
+    height: '100%',
+    overflow: 'hidden',
+    '& span': {
+      fontWeight: 600,
+    },
+  },
+  tradeHistoryArea: {
+    width: 480,
+    height: '100%',
+    overflow: 'auto',
+  },
+  tradeHistoryBookPaper: {
+    // extend: 'orderBookPaper',
+    borderLeft: 0,
+    border: '1px solid',
+    height: '100%',
+    overflow: 'hidden',
     borderColor: theme.palette.background.paper,
     backgroundColor: theme.palette.background.default,
     '& span': {
       fontWeight: 600,
     },
   },
-  tradeHistoryBookPaper: {
+  exchangeHistoryArea: {
+    height: '100%',
+    overflow: 'auto',
+  },
+  exchangeHistoryBookPaper: {
     // extend: 'orderBookPaper',
     borderLeft: 0,
     border: '1px solid',
+    height: '100%',
+    overflow: 'hidden',
     borderColor: theme.palette.background.paper,
     backgroundColor: theme.palette.background.default,
     '& span': {
@@ -128,6 +209,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.default,
     width: '50%',
     minWidth: 0,
+    textTransform: 'uppercase',
+    fontWeight: 600,
     '&.Mui-selected': {
       backgroundColor: theme.palette.background.paper,
     },
@@ -147,17 +230,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const useMidstream = (middleware, defaults, dst) => {
-  const [ms] = useState(() => midstream(middleware, { defaults, dst }))
-  return ms
-}
-
 const greaterThan0 = (v) => {
   if (v > 0) {
     return v
   }
 
   throw new Error('Enter a value greater than 0.')
+}
+
+// Simple hook for Midstream
+const useMidstream = (config) => {
+  const dst = {}
+  const err = {}
+
+  // standard force rerender hack
+  const [tick, setTick] = useState(0)
+
+  const [ms] = useState(() => (
+    midstream(config, {
+      dst: (name, value) => {
+        dst[name] = value
+        setTick(tick + 1)
+      },
+      // err behaves just like dst
+      err: (name, value) => {
+        err[name] = value
+        setTick(tick + 1)
+      },
+    })
+  ))
+
+  return ms
 }
 
 export default (props) => {
@@ -169,41 +272,40 @@ export default (props) => {
     createOrder,
     maxSell,
     accountBalance,
+    slug,
+    movies,
+    orders,
   } = props
 
   if (!orderBook.isReady) {
     return <Typography>Loading chart...</Typography>
   }
 
-  const [mode, setMode] = useState(0)
-  const [showError, setShowError] = useState(false)
-
   const stock = toJS(orderBook.stock)
 
   const {
     src,
+    mode, setMode,
+    type, setType,
+    price, setPrice,
+    quantity, setQuantity,
+    showError, setShowError,
     dst,
     err,
-    hooks,
   } = useMidstream({
-    type: [isRequired, (v) => {
+    mode: [0],
+    showError: [false],
+    type: ['limit', isRequired, (v) => {
       // side effects of setting the type if setting
-      if (v !== dst.type) {
+      if (v !== type) {
         setShowError(false)
-        src.price = 0
+        setPrice(0)
         dst.price = 0
       }
       return v
     }],
-    price: (v) => (dst.type === 'limit' ? greaterThan0(v) : v),
-    quantity: greaterThan0,
-  }, {
-    type: 'limit',
-    price: 0,
-    quantity: 0,
-  }, {
-    price: 0,
-    quantity: 0,
+    price: [0, (v) => (type === 'limit' ? greaterThan0(v) : v)],
+    quantity: [0, greaterThan0],
   })
 
   const handleModeChange = (event, newValue) => {
@@ -219,9 +321,9 @@ export default (props) => {
 
       createOrder({
         side,
-        type: dst.type,
-        price: dst.price,
-        quantity: dst.quantity,
+        type,
+        price,
+        quantity,
         categories: movieCategories,
         ticker,
       })
@@ -241,16 +343,39 @@ export default (props) => {
   const { trades } = orderBook
 
   const classes = useStyles()
-  const isMarket = dst.type === 'market'
+  const isMarket = type === 'market'
 
   const data = stock.proChartData
+  const lastCandle = data[data.length - 1]
+  const secondLastCandle = data[data.length - 2]
+
+  const dailyDelta = (lastCandle.close - secondLastCandle.close).toFixed(2)
+  const dailyDeltaPercent = (
+    ((lastCandle.close - secondLastCandle.close) * 100)
+    / secondLastCandle.close
+  ).toFixed(2)
+
+  const marketOpts = {}
+
+  for (let movie of movies) {
+    marketOpts[movie.movieSlug] = movie.ticker
+  }
+
+  const subtotal = price * quantity
 
   return (
-    <Element>
-      <Box ml={-3} mr={-3} mt={-8}>
+    <Element className={ classes.proTrader }>
+      <div>
         <Grid container spacing={0}>
-          <Grid item xs={12} sm={4} md={3}>
-            <Paper square className={ classes.tabsPaper }>
+          <Grid item xs style={{
+            minWidth: tradingAreaWidth,
+            maxWidth: tradingAreaWidth,
+          }}>
+            <Paper
+              square
+              className={ classes.tabsPaper }
+              style={{ minHeight: topBarHeight }}
+            >
               <Tabs
                 value={mode}
                 onChange={ handleModeChange }
@@ -267,43 +392,102 @@ export default (props) => {
               </Tabs>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={8} md={9}>
+          <Grid item xs>
             <Box
               p={1}
               pl={2}
               pr={2}
               className={ classes.bordered }
+              style={{ minHeight: topBarHeight }}
             >
-              <Grid container spacing={2}>
+              <Grid container spacing={6}>
                 <Grid item>
-                  <Typography variant='caption'>
-                    Current Price:
+                  <Typography variant='caption' className={ classes.tickerLabel }>
+                    Current price
                   </Typography>
-                  <Typography variant='h6'>
+                  <Typography variant='h6' className={ classes.tickerNumber }>
                     1 { ticker } / ${ parseFloat(book.lastPrice).toFixed(2) }
                   </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant='caption' className={ classes.tickerLabel }>
+                    Bid-Ask
+                  </Typography>
+                  <Typography variant='h6' className={ classes.tickerNumber }>
+                    ${ parseFloat(bids[0][0]).toFixed(2) } - ${ parseFloat(asks[0][0]).toFixed(2) }
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant='caption' className={ classes.tickerLabel }>
+                    24hr change
+                  </Typography>
+                  <Typography
+                    variant='h6'
+                    className={ classes.tickerNumber }
+                    style={{ color: dailyDelta < 0 ? red[500] : green[500] }}
+                  >
+                    { dailyDelta < 0 ? '-' : ''}${ Math.abs(dailyDelta) } ({dailyDeltaPercent}%)
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant='caption' className={ classes.tickerLabel }>
+                    24hr range
+                  </Typography>
+                  <Typography variant='h6' className={ classes.tickerNumber }>
+                    ${ lastCandle.low } - ${ lastCandle.high }
+                  </Typography>
+                </Grid>
+                <Grid item xs/>
+                <Grid item>
+                  <MUIText
+                    select
+                    options={marketOpts}
+                    showError={ showError }
+                    value={slug}
+                    setValue={(v) => {
+                      if (v != slug) {
+                        Router.push(`/pro/${v}`)
+                      }
+                    }}
+                    fullWidth
+                    placeholder='Select a market'
+                  />
                 </Grid>
               </Grid>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={4} md={3}>
+        </Grid>
+        <Grid
+          container
+          spacing={0}
+          style={{
+            minHeight: tradingAreaHeight,
+            height: `calc(60vh - (${headerHeight}px + ${topBarHeight}px) / 2)`,
+          }}
+        >
+          <Grid item xs style={{
+            minWidth: tradingAreaWidth,
+            maxWidth: tradingAreaWidth,
+          }}>
             <Paper square className={ classes.tradePaper }>
-              <Box p={2} pl={4} pr={4}>
+              <Box p={1.5} pl={1} pr={1}>
                 <div>
                   {
                     mode === 0 ? (
                       <>
-                        <Typography variant='body2'>
-                          Available Cash to Trade:
+                        <Typography variant='body2' className={ classes.proTraderLabel }>
+                          Available Cash to Trade
                         </Typography>
                         <Typography variant='h6'>
-                          { formatCurrency(Number.parseFloat(accountBalance).toFixed(2)) }
+                          { formatCurrency(
+                            Number.parseFloat(accountBalance).toFixed(2),
+                          )}
                         </Typography>
                       </>
                     ) : (
                       <>
-                        <Typography variant='body2'>
-                          Available Share to Trade:
+                        <Typography variant='body2' className={ classes.proTraderLabel }>
+                          Available Share to Trade
                         </Typography>
                         <Typography variant='h6'>
                           { maxSell }
@@ -311,10 +495,13 @@ export default (props) => {
                       </>
                     )
                   }
-                  <br/>
+                  <Box mt={1} mb={2}>
+                    <a href='/account' target='_blank' className={ classes.coloredLink }>+ Add funds</a>
+                    &nbsp;|&nbsp;
+                    <a href='/portfolio' target='_blank' className={ classes.coloredLink }>See all balances</a>
+                  </Box>
                   <MUIText
                     label='Order Type'
-                    variant='outlined'
                     select
                     options={{
                       limit: 'Limit',
@@ -322,19 +509,18 @@ export default (props) => {
                     }}
                     showError={ showError }
                     error={ err.type }
-                    value={ src.type }
-                    setValue={ hooks.type[1] }
+                    value={ type }
+                    setValue={ setType }
                     fullWidth
                   />
                   <br/>
                   <MUIText
                     label='Price'
                     placeholder={ `$${(isMarket ? (meanPrice).toFixed(2) : '100.00')}` }
-                    variant='outlined'
                     showError={ showError }
                     error={ err.price }
-                    value={ isMarket ? meanPrice : src.price }
-                    setValue={ hooks.price[1] }
+                    value={ isMarket ? meanPrice : price }
+                    setValue={ setPrice }
                     InputProps={{
                       inputComponent: DollarFormatCustom,
                       endAdornment: <InputAdornment position='end'>USD</InputAdornment>,
@@ -346,11 +532,10 @@ export default (props) => {
                   <MUIText
                     label='Quantity'
                     placeholder='100'
-                    variant='outlined'
                     showError={ showError }
                     error={ err.quantity }
-                    value={ src.quantity }
-                    setValue={ hooks.quantity[1] }
+                    value={ quantity }
+                    setValue={ setQuantity }
                     InputProps={{
                       inputComponent: NumberFormatCustom,
                     }}
@@ -360,32 +545,38 @@ export default (props) => {
                   <Grid container>
                     <Grid item xs={6}>
                       <Typography variant='body1'>
-                        Subtotal:
+                        Subtotal
                       </Typography>
                     </Grid>
                     <Grid item xs={6} className='right-aligned'>
                       <Typography variant='body1' align='right'>
-                        ${ (dst.price * dst.quantity).toFixed(2) }
+                        {
+                          subtotal > 0 ? `$${(subtotal).toFixed(2)}` : longDash
+                        }
                       </Typography>
                     </Grid>
                     <Grid item xs={6}>
                       <Typography variant='body1'>
-                        Fee:
+                        Fee
                       </Typography>
                     </Grid>
                     <Grid item xs={6} className='right-aligned'>
                       <Typography variant='body1' align='right'>
-                        ${ (src.price * src.quantity * 0.005).toFixed(2) }
+                        {
+                          subtotal > 0 ? `$${(price * quantity * 0.005).toFixed(2)}` : longDash
+                        }
                       </Typography>
                     </Grid>
                     <Grid item xs={6}>
                       <Typography variant='body1'>
-                        Total:
+                        Total
                       </Typography>
                     </Grid>
                     <Grid item xs={6} className='right-aligned'>
                       <Typography variant='body1' align='right'>
-                        ${ (src.price * src.quantity * 1.005).toFixed(2) }
+                        {
+                          subtotal > 0 ? `$${(price * quantity * 1.005).toFixed(2)}` : longDash
+                        }
                       </Typography>
                     </Grid>
                   </Grid>
@@ -420,21 +611,34 @@ export default (props) => {
               </Box>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={8} md={9} className={classes.proChart}>
+          <Grid item xs className={classes.proChart}>
             <ProChart data={data} />
           </Grid>
-          <Grid item className={classes.orderBookPaperGrid}>
-            <Paper square className={classes.orderBookPaper}>
-              <OrderBook asks={asks} bids={bids} spread={spread}/>
-            </Paper>
-          </Grid>
-          <Grid item xs>
-            <Paper square className={classes.tradeHistoryBookPaper}>
-              <TradeHistoryBook trades={trades}/>
-            </Paper>
-          </Grid>
         </Grid>
-      </Box>
+      </div>
+      <Grid
+        container
+        spacing={0}
+        style={{
+          height: `calc(40vh - (${headerHeight}px + ${topBarHeight}px) / 2)`,
+        }}
+      >
+        <Grid item className={classes.tradeHistoryArea}>
+          <Paper square className={classes.tradeHistoryBookPaper}>
+            <TradeHistoryBook orders={orders}/>
+          </Paper>
+        </Grid>
+        <Grid item className={classes.orderBookArea}>
+          <Paper square className={classes.orderBookPaper}>
+            <OrderBook asks={asks} bids={bids} spread={spread}/>
+          </Paper>
+        </Grid>
+        <Grid item xs className={classes.exchangeHistoryArea}>
+          <Paper square className={classes.exchangeHistoryBookPaper}>
+            <ExchangeHistoryBook trades={trades}/>
+          </Paper>
+        </Grid>
+      </Grid>
     </Element>
   )
 }
