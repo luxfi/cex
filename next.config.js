@@ -102,7 +102,8 @@ module.exports = withBundleAnalyzer(
           '/contact': { page: '/contact' },
           '/about': { page: '/about' },
           '/placeholder': { page: '/placeholder' },
-          "/investor": { page: "/investor" }        
+          '/investor': { page: '/investor' },
+          '/accountLevels': { page: '/accountLevels' },
         }
       },
     }),
