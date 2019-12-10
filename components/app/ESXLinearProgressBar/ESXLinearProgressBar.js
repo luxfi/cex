@@ -1,7 +1,7 @@
 import LinearProgress from '@material-ui/core/LinearProgress'
 import { withStyles } from '@material-ui/core/styles'
 
-const LinearProgressBar = withStyles(theme => ({
+const ESXLinearProgressBar = withStyles(theme => ({
   root: {
     height: 6,
     backgroundColor: theme.palette.background.paper,
@@ -13,4 +13,4 @@ const LinearProgressBar = withStyles(theme => ({
   },
 }))(LinearProgress)
 
-export default LinearProgressBar
+export default ESXLinearProgressBar

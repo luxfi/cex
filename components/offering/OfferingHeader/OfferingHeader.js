@@ -3,7 +3,7 @@ import { Grid, Typography, Box, Chip, Divider } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import grey from '@material-ui/core/colors/grey'
 import { formatCurrency } from '../../../util/generic'
-import LinearProgressBar from '../../app/LinearProgressBar'
+import { ESXLinearProgressBar } from '../../app'
 import { OfferingInput, MediaSlider } from '../'
 import Icon from '@material-ui/core/Icon'
 
@@ -142,7 +142,7 @@ const RaisingInformation = ({
           </Typography>
         </Box>
         <Box mt={1} mb={1}>
-          <LinearProgressBar
+          <ESXLinearProgressBar
             variant="determinate"
             value={parseInt(percentFunded)}
           />
