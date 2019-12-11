@@ -66,8 +66,12 @@ class Offering extends Component {
     const { loggedIn } = userStore
     const checkIfLoggedIn = () => {
       if (!loggedIn) {
-        return router.push('/login')
+        router.push('/login')
+        document.body.scrollTop = 0 // For Safari
+        document.documentElement.scrollTop = 0
+        return false
       }
+      return true
     }
 
     const setErrorMessage = message => {

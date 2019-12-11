@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import useStyles from './rewardsCard.style'
+import { isStringUSCurrency } from '../../../util/generic'
 import { fade } from '@material-ui/core/styles'
 import { AccessibilityNew, HelpOutline } from '@material-ui/icons'
 import { common } from '@material-ui/core/colors'
@@ -20,51 +21,14 @@ import { isStringInteger, formatCurrency } from '../../../util/generic'
 
 const RewardsCard = ({
   reward,
-  marketPrice,
-  ticker,
-  createOrder,
-  redirectLogin,
-  movieCategories,
-  accountBalance,
-  maxSell,
-  book,
+  funds,
+  movie,
+  setErrorMessage,
+  setSuccessMessage,
+  addOfferingInvestment,
+  checkIfLoggedIn,
 }) => {
   const classes = useStyles()
-  const minimumInvestment = 50
-  const [investmentAmount, setInvestmentAmount] = useState('')
-
-  const handleSubmit = async () => {
-    checkIfLoggedIn()
-    const sufficientFunds = investmentAmount <= funds
-    if (sufficientFunds) {
-      await addOfferingInvestment(
-        investmentAmount,
-        () => {
-          setSuccessMessage('Your investment was successul')
-        },
-        ex => {
-          setErrorMessage(ex)
-        },
-      )
-      setInvestmentAmount('')
-    } else if (investmentAmount < minimumInvestment) {
-      setErrorMessage('Please enter the miminum investment amount or greater')
-    } else {
-      setErrorMessage('Insufficient funds')
-    }
-  }
-
-  const handleInputChange = evt => {
-    evt.preventDefault()
-    const { value } = evt.target
-    if (value === '') {
-      setInvestmentAmount(value)
-    }
-    if (isStringUSCurrency(value)) {
-      setInvestmentAmount(parseFloat(value))
-    }
-  }
-
   const {
     amount,
     description,
@@ -72,6 +36,25 @@ const RewardsCard = ({
     estimatedDelivery,
     disabled,
   } = reward
+
+  const handleSubmit = async () => {
+    if (!checkIfLoggedIn()) return
+    const sufficientFunds = amount <= funds
+    if (sufficientFunds) {
+      await addOfferingInvestment(
+        amount,
+        () => {
+          setSuccessMessage('Your investment was successul')
+        },
+        ex => {
+          setErrorMessage(ex)
+        },
+      )
+    } else {
+      setErrorMessage('Insufficient funds')
+    }
+  }
+
   const theme = useTheme()
   const style = disabled ? { opacity: 0.5 } : {}
   const paperStyle = disabled
@@ -133,55 +116,26 @@ const RewardsCard = ({
         <Divider className={classes.divider} />
         {!disabled && (
           <Grid item container xs={12} spacing={1}>
-            <Box mt={2} alignItems="center">
-              <Grid item xs={12}>
-                <Typography
-                  variant="subtitle2"
-                  component="span"
-                  color="textSecondary"
-                >
-                  Amount:
-                </Typography>
-              </Grid>
-            </Box>
-            <Grid item xs={12}>
-              <InputBase
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                  adornedStart: classes.adornedStart,
-                }}
-                required
-                id="investmentAmount"
-                name="investmentAmount"
-                fullWidth
-                placeholder="$"
-                onChange={evt => handleInputChange(evt)}
-                value={investmentAmount}
-                variant="filled"
-                inputProps={{
-                  style: {
-                    textAlign: 'left',
-                  },
-                }}
-              />
-            </Grid>
             <Grid item xs>
-              <Button
-                size="large"
-                fullWidth
-                classes={{
-                  root: classes.investButton,
-                }}
-              >
-                <Typography
-                  variant="subtitle2"
-                  className={classes.investButtonText}
+              <Box mt={2} alignItems="center">
+                <Button
+                  size="large"
+                  fullWidth
+                  classes={{
+                    root: classes.investButton,
+                  }}
+                  onClick={() => handleSubmit()}
                 >
-                  Invest
-                </Typography>
-              </Button>
+                  <Typography
+                    variant="subtitle2"
+                    className={classes.investButtonText}
+                  >
+                    Invest {formatCurrency(amount).slice(0, -3)}
+                  </Typography>
+                </Button>
+              </Box>
             </Grid>
+
             <Grid item xs={12}>
               <Box>
                 <Typography

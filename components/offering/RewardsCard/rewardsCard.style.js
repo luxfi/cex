@@ -24,21 +24,6 @@ export default makeStyles(theme => ({
     color: '#000',
     fontSize: 16,
   },
-  inputRoot: {
-    backgroundColor: 'rgba(255,255,255, 0.15)',
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
-    borderRadius: 4,
-  },
-  inputInput: {
-    fontSize: 16,
-  },
-  inputAdornedStart: {
-    '& > *:first-child': {
-      // * is the icon at the beginning of input
-      fontSize: 20,
-      marginRight: theme.spacing(2),
-    },
-  },
   // leaving this here if we decide to do back button
   // backButton: {
   //   color: 'transparent',
