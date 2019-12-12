@@ -11,7 +11,7 @@ const tabs = [
   {
     id: '',
     label: 'Account',
-    href: '/account/'
+    href: '/account'
   },
   {
     id: 'documents',
@@ -24,6 +24,8 @@ const tabs = [
     href: '/account/kyc'
   },
 ]
+
+// IMPORTANT - DO NOT USE TRAILING '/' ON HREF VALUE!!!
 
 export default props => {
   const { 
