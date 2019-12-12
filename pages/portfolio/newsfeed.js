@@ -12,7 +12,7 @@ import {
 } from '../../components/app'
 
 import {
-  RewardsView
+  NewsFeedView
 } from '../../components/portfolio'
 
 import { googlePageView } from '../../util/generic'
@@ -22,28 +22,29 @@ import styles from '../../styles/pages/portfolio.style.js'
 
 @inject("store")
 @observer
-class Rewards extends React.Component {
+class Newsfeed extends React.Component {
   static async getInitialProps({ mobxStore }) {
     return { ...mobxStore }
   }
 
   componentDidMount() {
+    this.props.store.newsStore.loadFeed()
     googlePageView()
   }
 
   render() {
     const { classes, store } = this.props
-    const { userStore } = store
+    const { userStore, newsStore } = store
 
     return (
       <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
         <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
-          <TabbedNav tabs={portfolioTabs} tab='rewards' />
+          <TabbedNav tabs={portfolioTabs} tab='newsfeed' />
         </AccountSection>
-        <RewardsView />
+        <NewsFeedView feed={newsStore.getFeedItems} />
       </Container>
     )
   }
 }
 
-export default withStyles(styles)(Rewards)
+export default withStyles(styles)(Newsfeed)

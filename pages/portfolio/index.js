@@ -1,67 +1,47 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
+import { Container } from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
 
-import {
-  PortfolioView,
-  TradeView,
-  RewardsView,
-  NewsFeedView,
-  ProTraderCTA,
-  PillsTabs
-} from "../../components/portfolio"
+import { 
+  AccountSection
+} from '../../components/account'
 
-import styles from "../../styles/pages/portfolio.style.js"
+import {
+  TabbedNav
+} from '../../components/app'
+
+import {
+  TradeView
+} from '../../components/portfolio'
+
+import { PortfolioView } from '../../components/portfolio'
+
+import styles from '../../styles/pages/portfolio.style.js'
 
 import { googlePageView } from "../../util/generic.js"
+import portfolioTabs from "../../util/portfolioTabs"
 
 const isServer = typeof window === "undefined"
 
 @inject("store")
 @observer
 class Portfolio extends React.Component {
-  state = {
-    tabIdx: 0
-  }
 
   constructor(props) {
     super(props)
-
-    if (!isServer) {
-
-      let tabIdx = ("tab" in props) ? props.tab : localStorage.getItem("portfolio-index")
-
-      if (tabIdx) {
-        tabIdx = JSON.parse(tabIdx)
-      } else {
-        tabIdx = 0
-      }
-
-      this.state = {
-        tabIdx: tabIdx,
-      }
-    }
-  }
-
-  setTab = (evt, val) => {
-    this.setState({ tabIdx: val })
-    if (!isServer) {
-      localStorage.setItem("portfolio-index", JSON.stringify(val))
-    }
   }
 
   componentDidMount () {
     this.props.store.userStore.loadAccountBalance()
     this.props.store.userPortfolio.getInvestments()
     this.props.store.userPortfolio.getWatchlist()
-    this.props.store.newsStore.loadFeed()
     googlePageView()
   }
 
   render() {
     const { store, classes } = this.props
     const { movieStore, userPortfolio, newsStore, userStore } = store
-    const { tabIdx } = this.state
 
     // What functions do we need from the movie and user store?
     const findMovieByTicker = t => movieStore.getMovieByTicker(t)
@@ -78,12 +58,11 @@ class Portfolio extends React.Component {
     }
 
     return (
-      <div className={classes.container}>
-        <PillsTabs tabIdx={tabIdx} handleChange={this.setTab} />
-        <br />
+      <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
+        <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
+          <TabbedNav tabs={portfolioTabs} tab='' />
+        </AccountSection>
         <TradeView
-          tabIdx={tabIdx}
-          index={0}
           investments={userPortfolio.topInvestments}
           findMovieByTicker={findMovieByTicker}
           store={store}
@@ -100,9 +79,7 @@ class Portfolio extends React.Component {
           removeFromWatchlist={removeFromWatchlist}
           accountBalance={userStore.accountBalance}
         />
-        <RewardsView tabIdx={tabIdx} index={1} />
-        <NewsFeedView tabIdx={tabIdx} index={2} feed={newsStore.getFeedItems} />
-      </div>
+      </Container>
     )
   }
 }

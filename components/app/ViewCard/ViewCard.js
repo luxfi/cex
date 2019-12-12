@@ -34,10 +34,9 @@ export default (props) => {
 
   return (
     <Paper className={classes.sectionOuter}>
-      <div className={classes.sectionTitleOuter} >
-        <Typography variant='h5' color='textPrimary' className={classes.sectionTitle}>{title}</Typography>
+      {/* <div className={classes.sectionTitleOuter} >
         {control}
-      </div>
+      </div> */}
       <div className={classes.sectionBody}>
         {children}
       </div>

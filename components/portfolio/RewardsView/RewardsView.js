@@ -175,34 +175,43 @@ const UrlWasCopiedSnackbar = props => {
 
 const rewards = [
   {
+    id: 1,
     title: 'complete your profile',
     completed: true,
   },
   {
+    id: 2,
     title: 'invite a friend',
     completed: true,
   },
   {
+    id: 3,
     title: 'add a payment option',
     completed: true,
   },
   {
+    id: 4,
     title: 'make 1 investment',
     completed: true,
   },
   {
+    id: 5,
     title: 'make 2 investment',
   },
   {
+    id: 6,
     title: 'make 1 investment',
   },
   {
+    id: 7,
     title: 'make 10 investment',
   },
   {
+    id: 8,
     title: 'make 20 investment',
   },
   {
+    id: 9,
     title: 'make 50 investment',
   },
 ]
@@ -235,7 +244,7 @@ const RewardsView = (props) => {
       </Grid>
       {
         rewards.map(reward => (
-          <Grid item xs={12} sm={4}>
+          <Grid key={reward.id} item xs={12} sm={4}>
             <RewardCard title={reward.title} points={5} completed={!!reward.completed}/>
           </Grid>
         ))

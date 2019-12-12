@@ -8,11 +8,15 @@ import {
 
 import { 
   AccountSection,
-  AccountTabs,
   TaxDocument
-} from "../../components/account"
+} from '../../components/account'
+
+import {
+  TabbedNav
+} from '../../components/app'
 
 import { googlePageView } from '../../util/generic'
+import AccountTabs from '../../util/accountTabs'
 
 @inject("store")
 @observer
@@ -33,7 +37,7 @@ class Documents extends React.Component {
     return (
       <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
         <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
-          <AccountTabs tab='documents' />
+          <TabbedNav tabs={AccountTabs} tab='documents' />
         </AccountSection>
         <AccountSection title="Tax Documents" style={{ marginBottom: '3em' }}>
           {

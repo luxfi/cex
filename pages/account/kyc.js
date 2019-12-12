@@ -6,14 +6,11 @@ import React from "react"
 import Container from "@material-ui/core/Container"
 import Link from "@material-ui/core/Link"
 
-import { 
-  AccountSection,
-  AccountTabs
-} from "../../components/account"
-import { CustomLink } from '../../components/app'
-
-import { KYCForm } from "../../components/account"
+import { AccountSection } from '../../components/account'
+import { CustomLink, TabbedNav } from '../../components/app'
+import { KYCForm } from '../../components/account'
 import { googlePageView } from '../../util/generic'
+import AccountTabs from '../../util/accountTabs'
 
 @inject("store")
 @observer
@@ -62,7 +59,7 @@ class KYC extends React.Component {
     return (
       <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
         <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
-          <AccountTabs tab='kyc' />
+          <TabbedNav tabs={AccountTabs} tab='kyc' />
         </AccountSection>
         <AccountSection title="KYC" style={{ marginBottom: '3em' }}>
           <KYCForm
