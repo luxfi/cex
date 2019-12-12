@@ -1,7 +1,10 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
 import { withStyles } from "@material-ui/core/styles"
-import { Container } from "@material-ui/core"
+import {
+  Container,
+  Typography,
+} from "@material-ui/core"
 
 import { 
   AccountSection
@@ -12,17 +15,17 @@ import {
 } from '../../components/app'
 
 import {
-  RewardsView
-} from '../../components/portfolio'
+  ActiveSessionsView
+} from '../../components/investor'
 
 import { googlePageView } from '../../util/generic'
-import portfolioTabs from '../../util/portfolioTabs'
+import AccountTabs from '../../util/accountTabs'
 
-import styles from '../../styles/pages/portfolio.style.js'
+import styles from '../../styles/pages/investor.style.js'
 
 @inject("store")
 @observer
-class Rewards extends React.Component {
+class Activity extends React.Component {
   static async getInitialProps({ mobxStore }) {
     return { ...mobxStore }
   }
@@ -38,12 +41,12 @@ class Rewards extends React.Component {
     return (
       <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
         <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
-          <TabbedNav tabs={portfolioTabs} tab='rewards' />
+          <TabbedNav tabs={AccountTabs} tab='activity' />
         </AccountSection>
-        <RewardsView />
+        <ActiveSessionsView tabTitle='Account Activity' classes={classes} />
       </Container>
     )
   }
 }
 
-export default withStyles(styles)(Rewards)
+export default withStyles(styles)(Activity)

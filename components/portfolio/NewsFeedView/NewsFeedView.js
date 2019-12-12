@@ -105,9 +105,6 @@ const NewsFeedSection = props => {
 }
 
 const NewsFeedView = (props) => {
-  const { tabIdx, index } = props
-  // Not me! Don't render
-  if (tabIdx !== index) return null
 
   const classes = styles()
 
@@ -130,19 +127,6 @@ const NewsFeedView = (props) => {
           )
         }
       </NewsFeedSection>
-      {/* <br />
-      <NewsFeedSection title={sectionTitles.thisWeek} classes={classes} >
-        <Item classes={classes} />
-        <Item classes={classes} />
-        <Item classes={classes} />
-      </NewsFeedSection>
-      <br />
-      <NewsFeedSection title={sectionTitles.indieNews} classes={classes} >
-        <Item classes={classes} />
-        <Item classes={classes} />
-        <Item classes={classes} />
-      </NewsFeedSection>
-      <br /> */}
     </div>
   )
 }

@@ -38,11 +38,6 @@ const menuElements = {
       icon: (className) => <FontAwesomeIcon icon={faAddressCard} size='1x' className={className} />,
     },
     {
-      title: 'Investor Profile',
-      link: '/account/kyc',
-      icon: (className) => <FontAwesomeIcon icon={faIdCard} size='1x' className={className} />,
-    },
-    {
       title: 'Portfolio',
       link: '/portfolio',
       icon: (className) => <FontAwesomeIcon icon={faChartArea} size='1x' className={className} />,

@@ -73,15 +73,6 @@ export default (props) => {
                       <FontAwesomeIcon icon={faAddressCard} size='1x' className={classes.menuItem} />
                     </MenuItem>
                   </Link>
-                  <Link href='/account/kyc'>
-                    <MenuItem
-                      className={classes.menuItem}
-                      onClick={popupState.close}
-                    >
-                      <span className={classes.menuItemText}>Investor Profile</span>
-                      <FontAwesomeIcon icon={faIdCard} size='1x' className={classes.menuItem} />
-                    </MenuItem>
-                  </Link>
                   <Link href='/portfolio'>
                     <MenuItem
                       className={classes.menuItem}
