@@ -8,8 +8,6 @@ import WatchlistSection from '../WatchlistSection/WatchlistSection'
 const TradeView = props => {
   const {
     accountBalance,
-    tabIdx,
-    index,
     investments,
     findMovieByTicker,
     store,
@@ -25,9 +23,6 @@ const TradeView = props => {
     removeFromWatchlist,
     topChips,
   } = props
-
-  // Hide the tab
-  if (tabIdx !== index) return null
 
   return (
     <div>

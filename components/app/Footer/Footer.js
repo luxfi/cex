@@ -230,10 +230,6 @@ class Footer extends React.Component {
           link: '/account',
         },
         {
-          title: 'Investor Profile',
-          link: '/kyc',
-        },
-        {
           title: 'Portfolio',
           link: '/portfolio',
         },
