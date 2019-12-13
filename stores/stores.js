@@ -57,6 +57,8 @@ export default function initializeStore(initialData = _initialData) {
       contentfulStore: new ContentfulStore(initialData.contentfulStore, api),
       newsStore: new NewsStore(initialData.newsStore, api),
     }
+
+    store.uiStore.loadState()
   }
   // Otherwise we don't need to re-initialize the store
   return store

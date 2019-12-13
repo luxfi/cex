@@ -95,7 +95,7 @@ class Index extends React.Component {
     // get router slug and find article
     const { router } = this.props
     const { slug } = router.query
-    const { movieStore, orderBook, userStore, userPortfolio } = this.props.store
+    const { movieStore, orderBook, userStore, userPortfolio, uiStore } = this.props.store
     const { loggedIn } = userStore
     const redirectLogin = () => {
       if (!loggedIn) {
@@ -176,6 +176,10 @@ class Index extends React.Component {
               onExecute={(order, orderType) => {
                 return userPortfolio.onOrderExecute(order, orderType)
               }}
+              setTrading={(mode) => {
+                uiStore.setTrading(mode)
+              }}
+              slug={slug}
               movieCategories={toJS(movie.genre)}
               maxSell={maxSell}
               investmentHistory={investmentHistory}

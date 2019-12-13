@@ -6,7 +6,9 @@ import {
   Button,
   Grid,
   InputAdornment,
+  MenuItem,
   Paper,
+  Select,
   Tab,
   Tabs,
   Typography,
@@ -21,7 +23,8 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import midstream from 'midstream'
 import { toJS } from 'mobx'
-import Router from "next/router"
+import Link from 'next/link'
+import Router from 'next/router'
 import { useState } from 'react'
 import NumberFormat from 'react-number-format'
 import { Element } from 'react-scroll'
@@ -275,10 +278,21 @@ export default (props) => {
     slug,
     movies,
     orders,
+    setTrading,
   } = props
 
   if (!orderBook.isReady) {
     return <Typography>Loading chart...</Typography>
+  }
+
+  const moviesCleaned = []
+  const moviesFilter = {}
+
+  for (const movie of movies) {
+    if (!moviesFilter[movie.ticker]) {
+      moviesCleaned.push(movie)
+      moviesFilter[movie.ticker] = true
+    }
   }
 
   const stock = toJS(orderBook.stock)
@@ -354,12 +368,6 @@ export default (props) => {
     ((lastCandle.close - secondLastCandle.close) * 100)
     / secondLastCandle.close
   ).toFixed(2)
-
-  const marketOpts = {}
-
-  for (let movie of movies) {
-    marketOpts[movie.movieSlug] = movie.ticker
-  }
 
   const subtotal = price * quantity
 
@@ -438,20 +446,42 @@ export default (props) => {
                   </Typography>
                 </Grid>
                 <Grid item xs/>
+                <Grid item style={{ paddingRight: 0 }}>
+                  <Button
+                    title='Switch to Basic'
+                    variant='outlined'
+                    fullWidth
+                    color='secondary'
+                    size='medium'
+                    onClick={() => {
+                      setTrading('basic')
+                      Router.push(`/trade/${slug}`)
+                    }}
+                  >
+                    <Typography
+                      variant='subtitle1'
+                      className={classes.buyTicketsText}
+                    >
+                      Switch to Basic
+                    </Typography>
+                  </Button>
+                </Grid>
                 <Grid item>
-                  <MUIText
-                    select
-                    options={marketOpts}
-                    showError={ showError }
-                    value={slug}
-                    setValue={(v) => {
-                      if (v != slug) {
-                        Router.push(`/pro/${v}`)
+                  <Select
+                    defaultValue={slug}
+                    onChange={(e) => {
+                      if (e.target.value !== slug) {
+                        Router.push(`/pro/${e.target.value}`)
                       }
                     }}
-                    fullWidth
-                    placeholder='Select a market'
-                  />
+                  >
+                    {
+                      moviesCleaned.map((m) => <MenuItem value={m.movieSlug}>
+                        { /*}<Link href={`/pro/${m.movieSlug}`}>{m.ticker}</Link>*/ }
+                        { m.ticker }
+                      </MenuItem>)
+                    }
+                  </Select>
                 </Grid>
               </Grid>
             </Box>

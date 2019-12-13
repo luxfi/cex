@@ -30,8 +30,4 @@ export default [
     title: 'rewards',
     link: '/portfolio/rewards',
   },
-  {
-    title: 'trade',
-    link: '/pro/terminator-dark-fate',
-  },
 ]

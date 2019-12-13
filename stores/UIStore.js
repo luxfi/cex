@@ -4,6 +4,7 @@ export default class UIStore {
   @observable snackBarOpen = false
   @observable snackBarVariant = 'error'
   @observable snackBarMessage = ''
+  @observable trading = 'basic'
 
   @observable drawers = {
     left: false,
@@ -16,15 +17,28 @@ export default class UIStore {
     body: null,
   }
 
-  @action setLeftDrawerOpen = open => {
-    this.drawers.left = open
+  @action loadState = () => {
+    const trading = window.localStorage.getItem('trading')
+
+    if (trading) {
+      this.trading = trading
+    }
   }
 
-  @action setErrorMessage = message => {
+  @action setTrading = (mode) => {
+    this.trading = mode
+    window.localStorage.setItem('trading', mode)
+  }
+
+  @action setLeftDrawerOpen = (openModal) => {
+    this.drawers.left = openModal
+  }
+
+  @action setErrorMessage = (message) => {
     this.setSnackBarMessage(message, 'error')
   }
 
-  @action setSuccessMessage = message => {
+  @action setSuccessMessage = (message) => {
     this.setSnackBarMessage(message, 'success')
   }
 
@@ -34,11 +48,11 @@ export default class UIStore {
     this.snackBarOpen = true
   }
 
-  @action setLeftDrawerOpen = open => {
+  @action setLeftDrawerOpen = (open) => {
     this.drawers.left = open
   }
 
-  @action setRightDrawerOpen = open => {
+  @action setRightDrawerOpen = (open) => {
     this.drawers.right = open
   }
 
