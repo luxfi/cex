@@ -476,7 +476,7 @@ export default (props) => {
                     }}
                   >
                     {
-                      moviesCleaned.map((m) => <MenuItem value={m.movieSlug}>
+                      moviesCleaned.map((m, i) => <MenuItem key={`menu_${i}`} value={m.movieSlug}>
                         { /*}<Link href={`/pro/${m.movieSlug}`}>{m.ticker}</Link>*/ }
                         { m.ticker }
                       </MenuItem>)
