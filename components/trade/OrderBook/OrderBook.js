@@ -90,7 +90,7 @@ export default (props) => {
   return (
     <Box pt={1} className={classes.orderBookContainer}>
       <Box pl={2} pr={2} className={classes.orderBookHeader}>
-        <Typography variant='h2'>My Orders</Typography>
+        <Typography variant='h2'>Order Book</Typography>
         <Grid container spacing={1}>
           <Grid item xs={6}>
             <Typography variant='caption'>
