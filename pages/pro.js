@@ -13,8 +13,6 @@ class ProTrade extends React.Component {
     const { slug } = router.query
     const { uiStore } = store
 
-    console.log('uiStore', uiStore, Router)
-
     if (uiStore.trading === 'basic') {
       Router.push(`/trade/${slug}`)
     } else {
