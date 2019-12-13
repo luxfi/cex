@@ -14,7 +14,7 @@ class ProTrade extends React.Component {
     const { uiStore } = store
 
     if (uiStore.trading === 'basic') {
-      Router.push(`/trade/${slug}`)
+      Router.replace(`/trade/${slug}`)
     } else {
       googlePageView()
     }

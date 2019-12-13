@@ -4,7 +4,7 @@ export default class UIStore {
   @observable snackBarOpen = false
   @observable snackBarVariant = 'error'
   @observable snackBarMessage = ''
-  @observable trading = 'basic'
+  @observable trading = 'pro'
 
   @observable drawers = {
     left: false,
