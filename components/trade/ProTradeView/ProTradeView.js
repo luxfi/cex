@@ -32,10 +32,10 @@ class Index extends React.Component {
     const { router, store } = this.props
     const { slug } = router.query
     const {
-      userStore,
       movieStore,
       orderBook,
       userPortfolio,
+      userStore,
     } = store
     const movie = movieStore.getMovieBySlug(slug)
     // orderBook.initiateDataGenerator(movie.ticker, movie.price)
@@ -73,6 +73,7 @@ class Index extends React.Component {
     const {
       movieStore,
       orderBook,
+      uiStore,
       userStore,
       userPortfolio,
     } = store
@@ -146,6 +147,9 @@ class Index extends React.Component {
           onExecute={(order, orderType) => (
             userPortfolio.onOrderExecute(order, orderType)
           )}
+          setTrading={(mode) => {
+            uiStore.setTrading(mode)
+          }}
           slug={slug}
           movies={movieStore.movies}
           orders={userPortfolio

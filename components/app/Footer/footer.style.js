@@ -125,7 +125,7 @@ export default (theme) => ({
     '& p': {
       marginRight: theme.spacing(1),
     },
-    marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(2),
 
     '& a': {
       color: 'inherit',

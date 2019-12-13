@@ -3,6 +3,7 @@ import { toJS } from 'mobx'
 import { Grid, Typography, Button, Box, Divider } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 import { makeStyles } from '@material-ui/styles'
+import Router from 'next/router'
 import {
   AboutSection,
   BuySellWidget,
@@ -12,7 +13,6 @@ import {
   OtherFilmsTrading,
   AnalystSection,
 } from '../../trade'
-import { useState, useEffect } from 'react'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default props => {
+export default (props) => {
   const {
     buyOrders,
     sellOrders,
@@ -49,6 +49,8 @@ export default props => {
     atomTicketsURL,
     movies,
     redirectLogin,
+    setTrading,
+    slug,
   } = props
   const stock = toJS(orderBook.stock)
   let { connected } = orderBook
@@ -142,6 +144,32 @@ export default props => {
                     className={classes.buyTicketsText}
                   >
                     {inWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}
+                  </Typography>
+                </Button>
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Box mt={3} pl={4} pr={4}>
+                <Button
+                  title="Switch to Pro"
+                  variant="outlined"
+                  fullWidth
+                  color="secondary"
+                  size="large"
+                  className={classes.buyTicketsButton}
+                  classes={{
+                    label: classes.label,
+                  }}
+                  onClick={() => {
+                    setTrading('pro')
+                    Router.push(`/pro/${slug}`)
+                  }}
+                >
+                  <Typography
+                    variant="subtitle1"
+                    className={classes.buyTicketsText}
+                  >
+                    Switch to Pro
                   </Typography>
                 </Button>
               </Box>

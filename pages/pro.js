@@ -1,11 +1,23 @@
+import { inject, observer } from 'mobx-react'
+import Router, { withRouter } from 'next/router'
 import React from 'react'
 
 import { ProTradeView } from '../components/trade'
 import { googlePageView } from '../util/generic'
 
-class Trade extends React.Component {
+@inject('store')
+@observer
+class ProTrade extends React.Component {
   componentDidMount() {
-    googlePageView()
+    const { store, router } = this.props
+    const { slug } = router.query
+    const { uiStore } = store
+
+    if (uiStore.trading === 'basic') {
+      Router.push(`/trade/${slug}`)
+    } else {
+      googlePageView()
+    }
   }
 
   render() {
@@ -13,4 +25,4 @@ class Trade extends React.Component {
   }
 }
 
-export default Trade
+export default withRouter(ProTrade)
