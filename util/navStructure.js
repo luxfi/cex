@@ -27,7 +27,15 @@ export default [
     link: '/portfolio/rewards',
   },
   {
-    title: 'trade',
+    title: 'funding',
+    link: '/offering/terminator-dark-fate',
+  },
+  {
+    title: 'invest',
+    link: '/trade/terminator-dark-fate',
+  },
+  {
+    title: 'exchange',
     link: '/pro/terminator-dark-fate',
   },
 ]
