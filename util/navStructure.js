@@ -23,11 +23,19 @@ export default [
      */
   },
   {
+    title: 'rewards',
+    link: '/portfolio/rewards',
+  },
+  {
+    title: 'funding',
+    link: '/offering/terminator-dark-fate',
+  },
+  {
     title: 'invest',
     link: '/trade/terminator-dark-fate',
   },
   {
-    title: 'rewards',
-    link: '/portfolio/rewards',
+    title: 'exchange',
+    link: '/pro/terminator-dark-fate',
   },
 ]

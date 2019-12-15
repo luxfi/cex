@@ -13,8 +13,8 @@ class Trade extends React.Component {
     const { slug } = router.query
     const { uiStore } = store
 
-    if (uiStore.trading === 'pro') {
-      Router.push(`/pro/${slug}`)
+    if (false && uiStore.trading === 'pro') {
+      Router.replace(`/pro/${slug}`)
     } else {
       googlePageView()
     }
