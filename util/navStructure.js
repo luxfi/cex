@@ -9,7 +9,7 @@ export default [
   },
   {
     title: 'invest',
-    link: '/offering/terminator-dark-fate',
+    link: '/offering/saw-9',
   },
   {
     title: 'trade',
