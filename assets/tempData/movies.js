@@ -259,4 +259,43 @@ module.exports = [
     valueDelta: 4.02,
     financialDescription: 'Onward 2020 Inc. - Class C Capital Stock',
   },
+  {
+    name: 'SAW 9',
+    movieSlug: 'saw-9',
+    atomTicketsSlug: 'saw-9',
+    articles: ['edward-furlong-edward-furlong-terminator-dark-fate'],
+    genre: ['Action', 'Adventure', 'Sci-Fi'],
+    trailer: 'https://www.youtube.com/embed/oxy8udgWRmo',
+    posterImg:
+      'https://m.media-amazon.com/images/M/MV5BMTUwNWI2ZDQtODRjNy00OGE1LThlNGEtYzU2NDU5ZGMzN2RmXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg',
+    heroImg:
+      'https://cdn1us.denofgeek.com/sites/denofgeekus/files/styles/main_wide/public/2019/07/terminator-dark-fate-arnold-schwarzenegger-linda-hamilton-sdcc-den-of-geek-cover.jpg?itok=I6okknqO',
+    website: 'https://www.facebook.com/Terminator/',
+    rated: 'R',
+    imdbid: 'tt6450804',
+    actors: [
+      'Arnold Schwarzenegger',
+      'Mackenzie Davis',
+      'Edward Furlong',
+      'Linda Hamilton',
+    ],
+    director: ['Tim Miller'],
+    releaseDate: '01 Nov 2019',
+    writer: [
+      'James Cameron (story by)',
+      'Charles H. Eglee (story by)',
+      'Josh Friedman (story by)',
+      'David S. Goyer (story by)',
+      'Justin Rhodes (story by)',
+      'David S. Goyer (screenplay by)',
+      'Justin Rhodes (screenplay by)',
+      'Billy Ray (screenplay by)',
+    ],
+    shortDescription:
+      'Sarah Connor and a hybrid cyborg human must protect a young girl from a newly modified liquid Terminator from the future.',
+    ticker: 'TERMDF',
+    price: 125.15,
+    valueDelta: 3.78,
+    financialDescription: 'Term Inc. - Class C Capital Stock',
+  },
 ]
