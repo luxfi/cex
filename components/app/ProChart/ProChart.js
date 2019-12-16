@@ -120,13 +120,13 @@ class StockChart extends React.Component {
           height={chartHeight}
           yExtents={this.candleChartExtents}>
           <XAxis
-            stroke={textColor}
+            stroke={gridColor}
             tickLabelFill={textColor}
             innerTickSize={-1 * gridHeight}
             tickStroke={gridColor}
             ticks={6} />
           <YAxis
-            stroke={textColor}
+            stroke={gridColor}
             innerTickSize={-1 * gridWidth}
             tickFormat={this.pricesDisplayFormat}
             tickStroke={gridColor}
