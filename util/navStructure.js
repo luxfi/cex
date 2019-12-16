@@ -32,7 +32,7 @@ export default [
   },
   {
     title: 'invest',
-    link: '/trade/terminator-dark-fate',
+    link: '/trade/saw-9',
   },
   {
     title: 'exchange',
