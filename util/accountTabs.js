@@ -15,9 +15,9 @@ export default [
     href: '/account/documents'
   },
   {
-    id: 'kyc',
-    label: 'KYC',
-    href: '/account/kyc'
+    id: 'identity',
+    label: 'Identity',
+    href: '/account/identity'
   },
   {
     id: 'activity',

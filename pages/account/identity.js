@@ -59,9 +59,7 @@ class KYC extends React.Component {
     return (
       <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
         <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
-          <TabbedNav tabs={AccountTabs} tab='kyc' />
-        </AccountSection>
-        <AccountSection title="KYC" style={{ marginBottom: '3em' }}>
+          <TabbedNav tabs={AccountTabs} tab='identity' />
           <KYCForm
             phone={phone}
             taxId={taxId}
