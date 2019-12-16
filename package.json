@@ -77,6 +77,7 @@
     "react-vis": "1.11.7",
     "recharts": "^1.8.5",
     "rss-parser": "^3.7.3",
+    "sha3": "^2.1.1",
     "socket.io": "^2.3.0",
     "text-encoding": "0.7.0",
     "uuid": "^3.3.3",
