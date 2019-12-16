@@ -94,7 +94,7 @@ export default inject('store')(observer((props) => {
     <div {...rest}>
       <div className={classes.container}>
         <MyCarousel>
-          {store.movieStore.movies.map((movie) => {
+          {store.movieStore.movies.filter((m) => movieExtendedMap[m.movieSlug]).map((movie) => {
             const hrefLink = `/film/${movie.movieSlug}`
             return (
               <HeroImg
