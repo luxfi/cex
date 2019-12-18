@@ -199,7 +199,7 @@ class SignupForm extends React.Component {
             disabled={!this.state.checkedOver18 || !isValidSignUp}
             onClick={() => {
               signUp(
-                () => Router.push("/account/kyc"),
+                () => Router.push("/account/identity"),
                 ex => {
                   console.log("hit error callback **", ex)
                   setErrorMessage(ex)

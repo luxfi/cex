@@ -526,7 +526,7 @@ export default (props) => {
                     )
                   }
                   <Box mt={1} mb={2}>
-                    <a href='/account' target='_blank' className={ classes.coloredLink }>+ Add funds</a>
+                    <a href='/account/funds' target='_blank' className={ classes.coloredLink }>+ Add funds</a>
                     &nbsp;|&nbsp;
                     <a href='/portfolio' target='_blank' className={ classes.coloredLink }>See all balances</a>
                   </Box>
