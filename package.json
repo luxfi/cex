@@ -79,6 +79,7 @@
     "rss-parser": "^3.7.3",
     "sha3": "^2.1.1",
     "socket.io": "^2.3.0",
+    "styled-components": "^4.4.1",
     "text-encoding": "0.7.0",
     "uuid": "^3.3.3",
     "web3": "1.2.4",

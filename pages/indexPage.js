@@ -5,14 +5,13 @@ import { makeStyles } from '@material-ui/core/styles'
 import { googlePageView } from '../util/generic'
 
 import {
-  CategorySlider,
-  ForYouSlider,
-  StudioSlider,
   TrailerSlider,
 } from '../components/landing'
 
 const heroMaxHeight = 800
 const heroMinHeight = 600
+
+import TerminatorHero from '../assets/images/terminator-hero.jpg'
 
 const useStyles = makeStyles(() => ({
   /*
@@ -34,12 +33,7 @@ export default inject('store')(observer((props) => {
 
   return (
     <>
-      <div style={{ /*marginTop: -120,*/ position: 'relative' }}>
-        <TrailerSlider/>
-        <ForYouSlider />
-        <StudioSlider />
-        <CategorySlider />
-      </div>
+      <TrailerSlider/>
     </>
   )
 }))

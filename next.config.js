@@ -108,7 +108,7 @@ module.exports = withBundleAnalyzer(
           '/about': { page: '/about' },
           '/placeholder': { page: '/placeholder' },
           '/accountLevels': { page: '/accountLevels' },
-          '/discover': { page: '/discover' },
+          '/discover': { page: '/indexPage' },
         }
       },
     }),
