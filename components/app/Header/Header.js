@@ -1,20 +1,20 @@
-import React from 'react'
-
 import {
   AppBar,
-  Toolbar,
   IconButton,
+  Toolbar,
   useScrollTrigger,
 } from '@material-ui/core'
 
-import { MenuRounded, AccountCircle } from '@material-ui/icons'
+import { makeStyles } from '@material-ui/core/styles'
+
+import { AccountCircle, MenuRounded } from '@material-ui/icons'
+
+import classNames from 'classnames'
+import React from 'react'
 
 import DesktopNav from './DesktopNav'
 import DesktopProfileAndSearch from './DesktopProfileAndSearch'
-
-import { makeStyles } from '@material-ui/core/styles'
-import classNames from 'classnames'
-import styles from './header.style.js'
+import styles from './header.style'
 
 const useStyles = makeStyles(styles)
 
