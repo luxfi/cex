@@ -31,6 +31,10 @@ export default theme => {
       background: 'rgba(10, 10, 10, 0.85)',
     },
   
+    search: {
+      marginLeft: theme.spacing(4)
+    },
+
     main: {
       paddingTop: '88px' // 64px offset + 24px real padding 
     },

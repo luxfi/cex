@@ -3,11 +3,11 @@ import { fade } from "@material-ui/core/styles"
 export default (theme) => {
   return {
 
-    search: {
+    searchOuter: {
       borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.common.white, 0.15),
+      backgroundColor: fade(theme.palette.common.white, 0.10),
       "&:hover": {
-        backgroundColor: fade(theme.palette.common.white, 0.25)
+        backgroundColor: fade(theme.palette.common.white, 0.15)
       },
       transition: theme.transitions.create("width"),
       [theme.breakpoints.up("sm")]: {

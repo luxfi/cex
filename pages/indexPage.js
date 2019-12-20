@@ -17,6 +17,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Router from 'next/router'
 
 import classNames from 'classnames'
+import { AutoCompleteSearch } from '../components/app'
 
 import { googlePageView } from '../util/generic'
 
@@ -63,6 +64,7 @@ export default inject('store')(observer((props) => {
           <Tab label='New Releases' disableFocusRipple key='releases' classes={tabClasses}/>
           <Tab label='Your Recommended' disableFocusRipple key='recommended' classes={tabClasses}/>
         </Tabs>
+        <AutoCompleteSearch placeholder='Search…' className={classes.search}/>
       </Toolbar>
       <Grid container spacing={3} className={classes.main}>
       {props.store.movieStore.movies.map((m) => (
