@@ -32,6 +32,9 @@ export default class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <script src='/static/datafeeds/udf/dist/bundle.js' />
+          <script async src='https://cdn.reamaze.com/assets/reamaze.js' />
+          <script src='/static/js/reamaze.js' />
         </body>
       </Html>
     )
