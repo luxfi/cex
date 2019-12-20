@@ -7,7 +7,8 @@ export default (theme) => {
       borderRadius: theme.shape.borderRadius,
       backgroundColor: fade(theme.palette.common.white, 0.10),
       "&:hover": {
-        backgroundColor: fade(theme.palette.common.white, 0.15)
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        width: 175
       },
       transition: theme.transitions.create("width"),
       [theme.breakpoints.up("sm")]: {
@@ -22,14 +23,17 @@ export default (theme) => {
       },
       [theme.breakpoints.up("md")]: {
         width: 170,
+        "&:hover": {
+          width: 200
+        },
         "&:focus-within": {
           width: 200
-        }
+        },
       },
       display: "none"
     },
     searchIcon: {
-      width: 26,
+      width: 28,
       paddingLeft: 4,
       height: "100%",
       position: "absolute",
@@ -41,7 +45,7 @@ export default (theme) => {
     },
 
     inputInput: {
-      padding: theme.spacing(1, 1, 1, 4),
+      padding: theme.spacing(1, 1, 1, 5),
       width: 140
     },
 

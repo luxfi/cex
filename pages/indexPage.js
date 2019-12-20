@@ -17,6 +17,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import Router from 'next/router'
 
 import classNames from 'classnames'
+
+  // TODO implement movies to pass as param to the widget! (currently hard coded in widget)
 import { AutoCompleteSearch } from '../components/app'
 
 import { googlePageView } from '../util/generic'
