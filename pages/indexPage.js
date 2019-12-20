@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { inject, observer } from 'mobx-react'
 import {
   AppBar,
+  Button,
   Card,
   CardMedia,
   CardContent,
@@ -67,6 +68,7 @@ export default inject('store')(observer((props) => {
           <Tab label='Your Recommended' disableFocusRipple key='recommended' classes={tabClasses}/>
         </Tabs>
         <AutoCompleteSearch placeholder='Search…' className={classes.search}/>
+        <Facets classes={classes} className={classes.facetsOuter}/>
       </Toolbar>
       <Grid container spacing={3} className={classes.main}>
       {props.store.movieStore.movies.map((m) => (
@@ -83,9 +85,16 @@ export default inject('store')(observer((props) => {
     </Container>
   )
 }))
-
 /*
     <Typography variant="body1">Price: <span className={classes.stat}>${m.price}</span></Typography>
     <Typography variant="body1">Value Delta: <span className={classes.stat}>{m.valueDelta}%</span></Typography>
     <Typography variant="body2">{m.financialDescription}</Typography>
 */
+
+const Facets = (props) => (
+  <div className={props.className}>
+    <span className={props.classes.facetsLabel}>Filters</span>
+    <Button className={props.classes.facetsButton} onClick={() => {console.log('test')}}>All Studios</Button>
+    <Button className={props.classes.facetsButton} onClick={() => {console.log('test')}}>All Genres</Button>
+  </div>
+)

@@ -1,3 +1,5 @@
+import { fade } from '@material-ui/core/styles'
+
 export default theme => {
   return {
     toolbar: {
@@ -33,6 +35,23 @@ export default theme => {
   
     search: {
       marginLeft: theme.spacing(4)
+    },
+
+    facetsOuter: {
+      marginLeft: 'auto',
+    },
+
+    facetsLabel: {
+      marginRight: theme.spacing(3)
+    },
+
+    facetsButton: {
+      backgroundColor: '#222',
+      marginRight: theme.spacing(2),
+      '&:last-child': {
+        marginRight: 0
+      },
+      textTransform: 'capitalize', 
     },
 
     main: {
