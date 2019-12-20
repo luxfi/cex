@@ -68,11 +68,11 @@ export default inject('store')(observer((props) => {
           <Tab label='Your Recommended' disableFocusRipple key='recommended' classes={tabClasses}/>
         </Tabs>
         <AutoCompleteSearch placeholder='Search…' className={classes.search}/>
-        <Facets classes={classes} className={classes.facetsOuter}/>
+        <Facets classes={classes} className={classes.facets}/>
       </Toolbar>
       <Grid container spacing={3} className={classes.main}>
-      {props.store.movieStore.movies.map((m) => (
-        <Grid xs={12} sm={6} md={3} lg={2} item key={m.imdbid}>
+      {props.store.movieStore.movies.map((m, i) => (
+        <Grid xs={12} sm={6} md={3} lg={2} item key={m.imdbid + i}>
           <Card className={classes.card} onClick={() => {Router.push(`/film/${m.movieSlug}`)}}>
             <CardMedia src={m.posterImg} className={classes.cardMedia} component='img'/>
             <CardContent className={classes.cardContent}>

@@ -37,7 +37,7 @@ export default theme => {
       marginLeft: theme.spacing(4)
     },
 
-    facetsOuter: {
+    facets: {
       marginLeft: 'auto',
     },
 
