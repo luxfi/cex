@@ -26,8 +26,6 @@ export default class MyDocument extends Document {
             rel='stylesheet'
             href='https://fonts.googleapis.com/icon?family=Material+Icons'
           />
-          <script src='/static/datafeeds/udf/dist/polyfills.js' />
-          <script src='/static/datafeeds/udf/dist/bundle.js' />
         </Head>
         <body>
           <Main />
