@@ -16,6 +16,7 @@ export default (theme) => {
         marginLeft: 0,
         width: 160,
         "&:focus-within": {
+          backgroundColor: fade(theme.palette.common.white, 0.15),
           width: 175
         },
         display: "inline-block",
