@@ -1,11 +1,10 @@
 import { action, observable, computed, autorun } from "mobx"
-import _ from "lodash"
 import uuid from "uuid"
-// const movies = []
 import moviesFromJson from "../assets/tempData/movies"
 
 export default class MovieStore {
   @observable movies = []
+  @observable genres = []
   @observable isLoading = true
   @observable currentMovie = undefined
 
@@ -19,6 +18,10 @@ export default class MovieStore {
    * Fetches all Movies from the server
    */
   loadMovies() {
+    if (this.movies.length > 0) {
+      return
+    }
+
     this.isLoading = true
     // this.fetchMovies().then(fetchedMovies => {
     //   fetchedMovies.forEach(json => this.updateMovieFromServer(json))

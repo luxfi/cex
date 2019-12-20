@@ -1,70 +1,76 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { inject, observer } from 'mobx-react'
 import {
+  AppBar,
   Card,
   CardMedia,
   CardContent,
   Container,
   Grid,
+  Tabs,
+  Tab,
+  Toolbar,
   Typography,
+  useScrollTrigger,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import Router from 'next/router'
 
+import classNames from 'classnames'
 
 import { googlePageView } from '../util/generic'
 
-const useStyles = makeStyles((theme) => ({
-  card: {
-    maxWidth: 345,
-    position: 'relative',
-    '&:hover': {
-      transform: 'scale(1.1) !important',
-      cursor: 'pointer',
-    },
-    '&:hover $cardContent': {
-      visibility: 'visible',
-    }
-
-  },
-  media: {
-  },
-  cardMedia: {
-    objectFit: 'cover'
-  },
-  cardContent: {
-    visibility: 'hidden',
-    position: 'absolute',
-    width: '100%',
-    bottom: 0,
-    backgroundColor: '#222',
-    opacity: '0.8'
-  },
-  stat: {
-    fontWeight: 'bold',
-    color: theme.palette.secondary.main
-  }
-}))
+import styles from '../styles/pages/indexPage.style.js'
+const useStyles = makeStyles(styles)
 
 export default inject('store')(observer((props) => {
+
+  let currentTab = 0
+  if ('newReleases' in props) {
+    currentTab = 1
+  }
+  else if ('recommended' in props) {
+    currentTab = 2
+  }
+
   const classes = useStyles()
+  const trigger = useScrollTrigger({ threshold: 0, disableHysteresis: true })
+  const [tabIndex, setTabIndex] = useState(currentTab)
 
   useEffect(() => {
+    props.store.movieStore.loadMovies() // safe call
     googlePageView()
   }, [])
 
+  // https://material-ui.com/customization/components/
+  const tabsClasses = {
+    indicator: classes.tabIndicator,
+  }
+
+  const tabClasses = {
+    root: classes.tabRoot,
+    wrapper: classes.tabWrapper,
+  }
+
   return (
-    <Container>
-      <Grid container spacing={3}>
-      {props.store.movieStore.movies.map((m, i) => (
-        <Grid xs={12} sm={6} md={3} lg={2} item key={m.movieSlug + i}>
+    <Container maxWidth='xl'>
+      <Toolbar className={classNames(
+        classes.toolbar,
+        trigger ? classes.solid : classes.transparent
+      )}>
+        <Tabs value={tabIndex} onChange={(ignore, i) => { setTabIndex(i) }} classes={tabsClasses}>
+          <Tab label='Now Fundraising' disableFocusRipple key='fundraising' classes={tabClasses}/>
+          <Tab label='New Releases' disableFocusRipple key='releases' classes={tabClasses}/>
+          <Tab label='Your Recommended' disableFocusRipple key='recommended' classes={tabClasses}/>
+        </Tabs>
+      </Toolbar>
+      <Grid container spacing={3} className={classes.main}>
+      {props.store.movieStore.movies.map((m) => (
+        <Grid xs={12} sm={6} md={3} lg={2} item key={m.imdbid}>
           <Card className={classes.card} onClick={() => {Router.push(`/film/${m.movieSlug}`)}}>
             <CardMedia src={m.posterImg} className={classes.cardMedia} component='img'/>
             <CardContent className={classes.cardContent}>
               <Typography variant="body1">Ticker: <span className={classes.stat}>{m.ticker}</span></Typography>
-              <Typography variant="body1">Price: <span className={classes.stat}>${m.price}</span></Typography>
-              <Typography variant="body1">Value Delta: <span className={classes.stat}>{m.valueDelta}%</span></Typography>
-              <Typography variant="body2">{m.financialDescription}</Typography>
             </CardContent>
           </Card>
         </Grid>
@@ -73,3 +79,9 @@ export default inject('store')(observer((props) => {
     </Container>
   )
 }))
+
+/*
+    <Typography variant="body1">Price: <span className={classes.stat}>${m.price}</span></Typography>
+    <Typography variant="body1">Value Delta: <span className={classes.stat}>{m.valueDelta}%</span></Typography>
+    <Typography variant="body2">{m.financialDescription}</Typography>
+*/
