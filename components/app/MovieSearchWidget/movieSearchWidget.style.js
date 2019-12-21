@@ -3,6 +3,24 @@ import { fade } from "@material-ui/core/styles"
 export default (theme) => {
   return {
 
+    suggestionsContainer: {
+      position: "relative"
+    },
+    suggestionsContainerOpen: {
+      position: "absolute",
+      zIndex: 1,
+      left: 0,
+      right: 0
+    },
+    suggestionsList: {
+      margin: 0,
+      padding: 0,
+      listStyleType: "none"
+    },
+    suggestion: {
+      display: "block"
+    },
+
     searchOuter: {
       borderRadius: theme.shape.borderRadius,
       backgroundColor: fade(theme.palette.common.white, 0.10),

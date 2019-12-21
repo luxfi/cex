@@ -16,13 +16,20 @@ import {
 import { withStyles } from '@material-ui/core/styles'
 
 import classNames from 'classnames'
-
-  // TODO implement movies to pass as param to the widget! (currently hard coded in widget)
-import { AutoCompleteSearch } from '../components/app'
-
 import { googlePageView } from '../util/generic'
 
+import { MovieSearchWidget } from '../components/app'
+
 import styles from '../styles/pages/browse.style.js'
+
+
+const Facets = (props) => (
+  <div className={props.className}>
+    <span className={props.classes.facetsLabel}>Filters</span>
+    <Button className={props.classes.facetsButton} disableRipple onClick={() => {console.log('test')}}>All Studios</Button>
+    <Button className={props.classes.facetsButton} disableRipple onClick={() => {console.log('test')}}>All Genres</Button>
+  </div>
+)
 
 @inject('store')
 @observer
@@ -45,12 +52,12 @@ class Browse extends React.Component {
 
   componentDidMount = () => {
     this.props.store.movieStore.loadMovies() // safe call
-    window.addEventListener("scroll", this.handleScroll);
+    window.addEventListener('scroll', this.handleScroll);
     googlePageView()
   }
 
   componentWillUnmount = () => {
-    window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener('scroll', this.handleScroll);
   }  
 
   handleScroll = () => {
@@ -81,11 +88,11 @@ class Browse extends React.Component {
           this.state.scrollTrigger ? classes.solid : classes.transparent
         )}>
           <Tabs value={this.state.tabIndex} onChange={(ignore, i) => { this.setTabIndex(i) }} classes={tabsClasses}>
-            <Tab label='Now Fundraising' disableFocusRipple key='fundraising' classes={tabClasses}/>
-            <Tab label='New Releases' disableFocusRipple key='releases' classes={tabClasses}/>
-            <Tab label='Your Recommended' disableFocusRipple key='recommended' classes={tabClasses}/>
+            <Tab label='Now Fundraising' disableRipple key='fundraising' classes={tabClasses}/>
+            <Tab label='New Releases' disableRipple key='releases' classes={tabClasses}/>
+            <Tab label='Your Recommended' disableRipple key='recommended' classes={tabClasses}/>
           </Tabs>
-          <AutoCompleteSearch placeholder='Search…' className={classes.search}/>
+          <MovieSearchWidget placeholder='Search…' movies={this.props.store.movieStore.movies} className={classes.search}/>
           <Facets classes={classes} className={classes.facets}/>
         </Toolbar>
         <Grid container spacing={3} className={classes.main}>
@@ -107,16 +114,3 @@ class Browse extends React.Component {
 }
 
 export default withStyles(styles)(Browse)
-/*
-    <Typography variant="body1">Price: <span className={classes.stat}>${m.price}</span></Typography>
-    <Typography variant="body1">Value Delta: <span className={classes.stat}>{m.valueDelta}%</span></Typography>
-    <Typography variant="body2">{m.financialDescription}</Typography>
-*/
-
-const Facets = (props) => (
-  <div className={props.className}>
-    <span className={props.classes.facetsLabel}>Filters</span>
-    <Button className={props.classes.facetsButton} onClick={() => {console.log('test')}}>All Studios</Button>
-    <Button className={props.classes.facetsButton} onClick={() => {console.log('test')}}>All Genres</Button>
-  </div>
-)
