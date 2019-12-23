@@ -42,7 +42,7 @@ const Facets = (props) => {
   const classes = useStyles()
   return (
     <div className={classes.facetsOuter}>
-      <Typography variant='body1' className={classes.facetsLabel}>Filters</Typography>
+      <span className={classes.facetsLabel}>Filters</span>
       <Facet facet={genreFacet} classes={classes} />
     </div>
   )
@@ -76,7 +76,7 @@ const Facet = ({facet, classes }) => {
             <Paper>
               <MenuList>
               {facet.values.map((v ) => (
-                <MenuItem onClick={popupState.close} className={classes.facetMenuValueOuter}>
+                <MenuItem onClick={popupState.close} className={classes.facetMenuValueOuter} key={v.title}>
                   <Icon className={v.active ? classes.facetValueIconActive : classes.facetValueIconInactive}>check</Icon>
                   <span className={classes.facetMenuValueTitle}>
                     {v.title}
@@ -90,7 +90,7 @@ const Facet = ({facet, classes }) => {
         )}
       </PopupState>
       {activeValues.map(v => (
-        <div className={classes.activeFacetPill}>
+        <div className={classes.activeFacetPill} key={v.title}>
           <span className={classes.activeFacetTitle}>{v.title}</span>
           <Icon className={classes.activeFacetCloseIcon}>cancel</Icon>
         </div>

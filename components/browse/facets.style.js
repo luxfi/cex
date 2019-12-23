@@ -1,12 +1,23 @@
 export default theme => ({
+
   facetsOuter: {
     marginLeft: 'auto',
-    display: 'flex'
+    display: 'flex',
+    flexDirection: 'row',
+    //justifyContent: 'center',
+    //alignContent: 'center',
   },
   facetsLabel: {
+    display: 'block',
     marginRight: theme.spacing(3)
   },
   
+
+  facetOuter: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+
   facetDropdownButton: {
     backgroundColor: '#222',
     marginRight: theme.spacing(2),
