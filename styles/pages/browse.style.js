@@ -54,6 +54,21 @@ export default theme => {
       textTransform: 'capitalize', 
     },
 
+    facetsButtonText: {
+      textTransform: 'capitalize', 
+    },
+
+    facetsMenu: {
+      zIndex: 20
+    },
+
+    facetUnchecked: {
+        // using visibility: hidden rather than display: none so layout is preserved
+      visibility: 'hidden'
+    },
+
+
+
     main: {
       paddingTop: '88px' // 64px offset + 24px real padding 
     },

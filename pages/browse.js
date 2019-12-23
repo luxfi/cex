@@ -19,6 +19,7 @@ import classNames from 'classnames'
 import { googlePageView } from '../util/generic'
 
 import { MovieSearchWidget } from '../components/app'
+import { FacetDropdown } from '../components/browse'
 
 import styles from '../styles/pages/browse.style.js'
 
@@ -26,7 +27,7 @@ import styles from '../styles/pages/browse.style.js'
 const Facets = (props) => (
   <div className={props.className}>
     <span className={props.classes.facetsLabel}>Filters</span>
-    <Button className={props.classes.facetsButton} disableRipple onClick={() => {console.log('test')}}>All Studios</Button>
+    <FacetDropdown classes={props.classes} >All Studios</FacetDropdown>
     <Button className={props.classes.facetsButton} disableRipple onClick={() => {console.log('test')}}>All Genres</Button>
   </div>
 )
