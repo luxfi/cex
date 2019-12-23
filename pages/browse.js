@@ -19,18 +19,9 @@ import classNames from 'classnames'
 import { googlePageView } from '../util/generic'
 
 import { MovieSearchWidget } from '../components/app'
-import { FacetDropdown } from '../components/browse'
+import { Facets } from '../components/browse'
 
 import styles from '../styles/pages/browse.style.js'
-
-
-const Facets = (props) => (
-  <div className={props.className}>
-    <span className={props.classes.facetsLabel}>Filters</span>
-    <FacetDropdown classes={props.classes} >All Studios</FacetDropdown>
-    <Button className={props.classes.facetsButton} disableRipple onClick={() => {console.log('test')}}>All Genres</Button>
-  </div>
-)
 
 @inject('store')
 @observer
@@ -94,7 +85,7 @@ class Browse extends React.Component {
             <Tab label='Your Recommended' disableRipple key='recommended' classes={tabClasses}/>
           </Tabs>
           <MovieSearchWidget placeholder='Search…' movies={this.props.store.movieStore.movies} className={classes.search}/>
-          <Facets classes={classes} className={classes.facets}/>
+          <Facets />
         </Toolbar>
         <Grid container spacing={3} className={classes.main}>
         {this.props.store.movieStore.movies.map((m, i) => (
