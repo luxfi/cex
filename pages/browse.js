@@ -23,6 +23,56 @@ import { Facets } from '../components/browse'
 
 import styles from '../styles/pages/browse.style.js'
 
+const genreFacet = {
+  name: 'genre',
+  titleAll: 'All Genres',
+  titleSome: 'Genre',
+  values: {
+    action: {
+      key: 'Action',
+      active: false,
+      color: '#2676ee',
+      gradient: 'linear-gradient(90deg, #015ce3 0%, #4a90f9 100%)',
+    },
+    comedy: {
+      key: 'Comedy',
+      value: true,
+      color: '#24c6ea',
+      gradient: 'linear-gradient(90deg, #02b0d7 0%, #46dbfc 100%)',
+    },
+    documentary: {
+      key: 'Documentary',
+      value: false,
+      color: '#47d4ba',
+      gradient: 'linear-gradient(90deg, #26c3ac 0%, #69e6c8 100%)',
+    },
+    drama: {
+      key: 'Drama',
+      value: false,
+      color: '#76dd7b',
+      gradient: 'linear-gradient(90deg, #6bc959 0%, #80f09b 100%)',
+    },
+    romance: {
+      key: 'Romance',
+      value: true,
+      color: '#f3913d',
+      gradient: 'linear-gradient(90deg, #e77718 0%, #ffaa61 100%)',
+    },
+    scifi: {
+      key: 'Sci-Fi',
+      value: false,
+      color: '#ef4343',
+      gradient: 'linear-gradient(90deg, #e01717 0%, #fe7070 100%)',
+    },
+    thriller: {
+      key: 'Thriller',
+      value: false,
+      color: '#ad4bc3',
+      gradient: 'linear-gradient(90deg,  #8c3b9e 0%, #cf5bea 100%)',
+    },
+  }
+} 
+
 @inject('store')
 @observer
 class Browse extends React.Component {
@@ -62,6 +112,10 @@ class Browse extends React.Component {
     this.setState({tabIndex: i})
   }
 
+  setFacet = (name, key, value) => {
+    console.log(`${name}:${key} was set to ${value}.`)
+  }
+
   render = () => {
     const { classes } = this.props
       // https://material-ui.com/customization/components/
@@ -85,7 +139,7 @@ class Browse extends React.Component {
             <Tab label='Your Recommended' disableRipple key='recommended' classes={tabClasses}/>
           </Tabs>
           <MovieSearchWidget placeholder='Search…' movies={this.props.store.movieStore.movies} className={classes.search}/>
-          <Facets />
+          <Facets facets={[genreFacet]} setFacet={this.setFacet}/>
         </Toolbar>
         <Grid container spacing={3} className={classes.main}>
         {this.props.store.movieStore.movies.map((m, i) => (
@@ -102,7 +156,6 @@ class Browse extends React.Component {
       </Container>
     )
   }
-  
 }
 
 export default withStyles(styles)(Browse)
