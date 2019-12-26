@@ -48,6 +48,7 @@
     "midstream": "2.0.1",
     "mobx": "^5.15.0",
     "mobx-react": "^6.1.4",
+    "mobx-utils": "^5.5.2",
     "moment": "^2.24.0",
     "moment-timezone": "0.5.27",
     "next": "latest",

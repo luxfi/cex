@@ -1,5 +1,7 @@
 import { action, observable, computed, autorun } from "mobx"
+import { computedFn } from "mobx-utils"
 import uuid from "uuid"
+
 import moviesFromJson from "../assets/tempData/movies"
 
 export default class MovieStore {
@@ -8,6 +10,7 @@ export default class MovieStore {
   @observable isLoading = true
   @observable currentMovie = undefined
 
+  
   facets = {
     genre: observable.map()
   }
@@ -18,37 +21,27 @@ export default class MovieStore {
     this.api = hanzoApi
   }
 
-  @action setFacetValue(name, key, set) {
-    if (!this.facets.includes(name) ) {
+   @action setFacetValue = (name, key, set) => {
+    
+    if (!name in this.facets ) {
       throw new Error('MovieStore: setFacetValue() expects an existing facet name')
     }
     if (set) {
+      console.log("GOT HERE " + name + " key " + key )
       this.facets[name].set(key, true)
     }
     else {
       this.facets[name].delete(key)
     }
   }
-
-  @computed getFacetValue(name, key) {
-    if (!this.facets.includes(name) ) {
+  
+  getFacetValue = computedFn((name, key) => {
+    if (!name in this.facets ) {
       throw new Error('MovieStore: getFacetValue() expects an existing facet name')
     }
     return (this.facets[name].has(key))
-  }
+  }, {keepAlive : true})
 
-  /*
-  @computed facetIsSet(name) {
-    if (!this.facets.includes(name) ) {
-      throw new Error('MovieStore: getFacetValue() expects an existing facet name')
-    }
-    return (this.facets[name].size)
-  }
-  */
-
-  /**
-   * Fetches all Movies from the server
-   */
   loadMovies() {
     if (this.movies.length > 0) {
       return

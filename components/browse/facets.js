@@ -1,4 +1,5 @@
 import React from 'react'
+import { observer } from 'mobx-react'
 import classNames from 'classnames'
 
 import {
@@ -40,23 +41,17 @@ const Facets = ({facets, setFacetValue, getFacetValue}) => {
   )
 } 
 
-const Facet = ({facet, setFacetValue, getFacetValue, classes }) => {
+const Facet = observer(({facet, setFacetValue, getFacetValue, classes }) => {
 
-  const [activeValues, setActiveValues] = useState([])
-
-
-  useEffect(() => {
-    let active = []
-    Object.keys(facet.values).forEach( (f, i) => {
-      if (getFacetValue(facet.name, facet.values[f].key)) {
-        active.push(facet.values[f])
-      } 
-    })
-    setActiveValues(active)
+  const activeValues = []
+  Object.keys(facet.values).forEach( (f, i) => {
+    if (getFacetValue(facet.name, facet.values[f].key)) {
+      activeValues.push(facet.values[f])
+    } 
   })
 
   const title = activeValues.length ? facet.titleSome + ':' : facet.titleAll
-
+  const toRender = []
   return (
     <Paper className={classes.facetOuter}>
       <PopupState variant='popper' popupId='menu-popover'>
@@ -65,20 +60,6 @@ const Facet = ({facet, setFacetValue, getFacetValue, classes }) => {
             setFacetValue(facet.name, key, value)
             popupState.close()
           }
-          const valueMarkup = []
-          Object.keys(facet.values).forEach((v, i) => {
-            const val = facet.values[v]
-            const isActive = activeValues.includes(val.key)
-            const style = (color in val) ? {borderBottomColor: val.color} : {borderBottom: 'none !important'}
-            valueMarkup.push(
-              <MenuItem onClick={() => setFacetValue_Menu(val.key, !isActive)} className={classes.facetValueMenuItemOuter} key={val.key}>
-                <Check className={classNames(isActive ? classes.facetValueIconActive : classes.facetValueIconInactive, classes.facetValueIcon)} />
-                <span className={classes.facetValueTitle} style={style}>
-                  {val.key}
-                </span>
-              </MenuItem>
-            )
-          })
           return (
             <>
             <Button
@@ -96,7 +77,18 @@ const Facet = ({facet, setFacetValue, getFacetValue, classes }) => {
             >
               <Paper>
                 <MenuList>
-                  {valueMarkup}
+                {Object.values(facet.values).map((val) => {
+                  const isActive = activeValues.includes(val)
+                  const style = ('color' in val) ? {borderBottomColor: val.color} : {borderBottom: 'none !important'}
+                  return (
+                    <MenuItem onClick={() => setFacetValue_Menu(val.key, !isActive)} className={classes.facetValueMenuItemOuter} key={val.key}>
+                      <Check className={classNames(isActive ? classes.facetValueIconActive : classes.facetValueIconInactive, classes.facetValueIcon)} />
+                      <span className={classes.facetValueTitle} style={style}>
+                        {val.key}
+                      </span>
+                    </MenuItem>
+                  )
+                })}
                 </MenuList>
               </Paper>
             </Popper>
@@ -104,10 +96,9 @@ const Facet = ({facet, setFacetValue, getFacetValue, classes }) => {
           )
         }}
       </PopupState>
-      {(Object.keys(facet.values).forEach((v) => {
-        const val = facet.values[v]
-        const isActive = activeValues.includes(val.key)
-        const style = (color in val) ? {borderBottomColor: val.color} : {borderBottom: 'none !important'}
+      {Object.values(facet.values).map((val) => {
+        const isActive = activeValues.includes(val)
+        const style = ('color' in val) ? {borderBottomColor: val.color} : {borderBottom: 'none !important'}
         if (isActive) {
           return (
             <div className={classes.activeFacetPill} key={val.key}>
@@ -120,9 +111,10 @@ const Facet = ({facet, setFacetValue, getFacetValue, classes }) => {
             </div>
           )
         }
-      }))}
+        return null
+      })}
     </Paper>
   )
-}
+})
 
 export default Facets
