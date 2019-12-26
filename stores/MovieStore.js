@@ -8,11 +8,43 @@ export default class MovieStore {
   @observable isLoading = true
   @observable currentMovie = undefined
 
+  facets = {
+    genre: observable.map()
+  }
+
   constructor(initialData, hanzoApi) {
     this.loadMovies()
     // this.movies = initialData
     this.api = hanzoApi
   }
+
+  @action setFacetValue(name, key, set) {
+    if (!this.facets.includes(name) ) {
+      throw new Error('MovieStore: setFacetValue() expects an existing facet name')
+    }
+    if (set) {
+      this.facets[name].set(key, true)
+    }
+    else {
+      this.facets[name].delete(key)
+    }
+  }
+
+  @computed getFacetValue(name, key) {
+    if (!this.facets.includes(name) ) {
+      throw new Error('MovieStore: getFacetValue() expects an existing facet name')
+    }
+    return (this.facets[name].has(key))
+  }
+
+  /*
+  @computed facetIsSet(name) {
+    if (!this.facets.includes(name) ) {
+      throw new Error('MovieStore: getFacetValue() expects an existing facet name')
+    }
+    return (this.facets[name].size)
+  }
+  */
 
   /**
    * Fetches all Movies from the server

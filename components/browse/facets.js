@@ -25,23 +25,34 @@ import PopupState, { bindTrigger, bindPopper } from 'material-ui-popup-state'
 import styles from './facets.style.js'
 const useStyles = makeStyles(styles)
 
-const Facets = ({facets, setFacet}) => {
+const Facets = ({facets, setFacetValue, getFacetValue}) => {
   const classes = useStyles()
   return (
     <div className={classes.facetsOuter}>
       <span className={classes.facetsLabel}>Filters</span>
-      <Facet facet={facets[0]} setFacet={setFacet} classes={classes} />
+      <Facet 
+        facet={facets[0]} 
+        setFacetValue={setFacetValue} 
+        getFacetValue={getFacetValue} 
+        classes={classes} 
+      />
     </div>
   )
 } 
 
-const Facet = ({facet, setFacet, classes }) => {
-  
-  let activeValues = []
-  Object.keys(facet.values).forEach( (f, i) => {
-    if (facet.values[f].value) {
-      activeValues.push(facet.values[f])
-    } 
+const Facet = ({facet, setFacetValue, getFacetValue, classes }) => {
+
+  const [activeValues, setActiveValues] = useState([])
+
+
+  useEffect(() => {
+    let active = []
+    Object.keys(facet.values).forEach( (f, i) => {
+      if (getFacetValue(facet.name, facet.values[f].key)) {
+        active.push(facet.values[f])
+      } 
+    })
+    setActiveValues(active)
   })
 
   const title = activeValues.length ? facet.titleSome + ':' : facet.titleAll
@@ -50,19 +61,19 @@ const Facet = ({facet, setFacet, classes }) => {
     <Paper className={classes.facetOuter}>
       <PopupState variant='popper' popupId='menu-popover'>
         {(popupState) => {
-
-          const toggleFacet = (key, value) => {
-            setFacet(facet.name, key, value)
+          const setFacetValue_Menu = (key, value) => {
+            setFacetValue(facet.name, key, value)
             popupState.close()
           }
-
           const valueMarkup = []
           Object.keys(facet.values).forEach((v, i) => {
             const val = facet.values[v]
+            const isActive = activeValues.includes(val.key)
+            const style = (color in val) ? {borderBottomColor: val.color} : {borderBottom: 'none !important'}
             valueMarkup.push(
-              <MenuItem onClick={() => toggleFacet(val.key, !val.value)} className={classes.facetValueMenuItemOuter} key={val.key}>
-                <Check className={classNames(val.value ? classes.facetValueIconActive : classes.facetValueIconInactive, classes.facetValueIcon)} />
-                <span className={classes.facetValueTitle} style={{borderBottomColor: val.color}}>
+              <MenuItem onClick={() => setFacetValue_Menu(val.key, !isActive)} className={classes.facetValueMenuItemOuter} key={val.key}>
+                <Check className={classNames(isActive ? classes.facetValueIconActive : classes.facetValueIconInactive, classes.facetValueIcon)} />
+                <span className={classes.facetValueTitle} style={style}>
                   {val.key}
                 </span>
               </MenuItem>
@@ -93,16 +104,23 @@ const Facet = ({facet, setFacet, classes }) => {
           )
         }}
       </PopupState>
-      {activeValues.map(v => (
-        <div className={classes.activeFacetPill} key={v.key}>
-          <div className={classes.activeFacetPillInner} >
-            <span className={classes.activeFacetTitle} style={{borderBottomColor: v.color}}>{v.key}</span>
-            <IconButton className={classes.activeFacetCloseButton} onClick={() => setFacet(facet.name, v.key, false)}>
-              <Close className={classes.activeFacetCloseButtonIcon} />
-            </IconButton>
-          </div>
-        </div>
-      ))}
+      {(Object.keys(facet.values).forEach((v) => {
+        const val = facet.values[v]
+        const isActive = activeValues.includes(val.key)
+        const style = (color in val) ? {borderBottomColor: val.color} : {borderBottom: 'none !important'}
+        if (isActive) {
+          return (
+            <div className={classes.activeFacetPill} key={val.key}>
+              <div className={classes.activeFacetPillInner} >
+                <span className={classes.activeFacetTitle} style={style}>{val.key}</span>
+                <IconButton className={classes.activeFacetCloseButton} onClick={() => setFacetValue(facet.name, val.key, false)}>
+                  <Close className={classes.activeFacetCloseButtonIcon} />
+                </IconButton>
+              </div>
+            </div>
+          )
+        }
+      }))}
     </Paper>
   )
 }
