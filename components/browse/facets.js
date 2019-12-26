@@ -49,9 +49,8 @@ const Facet = observer(({facet, setFacetValue, getFacetValue, classes }) => {
       activeValues.push(facet.values[f])
     } 
   })
-
   const title = activeValues.length ? facet.titleSome + ':' : facet.titleAll
-  const toRender = []
+
   return (
     <Paper className={classes.facetOuter}>
       <PopupState variant='popper' popupId='menu-popover'>

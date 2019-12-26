@@ -127,7 +127,7 @@ class Browse extends React.Component {
             <Tab label='New Releases' disableRipple key='releases' classes={tabClasses}/>
             <Tab label='Your Recommended' disableRipple key='recommended' classes={tabClasses}/>
           </Tabs>
-          <MovieSearchWidget placeholder='Search…' movies={this.props.store.movieStore.movies} className={classes.search}/>
+          <MovieSearchWidget placeholder='Search…' movies={this.props.store.movieStore.filteredMovies} className={classes.search}/>
           <Facets 
             facets={[genreFacet]} 
             setFacetValue={this.props.store.movieStore.setFacetValue} 
@@ -135,7 +135,7 @@ class Browse extends React.Component {
           />
         </Toolbar>
         <Grid container spacing={3} className={classes.main}>
-        {this.props.store.movieStore.movies.map((m, i) => (
+        {this.props.store.movieStore.filteredMovies.map((m, i) => (
           <Grid xs={12} sm={6} md={3} lg={2} item key={m.imdbid + i}>
             <Card className={classes.card} onClick={() => {Router.push(`/film/${m.movieSlug}`)}}>
               <CardMedia src={m.posterImg} className={classes.cardMedia} component='img'/>

@@ -6,14 +6,14 @@ import moviesFromJson from "../assets/tempData/movies"
 
 export default class MovieStore {
   @observable movies = []
-  @observable genres = []
   @observable isLoading = true
   @observable currentMovie = undefined
-
   
-  facets = {
+  facets = observable({
     genre: observable.map()
-  }
+  })
+
+  @observable filteredMovies = []
 
   constructor(initialData, hanzoApi) {
     this.loadMovies()
@@ -21,18 +21,49 @@ export default class MovieStore {
     this.api = hanzoApi
   }
 
-   @action setFacetValue = (name, key, set) => {
-    
+  @action updateFilteredMovies = () => {
+
+    this.filteredMovies = this.movies.filter(m => this.checkFacets(m))
+  }
+
+  checkFacets = (movie) => {
+
+    const facetsNamesAsArray = Object.keys(this.facets)
+      // initilize all facets results to false
+    const facetResults = Array(facetsNamesAsArray.length).fill(false) 
+    for (let i = 0; i < facetsNamesAsArray.length; i++) {
+      const name = facetsNamesAsArray[i]
+      if (this.facets[name].size === 0) {
+        facetResults[i] = true
+      }
+      else {
+        for (let activeKey in this.facets[name]) {
+          if (movie[name] === activeKey) {
+            facetResults[i] = true
+            break
+          }
+        }
+      }
+      if (facetResults[i]) {
+        break
+      }
+    }
+
+      // if any facet included this film...
+    return facetResults.includes(true)
+  }
+
+  @action setFacetValue = (name, key, set) => {
     if (!name in this.facets ) {
       throw new Error('MovieStore: setFacetValue() expects an existing facet name')
     }
     if (set) {
-      console.log("GOT HERE " + name + " key " + key )
       this.facets[name].set(key, true)
     }
     else {
       this.facets[name].delete(key)
     }
+    this.updateFilteredMovies()
   }
   
   getFacetValue = computedFn((name, key) => {
@@ -54,6 +85,8 @@ export default class MovieStore {
     // })
     // console.log("We have movies", movies)
     moviesFromJson.forEach(m => this.updateMovieFromServer(m))
+    
+    this.filteredMovies = this.movies
 
     this.currentMovie = this.movies[0] // TEMP
 
