@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { inject, observer } from 'mobx-react'
 import Router from 'next/router'
 import {
@@ -105,8 +105,12 @@ class Browse extends React.Component {
     this.setState({tabIndex: i})
   }
 
-  render = () => {
-    const { classes } = this.props
+    // cannot use fat-arrow for render as it breaks mobx observing :)
+  render() {
+    const { classes, store } = this.props
+
+    const movieStore = store.movieStore
+
       // https://material-ui.com/customization/components/
     const tabsClasses = {
       indicator: classes.tabIndicator,
@@ -127,15 +131,15 @@ class Browse extends React.Component {
             <Tab label='New Releases' disableRipple key='releases' classes={tabClasses}/>
             <Tab label='Your Recommended' disableRipple key='recommended' classes={tabClasses}/>
           </Tabs>
-          <MovieSearchWidget placeholder='Search…' movies={this.props.store.movieStore.filteredMovies} className={classes.search}/>
+          <MovieSearchWidget placeholder='Search…' movies={movieStore.filteredMovies} className={classes.search}/>
           <Facets 
             facets={[genreFacet]} 
-            setFacetValue={this.props.store.movieStore.setFacetValue} 
-            getFacetValue={this.props.store.movieStore.getFacetValue} 
+            setFacetValue={movieStore.setFacetValue} 
+            getFacetValue={movieStore.getFacetValue} 
           />
         </Toolbar>
         <Grid container spacing={3} className={classes.main}>
-        {this.props.store.movieStore.filteredMovies.map((m, i) => (
+        {movieStore.filteredMovies.map((m, i) => (
           <Grid xs={12} sm={6} md={3} lg={2} item key={m.imdbid + i}>
             <Card className={classes.card} onClick={() => {Router.push(`/film/${m.movieSlug}`)}}>
               <CardMedia src={m.posterImg} className={classes.cardMedia} component='img'/>

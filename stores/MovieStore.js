@@ -22,7 +22,6 @@ export default class MovieStore {
   }
 
   @action updateFilteredMovies = () => {
-
     this.filteredMovies = this.movies.filter(m => this.checkFacets(m))
   }
 
@@ -37,8 +36,8 @@ export default class MovieStore {
         facetResults[i] = true
       }
       else {
-        for (let activeKey in this.facets[name]) {
-          if (movie[name] === activeKey) {
+        for (const [key, value] of this.facets[name]) {
+          if (movie[name].includes(key)) {
             facetResults[i] = true
             break
           }
@@ -48,7 +47,6 @@ export default class MovieStore {
         break
       }
     }
-
       // if any facet included this film...
     return facetResults.includes(true)
   }
