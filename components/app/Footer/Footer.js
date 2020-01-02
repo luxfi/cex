@@ -25,11 +25,11 @@ import FinePrint from './FinePrint.js'
 
 const EXTERNAL_LINKS = {
 
-  facebook: 'https://www.facebook.com/', // TODO
-  twitter: 'https://twitter.com/EntertainStock',
-  instagram: 'https://www.instagram.com/', // TODO
+  facebook: 'https://www.facebook.com/EntertainmetnStockX',
+  twitter: 'https://twitter.com/EntertainStockX',
+  instagram: 'https://www.instagram.com/entertainmentstockx',
   youtube: 'https://www.youtube.com/', // TODO
-  medium: 'https://medium.com/entertainment-stock-x',
+  medium: 'https://medium.com/entertainmentstockx',
   reddit: 'https://www.reddit.com/r/EntertainmentStockX/',
 
   itunes: 'https://itunes.apple.com', // TODO
