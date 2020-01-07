@@ -26,7 +26,7 @@ import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state'
 
 import { makeStyles } from '@material-ui/core/styles'
 
-import mainStyles from './desktopNav.style'
+import mainStyles from './desktopNav.style.js'
 
 const useMainStyles = makeStyles(mainStyles)
 

@@ -1,13 +1,19 @@
 import { action, observable, computed, autorun } from "mobx"
-import _ from "lodash"
+import { computedFn } from "mobx-utils"
 import uuid from "uuid"
-// const movies = []
+
 import moviesFromJson from "../assets/tempData/movies"
 
 export default class MovieStore {
   @observable movies = []
   @observable isLoading = true
   @observable currentMovie = undefined
+  
+  facets = observable({
+    genre: observable.map()
+  })
+
+  @observable filteredMovies = []
 
   constructor(initialData, hanzoApi) {
     this.loadMovies()
@@ -15,10 +21,61 @@ export default class MovieStore {
     this.api = hanzoApi
   }
 
-  /**
-   * Fetches all Movies from the server
-   */
+  @action updateFilteredMovies = () => {
+    this.filteredMovies = this.movies.filter(m => this.checkFacets(m))
+  }
+
+  checkFacets = (movie) => {
+
+    const facetsNamesAsArray = Object.keys(this.facets)
+      // initilize all facets results to false
+    const facetResults = Array(facetsNamesAsArray.length).fill(false) 
+    for (let i = 0; i < facetsNamesAsArray.length; i++) {
+      const name = facetsNamesAsArray[i]
+      if (this.facets[name].size === 0) {
+        facetResults[i] = true
+      }
+      else {
+        for (const [key, value] of this.facets[name]) {
+          if (movie[name].includes(key)) {
+            facetResults[i] = true
+            break
+          }
+        }
+      }
+      if (facetResults[i]) {
+        break
+      }
+    }
+      // if any facet included this film...
+    return facetResults.includes(true)
+  }
+
+  @action setFacetValue = (name, key, set) => {
+    if (!name in this.facets ) {
+      throw new Error('MovieStore: setFacetValue() expects an existing facet name')
+    }
+    if (set) {
+      this.facets[name].set(key, true)
+    }
+    else {
+      this.facets[name].delete(key)
+    }
+    this.updateFilteredMovies()
+  }
+  
+  getFacetValue = computedFn((name, key) => {
+    if (!name in this.facets ) {
+      throw new Error('MovieStore: getFacetValue() expects an existing facet name')
+    }
+    return (this.facets[name].has(key))
+  }, {keepAlive : true})
+
   loadMovies() {
+    if (this.movies.length > 0) {
+      return
+    }
+
     this.isLoading = true
     // this.fetchMovies().then(fetchedMovies => {
     //   fetchedMovies.forEach(json => this.updateMovieFromServer(json))
@@ -26,6 +83,8 @@ export default class MovieStore {
     // })
     // console.log("We have movies", movies)
     moviesFromJson.forEach(m => this.updateMovieFromServer(m))
+    
+    this.filteredMovies = this.movies
 
     this.currentMovie = this.movies[0] // TEMP
 

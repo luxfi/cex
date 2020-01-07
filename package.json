@@ -48,6 +48,7 @@
     "midstream": "2.0.1",
     "mobx": "^5.15.0",
     "mobx-react": "^6.1.4",
+    "mobx-utils": "^5.5.2",
     "moment": "^2.24.0",
     "moment-timezone": "0.5.27",
     "next": "latest",
@@ -67,6 +68,7 @@
     "react-number-format": "4.3.1",
     "react-parallax": "2.2.4",
     "react-plaid-link": "^1.5.0",
+    "react-resize-image": "^1.0.4",
     "react-responsive-carousel": "3.1.51",
     "react-scroll": "^1.7.14",
     "react-share": "^3.0.1",
@@ -79,6 +81,7 @@
     "rss-parser": "^3.7.3",
     "sha3": "^2.1.1",
     "socket.io": "^2.3.0",
+    "styled-components": "^4.4.1",
     "text-encoding": "0.7.0",
     "uuid": "^3.3.3",
     "web3": "1.2.4",
@@ -95,6 +98,8 @@
     "babel-eslint": "^10.0.3",
     "babel-plugin-inline-json-import": "^0.3.2",
     "babel-plugin-inline-react-svg": "^1.1.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.26.0",
     "eslint": "^6.7.2",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.7.0",
@@ -117,5 +122,34 @@
     "> 1%",
     "maintained node versions",
     "not dead"
-  ]
+  ],
+  "babel": {
+    "presets": [
+      "next/babel"
+    ],
+    "plugins": [
+      [
+        "@babel/plugin-proposal-decorators",
+        {
+          "legacy": true
+        }
+      ],
+      [
+        "@babel/plugin-proposal-class-properties",
+        {
+          "loose": true
+        }
+      ],
+      [
+        "inline-json-import",
+        {}
+      ],
+      [
+        "inline-react-svg",
+        {}
+      ]
+    ],
+    "sourceMaps": true,
+    "retainLines": true
+  }
 }
