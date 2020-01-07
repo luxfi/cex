@@ -140,8 +140,14 @@
           "loose": true
         }
       ],
-      ["inline-json-import", {}],
-      ["inline-react-svg", {}]
+      [
+        "inline-json-import",
+        {}
+      ],
+      [
+        "inline-react-svg",
+        {}
+      ]
     ],
     "sourceMaps": true,
     "retainLines": true
