@@ -1,1 +1,3 @@
-module.exports = require('./moviesGenerator.js')
+import movies from './moviesGenerator'
+
+export default movies
