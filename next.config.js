@@ -8,7 +8,7 @@ const comments = require('postcss-discard-comments')
 const postcss = require('poststylus')
 const rupture = require('rupture')
 const articlesFromJson = require('./assets/tempData/articles')
-const moviesFromJson = require('./assets/tempData/movies')
+const moviesFromJson = require('./assets/tempData/moviesBuild')
 
 module.exports = withBundleAnalyzer(
   withCSS(
@@ -24,6 +24,7 @@ module.exports = withBundleAnalyzer(
           ]),
         ],
       },
+
       webpack: config => {
         config.module.rules.push({
           test: /\.mjs$/,
@@ -45,8 +46,18 @@ module.exports = withBundleAnalyzer(
           ],
         })
 
+        config.module.rules.unshift({
+          test: /moviesGenerator.js$/,
+          use: [
+            {
+              loader: 'val-loader',
+            },
+          ],
+        })
+
         return config
       },
+
       async exportPathMap() {
         const articles = articlesFromJson.reduce(
           (as, a) => ({
