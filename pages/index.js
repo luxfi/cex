@@ -21,7 +21,9 @@ import {
   Hero
 } from '../components/app'
 
-import heroInfo from '../components/landing/Hero/terminator-dark-fate'
+// import heroInfo from '../components/landing/Hero/terminator-dark-fate'
+import TerminatorHero from '../assets/images/terminator-hero.jpg'
+import TerminatorLogo from '../assets/svg/terminator-logo.svg'
 
 import {
   CategorySlider,
@@ -41,6 +43,21 @@ const sliderSettings = {
   speed: 500,
   slidesToShow: 5,
   slidesToScroll: 1,
+}
+
+// Test moving terminator-dark-fate.js to here
+const heroInfo = {
+  slug: 'terminator-dark-fate',
+  img: TerminatorHero,
+  styles: {
+    backgroundPosition: 'right -500px center',
+    backgroundColor: 'black'
+  },
+  logo: (<TerminatorLogo style={{
+    fill: "#F0f0f0",
+    width: "60%",
+    height: "60%"
+  }}/>)
 }
 
 export default withWidth()(inject('store')(observer((props) => {
@@ -65,7 +82,7 @@ export default withWidth()(inject('store')(observer((props) => {
 
   return (
     <>
-      <Hero image={TerminatorHero} styles={heroStyles} />
+      <Hero image={heroInfo.img} styles={heroStyles} />
       <div id="trailer-slider">
         <Typography variant="h5" style={{ marginLeft: "56px" }} gutterBottom>
           <Box fontWeight={100} fontSize={20}>
@@ -73,7 +90,7 @@ export default withWidth()(inject('store')(observer((props) => {
           </Box>
         </Typography>
         <Slider {...sliderSettings}>
-        {movies.map((movie, i) => <SliderItem movie={movie} key={i} />) }
+        {store.movieStore.movies.map((movie, i) => <SliderItem movie={movie} key={i} />) }
         </Slider>
       </div>
     </>
