@@ -45,14 +45,6 @@ module.exports = withBundleAnalyzer(
             },
           ],
         })
-<<<<<<< HEAD
-        /*
-        config.module.rules.push({
-          test: /\.svg$/,
-          use: ['@svgr/webpack'],
-        })
-        */
-=======
 
         config.module.rules.unshift({
           test: /moviesGenerator.js$/,
@@ -63,7 +55,6 @@ module.exports = withBundleAnalyzer(
           ],
         })
 
->>>>>>> master
         return config
       },
 
