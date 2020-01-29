@@ -1,3 +1,19 @@
+import {
+  Box,
+  Button,
+  Grid,
+  Typography,
+  useMediaQuery,
+} from '@material-ui/core'
+
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
+
+import NextLink from 'next/link'
+
+import { makeStyles } from '@material-ui/core/styles'
+import { HeroImg, TrailerModal } from '..'
+
+
 const useStyles = makeStyles ((theme) => (
 
 {
@@ -49,6 +65,11 @@ export default (props) => {
 
   const classes = useStyles()
   
+  const { movie, logo } = props 
+
+  const hrefLink = `/film/${movie.movieSlug}`
+
+
   return (
     <Grid
     container
@@ -69,11 +90,11 @@ export default (props) => {
             </Box>
             </Typography>
             <br />
-            {movieExtendedMap[movie.movieSlug].logo}
+            {logo}
             <br />
             <br />
             <Typography variant='body2'>
-              {movie.shortDescription}
+              {movie.name}
             </Typography>
             <br />
           </Box>

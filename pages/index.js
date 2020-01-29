@@ -1,25 +1,22 @@
-import { makeStyles } from '@material-ui/core/styles'
-import { inject, observer } from 'mobx-react'
-
 import React, { useEffect } from 'react'
-
-import Slider from 'react-slick'
-
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
+import { inject, observer } from 'mobx-react'
 
 import { 
   Box, 
   Card,
   CardContent,
   Typography, 
+  makeStyles, 
   withWidth,
   isWidthDown, 
 } from "@material-ui/core"
 
-import {
-  Hero
-} from '../components/app'
+import Slider from 'react-slick'
+
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+
+import { Hero } from '../components/app'
 
 // import heroInfo from '../components/landing/Hero/terminator-dark-fate'
 import TerminatorHero from '../assets/images/terminator-hero.jpg'
@@ -30,7 +27,7 @@ import {
   ForYouSlider,
   StudioSlider,
   TrailerSlider,
-  //TrailerSliderModal,
+  HeroElements
 } from '../components/landing'
 
 import { googlePageView } from '../util/generic'
@@ -82,7 +79,9 @@ export default withWidth()(inject('store')(observer((props) => {
 
   return (
     <>
-      <Hero image={heroInfo.img} styles={heroStyles} />
+      <Hero image={heroInfo.img} styles={heroStyles} >
+        <HeroElements movie={heroMovie} logo={heroInfo.logo}/>
+      </Hero>
       <div id="trailer-slider">
         <Typography variant="h5" style={{ marginLeft: "56px" }} gutterBottom>
           <Box fontWeight={100} fontSize={20}>
