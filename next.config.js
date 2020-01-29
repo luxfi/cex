@@ -31,7 +31,7 @@ module.exports = withBundleAnalyzer(
         })
 
         config.module.rules.push({
-          test: /\.(eot|woff|woff2|ttf|webp|txt|jpg|png|jpeg|svg|gif)$/,
+          test: /\.(eot|woff|woff2|ttf|webp|txt|jpg|png|jpeg|gif|svg)$/,
           use: [
             {
               loader: 'file-loader',
@@ -44,7 +44,12 @@ module.exports = withBundleAnalyzer(
             },
           ],
         })
-
+        /*
+        config.module.rules.push({
+          test: /\.svg$/,
+          use: ['@svgr/webpack'],
+        })
+        */
         return config
       },
       async exportPathMap() {

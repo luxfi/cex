@@ -30,7 +30,7 @@ import {
 } from '../components/app'
 
 import initializeStore from '../stores/stores'
-import styles from '../styles/app.style'
+import styles from '../styles/app.style.js'
 import { darkTheme } from '../styles/esxThemes'
 
 config.autoAddCss = false

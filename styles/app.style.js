@@ -20,8 +20,7 @@ export default (theme) => ({
   main: {
     flexGrow: 1,
     minHeight: '50vh',
-    paddingTop: theme.spacing(8),
-    // paddingBottom: theme.spacing(2),
+    //paddingTop: theme.spacing(8),
     '& .slide-button': {
       margin: 0,
       background: 'transparent !important',
