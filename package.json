@@ -30,6 +30,7 @@
     "bignumber.js": "9.0.0",
     "bip39": "3.0.2",
     "classnames": "2.2.6",
+    "convert-csv-to-json": "0.0.15",
     "d3-format": "1.4.2",
     "d3-time-format": "2.2.2",
     "eosjs": "20.0.0",
@@ -87,6 +88,7 @@
     "styled-components": "^4.4.1",
     "text-encoding": "0.7.0",
     "uuid": "^3.3.3",
+    "val-loader": "^2.1.0",
     "web3": "1.2.4",
     "wif": "2.0.6",
     "yup": "^0.27.0"
