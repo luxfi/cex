@@ -47,6 +47,9 @@ const useStyles = makeStyles ((theme) => (
     color: theme.palette.common.black,
     backgroundColor: '#FBC43E',
     padding: '12px 24px',
+    '&:hover': {
+      backgroundColor: 'rgba(255, 255, 255, 0.1)'
+    }
   },
   watchTrailerButton: {
     color: theme.palette.common.white,

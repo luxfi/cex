@@ -22,6 +22,10 @@ import { Hero } from '../components/app'
 import TerminatorHero from '../assets/images/terminator-hero.jpg'
 import TerminatorLogo from '../assets/svg/terminator-logo.svg'
 
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+
+
 import {
   CategorySlider,
   ForYouSlider,
@@ -31,15 +35,68 @@ import {
 } from '../components/landing'
 
 import { googlePageView } from '../util/generic'
+import { Translate } from '@material-ui/icons'
 
+const useStyles = makeStyles ((theme) => (
+  {
+    previousArrow: {
+      display: 'block',
+      position: 'absolute',
+      color: 'white',
+      top: '50%',
+      transform: 'translate(0, -50%)',
+      cursor: 'pointer',
+      left: '-25px',
+      width: '20px',
+      height: '20px',
+      zIndex: 100,
+      //'&:before': {
+        //content: '&#x3008'
+      //}
+    },
+    nextArrow: {
+      display: 'block',
+      position: 'absolute',
+      color: 'white',
+      zIndex: 100,
+      top: '50%',
+      transform: 'translate(0, -50%)',
+      cursor: 'pointer',
+      width: '20px',
+      height: '20px',
+      right: '-25px',
+      //'&:before': {
+        //content: '&#x3009'
+      //}
+    }
+  }
+))
+
+
+const Arrow = (props) => {
+  const { which, onClick, style } = props
+
+//       onClick={onClick}
+  const classes = useStyles()
+
+  return (
+    <div
+      className={(which === 'next') ? classes.nextArrow : classes.previousArrow}
+      style={{ ...style}}
+      onClick={onClick}
+  >{(which === 'next') ? <ChevronRightIcon/> : <ChevronLeftIcon/>}</div>
+  )
+}
 
 const sliderSettings = {
   dots: false,
-  //arrows: true,
+  arrows: true,
   infinite: true,
   speed: 500,
   slidesToShow: 5,
   slidesToScroll: 1,
+  prevArrow: <Arrow which='previous'/>,
+  nextArrow: <Arrow which='next' />,
 }
 
 // Test moving terminator-dark-fate.js to here
@@ -74,9 +131,6 @@ export default withWidth()(inject('store')(observer((props) => {
     })
   }
   
-  //store.movieStore.movies.filter((m) => movieExtendedMap[m.movieSlug]).map((movie) => {
-    //const hrefLink = `/film/${movie.movieSlug}`
-
   return (
     <>
       <Hero image={heroInfo.img} styles={heroStyles} >
@@ -88,9 +142,11 @@ export default withWidth()(inject('store')(observer((props) => {
             NEWEST TRAILERS
           </Box>
         </Typography>
-        <Slider {...sliderSettings}>
-        {store.movieStore.movies.map((movie, i) => <SliderItem movie={movie} key={i} />) }
-        </Slider>
+        <div className='slider-outer' style={{paddingLeft: '30px', paddingRight: '30px'}}>
+          <Slider {...sliderSettings} >
+            {store.movieStore.movies.map((movie, i) => <SliderItem movie={movie} key={i} />) }
+          </Slider>
+        </div>
       </div>
     </>
   )
@@ -105,14 +161,7 @@ export default withWidth()(inject('store')(observer((props) => {
       </div>
 */
 
-const SliderItem = ({ movie }) => {
-  return (
-  <div style={{height: '100px', backgroundColor: '#aaa'}}>TESTING</div>
-  )
-}
 
-
-/*
 const SliderItem = ({ movie }) => {
   return (
     <div
@@ -141,11 +190,11 @@ const SliderItem = ({ movie }) => {
             backgroundSize: 'cover',
           }}
         >
-            FOo
+            
         </CardContent>
       </Card>
     </div>
   )
 }
-*/
+
           //<TrailerSliderModal movie={movie} ref={childRef} />
