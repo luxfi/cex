@@ -85,6 +85,7 @@
     "styled-components": "^4.4.1",
     "text-encoding": "0.7.0",
     "uuid": "^3.3.3",
+    "val-loader": "^2.1.0",
     "web3": "1.2.4",
     "wif": "2.0.6",
     "yup": "^0.27.0"
