@@ -1,1 +1,1 @@
-module.exports = require('./movies.cjs')
+module.exports = require('./moviesGenerator.js')

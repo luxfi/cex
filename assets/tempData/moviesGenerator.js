@@ -66,7 +66,10 @@ function mergeData(legacy, parsed) {
 // Re-organize data by slug and merge
 let legacy = moviesBySlug(moviesLegacy)
 let parsed = moviesBySlug(parseMovies())
-let movies = mergeData(legacy, parsed)
+let movies = Object.values(mergeData(legacy, parsed))
 
-// Should we really return an array here?
-module.exports = Object.values(movies)
+module.exports = function moviesGenerator() {
+  return {
+    code: 'module.exports = ' + JSON.stringify(movies)
+  }
+}
