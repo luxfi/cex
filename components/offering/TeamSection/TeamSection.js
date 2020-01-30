@@ -91,15 +91,12 @@ const TeamSection = ({ teamRef }) => {
       <Box mb={4}>
         <Typography variant="h5">
           <Box mb={3} mt={5} fontWeight="fontWeightBold">
-            Team
+            Team and Cast
           </Box>
         </Typography>
-        <Typography variant="h5">
-          <Box mb={6} mt={2} fontWeight="fontWeightBold">
-            The Organ Donor is an upcoming American horror film. The film will
-            serve as the ninth installment in the Saw franchise. The film is
-            directed by Darren Lynn Bousman, from a screenplay by Josh Stolberg
-            and Pete Goldfinger, based on a story by Chris Rock.
+        <Typography variant="h6">
+          <Box mb={6} mt={2}>
+            The Organ Donor will be directed by Darren Lynn Bousman, from a screenplay by Josh Stolberg and Pete Goldfinger, based on a story by Chris Rock.
           </Box>
         </Typography>
         <Box display="flex" justifyContent="space-between">

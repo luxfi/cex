@@ -24,17 +24,15 @@ const SummarySection = ({ summaryRef }) => {
         </Typography>
         <Typography variant="h5">
           <Box mb={2} mt={2} fontWeight="fontWeightBold">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+            For the first time ever, invest in the legendary horror franchise.
           </Box>
         </Typography>
         <Typography gutterBottom variant="subtitle1" color="textSecondary">
           <Box mb={3}>
-            At vero eos et accusamus et iusto odio dignissimos ducimus qui
-            blanditiis praesentium voluptatum deleniti atque corrupti quos
-            dolores et quas molestias excepturi sint occaecati cupiditate non
-            provident, similique sunt in culpa qui officia deserunt mollitia
-            animi, id est laborum et dolorum fuga.
+            The Organ Donor is an upcoming American horror film. The film will
+            serve as the ninth installment in the Saw franchise. The film is directed
+            by Darren Lynn Bousman, from a screenplay by Josh Stolberg and Pete
+            Goldfinger, based on a story by Chris Rock.
           </Box>
         </Typography>
         <Typography variant="subtitle1" color="textSecondary">

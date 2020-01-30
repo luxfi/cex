@@ -8,7 +8,7 @@ import { OfferingInput, MediaSlider } from '../'
 import Icon from '@material-ui/core/Icon'
 
 const movie = {
-  title: 'SAW 9: The Organ Donor',
+  title: 'SAW: The Organ Donor',
   highlightedTags: ['New Release'],
   tags: ['2019', 'Paramount Pictures'],
   youtubeIDs: [
@@ -25,10 +25,10 @@ const movie = {
     'BZDhyjk7LrE',
     'zEu9M1fuTxA',
   ],
-  raisedAmount: 2123201.44,
-  amountOfInvestors: 1614,
-  daysLeft: 11,
-  fundingGoal: 3000000,
+  raisedAmount: 4203250.00,
+  amountOfInvestors: 84065,
+  daysLeft: 23,
+  fundingGoal: 5000000,
 }
 
 const useTitleStyles = makeStyles(theme => ({
@@ -131,7 +131,7 @@ const RaisingInformation = ({
     <Grid container direction="column" spacing={2}>
       <Grid item xs={12}>
         <Typography variant="h3">
-          <Box fontWeight="fontWeightBold">{formatCurrency(raisedAmount)}</Box>
+          <Box fontWeight="fontWeightBold">{formatCurrency(raisedAmount, 'USD', false)}</Box>
         </Typography>
         <Box mt={1} mb={1}>
           <Typography variant="subtitle1">
@@ -171,7 +171,7 @@ const RaisingInformation = ({
       </Box>
       <Grid item container xs={12}>
         <Typography variant="subtitle2">
-          Minimum Investment: (Dollars)
+          Minimum Investment: $50
         </Typography>
         {/* <div className={classes.spacer}></div>
         <Typography variant="subtitle2" component="span" color="textSecondary">
