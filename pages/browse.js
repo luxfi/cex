@@ -194,6 +194,7 @@ class Browse extends React.Component {
             <Card className={classes.card} onClick={() => {Router.push(`/film/${m.movieSlug}`)}}>
               <CardMedia src={m.posterImg} className={classes.cardMedia} component='img'/>
               <CardContent className={classes.cardContent}>
+                <Typography variant="body2">Name: <span className={classes.stat}>{m.name}</span></Typography>
                 <Typography variant="body1">Ticker: <span className={classes.stat}>{m.ticker}</span></Typography>
               </CardContent>
             </Card>

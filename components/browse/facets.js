@@ -21,10 +21,16 @@ import {
 } from '@material-ui/icons'
 
   // This module is recommended in the MUI docs themselves :)
-import PopupState, { bindTrigger, bindPopper } from 'material-ui-popup-state'
+import PopupState, { 
+  bindHover, 
+  //bindTrigger, 
+  bindPopper, // this is a bit buggy but ok for now
+} from 'material-ui-popup-state'
+
 
 import styles from './facets.style.js'
 const useStyles = makeStyles(styles)
+
 
 const Facets = ({facetDescriptions, movieStore}) => {
   const classes = useStyles()
@@ -66,7 +72,7 @@ const Facet = observer(({facetDesc, movieStore, classes }) => {
           return (
             <>
             <Button
-              {...bindTrigger(popupState)}
+              {...bindHover(popupState)}
               className={classes.facetDropdownButton}
               classes={{ label: classes.facetButtonText }}
             >
