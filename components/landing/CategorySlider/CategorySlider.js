@@ -5,7 +5,7 @@ import Router from "next/router"
 // nodejs library that concatenates classes
 import classNames from "classnames"
 
-const studioImages = [
+const genres = [
   { title: 'Action', background: "linear-gradient(90deg, #015ce3 0%, #4a90f9 100%)" },
   { title: 'Comedy', background: "linear-gradient(90deg, #02b0d7 0%, #46dbfc 100%)" },
   { title: 'Documentary', background: "linear-gradient(90deg, #26c3ac 0%, #69e6c8 100%)" },
@@ -41,12 +41,15 @@ export default class TrailerSlider extends React.Component {
           display: "flex",
         }}>
           <Slider>
-            {studioImages.map((category, i) => {
+            {genres.map((genre, i) => {
               return (
                 <Slider.CategoryItem 
-                  category={category} 
+                  category={genre} 
                   key={i}
-                  openModal={(title, body) => store.uiStore.openModal(title, body)}
+                  onClick={(genre) => {
+                    store.movieStore.setFacetValue('genres', genre.title, true)
+                    Router.push('/discover')
+                  }}
                 >
                   item1
                 </Slider.CategoryItem>

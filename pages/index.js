@@ -139,15 +139,17 @@ export default withWidth()(inject('store')(observer((props) => {
       <div id="trailer-slider">
         <Typography variant="h5" style={{ marginLeft: "56px" }} gutterBottom>
           <Box fontWeight={100} fontSize={20}>
-            NEWEST TRAILERS
+            NOW FUNDRAISING
           </Box>
         </Typography>
         <div className='slider-outer' style={{paddingLeft: '30px', paddingRight: '30px'}}>
           <Slider {...sliderSettings} >
-            {store.movieStore.movies.map((movie, i) => <SliderItem movie={movie} key={i} />) }
+            {store.movieStore.movies.filter(m => !m.trading).map((movie, i) => <SliderItem movie={movie} key={i} />) }
           </Slider>
         </div>
       </div>
+      <CategorySlider />
+      <StudioSlider />
     </>
   )
 })))
@@ -156,8 +158,6 @@ export default withWidth()(inject('store')(observer((props) => {
       <div style={{ marginTop: -120, position: 'relative' }}>
 <TrailerSlider />
 <ForYouSlider />
-<StudioSlider />
-<CategorySlider />
       </div>
 */
 

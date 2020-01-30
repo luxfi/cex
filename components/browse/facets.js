@@ -26,37 +26,41 @@ import PopupState, { bindTrigger, bindPopper } from 'material-ui-popup-state'
 import styles from './facets.style.js'
 const useStyles = makeStyles(styles)
 
-const Facets = ({facets, setFacetValue, getFacetValue}) => {
+const Facets = ({facetDescriptions, movieStore}) => {
   const classes = useStyles()
   return (
     <div className={classes.facetsOuter}>
       <span className={classes.facetsLabel}>Filters</span>
-      <Facet 
-        facet={facets[0]} 
-        setFacetValue={setFacetValue} 
-        getFacetValue={getFacetValue} 
-        classes={classes} 
-      />
+      {Object.keys(facetDescriptions).map(
+        (key, i) => (
+          <Facet 
+            movieStore={movieStore} 
+            facetDesc={facetDescriptions[key]}
+            classes={classes} 
+            key={key}
+          />
+        )
+      )}
     </div>
   )
 } 
 
-const Facet = observer(({facet, setFacetValue, getFacetValue, classes }) => {
+const Facet = observer(({facetDesc, movieStore, classes }) => {
 
   const activeValues = []
-  Object.keys(facet.values).forEach( (f, i) => {
-    if (getFacetValue(facet.name, facet.values[f].key)) {
-      activeValues.push(facet.values[f])
+  Object.keys(facetDesc.values).forEach( (value, i) => {
+    if (movieStore.getFacetValue(facetDesc.name, facetDesc.values[value].key)) {
+      activeValues.push(facetDesc.values[value])
     } 
   })
-  const title = activeValues.length ? facet.titleSome + ':' : facet.titleAll
+  const title = activeValues.length ? facetDesc.titleSome + ':' : facetDesc.titleAll
 
   return (
     <Paper className={classes.facetOuter}>
       <PopupState variant='popper' popupId='menu-popover'>
         {(popupState) => {
           const setFacetValue_Menu = (key, value) => {
-            setFacetValue(facet.name, key, value)
+            movieStore.setFacetValue(facetDesc.name, key, value)
             popupState.close()
           }
           return (
@@ -76,7 +80,7 @@ const Facet = observer(({facet, setFacetValue, getFacetValue, classes }) => {
             >
               <Paper>
                 <MenuList>
-                {Object.values(facet.values).map((val) => {
+                {Object.values(facetDesc.values).map((val) => {
                   const isActive = activeValues.includes(val)
                   const style = ('color' in val) ? {borderBottomColor: val.color} : {borderBottom: 'none !important'}
                   return (
@@ -95,7 +99,7 @@ const Facet = observer(({facet, setFacetValue, getFacetValue, classes }) => {
           )
         }}
       </PopupState>
-      {Object.values(facet.values).map((val) => {
+      {Object.values(facetDesc.values).map((val) => {
         const isActive = activeValues.includes(val)
         const style = ('color' in val) ? {borderBottomColor: val.color} : {borderBottom: 'none !important'}
         if (isActive) {
@@ -103,7 +107,7 @@ const Facet = observer(({facet, setFacetValue, getFacetValue, classes }) => {
             <div className={classes.activeFacetPill} key={val.key}>
               <div className={classes.activeFacetPillInner} >
                 <span className={classes.activeFacetTitle} style={style}>{val.key}</span>
-                <IconButton className={classes.activeFacetCloseButton} onClick={() => setFacetValue(facet.name, val.key, false)}>
+                <IconButton className={classes.activeFacetCloseButton} onClick={() => movieStore.setFacetValue(facetDesc.name, val.key, false)}>
                   <Close className={classes.activeFacetCloseButtonIcon} />
                 </IconButton>
               </div>

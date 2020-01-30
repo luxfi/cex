@@ -24,7 +24,7 @@ import { Facets } from '../components/browse'
 import styles from '../styles/pages/browse.style.js'
 
 const genreFacet = {
-  name: 'genre',
+  name: 'genres',
   titleAll: 'All Genres',
   titleSome: 'Genre',
   values: {
@@ -62,6 +62,54 @@ const genreFacet = {
       key: 'Thriller',
       color: '#ad4bc3',
       gradient: 'linear-gradient(90deg,  #8c3b9e 0%, #cf5bea 100%)',
+    },
+  }
+} 
+
+const studioFacet = {
+  name: 'distributors',
+  titleAll: 'All Distributors',
+  titleSome: 'Distributor',
+  values: {
+    Netflix: {
+      key: 'Netflix',
+      ///color: '#2676ee',
+      //gradient: 'linear-gradient(90deg, #015ce3 0%, #4a90f9 100%)',
+    },
+    Disney: {
+      key: 'Disney',
+      //color: '#24c6ea',
+      //gradient: 'linear-gradient(90deg, #02b0d7 0%, #46dbfc 100%)',
+    },
+    Warner: {
+      key: 'Warner',
+      //color: '#47d4ba',
+      //gradient: 'linear-gradient(90deg, #26c3ac 0%, #69e6c8 100%)',
+    },
+    Neon: {
+      key: 'Neon',
+      //color: '#76dd7b',
+      //gradient: 'linear-gradient(90deg, #6bc959 0%, #80f09b 100%)',
+    },
+    Paramount: {
+      key: 'Paramount',
+      //color: '#f3913d',
+      //gradient: 'linear-gradient(90deg, #e77718 0%, #ffaa61 100%)',
+    },
+    Stx: {
+      key: 'Stx',
+      //color: '#ef4343',
+      //gradient: 'linear-gradient(90deg, #e01717 0%, #fe7070 100%)',
+    },
+    Lionsgate: {
+      key: 'Lionsgate',
+      //color: '#ad4bc3',
+      //gradient: 'linear-gradient(90deg,  #8c3b9e 0%, #cf5bea 100%)',
+    },
+    Sony: {
+      key: 'Sony',
+      //color: '#ad4bc3',
+      //gradient: 'linear-gradient(90deg,  #8c3b9e 0%, #cf5bea 100%)',
     },
   }
 } 
@@ -133,9 +181,11 @@ class Browse extends React.Component {
           </Tabs>
           <MovieSearchWidget placeholder='Search…' movies={movieStore.filteredMovies} className={classes.search}/>
           <Facets 
-            facets={[genreFacet]} 
-            setFacetValue={movieStore.setFacetValue} 
-            getFacetValue={movieStore.getFacetValue} 
+            movieStore={movieStore} 
+            facetDescriptions={{
+              genres: genreFacet, 
+              distributors: studioFacet
+            }} 
           />
         </Toolbar>
         <Grid container spacing={3} className={classes.main}>

@@ -9,9 +9,10 @@ export default class MovieStore {
   @observable isLoading = true
   @observable currentMovie = undefined
   
-  facets = observable({
-    genre: observable.map()
-  })
+  facets = {
+    genres: observable.map(),
+    distributors: observable.map()
+  }
 
   @observable filteredMovies = []
 
@@ -22,36 +23,44 @@ export default class MovieStore {
   }
 
   @action updateFilteredMovies = () => {
-    this.filteredMovies = this.movies.filter(m => this.checkFacets(m))
+    this.filteredMovies = this.movies.filter(m => this.passesFacets(m))
   }
 
-  checkFacets = (movie) => {
-
+  passesFacets = (movie) => {
     const facetsNamesAsArray = Object.keys(this.facets)
       // initilize all facets results to false
     const facetResults = Array(facetsNamesAsArray.length).fill(false) 
     for (let i = 0; i < facetsNamesAsArray.length; i++) {
-      const name = facetsNamesAsArray[i]
-      if (this.facets[name].size === 0) {
+      const facet = facetsNamesAsArray[i]
+      if (this.facets[facet].size === 0) {
+        console.log(`No constraints on ${facet}, so "${movie.name}" matches`)
         facetResults[i] = true
       }
       else {
-        for (const [key, value] of this.facets[name]) {
-          if (movie[name].includes(key)) {
+          // logical OR within a facet
+        for (const [key, value] of this.facets[facet]) {
+          if (movie[facet].includes(key)) {
+            console.log(`"${movie.name}" matches ${key} for ${facet}`)
             facetResults[i] = true
             break
           }
         }
       }
-      if (facetResults[i]) {
+      if (!facetResults[i]) {
         break
       }
     }
-      // if any facet included this film...
-    return facetResults.includes(true)
+      // logical AND between facets
+    return !facetResults.includes(false)
   }
 
   @action setFacetValue = (name, key, set) => {
+    if (set) {
+      console.log(`FACET: ${key} selected for ${name}`)
+    }
+    else {
+      console.log(`FACET: ${key} cleared for ${name}`)
+    }
     if (!name in this.facets ) {
       throw new Error('MovieStore: setFacetValue() expects an existing facet name')
     }
@@ -64,12 +73,25 @@ export default class MovieStore {
     this.updateFilteredMovies()
   }
   
+  
   getFacetValue = computedFn((name, key) => {
     if (!name in this.facets ) {
       throw new Error('MovieStore: getFacetValue() expects an existing facet name')
     }
     return (this.facets[name].has(key))
-  }, {keepAlive : true})
+  }, {keepAlive : false})
+  
+
+  /*
+  _getFacetValue = (name, key) => {
+    if (!name in this.facets ) {
+      throw new Error('MovieStore: getFacetValue() expects an existing facet name')
+    }
+    return (this.facets[name].has(key))
+  }
+
+  getFacetValue = computedFn(this._getFacetValue, {keepAlive: false})
+  */
 
   loadMovies() {
     if (this.movies.length > 0) {
@@ -83,9 +105,7 @@ export default class MovieStore {
     // })
     // console.log("We have movies", movies)
     moviesFromJson.forEach(m => this.updateMovieFromServer(m))
-    
     this.filteredMovies = this.movies
-
     this.currentMovie = this.movies[0] // TEMP
 
     this.isLoading = false

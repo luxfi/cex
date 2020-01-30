@@ -9,7 +9,7 @@ import IconArrowDown from '../Icons/IconArrowDown'
 import { TrailerSliderModal } from ".."
 const { useRef } = React
 
-const Item = ({ category, openModal }) => {
+const Item = ({ category, onClick }) => {
   const childRef = useRef()
 
   return (
@@ -30,7 +30,7 @@ const Item = ({ category, openModal }) => {
           >
             <Card
               onClick={() => {
-                openModal(category.title)
+                onClick(category)
               }}
             >
               <CardContent
