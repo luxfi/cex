@@ -26,7 +26,7 @@ const movie = {
     'zEu9M1fuTxA',
   ],
   raisedAmount: 4203250.00,
-  amountOfInvestors: 84065,
+  amountOfInvestors: 24065,
   daysLeft: 23,
   fundingGoal: 5000000,
 }
@@ -138,7 +138,7 @@ const RaisingInformation = ({
             <Typography component="span" color="secondary">
               ({percentFunded}%)
             </Typography>{' '}
-            of {fundingGoal.toLocaleString()} funded
+            of ${fundingGoal.toLocaleString()} funded
           </Typography>
         </Box>
         <Box mt={1} mb={1}>
