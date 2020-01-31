@@ -22,10 +22,10 @@ export default class MovieStore {
   }
 
   @action updateFilteredMovies = () => {
-    this.filteredMovies = this.movies.filter(m => this.passesFacets(m))
+    this.filteredMovies = this.movies.filter(m => this.facetsAllow(m))
   }
 
-  passesFacets = (movie) => {
+  facetsAllow = (movie) => {
     const facetsNamesAsArray = Object.keys(this.facets)
       // initilize all facets results to false
     const facetResults = Array(facetsNamesAsArray.length).fill(false) 
@@ -72,6 +72,15 @@ export default class MovieStore {
     this.updateFilteredMovies()
   }
   
+  @action clearFacets(update = false) {
+    for (const f in this.facets) {
+      this.facets[f].clear()
+    }
+    if (update) {
+      this.updateFilteredMovies()
+    }
+  }
+
   
   getFacetValue = computedFn((name, key) => {
     if (!name in this.facets ) {
@@ -81,46 +90,32 @@ export default class MovieStore {
   }, {keepAlive : false})
   
 
-  loadMovies() {
-    if (this.movies.length > 0) {
+  loadMovies(query) {
+    if (!query && this.movies.length > 0) {
       return
     }
 
-    console.log("LOOOADING")
-
     this.isLoading = true
-    // this.fetchMovies().then(fetchedMovies => {
-    //   fetchedMovies.forEach(json => this.updateMovieFromServer(json))
-    //   this.isLoading = false
-    // })
-    // console.log("We have movies", movies)
-    moviesFromJson.forEach(m => this.updateMovieFromServer(m))
-    //this.filteredMovies = this.movies
-    this.updateFilteredMovies()
+    this.movies.clear()
+    moviesFromJson.forEach(m => {
+      this.movies.push(this.moviefromJSON(m))
+    })
+    if (query) {
+      this.clearFacets(false)
+          // Calls updateFilteredMovies()
+      this.setFacetValue(query.facet, query.value, true)
+    }
+    else {
+      this.filteredMovies = this.movies
+    }
     this.currentMovie = this.movies[0] // TEMP
-
     this.isLoading = false
   }
 
-  /**
-   * Update a movie with information from the server. Guarantees a movie
-   * only exists once. Might either construct a new movie, update an existing one,
-   * or remove a movie if it has been deleted on the server.
-   */
-  updateMovieFromServer(json) {
-    // const movie = this.movies.find(movie => movie.id === json.id)
-    // if (!movie) {
-    //   movie = new Movie(this, json.id)
-    //   this.movies.push(movie)
-    // }
-    // if (json.isDeleted) {
-    //   this.removeMovie(movie)
-    // } else {
-    //   movie.updateFromJson(json)
-    // }
+  moviefromJSON(json) {
     const movie = new Movie(json.imbdid)
     movie.updateFromJson(json)
-    this.movies.push(movie)
+    return movie
   }
 
   // @computed get topMovies() {
@@ -183,51 +178,12 @@ export class Movie {
     this.id = id
   }
 
-  // constructor(store, id = uuid.v4()) {
-  //   this.store = store
-  //   this.id = id
 
-  //   this.saveHandler = reaction(
-  //     // observe everything that is used in the JSON:
-  //     () => this.asJson,
-  //     // if autoSave is on, send json to server
-  //     json => {
-  //       if (this.autoSave) {
-  //         this.store.transportLayer.saveMovie(json)
-  //       }
-  //     }
-  //   )
-  // }
-
-  /**
-   * Remove this Movie from the client and server
-   */
-  // delete() {
-  //   this.store.transportLayer.deleteMovie(this.id)
-  //   this.store.removeMovie(this)
-  // }
-
-  // @computed get asJson() {
-  //   return {
-  //     id: this.id,
-  //     completed: this.completed,
-  //     task: this.task,
-  //     authorId: this.author ? this.author.id : null
-  //   }
-  // }
-
-  /**
-   * Update this Movie with information from the server
-   */
   updateFromJson(json) {
-    // make sure our changes aren't sent back to the server
+      // make sure our changes aren't sent back to the server
     Object.keys(json).forEach(k => {
       this[k] = json[k]
     })
   }
 
-  // dispose() {
-  //   // clean up the observer
-  //   this.saveHandler()
-  // }
 }

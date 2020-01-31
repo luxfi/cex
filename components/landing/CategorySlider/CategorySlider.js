@@ -41,20 +41,13 @@ export default class TrailerSlider extends React.Component {
           display: "flex",
         }}>
           <Slider>
-            {genres.map((genre, i) => {
-              return (
+            {genres.map((genre, i) => (
                 <Slider.CategoryItem
-                  category={genre}
-                  key={i}
-                  onClick={(genre) => {
-                    //store.movieStore.setFacetValue('genres', genre.title, true
-                    router.push(`/browse?facet=genres&value=${genre.title}`)
-                  }}
-                >
-                  item1
-                </Slider.CategoryItem>
-              )
-            })}
+                  genre={genre}
+                  key={genre.title}
+                  onClick={genre => router.push(`/browse?facet=genres&value=${genre.title}`)}
+                />
+            ))}
           </Slider>
         </div>
       </div >

@@ -1,6 +1,6 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
-import Router from "next/router"
+import router from "next/router"
 
 // nodejs library that concatenates classes
 import classNames from "classnames"
@@ -83,17 +83,13 @@ export default class TrailerSlider extends React.Component {
           display: "flex",
         }}>
           <Slider>
-            {studios.map((studio, i) => {
-              return (
-                <Slider.StudioItem
-                  imgSrc={studio.img}
-                  key={i}
-                  openModal={(title, body) => store.uiStore.openModal(title, body)}
-                >
-                  item1
-                </Slider.StudioItem>
-              )
-            })}
+            {studios.map((studio, i) => (
+              <Slider.StudioItem 
+                studio={studio} 
+                key={studio.name}
+                onClick={studio => router.push(`/browse?facet=distributors&value=${studio.name}`)}
+              />
+            ))}
           </Slider>
         </div>
       </div >

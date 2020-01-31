@@ -9,7 +9,7 @@ import IconArrowDown from '../Icons/IconArrowDown'
 import { TrailerSliderModal } from ".."
 const { useRef } = React
 
-const Item = ({ category, onClick }) => {
+const Item = ({ genre, onClick }) => {
   const childRef = useRef()
 
   return (
@@ -28,30 +28,24 @@ const Item = ({ category, onClick }) => {
               position: "relative"
             }}
           >
-            <Card
-              onClick={() => {
-                onClick(category)
-              }}
-            >
+            <Card onClick={() => onClick(genre)} >
               <CardContent
                 style={{
                   display: 'flex',
                   position: 'relative',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  background: `${category.background}`,
+                  background: `${genre.background}`,
                   maxHeight: '1200px',
                   minHeight: '125px',
                   minWidth: '207px',
                   flexDirection: "column",
                   paddingTop: "39px"
-              // backgroundSize: 'cover',
-              // backgroundPosition: 'center'
-            }}
-          >
+                }}
+              >
                 <Typography variant="h5">
-                <Box fontWeight={100} fontSize={20}>
-                    {category.title}
+                  <Box fontWeight={100} fontSize={20}>
+                      {genre.title}
                   </Box>
                 </Typography>
                 <Grid item style={{width: "10%"}}>

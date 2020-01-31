@@ -46,9 +46,9 @@ class Browse extends React.Component {
   }
 
   componentDidMount = () => {
-    this.props.store.movieStore.loadMovies() // safe call
+    this.props.store.movieStore.loadMovies(router.query) // safe call
 
-    console.log('QUERY: \n' + JSON.stringify(router.query, null, 2))
+    //console.log('QUERY: \n' + JSON.stringify(router.query, null, 2))
     
     window.addEventListener('scroll', this.handleScroll);
     googlePageView()
