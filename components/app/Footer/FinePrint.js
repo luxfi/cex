@@ -1,37 +1,39 @@
 export default (props) => (
 	<div className={props.className}>
 		<p>
-            This site (the "Site") is owned and maintained by ESX LLC, which is
-            not a registered broker - dealer. ESX LLC does not give investment advice,
-            endorsement, analysis or recommendations with respect to any securities. All
-            securities listed here are being offered by, and all information included on
-            this Site is the responsibility of, the applicable issuer of such securities.
+            This site (the "Site") is owned and maintained by Entertainment
+            Stock X LLC, which is not a registered broker - dealer. Entertainment Stock X
+            LLC does not give investment advice, endorsement, analysis or recommendations
+            with respect to any securities. All securities listed here are being offered
+            by, and all information included on this Site is the responsibility of, the
+            applicable issuer of such securities.
 		</p>
 		<p>
             All broker - dealer related securities activity is conducted by
-            Proxima Capital Management LLC, a registered broker - dealer, and member
-            of <a href="https://www.finra.org">FINRA</a> | <a href="https://www.sipc.org/">SiPC</a>,
-            located at 2121 Avenue of the Stars, 23rd Floor, Los Angeles,
-            CA, 90067, please check our background on <a href="https://www.adviserinfo.sec.gov/IAPD/IAPDFirmSummary.aspx?ORG_PK=133043">FINRA's BrokerCheck</a>.
-            Proxima Capital does not make investment recommendations and no
-            communication, through this Site or in any other medium should be construed
-            as a recommendation for any security offered on or off this investment
-            platform. Investment opportunities posted on this Site are private placements
-            of securities that are not publicly traded, involve a high degree of risk,
-            may lose value, are subject to holding period requirements and are intended
-            for investors who do not need a liquid investment. Past performance is not
-            indicative of future results. Investors must be able to afford the loss of
-            their entire investment.
+            Proxima Capital Management LLC, a registered broker - dealer, and member of <a href="https://www.finra.org">FINRA</a> | <a href="https://www.sipc.org/">SiPC</a>, located
+            at 2121 Avenue of the Stars, 23rd Floor, Los Angeles, CA, 90067,
+            please check our background on <a
+            href="https://www.adviserinfo.sec.gov/IAPD/IAPDFirmSummary.aspx?ORG_PK=133043">FINRA's
+            BrokerCheck</a>.  Proxima Capital does not make investment recommendations
+            and no communication, through this Site or in any other medium should be
+            construed as a recommendation for any security offered on or off this
+            investment platform. Investment opportunities posted on this Site are private
+            placements of securities that are not publicly traded, involve a high degree
+            of risk, may lose value, are subject to holding period requirements and are
+            intended for investors who do not need a liquid investment. Past performance
+            is not indicative of future results. Investors must be able to afford the
+            loss of their entire investment.
 		</p>
 		<p>
-            ESX LLC nor any of their officers, directors, agents and employees
-            makes any warranty, express or implied, of any kind whatsoever related to the
-            adequacy, accuracy or completeness of any information on this Site or the use
-            of information on this site. Offers to sell securities can only be made
-            through official offering documents that contain important information about
-            the investment and the issuers, including risks. Investors should carefully
-            read the offering documents. Investors should conduct their own due diligence
-            and are encouraged to consult with their tax, legal and financial advisors.
+            Entertainment Stock X LLC nor any of their officers, directors,
+            agents and employees makes any warranty, express or implied, of any kind
+            whatsoever related to the adequacy, accuracy or completeness of any
+            information on this Site or the use of information on this site. Offers to
+            sell securities can only be made through official offering documents that
+            contain important information about the investment and the issuers, including
+            risks. Investors should carefully read the offering documents. Investors
+            should conduct their own due diligence and are encouraged to consult with
+            their tax, legal and financial advisors.
 		</p>
 		<p>
             By accessing the Site and any pages thereof, you agree to be bound

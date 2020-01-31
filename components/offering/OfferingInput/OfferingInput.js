@@ -120,7 +120,7 @@ export default function CustomizedInputBase({
         className={classes.button}
         onClick={() => handleSubmit()}
       >
-        <Typography variant="subtitle1">Invest</Typography>
+        <Typography variant="h6">Invest</Typography>
       </Button>
     </div>
   )

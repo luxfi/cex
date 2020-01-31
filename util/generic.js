@@ -20,10 +20,14 @@ const googlePageView = () => {
   ReactGA.pageview(window.location.pathname + window.location.search)
 }
 
-const formatCurrency = (num, currency = 'USD') => {
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(
-    num,
-  )
+const formatCurrency = (num, currency = 'USD', decimal = true) => {
+  let formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(num)
+
+  if (!decimal) {
+    formatted = formatted.split('.')[0]
+  }
+
+  return formatted
 }
 
 const isStringInteger = stringInput => {

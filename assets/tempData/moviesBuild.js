@@ -31,6 +31,7 @@ function parseMovies() {
     // Massage CSV data into final format
   for (let i=0; i<data.length; i++) {
     let movie = data[i]
+
     movie.trading      = movie.trading == 'TRUE'
 
     // New, more consistent arrays are stored as | separated strings
@@ -44,8 +45,11 @@ function parseMovies() {
     // TODO: Will be deprecated, preserved now for legacy compatibility
     movie.director     = movie.directors
     movie.genre        = movie.genres
-    movie.writer       = movie.writer
+    movie.writer       = movie.writers
+
+    data[i] = movie
   }
+
 
   return data
 }
@@ -57,7 +61,7 @@ function mergeData(legacy, parsed) {
       parsed[slug].awards   = legacy[slug].awards
       parsed[slug].trailers = legacy[slug].trailers
     } catch (err) {
-      console.error('Failed to update ' + slug)
+      console.error(`Failed to update ${slug}: ${err.toString()}`)
     }
   }
   return parsed
