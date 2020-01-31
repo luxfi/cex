@@ -2,7 +2,7 @@ const movies = require('./moviesBuild')
 
 function moviesGenerator() {
   return {
-	cacheable: true,
+	  cacheable: true,
     code: `const movies = ${JSON.stringify(movies)}; export default movies;`
   }
 }

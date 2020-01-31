@@ -1,6 +1,6 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
-import Router from "next/router"
+import router from "next/router"
 
 // nodejs library that concatenates classes
 import classNames from "classnames"
@@ -47,8 +47,14 @@ export default class TrailerSlider extends React.Component {
                   category={genre} 
                   key={i}
                   onClick={(genre) => {
-                    store.movieStore.setFacetValue('genres', genre.title, true)
-                    Router.push('/discover')
+                    //store.movieStore.setFacetValue('genres', genre.title, true)
+                    router.push({
+                      path: '/browse',
+                      query: {
+                        facet: 'genres',
+                        value: genre.title
+                      }
+                    })
                   }}
                 >
                   item1

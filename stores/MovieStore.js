@@ -18,7 +18,6 @@ export default class MovieStore {
 
   constructor(initialData, hanzoApi) {
     this.loadMovies()
-    // this.movies = initialData
     this.api = hanzoApi
   }
 
@@ -82,21 +81,12 @@ export default class MovieStore {
   }, {keepAlive : false})
   
 
-  /*
-  _getFacetValue = (name, key) => {
-    if (!name in this.facets ) {
-      throw new Error('MovieStore: getFacetValue() expects an existing facet name')
-    }
-    return (this.facets[name].has(key))
-  }
-
-  getFacetValue = computedFn(this._getFacetValue, {keepAlive: false})
-  */
-
   loadMovies() {
     if (this.movies.length > 0) {
       return
     }
+
+    console.log("LOOOADING")
 
     this.isLoading = true
     // this.fetchMovies().then(fetchedMovies => {
@@ -105,7 +95,8 @@ export default class MovieStore {
     // })
     // console.log("We have movies", movies)
     moviesFromJson.forEach(m => this.updateMovieFromServer(m))
-    this.filteredMovies = this.movies
+    //this.filteredMovies = this.movies
+    this.updateFilteredMovies()
     this.currentMovie = this.movies[0] // TEMP
 
     this.isLoading = false

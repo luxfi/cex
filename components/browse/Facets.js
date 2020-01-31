@@ -28,22 +28,21 @@ import PopupState, {
 } from 'material-ui-popup-state'
 
 
-import styles from './facets.style.js'
+import styles from './Facets.style.js'
 const useStyles = makeStyles(styles)
 
-
-const Facets = ({facetDescriptions, movieStore}) => {
+const Facets = ({facets, movieStore}) => {
   const classes = useStyles()
   return (
     <div className={classes.facetsOuter}>
       <span className={classes.facetsLabel}>Filters</span>
-      {Object.keys(facetDescriptions).map(
-        (key, i) => (
+      {facets.map(
+        (f, i) => (
           <Facet 
             movieStore={movieStore} 
-            facetDesc={facetDescriptions[key]}
+            facetDesc={f}
             classes={classes} 
-            key={key}
+            key={f.name}
           />
         )
       )}
