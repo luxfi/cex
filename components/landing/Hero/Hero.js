@@ -21,7 +21,7 @@ import BirdsOfPreyHero from '../../../assets/images/birds-of-prey-hero.jpg'
 import BirdsOfPreyLogo from '../../../assets/images/birds-of-prey-logo.png'
 import OnwardHero from '../../../assets/images/onward-hero.jpg'
 import TerminatorHero from '../../../assets/images/terminator-hero.jpg'
-import TerminatorLogo from '../../../assets/images/terminator-logo.svg'
+import TerminatorLogo from '../../../assets/svg/terminator-logo.svg'
 import UncutGemsHero from '../../../assets/images/uncut-gems-hero.jpg'
 
 import styles from './Hero.style'

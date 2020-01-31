@@ -39,7 +39,8 @@ export default theme => ({
 
 
   main: {
-    paddingTop: '88px' // 64px offset + 24px real padding 
+    paddingTop: '128px', // 2 X 64px toolbar 
+    marginTop: 0
   },
 
   tabIndicator: {

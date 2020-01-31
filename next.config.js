@@ -9,6 +9,7 @@ const postcss = require('poststylus')
 const rupture = require('rupture')
 const articlesFromJson = require('./assets/tempData/articles')
 const moviesFromJson = require('./assets/tempData/moviesBuild')
+const facets = require('./util/facets')
 
 module.exports = withBundleAnalyzer(
   withCSS(
@@ -32,7 +33,7 @@ module.exports = withBundleAnalyzer(
         })
 
         config.module.rules.push({
-          test: /\.(eot|woff|woff2|ttf|webp|txt|jpg|png|jpeg|svg|gif)$/,
+          test: /\.(eot|woff|woff2|ttf|webp|txt|jpg|png|jpeg|gif|svg)$/,
           use: [
             {
               loader: 'file-loader',
@@ -93,11 +94,26 @@ module.exports = withBundleAnalyzer(
           {},
         )
 
+        const browseFacets = facets.reduce(
+          (acc, f) => {
+            let result = {...acc}
+            for (let v of f.values) {
+              result[`/browse/${f.name}/${v.key}`] = {
+                page: '/browse',
+                query: { facet: f.name, value: v.key}
+              }
+            }
+            return result
+          },
+          {}
+        )
 
-        // combine the map of post pages with the home
+        //console.log(JSON.stringify(browseFacets, null, 2))
+
         return {
           ...articles,
           ...movies,
+          ...browseFacets,
           '/': { page: '/' },
           '/login': { page: '/login' },
           '/signup': { page: '/signup' },
@@ -120,6 +136,7 @@ module.exports = withBundleAnalyzer(
           '/placeholder': { page: '/placeholder' },
           '/accountLevels': { page: '/accountLevels' },
           '/discover': { page: '/browse' },
+          '/browse': { page: '/browse' },
         }
       },
     }),

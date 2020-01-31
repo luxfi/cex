@@ -1,6 +1,6 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
-import Router from "next/router"
+import router from "next/router"
 
 // nodejs library that concatenates classes
 import classNames from "classnames"
@@ -21,16 +21,41 @@ import classNames from "classnames"
 //     Paramount,
 //     STX]
 
-const studioImages = 
-['/static/images/studio/Disney.png',
-  '/static/images/studio/Fox.png',
-  '/static/images/studio/Lionsgate.png',
-  '/static/images/studio/Netflix.png',
-  '/static/images/studio/Paramount.png',
-  '/static/images/studio/STX.png',
-    '/static/images/studio/Universal.jpg',
-    '/static/images/studio/Amazon.jpg']
-
+const studios = 
+[
+  {
+    name: 'Disney',
+    img: '/static/images/studio/Disney.png',
+  },
+  {
+    name: 'Fox',
+    img: '/static/images/studio/Fox.png',
+  },
+  {
+    name: 'Lionsgate',
+    img: '/static/images/studio/Lionsgate.png',
+  },
+  {
+    name: 'Netflix',
+    img: '/static/images/studio/Netflix.png',
+  },
+  {
+    name: 'Paramount',
+    img: '/static/images/studio/Paramount.png',
+  },
+  {
+    name: 'STX',
+    img: '/static/images/studio/STX.png',
+  },
+  {
+    name: 'Universal',
+    img: '/static/images/studio/Universal.jpg',
+  },
+  {
+    name: 'Amazon',
+    img: '/static/images/studio/Amazon.jpg',
+  },
+]
 
 // @material-ui/core components
 import {
@@ -58,17 +83,13 @@ export default class TrailerSlider extends React.Component {
           display: "flex",
         }}>
           <Slider>
-            {studioImages.map((imgSrc, i) => {
-              return (
-                <Slider.StudioItem
-                  imgSrc={imgSrc}
-                  key={i}
-                  openModal={(title, body) => store.uiStore.openModal(title, body)}
-                >
-                  item1
-                </Slider.StudioItem>
-              )
-            })}
+            {studios.map((studio, i) => (
+              <Slider.StudioItem 
+                studio={studio} 
+                key={studio.name}
+                onClick={studio => router.push(`/browse?facet=distributors&value=${studio.name}`)}
+              />
+            ))}
           </Slider>
         </div>
       </div >

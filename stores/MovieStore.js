@@ -9,49 +9,57 @@ export default class MovieStore {
   @observable isLoading = true
   @observable currentMovie = undefined
   
-  facets = observable({
-    genre: observable.map()
-  })
+  facets = {
+    genres: observable.map(),
+    distributors: observable.map()
+  }
 
   @observable filteredMovies = []
 
   constructor(initialData, hanzoApi) {
     this.loadMovies()
-    // this.movies = initialData
     this.api = hanzoApi
   }
 
   @action updateFilteredMovies = () => {
-    this.filteredMovies = this.movies.filter(m => this.checkFacets(m))
+    this.filteredMovies = this.movies.filter(m => this.facetsAllow(m))
   }
 
-  checkFacets = (movie) => {
-
+  facetsAllow = (movie) => {
     const facetsNamesAsArray = Object.keys(this.facets)
       // initilize all facets results to false
     const facetResults = Array(facetsNamesAsArray.length).fill(false) 
     for (let i = 0; i < facetsNamesAsArray.length; i++) {
-      const name = facetsNamesAsArray[i]
-      if (this.facets[name].size === 0) {
+      const facet = facetsNamesAsArray[i]
+      if (this.facets[facet].size === 0) {
+        console.log(`No constraints on ${facet}, so "${movie.name}" matches`)
         facetResults[i] = true
       }
       else {
-        for (const [key, value] of this.facets[name]) {
-          if (movie[name].includes(key)) {
+          // logical OR within a facet
+        for (const [key, value] of this.facets[facet]) {
+          if (movie[facet].includes(key)) {
+            console.log(`"${movie.name}" matches ${key} for ${facet}`)
             facetResults[i] = true
             break
           }
         }
       }
-      if (facetResults[i]) {
+      if (!facetResults[i]) {
         break
       }
     }
-      // if any facet included this film...
-    return facetResults.includes(true)
+      // logical AND between facets
+    return !facetResults.includes(false)
   }
 
   @action setFacetValue = (name, key, set) => {
+    if (set) {
+      console.log(`FACET: ${key} selected for ${name}`)
+    }
+    else {
+      console.log(`FACET: ${key} cleared for ${name}`)
+    }
     if (!name in this.facets ) {
       throw new Error('MovieStore: setFacetValue() expects an existing facet name')
     }
@@ -64,52 +72,50 @@ export default class MovieStore {
     this.updateFilteredMovies()
   }
   
+  @action clearFacets(update = false) {
+    for (const f in this.facets) {
+      this.facets[f].clear()
+    }
+    if (update) {
+      this.updateFilteredMovies()
+    }
+  }
+
+  
   getFacetValue = computedFn((name, key) => {
     if (!name in this.facets ) {
       throw new Error('MovieStore: getFacetValue() expects an existing facet name')
     }
     return (this.facets[name].has(key))
-  }, {keepAlive : true})
+  }, {keepAlive : false})
+  
 
-  loadMovies() {
-    if (this.movies.length > 0) {
+  loadMovies(query) {
+    if (!query && this.movies.length > 0) {
       return
     }
 
     this.isLoading = true
-    // this.fetchMovies().then(fetchedMovies => {
-    //   fetchedMovies.forEach(json => this.updateMovieFromServer(json))
-    //   this.isLoading = false
-    // })
-    // console.log("We have movies", movies)
-    moviesFromJson.forEach(m => this.updateMovieFromServer(m))
-    
-    this.filteredMovies = this.movies
-
+    this.movies.clear()
+    moviesFromJson.forEach(m => {
+      this.movies.push(this.moviefromJSON(m))
+    })
+    if (query) {
+      this.clearFacets(false)
+          // Calls updateFilteredMovies()
+      this.setFacetValue(query.facet, query.value, true)
+    }
+    else {
+      this.filteredMovies = this.movies
+    }
     this.currentMovie = this.movies[0] // TEMP
-
     this.isLoading = false
   }
 
-  /**
-   * Update a movie with information from the server. Guarantees a movie
-   * only exists once. Might either construct a new movie, update an existing one,
-   * or remove a movie if it has been deleted on the server.
-   */
-  updateMovieFromServer(json) {
-    // const movie = this.movies.find(movie => movie.id === json.id)
-    // if (!movie) {
-    //   movie = new Movie(this, json.id)
-    //   this.movies.push(movie)
-    // }
-    // if (json.isDeleted) {
-    //   this.removeMovie(movie)
-    // } else {
-    //   movie.updateFromJson(json)
-    // }
+  moviefromJSON(json) {
     const movie = new Movie(json.imbdid)
     movie.updateFromJson(json)
-    this.movies.push(movie)
+    return movie
   }
 
   // @computed get topMovies() {
@@ -172,51 +178,12 @@ export class Movie {
     this.id = id
   }
 
-  // constructor(store, id = uuid.v4()) {
-  //   this.store = store
-  //   this.id = id
 
-  //   this.saveHandler = reaction(
-  //     // observe everything that is used in the JSON:
-  //     () => this.asJson,
-  //     // if autoSave is on, send json to server
-  //     json => {
-  //       if (this.autoSave) {
-  //         this.store.transportLayer.saveMovie(json)
-  //       }
-  //     }
-  //   )
-  // }
-
-  /**
-   * Remove this Movie from the client and server
-   */
-  // delete() {
-  //   this.store.transportLayer.deleteMovie(this.id)
-  //   this.store.removeMovie(this)
-  // }
-
-  // @computed get asJson() {
-  //   return {
-  //     id: this.id,
-  //     completed: this.completed,
-  //     task: this.task,
-  //     authorId: this.author ? this.author.id : null
-  //   }
-  // }
-
-  /**
-   * Update this Movie with information from the server
-   */
   updateFromJson(json) {
-    // make sure our changes aren't sent back to the server
+      // make sure our changes aren't sent back to the server
     Object.keys(json).forEach(k => {
       this[k] = json[k]
     })
   }
 
-  // dispose() {
-  //   // clean up the observer
-  //   this.saveHandler()
-  // }
 }

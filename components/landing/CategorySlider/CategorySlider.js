@@ -1,11 +1,11 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
-import Router from "next/router"
+import router from "next/router"
 
 // nodejs library that concatenates classes
 import classNames from "classnames"
 
-const studioImages = [
+const genres = [
   { title: 'Action', background: "linear-gradient(90deg, #015ce3 0%, #4a90f9 100%)" },
   { title: 'Comedy', background: "linear-gradient(90deg, #02b0d7 0%, #46dbfc 100%)" },
   { title: 'Documentary', background: "linear-gradient(90deg, #26c3ac 0%, #69e6c8 100%)" },
@@ -41,17 +41,13 @@ export default class TrailerSlider extends React.Component {
           display: "flex",
         }}>
           <Slider>
-            {studioImages.map((category, i) => {
-              return (
-                <Slider.CategoryItem 
-                  category={category} 
-                  key={i}
-                  openModal={(title, body) => store.uiStore.openModal(title, body)}
-                >
-                  item1
-                </Slider.CategoryItem>
-              )
-            })}
+            {genres.map((genre, i) => (
+                <Slider.CategoryItem
+                  genre={genre}
+                  key={genre.title}
+                  onClick={genre => router.push(`/browse?facet=genres&value=${genre.title}`)}
+                />
+            ))}
           </Slider>
         </div>
       </div >

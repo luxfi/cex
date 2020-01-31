@@ -21,48 +21,57 @@ import {
 } from '@material-ui/icons'
 
   // This module is recommended in the MUI docs themselves :)
-import PopupState, { bindTrigger, bindPopper } from 'material-ui-popup-state'
+import PopupState, { 
+  bindHover, 
+  //bindTrigger, 
+  bindPopper, // this is a bit buggy but ok for now
+} from 'material-ui-popup-state'
 
-import styles from './facets.style.js'
+
+import styles from './Facets.style.js'
 const useStyles = makeStyles(styles)
 
-const Facets = ({facets, setFacetValue, getFacetValue}) => {
+const Facets = ({facets, movieStore}) => {
   const classes = useStyles()
   return (
     <div className={classes.facetsOuter}>
       <span className={classes.facetsLabel}>Filters</span>
-      <Facet 
-        facet={facets[0]} 
-        setFacetValue={setFacetValue} 
-        getFacetValue={getFacetValue} 
-        classes={classes} 
-      />
+      {facets.map(
+        (f, i) => (
+          <Facet 
+            movieStore={movieStore} 
+            facetDesc={f}
+            classes={classes} 
+            key={f.name}
+          />
+        )
+      )}
     </div>
   )
 } 
 
-const Facet = observer(({facet, setFacetValue, getFacetValue, classes }) => {
+const Facet = observer(({facetDesc, movieStore, classes }) => {
 
   const activeValues = []
-  Object.keys(facet.values).forEach( (f, i) => {
-    if (getFacetValue(facet.name, facet.values[f].key)) {
-      activeValues.push(facet.values[f])
+  Object.keys(facetDesc.values).forEach( (value, i) => {
+    if (movieStore.getFacetValue(facetDesc.name, facetDesc.values[value].key)) {
+      activeValues.push(facetDesc.values[value])
     } 
   })
-  const title = activeValues.length ? facet.titleSome + ':' : facet.titleAll
+  const title = activeValues.length ? facetDesc.titleSome + ':' : facetDesc.titleAll
 
   return (
     <Paper className={classes.facetOuter}>
       <PopupState variant='popper' popupId='menu-popover'>
         {(popupState) => {
           const setFacetValue_Menu = (key, value) => {
-            setFacetValue(facet.name, key, value)
+            movieStore.setFacetValue(facetDesc.name, key, value)
             popupState.close()
           }
           return (
             <>
             <Button
-              {...bindTrigger(popupState)}
+              {...bindHover(popupState)}
               className={classes.facetDropdownButton}
               classes={{ label: classes.facetButtonText }}
             >
@@ -76,7 +85,7 @@ const Facet = observer(({facet, setFacetValue, getFacetValue, classes }) => {
             >
               <Paper>
                 <MenuList>
-                {Object.values(facet.values).map((val) => {
+                {Object.values(facetDesc.values).map((val) => {
                   const isActive = activeValues.includes(val)
                   const style = ('color' in val) ? {borderBottomColor: val.color} : {borderBottom: 'none !important'}
                   return (
@@ -95,7 +104,7 @@ const Facet = observer(({facet, setFacetValue, getFacetValue, classes }) => {
           )
         }}
       </PopupState>
-      {Object.values(facet.values).map((val) => {
+      {Object.values(facetDesc.values).map((val) => {
         const isActive = activeValues.includes(val)
         const style = ('color' in val) ? {borderBottomColor: val.color} : {borderBottom: 'none !important'}
         if (isActive) {
@@ -103,7 +112,7 @@ const Facet = observer(({facet, setFacetValue, getFacetValue, classes }) => {
             <div className={classes.activeFacetPill} key={val.key}>
               <div className={classes.activeFacetPillInner} >
                 <span className={classes.activeFacetTitle} style={style}>{val.key}</span>
-                <IconButton className={classes.activeFacetCloseButton} onClick={() => setFacetValue(facet.name, val.key, false)}>
+                <IconButton className={classes.activeFacetCloseButton} onClick={() => movieStore.setFacetValue(facetDesc.name, val.key, false)}>
                   <Close className={classes.activeFacetCloseButtonIcon} />
                 </IconButton>
               </div>

@@ -18,6 +18,10 @@ export default theme => ({
     alignItems: 'center',
     paddingRight: theme.spacing(1),
     borderRadius: '9px',
+    marginRight: theme.spacing(1),
+    '&:last-child': {
+      marginRight: 0
+    }
   },
 
   facetDropdownButton: {
@@ -34,7 +38,8 @@ export default theme => ({
   },
   
   facetValuesMenu: {
-    zIndex: 20
+    zIndex: 20,
+    //pointerEvents: 'none'
   },
   
   facetValueMenuItemOuter:{
