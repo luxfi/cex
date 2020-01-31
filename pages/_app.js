@@ -8,6 +8,7 @@ import { Provider, observer } from 'mobx-react'
 
 import App from 'next/app'
 import { withRouter } from 'next/router'
+import Head from 'next/head'
 
 import React from 'react'
 import ReactGA from 'react-ga'
@@ -95,6 +96,10 @@ class MyMobxApp extends App {
     const showDesktopProfileMenu = isWidthUp('sm', width)
 
     return (
+      <>
+      <Head>
+        <title>ESX | Entertainment Stock X</title>
+      </Head>
       <Provider store={this.mobxStore}>
         <MuiThemeProvider theme={darkTheme}>
           <div className={classes.root}>
@@ -151,6 +156,7 @@ class MyMobxApp extends App {
           </div>
         </MuiThemeProvider>
       </Provider>
+      </>
     )
   }
 

@@ -6,18 +6,10 @@ import Document, {
 } from 'next/document'
 
 export default class MyDocument extends Document {
-  getChildContext() {
-    return {
-      _documentProps: this.props,
-      _devOnlyInvalidateCacheQueryString: '',
-    }
-  }
-
   render() {
     return (
       <Html>
         <Head>
-          <title>ESX | Entertainment Stock Exchange</title>
           <meta
             name='viewport'
             content='initial-scale=1.0, width=device-width'
