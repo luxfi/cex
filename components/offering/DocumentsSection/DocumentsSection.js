@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   Box,
+  Divider,
   Typography,
   ListItem,
   ListItemIcon,
@@ -27,11 +28,11 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const documents = [
-  'SAW9-Document-111220.pdf',
-  'InvestorsProfile.pdf',
-  'AnotherDocument-forthismovie.pdf',
-  'SAW9-Doc-2884.pdf',
-  'Terms&Agreements',
+  'Form S1',
+  'Subscription Agreement',
+  'Investor Deck',
+  'Financial Analysis & Comparables',
+  'ESX Diligence Report',
 ]
 
 const DocumentsSection = ({ documentsRef }) => {
@@ -46,13 +47,7 @@ const DocumentsSection = ({ documentsRef }) => {
             Documents
           </Box>
         </Typography>
-        <Typography variant="subtitle1" color="textSecondary">
-          <Box mb={2} mt={2}>
-            Temporibus autem quibusdam et aut officiis debitis aut rerum
-            necessitatibus saepe eveniet ut et voluptates repudiandae sint et
-            molestiae non recusandae.
-          </Box>
-        </Typography>
+        <Divider />
         {documents.map((doc, i) => (
           <ListItem
             key={i}

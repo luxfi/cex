@@ -35,23 +35,6 @@ const SummarySection = ({ summaryRef }) => {
             Goldfinger, based on a story by Chris Rock.
           </Box>
         </Typography>
-        <Typography variant="subtitle1" color="textSecondary">
-          <Box mb={3}>
-            Et harum quidem rerum facilis est et expedita distinctio. Nam libero
-            tempore, cum soluta nobis est eligendi optio cumque nihil impedit
-            quo minus id quod maxime placeat facere possimus, omnis voluptas
-            assumenda est, omnis dolor repellendus.
-          </Box>
-        </Typography>
-        <Typography variant="subtitle1" color="textSecondary">
-          <Box mb={3}>
-            Temporibus autem quibusdam et aut officiis debitis aut rerum
-            necessitatibus saepe eveniet ut et voluptates repudiandae sint et
-            molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente
-            delectus, ut aut reiciendis voluptatibus maiores alias consequatur
-            aut perferendis doloribus asperiores repellat.
-          </Box>
-        </Typography>
         <Typography variant="subtitle1" color="textPrimary">
           <Box mb={2} fontWeight="fontWeightBold">
             {bull} SAW9 Might be the most intense movie since Bambi

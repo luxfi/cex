@@ -47,22 +47,22 @@ const useStyles = makeStyles(theme => ({
 
 const UPDATES = [
   {
+    date: 'February 14, 2020',
+    heading: 'Only two weeks left to invest!',
+    details:
+      'Thanks to our amazing community for supporting us, we love you back fam. We would especially like to thank our fans in Detroit for their incredible support. The SAW franchise is powered by millions of horror hungry fans ...',
+  },
+  {
+    date: 'January 1, 2020',
+    heading: 'Fundraising is now open for everyone',
+    details:
+      'We are now accepting investors for our crowdsale of SAW 9. Don\'t miss out on this exciting opportunity to be part of SAW history! Join us on our journey to ...',
+  },
+  {
     date: 'December 6th 2019',
-    heading: 'Investors are bringing the rain!',
+    heading: 'Prospectus approved by SEC',
     details:
-      'How many free autoresponders have you tried? Really how many? And how many emails did you get through using them? How do you know? How many people opened your followup message? My point here is that if you have no clue for the answers above you probably are not operating a followup campaign successfully.',
-  },
-  {
-    date: 'December 5th 2019',
-    heading: 'Investors are bringing the rain!',
-    details:
-      'How many free autoresponders have you tried? Really how many? And how many emails did you get through using them? How do you know? How many people opened your followup message? My point here is that if you have no clue for the answers above you probably are not operating a followup campaign successfully.',
-  },
-  {
-    date: 'December 3th 2019',
-    heading: 'Investors are bringing the rain!',
-    details:
-      'How many free autoresponders have you tried? Really how many? And how many emails did you get through using them? How do you know? How many people opened your followup message? My point here is that if you have no clue for the answers above you probably are not operating a followup campaign successfully.',
+      'The SEC has now approved our prospectus, and invesment will soon open. Sign up to stay in the loop about everything SAW. Don\'t miss out on this legendary ...',
   },
 ]
 

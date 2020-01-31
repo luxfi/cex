@@ -15,28 +15,30 @@ const useStyles = makeStyles(theme => ({
 
 const NEWS = [
   {
-    title: 'Market Watch',
-    date: '1hr ago',
-    heading:
-      'Former HBO chief is in advanced talks to sign exclusive production deal with Apple.',
+    publisher: 'NME',
+    date: '2 hours ago',
+    image: 'https://www.nme.com/wp-content/uploads/2020/01/GettyImages-451473112-1392x884.jpg',
+    heading: 'Chris Rock teases his "really scary and really bloody" Saw reboot',
     details:
-      'Ex ea commodo consequat. Duis aute irure dolor in reprehenderit involuptate velit esse cillum dolore eu fugiat nulla pariatur...',
+      'Asked how his involvement with Saw 9 came about, Rock revealed that it was down to a chance meeting with the franchise\'s production ...',
   },
   {
-    title: 'Saw9',
-    date: '3hr ago',
+    publisher: 'MovieWeb',
+    date: '2 weeks ago',
+    image: 'https://cdn3.movieweb.com/i/article/63Z9ee5ZpXjbWRmNuTzbkNSOz7lf7v/798:75/Saw-9-Chris-Rock-Update.jpg',
     heading:
-      'This movie is going to be so good. It will also be quite bloody and intense but that’s the point, right?',
+      'Chris Rock Promises Saw 9 Is Not Scary Movie: It\'s Gory with a Sprinkling of Humor',
     details:
-      'Ex ea commodo consequat. Duis aute irure dolor in reprehenderit involuptate velit esse cillum dolore eu fugiat nulla pariatur...',
+      'The Saw Reboot is hitting theaters this year and it\'s quite possibly the most interesting entry in the series since the original ...',
   },
   {
-    title: 'Saw9',
-    date: '4hr ago',
+    publisher: 'The Wrap',
+    date: '1 month ago',
+    image: 'https://www.thewrap.com/wp-content/uploads/2019/05/ChrisRockSaw.jpg',
     heading:
-      'This movie is going to be so good. It will also be quite bloody and intense but that’s the point, right?',
+      'Chris Rock\'s "Saw" Reboot Moves Up 5 Months',
     details:
-      'Ex ea commodo consequat. Duis aute irure dolor in reprehenderit involuptate velit esse cillum dolore eu fugiat nulla pariatur...',
+      'Chris Rock\'s "Saw" reboot will slash into theaters five months earlier, with Lionsgate ...',
   },
 ]
 
@@ -51,7 +53,7 @@ const NewsSection = ({ newsRef }) => {
           </Box>
         </Typography>
         <Divider />
-        {NEWS.map(({ title, date, heading, details }, i) => {
+        {NEWS.map(({ publisher, image, date, heading, details }, i) => {
           const [hover, setHover] = useState(false)
           const handleMouseOver = () => {
             setHover(true)
@@ -66,7 +68,7 @@ const NewsSection = ({ newsRef }) => {
                   <Box mb={1} mt={5}>
                     <Typography variant="h6" component="span">
                       <Box mr={2} fontWeight="fontWeightBold" component="span">
-                        {title}
+                        {publisher}
                       </Box>
                     </Typography>
                     <Typography
@@ -103,7 +105,7 @@ const NewsSection = ({ newsRef }) => {
                       className={classNames(classes.pointer)}
                       onMouseOver={() => handleMouseOver()}
                       onMouseOut={() => handleMouseOut()}
-                      src={`https://picsum.photos/id/866/260/170`}
+                      src={image}
                       disableSpinner
                     />
                   </Box>

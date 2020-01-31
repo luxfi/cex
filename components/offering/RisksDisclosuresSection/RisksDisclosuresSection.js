@@ -71,13 +71,6 @@ const RISKS_DISCLOSURES = [
   },
   {
     heading:
-      'Purchasers will not be entitled to any inspection or information rights other than those required by Regulation CF.',
-    details: [
-      'The Organ Donor is an upcoming American horror film. The film will serve as the ninth installment in the Saw franchise. The film is directed by Darren Lynn Bousman, from a screenplay by Josh Stolberg and Pete Goldfinger, based on a story by Chris Rock.',
-    ],
-  },
-  {
-    heading:
       'Purchasers will be unable to declare the Security in "default" and demand repayment.',
     details: [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nam aliquam sem et tortor consequat. Dictum non consectetur a erat nam at lectus urna duis. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Elementum eu facilisis sed odio. Magna fringilla urna porttitor rhoncus dolor purus non. Mollis aliquam ut porttitor leo a diam sollicitudin tempor id. Ultrices sagittis orci a scelerisque purus. Id diam vel quam elementum pulvinar. Rhoncus dolor purus non enim praesent elementum facilisis.',
