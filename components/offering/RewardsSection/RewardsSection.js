@@ -5,32 +5,75 @@ import { RewardsCard } from '../'
 
 const REWARDS = [
   {
-    amount: 100,
+    amount: 5,
     description: [
-      "$1 allows you to stay informed on our progress and make a decision before the campaign ends. Plus, you'll receive infinite love + appreciation from our team.",
+      "THANK YOU. You've now joined the legion of Saw fans that own a piece of history.",
     ],
-    investorsAmount: 78,
-    estimatedDelivery: 'Dec 2019',
+    investorsAmount: 8908,
+    estimatedDelivery: 'Jun 2020',
     disabled: false,
   },
   {
-    amount: 500,
+    amount: 20,
     description: [
-      "$1 allows you to stay informed on our progress and make a decision before the campaign ends. Plus, you'll receive infinite love + appreciation from our team. $1 allows you to stay informed on our progress and make a decision before the campaign ends. Plus, you'll receive infinite love + appreciation from our team.",
-      "Plus, you'll receive infinite love + appreciation from our team. $1 allows you to stay informed on our progress and make a decision before the campaign ends. Plus, you'll receive infinite love + appreciation from.",
+      "JIGSAW PIN. You'll get a high quality Jigsaw metal pin badge featuring Jigsaw from the movie.",
     ],
-    investorsAmount: 150,
-    estimatedDelivery: 'Dec 2019',
+    investorsAmount: 2100,
+    estimatedDelivery: 'Jun 2020',
+    disabled: false,
+  },
+  {
+    amount: 50,
+    description: [
+      "DIGITAL DOWNLOAD + SOUNDTRACK. You'll get an HD digital download of the movie when it’s commercially released + Your name on the wall at Twisted Pictures studio to honor your involvement in the film + Production updates and Saw news!",
+    ],
+    investorsAmount: 3041,
+    estimatedDelivery: 'Jun 2020',
+    disabled: false,
+  },
+  {
+    amount: 85,
+    description: [
+      "SAW SHIRT OR BAG. These awesome Saw themed items are designed for us by Horror Enterprises in NYC. You'll get high quality, sweat-shop free coton bag or super-soft American Apparel shirt + Everything from the $45 level.",
+    ],
+    investorsAmount: 1150,
+    estimatedDelivery: 'Jun 2020',
+    disabled: false,
+  },
+  {
+    amount: 85,
+    description: [
+      "NEW! SAW MOVIE POSTER! You’ll get The Organ Donor official film poster! (this will be made for the film’s theatrical release and will be big and pretty damn cool) + Your name in the film’s credits (festival and home video versions) + Everything from our $45 DIGITAL DOWNLOAD level!",
+    ],
+    investorsAmount: 273,
+    estimatedDelivery: 'Jun 2020',
+    disabled: false,
+  },
+  {
+    amount: 200,
+    description: [
+      "OWN A PIECE OF THE FILM. You get a unique 8 x10 frame from the movie individually selected for you! It will be made just for you with a dedication on the reverse from the director + Everything from our $45 DIGITAL DOWNLOAD level!",
+    ],
+    investorsAmount: 782,
+    estimatedDelivery: 'Jun 2020',
     disabled: false,
   },
   {
     amount: 5000,
-    investorsAmount: 100,
+    investorsAmount: 10,
     description: [
-      "$1 allows you to stay informed on our progress and make a decision before the campaign ends. Plus, you'll receive infinite love + appreciation from our team. $1 allows you to stay informed on our progress and make a decision before the campaign ends. Plus, you'll receive infinite love + appreciation from our team.",
-      "Plus, you'll receive infinite love + appreciation from our team. $1 allows you to stay informed on our progress and make a decision before the campaign ends. Plus, you'll receive infinite love + appreciation from.",
+      "WORLD PREMIERE. You get 4 tickets to the film’s World premiere (location TBD, excludes travel and accommodation) + A special thank you credit (theatrical and home video version) + Everything above.",
     ],
-    estimatedDelivery: 'Dec 2019',
+    estimatedDelivery: 'Jun 2020',
+    disabled: true,
+  },
+  {
+    amount: 10000,
+    investorsAmount: 1,
+    description: [
+      "TOP DOG. Thank you for believing in this film and becoming a key part of the team. You’ll get a special on-screen production credit of Contributing Associate Producer + 2 tickets to the film’s World Premiere (travel and accommodation not included) + Everything else above."
+    ],
+    estimatedDelivery: 'Jun 2020',
     disabled: true,
   },
 ]
