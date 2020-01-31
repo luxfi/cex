@@ -187,9 +187,7 @@ const AppStore = ({ classes }) => (
 )
 
 const Copyright = ({ classes }) => {
-  const firstYear = 2019
   const currentYear = new Date().getFullYear()
-  const yearString = (currentYear > firstYear) ? `${firstYear}-${currentYear}` : firstYear
 
   // TODO Create Privacy and Terms of Use pages
   return (
@@ -198,7 +196,7 @@ const Copyright = ({ classes }) => {
         <a href='/privacy'>Privacy Policy</a> / <a href='/terms'>Terms of Use</a>
       </Typography>
       <Typography variant='body2' color='textSecondary'>
-        {`© ${yearString} Entertainment Stock X LLC. All rights reserved.`}
+        {`© ${currentYear} Entertainment Stock X LLC. All rights reserved.`}
       </Typography>
     </div>
   )
