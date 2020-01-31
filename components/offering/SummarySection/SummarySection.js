@@ -35,9 +35,20 @@ const SummarySection = ({ summaryRef }) => {
             Goldfinger, based on a story by Chris Rock.
           </Box>
         </Typography>
+
+        <Typography gutterBottom variant="subtitle1" color="textSecondary">
+          <Box mb={3}>
+            Saw was first screened on January 19, 2004, before released in
+            North America on October 29, 2004 by Lionsgate Films. Compared to its low
+            budget, Saw performed very well at the box office, grossing more than $100
+            million worldwide and becoming, one of the most profitable
+            horror films since Scream.
+          </Box>
+        </Typography>
+
         <Typography variant="subtitle1" color="textPrimary">
           <Box mb={2} fontWeight="fontWeightBold">
-            {bull} SAW9 Might be the most intense movie since Bambi
+            {bull} "The Organ Donor is set to be one of the franchises best films" - Chris Rock
           </Box>
         </Typography>
         <Typography variant="subtitle1" color="textPrimary">
@@ -47,8 +58,7 @@ const SummarySection = ({ summaryRef }) => {
         </Typography>
         <Typography variant="subtitle1" color="textPrimary">
           <Box mb={2} fontWeight="fontWeightBold">
-            {bull} If you like movies that keep you at the edge of your seat, go
-            see this movie!
+            {bull} If you like movies that keep you at the edge of your seat, go see this movie!
           </Box>
         </Typography>
       </Box>
