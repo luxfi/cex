@@ -169,15 +169,6 @@ const RaisingInformation = ({
       <Box mb={2} mt={2}>
         <Divider light />
       </Box>
-      <Grid item container xs={12}>
-        <Typography variant="subtitle2">
-          Minimum Investment: $50
-        </Typography>
-        {/* <div className={classes.spacer}></div>
-        <Typography variant="subtitle2" component="span" color="textSecondary">
-          Estimated Cost: $0.00
-        </Typography> */}
-      </Grid>
       <Grid item xs={12}>
         <OfferingInput
           addOfferingInvestment={addOfferingInvestment}
@@ -199,7 +190,7 @@ const RaisingInformation = ({
               </Icon>
             </Box>
             <Box component="span" ml={1}>
-              Email Me
+              Email me
             </Box>
           </Typography>
         </Grid>
