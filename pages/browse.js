@@ -97,9 +97,9 @@ class Browse extends React.Component {
           <MovieSearchWidget placeholder='Search…' movies={movieStore.filteredMovies} className={classes.search}/>
           <Facets movieStore={movieStore} facets={facets} />
         </Toolbar>
-        <Grid container spacing={3} className={classes.main}>
+        <Grid container spacing={3} className={classes.main} alignItems='stretch'>
         {movieStore.filteredMovies.map((m, i) => (
-          <Grid xs={12} sm={6} md={3} lg={2} item key={m.imdbid + i}>
+          <Grid xs={12} sm={6} md={3} lg={2} item key={m.imdbid + i} >
             <Card className={classes.card} onClick={() => {router.push(`/film/${m.movieSlug}`)}}>
               <CardMedia src={m.posterImg} className={classes.cardMedia} component='img'/>
               <CardContent className={classes.cardContent}>

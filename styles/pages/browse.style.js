@@ -58,6 +58,7 @@ export default theme => ({
   card: {
     maxWidth: 450,
     position: 'relative',
+    height: '100%',
     zIndex: 1,
     '&:hover': {
       zIndex: 10,
@@ -70,7 +71,8 @@ export default theme => ({
     },
 
   cardMedia: {
-    objectFit: 'cover'
+    objectFit: 'cover',
+    height: '100%',
   },
 
   cardContent: {
