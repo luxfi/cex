@@ -72,6 +72,7 @@ class Browse extends React.Component {
     const tabClasses = {
       root: classes.tabRoot,
       wrapper: classes.tabWrapper,
+      selected: classes.selected, // see reference comment in style file
     }
   
     return (

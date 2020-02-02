@@ -1,5 +1,7 @@
 import { fade } from '@material-ui/core/styles'
 
+  // this visually accomodates the trading/funding tabs
+  // and the fact that the text is centered 
 const tabOffsetMargin = '-15px'
 
 export default theme => ({
@@ -51,15 +53,34 @@ export default theme => ({
     marginLeft: tabOffsetMargin,
   },
 
+    // https://codeburst.io/my-journey-to-make-styling-with-material-ui-right-6a44f7c68113
   tabRoot: {
     paddingLeft: 0,
     minWidth: 130,
-    width: 130
+    width: 130,
+    cursor: 'default !important',
+
+    '&$selected': {
+      '& $tabWrapper:hover': {
+        cursor: 'default !important',
+        backgroundColor: theme.palette.background.default,
+      }
+    }, 
   },
 
+    // must include this!
+    // https://codeburst.io/my-journey-to-make-styling-with-material-ui-right-6a44f7c68113
+  selected: {},
+  
   tabWrapper: {
-    //alignItems: 'flex-start',
     alignItems: 'center',
+    lineHeight: '2.0',
+    border: 1,
+    borderRadius: 5,
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: theme.palette.background.paper,
+    }
   },
 
   tabIndicator: {
