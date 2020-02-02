@@ -22,6 +22,8 @@ import { MovieSearchWidget } from '../components/app'
 import { Facets } from '../components/browse'
 import styles from '../styles/pages/browse.style.js'
 
+import tradingStatus from '../util/tradingStatus'
+
   // must use CommonJS style since that file is used in the build system
 const facets = require('../util/facets')
 
@@ -32,24 +34,13 @@ class Browse extends React.Component {
 
   constructor(props) {
     super(props)
-    let currentTab = 0
-    if ('newReleases' in props) {
-      currentTab = 1
-    }
-    else if ('recommended' in props) {
-      currentTab = 2
-    }
     this.state = {
-      tabIndex: currentTab,
       scrollTrigger: false
     }
   }
 
   componentDidMount = () => {
     this.props.store.movieStore.loadMovies(router.query) // safe call
-
-    //console.log('QUERY: \n' + JSON.stringify(router.query, null, 2))
-    
     window.addEventListener('scroll', this.handleScroll);
     googlePageView()
   }
@@ -64,18 +55,17 @@ class Browse extends React.Component {
     })
   }
 
-  setTabIndex = (i) => {
-    this.setState({tabIndex: i})
+  tabSelected = (i) => {
+    this.props.store.movieStore.setTradingStatusFilter(tradingStatus.byIndex(i))
   }
 
     // cannot use fat-arrow for render as it breaks mobx observing :)
   render() {
     const { classes, store } = this.props
-
     const movieStore = store.movieStore
 
       // https://material-ui.com/customization/components/
-    const tabsClasses = {
+    const tabGroupClasses = {
       indicator: classes.tabIndicator,
     }
     const tabClasses = {
@@ -89,10 +79,10 @@ class Browse extends React.Component {
           classes.toolbar,
           this.state.scrollTrigger ? classes.solid : classes.transparent
         )}>
-          <Tabs value={this.state.tabIndex} onChange={(ignore, i) => { this.setTabIndex(i) }} classes={tabsClasses}>
-            <Tab label='Now Fundraising' disableRipple key='fundraising' classes={tabClasses}/>
-            <Tab label='New Releases' disableRipple key='releases' classes={tabClasses}/>
-            <Tab label='Your Recommended' disableRipple key='recommended' classes={tabClasses}/>
+          <Tabs value={movieStore.tradingStatusFilter.index} onChange={(ignore, i) => { this.tabSelected(i) }} classes={tabGroupClasses}>
+          {tradingStatus.values.map((status, i) => 
+            (<Tab label={status.title} disableRipple key={status.key} classes={tabClasses}/>)
+          )}
           </Tabs>
           <MovieSearchWidget placeholder='Search…' movies={movieStore.filteredMovies} className={classes.search}/>
           <Facets movieStore={movieStore} facets={facets} />
