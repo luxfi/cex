@@ -2,7 +2,13 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import Router from 'next/router'
 
-import { Grid, Container, Typography } from '@material-ui/core'
+import { 
+  Grid, 
+  Container, 
+  Typography 
+} from '@material-ui/core'
+
+import { CustomLink, TabbedNav } from '../../components/app'
 
 import {
   AccountSection,
@@ -11,13 +17,9 @@ import {
   ManageFunds,
   BalanceHistoryItem,
 } from '../../components/account'
-import {
-  CustomLink,
-  TabbedNav
-} from '../../components/app'
 
 import { googlePageView } from '../../util/generic'
-import AccountTabs from '../../util/accountTabs'
+import AccountTabs from '../../settings/accountTabs'
 
 @inject('store')
 @observer

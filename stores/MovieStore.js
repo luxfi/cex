@@ -1,9 +1,9 @@
-import { action, observable, computed, autorun } from "mobx"
-import { computedFn } from "mobx-utils"
-import uuid from "uuid"
+import { action, observable, computed, autorun } from 'mobx'
+import { computedFn } from 'mobx-utils'
+import uuid from 'uuid'
 
-import tradingStatus from '../util/tradingStatus'
-import moviesFromJson from "../assets/tempData/movies"
+import tradingStatus from '../settings/tradingStatus'
+import moviesFromJson from '../assets/tempData/movies'
 
 export default class MovieStore {
   @observable movies = []

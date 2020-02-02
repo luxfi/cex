@@ -22,11 +22,9 @@ import { MovieSearchWidget } from '../components/app'
 import { Facets } from '../components/browse'
 import styles from '../styles/pages/browse.style.js'
 
-import tradingStatus from '../util/tradingStatus'
-
+import tradingStatus from '../settings/tradingStatus'
   // must use CommonJS style since that file is used in the build system
-const facets = require('../util/facets')
-
+const facets = require('../settings/facets')
 
 @inject('store')
 @observer
