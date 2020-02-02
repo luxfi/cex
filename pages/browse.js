@@ -2,23 +2,18 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import router from 'next/router'
 import {
-  Button,
-  Card,
-  CardMedia,
-  CardContent,
   Container,
   Grid,
   Tabs,
   Tab,
   Toolbar,
-  Typography,
+  withStyles,
 } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
 
 import classNames from 'classnames'
 import { googlePageView } from '../util/generic'
 
-import { MovieSearchWidget } from '../components/app'
+import { MovieCard, MovieSearchWidget } from '../components/app'
 import { Facets } from '../components/browse'
 import styles from '../styles/pages/browse.style.js'
 
@@ -81,7 +76,7 @@ class Browse extends React.Component {
         )}>
           <Tabs value={movieStore.tradingStatusFilter.index} onChange={(ignore, i) => { this.tabSelected(i) }} classes={tabGroupClasses}>
           {tradingStatus.values.map((status, i) => 
-            (<Tab label={status.title} disableRipple key={status.key} classes={tabClasses}/>)
+            <Tab label={status.title} disableRipple key={status.key} classes={tabClasses}/>
           )}
           </Tabs>
           <MovieSearchWidget placeholder='Search…' movies={movieStore.filteredMovies} className={classes.search}/>
@@ -90,13 +85,7 @@ class Browse extends React.Component {
         <Grid container spacing={3} className={classes.main} alignItems='stretch'>
         {movieStore.filteredMovies.map((m, i) => (
           <Grid xs={12} sm={6} md={3} lg={2} item key={m.imdbid + i} >
-            <Card className={classes.card} onClick={() => {router.push(`/film/${m.movieSlug}`)}}>
-              <CardMedia src={m.posterImg} className={classes.cardMedia} component='img'/>
-              <CardContent className={classes.cardContent}>
-                <Typography variant="body2">Name: <span className={classes.stat}>{m.name}</span></Typography>
-                <Typography variant="body1">Ticker: <span className={classes.stat}>{m.ticker}</span></Typography>
-              </CardContent>
-            </Card>
+            <MovieCard movie={m} onClick={() => {router.push(`/film/${m.movieSlug}`)}} />
           </Grid>
         ))}
         </Grid>

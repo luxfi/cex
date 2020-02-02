@@ -1,0 +1,27 @@
+import React from 'react'
+import {
+  Button,
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  makeStyles,
+} from '@material-ui/core'
+
+import styles from './MovieCard.style.js'
+const useStyles = makeStyles(styles)
+
+export default ({movie, onClick}) => {
+  const classes = useStyles()
+  return (
+    <Card className={classes.card} onClick={onClick}>
+      <CardMedia src={movie.posterImg} className={classes.cardMedia} component='img'/>
+      <CardContent className={classes.cardContent}>
+        <Typography variant="body2">Name: <span className={classes.stat}>{movie.name}</span></Typography>
+        <Typography variant="body1">Ticker: <span className={classes.stat}>{movie.ticker}</span></Typography>
+      </CardContent>
+    </Card>
+  )
+} 
+
+
