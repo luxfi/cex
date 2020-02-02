@@ -60,15 +60,15 @@ export default theme => ({
     position: 'relative',
     height: '100%',
     zIndex: 1,
+    cursor: 'pointer',
     '&:hover': {
       zIndex: 10,
       transform: 'scale(1.1) !important',
-      cursor: 'pointer',
     },
     '&:hover $cardContent': {
       visibility: 'visible',
     }
-    },
+  },
 
   cardMedia: {
     objectFit: 'cover',

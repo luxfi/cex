@@ -108,8 +108,13 @@ export default class MovieStore {
   }, {keepAlive : false})
   
 
+  nullQuery(query) {
+    return !query || Object.entries(query).length === 0
+  }
+
   loadMovies(query) {
-    if (!query && this.movies.length > 0) {
+
+    if (this.nullQuery(query) && this.movies.length > 0) {
       return
     }
 
@@ -118,7 +123,7 @@ export default class MovieStore {
     moviesFromJson.forEach(m => {
       this.movies.push(this.moviefromJSON(m))
     })
-    if (query) {
+    if (!this.nullQuery(query)) {
       this.clearFacets()
       this.setFacetValue(query.facet, query.value, true)
     }
