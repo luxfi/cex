@@ -67,6 +67,7 @@ class Browse extends React.Component {
       // https://material-ui.com/customization/components/
     const tabGroupClasses = {
       indicator: classes.tabIndicator,
+      flexContainer: classes.tabsContainer
     }
     const tabClasses = {
       root: classes.tabRoot,

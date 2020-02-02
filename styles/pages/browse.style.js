@@ -1,5 +1,7 @@
 import { fade } from '@material-ui/core/styles'
 
+const tabOffsetMargin = '-15px'
+
 export default theme => ({
   toolbar: {
     position: 'fixed',
@@ -20,6 +22,8 @@ export default theme => ({
       paddingLeft: theme.spacing(8),
       paddingRight: theme.spacing(8),
     },
+
+    marginLeft: tabOffsetMargin,
 
     ...theme.mixins.toolbar,
   },
@@ -43,17 +47,26 @@ export default theme => ({
     marginTop: 0
   },
 
-  tabIndicator: {
-    width: '150px !important',
+  tabsContainer: {
+    marginLeft: tabOffsetMargin,
   },
 
   tabRoot: {
     paddingLeft: 0,
+    minWidth: 130,
+    width: 130
   },
 
   tabWrapper: {
-    alignItems: 'flex-start',
+    //alignItems: 'flex-start',
+    alignItems: 'center',
   },
+
+  tabIndicator: {
+    width: '110px !important',
+  },
+
+
 
   card: {
     maxWidth: 450,

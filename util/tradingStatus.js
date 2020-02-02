@@ -2,7 +2,7 @@ const values = [
   {
     index: 0,
     key: 'all',
-    title: 'All'
+    title: 'All Films'
   },
   {
     index: 1,
