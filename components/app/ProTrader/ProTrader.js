@@ -101,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
     height: `calc(100vh - ${headerHeight}px)`,
     background: 'linear-gradient(to bottom, rgba(26,26,26,1) 0%,rgba(9,9,9,1) 100%)',
     marginTop: -64,
-    paddingTop: 64,
+    paddingTop: 128,
     // fonts
     '& *': {
       fontSize: '.7rem',
