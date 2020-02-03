@@ -49,6 +49,7 @@ export default ({
     <Card className={classNames(classes.card, className)} >
       <CardMedia src={movie.posterImg} className={classes.cardMedia} component='img' style={style}/>
       <CardContent className={classes.cardContent}>
+        <TrailerImage img={movie.heroImg} className={classes.trailerImg} />
         <Box className={classes.innerCardContent}>
           <Box className={classes.standardContent}>
             <Typography className={classes.title} variant="body2">{movie.name}</Typography>
@@ -63,6 +64,12 @@ export default ({
     </Card>
   )
 }
+
+const TrailerImage = ({img, className}) => (
+  <div className={className} >
+    <img src={img} />
+  </div>
+)
 
 
 //<img className={classes.trailerPoster} src={movie.heroImg} width='100%' height='auto' />

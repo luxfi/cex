@@ -1,3 +1,4 @@
+import autoprefixer from "autoprefixer"
 
 const lowerGradientRGBString = '0, 0, 0'
 //const hoverGradientRGBString = '176, 130, 19'
@@ -19,7 +20,7 @@ export default (theme) => ({
     },
     '&:hover $cardContent': {
       background: `linear-gradient(to top,  rgba(${hoverGradientRGBString}, 1) 0%, rgba(${hoverGradientRGBString}, 0.7) 97%, rgba(${hoverGradientRGBString}, 0.5) 100%)`,
-      height: '40%',
+      height: '100%',
     },
     '&:hover $innerCardContent': {
       justifyContent: 'flex-start',
@@ -31,7 +32,9 @@ export default (theme) => ({
     '&:hover $standardContent': {
       visibility: 'hidden'
     },
-    
+    '&:hover $trailerImg': {
+      visibility: 'visible'
+    },
   },
 
   cardMedia: {
@@ -44,9 +47,9 @@ export default (theme) => ({
     width: '100%',
     height: '20%',
     bottom: 0,
+    padding: 0,
     background: `linear-gradient(to top,  rgba(${lowerGradientRGBString}, 0.9) 0%, rgba(${lowerGradientRGBString}, 0.3) 75%, rgba(${lowerGradientRGBString}, 0) 100%)`,
     transition: 'height 0.25s linear 0ms',
-    padding: theme.spacing(2),
   },
 
   innerCardContent: {
@@ -56,8 +59,7 @@ export default (theme) => ({
     alignItems: 'center',
 
     width: '100%',
-    borderRadius: '3px',
-    padding: theme.spacing(1),
+    padding: theme.spacing(2),
     background: 'transparent',
     transition: 'background 0.25s linear 0ms'
   },
@@ -67,6 +69,7 @@ export default (theme) => ({
     fontSize: '1.1rem',
     color: theme.palette.common.white,
     marginBottom: theme.spacing(2),
+    marginTop: 0
   },
 
   hoverContent: {
@@ -101,5 +104,16 @@ export default (theme) => ({
     backgroundColor: theme.palette.secondary.main,
     color: theme.palette.common.black,
     marginRight: theme.spacing(2),
+  },
+
+  trailerImg: {
+    //width: '100%',
+    //height: 'auto',
+    visibility: 'hidden',
+
+    '& img': {
+      height: 'auto',
+      width: '100%'
+    }
   }
 })
