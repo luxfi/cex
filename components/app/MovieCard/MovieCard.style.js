@@ -12,7 +12,7 @@ export default (theme) => ({
     position: 'relative',
     height: '100%',
     zIndex: 1,
-    cursor: 'pointer',
+    //cursor: 'pointer',
     transition: 'transform 300ms ease 100ms',
     '&:hover': {
       zIndex: 10,
@@ -20,7 +20,7 @@ export default (theme) => ({
     },
     '&:hover $cardContent': {
       background: `linear-gradient(to top,  rgba(${hoverGradientRGBString}, 1) 0%, rgba(${hoverGradientRGBString}, 0.7) 97%, rgba(${hoverGradientRGBString}, 0.5) 100%)`,
-      height: '30%',
+      height: '70%',
     },
     '&:hover $innerCardContent': {
       justifyContent: 'flex-start',
@@ -81,5 +81,21 @@ export default (theme) => ({
 
   label: {
     color: theme.palette.common.white
+  },
+
+  buttonsOuter: {
+    marginTop: theme.spacing(3),
+  },
+
+  hoverButton: {
+    padding: 0, //theme.spacing(1),
+    minWidth: '40px',
+    width: '40px',
+    height: '40px',
+    borderRadius: '50%',
+    border: '1px solid ' + theme.palette.background.default,
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.common.black,
+    marginRight: theme.spacing(2),
   }
 })

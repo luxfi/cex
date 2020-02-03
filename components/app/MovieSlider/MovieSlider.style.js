@@ -1,4 +1,7 @@
-const arrowOffset = '-30px' // relative to the track, NOT "outer"
+import { relativeTimeRounding } from "moment"
+
+const arrowDiameter = 46
+const arrowOffset = `-${arrowDiameter/2}px` // relative to the track, NOT "outer"
 
 export default (theme) => ({
 
@@ -9,19 +12,20 @@ export default (theme) => ({
     top: '50%',
     transform: 'translate(0, -50%)',
     cursor: 'pointer',
-    width: '30px',
-    height: '80px',
+    width: `${arrowDiameter}px`,
+    height: `${arrowDiameter}px`,
     zIndex: 100,
-
-    backgroundColor: theme.palette.background.default,
+    borderRadius: '50%',
+    border: '1px solid ' + theme.palette.background.paper,
+    backgroundColor: theme.palette.background.paper,
 
     '&:hover': {
-      backgroundColor: theme.palette.background.paper,
-      borderRadius: '5px',
-      border: '1px solid ' + theme.palette.background.paper,
+      backgroundColor: '#333',
+      borderColor: '#333',
     },
 
     '& svg': {
+      position: 'relative',
       width: '100%',
       height: '100%'
     }
@@ -29,6 +33,9 @@ export default (theme) => ({
 
   previousArrow: {
     left: arrowOffset,
+    '& svg': {
+      left: '-1px',
+    },
   },
 
   nextArrow: {
