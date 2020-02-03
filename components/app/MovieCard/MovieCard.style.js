@@ -1,7 +1,10 @@
 
 const lowerGradientRGBString = '100, 100, 100'
 //const hoverGradientRGBString = '176, 130, 19'
-const hoverGradientRGBString = '176, 145, 100'
+// const hoverGradientRGBString = '176, 145, 100'
+const hoverGradientRGBString = '150, 150, 150'
+
+// rgba(${hoverGradientRGBString}, 0.1) 100%, rgba(${hoverGradientRGBString}, 0.5) 95%,
 
 export default (theme) => ({
 
@@ -15,8 +18,10 @@ export default (theme) => ({
       transform: 'scale(1.05) !important',
     },
     '&:hover $cardContent': {
-      background: `linear-gradient(to top,  rgba(${hoverGradientRGBString}, 1) 0%, rgba(${hoverGradientRGBString}, 0.9) 70%, rgba(${hoverGradientRGBString}, 0.5) 95%, rgba(${hoverGradientRGBString}, 0.1) 100%)`,
+      background: `linear-gradient(to top,  rgba(${hoverGradientRGBString}, 1) 0%, rgba(${hoverGradientRGBString}, 0.7) 97%, rgba(${hoverGradientRGBString}, 0.5) 100%)`,
       height: '67%',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
     },
     transition: 'transform 300ms ease 100ms'
   },
@@ -29,9 +34,9 @@ export default (theme) => ({
   cardContent: {
     position: 'absolute',
     width: '100%',
-    height: '100%',
+    height: '33%',
     bottom: 0,
-    background: `linear-gradient(to top,  rgba(${lowerGradientRGBString}, 0.9) 0%, rgba(${lowerGradientRGBString}, 0.3) 25%, rgba(${lowerGradientRGBString}, 0) 100%)`,
+    background: `linear-gradient(to top,  rgba(${lowerGradientRGBString}, 0.9) 0%, rgba(${lowerGradientRGBString}, 0.3) 75%, rgba(${lowerGradientRGBString}, 0) 100%)`,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
