@@ -1,8 +1,8 @@
 
-const lowerGradientRGBString = '100, 100, 100'
+const lowerGradientRGBString = '0, 0, 0'
 //const hoverGradientRGBString = '176, 130, 19'
 // const hoverGradientRGBString = '176, 145, 100'
-const hoverGradientRGBString = '150, 150, 150'
+const hoverGradientRGBString = '20, 20, 20'
 
 // rgba(${hoverGradientRGBString}, 0.1) 100%, rgba(${hoverGradientRGBString}, 0.5) 95%,
 
@@ -20,13 +20,13 @@ export default (theme) => ({
     },
     '&:hover $cardContent': {
       background: `linear-gradient(to top,  rgba(${hoverGradientRGBString}, 1) 0%, rgba(${hoverGradientRGBString}, 0.7) 97%, rgba(${hoverGradientRGBString}, 0.5) 100%)`,
-      height: '67%',
+      height: '30%',
     },
     '&:hover $innerCardContent': {
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
       //background: theme.palette.background.paper
-      background: `rgb(${hoverGradientRGBString}, 0.8)`
+      // background: `rgb(${hoverGradientRGBString}, 0.8)`
     },
     '&:hover $hoverContent': {
       visibility: 'visible'
@@ -41,7 +41,7 @@ export default (theme) => ({
   cardContent: {
     position: 'absolute',
     width: '100%',
-    height: '33%',
+    height: '20%',
     bottom: 0,
     background: `linear-gradient(to top,  rgba(${lowerGradientRGBString}, 0.9) 0%, rgba(${lowerGradientRGBString}, 0.3) 75%, rgba(${lowerGradientRGBString}, 0) 100%)`,
     transition: 'height 0.25s linear 0ms',
@@ -63,7 +63,7 @@ export default (theme) => ({
 
   title: {
     fontWeight: 'bold',
-    fontSize: '1.2rem',
+    fontSize: '1.1rem',
     color: theme.palette.common.white,
     marginBottom: theme.spacing(2),
   },

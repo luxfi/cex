@@ -15,9 +15,9 @@ const useStyles = makeStyles(styles)
 
 export default ({movie, onClick, height, className}) => {
   const classes = useStyles()
-  const style = (height) ? { height: height, width: 'auto' } : {} 
+  const style = (height) ? { height: height, width: 'auto' } : {}
 
-  const auxContent = (movie.trading) ? 
+  const auxContent = (movie.trading) ?
   (
     <span> trading stuff</span>
   ) : (
@@ -32,12 +32,11 @@ export default ({movie, onClick, height, className}) => {
           <Typography className={classes.title} variant="body2">{movie.name}</Typography>
           <Box className={classes.hoverContent}>
             <Typography className={classes.status} variant="body2"><span className={classes.label}>Status: </span>{movie.trading ? 'Trading' : 'Funding'}</Typography>
-            {auxContent}
           </Box>
         </Box>
       </CardContent>
     </Card>
   )
-} 
+}
 
 
