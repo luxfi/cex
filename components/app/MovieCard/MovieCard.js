@@ -50,8 +50,11 @@ export default ({
       <CardMedia src={movie.posterImg} className={classes.cardMedia} component='img' style={style}/>
       <CardContent className={classes.cardContent}>
         <Box className={classes.innerCardContent}>
-          <Typography className={classes.title} variant="body2">{movie.name}</Typography>
+          <Box className={classes.standardContent}>
+            <Typography className={classes.title} variant="body2">{movie.name}</Typography>
+          </Box>
           <Box className={classes.hoverContent}>
+            <Typography className={classes.title} variant="body2">{movie.name}</Typography>
             <Typography className={classes.status} variant="body2"><span className={classes.label}>Status: </span>{movie.trading ? 'Trading' : 'Funding'}</Typography>
             {auxContent}
           </Box>
@@ -62,3 +65,4 @@ export default ({
 }
 
 
+//<img className={classes.trailerPoster} src={movie.heroImg} width='100%' height='auto' />

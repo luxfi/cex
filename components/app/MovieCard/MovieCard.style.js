@@ -3,7 +3,6 @@ const lowerGradientRGBString = '0, 0, 0'
 //const hoverGradientRGBString = '176, 130, 19'
 // const hoverGradientRGBString = '176, 145, 100'
 const hoverGradientRGBString = '20, 20, 20'
-
 // rgba(${hoverGradientRGBString}, 0.1) 100%, rgba(${hoverGradientRGBString}, 0.5) 95%,
 
 export default (theme) => ({
@@ -20,17 +19,19 @@ export default (theme) => ({
     },
     '&:hover $cardContent': {
       background: `linear-gradient(to top,  rgba(${hoverGradientRGBString}, 1) 0%, rgba(${hoverGradientRGBString}, 0.7) 97%, rgba(${hoverGradientRGBString}, 0.5) 100%)`,
-      height: '70%',
+      height: '40%',
     },
     '&:hover $innerCardContent': {
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
-      //background: theme.palette.background.paper
-      // background: `rgb(${hoverGradientRGBString}, 0.8)`
     },
     '&:hover $hoverContent': {
       visibility: 'visible'
     },
+    '&:hover $standardContent': {
+      visibility: 'hidden'
+    },
+    
   },
 
   cardMedia: {
@@ -72,6 +73,9 @@ export default (theme) => ({
     visibility: 'hidden'
   },
 
+  standardContent: {
+  },
+
   status: {
     fontWeight: 'bold',
     fontSize: '1.0rem',
@@ -88,7 +92,7 @@ export default (theme) => ({
   },
 
   hoverButton: {
-    padding: 0, //theme.spacing(1),
+    padding: 0, 
     minWidth: '40px',
     width: '40px',
     height: '40px',
