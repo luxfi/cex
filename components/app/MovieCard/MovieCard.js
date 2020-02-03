@@ -14,7 +14,7 @@ const useStyles = makeStyles(styles)
 export default ({movie, onClick}) => {
   const classes = useStyles()
   return (
-    <Card className={classes.card} onClick={onClick}>
+    <Card className={classes.card} onClick={() => {onClick(movie)}}>
       <CardMedia src={movie.posterImg} className={classes.cardMedia} component='img'/>
       <CardContent className={classes.cardContent}>
         <Typography variant="body2">Name: <span className={classes.stat}>{movie.name}</span></Typography>
