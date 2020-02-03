@@ -11,7 +11,10 @@ import {
 
 import InfoIcon from "@material-ui/icons/Help"
 import PollIcon from "@material-ui/icons/Poll"
-import BookmarkIcon from "@material-ui/icons/Bookmark"
+import FavoriteIcon from "@material-ui/icons/FavoriteBorder"
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlayCircle } from '@fortawesome/free-solid-svg-icons'
 
 
 import classNames from 'classnames'
@@ -24,6 +27,7 @@ export default ({
   goToMovieDetail, 
   goToMovieTrading,
   goToMovieOffering,
+  playMovieTrailer,
   height, 
   className
 }) => {
@@ -35,13 +39,13 @@ export default ({
     <div className={classes.buttonsOuter}>
       <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => {goToMovieDetail(movie)}} ><InfoIcon /></Button>
       <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => {goToMovieTrading(movie)}} ><PollIcon /></Button>
-      <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => {console.log("BOOKMARK clicked for " + movie.name)}} ><BookmarkIcon /></Button>
+      <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => {console.log("BOOKMARK clicked for " + movie.name)}} ><FavoriteIcon /></Button>
     </div>
   ) : (
     <div className={classes.buttonsOuter}>
       <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => {goToMovieDetail(movie)}} ><InfoIcon /></Button>
       <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => {goToMovieOffering(movie)}} ><PollIcon /></Button>
-      <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => {console.log("BOOKMARK clicked for " + movie.name)}} ><BookmarkIcon /></Button>
+      <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => {console.log("BOOKMARK clicked for " + movie.name)}} ><FavoriteIcon /></Button>
     </div>
   )
 
@@ -49,7 +53,7 @@ export default ({
     <Card className={classNames(classes.card, className)} >
       <CardMedia src={movie.posterImg} className={classes.cardMedia} component='img' style={style}/>
       <CardContent className={classes.cardContent}>
-        <TrailerImage img={movie.heroImg} className={classes.trailerImg} />
+        <TrailerImage movie={movie} className={classes.trailerImg} playMovieTrailer={playMovieTrailer}/>
         <Box className={classes.innerCardContent}>
           <Box className={classes.standardContent}>
             <Typography className={classes.title} variant="body2">{movie.name}</Typography>
@@ -65,9 +69,10 @@ export default ({
   )
 }
 
-const TrailerImage = ({img, className}) => (
-  <div className={className} >
-    <img src={img} />
+const TrailerImage = ({movie, className, playMovieTrailer}) => (
+  <div className={className} onClick={() => playMovieTrailer(movie)}>
+    <FontAwesomeIcon icon={faPlayCircle} size='1x' />
+    <img src={movie.heroImg} />
   </div>
 )
 

@@ -1,4 +1,5 @@
 import autoprefixer from "autoprefixer"
+import { relativeTimeRounding } from "moment"
 
 const lowerGradientRGBString = '0, 0, 0'
 //const hoverGradientRGBString = '176, 130, 19'
@@ -46,6 +47,7 @@ export default (theme) => ({
     position: 'absolute',
     width: '100%',
     height: '20%',
+//     height: '100%',
     bottom: 0,
     padding: 0,
     background: `linear-gradient(to top,  rgba(${lowerGradientRGBString}, 0.9) 0%, rgba(${lowerGradientRGBString}, 0.3) 75%, rgba(${lowerGradientRGBString}, 0) 100%)`,
@@ -107,9 +109,22 @@ export default (theme) => ({
   },
 
   trailerImg: {
-    //width: '100%',
-    //height: 'auto',
     visibility: 'hidden',
+    position: 'relative',
+    
+    '& svg': {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      width: '50px !important',
+      height: 'auto !important',
+      transform: 'translate(-50%, -50%)',
+      cursor: 'pointer',
+      '&:hover': {
+        width: '60px !important',
+      },
+    },
+
 
     '& img': {
       height: 'auto',
