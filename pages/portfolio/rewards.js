@@ -1,24 +1,15 @@
-import React from "react"
-import { inject, observer } from "mobx-react"
-import { withStyles } from "@material-ui/core/styles"
-import { Container } from "@material-ui/core"
+import React from 'react'
+import { inject, observer } from 'mobx-react'
+import { Container, withStyles } from '@material-ui/core'
 
-import { 
-  AccountSection
-} from '../../components/account'
-
-import {
-  TabbedNav
-} from '../../components/app'
-
-import {
-  RewardsView
-} from '../../components/portfolio'
+import { TabbedNav } from '../../components/app'
+import { AccountSection } from '../../components/account'
+import { RewardsView } from '../../components/portfolio'
 
 import { googlePageView } from '../../util/generic'
-import portfolioTabs from '../../util/portfolioTabs'
-
 import styles from '../../styles/pages/portfolio.style.js'
+
+import portfolioTabs from '../../settings/portfolioTabs'
 
 @inject("store")
 @observer

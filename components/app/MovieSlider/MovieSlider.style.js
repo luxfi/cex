@@ -1,0 +1,64 @@
+const arrowOffset = '-30px' // relative to the track, NOT "outer"
+
+export default (theme) => ({
+
+  arrow: {
+    display: 'block',
+    position: 'absolute',
+    color: theme.palette.text.primary,
+    top: '50%',
+    transform: 'translate(0, -50%)',
+    cursor: 'pointer',
+    width: '30px',
+    height: '80px',
+    zIndex: 100,
+
+    backgroundColor: theme.palette.background.default,
+
+    '&:hover': {
+      backgroundColor: theme.palette.background.paper,
+      borderRadius: '5px',
+      border: '1px solid ' + theme.palette.background.paper,
+    },
+
+    '& svg': {
+      width: '100%',
+      height: '100%'
+    }
+  },
+
+  previousArrow: {
+    left: arrowOffset,
+  },
+
+  nextArrow: {
+    right: arrowOffset,
+  },
+
+  outer: {
+    position: 'relative',
+
+      // to match header.style.js and other elements
+    padding: `0px ${theme.spacing(3)}px`,   
+    [theme.breakpoints.down('xs')]: {
+      padding: `0px ${theme.spacing(2)}px`,   
+    },
+    [theme.breakpoints.up('lg')]: {
+      padding: `0px ${theme.spacing(8)}px`,   
+    },
+      // This allows room for the cards to expand on hover without getting clipped out by the parent div
+    '& .slick-track': {
+      padding: '25px 0px'
+    },
+    '& .slick-slide': {
+      paddingRight: theme.spacing(1)
+    }
+  },
+
+  title: {
+    paddingLeft: theme.spacing(8),
+    textTransform: 'upperCase',
+    fontSize: '1.7rem',
+  },
+
+})

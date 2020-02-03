@@ -6,6 +6,7 @@ import {
   IconButton,
   Popover,
   MenuItem,
+  makeStyles
 } from '@material-ui/core'
 
 import {
@@ -23,9 +24,7 @@ import {
 
 // This one is recommended in the MUI docs themselves :)
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state'
-
-import { makeStyles } from '@material-ui/core/styles'
-
+import { MovieSearchWidget } from '..'
 import mainStyles from './desktopNav.style.js'
 
 const useMainStyles = makeStyles(mainStyles)
@@ -34,19 +33,14 @@ export default (props) => {
   const {
     isLoggedIn,
     handleLogout,
+    movies
   } = props
 
   const classes = useMainStyles()
 
   return (
     <div className={classes.accountOuter}>
-      {/* <div className={searchClasses.search}>
-        <Search className={searchClasses.searchIcon}/>
-        <AutoCompleteSearch
-          placeholder='Search…'
-          classes={searchClasses}
-        />
-      </div> */}
+      <MovieSearchWidget placeholder='Search…' movies={movies} />
       {isLoggedIn
         ? (
           <PopupState variant='popover' popupId='menu-popover'>

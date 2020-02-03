@@ -9,7 +9,7 @@ const postcss = require('poststylus')
 const rupture = require('rupture')
 const articlesFromJson = require('./assets/tempData/articles')
 const moviesFromJson = require('./assets/tempData/moviesBuild')
-const facets = require('./util/facets')
+const facets = require('./settings/facets')
 
 module.exports = withBundleAnalyzer(
   withCSS(
@@ -107,8 +107,6 @@ module.exports = withBundleAnalyzer(
           },
           {}
         )
-
-        //console.log(JSON.stringify(browseFacets, null, 2))
 
         return {
           ...articles,

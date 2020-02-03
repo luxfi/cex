@@ -1,29 +1,23 @@
-import React from "react"
-import NextLink from "next/link"
+import React from 'react'
+import NextLink from 'next/link'
 
-import {
-  ExpandLess,
-  ExpandMore
-} from "@material-ui/icons"
+import { ExpandLess, ExpandMore } from "@material-ui/icons"
 
 import {
   List,
   ListItem,
   ListItemText,
   Collapse,
-  Divider
+  Divider,
+  makeStyles
 } from "@material-ui/core"
 
-import {
-  SideDrawer,
-  CustomLink
-} from ".."
+import { SideDrawer, CustomLink } from ".."
 
-import { makeStyles } from "@material-ui/core/styles"
 import styles from './mobileNavMenu.style.js'
 const useStyles = makeStyles(styles)
 
-import navStructure from "../../../util/navStructure"
+import navStructure from "../../../settings/navStructure"
 
 export default (props) => {
 

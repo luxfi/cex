@@ -5,17 +5,16 @@ import {
   Button,
   Popover,
   MenuItem,
+  makeStyles
 } from '@material-ui/core'
 
   // This one is recommended in the MUI docs themselves :)
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state'
 
-import { makeStyles } from '@material-ui/core/styles'
 import styles from './desktopNav.style.js'
-
 const useStyles = makeStyles(styles)
 
-import navStructure from '../../../util/navStructure'
+import navStructure from '../../../settings/navStructure'
 
 export default () => {
   const classes = useStyles()

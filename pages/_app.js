@@ -118,6 +118,7 @@ class MyMobxApp extends App {
                 handleLogout={() => {
                   this.mobxStore.userStore.logout()
                 }}
+                movies={this.mobxStore.movieStore.filteredMovies}
               />
               <MobileNavMenu
                 open={this.mobxStore.uiStore.drawers.left}

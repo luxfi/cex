@@ -38,7 +38,7 @@ export default (theme) => {
           width: 175
         },
         display: "inline-block",
-        marginRight: theme.spacing(2),
+        marginRight: theme.spacing(6),
       },
       [theme.breakpoints.up("md")]: {
         width: 170,

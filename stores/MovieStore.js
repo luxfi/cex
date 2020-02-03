@@ -1,8 +1,9 @@
-import { action, observable, computed, autorun } from "mobx"
-import { computedFn } from "mobx-utils"
-import uuid from "uuid"
+import { action, observable, computed, autorun } from 'mobx'
+import { computedFn } from 'mobx-utils'
+import uuid from 'uuid'
 
-import moviesFromJson from "../assets/tempData/movies"
+import tradingStatus from '../settings/tradingStatus'
+import moviesFromJson from '../assets/tempData/movies'
 
 export default class MovieStore {
   @observable movies = []
@@ -14,16 +15,37 @@ export default class MovieStore {
     distributors: observable.map()
   }
 
-  @observable filteredMovies = []
+  @observable tradingStatusFilter = tradingStatus.byIndex(0) 
 
   constructor(initialData, hanzoApi) {
     this.loadMovies()
     this.api = hanzoApi
   }
 
-  @action updateFilteredMovies = () => {
-    this.filteredMovies = this.movies.filter(m => this.facetsAllow(m))
+  @action setTradingStatusFilter(status) {
+    this.tradingStatusFilter = status 
   }
+
+  @computed get filteredMovies() {
+    return (this.movies.filter(m => this.filtersAllow(m) && this.facetsAllow(m)))
+  }
+
+  @computed get tradingMovies() {
+    return (this.movies.filter(movie => movie.trading))
+  } 
+  
+  @computed get fundingMovies() {
+    return (this.movies.filter(movie => !movie.trading))
+  } 
+  
+  filtersAllow = (movie) => {
+    switch(this.tradingStatusFilter.key) {
+      case 'funding': return !movie.trading
+      case 'trading': return movie.trading
+    }
+    return true // all
+  }
+
 
   facetsAllow = (movie) => {
     const facetsNamesAsArray = Object.keys(this.facets)
@@ -69,15 +91,11 @@ export default class MovieStore {
     else {
       this.facets[name].delete(key)
     }
-    this.updateFilteredMovies()
   }
   
-  @action clearFacets(update = false) {
+  @action clearFacets() {
     for (const f in this.facets) {
       this.facets[f].clear()
-    }
-    if (update) {
-      this.updateFilteredMovies()
     }
   }
 
@@ -90,8 +108,13 @@ export default class MovieStore {
   }, {keepAlive : false})
   
 
+  nullQuery(query) {
+    return !query || Object.entries(query).length === 0
+  }
+
   loadMovies(query) {
-    if (!query && this.movies.length > 0) {
+
+    if (this.nullQuery(query) && this.movies.length > 0) {
       return
     }
 
@@ -100,13 +123,9 @@ export default class MovieStore {
     moviesFromJson.forEach(m => {
       this.movies.push(this.moviefromJSON(m))
     })
-    if (query) {
-      this.clearFacets(false)
-          // Calls updateFilteredMovies()
+    if (!this.nullQuery(query)) {
+      this.clearFacets()
       this.setFacetValue(query.facet, query.value, true)
-    }
-    else {
-      this.filteredMovies = this.movies
     }
     this.currentMovie = this.movies[0] // TEMP
     this.isLoading = false

@@ -1,5 +1,9 @@
 import { fade } from '@material-ui/core/styles'
 
+  // this visually accomodates the trading/funding tabs
+  // and the fact that the text is centered 
+const tabOffsetMargin = '-15px'
+
 export default theme => ({
   toolbar: {
     position: 'fixed',
@@ -20,6 +24,8 @@ export default theme => ({
       paddingLeft: theme.spacing(8),
       paddingRight: theme.spacing(8),
     },
+
+    marginLeft: tabOffsetMargin,
 
     ...theme.mixins.toolbar,
   },
@@ -43,47 +49,41 @@ export default theme => ({
     marginTop: 0
   },
 
-  tabIndicator: {
-    width: '150px !important',
+  tabsContainer: {
+    marginLeft: tabOffsetMargin,
   },
 
+    // https://codeburst.io/my-journey-to-make-styling-with-material-ui-right-6a44f7c68113
   tabRoot: {
     paddingLeft: 0,
+    minWidth: 130,
+    width: 130,
+    cursor: 'default !important',
+
+    '&$selected': {
+      '& $tabWrapper:hover': {
+        cursor: 'default !important',
+        backgroundColor: theme.palette.background.default,
+      }
+    }, 
   },
 
+    // must include this!
+    // https://codeburst.io/my-journey-to-make-styling-with-material-ui-right-6a44f7c68113
+  selected: {},
+  
   tabWrapper: {
-    alignItems: 'flex-start',
-  },
-
-  card: {
-    maxWidth: 450,
-    position: 'relative',
-    zIndex: 1,
+    alignItems: 'center',
+    lineHeight: '2.0',
+    border: 1,
+    borderRadius: 5,
+    cursor: 'pointer',
     '&:hover': {
-      zIndex: 10,
-      transform: 'scale(1.1) !important',
-      cursor: 'pointer',
-    },
-    '&:hover $cardContent': {
-      visibility: 'visible',
+      backgroundColor: theme.palette.background.paper,
     }
-    },
-
-  cardMedia: {
-    objectFit: 'cover'
   },
 
-  cardContent: {
-    visibility: 'hidden',
-    position: 'absolute',
-    width: '100%',
-    bottom: 0,
-    backgroundColor: '#222',
-    opacity: '0.8'
+  tabIndicator: {
+    width: '110px !important',
   },
-
-  stat: {
-    fontWeight: 'bold',
-    color: theme.palette.secondary.main
-  }
 })

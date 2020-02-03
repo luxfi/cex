@@ -1,26 +1,15 @@
-import React from "react"
-import { inject, observer } from "mobx-react"
-import { Container } from "@material-ui/core"
-import { withStyles } from "@material-ui/core/styles"
+import React from 'react'
+import { inject, observer } from 'mobx-react'
+import { Container, withStyles } from '@material-ui/core'
 
-import { 
-  AccountSection
-} from '../../components/account'
-
-import {
-  TabbedNav
-} from '../../components/app'
-
-import {
-  TradeView
-} from '../../components/portfolio'
-
-import { PortfolioView } from '../../components/portfolio'
-
-import styles from '../../styles/pages/portfolio.style.js'
+import { AccountSection } from '../../components/account'
+import { TabbedNav } from '../../components/app'
+import { TradeView, PortfolioView } from '../../components/portfolio'
 
 import { googlePageView } from "../../util/generic.js"
-import portfolioTabs from "../../util/portfolioTabs"
+
+import styles from '../../styles/pages/portfolio.style.js'
+import portfolioTabs from '../../settings/portfolioTabs'
 
 const isServer = typeof window === "undefined"
 
