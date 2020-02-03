@@ -7,15 +7,16 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core'
+import classNames from 'classnames'
 
 import styles from './MovieCard.style.js'
 const useStyles = makeStyles(styles)
 
-export default ({movie, onClick, height}) => {
+export default ({movie, onClick, height, className}) => {
   const classes = useStyles()
   const style = (height) ? { height: height, width: 'auto' } : {} 
   return (
-    <Card className={classes.card} onClick={() => {onClick(movie)}}>
+    <Card className={classNames(classes.card, className)} onClick={() => {onClick(movie)}}>
       <CardMedia src={movie.posterImg} className={classes.cardMedia} component='img' style={style}/>
       <CardContent className={classes.cardContent}>
         <Typography variant="body2">Name: <span className={classes.stat}>{movie.name}</span></Typography>

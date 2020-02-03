@@ -7,11 +7,13 @@ export default (theme) => ({
     cursor: 'pointer',
     '&:hover': {
       zIndex: 10,
-      transform: 'scale(1.1) !important',
+      transform: 'scale(1.05) !important',
     },
     '&:hover $cardContent': {
-      visibility: 'visible',
-    }
+      background: 'linear-gradient(to top,  rgba(150, 150, 150, 1) 0%, rgba(150, 150, 150, 0.9) 70%, rgba(150, 150, 150, 0.6) 95%, rgba(150, 150, 150, 0.3) 100%)',
+      height: '67%',
+    },
+    transition: 'transform 300ms ease 100ms'
   },
 
   cardMedia: {
@@ -20,12 +22,16 @@ export default (theme) => ({
   },
 
   cardContent: {
-    visibility: 'hidden',
     position: 'absolute',
     width: '100%',
+    height: '100%',
     bottom: 0,
-    backgroundColor: theme.palette.background.paper,
-    opacity: '0.8'
+    background: 'linear-gradient(to top,  rgba(100, 100, 100, 0.9) 0%, rgba(100, 100, 100, 0.3) 25%, rgba(100, 100, 100, 0) 100%)',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    transition: 'height 0.25s linear 0ms'
   },
 
   stat: {

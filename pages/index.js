@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { inject, observer } from 'mobx-react'
+import router from 'next/router'
 
 import { 
   Box, 
@@ -82,21 +83,19 @@ export default withWidth()(inject('store')(observer((props) => {
       <MovieSlider 
         movies={store.movieStore.fundingMovies} 
         title='Now Funding' 
-        onClick={(movie) => {console.log("MOVIE CLICKED: " + movie.name) }} 
+        onClick={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
         className={classes.fundingSlider}
         height='576px'
       />
       <MovieSlider 
         movies={store.movieStore.tradingMovies} 
         title='Now Trading' 
-        onClick={(movie) => {console.log("MOVIE CLICKED: " + movie.name) }} 
+        onClick={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
         className={classes.tradingSlider}
-        height='576px'
+        height='480px'
       />
       <CategorySlider />
       <StudioSlider />
     </>
   )
 })))
-
-

@@ -50,20 +50,36 @@ export default (props) => {
     dots: false,
     arrows: true,
     infinite: true,
+    variableWidth: true,
     speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 5,
+    slidesToShow: 3,
+    slidesToScroll: 3,
     prevArrow: <PreviousArrow classes={classes}/>,
     nextArrow: <NextArrow classes={classes}/>,
+    responsive: [
+      {
+        breakpoint: 900,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
   }
-  
 
   return (
     <div className={classNames(classes.outerMost, className)}>
       <Typography variant="h4" className={classes.title}>{title}</Typography>
-      <div className={classes.outer} >
+      <div className={classes.outer}>
         <Slider {...sliderSettings} >
-          {movies.map((movie, i) => <MovieCard movie={movie} onClick={onClick} key={movie.movieSlug} height={height}/>) }
+          {movies.map((movie, i) => <MovieCard movie={movie} onClick={onClick} key={movie.movieSlug} height={height} className={classes.movieCard}/>) }
         </Slider>
       </div>
     </div>

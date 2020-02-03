@@ -49,6 +49,9 @@ export default (theme) => ({
       // This allows room for the cards to expand on hover without getting clipped out by the parent div
     '& .slick-track': {
       padding: '25px 0px'
+    },
+    '& .slick-slide': {
+      paddingRight: theme.spacing(1)
     }
   },
 
@@ -56,5 +59,6 @@ export default (theme) => ({
     paddingLeft: theme.spacing(8),
     textTransform: 'upperCase',
     fontSize: '1.7rem',
-  }
+  },
+
 })
