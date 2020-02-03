@@ -13,7 +13,7 @@ import {
 import classNames from 'classnames'
 import { googlePageView } from '../util/generic'
 
-import { MovieCard, MovieSearchWidget } from '../components/app'
+import { MovieCard } from '../components/app'
 import { Facets } from '../components/browse'
 import styles from '../styles/pages/browse.style.js'
 
@@ -79,7 +79,6 @@ class Browse extends React.Component {
             <Tab label={status.title} disableRipple key={status.key} classes={tabClasses}/>
           )}
           </Tabs>
-          <MovieSearchWidget placeholder='Search…' movies={movieStore.filteredMovies} className={classes.search}/>
           <Facets movieStore={movieStore} facets={facets} />
         </Toolbar>
         <Grid container spacing={3} className={classes.main} alignItems='stretch'>

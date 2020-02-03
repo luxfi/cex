@@ -25,6 +25,7 @@ export default (props) => {
     openRightDrawer,
     handleLogout,
     isLoggedIn,
+    movies
   } = props
 
   const trigger = useScrollTrigger({ threshold: 0, disableHysteresis: true })
@@ -51,6 +52,7 @@ export default (props) => {
           <DesktopProfileAndSearch
             isLoggedIn={isLoggedIn}
             handleLogout={handleLogout}
+            movies={movies}
           />
         ) : (
           <>
