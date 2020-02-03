@@ -10,7 +10,7 @@ export default (theme) => ({
       transform: 'scale(1.05) !important',
     },
     '&:hover $cardContent': {
-      background: 'linear-gradient(to top,  rgba(150, 150, 150, 1) 0%, rgba(150, 150, 150, 0.9) 70%, rgba(150, 150, 150, 0.6) 95%, rgba(150, 150, 150, 0.3) 100%)',
+      background: 'linear-gradient(to top,  rgba(176, 130, 19, 1) 0%, rgba(176, 130, 19, 0.9) 70%, rgba(176, 130, 19, 0.5) 95%, rgba(176, 130, 19, 0.1) 100%)',
       height: '67%',
     },
     transition: 'transform 300ms ease 100ms'
