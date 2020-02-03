@@ -85,7 +85,7 @@ export default withWidth()(inject('store')(observer((props) => {
         title='Now Funding' 
         onClick={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
         className={classes.fundingSlider}
-        height='576px'
+        height='480px'
       />
       <MovieSlider 
         movies={store.movieStore.tradingMovies} 
