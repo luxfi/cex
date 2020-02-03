@@ -11,12 +11,11 @@ import {
   isWidthDown, 
 } from "@material-ui/core"
 
-import { Hero } from '../components/app'
+import { Hero, MovieSlider } from '../components/app'
 import TerminatorHero from '../assets/images/terminator-hero.jpg'
 import TerminatorLogo from '../assets/svg/terminator-logo.svg'
 
 import {
-  MovieSlider,
   CategorySlider,
   StudioSlider,
   HeroElements
@@ -28,6 +27,7 @@ import { googlePageView } from '../util/generic'
 const heroInfo = {
   slug: 'terminator-dark-fate',
   img: TerminatorHero,
+    // this is here because it's potentially specific to each image
   styles: {
     backgroundPosition: 'right -500px center',
     backgroundColor: 'black'
@@ -39,6 +39,23 @@ const heroInfo = {
   }}/>)
 }
 
+const useStyles = makeStyles((theme) => ({
+  hero: {
+    position: 'relative',
+    zIndex: 1
+  },
+  fundingSlider: {
+    marginTop: '-80px',
+    position: 'relative',
+    zIndex: 2
+  },
+  tradingSlider: {
+    //marginTop: '-80px',
+    position: 'relative',
+    zIndex: 3
+  }
+}))
+
 export default withWidth()(inject('store')(observer((props) => {
 
   useEffect(() => {
@@ -48,23 +65,33 @@ export default withWidth()(inject('store')(observer((props) => {
 
   const { store, width } = props
   const heroMovie = store.movieStore.movies.find(m => (m.movieSlug === heroInfo.slug))
-
   const heroStyles = heroInfo.styles
   if (isWidthDown('sm', width)) {
     Object.assign(heroStyles, {
       backgroundPosition: 'center center',
     })
   }
-  
+
+  const classes = useStyles()
+
   return (
     <>
-      <Hero image={heroInfo.img} styles={heroStyles} >
+      <Hero image={heroInfo.img} styles={heroStyles} className={classes.hero}>
         <HeroElements movie={heroMovie} logo={heroInfo.logo}/>
       </Hero>
       <MovieSlider 
         movies={store.movieStore.fundingMovies} 
         title='Now Funding' 
         onClick={(movie) => {console.log("MOVIE CLICKED: " + movie.name) }} 
+        className={classes.fundingSlider}
+        height='576px'
+      />
+      <MovieSlider 
+        movies={store.movieStore.tradingMovies} 
+        title='Now Trading' 
+        onClick={(movie) => {console.log("MOVIE CLICKED: " + movie.name) }} 
+        className={classes.tradingSlider}
+        height='576px'
       />
       <CategorySlider />
       <StudioSlider />

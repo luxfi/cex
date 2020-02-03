@@ -13,7 +13,7 @@ import 'slick-carousel/slick/slick-theme.css'
 
 import classNames from 'classnames'
 
-import MovieCard from '../../app/MovieCard'
+import MovieCard from '../MovieCard'
 
 import styles from './MovieSlider.style.js'
 const useStyles = makeStyles(styles)
@@ -34,18 +34,14 @@ const NextArrow = ({onClick, classes, style}) => (
   </ChevronButton>
 )
 
-/*
-let slider = undefined
-const next = () => slider.slickNext()
-const previous = () => slider.slickPrev()
-*/
-
 export default (props) => {
 
   const {
     movies,
     title,
-    onClick
+    onClick,
+    className,
+    height
   } = props 
 
   const classes = useStyles()
@@ -56,19 +52,18 @@ export default (props) => {
     infinite: true,
     speed: 500,
     slidesToShow: 5,
-    slidesToScroll: 1,
-      // some mistake somewhere, but have to reverse these for some reason...
-    nextArrow: <PreviousArrow classes={classes}/>,
-    prevArrow: <NextArrow classes={classes}/>,
+    slidesToScroll: 5,
+    prevArrow: <PreviousArrow classes={classes}/>,
+    nextArrow: <NextArrow classes={classes}/>,
   }
   
 
   return (
-    <div className={classes.outerMost}>
+    <div className={classNames(classes.outerMost, className)}>
       <Typography variant="h4" className={classes.title}>{title}</Typography>
       <div className={classes.outer} >
         <Slider {...sliderSettings} >
-          {movies.map((movie, i) => <MovieCard movie={movie} onClick={onClick} key={movie.movieSlug}/>) }
+          {movies.map((movie, i) => <MovieCard movie={movie} onClick={onClick} key={movie.movieSlug} height={height}/>) }
         </Slider>
       </div>
     </div>

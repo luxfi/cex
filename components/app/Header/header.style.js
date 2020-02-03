@@ -2,15 +2,12 @@ export default theme => ({
   appBar: {
     color: 'inherit',
     boxShadow: 'none',
-    paddingLeft: theme.spacing(3), // 32px
-    paddingRight: theme.spacing(3),
+    padding: `0px ${theme.spacing(3)}px`,   
     [theme.breakpoints.down('xs')]: {
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
+      padding: `0px ${theme.spacing(2)}px`,   
     },
     [theme.breakpoints.up('lg')]: {
-      paddingLeft: theme.spacing(8),
-      paddingRight: theme.spacing(8),
+      padding: `0px ${theme.spacing(8)}px`,   
     },
     transition: 'background 0.5s ease-in-out',
   },

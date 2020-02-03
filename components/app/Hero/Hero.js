@@ -1,5 +1,6 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core'
+import classNames from 'classnames'
 
 const useStyles = makeStyles(theme => ({
   image: {
@@ -33,7 +34,7 @@ export default (props) => {
   }
 
   return (
-    <div className={classes.image} style={elementStyles}>
+    <div className={classNames(classes.image, props.className)} style={elementStyles}>
       <div className={classes.content}>
         {props.children}
       </div>

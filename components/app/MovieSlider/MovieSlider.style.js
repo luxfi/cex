@@ -37,6 +37,24 @@ export default (theme) => ({
 
   outer: {
     position: 'relative',
-    padding: '0px 30px'
+
+      // to match header.style.js and other elements
+    padding: `0px ${theme.spacing(3)}px`,   
+    [theme.breakpoints.down('xs')]: {
+      padding: `0px ${theme.spacing(2)}px`,   
+    },
+    [theme.breakpoints.up('lg')]: {
+      padding: `0px ${theme.spacing(8)}px`,   
+    },
+      // This allows room for the cards to expand on hover without getting clipped out by the parent div
+    '& .slick-track': {
+      padding: '25px 0px'
+    }
+  },
+
+  title: {
+    paddingLeft: theme.spacing(8),
+    textTransform: 'upperCase',
+    fontSize: '1.7rem',
   }
 })

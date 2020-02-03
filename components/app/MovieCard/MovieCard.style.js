@@ -1,7 +1,6 @@
 export default (theme) => ({
 
   card: {
-    maxWidth: 450,
     position: 'relative',
     height: '100%',
     zIndex: 1,
