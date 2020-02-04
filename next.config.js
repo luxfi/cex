@@ -82,6 +82,10 @@ module.exports = withBundleAnalyzer(
               page: '/trade',
               query: { slug: m.movieSlug },
             },
+            [`/ticketing/${m.atomTicketsSlug}`]: {
+              page: '/ticketing',
+              query: { slug: m.atomTicketsSlug },
+            },
             [`/offering/${m.movieSlug}`]: {
               page: '/offering',
               query: { slug: m.movieSlug },
