@@ -84,6 +84,9 @@ export default withWidth()(inject('store')(observer((props) => {
         movies={store.movieStore.fundingMovies} 
         title='Now Funding' 
         goToMovieDetail={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
+        goToMovieOffering={(movie) => {router.push(`/offering/${movie.movieSlug}`)}} 
+        goToMovieTrading={(movie) => {router.push(`/trade/${movie.movieSlug}`)}} 
+        playMovieTrailer={(movie) => console.log("PLAY TRAILER for " + movie.name)}
         className={classes.fundingSlider}
         height='480px'
       />
@@ -93,6 +96,7 @@ export default withWidth()(inject('store')(observer((props) => {
         goToMovieDetail={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
         goToMovieOffering={(movie) => {router.push(`/offering/${movie.movieSlug}`)}} 
         goToMovieTrading={(movie) => {router.push(`/trade/${movie.movieSlug}`)}} 
+        playMovieTrailer={(movie) => console.log("PLAY TRAILER for " + movie.name)}
         className={classes.tradingSlider}
         height='480px'
       />
