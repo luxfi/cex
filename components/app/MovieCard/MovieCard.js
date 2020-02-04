@@ -19,6 +19,8 @@ import { faPlayCircle } from '@fortawesome/free-solid-svg-icons'
 
 import classNames from 'classnames'
 
+import { TrailerSliderModal } from "../../landing"
+
 import styles from './MovieCard.style.js'
 const useStyles = makeStyles(styles)
 
@@ -27,7 +29,6 @@ export default ({
   goToMovieDetail, 
   goToMovieTrading,
   goToMovieOffering,
-  playMovieTrailer,
   height, 
   className
 }) => {
@@ -69,12 +70,13 @@ export default ({
   )
 }
 
-const TrailerImage = ({movie, className, playMovieTrailer}) => (
-  <div className={className} onClick={() => playMovieTrailer(movie)}>
-    <FontAwesomeIcon icon={faPlayCircle} size='1x' />
-    <img src={movie.heroImg} />
-  </div>
-)
-
-
-//<img className={classes.trailerPoster} src={movie.heroImg} width='100%' height='auto' />
+const TrailerImage = ({movie, className}) => {
+  const childRef = React.useRef()
+  return (
+    <div className={className} onClick={() => childRef.current.handleOpen()}>
+      <FontAwesomeIcon icon={faPlayCircle} size='1x' />
+      <img src={movie.heroImg} />
+      <TrailerSliderModal movie={movie} ref={childRef} />
+    </div>
+  )
+}

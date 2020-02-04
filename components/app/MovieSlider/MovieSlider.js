@@ -42,7 +42,6 @@ export default (props) => {
     goToMovieDetail,
     goToMovieOffering, 
     goToMovieTrading,
-    playMovieTrailer,
     className,
     height
   } = props 
@@ -88,7 +87,6 @@ export default (props) => {
               goToMovieDetail={goToMovieDetail} 
               goToMovieOffering={goToMovieOffering}
               goToMovieTrading={goToMovieTrading}
-              playMovieTrailer={playMovieTrailer}
               key={movie.movieSlug} 
               height={height} 
               className={classes.movieCard}

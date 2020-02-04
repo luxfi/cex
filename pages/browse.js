@@ -89,7 +89,6 @@ class Browse extends React.Component {
               goToMovieDetail={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
               goToMovieOffering={(movie) => {router.push(`/offering/${movie.movieSlug}`)}} 
               goToMovieTrading={(movie) => {router.push(`/trade/${movie.movieSlug}`)}} 
-              playMovieTrailer={(movie) => console.log("PLAY TRAILER for " + movie.name)}
             />
           </Grid>
         ))}
