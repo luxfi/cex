@@ -1,7 +1,8 @@
 import React from 'react'
-import { Box, Grid, Button, Container } from '@material-ui/core'
+import Link from 'next/link'
+import { Box, Grid, Button, Container, Typography } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-import Rating from 'react-rating';
+import Rating from 'react-rating'
 
 import styles from './ticketing.style'
 
@@ -26,7 +27,7 @@ class TicketingView extends React.Component {
               <img class={classes.heroImage} src={imgSrc} alt="" role="presentation" />
             </Box>
             <Box className={classes.movieSummaryHeroInfo}>
-              <h1 class={classes.movieSummaryHeroTitle}>Terminator: Dark Fate</h1>
+              <Typography variant='h1' class={classes.movieSummaryHeroTitle}>Terminator: Dark Fate</Typography>
               <Box className={classes.movieSummaryHeroMetadata}>
                 <span className={classes.rRatedContainer}>R</span>
                 <span className={classes.movieTimer}>2hrs 8m</span>
@@ -54,7 +55,7 @@ class TicketingView extends React.Component {
         </Box>
         <Box>
           <Box className={classes.dateLocationStripe}>
-            <h2 className={classes.dateLocationStripeHeading}>Find Movie Theaters & Showtimes</h2>
+            <Typography variant="h2" className={classes.dateLocationStripeHeading}>Find Movie Theaters & Showtimes</Typography>
             <span className={classes.dateLocationStripeText}>for</span>
             <Button
               startIcon={<Calendar className={classes.svgIcon} />}
@@ -80,10 +81,51 @@ class TicketingView extends React.Component {
             </Button>
           </Box>
           <Box>
-            <Box className={classes.panelBody}>
-              Hmm... we couldn't find any showtimes for this date and location.
-            </Box>
+            <Grid className={classes.panelBody} container alignContent="flex-start">
+              {/* <Box>
+                Hmm... we couldn't find any showtimes for this date and location.
+              </Box> */}
+              <Box className={classes.movieVenueIconContainer}>
+                <img
+                  className={classes.movieVenueIcon}
+                  src="https://images.atomtickets.com/image/upload/v1/client-image-repo/circuit-logo/CinemarkLogoCircle_Red.svg"
+                  alt="Logo"
+                />
+              </Box>
+              <Grid className={classes.movieVenueContainer}>
+                <a href="#" className={classes.movieVenueTitleLink}>
+                  Cinemark Hollywood USA Movies 15
+                </a>
+                <Box component="span">4040 S. Shiloh Road, Garland, TX</Box>
+              </Grid>
+            </Grid>
           </Box>
+          <Grid container className={classes.showtimeSchedules} alignItems="center">
+            <Typography variant="h4" className={classes.showtimeTitle}>STANDARD FORMAT</Typography>
+            <ul className={classes.formatShowtimesList}>
+              <li>
+                <Link href="/checkout/368249511/tickets">
+                  <a className={classes.showtimeLink}>
+                    <Button className={classes.btnShowtime}>12:45 PM</Button>
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/checkout/368249511/tickets">
+                  <a className={classes.showtimeLink}>
+                    <Button className={classes.btnShowtime}>1:45 PM</Button>
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/checkout/368249511/tickets">
+                  <a className={classes.showtimeLink}>
+                    <Button className={classes.btnShowtime}>2:00 PM</Button>
+                  </a>
+                </Link>
+              </li>
+            </ul>
+          </Grid>
         </Box>
       </Box>
     )

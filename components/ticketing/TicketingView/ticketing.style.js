@@ -3,6 +3,7 @@ import {
   title,
   flexCenteredRow,
   flexCenteredColumn,
+  flexStartColumn,
 } from "../../../styles/esxStyles.js"
 
 const whiteColor = '#ffffff';
@@ -125,10 +126,57 @@ export default theme => ({
     },
   },
   panelBody: {
-    padding: '16px 0',
-    backgroundColor: '#0f1a21',
+    padding: '16px',
+    backgroundColor: '#202b35',
     textAlign: 'center',
+  },
+  movieVenueIconContainer: {
+    paddingRight: '16px',
+    verticalAlign: 'middle',
+    ...flexCenteredColumn,
+  },
+  movieVenueIcon: {
+    width: '64px',
+    height: '64px',
+  },
+  movieVenueTitle: {
+    margin: 0,
+  },
+  movieVenueTitleLink: {
+    color: '#00aeef',
+    textDecoration: 'none',
+    fontSize: '20px',
+  },
+  movieVenueContainer: {
+    padding: '16px 0',
+    ...flexStartColumn,
+  },
+  showtimeSchedules: {
+    padding: '16px',
+    backgroundColor: '#0f1a21',
+  },
+  formatShowtimesList: {
+    listStyle: 'none',
+    marginLeft: '30px',
+    padding: '8px 4px 4px 8px',
+    overflow: 'auto',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  btnShowtime: {
+    position: 'relative',
+    color: 'white',
+    backgroundColor: '#202b35',
+    border: '1px solid #FBC43E',
+    borderRadius: '4px',
+    padding: '5px 20px',
+  },
+  showtimeLink: {
+    textDecoration: 'none',
+    marginLeft: '12px',
+  },
+  showtimeTitle: {
+    fontSize: '18px',
   }
 })
-
-

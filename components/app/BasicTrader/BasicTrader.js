@@ -4,6 +4,8 @@ import { Grid, Typography, Button, Box, Divider } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 import { makeStyles } from '@material-ui/styles'
 import Router from 'next/router'
+import Link from 'next/link'
+
 import {
   AboutSection,
   BuySellWidget,
@@ -100,26 +102,26 @@ export default (props) => {
             </Grid>
             <Grid item xs={12}>
               <Box mt={3} pl={4} pr={4}>
-                <Button
-                  href={atomTicketsURL}
-                  target="_blank"
-                  title="Tweet"
-                  variant="outlined"
-                  fullWidth
-                  color="secondary"
-                  size="large"
-                  className={classes.buyTicketsButton}
-                  classes={{
-                    label: classes.label,
-                  }}
-                >
-                  <Typography
-                    variant="subtitle1"
-                    className={classes.buyTicketsText}
+                <Link href={`/ticketing/${atomTicketsURL}`}>
+                  <Button
+                    title="Tweet"
+                    variant="outlined"
+                    fullWidth
+                    color="secondary"
+                    size="large"
+                    className={classes.buyTicketsButton}
+                    classes={{
+                      label: classes.label,
+                    }}
                   >
-                    Buy Tickets
-                  </Typography>
-                </Button>
+                    <Typography
+                      variant="subtitle1"
+                      className={classes.buyTicketsText}
+                    >
+                      Buy Tickets
+                    </Typography>
+                  </Button>
+                </Link>
               </Box>
             </Grid>
             <Grid item xs>

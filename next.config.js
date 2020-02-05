@@ -139,6 +139,7 @@ module.exports = withBundleAnalyzer(
           '/accountLevels': { page: '/accountLevels' },
           '/discover': { page: '/browse' },
           '/browse': { page: '/browse' },
+          '/checkout/[...slug]': { page: '/checkout/[...slug]' }
         }
       },
     }),
