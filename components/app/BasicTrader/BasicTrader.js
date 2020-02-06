@@ -48,7 +48,7 @@ export default (props) => {
     watchlist,
     removeFromWatchlist,
     addToWatchlist,
-    atomTicketsURL,
+    movieSlug,
     movies,
     redirectLogin,
     setTrading,
@@ -102,7 +102,7 @@ export default (props) => {
             </Grid>
             <Grid item xs={12}>
               <Box mt={3} pl={4} pr={4}>
-                <Link href={`/ticketing/${atomTicketsURL}`}>
+                <Link href={`/ticketing/${movieSlug}`}>
                   <Button
                     title="Tweet"
                     variant="outlined"

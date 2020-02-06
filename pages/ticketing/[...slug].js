@@ -1,16 +1,16 @@
 import React from 'react'
 import { Container } from "@material-ui/core"
 
-import { CheckoutView } from '../../components/checkout'
+import { TicketingView } from '../../components/ticketing'
 
-class Checkout extends React.Component {
+class Ticketing extends React.Component {
   render() {
     return (
       <Container component="main" maxWidth="lg">
-        <CheckoutView />
+        <TicketingView />
       </Container>
     )
   }
 }
 
-export default Checkout
+export default Ticketing

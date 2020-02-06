@@ -1,20 +1,29 @@
 import React from 'react'
 import Link from 'next/link'
 import { withRouter } from 'next/router';
+import { inject, observer } from 'mobx-react'
 import { Box, Grid, Button, Container, Typography } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 
-import Add from '../../../assets/svg/Add.svg';
-import Minus from '../../../assets/svg/Minus.svg';
-import Calendar from '../../../assets/svg/Calendar.svg';
+import DateRangeIcon from '@material-ui/icons/DateRange'
+import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined'
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline'
 
-import styles from './tickets.style'
+import styles from './checkoutTickets.style'
 
-const imgSrc = 'https://atom-tickets-res.cloudinary.com/image/upload/c_lfill,f_auto,g_north,q_auto,w_300/v1567707539/ingestion-images-archive-prod/archive/1567707538556_194671_cops_0.jpg';
-
-class Tickets extends React.Component {
+@inject('store')
+@observer
+class CheckoutTickets extends React.Component {
   render() {
-    const { classes } = this.props;
+    const {
+      classes,
+      router: { query: { slug } },
+      store: { movieStore }
+    } = this.props;
+
+    const [ movieSlug ] = slug;
+    const movie = movieStore.getMovieBySlug(movieSlug);
+
     return (
       <Grid className={classes.outerContainer}>
         <Grid container alignItems="flex-start" justify="center" className={classes.innerContainer}>
@@ -29,25 +38,25 @@ class Tickets extends React.Component {
               <Box className={classes.ticketColumn}>$2.17</Box>
               <Grid className={classes.ticketColumn} container justify="flex-start" alignItems="center" wrap="nowrap">
                 <button className={classes.ticketBtn}>
-                  <Minus className={classes.buttonIcon} />
+                  <RemoveCircleOutlineIcon className={classes.buttonIcon} />
                 </button>
                 <Typography variant="h5" className={classes.ticketQuantity}>1</Typography>
                 <button className={classes.ticketBtn}>
-                  <Add className={classes.buttonIcon} />
+                  <AddCircleOutlineOutlinedIcon className={classes.buttonIcon} />
                 </button>
               </Grid>
             </Grid>
             <Box container className={classes.tableFooter}>
               <a className={classes.agePolicyLink}>
-                <Calendar className={classes.agePolicyLinkIcon} />
+                <DateRangeIcon className={classes.agePolicyLinkIcon} />
                 Age Policy
               </a>
             </Box>
           </Grid>
           <Box>
-            <Box><img className={classes.movieImg} src={imgSrc} /></Box>
+            <Box><img className={classes.movieImg} src={movie.posterImg} /></Box>
             <Box>
-              <Typography variant="h5">Terminator: Dark Fate</Typography>
+              <Typography variant="h5">{movie.name}</Typography>
               <Box>Cinemark Hollywood USA Movies 15</Box>
               <Box>Monday at 3:45 PM</Box>
             </Box>
@@ -59,7 +68,7 @@ class Tickets extends React.Component {
             <Typography variant="h5" className={classes.subTotal}>$15.19</Typography>
           </Box>
           <Grid>
-            <Link href="/checkout/368249511/payment-method">
+            <Link href="payment-method">
               <Button className={classes.nextButton}>NEXT</Button>
             </Link>
           </Grid>
@@ -69,4 +78,4 @@ class Tickets extends React.Component {
   }
 }
 
-export default withRouter(withStyles(styles)(Tickets))
+export default withRouter(withStyles(styles)(CheckoutTickets))

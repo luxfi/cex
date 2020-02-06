@@ -153,6 +153,20 @@ export default class MovieStore {
   getMovieBySlug(slug) {
     return this.movies.find(m => m.movieSlug === slug)
   }
+
+  validateTicketingSlug(slug) {
+    if(typeof slug === 'string') {
+      return this.movies.some(m => m.movieSlug === slug)
+    }
+    return false
+  }
+
+  validateCheckoutSlug(slug, routeName) {
+    if(Array.isArray(slug)) {
+      return slug[1] === 'checkout' && slug[3] === routeName;
+    }
+    return false
+  }
 }
 
 export class Movie {

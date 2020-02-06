@@ -76,7 +76,7 @@ export default theme => ({
   rRatedContainer: {
     border: `1px solid ${whiteColor}`,
     borderRadius: '4px',
-    padding: '2px',
+    padding: '1px',
     marginRight: '5px',
     color: whiteColor,
   },

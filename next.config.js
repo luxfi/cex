@@ -82,9 +82,9 @@ module.exports = withBundleAnalyzer(
               page: '/trade',
               query: { slug: m.movieSlug },
             },
-            [`/ticketing/${m.atomTicketsSlug}`]: {
-              page: '/ticketing',
-              query: { slug: m.atomTicketsSlug },
+            [`/ticketing/${m.movieSlug}`]: {
+              page: '/ticketing/[...slug]',
+              query: { slug: m.movieSlug },
             },
             [`/offering/${m.movieSlug}`]: {
               page: '/offering',
@@ -139,7 +139,6 @@ module.exports = withBundleAnalyzer(
           '/accountLevels': { page: '/accountLevels' },
           '/discover': { page: '/browse' },
           '/browse': { page: '/browse' },
-          '/checkout/[...slug]': { page: '/checkout/[...slug]' }
         }
       },
     }),

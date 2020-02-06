@@ -169,7 +169,7 @@ class Index extends React.Component {
               orderBook={orderBook}
               book={orderBook.book}
               ticker={movie.ticker}
-              atomTicketsURL={movie.atomTicketsSlug}
+              movieSlug={movie.movieSlug}
               createOrder={createOrder}
               onExecute={(order, orderType) => {
                 return userPortfolio.onOrderExecute(order, orderType)
