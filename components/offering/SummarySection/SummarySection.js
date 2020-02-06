@@ -29,7 +29,7 @@ const SummarySection = ({ summaryRef }) => {
         </Typography>
         <Typography gutterBottom variant="subtitle1" color="textSecondary">
           <Box mb={3}>
-            The Organ Donor is an upcoming American horror film. The film will
+            Spiral is an upcoming American horror film. The film will
             serve as the ninth installment in the Saw franchise. The film is directed
             by Darren Lynn Bousman, from a screenplay by Josh Stolberg and Pete
             Goldfinger, based on a story by Chris Rock.
@@ -48,7 +48,7 @@ const SummarySection = ({ summaryRef }) => {
 
         <Typography variant="subtitle1" color="textPrimary">
           <Box mb={2} fontWeight="fontWeightBold">
-            {bull} "The Organ Donor is set to be one of the franchises best films" - Chris Rock
+            {bull} "Spiral will keep you laughing on the edge of your seat" - Chris Rock
           </Box>
         </Typography>
         <Typography variant="subtitle1" color="textPrimary">
