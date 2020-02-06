@@ -1,9 +1,9 @@
 import React from 'react'
-import { 
-  Typography, 
-  makeStyles, 
+import {
+  Typography,
+  makeStyles,
   withWidth,
-  isWidthDown, 
+  isWidthDown,
 } from '@material-ui/core'
 import { ChevronLeft, ChevronRight} from '@material-ui/icons'
 
@@ -40,11 +40,11 @@ export default (props) => {
     movies,
     title,
     goToMovieDetail,
-    goToMovieOffering, 
+    goToMovieOffering,
     goToMovieTrading,
     className,
     height
-  } = props 
+  } = props
 
   const classes = useStyles()
 
@@ -56,6 +56,7 @@ export default (props) => {
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
+    swipeToSlide: true,
     prevArrow: <PreviousArrow classes={classes}/>,
     nextArrow: <NextArrow classes={classes}/>,
     responsive: [
@@ -81,14 +82,14 @@ export default (props) => {
       <Typography variant="h4" className={classes.title}>{title}</Typography>
       <div className={classes.outer}>
         <Slider {...sliderSettings} >
-          {movies.map((movie, i) => 
-            <MovieCard 
-              movie={movie} 
-              goToMovieDetail={goToMovieDetail} 
+          {movies.map((movie, i) =>
+            <MovieCard
+              movie={movie}
+              goToMovieDetail={goToMovieDetail}
               goToMovieOffering={goToMovieOffering}
               goToMovieTrading={goToMovieTrading}
-              key={movie.movieSlug} 
-              height={height} 
+              key={movie.movieSlug}
+              height={height}
               className={classes.movieCard}
             />
           )}

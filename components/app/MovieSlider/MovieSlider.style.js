@@ -28,7 +28,7 @@ export default (theme) => ({
       position: 'relative',
       width: '100%',
       height: '100%'
-    }
+    },
   },
 
   previousArrow: {
@@ -36,30 +36,40 @@ export default (theme) => ({
     '& svg': {
       left: '-1px',
     },
+
+    '& .slick-disabled': {
+      display: 'none',
+    },
   },
 
   nextArrow: {
     right: arrowOffset,
+
+    '& .slick-disabled': {
+      display: 'none',
+    },
   },
 
   outer: {
     position: 'relative',
 
       // to match header.style.js and other elements
-    padding: `0px ${theme.spacing(3)}px`,   
+    padding: `0px ${theme.spacing(3)}px`,
     [theme.breakpoints.down('xs')]: {
-      padding: `0px ${theme.spacing(2)}px`,   
+      padding: `0px ${theme.spacing(2)}px`,
     },
     [theme.breakpoints.up('lg')]: {
-      padding: `0px ${theme.spacing(8)}px`,   
+      padding: `0px ${theme.spacing(8)}px`,
     },
-      // This allows room for the cards to expand on hover without getting clipped out by the parent div
+
+    // This allows room for the cards to expand on hover without getting clipped out by the parent div
     '& .slick-track': {
       padding: '25px 0px'
     },
+
     '& .slick-slide': {
       paddingRight: theme.spacing(1)
-    }
+    },
   },
 
   title: {
