@@ -43,7 +43,7 @@ const REWARDS = [
   {
     amount: 85,
     description: [
-      "NEW! SAW MOVIE POSTER! You’ll get The Organ Donor official film poster! (this will be made for the film’s theatrical release and will be big and pretty damn cool) + Your name in the film’s credits (festival and home video versions) + Everything from our $45 DIGITAL DOWNLOAD level!",
+      "NEW! SAW MOVIE POSTER! You’ll get the official film poster! (this will be made for the film’s theatrical release and will be big and pretty damn cool) + Your name in the film’s credits (festival and home video versions) + Everything from our $45 DIGITAL DOWNLOAD level!",
     ],
     investorsAmount: 273,
     estimatedDelivery: 'Jun 2020',

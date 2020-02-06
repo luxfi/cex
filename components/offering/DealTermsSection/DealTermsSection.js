@@ -67,7 +67,7 @@ const DEAL_TERMS = [
     heading: 'Security Type',
     value: 'Preferred Equity',
     details: [
-      'The Organ Donor is an upcoming American horror film. The film will serve as the ninth installment in the Saw franchise. The film is directed by Darren Lynn Bousman, from a screenplay by Josh Stolberg and Pete Goldfinger, based on a story by Chris Rock.',
+      'Spiral is an upcoming American horror film. The film will serve as the ninth installment in the Saw franchise. The film is directed by Darren Lynn Bousman, from a screenplay by Josh Stolberg and Pete Goldfinger, based on a story by Chris Rock.',
     ],
   },
   {
