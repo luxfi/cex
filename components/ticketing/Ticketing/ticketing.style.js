@@ -29,7 +29,7 @@ export default theme => ({
     backgroundColor: '#202b35',
     ...flexCenteredRow,
     alignItems: 'center',
-    margin: '32px 0 0',
+    margin: '32px auto 0',
   },
   movieSummaryHeroTitle: {
     fontSize: '28px',
