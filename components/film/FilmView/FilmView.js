@@ -13,6 +13,7 @@ import { formatTakeResults } from "../../../util/formatOrderBookDataForChart"
 // @material-ui/core components
 import { Button, Grid, Typography, Switch } from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
 // core components
 import {
@@ -161,7 +162,21 @@ class Index extends React.Component {
             </p>
           </div>
           <div>
-            <TrailerModal movie={movie} />
+            {/* <TrailerModal movie={movie} /> */}
+            <Link href={`/film/${movie.movieSlug}/watch`}>
+              <a style={{ textDecoration: 'none'}}>
+                <Button
+                  className={`watch-trailer-button button`}
+                  variant="outlined"
+                  size="large"
+                  startIcon={<PlayArrowIcon />}
+                >
+                  <Typography variant="body2">
+                    Play Trailer
+                  </Typography>
+                </Button>
+              </a>
+            </Link>
             <Button
               href={"/trade/" + movie.movieSlug}
               rel="noopener noreferrer"

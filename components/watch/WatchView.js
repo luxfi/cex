@@ -5,11 +5,24 @@ import { inject, observer } from "mobx-react"
 import { withRouter, Router } from "next/router"
 import classNames from "classnames"
 
+import LikeAndUnlike from './LikeAndUnlike'
 import VideoDescription from './VideoDescription'
 import ShowingNext from './ShowingNext'
+import Comments from './Comments'
+import SortComments from './SortButton'
 
 // @material-ui/core components
-import { Button, Grid, Typography, Divider, IconButton, Box, Switch } from "@material-ui/core"
+import { 
+  Button,
+  Grid,
+  Typography,
+  Divider,
+  IconButton,
+  Box,
+  Switch,
+  TextField,
+  Avatar
+} from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
 import ShareIcon from '@material-ui/icons/Share';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
@@ -63,38 +76,23 @@ class Index extends React.Component {
 
     return (
       <>
-        <div
+        <Box
           className="MuiContainer-maxWidthXl"
           style={{ padding: '50px 20px'}}
         >
-          <div className={classes.watchGrid}>
-            <div className={classes.videoContainer}>
-                <div className="video">
-                  <iframe className="video-player" src={movie.trailer + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0"} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                </div>
-            </div>
+          <Box className={classes.watchGrid}>
+            <Box className={classes.videoContainer}>
+              <Box className="video">
+                <iframe className="video-player" src={movie.trailer + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0"} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+              </Box>
+            </Box>
             <Box className="video-metadata">
               <h3>FAST AND FURIOUS 9 Trailer #2 Han Returns TV Spot (NEW 2020) Vin Diesel Action Movie HD</h3>
               <Box className={classes.videoStats}>
                 <Typography component="span">774,900 views</Typography>
                 <Box className={classes.videoActions}>
                   <Box className={classes.rating}>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      className={classes.likeButton}
-                      startIcon={<ThumbUpAltIcon />}
-                    >
-                      12K
-                    </Button>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      className={classes.likeButton}
-                      startIcon={<ThumbDownIcon />}
-                    >
-                      488
-                    </Button>
+                    <LikeAndUnlike />
                     <Box className={classes.likeUnderline}>
                       <Divider />
                     </Box>
@@ -142,54 +140,44 @@ class Index extends React.Component {
               <Divider />
             </Box>
             <ShowingNext />
-            <div>
-                <div className="comments-header">
-                  <h4>1097 Comments</h4>
-                  <button className="ui basic compact icon left labeled button"><i aria-hidden="true" className="align left icon"></i>Sort by</button>
-                </div>
-                <div className="add-comment">
-                  <img src="http://via.placeholder.com/48x48" className="ui circular image user-image" />
-                  <form className="ui form">
-                      <div className="field"><textarea placeholder="Add a public comment" rows="3"></textarea></div>
-                  </form>
-                </div>
-                <div className="comment">
-                  <img src="https://yt3.ggpht.com/a/AGF-l7-p9SFzNRQ3p9NhtvFXwgFTTsZ9bH0XamJ2vw=s48-c-k-c0xffffffff-no-rj-mo" className="ui circular image user-image" />
-                  <div>
-                      <div className="user-name">Bubl Bodies</div>
-                      <span>My nigga if ur gonna hate on the movie just don’t watch the previews n shit</span>
-                      <div className="comment-actions">
-                        <div className="rating">
-                            <div><i aria-hidden="true" className="thumbs outline up icon"></i><span></span></div>
-                            <div><i aria-hidden="true" className="thumbs outline down icon"></i><span></span></div>
-                        </div>
-                        <button className="ui mini compact button">REPLY</button>
-                      </div>
-                  </div>
-                </div>
-                <div className="comment">
-                  <img src="https://yt3.ggpht.com/a/AGF-l78b5GeGFkc5FXiMGib0C_gBEIVr99k_QEY2Jw=s48-c-k-c0xffffffff-no-rj-mo" className="ui circular image user-image" />
-                  <div>
-                      <div className="user-name">Edwin Piercin</div>
-                      <span>Fuck it. Han is back I am sold. Even tho it's physically impossible for them to swing that car over the bridge that way.</span>
-                      <div className="comment-actions">
-                        <div className="rating">
-                            <div><i aria-hidden="true" className="thumbs outline up icon"></i><span></span></div>
-                            <div><i aria-hidden="true" className="thumbs outline down icon"></i><span></span></div>
-                        </div>
-                        <button className="ui mini compact button">REPLY</button>
-                      </div>
-                  </div>
-                </div>
-            </div>
-          </div>
-        </div>
-        <div
+            <Box className={classes.commentWrapper}>
+              <Box className={classes.commentHeader}>
+                <Typography component="h4">1097 Comments</Typography>
+                <SortComments />
+              </Box>
+              <Box className={classNames('add-comment', classes.comment)}>
+                <Avatar src="https://yt3.ggpht.com/a/AGF-l7-p9SFzNRQ3p9NhtvFXwgFTTsZ9bH0XamJ2vw=s48-c-k-c0xffffffff-no-rj-mo" className={classes.commentImage} />
+                <Box className={classes.commentInputArea}>
+                  <TextField
+                    InputProps={{
+                      className: classes.addCommentInput
+                    }}
+                    rows="3"
+                    placeholder="add a commment"
+                    multiline
+                    fullWidth
+                  />
+                  <Box className={classes.submitButtonContainer}>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      className={classes.shareButton}
+                    >
+                      Post Comment
+                    </Button>
+                  </Box>
+                </Box>
+              </Box>
+              <Comments />
+            </Box>
+          </Box>
+        </Box>
+        <Box
           className={classNames(classes.container)}
           style={{ paddingLeft: "0px", paddingRight: "0px" }}
         >
           {!userStore.token ? <InvestNow /> : ""}
-        </div>
+        </Box>
       </>
     )
   }

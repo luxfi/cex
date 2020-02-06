@@ -89,8 +89,10 @@ import {
         maxWidth: 615,
         gridRow: '2/3',
         gridColumn: '2/3',
+        fontSize: 13,
+        lineHeight: '16px',
         '& .collapsed': {
-          maxHeight: '3.6rem',
+          maxHeight: 48,
           overflowY: 'hidden',
         },
         '& .expanded': {
@@ -278,6 +280,59 @@ import {
         fontSize: 12,
       },
     },
+
+    commentHeader: {
+      display: 'flex',
+      alignItems: 'center',
+      margin: '20px 0',
+      '& > *': {
+        margin: '0 20px 0 0',
+        fontSize: 14,
+      }
+    },
+
+    comment: {
+      display: 'flex',
+      margin: '0 0 10px 0',  
+    },
+
+    commentActions: {
+      display: 'flex',
+      alignItems: 'center',
+      fontSize: 10,
+    },
+
+    commentUserName: {
+      fontSize: 14,
+      fontWeight: 600,
+    },
+
+    commentImage: {
+      margin: '0 10px 0 0',
+      width: 50,
+      height: 50,
+    },
+
+    addCommentInput: {
+      padding: 10,
+      fontSize: 14,
+    },
+
+    commentInputArea: {
+      width: '100%',
+      margin: '0 0 20px 0'
+    },
+
+    submitButtonContainer: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      width: '100%',
+      '& > button': {
+        margin: '10px 0 0 0',
+      }
+    },
+
+
   
   })
   
