@@ -6,9 +6,10 @@ import { withRouter, Router } from "next/router"
 import classNames from "classnames"
 
 import VideoDescription from './VideoDescription'
+import ShowingNext from './ShowingNext'
 
 // @material-ui/core components
-import { Button, Grid, Typography, Switch, Divider, IconButton } from "@material-ui/core"
+import { Button, Grid, Typography, Divider, IconButton, Box, Switch } from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
 import ShareIcon from '@material-ui/icons/Share';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
@@ -20,14 +21,10 @@ import CustomLink from "../app/CustomLink"
 // core components
 import {
   CustomBreadcrumbs,
-  BasicTrader,
   InvestNow,
-  ProTrader,
 } from "../app"
 
 import styles from "./style.js"
-
-import { isObservableArray } from "mobx"
 
 const ExternalLink = React.forwardRef(
   ({ className, href, hrefAs, children }, ref) => (
@@ -46,13 +43,6 @@ const ExternalLink = React.forwardRef(
 @inject("store")
 @observer
 class Index extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      selectedTab: "about",
-      selectedTrader: "basic",
-    }
-  }
 
   render() {
     const { classes, store } = this.props
@@ -83,113 +73,75 @@ class Index extends React.Component {
                   <iframe className="video-player" src={movie.trailer + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0"} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                 </div>
             </div>
-            <div className="video-metadata">
-                <h3>FAST AND FURIOUS 9 Trailer #2 Han Returns TV Spot (NEW 2020) Vin Diesel Action Movie HD</h3>
-                <div className={classes.videoStats}>
-                  <span>774,900 views</span>
-                  <div className={classes.videoActions}>
-                      <div className={classes.rating}>
-                        <Button
-                          variant="contained"
-                          size="small"
-                          className={classes.likeButton}
-                          startIcon={<ThumbUpAltIcon />}
-                        >
-                          12K
-                        </Button>
-                        <Button
-                          variant="contained"
-                          size="small"
-                          className={classes.likeButton}
-                          startIcon={<ThumbDownIcon />}
-                        >
-                          488
-                        </Button>
-                        <Divider />
-
-                      </div>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        className={classes.shareButton}
-                        startIcon={<ShareIcon />}
-                      >
-                        Share
-                      </Button>
-                      <IconButton onClick={() => {}} className={classes.iconButton}>
-                        <AddCircleIcon />
-                      </IconButton>
-                      <IconButton onClick={() => {}} className={classes.iconButton}>
-                        <MoreHorizIcon />
-                      </IconButton>
-                  </div>
-                </div>
-                <div className="ui divider"></div>
-            </div>
-            <div>
-                <div className={classes.videoInfoBox}>
-                  <img src="https://yt3.ggpht.com/a/AGF-l78o8C7mo9M3Dmcii6u_pfOt3I9dBS8n8zwVmQ=s240-c-k-c0xffffffff-no-rj-mo" className={classes.videoInfoImage} />
-                  <div className={classes.videoInfo}>
-                      <div className="channel-name">FilmSpot Trailer</div>
-                      <div className={classes.videoPubDate}>Sun Feb 02 2020</div>
-                  </div>
-                  <Button
-                    className={classes.subScribeButton}
-                    size="small"
-                  >
-                    <Typography
-                      variant="body1"
-                      className={classes.subScribeButtonText}
+            <Box className="video-metadata">
+              <h3>FAST AND FURIOUS 9 Trailer #2 Han Returns TV Spot (NEW 2020) Vin Diesel Action Movie HD</h3>
+              <Box className={classes.videoStats}>
+                <Typography component="span">774,900 views</Typography>
+                <Box className={classes.videoActions}>
+                  <Box className={classes.rating}>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      className={classes.likeButton}
+                      startIcon={<ThumbUpAltIcon />}
                     >
-                      Subscribe 3.4M
-                    </Typography>
+                      12K
+                    </Button>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      className={classes.likeButton}
+                      startIcon={<ThumbDownIcon />}
+                    >
+                      488
+                    </Button>
+                    <Box className={classes.likeUnderline}>
+                      <Divider />
+                    </Box>
+                  </Box>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    className={classes.shareButton}
+                    startIcon={<ShareIcon />}
+                  >
+                    Share
                   </Button>
-                  <VideoDescription />
-                </div>
+                  <IconButton onClick={() => {}} className={classes.iconButton}>
+                    <AddCircleIcon />
+                  </IconButton>
+                  <IconButton onClick={() => {}} className={classes.iconButton}>
+                    <MoreHorizIcon />
+                  </IconButton>
+                </Box>
+              </Box>
+              <Box style={{ margin: '0 0 20px 0' }}>
                 <Divider />
-            </div>
-            <div className={classes.relatedVideos}>
-                <div className="next-up-container">
-                  <h4>Up next</h4>
-                  <div className="up-next-toggle">
-                      <span>Autoplay</span>
-                      <div className="ui checked fitted toggle checkbox"><input className="hidden" tabIndex="0" type="checkbox" value="" checked="" /><label></label></div>
-                  </div>
-                </div>
-                <a href="/watch?v=6BLnOGpDk70">
-                  <div className="video-preview horizontal ">
-                      <div className="image-container">
-                        <img src="https://i.ytimg.com/vi/6BLnOGpDk70/mqdefault.jpg" className="ui image" />
-                        <div className="time-label"><span>6:13</span></div>
-                      </div>
-                      <div className="video-info">
-                        <div className="semi-bold show-max-two-lines ">The Best SUPER BOWL Movie Trailers 2020</div>
-                        <div className="video-preview-metadata-container">
-                            <div className="channel-title">KinoCheck International</div>
-                            <div className="view-and-time">313K views • a day ago</div>
-                            <div className="show-max-two-lines"></div>
-                        </div>
-                      </div>
-                  </div>
-                </a>
-                <div className="ui divider"></div>
-                <a href="/watch?v=HLQ9DRPuYXU">
-                  <div className="video-preview horizontal ">
-                      <div className="image-container">
-                        <img src="https://i.ytimg.com/vi/HLQ9DRPuYXU/mqdefault.jpg" className="ui image" />
-                        <div className="time-label"><span>3:10</span></div>
-                      </div>
-                      <div className="video-info">
-                        <div className="semi-bold show-max-two-lines ">TOP GUN 2 MAVERICK Trailer #3 Official (NEW 2020) Tom Cruise Action Movie HD</div>
-                        <div className="video-preview-metadata-container">
-                            <div className="channel-title">FilmSpot Trailer</div>
-                            <div className="view-and-time">35K views • a day ago</div>
-                            <div className="show-max-two-lines"></div>
-                        </div>
-                      </div>
-                  </div>
-                </a>
-            </div>
+              </Box>
+            </Box>
+            <Box>
+              <Box className={classes.videoInfoBox}>
+                <img src="https://yt3.ggpht.com/a/AGF-l78o8C7mo9M3Dmcii6u_pfOt3I9dBS8n8zwVmQ=s240-c-k-c0xffffffff-no-rj-mo" className={classes.videoInfoImage} />
+                <Box className={classes.videoInfo}>
+                    <Typography className={classes.channelName}>FilmSpot Trailer</Typography>
+                    <Typography className={classes.videoPubDate}>Sun Feb 02 2020</Typography>
+                </Box>
+                <Button
+                  className={classes.subScribeButton}
+                  size="small"
+                >
+                  <Typography
+                    variant="body1"
+                    className={classes.subScribeButtonText}
+                  >
+                    Subscribe 3.4M
+                  </Typography>
+                </Button>
+                <VideoDescription />
+              </Box>
+              <Divider />
+            </Box>
+            <ShowingNext />
             <div>
                 <div className="comments-header">
                   <h4>1097 Comments</h4>

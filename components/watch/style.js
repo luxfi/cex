@@ -7,6 +7,14 @@ import {
 
   const YELLOW = '#FBC43E';
   const GREY = '#808080';
+  const maxLines = {
+    overflow: 'hidden',
+    display: '-webkit-box',
+    boxOrient: 'vertical',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'normal',
+    lineClamp: 2,
+  };
   
   export default theme => ({
     flexCenteredRow: {
@@ -72,7 +80,7 @@ import {
 
     videoInfoBox: {
       display: 'grid',
-      grid: 'auto auto/58px auto max-content',
+      grid: 'auto auto/60px auto max-content',
       alignItems: 'center',
       gridRowGap: 10,
       gridColumn: '1/2',
@@ -123,6 +131,13 @@ import {
       }
     },
 
+    likeUnderline: {
+      position: 'relative',
+      display: 'block',
+      gridColumn: '1/span 2',
+      gridRow: '2/3',
+    },
+
     shareButton: {
       background: '#fff',
       '&:hover': {
@@ -157,6 +172,10 @@ import {
       color: GREY,
     },
 
+    channelName: {
+      fontSize: 14,
+    },
+
     subScribeButton: {
       gridRow: '1/2',
       gridColumn: '3/4',
@@ -172,7 +191,93 @@ import {
     relatedVideos: {
       gridColumn: '2/3',
       gridRow: '1/span 4',
-    }
+      '& > a': {
+        lineHeight: 1,
+        textDecoration: 'none',
+        color: GREY,
+      }
+    },
+
+    upNextTop: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      margin: '0 0 10px 0',
+      '& .title': {
+        fontWeight: 'bold',
+        fontSize: '1rem',    
+      },
+    },
+
+    upNextToggle: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+
+    singleVideo: {
+      display: 'grid',
+      grid: 'auto/210px auto',
+      gridColumnGap: 10,
+      margin: '10px 0 0 0',
+    },
+
+    imageWrapper: {
+      position: 'relative',
+      gridRow: '1/2',
+      gridColumn: '1/2',
+      '& img': {
+        maxWidth: '100%',
+      },
+    },
+
+    sidebarVideoInfo: {
+      gridRow: '1/2',
+      gridColumn: '2/3',
+    },
+
+    playTime: {
+      position: 'absolute',
+      bottom: 0,
+      right: 0,
+      margin: 5,
+      padding: '0px 5px',
+      background: '#000',
+      opacity: '0.85',
+      color: '#fff',
+      '& span': {
+        fontSize: 12,
+        fontWeight: 'normal',
+      }
+    },
+
+    sidebarMovieTitle: {
+      color: '#fff',
+      fontWeight: 'bold',
+      fontSize: 13,
+      lineHeight: '18px',
+      maxHeight: 36,
+      margin: '0 0 5px 0',
+    },
+
+    maxTwoLines: {
+      ...maxLines,
+      lineClamp: 2,
+    },
+
+    singleLine: {
+      ...maxLines,
+      lineClamp: 1,
+    },
+
+    sidebarVideoMeta: {
+      '& > p': {
+        fontSize: 14,
+        lineHeight: '20px',
+      },
+      '& > p.views-and-time': {
+        fontSize: 12,
+      },
+    },
   
   })
   
