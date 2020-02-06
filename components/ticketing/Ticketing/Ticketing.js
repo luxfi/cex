@@ -34,7 +34,7 @@ class Ticketing extends React.Component {
               <img className={classes.heroImage} src={movie.posterImg} alt="" role="presentation" />
             </Box>
             <Box className={classes.movieSummaryHeroInfo}>
-              <Typography variant='h1' class={classes.movieSummaryHeroTitle}>{movie.name}</Typography>
+              <Typography variant='h1' className={classes.movieSummaryHeroTitle}>{movie.name}</Typography>
               <Grid container={true} alignItems="center" className={classes.movieSummaryHeroMetadata}>
                 <span className={classes.rRatedContainer}>R</span>
                 <span className={classes.movieTimer}>2hrs 8m</span>
