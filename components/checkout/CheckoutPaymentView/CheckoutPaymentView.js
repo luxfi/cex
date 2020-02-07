@@ -13,7 +13,7 @@ import {
 import { Formik } from 'formik'
 import { string, object } from 'yup'
 
-import styles from './payment.style'
+import styles from './checkoutPayment.style'
 
 import MasterCard from '../../../assets/svg/MasterCard.svg'
 import VisaCard from '../../../assets/svg/VisaCard.svg'
@@ -35,7 +35,7 @@ const validationSchema = object().shape({
     .required('Required'),
 });
 
-class PaymentMethod extends React.Component {
+class CheckoutPaymentView extends React.Component {
   render() {
     const { classes } = this.props;
   
@@ -134,4 +134,4 @@ class PaymentMethod extends React.Component {
   }
 }
 
-export default withStyles(styles)(PaymentMethod)
+export default withStyles(styles)(CheckoutPaymentView)

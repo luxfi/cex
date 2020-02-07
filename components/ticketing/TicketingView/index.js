@@ -1,1 +1,1 @@
-export { default } from './TicketingView'
+export { default as TicketingView } from './TicketingView'

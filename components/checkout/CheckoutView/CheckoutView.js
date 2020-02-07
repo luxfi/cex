@@ -9,20 +9,19 @@ import DateRangeIcon from '@material-ui/icons/DateRange'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined'
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline'
 
-import styles from './checkoutTickets.style'
+import styles from './checkout.style'
 
 @inject('store')
 @observer
-class CheckoutTickets extends React.Component {
+class CheckoutView extends React.Component {
   render() {
     const {
       classes,
-      router: { query: { slug } },
+      router: { query: { slug, id } },
       store: { movieStore }
     } = this.props;
 
-    const [ movieSlug ] = slug;
-    const movie = movieStore.getMovieBySlug(movieSlug);
+    const movie = movieStore.getMovieBySlug(slug);
 
     return (
       <Grid className={classes.outerContainer}>
@@ -68,7 +67,7 @@ class CheckoutTickets extends React.Component {
             <Typography variant="h5" className={classes.subTotal}>$15.19</Typography>
           </Box>
           <Grid>
-            <Link href="payment-method">
+            <Link href={`checkout/payment?id=${id}`}>
               <Button className={classes.nextButton}>NEXT</Button>
             </Link>
           </Grid>
@@ -78,4 +77,4 @@ class CheckoutTickets extends React.Component {
   }
 }
 
-export default withRouter(withStyles(styles)(CheckoutTickets))
+export default withRouter(withStyles(styles)(CheckoutView))
