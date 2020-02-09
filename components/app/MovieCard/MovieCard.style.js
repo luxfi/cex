@@ -63,7 +63,7 @@ export default (theme) => ({
     width: '100%',
     padding: theme.spacing(2),
     background: 'transparent',
-    transition: 'background 0.25s linear 0ms'
+    transition: 'background 0.25s linear 0ms',
   },
 
   title: {
@@ -71,11 +71,18 @@ export default (theme) => ({
     fontSize: '1.1rem',
     color: theme.palette.common.white,
     marginBottom: theme.spacing(2),
-    marginTop: 0
+    marginTop: 0,
+  },
+
+  shortDescription: {
+    fontSize: '0.9rem',
+    color: theme.palette.common.white,
+    marginBottom: theme.spacing(2),
+    marginTop: 0,
   },
 
   hoverContent: {
-    visibility: 'hidden'
+    visibility: 'hidden',
   },
 
   standardContent: {
@@ -89,7 +96,7 @@ export default (theme) => ({
   },
 
   label: {
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
   },
 
   buttonsOuter: {
@@ -97,7 +104,7 @@ export default (theme) => ({
   },
 
   hoverButton: {
-    padding: 0, 
+    padding: 0,
     minWidth: '40px',
     width: '40px',
     height: '40px',
@@ -108,10 +115,17 @@ export default (theme) => ({
     marginRight: theme.spacing(2),
   },
 
+  textButton: {
+    width: 'auto',
+    borderRadius: '5px',
+    padding: '5px 20px',
+    fontWeight: 'bold',
+  },
+
   trailerImg: {
     visibility: 'hidden',
     position: 'relative',
-    
+
     '& svg': {
       position: 'absolute',
       top: '50%',

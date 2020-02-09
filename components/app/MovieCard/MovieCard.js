@@ -25,11 +25,11 @@ import styles from './MovieCard.style.js'
 const useStyles = makeStyles(styles)
 
 export default ({
-  movie, 
-  goToMovieDetail, 
+  movie,
+  goToMovieDetail,
   goToMovieTrading,
   goToMovieOffering,
-  height, 
+  height,
   className
 }) => {
   const classes = useStyles()
@@ -41,12 +41,14 @@ export default ({
       <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => {goToMovieDetail(movie)}} ><InfoIcon /></Button>
       <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => {goToMovieTrading(movie)}} ><PollIcon /></Button>
       <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => {console.log("BOOKMARK clicked for " + movie.name)}} ><FavoriteIcon /></Button>
+      <Button className={classNames(classes.detailsButton, classes.hoverButton, classes.textButton)} onClick={() => {goToMovieTrading(movie)}} >TRADE</Button>
     </div>
   ) : (
     <div className={classes.buttonsOuter}>
       <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => {goToMovieDetail(movie)}} ><InfoIcon /></Button>
       <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => {goToMovieOffering(movie)}} ><PollIcon /></Button>
       <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => {console.log("BOOKMARK clicked for " + movie.name)}} ><FavoriteIcon /></Button>
+      <Button className={classNames(classes.detailsButton, classes.hoverButton, classes.textButton)} onClick={() => {goToMovieOffering(movie)}} >INVEST</Button>
     </div>
   )
 
@@ -61,7 +63,7 @@ export default ({
           </Box>
           <Box className={classes.hoverContent}>
             <Typography className={classes.title} variant="body2">{movie.name}</Typography>
-            <Typography className={classes.status} variant="body2"><span className={classes.label}>Status: </span>{movie.trading ? 'Trading' : 'Funding'}</Typography>
+            <Typography className={classes.shortDescription} variant="body1">{movie.shortDescription}</Typography>
             {auxContent}
           </Box>
         </Box>
