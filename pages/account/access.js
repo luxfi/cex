@@ -15,10 +15,6 @@ import styles from '../../styles/pages/investor.style.js'
 @inject("store")
 @observer
 class Access extends React.Component {
-  static async getInitialProps({ mobxStore }) {
-    return { ...mobxStore }
-  }
-
   componentDidMount() {
     googlePageView()
   }

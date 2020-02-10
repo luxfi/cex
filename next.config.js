@@ -27,6 +27,9 @@ module.exports = withBundleAnalyzer(
       },
 
       webpack: config => {
+        // Performance boost during dev, but breaks source maps
+        // config.devtool = 'cheap-module-source-map'
+
         config.module.rules.push({
           test: /\.mjs$/,
           type: 'javascript/auto',

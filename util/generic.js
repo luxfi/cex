@@ -1,11 +1,15 @@
 import ReactGA from 'react-ga'
 
-const padDollarAmount = amount => {
+const isNumber = val => typeof val === 'number' && val === val
+const isServer = () => typeof window === 'undefined'
+
+function padDollarAmount(amount) {
   let _amount = amount
   if (typeof _amount === 'number') _amount = _amount.toString()
   if (_amount.indexOf('.') === -1) {
     return `${_amount}.00`
   }
+
   const splitAmount = _amount.split('.')
   if (splitAmount.length === 1) {
     return `${splitAmount[0]}.00`
@@ -16,11 +20,11 @@ const padDollarAmount = amount => {
   }
 }
 
-const googlePageView = () => {
+function googlePageView() {
   ReactGA.pageview(window.location.pathname + window.location.search)
 }
 
-const formatCurrency = (num, currency = 'USD', decimal = true) => {
+function formatCurrency(num, currency = 'USD', decimal = true) {
   let formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(num)
 
   if (!decimal) {
@@ -30,24 +34,22 @@ const formatCurrency = (num, currency = 'USD', decimal = true) => {
   return formatted
 }
 
-const isStringInteger = stringInput => {
+function isStringInteger(str) {
   // match a digit one or more times
-  const rx = new RegExp(/^\d+(?:\.\d{1,2})?$/)
-  return rx.test(stringInput)
+  const re = new RegExp(/^\d+(?:\.\d{1,2})?$/)
+  return re.test(str)
 }
 
-const isStringUSCurrency = stringInput => {
+function isStringUSCurrency(stringInput) {
   // match a digit one or more times
-  const rx = new RegExp(/^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:\.[0-9]{2})?$/)
-  return rx.test(stringInput)
+  const re = new RegExp(/^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:\.[0-9]{2})?$/)
+  return re.test(stringInput)
 }
-
-const isNumber = val => typeof val === 'number' && val === val
 
 // pluralize(0, 'apple'); // 'apples'
 // pluralize(1, 'apple'); // 'apple'
 // pluralize(2, 'apple'); // 'apples'
-const pluralize = (val, word, plural = word + 's') => {
+function pluralize(val, word, plural = word + 's') {
   const _pluralize = (num, word, plural = word + 's') =>
     [1, -1].includes(Number(num)) ? word : plural
   if (typeof val === 'object')
@@ -55,13 +57,15 @@ const pluralize = (val, word, plural = word + 's') => {
   return _pluralize(val, word, plural)
 }
 
-const textTruncate = (str, length, ending) => {
+function textTruncate(str, length, ending) {
   if (length == null) {
     length = 48
   }
+
   if (ending == null) {
     ending = '...'
   }
+
   if (Array.from(str).length > length) {
     return (
       str
@@ -69,12 +73,12 @@ const textTruncate = (str, length, ending) => {
         .slice(0, length)
         .join(' ') + ending
     )
-  } else {
-    return str
   }
+
+  return str
 }
 
-const toDashString = str => {
+function toDashString(str) {
   if (!str) {
     throw 'toDashString str parameter is undefined!'
   }
@@ -87,25 +91,25 @@ const toDashString = str => {
   return arr.join('-').replace(/[A-Z]/g, m => '-' + m.toLowerCase())
 }
 
-const toDashString_test = () => {
-  const test = 'This  Iis itA-tBt'
-  console.log(`Original string  |${test}|`)
-  console.log(`Converted string |${toDashString(test)}|`) // expected: this-iis-it-a-t-bt
-}
-
-const isServer = () => {
-  typeof window === 'undefined'
+function slugFromPath() {
+  try {
+    const parts = location.pathname.split('/')
+    return parts[parts.length-1]
+  } catch (err) {
+    return ''
+  }
 }
 
 export {
-  padDollarAmount,
-  googlePageView,
   formatCurrency,
+  googlePageView,
+  isNumber,
+  isServer,
   isStringInteger,
   isStringUSCurrency,
-  isNumber,
+  padDollarAmount,
   pluralize,
+  slugFromPath,
   textTruncate,
   toDashString,
-  isServer,
 }

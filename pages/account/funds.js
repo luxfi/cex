@@ -2,10 +2,10 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import Router from 'next/router'
 
-import { 
-  Grid, 
-  Container, 
-  Typography 
+import {
+  Grid,
+  Container,
+  Typography
 } from '@material-ui/core'
 
 import { CustomLink, TabbedNav } from '../../components/app'
@@ -24,12 +24,6 @@ import AccountTabs from '../../settings/accountTabs'
 @inject('store')
 @observer
 class Funds extends React.Component {
-  static async getInitialProps({ mobxStore }) {
-    return { ...mobxStore }
-  }
-
-  state = {}
-
   componentDidMount() {
     googlePageView()
     this.props.store.userStore.loadAccountBalance()
