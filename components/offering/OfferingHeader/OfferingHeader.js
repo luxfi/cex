@@ -8,9 +8,9 @@ import { OfferingInput, MediaSlider } from '../'
 import Icon from '@material-ui/core/Icon'
 
 const movie = {
-  title: 'SAW: The Organ Donor',
+  title: 'SAW 9: Spiral',
   highlightedTags: ['New Release'],
-  tags: ['2019', 'Paramount Pictures'],
+  tags: ['2020', 'Paramount Pictures'],
   youtubeIDs: [
     'uiisFYRu0DQ',
     '2RRkauL6Igs',

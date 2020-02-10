@@ -19,7 +19,7 @@ import { CustomBreadcrumbs, BasicTrader, InvestNow, ProTrader } from '../../app'
 import { TrailerModal } from '../../landing'
 
 // section
-import { padDollarAmount } from '../../../util/generic'
+import { padDollarAmount, slugFromPath } from '../../../util/generic'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // the nice looking double chevrons are part of the "pro" package that costs money
@@ -64,7 +64,7 @@ class Index extends React.Component {
   componentDidMount() {
     // Need to pass the order book the data to render
     const { router } = this.props
-    const { slug } = router.query
+    const slug = router.query.slug || slugFromPath()
     const { userStore, movieStore, orderBook, userPortfolio } = this.props.store
     const movie = movieStore.getMovieBySlug(slug)
     // orderBook.initiateDataGenerator(movie.ticker, movie.price)
@@ -94,7 +94,7 @@ class Index extends React.Component {
 
     // get router slug and find article
     const { router } = this.props
-    const { slug } = router.query
+    const slug = router.query.slug || slugFromPath()
     const { movieStore, orderBook, userStore, userPortfolio, uiStore } = this.props.store
     const { loggedIn } = userStore
     const redirectLogin = () => {

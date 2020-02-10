@@ -47,36 +47,31 @@ const hideFooter = (page) => {
 }
 
 @observer
-class MyMobxApp extends App {
-  static async getInitialProps(appContext) {
-    //
-    // Use getInitialProps as a step in the lifecycle when
-    // we can initialize our store (nextJS DOCS)
-    //
+class MobxApp extends App {
+  //static async getInitialProps(appContext)
+  //  //
+  //  // Use getInitialProps as a step in the lifecycle when
+  //  // we can initialize our store (nextJS DOCS)
+  //  //
 
-    const isServer = typeof window === 'undefined'
-    const mobxStore = initializeStore()
-    appContext.ctx.mobxStore = mobxStore
+  //  const isServer = typeof window === 'undefined'
+  //  appContext.ctx.mobxStore = mobxStore
 
-    let pageProps = {}
+  //  let pageProps = {}
 
-    const appProps = await App.getInitialProps(appContext)
-    pageProps = appProps.pageProps
+  //  const appProps = await App.getInitialProps(appContext)
+  //  pageProps = appProps.pageProps
 
-    return {
-      pageProps,
-      isServer,
-      initialMobxState: mobxStore,
-    }
-  }
+  //  return {
+  //    pageProps,
+  //    isServer,
+  //    initialMobxState: mobxStore,
+  //  }
+  //}
 
   constructor(props) {
     super(props)
-
-    const isServer = typeof window === 'undefined'
-    this.mobxStore = isServer
-      ? props.initialMobxState
-      : initializeStore(props.initialMobxState)
+    this.mobxStore = initializeStore()
   }
 
   componentDidMount() {
@@ -161,11 +156,11 @@ class MyMobxApp extends App {
     )
   }
 
-  componentDidCatch(error, errorInfo) {
-    console.log('CUSTOM ERROR HANDLING: ', error)
-    // This is needed to render errors correctly in development / production
-    super.componentDidCatch(error, errorInfo)
-  }
+  // componentDidCatch(error, errorInfo) {
+  //   console.log('CUSTOM ERROR HANDLING: ', error)
+  //   // This is needed to render errors correctly in development / production
+  //   super.componentDidCatch(error, errorInfo)
+  // }
 }
 
-export default withWidth()(withRouter(withStyles(styles)(MyMobxApp)))
+export default withWidth()(withRouter(withStyles(styles)(MobxApp)))

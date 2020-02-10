@@ -46,12 +46,12 @@ const genre = {
       image: null,
     },
   ]
-} 
+}
 
 const distributor = {
   name: 'distributors',
-  titleAll: 'All Distributors',
-  titleSome: 'Distributor',
+  titleAll: 'All Studios',
+  titleSome: 'Studio',
   values: [
     {
       key: 'Disney',
@@ -120,7 +120,7 @@ const distributor = {
       image: null
     },
   ]
-} 
+}
 
   // must use CommonJS style since this is require() 'd by the build system
 module.exports = [genre, distributor]

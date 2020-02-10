@@ -6,7 +6,7 @@ import {
   OfferingNavBar,
   OfferingContent,
 } from '../components/offering'
-import { googlePageView } from '../util/generic'
+import { googlePageView, slugFromPath } from '../util/generic'
 import { withRouter } from 'next/router'
 
 const OfferingBody = ({
@@ -61,7 +61,7 @@ class Offering extends Component {
     const { store, router } = this.props
     const { userStore, movieStore, uiStore } = store
     const { accountBalance } = userStore
-    const { slug } = router.query
+    const slug  = router.query.slug || slugFromPath()
     const movie = movieStore.getMovieBySlug(slug)
     const { loggedIn } = userStore
     const checkIfLoggedIn = () => {

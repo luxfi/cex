@@ -24,6 +24,9 @@ import {
 
 import { googlePageView } from '../util/generic'
 
+
+let modalRef = undefined
+
 // Test moving terminator-dark-fate.js to here
 const heroInfo = {
   slug: 'terminator-dark-fate',
@@ -83,14 +86,18 @@ export default withWidth()(inject('store')(observer((props) => {
       <MovieSlider 
         movies={store.movieStore.fundingMovies} 
         title='Now Funding' 
-        onClick={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
+        goToMovieDetail={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
+        goToMovieOffering={(movie) => {router.push(`/offering/${movie.movieSlug}`)}} 
+        goToMovieTrading={(movie) => {router.push(`/trade/${movie.movieSlug}`)}} 
         className={classes.fundingSlider}
         height='480px'
       />
       <MovieSlider 
         movies={store.movieStore.tradingMovies} 
         title='Now Trading' 
-        onClick={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
+        goToMovieDetail={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
+        goToMovieOffering={(movie) => {router.push(`/offering/${movie.movieSlug}`)}} 
+        goToMovieTrading={(movie) => {router.push(`/trade/${movie.movieSlug}`)}} 
         className={classes.tradingSlider}
         height='480px'
       />

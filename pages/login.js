@@ -8,10 +8,6 @@ import { googlePageView } from '../util/generic.js'
 @inject('store')
 @observer
 class Login extends React.Component {
-  static async getInitialProps({ mobxStore }) {
-    return { ...mobxStore }
-  }
-
   componentDidMount() {
     googlePageView()
   }

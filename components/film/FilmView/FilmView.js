@@ -24,7 +24,7 @@ import {
 import { TrailerModal } from "../../landing"
 
 // section
-import { padDollarAmount } from "../../../util/generic"
+import { padDollarAmount, slugFromPath } from "../../../util/generic"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 // the nice looking double chevrons are part of the "pro" package that costs money
@@ -390,7 +390,8 @@ class Index extends React.Component {
 
     // get router slug and find article
     const { router } = this.props
-    const { slug } = router.query
+    const slug = router.query.slug || slugFromPath()
+
     const {
       movieStore,
       orderBook,

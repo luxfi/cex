@@ -18,28 +18,28 @@ const team = [
     image: 'https://m.media-amazon.com/images/M/MV5BMTEyNjM5MjgyNzdeQTJeQWpwZ15BbWU3MDAzMzUyODc@._V1_UX214_CR0,0,214,317_AL_.jpg',
     title: 'Zeke',
     summary:
-      'The Organ Donor is an upcoming American horror film. The film will serve as the ninth installment in the Saw.',
+      'Spiral is an upcoming American horror film. The film will serve as the ninth installment in the Saw.',
   },
   {
     name: 'Samuel L. Jackson',
     image: 'https://m.media-amazon.com/images/M/MV5BMTQ1NTQwMTYxNl5BMl5BanBnXkFtZTYwMjA1MzY1._V1_UX214_CR0,0,214,317_AL_.jpg',
     title: 'Marcus',
     summary:
-      'The Organ Donor is an upcoming American horror film. The film will serve as the ninth installment in the Saw.',
+      'Spiral is an upcoming American horror film. The film will serve as the ninth installment in the Saw.',
   },
   {
     name: 'Max Minghella',
     image: 'https://m.media-amazon.com/images/M/MV5BMTQ4OTEwNTcwN15BMl5BanBnXkFtZTgwNDU4MDgxMTE@._V1_UY317_CR31,0,214,317_AL_.jpg',
     title: 'William Schenk',
     summary:
-      'The Organ Donor is an upcoming American horror film. The film will serve as the ninth installment in the Saw.',
+      'Spiral is an upcoming American horror film. The film will serve as the ninth installment in the Saw.',
   },
   {
     name: 'Marisol Nichols',
     image: 'https://m.media-amazon.com/images/M/MV5BMTgyNTA0ODk5Ml5BMl5BanBnXkFtZTgwNjAyMTI3NjE@._V1_.jpg',
     title: 'Capt. Angie Garza',
     summary:
-      'The Organ Donor is an upcoming American horror film. The film will serve as the ninth installment in the Saw.',
+      'Spiral is an upcoming American horror film. The film will serve as the ninth installment in the Saw.',
   },
 ]
 
@@ -95,7 +95,7 @@ const TeamSection = ({ teamRef }) => {
         </Typography>
         <Typography variant="h6">
           <Box mb={6} mt={2}>
-            The Organ Donor will be directed by Darren Lynn Bousman, from a screenplay by Josh Stolberg and Pete Goldfinger, based on a story by Chris Rock.
+            Spiral will be directed by Darren Lynn Bousman, from a screenplay by Josh Stolberg and Pete Goldfinger, based on a story by Chris Rock.
           </Box>
         </Typography>
         <Box display="flex" justifyContent="space-between">

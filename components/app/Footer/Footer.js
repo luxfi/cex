@@ -205,10 +205,6 @@ const Copyright = ({ classes }) => {
 @inject('store')
 @observer
 class Footer extends React.Component {
-  static async getInitialProps({ mobxStore }) {
-    return { ...mobxStore }
-  }
-
   render() {
     const {
       classes,
