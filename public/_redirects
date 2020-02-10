@@ -5,4 +5,6 @@
 /offering/*     /offering.html  404
 /pro/*          /pro.html       404
 /trade/*        /trade.html     404
-/ticketing/*        /ticketing.html     404
+/ticketing/*    /ticketing.html 404
+/checkout/*     /checkout.html  404
+/payment/*      /payment.html   404

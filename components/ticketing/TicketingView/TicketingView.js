@@ -39,7 +39,6 @@ class TicketingView extends React.Component {
     } = this.props
 
     const { dateModalOpenStatus } = this.state
-
     const slug = router.query.slug || slugFromPath()
 
     const movie = movieStore.getMovieBySlug(slug)
@@ -141,14 +140,14 @@ class TicketingView extends React.Component {
             <Typography variant="h4" className={classes.showtimeTitle}>STANDARD FORMAT</Typography>
             <ul className={classes.formatShowtimesList}>
               <li>
-                <Link href="/checkout" as={`/checkout/${slug}?id=368249511`}>
+                <Link href="/checkout" as={`/checkout/${slug}?id=368249512`}>
                   <a className={classes.showtimeLink}>
                     <Button className={classes.btnShowtime}>12:45 PM</Button>
                   </a>
                 </Link>
               </li>
               <li>
-                <Link href="/checkout" as={`/checkout/${slug}?id=368249515`}>
+                <Link href="/checkout" as={`/checkout/${slug}?id=368249514`}>
                   <a className={classes.showtimeLink}>
                     <Button className={classes.btnShowtime}>1:45 PM</Button>
                   </a>

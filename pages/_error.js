@@ -7,6 +7,9 @@ let dynamicRoutes = [
   'offering',
   'pro',
   'trade',
+  'ticketing',
+  'checkout',
+  'payment',
 ]
 
 function Error({ statusCode }) {
@@ -14,7 +17,7 @@ function Error({ statusCode }) {
   if (statusCode === 404) {
     let path = location.pathname.split('/')[1]
     if (dynamicRoutes.indexOf(path) !== -1) {
-      return Router.push('/'+path, location.pathname)
+      return Router.push('/'+path, location.pathname+location.search)
     }
   }
 
