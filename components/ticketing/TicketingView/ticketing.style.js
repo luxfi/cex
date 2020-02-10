@@ -74,10 +74,11 @@ export default theme => ({
     paddingLeft: '24px',
   },
   rRatedContainer: {
+    fontSize: '12px',
     border: `1px solid ${whiteColor}`,
     borderRadius: '4px',
-    padding: '1px',
-    marginRight: '5px',
+    padding: '0 1px',
+    marginRight: '10px',
     color: whiteColor,
   },
   movieTimer: {

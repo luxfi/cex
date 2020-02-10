@@ -12,11 +12,17 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import DateRangeIcon from '@material-ui/icons/DateRange'
 import PinDropIcon from '@material-ui/icons/PinDrop'
 
+import CustomModal from '../../app/CustomModal'
+
 import styles from './ticketing.style'
 
 @inject('store')
 @observer
 class TicketingView extends React.Component {
+  componentDidMount() {
+    this.props.store.ticketingStore.getTicket();
+  }
+
   render() {
     const {
       classes,
@@ -36,12 +42,8 @@ class TicketingView extends React.Component {
             <Box className={classes.movieSummaryHeroInfo}>
               <Typography variant='h1' className={classes.movieSummaryHeroTitle}>{movie.name}</Typography>
               <Grid container={true} alignItems="center" className={classes.movieSummaryHeroMetadata}>
-                <span className={classes.rRatedContainer}>R</span>
-                <span className={classes.movieTimer}>2hrs 8m</span>
-                <Rating
-                  name="read-only"
-                  value={4}
-                />
+                {movie.rated ? (<span className={classes.rRatedContainer}>{movie.rated}</span>) : ''}
+                {movie.releaseDate ? (<span className={classes.movieTimer}>Release Date: <b>{movie.releaseDate}</b></span>) : ''}
               </Grid>
               <Box className={classes.movieSummaryHeroSynopsis}>
                 {movie.shortDescription}
@@ -71,6 +73,21 @@ class TicketingView extends React.Component {
               className={classes.dateLocationStripeDropdown}
             >
               Tomorrow
+              <CustomModal
+                open={false}
+                title="What is ESX?"
+              >
+                <p>ESX is a film investing platform for everyone.</p>{" "}
+                <p>
+                  We allow regular people — not just wealthy film producers — to
+                  invest in promising films, with as little as $10 or as much as
+                  $100,000 per investment.
+                </p>{" "}
+                <p>
+                  ESX was created to democratize fundraising for film while
+                  giving anyone the chance to back the next greatest film.
+                </p>
+              </CustomModal>
             </Button>
             <span className={classes.dateLocationStripeText}>near</span>
             <Button

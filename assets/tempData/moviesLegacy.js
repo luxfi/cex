@@ -1,5 +1,6 @@
 module.exports = [
   {
+    id: 'B00422246210',
     name: 'Terminator: Dark Fate',
     movieSlug: 'terminator-dark-fate',
     atomTicketsSlug: 'terminator-dark-fate/194671',
@@ -39,6 +40,7 @@ module.exports = [
     financialDescription: 'Term Inc. - Class C Capital Stock',
   },
   {
+    id: 'B38787362736',
     name: 'Uncut Gems',
     movieSlug: 'uncut-gems',
     atomTicketsSlug: 'uncut-gems/279253',
@@ -64,6 +66,7 @@ module.exports = [
     financialDescription: 'Uncut Gems Inc. - Class C Capital Stock',
   },
   {
+    id: 'B38787362737',
     name: 'Birds of Prey',
     movieSlug: 'birds-of-prey',
     atomTicketsSlug:
@@ -100,6 +103,7 @@ module.exports = [
     financialDescription: 'Birds of Prey Inc. - Class C Capital Stock',
   },
   {
+    id: 'B0062792100',
     name: 'Onward',
     movieSlug: 'onward',
     atomTicketsSlug: 'onward/285150',
@@ -130,6 +134,7 @@ module.exports = [
     financialDescription: 'Onward 2020 Inc. - Class C Capital Stock',
   },
   {
+    id: 'B68787362737',
     name: 'SAW 9',
     movieSlug: 'saw-9',
     atomTicketsSlug: 'saw-9',
@@ -169,6 +174,7 @@ module.exports = [
     financialDescription: 'Term Inc. - Class C Capital Stock',
   },
   {
+    "id": 'B78787362730',
     "name": "Star Wars: The Rise of Skywalker (2019)",
     "genre": ["Action", "Adventure", "Fantasy", "Sci-Fi"],
     "trailers": [
@@ -241,6 +247,7 @@ module.exports = [
     "ticker": "SWTRS"
   },
   {
+    "id": "B001080766",
     "name": "Cats (2019)",
     "genre": ["Comedy", "Drama", "Family", "Fantasy", "Musical"],
     "trailers": [
@@ -284,6 +291,7 @@ module.exports = [
     "ticker": "C"
   },
   {
+    "id": "B62751630913",
     "name": "1917 (2019)",
     "genre": ["Drama", "War"],
     "trailers": [
@@ -338,6 +346,7 @@ module.exports = [
     "ticker": "1917"
   },
   {
+    "id": "B72751630919",
     "name": "Spies in Disguise (2019)",
     "genre": ["Animation", "Action", "Adventure", "Comedy", "Family", "Sci-Fi"],
     "trailers": [
@@ -380,6 +389,7 @@ module.exports = [
     "ticker": "SD"
   },
   {
+    "id": "B73837462940",
     "name": "Little Women (2019)",
     "genre": [""],
     "trailers": [
@@ -431,6 +441,7 @@ module.exports = [
     "ticker": "LW"
   },
   {
+    "id": "B73837462941",
     "name": "Just Mercy (2019)",
     "genre": [""],
     "trailers": [
@@ -481,6 +492,7 @@ module.exports = [
     "ticker": "JM"
   },
   {
+    "id": "B73837462942",
     "name": "Clemency (2019)",
     "genre": [""],
     "trailers": [
@@ -519,6 +531,7 @@ module.exports = [
     "movieSlug": "clemency-2019"
   },
   {
+    "id": "B73837462943",
     "name": "The Grudge (2020)",
     "genre": ["Horror", "Mystery"],
     "trailers": [
@@ -546,6 +559,7 @@ module.exports = [
     "ticker": "TG"
   },
   {
+    "id": "B73837462944",
     "name": "The Informer (2019)",
     "genre": ["Crime", "Drama"],
     "trailers": [
@@ -581,6 +595,7 @@ module.exports = [
     "ticker": "TI"
   },
   {
+    "id": "B73837462945",
     "name": "Wonder Woman 1984 (2020)",
     "genre": [""],
     "trailers": [
@@ -608,6 +623,7 @@ module.exports = [
     "ticker": "WW198"
   },
   {
+    "id": "B23837462936",
     "name": "Ghostbusters: Afterlife (2020)",
     "genre": ["Action", "Comedy", "Drama", "Fantasy", "Horror", "Sci-Fi"],
     "trailers": [
@@ -639,6 +655,7 @@ module.exports = [
     "ticker": "GA"
   },
   {
+    "id": "B13837462938"
     "name": "Black Widow (2020)",
     "genre": [""],
     "trailers": [
@@ -666,6 +683,7 @@ module.exports = [
     "ticker": "BW"
   },
   {
+    "id": "B13837462939",
     "name": "Joker (2019)",
     "genre": ["Crime", "Drama", "Thriller"],
     "trailers": [
@@ -737,6 +755,7 @@ module.exports = [
     "ticker": "J"
   },
   {
+    "id": "B00115694668",
     "name": "Shazam! (2019)",
     "genre": ["Action", "Adventure", "Comedy", "Fantasy"],
     "trailers": [
@@ -800,6 +819,7 @@ module.exports = [
     "ticker": "S"
   },
   {
+    "id": "B00143416877",
     "name": "Toy Story 4 (2019)",
     "genre": ["Animation", "Adventure", "Comedy", "Family", "Fantasy"],
     "trailers": [
@@ -850,6 +870,7 @@ module.exports = [
     "ticker": "TS4"
   },
   {
+    "id": "B00503020122",
     "name": "Once Upon a Time... in Hollywood (2019)",
     "genre": ["Comedy", "Drama"],
     "trailers": [
@@ -934,6 +955,8 @@ module.exports = [
     "ticker": "OUTH"
   },
   {
+
+    "id": "B90430818093",
     "name": "The Irishman (2019)",
     "genre": ["Biography", "Crime", "Drama"],
     "trailers": [
@@ -1031,6 +1054,7 @@ module.exports = [
     "movieSlug": "the-irishman-2019"
   },
   {
+    "id": "B90430818099",
     "name": "John Wick: Chapter 3 - Parabellum (2019)",
     "genre": ["Action", "Crime", "Thriller"],
     "trailers": [
@@ -1112,6 +1136,7 @@ module.exports = [
     "ticker": "JWC3P"
   },
   {
+    "id": "B70430818097",
     "name": "Alita: Battle Angel (2019)",
     "genre": ["Action", "Adventure", "Sci-Fi", "Thriller"],
     "trailers": [
