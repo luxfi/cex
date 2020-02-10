@@ -78,14 +78,6 @@ module.exports = withBundleAnalyzer(
               page: '/film',
               query: { slug: m.movieSlug },
             },
-            [`/watch/${m.movieSlug}`]: {
-              page: '/watch',
-              query: { slug: m.movieSlug },
-            },
-            [`/film/${m.movieSlug}/watch`]: {
-              page: '/watch',
-              query: { slug: m.movieSlug },
-            },            
             [`/trade/${m.movieSlug}`]: {
               page: '/trade',
               query: { slug: m.movieSlug },
@@ -143,6 +135,7 @@ module.exports = withBundleAnalyzer(
           '/accountLevels': { page: '/accountLevels' },
           '/discover': { page: '/browse' },
           '/browse': { page: '/browse' },
+          '/watch': { page: '/watch' },
         }
       },
     }),

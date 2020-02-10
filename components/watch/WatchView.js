@@ -5,11 +5,10 @@ import { inject, observer } from "mobx-react"
 import { withRouter, Router } from "next/router"
 import classNames from "classnames"
 
-import LikeAndUnlike from './LikeAndUnlike'
+import LikeAndUnlike from '../LikeAndUnlike'
 import VideoDescription from './VideoDescription'
 import ShowingNext from './ShowingNext'
-import Comments from './Comments'
-import SortComments from './SortButton'
+import Comments from '../comments'
 
 // @material-ui/core components
 import { 
@@ -57,18 +56,26 @@ const ExternalLink = React.forwardRef(
 @observer
 class Index extends React.Component {
 
+  componentDidMount() {
+    const { commentStore } = this.props.store
+    commentStore.loadComments('trailerComment')
+  }
+
   render() {
     const { classes, store } = this.props
 
     // get router slug and find article
     const { router } = this.props
-    const { slug } = router.query
+    const { video: movieSlug } = router.query
     const {
       movieStore,
       userStore,
-      userPortfolio
+      userPortfolio,
+      commentStore,
     } = this.props.store
-    const movie = movieStore.getMovieBySlug(slug)
+
+    const movie = movieStore.getMovieBySlug(movieSlug)
+    const comments = commentStore.comments;
 
     const addToWatchlist = t => {
       userPortfolio.addToWatchlist(t)
@@ -92,7 +99,10 @@ class Index extends React.Component {
                 <Typography component="span">774,900 views</Typography>
                 <Box className={classes.videoActions}>
                   <Box className={classes.rating}>
-                    <LikeAndUnlike />
+                    <LikeAndUnlike
+                      likeCount="1234"
+                      unlikeCount="3004"
+                    />
                     <Box className={classes.likeUnderline}>
                       <Divider />
                     </Box>
@@ -140,36 +150,7 @@ class Index extends React.Component {
               <Divider />
             </Box>
             <ShowingNext />
-            <Box className={classes.commentWrapper}>
-              <Box className={classes.commentHeader}>
-                <Typography component="h4">1097 Comments</Typography>
-                <SortComments />
-              </Box>
-              <Box className={classNames('add-comment', classes.comment)}>
-                <Avatar src="https://yt3.ggpht.com/a/AGF-l7-p9SFzNRQ3p9NhtvFXwgFTTsZ9bH0XamJ2vw=s48-c-k-c0xffffffff-no-rj-mo" className={classes.commentImage} />
-                <Box className={classes.commentInputArea}>
-                  <TextField
-                    InputProps={{
-                      className: classes.addCommentInput
-                    }}
-                    rows="3"
-                    placeholder="add a commment"
-                    multiline
-                    fullWidth
-                  />
-                  <Box className={classes.submitButtonContainer}>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      className={classes.shareButton}
-                    >
-                      Post Comment
-                    </Button>
-                  </Box>
-                </Box>
-              </Box>
-              <Comments />
-            </Box>
+            <Comments type="trailerComment" />
           </Box>
         </Box>
         <Box

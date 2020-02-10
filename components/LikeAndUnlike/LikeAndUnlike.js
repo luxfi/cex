@@ -9,7 +9,11 @@ import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 
 import styles from "./LikeAndUnlike.style"
 
-const LikeAndUnlike = () => {
+const LikeAndUnlike = ({
+  likeCount,
+  unlikeCount,
+  hideUnlike,
+}) => {
   const useMainStyles = makeStyles(styles)
   const classes = useMainStyles()
     
@@ -21,16 +25,20 @@ const LikeAndUnlike = () => {
         className={classes.likeButton}
         startIcon={<ThumbUpAltIcon />}
       >
-        12K
+        {likeCount}
       </Button>
-      <Button
-        variant="contained"
-        size="small"
-        className={classes.likeButton}
-        startIcon={<ThumbDownIcon />}
-      >
-        488
-      </Button>
+      {
+        !hideUnlike && (
+          <Button
+            variant="contained"
+            size="small"
+            className={classes.likeButton}
+            startIcon={<ThumbDownIcon />}
+          >
+            {unlikeCount}
+          </Button>
+        )
+      }
     </>
   );
 }

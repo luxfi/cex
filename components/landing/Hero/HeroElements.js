@@ -11,8 +11,8 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 import NextLink from 'next/link'
 
 import { makeStyles } from '@material-ui/core/styles'
-import { HeroImg, TrailerModal } from '..'
 
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
 const useStyles = makeStyles ((theme) => (
 
@@ -105,10 +105,20 @@ export default (props) => {
         <br />
         <Grid container item spacing={2} justify='flex-start' className={classes.buttonGridContainer}>
           <Grid item>
-            <TrailerModal
-              movie={movie}
-              buttonClass={classes.watchTrailerButton}
-            />
+            <NextLink href={`/watch?video=${movie.movieSlug}`}>
+              <a style={{ textDecoration: 'none'}}>
+                <Button
+                  className={`watch-trailer-button button ${classes.watchTrailerButton}`}
+                  variant="outlined"
+                  size="large"
+                  startIcon={<PlayArrowIcon />}
+                >
+                  <Typography variant="body2">
+                    Play Trailer
+                  </Typography>
+                </Button>
+              </a>
+            </NextLink>
           </Grid>
           <Grid item>
             <Button

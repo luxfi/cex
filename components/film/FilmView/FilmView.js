@@ -22,7 +22,6 @@ import {
   InvestNow,
   ProTrader,
 } from "../../app"
-import { TrailerModal } from "../../landing"
 
 // section
 import { padDollarAmount } from "../../../util/generic"
@@ -162,8 +161,7 @@ class Index extends React.Component {
             </p>
           </div>
           <div>
-            {/* <TrailerModal movie={movie} /> */}
-            <Link href={`/film/${movie.movieSlug}/watch`}>
+            <Link href={`/watch?video=${movie.movieSlug}`}>
               <a style={{ textDecoration: 'none'}}>
                 <Button
                   className={`watch-trailer-button button`}

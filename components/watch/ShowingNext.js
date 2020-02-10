@@ -10,6 +10,12 @@ import classNames from "classnames"
 import styles from "./style.js"
 
 const ShowingNext = ({ classes }) => {
+  const [state, setState] = useState({
+    autoPlay: true,
+  })
+
+  const handleChecked = (event) => {
+  }
   
   return (
     <Box className={classes.relatedVideos}>
@@ -18,8 +24,8 @@ const ShowingNext = ({ classes }) => {
         <Box className={classes.upNextToggle}>
           <Typography component="span">Autoplay</Typography>
           <Switch
-            checked={true}
-            value="checkedA"
+            checked={state.autoPlay}
+            onChange={handleChecked}
           />
         </Box>
       </Box>
@@ -46,8 +52,8 @@ const ShowingNext = ({ classes }) => {
       </a>
       <Divider style={{ margin: '10px 0 0 0'}} />
       {
-        [...Array(10)].map(() => (
-          <a href="/watch?v=HLQ9DRPuYXU">
+        [...Array(10)].map((el, i) => (
+          <a href="/watch?v=HLQ9DRPuYXU" key={`showing-next-${i}`}>
             <Box className={classes.singleVideo}>
               <Box className={classes.imageWrapper}>
                 <img src="https://i.ytimg.com/vi/HLQ9DRPuYXU/mqdefault.jpg"/>
