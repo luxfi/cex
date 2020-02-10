@@ -655,7 +655,7 @@ module.exports = [
     "ticker": "GA"
   },
   {
-    "id": "B13837462938"
+    "id": "B13837462938",
     "name": "Black Widow (2020)",
     "genre": [""],
     "trailers": [
