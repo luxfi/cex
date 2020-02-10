@@ -84,7 +84,12 @@ class Browse extends React.Component {
         <Grid container spacing={3} className={classes.main} alignItems='stretch'>
         {movieStore.filteredMovies.map((m, i) => (
           <Grid xs={12} sm={6} md={3} lg={2} item key={m.imdbid + i} >
-            <MovieCard movie={m} onClick={() => {router.push(`/film/${m.movieSlug}`)}} />
+            <MovieCard 
+              movie={m} 
+              goToMovieDetail={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
+              goToMovieOffering={(movie) => {router.push(`/offering/${movie.movieSlug}`)}} 
+              goToMovieTrading={(movie) => {router.push(`/trade/${movie.movieSlug}`)}} 
+            />
           </Grid>
         ))}
         </Grid>

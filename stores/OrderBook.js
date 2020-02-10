@@ -601,7 +601,7 @@ export default class OrderBook {
       // this.intradayData.length > 0 &&
       this.dailyData.length > 0
     )
-    return this.connected && this.book.lastPrice && this.intradayData.length > 0 && this.dailyData.length > 0
+    // return this.connected && this.book.lastPrice && this.intradayData.length > 0 && this.dailyData.length > 0
   }
 
   generatefullDay(book) {

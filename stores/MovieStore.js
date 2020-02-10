@@ -9,13 +9,13 @@ export default class MovieStore {
   @observable movies = []
   @observable isLoading = true
   @observable currentMovie = undefined
-  
+
   facets = {
     genres: observable.map(),
     distributors: observable.map()
   }
 
-  @observable tradingStatusFilter = tradingStatus.byIndex(0) 
+  @observable tradingStatusFilter = tradingStatus.byIndex(0)
 
   constructor(initialData, hanzoApi) {
     this.loadMovies()
@@ -23,7 +23,7 @@ export default class MovieStore {
   }
 
   @action setTradingStatusFilter(status) {
-    this.tradingStatusFilter = status 
+    this.tradingStatusFilter = status
   }
 
   @computed get filteredMovies() {
@@ -32,12 +32,12 @@ export default class MovieStore {
 
   @computed get tradingMovies() {
     return (this.movies.filter(movie => movie.trading))
-  } 
-  
+  }
+
   @computed get fundingMovies() {
     return (this.movies.filter(movie => !movie.trading))
-  } 
-  
+  }
+
   filtersAllow = (movie) => {
     switch(this.tradingStatusFilter.key) {
       case 'funding': return !movie.trading
@@ -50,7 +50,7 @@ export default class MovieStore {
   facetsAllow = (movie) => {
     const facetsNamesAsArray = Object.keys(this.facets)
       // initilize all facets results to false
-    const facetResults = Array(facetsNamesAsArray.length).fill(false) 
+    const facetResults = Array(facetsNamesAsArray.length).fill(false)
     for (let i = 0; i < facetsNamesAsArray.length; i++) {
       const facet = facetsNamesAsArray[i]
       if (this.facets[facet].size === 0) {
@@ -83,7 +83,7 @@ export default class MovieStore {
       console.log(`FACET: ${key} cleared for ${name}`)
     }
     if (!name in this.facets ) {
-      throw new Error('MovieStore: setFacetValue() expects an existing facet name')
+      throw new Error('setFacetValue() expects an existing facet name')
     }
     if (set) {
       this.facets[name].set(key, true)
@@ -92,28 +92,27 @@ export default class MovieStore {
       this.facets[name].delete(key)
     }
   }
-  
+
   @action clearFacets() {
     for (const f in this.facets) {
       this.facets[f].clear()
     }
   }
 
-  
+
   getFacetValue = computedFn((name, key) => {
     if (!name in this.facets ) {
       throw new Error('MovieStore: getFacetValue() expects an existing facet name')
     }
     return (this.facets[name].has(key))
   }, {keepAlive : false})
-  
+
 
   nullQuery(query) {
     return !query || Object.entries(query).length === 0
   }
 
   loadMovies(query) {
-
     if (this.nullQuery(query) && this.movies.length > 0) {
       return
     }
@@ -148,9 +147,16 @@ export default class MovieStore {
 
   // Public helper functions
   getMovieByTicker(ticker) {
+    if (ticker == null || ticker === '') {
+      throw new Error('getMovieByTicker() requires ticker to be defined')
+    }
     return this.movies.find(m => m.ticker === ticker)
   }
+
   getMovieBySlug(slug) {
+    if (slug == null || slug === '') {
+      throw new Error('getMovieBySlug() requires slug to be defined')
+    }
     return this.movies.find(m => m.movieSlug === slug)
   }
 }

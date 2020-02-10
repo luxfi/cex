@@ -21,31 +21,40 @@ function parseArray(str) {
   }
 }
 
+function parseDescription(str) {
+  if (str[0] === '"') {
+    str = str.substr(1, str.length-2)
+  }
+  return str
+}
+
 // Parse movies.csv and process film data lightly
 function parseMovies() {
   let data = csv
-    .fieldDelimiter(',')
+    .fieldDelimiter('\t')
     .formatValueByType()
-                .getJsonFromCsv(__dirname + '/movies.csv')
+    .getJsonFromCsv(__dirname + '/movies.tsv')
 
     // Massage CSV data into final format
   for (let i=0; i<data.length; i++) {
     let movie = data[i]
 
-    movie.trading      = movie.trading == 'TRUE'
+    movie.trading          = movie.trading == 'TRUE'
 
     // New, more consistent arrays are stored as | separated strings
-    movie.actors       = parseArray(movie.actors)
-    movie.articles     = parseArray(movie.articles)
-    movie.directors    = parseArray(movie.directors)
-    movie.distributors = parseArray(movie.distributors)
-    movie.genres       = parseArray(movie.genres)
-    movie.writers      = parseArray(movie.writers)
+    movie.actors           = parseArray(movie.actors)
+    movie.articles         = parseArray(movie.articles)
+    movie.directors        = parseArray(movie.directors)
+    movie.distributors     = parseArray(movie.distributors)
+    movie.genres           = parseArray(movie.genres)
+    movie.writers          = parseArray(movie.writers)
+    movie.shortDescription = parseDescription(movie.shortDescription)
+    movie.longDescription  = parseDescription(movie.shortDescription)
 
     // TODO: Will be deprecated, preserved now for legacy compatibility
-    movie.director     = movie.directors
-    movie.genre        = movie.genres
-    movie.writer       = movie.writers
+    movie.director         = movie.directors
+    movie.genre            = movie.genres
+    movie.writer           = movie.writers
 
     data[i] = movie
   }

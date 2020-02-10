@@ -83,13 +83,6 @@ const ButtonLink = React.forwardRef(
 @inject("store")
 @observer
 class Article extends React.Component {
-  // static async getInitialProps({ mobxStore }) {
-  //   await mobxStore.movieStore.fetch()
-  //   return {
-  //     store: mobxStore
-  //   }
-  // }
-
   componentDidMount() {
     googlePageView()
   }

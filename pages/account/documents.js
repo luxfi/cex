@@ -12,10 +12,6 @@ import AccountTabs from '../../settings/accountTabs'
 @inject("store")
 @observer
 class Documents extends React.Component {
-  static async getInitialProps({ mobxStore }) {
-    return { ...mobxStore }
-  }
-
   componentDidMount() {
     googlePageView()
     this.props.store.userStore.generateFakeDocs()
@@ -34,9 +30,9 @@ class Documents extends React.Component {
           {
             userStore.taxDocuments && userStore.taxDocuments.length > 0 ?
             userStore.taxDocuments.map((d, i) => (
-              <TaxDocument 
-                key={`apex_${i}`} 
-                type='Apex Clearing 1099' 
+              <TaxDocument
+                key={`apex_${i}`}
+                type='Apex Clearing 1099'
                 link={d.link}
                 showDivider={i < userStore.taxDocuments.length - 1}
                 date={d.date} />
@@ -48,9 +44,9 @@ class Documents extends React.Component {
           {
             userStore.accountStatements && userStore.accountStatements.length > 0 ?
             userStore.accountStatements.map((d, i) => (
-              <TaxDocument 
-                key={`statement_${i}`} 
-                type='ESX Securities Account Statement' 
+              <TaxDocument
+                key={`statement_${i}`}
+                type='ESX Securities Account Statement'
                 link={d.link}
                 showDivider={i < userStore.accountStatements.length - 1}
                 date={d.date} />

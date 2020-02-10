@@ -67,8 +67,8 @@ const useStyles = makeStyles ((theme) => (
 export default (props) => {
 
   const classes = useStyles()
-  
-  const { movie, logo } = props 
+
+  const { movie, logo } = props
 
   const hrefLink = `/film/${movie.movieSlug}`
 
@@ -97,7 +97,7 @@ export default (props) => {
             <br />
             <br />
             <Typography variant='body2'>
-              {movie.name}
+              {movie.shortDescription}
             </Typography>
             <br />
           </Box>
@@ -137,7 +137,7 @@ export default (props) => {
       </Grid>
     </Grid>
   )
- 
+
 }
 
 

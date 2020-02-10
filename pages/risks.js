@@ -19,11 +19,6 @@ const styles = theme => ({
 @observer
 class Risks extends React.Component {
 
-
-  static async getInitialProps({ mobxStore }) {
-    return { ...mobxStore }
-  }
-
   componentDidMount() {
     const { store } = this.props
     store.contentfulStore.getContent(false)
