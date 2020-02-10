@@ -25,11 +25,6 @@ function parseDescription(str) {
   if (str[0] === '"') {
     str = str.substr(1, str.length-2)
   }
-
-  if (str.length > 120) {
-    str = str.substr(0, 120) + '...'
-  }
-
   return str
 }
 
@@ -54,6 +49,7 @@ function parseMovies() {
     movie.genres           = parseArray(movie.genres)
     movie.writers          = parseArray(movie.writers)
     movie.shortDescription = parseDescription(movie.shortDescription)
+    movie.longDescription  = parseDescription(movie.shortDescription)
 
     // TODO: Will be deprecated, preserved now for legacy compatibility
     movie.director         = movie.directors
