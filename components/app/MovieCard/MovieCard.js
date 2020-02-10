@@ -9,6 +9,7 @@ import {
   makeStyles,
 } from '@material-ui/core'
 
+import Link from 'next/link'
 import InfoIcon from "@material-ui/icons/Help"
 import PollIcon from "@material-ui/icons/Poll"
 import FavoriteIcon from "@material-ui/icons/FavoriteBorder"
@@ -20,6 +21,7 @@ import { faPlayCircle } from '@fortawesome/free-solid-svg-icons'
 import classNames from 'classnames'
 
 import { TrailerSliderModal } from "../../landing"
+import { textTruncate } from "../../../util/generic"
 
 import styles from './MovieCard.style.js'
 const useStyles = makeStyles(styles)
@@ -48,7 +50,9 @@ export default ({
       <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => {goToMovieDetail(movie)}} ><InfoIcon /></Button>
       <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => {goToMovieOffering(movie)}} ><PollIcon /></Button>
       <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => {console.log("BOOKMARK clicked for " + movie.name)}} ><FavoriteIcon /></Button>
-      <Button className={classNames(classes.detailsButton, classes.hoverButton, classes.textButton)} onClick={() => {goToMovieOffering(movie)}} >INVEST</Button>
+      <Link href="/offering" as={`/offering/${movie.movieSlug}`}>
+        <Button className={classNames(classes.detailsButton, classes.hoverButton, classes.textButton)}>INVEST</Button>
+      </Link>
     </div>
   )
 
@@ -63,7 +67,7 @@ export default ({
           </Box>
           <Box className={classes.hoverContent}>
             <Typography className={classes.title} variant="body2">{movie.name}</Typography>
-            <Typography className={classes.shortDescription} variant="body1">{movie.shortDescription}</Typography>
+            <Typography className={classes.shortDescription} variant="body1">{textTruncate(movie.shortDescription, 130)}</Typography>
             {auxContent}
           </Box>
         </Box>
