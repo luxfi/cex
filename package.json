@@ -1,5 +1,5 @@
 {
-  "name": "esx-demo",
+  "name": "esx-app",
   "version": "1.0.0",
   "scripts": {
     "analyze": "ANALYZE=true next build",

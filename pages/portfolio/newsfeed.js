@@ -14,10 +14,6 @@ import portfolioTabs from '../../settings/portfolioTabs'
 @inject("store")
 @observer
 class Newsfeed extends React.Component {
-  static async getInitialProps({ mobxStore }) {
-    return { ...mobxStore }
-  }
-
   componentDidMount() {
     this.props.store.newsStore.loadFeed()
     googlePageView()

@@ -10,6 +10,7 @@ import React from 'react'
 
 // orderbook
 import { formatTakeResults } from '../../../util/formatOrderBookDataForChart'
+import { slugFromPath } from '../../../util/generic'
 
 // section
 // core components
@@ -30,7 +31,7 @@ class Index extends React.Component {
   componentDidMount() {
     // Need to pass the order book the data to render
     const { router, store } = this.props
-    const { slug } = router.query
+    const slug = router.query.slug || slugFromPath()
     const {
       movieStore,
       orderBook,
@@ -69,7 +70,7 @@ class Index extends React.Component {
   render() {
     // get router slug and find article
     const { router, store } = this.props
-    const { slug } = router.query
+    const slug = router.query.slug || slugFromPath()
     const {
       movieStore,
       orderBook,

@@ -19,10 +19,6 @@ import AccountTabs from '../../settings/accountTabs'
 @inject("store")
 @observer
 class Activity extends React.Component {
-  static async getInitialProps({ mobxStore }) {
-    return { ...mobxStore }
-  }
-
   componentDidMount() {
     googlePageView()
   }

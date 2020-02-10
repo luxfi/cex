@@ -3,14 +3,14 @@ import Router, { withRouter } from 'next/router'
 import React from 'react'
 
 import { ProTradeView } from '../components/trade'
-import { googlePageView } from '../util/generic'
+import { googlePageView, slugFromPath } from '../util/generic'
 
 @inject('store')
 @observer
 class ProTrade extends React.Component {
   componentDidMount() {
     const { store, router } = this.props
-    const { slug } = router.query
+    const slug = router.query.slug || slugFromPath()
     const { uiStore } = store
 
     if (false && uiStore.trading === 'basic') {
