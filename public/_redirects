@@ -1,3 +1,4 @@
+# dynamic routes
 /article/*      /article.html   404
 /browse/*       /browse.html    404
 /film/*         /film.html      404
