@@ -102,7 +102,7 @@ export default (props) => {
             </Grid>
             <Grid item xs={12}>
               <Box mt={3} pl={4} pr={4}>
-                <Link href={`/ticketing/${movieSlug}`}>
+                <Link href="/ticketing" as={`/ticketing/${movieSlug}`}>
                   <Button
                     title="Tweet"
                     variant="outlined"

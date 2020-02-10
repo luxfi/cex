@@ -1,0 +1,40 @@
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import MuiDialogContent from '@material-ui/core/DialogContent';
+import MuiDialogActions from '@material-ui/core/DialogActions';
+import CloseIcon from '@material-ui/icons/Close';
+import { Typography, Button, Dialog, IconButton, Divider } from '@material-ui/core';
+
+import { dialogTitleStyles, dialogContentStyles, dialogStyles} from './customeDialog.style'
+
+const DialogTitle = withStyles(dialogTitleStyles)(props => {
+  const { children, classes, onClose, ...other } = props;
+  return (
+    <MuiDialogTitle disableTypography className={classes.root} {...other}>
+      <Typography variant="h6">{children}</Typography>
+      {onClose ? (
+        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </MuiDialogTitle>
+  );
+});
+
+const DialogContent = withStyles(dialogContentStyles)(MuiDialogContent);
+
+const CustomDialog = ({ handleClose, classes, title, children, open }) => {
+  return (
+    <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+      <DialogTitle id="customized-dialog-title" onClose={()=>{}}>
+        {title}
+      </DialogTitle>
+      <DialogContent>
+        {children}
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+export default withStyles(dialogStyles)(CustomDialog)

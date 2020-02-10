@@ -12,23 +12,35 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import DateRangeIcon from '@material-ui/icons/DateRange'
 import PinDropIcon from '@material-ui/icons/PinDrop'
 
-import CustomModal from '../../app/CustomModal'
+import { slugFromPath } from '../../../util/generic'
+
+import CustomDialog from '../../app/CustomDialog'
 
 import styles from './ticketing.style'
 
 @inject('store')
 @observer
 class TicketingView extends React.Component {
-  componentDidMount() {
-    this.props.store.ticketingStore.getTicket();
+  state = {
+    dateModalOpenStatus: false,
+  }
+
+  openDateModal = () => {
+    this.setState({
+      dateModalOpenStatus: true,
+    });
   }
 
   render() {
     const {
       classes,
-      router: { query: { slug } },
+      router,
       store: { movieStore },
     } = this.props
+
+    const { dateModalOpenStatus } = this.state
+
+    const slug = router.query.slug || slugFromPath()
 
     const movie = movieStore.getMovieBySlug(slug)
 
@@ -56,9 +68,6 @@ class TicketingView extends React.Component {
                 >
                   Watch Trailer
                 </Button>
-                <Button className={classes.bookmarkButton} endIcon={<BookmarkBorderIcon className={classes.whiteSvgIcon} />}>
-                  Added
-                </Button>
               </Grid>
             </Box>
           </Box>
@@ -71,23 +80,26 @@ class TicketingView extends React.Component {
               startIcon={<DateRangeIcon className={classes.svgIcon} />}
               endIcon={<KeyboardArrowDownIcon className={classes.svgIcon} />}
               className={classes.dateLocationStripeDropdown}
+              onClick={this.openDateModal}
             >
               Tomorrow
-              <CustomModal
+              <CustomDialog
                 open={false}
-                title="What is ESX?"
+                title="Select Date"
               >
-                <p>ESX is a film investing platform for everyone.</p>{" "}
-                <p>
-                  We allow regular people — not just wealthy film producers — to
-                  invest in promising films, with as little as $10 or as much as
-                  $100,000 per investment.
-                </p>{" "}
-                <p>
-                  ESX was created to democratize fundraising for film while
-                  giving anyone the chance to back the next greatest film.
-                </p>
-              </CustomModal>
+                <>
+                  <p>ESX is a film investing platform for everyone.</p>{" "}
+                  <p>
+                    We allow regular people — not just wealthy film producers — to
+                    invest in promising films, with as little as $10 or as much as
+                    $100,000 per investment.
+                  </p>{" "}
+                  <p>
+                    ESX was created to democratize fundraising for film while
+                    giving anyone the chance to back the next greatest film.
+                  </p>
+                </>
+              </CustomDialog>
             </Button>
             <span className={classes.dateLocationStripeText}>near</span>
             <Button
@@ -129,21 +141,21 @@ class TicketingView extends React.Component {
             <Typography variant="h4" className={classes.showtimeTitle}>STANDARD FORMAT</Typography>
             <ul className={classes.formatShowtimesList}>
               <li>
-                <Link href={`${slug}/checkout?id=368249511`}>
+                <Link href="/checkout" as={`/checkout/${slug}?id=368249511`}>
                   <a className={classes.showtimeLink}>
                     <Button className={classes.btnShowtime}>12:45 PM</Button>
                   </a>
                 </Link>
               </li>
               <li>
-                <Link href={`${slug}/checkout?id=368249511`}>
+                <Link href="/checkout" as={`/checkout/${slug}?id=368249515`}>
                   <a className={classes.showtimeLink}>
                     <Button className={classes.btnShowtime}>1:45 PM</Button>
                   </a>
                 </Link>
               </li>
               <li>
-                <Link href={`${slug}/checkout?id=368249511`}>
+                <Link href="/checkout" as={`/checkout/${slug}?id=368249513`}>
                   <a className={classes.showtimeLink}>
                     <Button className={classes.btnShowtime}>2:00 PM</Button>
                   </a>
