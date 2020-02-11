@@ -15,6 +15,7 @@ import UserPortfolio from "./UserPortfolio"
 import UIStore from "./UIStore"
 import ContentfulStore from "./ContentfulStore"
 import NewsStore from "./NewsStore"
+import CommentStore from "./CommentStore"
 
 const isServer = typeof window === "undefined"
 useStaticRendering(isServer)
@@ -29,6 +30,7 @@ const _initialData = {
   uiStore: {},
   contentfulStore: {},
   newsStore: {},
+  commentStore: {},
 }
 
 export default function initializeStore(initialData = _initialData) {
@@ -44,6 +46,7 @@ export default function initializeStore(initialData = _initialData) {
       uiStore: new UIStore(initialData.uiStore, api),
       contentfulStore: new ContentfulStore(initialData.contentfulStore, api),
       newsStore: new NewsStore(initialData.newsStore, api),
+      commentStore: new CommentStore(initialData.commentStore, api),
     }
   } else if (store === null) {
     // Client stuff
@@ -56,6 +59,7 @@ export default function initializeStore(initialData = _initialData) {
       uiStore: new UIStore(initialData.uiStore, api),
       contentfulStore: new ContentfulStore(initialData.contentfulStore, api),
       newsStore: new NewsStore(initialData.newsStore, api),
+      commentStore: new CommentStore(initialData.commentStore, api),
     }
 
     store.uiStore.loadState()
