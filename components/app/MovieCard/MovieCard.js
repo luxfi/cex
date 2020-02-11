@@ -21,7 +21,7 @@ import { faPlayCircle } from '@fortawesome/free-solid-svg-icons'
 import classNames from 'classnames'
 
 import { TrailerSliderModal } from "../../landing"
-import { textTruncate } from "../../../util/generic"
+import { truncate } from "../../../util"
 
 import styles from './MovieCard.style.js'
 const useStyles = makeStyles(styles)
@@ -67,7 +67,7 @@ export default ({
           </Box>
           <Box className={classes.hoverContent}>
             <Typography className={classes.title} variant="body2">{movie.name}</Typography>
-            <Typography className={classes.shortDescription} variant="body1">{textTruncate(movie.shortDescription, 130)}</Typography>
+            <Typography className={classes.shortDescription} variant="body1">{truncate(movie.shortDescription, 20)}</Typography>
             {auxContent}
           </Box>
         </Box>

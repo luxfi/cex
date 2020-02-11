@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import useStyles from './rewardsCard.style'
-import { isStringUSCurrency } from '../../../util/generic'
+import { isStringUSCurrency } from '../../../util'
 import { fade } from '@material-ui/core/styles'
 import { AccessibilityNew, HelpOutline } from '@material-ui/icons'
 import { common } from '@material-ui/core/colors'
@@ -17,7 +17,7 @@ import {
   Popover,
   Divider,
 } from '@material-ui/core'
-import { isStringInteger, formatCurrency } from '../../../util/generic'
+import { isStringInteger, formatCurrency } from '../../../util'
 
 const RewardsCard = ({
   reward,

@@ -1,10 +1,9 @@
 import { useStaticRendering } from "mobx-react"
 
-// Proprietary Libraries
-import Api from "../src/hanzo/api"
+import Hanzo from 'hanzo.js'
 
 // Constants
-import { HANZO_KEY, HANZO_ENDPOINT } from "../src/settings.js"
+import { HANZO_KEY, HANZO_ENDPOINT } from "../settings"
 
 // Stores
 import MovieStore from "./MovieStore"
@@ -16,6 +15,7 @@ import UIStore from "./UIStore"
 import ContentfulStore from "./ContentfulStore"
 import NewsStore from "./NewsStore"
 import TicketingStore from './TicketingStore'
+import CommentStore from "./CommentStore"
 
 const isServer = typeof window === "undefined"
 useStaticRendering(isServer)
@@ -31,10 +31,11 @@ const _initialData = {
   contentfulStore: {},
   newsStore: {},
   ticketingStore: {},
+  commentStore: {},
 }
 
 export default function initializeStore(initialData = _initialData) {
-  const api = new Api(HANZO_KEY, HANZO_ENDPOINT)
+  const api = new Hanzo.Api({key: HANZO_KEY, endpoint: HANZO_ENDPOINT})
   if (isServer) {
     // Server stuff
     store = {
@@ -47,6 +48,7 @@ export default function initializeStore(initialData = _initialData) {
       contentfulStore: new ContentfulStore(initialData.contentfulStore, api),
       newsStore: new NewsStore(initialData.newsStore, api),
       ticketingStore: new TicketingStore(initialData.ticketingStore, api),
+      commentStore: new CommentStore(initialData.commentStore, api),
     }
   } else if (store === null) {
     // Client stuff
@@ -60,6 +62,7 @@ export default function initializeStore(initialData = _initialData) {
       contentfulStore: new ContentfulStore(initialData.contentfulStore, api),
       newsStore: new NewsStore(initialData.newsStore, api),
       ticketingStore: new TicketingStore(initialData.ticketingStore, api),
+      commentStore: new CommentStore(initialData.commentStore, api),
     }
 
     store.uiStore.loadState()

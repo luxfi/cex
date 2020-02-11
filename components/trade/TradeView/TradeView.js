@@ -19,7 +19,7 @@ import { CustomBreadcrumbs, BasicTrader, InvestNow, ProTrader } from '../../app'
 import { TrailerModal } from '../../landing'
 
 // section
-import { padDollarAmount, slugFromPath } from '../../../util/generic'
+import { padDollarAmount, slugFromPath } from '../../../util'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // the nice looking double chevrons are part of the "pro" package that costs money

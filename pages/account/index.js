@@ -10,7 +10,7 @@ import { TabbedNav } from '../../components/app'
 import { AccountSection } from '../../components/account'
 import { InvestorInfoView } from '../../components/investor'
 
-import { googlePageView } from '../../util/generic'
+import { googlePageView } from '../../util'
 import styles from '../../styles/pages/investor.style.js'
 
 import AccountTabs from '../../settings/accountTabs'

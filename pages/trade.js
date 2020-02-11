@@ -3,7 +3,7 @@ import Router, { withRouter } from 'next/router'
 import React from 'react'
 
 import { TradeView } from '../components/trade'
-import { googlePageView, slugFromPath } from '../util/generic'
+import { googlePageView, slugFromPath } from '../util'
 
 @inject('store')
 @observer

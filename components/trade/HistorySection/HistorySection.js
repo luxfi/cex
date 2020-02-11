@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Grid, Typography, Box, Divider } from '@material-ui/core'
-import { pluralize } from '../../../util/generic'
+import { pluralize } from '../../../util'
 import moment from 'moment-timezone'
 
 function capitalize(str) {

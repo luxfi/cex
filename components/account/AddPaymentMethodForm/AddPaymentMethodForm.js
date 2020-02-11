@@ -9,7 +9,7 @@ import {
   Button
 } from '@material-ui/core'
 
-import { PLAID_PUBLIC_KEY } from "../../../src/settings.js"
+import { PLAID_PUBLIC_KEY } from "../../../settings"
 
 class AddPaymentMethodForm extends React.Component {
   constructor(props) {
@@ -87,11 +87,11 @@ class AddPaymentMethodForm extends React.Component {
           />
         </Grid>
         <Grid item xs={4} style={{ textAlign: 'center' }}>
-          <Button 
+          <Button
             variant="outlined"
             disabled={!newPaymentMethodName || !validNewPaymentMethodName}
             onClick={() => {
-              this.plaidRef.current.handleOnClick() 
+              this.plaidRef.current.handleOnClick()
             }}
           >
             {

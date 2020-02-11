@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { pluralize } from '../../../util/generic'
+import { pluralize } from '../../../util'
 import Router from 'next/router'
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -19,14 +19,14 @@ import {
   HelpOutline as HelpOutlineIcon,
 } from '@material-ui/icons/'
 import useStyles from './buySellWidget.style'
-import { isStringInteger } from '../../../util/generic'
+import { isStringInteger } from '../../../util'
 import {
   errorNotEnoughFunds,
   errorNotEnoughShares,
   validNumberOfShares,
   QUOTE_NOT_MARKET_WARNING,
 } from './widgetMessages'
-import { formatCurrency } from '../../../util/generic'
+import { formatCurrency } from '../../../util'
 
 const useMarketPriceStyles = makeStyles(theme => ({
   container: {
