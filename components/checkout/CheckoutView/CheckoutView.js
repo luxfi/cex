@@ -9,7 +9,7 @@ import DateRangeIcon from '@material-ui/icons/DateRange'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined'
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline'
 
-import { slugFromPath } from '../../../util/generic'
+import { slugFromPath } from '../../../util'
 
 import styles from './checkout.style'
 

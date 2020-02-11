@@ -26,7 +26,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import DateRangeIcon from '@material-ui/icons/DateRange'
 import PinDropIcon from '@material-ui/icons/PinDrop'
 
-import { slugFromPath } from '../../../util/generic'
+import { slugFromPath } from '../../../util'
 
 import CustomDialog from '../../app/CustomDialog'
 
