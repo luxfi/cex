@@ -69,6 +69,7 @@ function mergeData(legacy, parsed) {
     try {
       parsed[slug].awards   = legacy[slug].awards
       parsed[slug].trailers = legacy[slug].trailers
+      parsed[slug].productionId = legacy[slug].productionId
     } catch (err) {
       console.error(`Failed to update ${slug}: ${err.toString()}`)
     }

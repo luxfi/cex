@@ -132,6 +132,8 @@ export default theme => ({
     textAlign: 'center',
   },
   movieVenueIconContainer: {
+    width: '64px',
+    height: '64px',
     paddingRight: '16px',
     verticalAlign: 'middle',
     ...flexCenteredColumn,
@@ -179,5 +181,19 @@ export default theme => ({
   },
   showtimeTitle: {
     fontSize: '18px',
+  },
+  datesList: {
+    width: '100%',
+    minWidth: '360px',
+    padding: '0 20px',
+  },
+  locationList: {
+    width: '100%',
+    minWidth: '360px',
+  },
+  formatsList: {
+    width: '100%',
+    minWidth: '360px',
+    padding: '20px',
   }
 })

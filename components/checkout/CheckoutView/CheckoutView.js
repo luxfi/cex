@@ -30,17 +30,17 @@ class CheckoutView extends React.Component {
 
     return (
       <Grid className={classes.outerContainer}>
-        <Grid container alignItems="flex-start" justify="center" className={classes.innerContainer}>
+        <Grid container={true} alignItems="flex-start" justify="center" className={classes.innerContainer}>
           <Grid className={classes.ticketQuantityContainer}>
-            <Grid container justify="space-between" className={classes.tableHeader}>
+            <Grid container={true} justify="space-between" className={classes.tableHeader}>
               <Box className={classes.ticketColumnHeader}>Ticket</Box>
               <Box className={classes.ticketColumnHeader}>Price</Box>
               <Box className={classes.ticketColumnHeader}>Quantity</Box>
             </Grid>
-            <Grid container justify="space-between" className={classes.tableBody}>
+            <Grid container={true} justify="space-between" className={classes.tableBody}>
               <Box className={classes.ticketColumn}>Matinee</Box>
               <Box className={classes.ticketColumn}>$2.17</Box>
-              <Grid className={classes.ticketColumn} container justify="flex-start" alignItems="center" wrap="nowrap">
+              <Grid className={classes.ticketColumn} container={true} justify="flex-start" alignItems="center" wrap="nowrap">
                 <button className={classes.ticketBtn}>
                   <RemoveCircleOutlineIcon className={classes.buttonIcon} />
                 </button>
@@ -50,7 +50,7 @@ class CheckoutView extends React.Component {
                 </button>
               </Grid>
             </Grid>
-            <Box container className={classes.tableFooter}>
+            <Box container={true} className={classes.tableFooter}>
               <a className={classes.agePolicyLink}>
                 <DateRangeIcon className={classes.agePolicyLinkIcon} />
                 Age Policy
@@ -66,7 +66,7 @@ class CheckoutView extends React.Component {
             </Box>
           </Box>
         </Grid>
-        <Grid container justify="flex-end" alignItems="center" className={classes.subTotalContainer}>
+        <Grid container={true} justify="flex-end" alignItems="center" className={classes.subTotalContainer}>
           <Box>
             <Typography variant="h6" className={classes.subTotalText}>SUBTOTAL</Typography>
             <Typography variant="h5" className={classes.subTotal}>$15.19</Typography>

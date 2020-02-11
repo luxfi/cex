@@ -1,7 +1,21 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import Link from 'next/link'
 import { inject, observer } from 'mobx-react'
-import { Box, Grid, Button, Container, Typography } from '@material-ui/core'
+import moment from 'moment'
+import {
+  Box,
+  Grid,
+  Button,
+  Container,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Divider,
+  FormControl,
+  TextField,
+} from '@material-ui/core'
 import Rating from '@material-ui/lab/Rating';
 import { withStyles } from '@material-ui/core/styles'
 import { withRouter } from 'next/router'
@@ -21,24 +35,108 @@ import styles from './ticketing.style'
 @inject('store')
 @observer
 class TicketingView extends React.Component {
-  state = {
-    dateModalOpenStatus: false,
+
+  componentDidMount() {
+    const { router, store: { movieStore, ticketingStore  } } = this.props;
+    const slug = router.query.slug || slugFromPath()
+    const movie = movieStore.getMovieBySlug(slug)
+    ticketingStore.setSelectedMovie(movie)
   }
 
-  openDateModal = () => {
-    this.setState({
-      dateModalOpenStatus: true,
-    });
+  openModal = (name) => () => {
+    const { store: { uiStore } } = this.props
+    uiStore.openDialog(name)
+  }
+
+  closeDialog = () => {
+    const { store: { uiStore } } = this.props
+    uiStore.closeDialog()
+  }
+
+  selectDate = (date) => () => {
+    const { store: { ticketingStore, uiStore } } = this.props
+    ticketingStore.setSelectedDate(date)
+    uiStore.closeDialog()
+  }
+
+  selectLocation = (location) => () => {
+    const { store: { ticketingStore, uiStore } } = this.props
+    ticketingStore.selectLocation(location)
+    uiStore.closeDialog()
+  }
+
+  handleLocationSearch = (event) => {
+    const { store: { ticketingStore } } = this.props
+    ticketingStore.searchLocation(event.target.value)
+  }
+
+  renderVenue = (seleectedVenue) => {
+    const {
+      classes,
+      router,
+    } = this.props
+    const slug = router.query.slug || slugFromPath()
+
+    return (
+      <Fragment key={seleectedVenue.venue.id}>
+        <Box>
+          <Grid className={classes.panelBody} container alignContent="flex-start">
+            <Box className={classes.movieVenueIconContainer}>
+              {/* <img
+                className={classes.movieVenueIcon}
+                src="https://images.atomtickets.com/image/upload/v1/client-image-repo/circuit-logo/CinemarkLogoCircle_Red.svg"
+                alt="Logo"
+              /> */}
+            </Box>
+            <Grid className={classes.movieVenueContainer}>
+              <Typography variant="h6" className={classes.movieVenueTitleLink}>
+                {seleectedVenue.venue.name}
+              </Typography>
+              <Box component="span">{seleectedVenue.venue.address.line}</Box>
+            </Grid>
+          </Grid>
+        </Box>
+        <Grid container className={classes.showtimeSchedules} alignItems="center">
+          <Typography variant="h4" className={classes.showtimeTitle}>STANDARD FORMAT</Typography>
+          <ul className={classes.formatShowtimesList}>
+            {
+              seleectedVenue.showtimeDetails.length
+                ? seleectedVenue.showtimeDetails.map(showtimeDetail => (
+                  <li key={showtimeDetail.showtimeId}>
+                    <Link href="/checkout" as={`/checkout/${slug}?id=${showtimeDetail.showtimeId}`}>
+                      <a className={classes.showtimeLink}>
+                      <Button className={classes.btnShowtime}>{moment(showtimeDetail.localShowtimeStart).format('hh:mm A')}</Button>
+                      </a>
+                    </Link>
+                  </li>
+                ))
+                : null
+            }
+          </ul>
+        </Grid>
+      </Fragment>
+    )
   }
 
   render() {
     const {
       classes,
       router,
-      store: { movieStore },
+      store: {
+        movieStore,
+        uiStore,
+        ticketingStore: {
+          selectedDate,
+          formatedDates,
+          location,
+          suggestedLocations,
+          selectedLocation,
+          seleectedVenues,
+          selectedMovie,
+        },
+      },
     } = this.props
 
-    const { dateModalOpenStatus } = this.state
     const slug = router.query.slug || slugFromPath()
 
     const movie = movieStore.getMovieBySlug(slug)
@@ -67,6 +165,12 @@ class TicketingView extends React.Component {
                 >
                   Watch Trailer
                 </Button>
+                <Button
+                  className={classes.bookmarkButton}
+                  endIcon={<BookmarkBorderIcon className={classes.whiteSvgIcon} />}
+                >
+                  Add To Watchlist
+                </Button>
               </Grid>
             </Box>
           </Box>
@@ -79,89 +183,114 @@ class TicketingView extends React.Component {
               startIcon={<DateRangeIcon className={classes.svgIcon} />}
               endIcon={<KeyboardArrowDownIcon className={classes.svgIcon} />}
               className={classes.dateLocationStripeDropdown}
-              onClick={this.openDateModal}
+              onClick={this.openModal('date')}
             >
-              Tomorrow
-              <CustomDialog
-                open={false}
-                title="Select Date"
-              >
-                <>
-                  <p>ESX is a film investing platform for everyone.</p>{" "}
-                  <p>
-                    We allow regular people — not just wealthy film producers — to
-                    invest in promising films, with as little as $10 or as much as
-                    $100,000 per investment.
-                  </p>{" "}
-                  <p>
-                    ESX was created to democratize fundraising for film while
-                    giving anyone the chance to back the next greatest film.
-                  </p>
-                </>
-              </CustomDialog>
+              {selectedDate.formated ? selectedDate.formated : 'Choose date' }
             </Button>
+            <CustomDialog
+              open={uiStore.dialog.open && uiStore.dialog.name === 'date'}
+              title="Select Date"
+              handleClose={this.closeDialog}
+            >
+              <List className={classes.datesList} aria-label="movie date list">
+                {formatedDates.map(date => (
+                  <Fragment key={date.isoFormat}>
+                    <ListItem
+                      onClick={this.selectDate(date)}
+                      button
+                      selected={selectedDate.formated === date.formated}
+                    >
+                      <ListItemText inset primary={date.formated} />
+                    </ListItem>
+                    <Divider light />
+                  </Fragment>
+                ))}
+              </List>
+            </CustomDialog>
             <span className={classes.dateLocationStripeText}>near</span>
             <Button
               startIcon={<PinDropIcon className={classes.svgIcon} />}
               endIcon={<KeyboardArrowDownIcon className={classes.svgIcon} />}
               className={classes.dateLocationStripeDropdown}
+              onClick={this.openModal('location')}
             >
-              Lagos
+              {selectedLocation.city
+                ?
+                  `${selectedLocation.city}, ${selectedLocation.state}`
+                :
+                  'Choose location'
+              }
             </Button>
+            <CustomDialog
+              open={uiStore.dialog.open && uiStore.dialog.name === 'location'}
+              title="Select Location"
+              handleClose={this.closeDialog}
+            >
+              <>
+                <FormControl fullWidth variant="outlined">
+                  <TextField
+                    onChange={this.handleLocationSearch}
+                    className={classes.locationTextField}
+                    value={location}
+                    label="Enter Location"
+                    variant="outlined"
+                  />
+                </FormControl>
+                <List aria-label="movie locations" className={classes.locationList}>
+                  
+                  {suggestedLocations.map(location => (
+                    <Fragment key={location.city}>
+                      <ListItem
+                        button
+                        selected={selectedLocation.city === location.city}
+                        onClick={this.selectLocation(location)}
+                      >
+                        <ListItemText inset primary={`${location.city}, ${location.state}`} />
+                      </ListItem>
+                      <Divider light />
+                    </Fragment>
+                  ))}
+                  <ListItem button>
+                    <ListItemIcon>
+                      <PinDropIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Current location" />
+                  </ListItem>
+                  <Divider light />
+                </List>
+              </>
+            </CustomDialog>
             <span className={classes.dateLocationStripeText}>in</span>
             <Button
               endIcon={<KeyboardArrowDownIcon className={classes.svgIcon} />}
               className={classes.dateLocationStripeDropdown}
+              onClick={this.openModal('formats')}
             >
               All Formats
             </Button>
+            <CustomDialog
+              open={uiStore.dialog.open && uiStore.dialog.name === 'formats'}
+              title="Select Formats"
+              handleClose={this.closeDialog}
+            >
+              <List aria-label="movie formats" className={classes.formatsList}>
+                <ListItem button selected>
+                  <ListItemText inset primary="All Formats" />
+                </ListItem>
+              </List>
+            </CustomDialog>
           </Box>
           <Box>
-            <Grid className={classes.panelBody} container alignContent="flex-start">
-              {/* <Box>
-                Hmm... we couldn't find any showtimes for this date and location.
-              </Box> */}
-              <Box className={classes.movieVenueIconContainer}>
-                <img
-                  className={classes.movieVenueIcon}
-                  src="https://images.atomtickets.com/image/upload/v1/client-image-repo/circuit-logo/CinemarkLogoCircle_Red.svg"
-                  alt="Logo"
-                />
-              </Box>
-              <Grid className={classes.movieVenueContainer}>
-                <a href="#" className={classes.movieVenueTitleLink}>
-                  Cinemark Hollywood USA Movies 15
-                </a>
-                <Box component="span">4040 S. Shiloh Road, Garland, TX</Box>
-              </Grid>
-            </Grid>
+            {
+              seleectedVenues.length
+                ? seleectedVenues.map(seleectedVenue => this.renderVenue(seleectedVenue))
+                : (
+                    <Box className={classes.panelBody}>
+                        Hmm... we couldn't find any showtimes for this date and location.
+                    </Box>
+                  )
+            }
           </Box>
-          <Grid container className={classes.showtimeSchedules} alignItems="center">
-            <Typography variant="h4" className={classes.showtimeTitle}>STANDARD FORMAT</Typography>
-            <ul className={classes.formatShowtimesList}>
-              <li>
-                <Link href="/checkout" as={`/checkout/${slug}?id=368249512`}>
-                  <a className={classes.showtimeLink}>
-                    <Button className={classes.btnShowtime}>12:45 PM</Button>
-                  </a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/checkout" as={`/checkout/${slug}?id=368249514`}>
-                  <a className={classes.showtimeLink}>
-                    <Button className={classes.btnShowtime}>1:45 PM</Button>
-                  </a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/checkout" as={`/checkout/${slug}?id=368249513`}>
-                  <a className={classes.showtimeLink}>
-                    <Button className={classes.btnShowtime}>2:00 PM</Button>
-                  </a>
-                </Link>
-              </li>
-            </ul>
-          </Grid>
         </Box>
       </Box>
     )

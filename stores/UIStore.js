@@ -17,6 +17,11 @@ export default class UIStore {
     body: null,
   }
 
+  @observable dialog = {
+    open: false,
+    name: null,
+  }
+
   @action loadState = () => {
     const trading = window.localStorage.getItem('trading')
 
@@ -66,5 +71,15 @@ export default class UIStore {
     this.modal.open = false
     this.modal.title = null
     this.modal.body = null
+  }
+
+  openDialog(name) {
+    this.dialog.open = true
+    this.dialog.name = name
+  }
+
+  closeDialog() {
+    this.dialog.open = false
+    this.dialog.name = null
   }
 }
