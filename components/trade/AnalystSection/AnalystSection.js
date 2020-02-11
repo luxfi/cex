@@ -3,8 +3,8 @@ import { lighten, makeStyles, withStyles } from '@material-ui/core/styles'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import { Grid, Typography, Box, Card, CardContent } from '@material-ui/core'
 
-const truncate = input =>
-  Array.from(input).length > 110 ? `${Array.from(input).slice(0,110).join('')}...` : input
+import { truncate } from '../../../util'
+
 
 const analystRatings = [
   {

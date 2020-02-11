@@ -9,10 +9,12 @@ const isEmpty = obj =>
   !Object.entries(obj || {}).length
 
 // Utilities
-import isEmail from '../src/control-middlewares/isEmail'
-import isPassword from '../src/control-middlewares/isPassword'
-import isPhone from '../src/control-middlewares/isPhone'
-import isRequired from '../src/control-middlewares/isRequired'
+import {
+  isEmail,
+  isPassword,
+  isPhone,
+  isRequired,
+} from '../util'
 
 /**
  * Later we'll wrap the fetch stuff up a bit more cleanly and / or use a helper library
@@ -114,12 +116,12 @@ export default class UserStore {
   @action async loadSession() {
     this.isLoading = true
 
-    this.token = this.api.client.getCustomerToken()
+    this.token = this.api.getCustomerToken()
     try {
       if (this.token) {
         const ps = [
-          this.api.client.library.shopjs(),
-          this.api.client.account.get(),
+          this.api.library.shopjs(),
+          this.api.account.get(),
         ]
 
         let [appSettings, account] = await Promise.all(ps)
@@ -127,7 +129,7 @@ export default class UserStore {
         this.account = account
         this.hydrateStore(account)
       } else {
-        this.appSettings = await this.api.client.library.shopjs()
+        this.appSettings = await this.api.library.shopjs()
       }
     } catch (e) {
       console.log('account token expired', e)
@@ -463,7 +465,7 @@ export default class UserStore {
     this.updating = true
 
     try {
-      const res = await this.api.client.account.create({
+      const res = await this.api.account.create({
         email: this.email,
         firstName: this.firstName,
         lastName: this.lastName,
@@ -475,7 +477,7 @@ export default class UserStore {
 
       this.identity = ethers.utils.sha256(ethers.utils.toUtf8Bytes(i))
 
-      this.api.client.setCustomerToken(res.token)
+      this.api.setCustomerToken(res.token)
 
       // this.setToken(res.token)
       this.loadSession()
@@ -494,7 +496,7 @@ export default class UserStore {
     this.updating = true
 
     try {
-      const res = await this.api.client.account.login({
+      const res = await this.api.account.login({
         email: this.email,
         password: this.password,
       })
@@ -505,7 +507,7 @@ export default class UserStore {
       const i = this.email + this.password
 
       this.identity = ethers.utils.sha256(ethers.utils.toUtf8Bytes(i))
-      // this.account = await this.api.client.account.get()
+      // this.account = await this.api.account.get()
       this.loadSession()
       this.setToken(res.token)
       onSuccess && onSuccess()
@@ -521,7 +523,7 @@ export default class UserStore {
     this.updating = true
 
     try {
-      const res = await this.api.client.account.logout()
+      const res = await this.api.account.logout()
       this.forgetUser()
       // TODO Not sure what this is? This needs to go in the password update function
       // this.inputs.password.val(this.inputs.password.val().replace(/./g, '•'))
@@ -546,7 +548,7 @@ export default class UserStore {
         metadata: { institution, accounts, account },
       }
 
-      const res = await this.api.client.account.paymentMethod(opts)
+      const res = await this.api.account.paymentMethod(opts)
       onSuccess && onSuccess()
     } catch (ex) {
       console.log('Error logging out', ex)
@@ -610,7 +612,7 @@ export default class UserStore {
         firstName: this.firstName,
         lastName: this.lastName,
       })
-      await this.api.client.account.update(newAcc)
+      await this.api.account.update(newAcc)
       // On success
       this.account = newAcc
       onSuccess && onSuccess()
@@ -623,8 +625,8 @@ export default class UserStore {
   }
 
   @action forgetUser() {
-    if (this.api.client.deleteCustomerToken) {
-      this.token = this.api.client.deleteCustomerToken()
+    if (this.api.deleteCustomerToken) {
+      this.token = this.api.deleteCustomerToken()
     }
     this.account = undefined
     this.currentUser = undefined

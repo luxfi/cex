@@ -13,7 +13,7 @@ import {
   withStyles
 } from '@material-ui/core'
 
-import { googlePageView } from '../util/generic.js'
+import { googlePageView } from '../util'
 
 const styles = (theme) => ({
   pageTitle: {

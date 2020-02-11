@@ -1,4 +1,4 @@
-import { pluralize } from '../../../util/generic'
+import { pluralize } from '../../../util'
 
 const errorNotEnoughFunds = (total, shares, ticker) => {
   const title = 'Not Enough Buying Power'

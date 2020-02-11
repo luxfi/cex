@@ -6,7 +6,7 @@ import { Container, Typography } from "@material-ui/core"
 import { AccountSection, TaxDocument } from '../../components/account'
 import { TabbedNav } from '../../components/app'
 
-import { googlePageView } from '../../util/generic'
+import { googlePageView } from '../../util'
 import AccountTabs from '../../settings/accountTabs'
 
 @inject("store")

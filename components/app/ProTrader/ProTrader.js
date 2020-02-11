@@ -29,7 +29,7 @@ import { useState } from 'react'
 import NumberFormat from 'react-number-format'
 import { Element } from 'react-scroll'
 
-import { formatCurrency } from '../../../util/generic'
+import { formatCurrency } from '../../../util'
 
 import {
   ExchangeHistoryBook,

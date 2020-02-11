@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Box } from "@material-ui/core"
 
-import { googlePageView } from '../util/generic'
+import { googlePageView } from '../util'
 
 
 class Privacy extends React.Component {

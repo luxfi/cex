@@ -3,7 +3,7 @@ import { Fab } from '@material-ui/core'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import { CarouselItem } from '../'
-import { useEventListener } from '../../../util/customHooks'
+import { useEventListener } from '../../../util'
 import useStyles from './Carousel.style'
 
 export const Carousel = ({ animationSpeed = 500, ...props }) => {

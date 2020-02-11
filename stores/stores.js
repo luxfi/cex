@@ -1,10 +1,9 @@
 import { useStaticRendering } from "mobx-react"
 
-// Proprietary Libraries
-import Api from "../src/hanzo/api"
+import Hanzo from 'hanzo.js'
 
 // Constants
-import { HANZO_KEY, HANZO_ENDPOINT } from "../src/settings.js"
+import { HANZO_KEY, HANZO_ENDPOINT } from "../settings"
 
 // Stores
 import MovieStore from "./MovieStore"
@@ -34,7 +33,7 @@ const _initialData = {
 }
 
 export default function initializeStore(initialData = _initialData) {
-  const api = new Api(HANZO_KEY, HANZO_ENDPOINT)
+  const api = new Hanzo.Api({key: HANZO_KEY, endpoint: HANZO_ENDPOINT})
   if (isServer) {
     // Server stuff
     store = {

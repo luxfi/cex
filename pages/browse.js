@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core'
 
 import classNames from 'classnames'
-import { googlePageView } from '../util/generic'
+import { googlePageView } from '../util'
 
 import { MovieCard } from '../components/app'
 import { Facets } from '../components/browse'

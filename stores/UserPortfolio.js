@@ -9,7 +9,7 @@ import _ from 'lodash'
 import moment from 'moment-timezone'
 import uuid from 'uuid'
 
-import { padDollarAmount } from '../util/generic'
+import { padDollarAmount } from '../util/'
 /**
  * Later we'll wrap the fetch stuff up a bit more cleanly and / or use a helper library
  */

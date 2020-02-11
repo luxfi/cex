@@ -6,7 +6,7 @@ import { AccountSection } from '../../components/account'
 import { TabbedNav } from '../../components/app'
 import { TradeView, PortfolioView } from '../../components/portfolio'
 
-import { googlePageView } from "../../util/generic.js"
+import { googlePageView } from "../../util"
 
 import styles from '../../styles/pages/portfolio.style.js'
 import portfolioTabs from '../../settings/portfolioTabs'

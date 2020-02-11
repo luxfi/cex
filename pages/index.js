@@ -22,7 +22,7 @@ import {
   HeroElements
 } from '../components/landing'
 
-import { googlePageView } from '../util/generic'
+import { googlePageView } from '../util'
 
 
 let modalRef = undefined
