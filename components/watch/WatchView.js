@@ -74,7 +74,12 @@ class Index extends React.Component {
       commentStore,
     } = this.props.store
 
+    if (!movieSlug) {
+      return
+    }
+
     const movie = movieStore.getMovieBySlug(movieSlug)
+    const relatedMovies = movieStore.getRelatedMovies(movieSlug)
     const comments = commentStore.comments;
 
     const addToWatchlist = t => {
@@ -94,7 +99,7 @@ class Index extends React.Component {
               </Box>
             </Box>
             <Box className="video-metadata">
-              <h3>FAST AND FURIOUS 9 Trailer #2 Han Returns TV Spot (NEW 2020) Vin Diesel Action Movie HD</h3>
+              <h3>{movie.name}</h3>
               <Box className={classes.videoStats}>
                 <Typography component="span">774,900 views</Typography>
                 <Box className={classes.videoActions}>
@@ -131,8 +136,8 @@ class Index extends React.Component {
               <Box className={classes.videoInfoBox}>
                 <img src="https://yt3.ggpht.com/a/AGF-l78o8C7mo9M3Dmcii6u_pfOt3I9dBS8n8zwVmQ=s240-c-k-c0xffffffff-no-rj-mo" className={classes.videoInfoImage} />
                 <Box className={classes.videoInfo}>
-                    <Typography className={classes.channelName}>FilmSpot Trailer</Typography>
-                    <Typography className={classes.videoPubDate}>Sun Feb 02 2020</Typography>
+                  <Typography className={classes.channelName}>FilmSpot Trailer</Typography>
+                  <Typography className={classes.videoPubDate}>Sun Feb 02 2020</Typography>
                 </Box>
                 <Button
                   className={classes.subScribeButton}
@@ -145,11 +150,11 @@ class Index extends React.Component {
                     Subscribe 3.4M
                   </Typography>
                 </Button>
-                <VideoDescription />
+                <VideoDescription description={movie.longDescription} />
               </Box>
               <Divider />
             </Box>
-            <ShowingNext />
+            <ShowingNext relatedMovies={relatedMovies} />
             <Comments type="trailerComment" />
           </Box>
         </Box>

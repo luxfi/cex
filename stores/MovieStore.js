@@ -159,6 +159,35 @@ export default class MovieStore {
     }
     return this.movies.find(m => m.movieSlug === slug)
   }
+
+  // TODO: Refactor
+  getRelatedMovies(slug) {
+    const requestedMovie = this.getMovieBySlug(slug)
+    const allMovies = [...this.movies]
+    return allMovies.map(movie => {
+      let score = 0
+      movie.genres.some(genre => {
+        requestedMovie.genres.includes(genre) ? score++ : null; 
+      })
+      movie.distributors.some(distributor=> {
+        requestedMovie.genres.includes(distributor) ? score++ : null
+      })
+      movie.directors.some(director=> {
+        requestedMovie.genres.includes(director) ? score++ : null
+      })
+      movie.actors.some(actor=> {
+        requestedMovie.genres.includes(actor) ? score++ : null
+      })
+
+      return {
+        score,
+        ...movie,
+      }     
+    })
+      .filter(movie => movie.movieSlug !== slug)
+      .sort((a,b) => b.score - a.score)
+      .slice(0,10)
+  }
 }
 
 export class Movie {
