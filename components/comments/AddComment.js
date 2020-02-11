@@ -10,7 +10,7 @@ import styles from "./styles/comments.style"
 const AddComment = inject('store')(observer(({
   numOfRows,
   onCancel,
-  type,
+  identifierId,
   comment,
   store
 }) => {
@@ -43,7 +43,7 @@ const AddComment = inject('store')(observer(({
   const handleClick = () => {
     const commentObject = {
       text: state.comment,
-      type,
+      identifierId,
       parentId: comment ? comment.parentCommentId : null,
     }
     console.log('comment: ', commentObject)

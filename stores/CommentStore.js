@@ -10,18 +10,18 @@ export default class CommentStore {
     this.api = hanzoApi
   }
   
-  getComments(commentType) {
+  getComments(identifierId) {
     // mock api call
     try {
-      return new Promise((resolve, reject) => setTimeout(() => resolve(commentsFromJSON[commentType]), 3000))
+      return new Promise((resolve, reject) => setTimeout(() => resolve(commentsFromJSON), 3000))
     } catch (error) {
       console.error('Caught parser exception', error)
     }
   }
 
-  @action loadComments(commentType) {
+  @action loadComments(identifierId) {
     this.isLoading = true
-    this.getComments(commentType).then(comments => {
+    this.getComments(identifierId).then(comments => {
       this.comments = comments
       this.isLoading = false
     })

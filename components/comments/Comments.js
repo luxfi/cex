@@ -11,18 +11,16 @@ import SortComments from './SortComments'
 
 import styles from './styles/comments.style'
 
-const COMMENT_TYPE = 'trailerComment'
-
 @inject("store")
 @observer
 class Comments extends Component {
   componentDidMount() {
-    const { store: { commentStore } } = this.props
-    commentStore.loadComments(COMMENT_TYPE)
+    const { store: { commentStore }, identifierId } = this.props
+    commentStore.loadComments(identifierId)
   }
 
   render() {
-    const { classes, store } = this.props
+    const { classes, store, identifierId } = this.props
     const { 
       isLoading,
       comments,
@@ -48,7 +46,7 @@ class Comments extends Component {
             </Box>
             <AddComment
               numOfRows={3}
-              type={COMMENT_TYPE}
+              identifierId={identifierId}
             />
             <DisplayComments comments={userComments} />
           </>

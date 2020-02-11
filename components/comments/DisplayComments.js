@@ -51,7 +51,7 @@ const DisplayComments = ({ comments }) => {
                     numOfRows={2}
                     onCancel={onReplyCancel}
                     comment={comment}
-                    type={comment.type}
+                    identifierId={comment.commentId}
                     isReply={true}
                   />)
               }

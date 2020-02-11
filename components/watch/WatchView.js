@@ -56,11 +56,6 @@ const ExternalLink = React.forwardRef(
 @observer
 class Index extends React.Component {
 
-  componentDidMount() {
-    const { commentStore } = this.props.store
-    commentStore.loadComments('trailerComment')
-  }
-
   render() {
     const { classes, store } = this.props
 
@@ -155,7 +150,7 @@ class Index extends React.Component {
               <Divider />
             </Box>
             <ShowingNext relatedMovies={relatedMovies} />
-            <Comments type="trailerComment" />
+            <Comments identifierId={movie.id} />
           </Box>
         </Box>
         <Box

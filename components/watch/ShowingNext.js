@@ -15,7 +15,7 @@ const ShowingNext = ({ classes, relatedMovies }) => {
   })
 
   const handleChecked = (event) => {
-    setState({ ...state, autoplay: !state.autoplay })
+    setState({ ...state, autoPlay: event.target.checked })
   }
   
   return (
