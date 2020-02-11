@@ -1,5 +1,5 @@
 import React from "react"
-import { padDollarAmount } from "../../../util/generic"
+import { padDollarAmount } from "../../../util"
 
 class CustomStockTooltip extends React.Component {
   constructor(props) {

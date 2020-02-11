@@ -3,7 +3,7 @@ import Router from 'next/router'
 import { inject, observer } from 'mobx-react'
 
 import LoginForm from '../components/login/LoginForm'
-import { googlePageView } from '../util/generic.js'
+import { googlePageView } from '../util'
 
 @inject('store')
 @observer

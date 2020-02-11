@@ -8,7 +8,7 @@ import {
   Typography,
   Box,
 } from '@material-ui/core'
-import { isStringUSCurrency } from '../../../util/generic'
+import { isStringUSCurrency } from '../../../util'
 
 const useStyles = makeStyles(theme => ({
   root: {

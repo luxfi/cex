@@ -10,7 +10,7 @@ import React from 'react'
 
 // orderbook
 import { formatTakeResults } from '../../../util/formatOrderBookDataForChart'
-import { slugFromPath } from '../../../util/generic'
+import { slugFromPath } from '../../../util'
 
 // section
 // core components

@@ -7,7 +7,7 @@ import { TabbedNav } from '../../components/app'
 import { AccountSection } from '../../components/account'
 import { NewsFeedView } from '../../components/portfolio'
 
-import { googlePageView } from '../../util/generic'
+import { googlePageView } from '../../util'
 import styles from '../../styles/pages/portfolio.style.js'
 import portfolioTabs from '../../settings/portfolioTabs'
 

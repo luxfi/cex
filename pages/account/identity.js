@@ -8,7 +8,7 @@ import Link from "@material-ui/core/Link"
 
 import { AccountSection, KYCForm } from '../../components/account'
 import { CustomLink, TabbedNav } from '../../components/app'
-import { googlePageView } from '../../util/generic'
+import { googlePageView } from '../../util'
 
 import AccountTabs from '../../settings/accountTabs'
 

@@ -18,7 +18,7 @@ import {
   BalanceHistoryItem,
 } from '../../components/account'
 
-import { googlePageView } from '../../util/generic'
+import { googlePageView } from '../../util'
 import AccountTabs from '../../settings/accountTabs'
 
 @inject('store')

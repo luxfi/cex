@@ -6,7 +6,7 @@ import {
   OfferingNavBar,
   OfferingContent,
 } from '../components/offering'
-import { googlePageView, slugFromPath } from '../util/generic'
+import { googlePageView, slugFromPath } from '../util'
 import { withRouter } from 'next/router'
 
 const OfferingBody = ({

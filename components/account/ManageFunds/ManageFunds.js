@@ -12,7 +12,7 @@ import {
  } from '@material-ui/core'
 import moment from 'moment'
 
-import { formatCurrency } from '../../../util/generic'
+import { formatCurrency } from '../../../util'
 
 export default props => {
   const {

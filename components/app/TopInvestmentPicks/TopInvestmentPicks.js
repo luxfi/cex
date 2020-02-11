@@ -17,6 +17,8 @@ import {
 } from "@material-ui/core"
 import ContentLoader from "react-content-loader"
 
+import { truncate } from '../../../util'
+
 // styles
 import { makeStyles } from "@material-ui/core/styles"
 import styles from "../../portfolio/TradeView/TradeView.style.js"
@@ -76,11 +78,6 @@ export default props => {
   const classes = useStyles()
   const { store, ...rest } = props
   const { investorTopPicks } = store.movieStore
-  const truncate = input =>
-    input
-      .split(" ")
-      .slice(0, 23)
-      .join(" ") + "..."
 
   const { userPortfolio } = store
 

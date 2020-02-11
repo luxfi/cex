@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { Button, Avatar, Grid } from '@material-ui/core'
-import { googlePageView } from '../util/generic'
+import { googlePageView } from '../util'
 import { inject, observer } from 'mobx-react'
 import Container from "@material-ui/core/Container"
 

@@ -5,7 +5,7 @@ import {
   makeStyles 
 } from '@material-ui/core'
 
-import { toDashString } from '../../../util/generic'
+import { toDashString } from '../../../util'
 
 /**
 
