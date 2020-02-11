@@ -67,7 +67,7 @@ export default ({
           </Box>
           <Box className={classes.hoverContent}>
             <Typography className={classes.title} variant="body2">{movie.name}</Typography>
-            <Typography className={classes.shortDescription} variant="body1">{textTruncate(movie.shortDescription, 130)}</Typography>
+            <Typography className={classes.shortDescription} variant="body1">{textTruncate(movie.shortDescription, 25)}</Typography>
             {auxContent}
           </Box>
         </Box>
