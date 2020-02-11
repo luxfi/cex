@@ -10,6 +10,7 @@ let dynamicRoutes = [
   'ticketing',
   'checkout',
   'payment',
+  'account',
 ]
 
 function Error({ statusCode }) {
