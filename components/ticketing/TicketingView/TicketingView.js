@@ -1,30 +1,28 @@
-import React, { Fragment } from 'react'
-import Link from 'next/link'
-import { inject, observer } from 'mobx-react'
-import moment from 'moment'
 import {
   Box,
-  Grid,
   Button,
-  Container,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
   Divider,
   FormControl,
+  Grid,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   TextField,
+  Typography,
 } from '@material-ui/core'
-import Rating from '@material-ui/lab/Rating';
 import { withStyles } from '@material-ui/core/styles'
-import { withRouter } from 'next/router'
 
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline'
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder'
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import DateRangeIcon from '@material-ui/icons/DateRange'
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import PinDropIcon from '@material-ui/icons/PinDrop'
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline'
+import { inject, observer } from 'mobx-react'
+import moment from 'moment'
+import Link from 'next/link'
+import { withRouter } from 'next/router'
+import React, { Fragment } from 'react'
 
 import { slugFromPath } from '../../../util'
 
@@ -35,9 +33,8 @@ import styles from './ticketing.style'
 @inject('store')
 @observer
 class TicketingView extends React.Component {
-
   componentDidMount() {
-    const { router, store: { movieStore, ticketingStore  } } = this.props;
+    const { router, store: { movieStore, ticketingStore } } = this.props
     const slug = router.query.slug || slugFromPath()
     const movie = movieStore.getMovieBySlug(slug)
     ticketingStore.setSelectedMovie(movie)
@@ -80,7 +77,7 @@ class TicketingView extends React.Component {
     return (
       <Fragment key={seleectedVenue.venue.id}>
         <Box>
-          <Grid className={classes.panelBody} container alignContent="flex-start">
+          <Grid className={classes.panelBody} container alignContent='flex-start'>
             <Box className={classes.movieVenueIconContainer}>
               {/* <img
                 className={classes.movieVenueIcon}
@@ -89,24 +86,22 @@ class TicketingView extends React.Component {
               /> */}
             </Box>
             <Grid className={classes.movieVenueContainer}>
-              <Typography variant="h6" className={classes.movieVenueTitleLink}>
+              <Typography variant='h6' className={classes.movieVenueTitleLink}>
                 {seleectedVenue.venue.name}
               </Typography>
-              <Box component="span">{seleectedVenue.venue.address.line}</Box>
+              <Box component='span'>{seleectedVenue.venue.address.line}</Box>
             </Grid>
           </Grid>
         </Box>
-        <Grid container className={classes.showtimeSchedules} alignItems="center">
-          <Typography variant="h4" className={classes.showtimeTitle}>STANDARD FORMAT</Typography>
+        <Grid container className={classes.showtimeSchedules} alignItems='center'>
+          <Typography variant='h4' className={classes.showtimeTitle}>STANDARD FORMAT</Typography>
           <ul className={classes.formatShowtimesList}>
             {
               seleectedVenue.showtimeDetails.length
-                ? seleectedVenue.showtimeDetails.map(showtimeDetail => (
+                ? seleectedVenue.showtimeDetails.map((showtimeDetail) => (
                   <li key={showtimeDetail.showtimeId}>
-                    <Link href="/checkout" as={`/checkout/${slug}?id=${showtimeDetail.showtimeId}`}>
-                      <a className={classes.showtimeLink}>
+                    <Link href='/checkout' as={`/checkout/${slug}?id=${showtimeDetail.showtimeId}`}>
                       <Button className={classes.btnShowtime}>{moment(showtimeDetail.localShowtimeStart).format('hh:mm A')}</Button>
-                      </a>
                     </Link>
                   </li>
                 ))
@@ -132,7 +127,6 @@ class TicketingView extends React.Component {
           suggestedLocations,
           selectedLocation,
           seleectedVenues,
-          selectedMovie,
         },
       },
     } = this.props
@@ -146,11 +140,11 @@ class TicketingView extends React.Component {
         <Box>
           <Box className={classes.movieSummaryHero}>
             <Box className={classes.movieSummaryHeroPoster}>
-              <img className={classes.heroImage} src={movie.posterImg} alt="" role="presentation" />
+              <img className={classes.heroImage} src={movie.posterImg} alt='' role='presentation' />
             </Box>
             <Box className={classes.movieSummaryHeroInfo}>
               <Typography variant='h1' className={classes.movieSummaryHeroTitle}>{movie.name}</Typography>
-              <Grid container={true} alignItems="center" className={classes.movieSummaryHeroMetadata}>
+              <Grid container alignItems='center' className={classes.movieSummaryHeroMetadata}>
                 {movie.rated ? (<span className={classes.rRatedContainer}>{movie.rated}</span>) : ''}
                 {movie.releaseDate ? (<span className={classes.movieTimer}>Release Date: <b>{movie.releaseDate}</b></span>) : ''}
               </Grid>
@@ -177,7 +171,7 @@ class TicketingView extends React.Component {
         </Box>
         <Box>
           <Box className={classes.dateLocationStripe}>
-            <Typography variant="h2" className={classes.dateLocationStripeHeading}>Find Movie Theaters & Showtimes</Typography>
+            <Typography variant='h2' className={classes.dateLocationStripeHeading}>Find Movie Theaters & Showtimes</Typography>
             <span className={classes.dateLocationStripeText}>for</span>
             <Button
               startIcon={<DateRangeIcon className={classes.svgIcon} />}
@@ -189,11 +183,11 @@ class TicketingView extends React.Component {
             </Button>
             <CustomDialog
               open={uiStore.dialog.open && uiStore.dialog.name === 'date'}
-              title="Select Date"
+              title='Select Date'
               handleClose={this.closeDialog}
             >
-              <List className={classes.datesList} aria-label="movie date list">
-                {formatedDates.map(date => (
+              <List className={classes.datesList} aria-label='movie date list'>
+                {formatedDates.map((date) => (
                   <Fragment key={date.isoFormat}>
                     <ListItem
                       onClick={this.selectDate(date)}
@@ -215,37 +209,35 @@ class TicketingView extends React.Component {
               onClick={this.openModal('location')}
             >
               {selectedLocation.city
-                ?
-                  `${selectedLocation.city}, ${selectedLocation.state}`
-                :
-                  'Choose location'
+                ? `${selectedLocation.city}, ${selectedLocation.state}`
+                : 'Choose location'
               }
             </Button>
             <CustomDialog
               open={uiStore.dialog.open && uiStore.dialog.name === 'location'}
-              title="Select Location"
+              title='Select Location'
               handleClose={this.closeDialog}
             >
               <>
-                <FormControl fullWidth variant="outlined">
+                <FormControl fullWidth variant='outlined'>
                   <TextField
                     onChange={this.handleLocationSearch}
                     className={classes.locationTextField}
                     value={location}
-                    label="Enter Location"
-                    variant="outlined"
+                    label='Enter Location'
+                    variant='outlined'
                   />
                 </FormControl>
-                <List aria-label="movie locations" className={classes.locationList}>
-                  
-                  {suggestedLocations.map(location => (
-                    <Fragment key={location.city}>
+                <List aria-label='movie locations' className={classes.locationList}>
+
+                  {suggestedLocations.map((suggestedLocation) => (
+                    <Fragment key={suggestedLocation.city}>
                       <ListItem
                         button
-                        selected={selectedLocation.city === location.city}
-                        onClick={this.selectLocation(location)}
+                        selected={selectedLocation.city === suggestedLocation.city}
+                        onClick={this.selectLocation(suggestedLocation)}
                       >
-                        <ListItemText inset primary={`${location.city}, ${location.state}`} />
+                        <ListItemText inset primary={`${suggestedLocation.city}, ${suggestedLocation.state}`} />
                       </ListItem>
                       <Divider light />
                     </Fragment>
@@ -254,7 +246,7 @@ class TicketingView extends React.Component {
                     <ListItemIcon>
                       <PinDropIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Current location" />
+                    <ListItemText primary='Current location' />
                   </ListItem>
                   <Divider light />
                 </List>
@@ -270,12 +262,12 @@ class TicketingView extends React.Component {
             </Button>
             <CustomDialog
               open={uiStore.dialog.open && uiStore.dialog.name === 'formats'}
-              title="Select Formats"
+              title='Select Formats'
               handleClose={this.closeDialog}
             >
-              <List aria-label="movie formats" className={classes.formatsList}>
+              <List aria-label='movie formats' className={classes.formatsList}>
                 <ListItem button selected>
-                  <ListItemText inset primary="All Formats" />
+                  <ListItemText inset primary='All Formats' />
                 </ListItem>
               </List>
             </CustomDialog>
@@ -283,12 +275,11 @@ class TicketingView extends React.Component {
           <Box>
             {
               seleectedVenues.length
-                ? seleectedVenues.map(seleectedVenue => this.renderVenue(seleectedVenue))
-                : (
-                    <Box className={classes.panelBody}>
-                        Hmm... we couldn't find any showtimes for this date and location.
+                ? seleectedVenues.map((seleectedVenue) => this.renderVenue(seleectedVenue))
+                : (<Box className={classes.panelBody}>
+                      Hmm... we couldn&apos;t find any showtimes for this date and location.
                     </Box>
-                  )
+                )
             }
           </Box>
         </Box>

@@ -1,12 +1,10 @@
 import {
-  container,
-  title,
-  flexCenteredRow,
   flexCenteredColumn,
+  flexCenteredRow,
   flexStartColumn,
-} from "../../../styles/esxStyles.js"
+} from '../../../styles/esxStyles'
 
-const whiteColor = '#ffffff';
+const whiteColor = '#ffffff'
 const buttons = {
   textTransform: 'capitalize',
   backgroundColor: '#0f1a21',
@@ -16,13 +14,13 @@ const buttons = {
   '&:hover': {
     backgroundColor: '#090909',
   },
-};
+}
 const svgIcon = {
   width: '1rem',
   height: '1rem',
 }
 
-export default theme => ({
+export default () => ({
   movieSummaryHero: {
     padding: '16px',
     borderRadius: '4px',
@@ -46,7 +44,7 @@ export default theme => ({
     ...svgIcon,
   },
   watchTrailerButton: {
-    ...buttons
+    ...buttons,
   },
   bookmarkButton: {
     ...buttons,
@@ -82,7 +80,7 @@ export default theme => ({
     color: whiteColor,
   },
   movieTimer: {
-    marginRight: '5px'
+    marginRight: '5px',
   },
   movieSummaryHeroSynopsis: {
     marginBottom: '16px',
@@ -174,9 +172,6 @@ export default theme => ({
     border: '1px solid #FBC43E',
     borderRadius: '4px',
     padding: '5px 20px',
-  },
-  showtimeLink: {
-    textDecoration: 'none',
     marginLeft: '12px',
   },
   showtimeTitle: {
@@ -195,5 +190,5 @@ export default theme => ({
     width: '100%',
     minWidth: '360px',
     padding: '20px',
-  }
+  },
 })

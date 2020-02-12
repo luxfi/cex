@@ -16,6 +16,7 @@ import ContentfulStore from "./ContentfulStore"
 import NewsStore from "./NewsStore"
 import TicketingStore from './TicketingStore'
 import CommentStore from "./CommentStore"
+import TicketCheckoutStore from './TicketCheckoutStore'
 
 const isServer = typeof window === "undefined"
 useStaticRendering(isServer)
@@ -31,6 +32,7 @@ const _initialData = {
   contentfulStore: {},
   newsStore: {},
   ticketingStore: {},
+  ticketCheckoutStore: {},
   commentStore: {},
 }
 
@@ -48,6 +50,7 @@ export default function initializeStore(initialData = _initialData) {
       contentfulStore: new ContentfulStore(initialData.contentfulStore, api),
       newsStore: new NewsStore(initialData.newsStore, api),
       ticketingStore: new TicketingStore(initialData.ticketingStore, api),
+      ticketCheckoutStore: new TicketCheckoutStore(initialData.ticketingStore, api),
       commentStore: new CommentStore(initialData.commentStore, api),
     }
   } else if (store === null) {
@@ -62,6 +65,7 @@ export default function initializeStore(initialData = _initialData) {
       contentfulStore: new ContentfulStore(initialData.contentfulStore, api),
       newsStore: new NewsStore(initialData.newsStore, api),
       ticketingStore: new TicketingStore(initialData.ticketingStore, api),
+      ticketCheckoutStore: new TicketCheckoutStore(initialData.ticketingStore, api),
       commentStore: new CommentStore(initialData.commentStore, api),
     }
 

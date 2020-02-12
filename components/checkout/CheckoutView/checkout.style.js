@@ -1,4 +1,4 @@
-export default theme => ({
+export default () => ({
   outerContainer: {
     marginTop: '64px',
     padding: '0 32px',
@@ -8,21 +8,20 @@ export default theme => ({
     padding: '20px',
   },
   ticketColumnHeader: {
-    width: '33.3%',
     fontSize: '16px',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   ticketColumn: {
-    width: '33.3%',
     fontSize: '16px',
   },
   ticketQuantityContainer: {
-    width: '60%',
+    width: '50%',
     padding: '0 20px',
   },
   tableHeader: {
     padding: '10px 20px',
     border: '1px solid rgba(255,255,255, 0.1)',
+    marginRight: 2,
   },
   tableBody: {
     padding: '40px 20px',
@@ -32,12 +31,16 @@ export default theme => ({
   tableFooter: {
     padding: '20px',
     backgroundColor: '#202b35',
+    marginRight: 1,
   },
   ticketBtn: {
     padding: 0,
     backgroundColor: 'transparent',
     border: 'none',
     cursor: 'pointer',
+  },
+  addBtn: {
+    border: '1px solid #FBC43E',
   },
   buttonIcon: {
     fill: '#FBC43E',
@@ -50,9 +53,10 @@ export default theme => ({
   },
   agePolicyLink: {
     color: '#00aeef',
-    fontSize: '16px',
+    fontSize: '12px',
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    textDecoration: 'none',
   },
   agePolicyLinkIcon: {
     fill: '#00aeef',
@@ -71,7 +75,7 @@ export default theme => ({
     fontSize: '20px',
     fontWeight: 700,
     backgroundColor: '#FBC43E',
-    color: '#090909'
+    color: '#090909',
   },
   subTotalContainer: {
     padding: '60px 20px',
@@ -81,5 +85,5 @@ export default theme => ({
   },
   subTotal: {
     fontSize: '26px',
-  }
+  },
 })
