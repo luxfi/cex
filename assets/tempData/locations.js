@@ -1,7 +1,7 @@
 module.exports = [
   {
     city: 'Fort Worth',
-    state: 'TX'
+    state: 'TX',
   },
   {
     city: 'New York',
@@ -10,5 +10,5 @@ module.exports = [
   {
     city: 'Colonia del Rio Number 1',
     state: 'TX',
-  }
+  },
 ]

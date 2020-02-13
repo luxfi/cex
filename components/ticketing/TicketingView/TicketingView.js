@@ -79,11 +79,11 @@ class TicketingView extends React.Component {
         <Box>
           <Grid className={classes.panelBody} container alignContent='flex-start'>
             <Box className={classes.movieVenueIconContainer}>
-              {/* <img
+              <img
                 className={classes.movieVenueIcon}
-                src="https://images.atomtickets.com/image/upload/v1/client-image-repo/circuit-logo/CinemarkLogoCircle_Red.svg"
-                alt="Logo"
-              /> */}
+                src='https://images.atomtickets.com/image/upload/v1/client-image-repo/circuit-logo/amc-logomark.svg'
+                alt='Logo'
+              />
             </Box>
             <Grid className={classes.movieVenueContainer}>
               <Typography variant='h6' className={classes.movieVenueTitleLink}>
@@ -126,7 +126,7 @@ class TicketingView extends React.Component {
           location,
           suggestedLocations,
           selectedLocation,
-          seleectedVenues,
+          movieVenues,
         },
       },
     } = this.props
@@ -242,7 +242,7 @@ class TicketingView extends React.Component {
                       <Divider light />
                     </Fragment>
                   ))}
-                  <ListItem button>
+                  <ListItem button onClick={this.selectLocation({ city: 'New York', state: 'NY' })}>
                     <ListItemIcon>
                       <PinDropIcon />
                     </ListItemIcon>
@@ -266,7 +266,7 @@ class TicketingView extends React.Component {
               handleClose={this.closeDialog}
             >
               <List aria-label='movie formats' className={classes.formatsList}>
-                <ListItem button selected>
+                <ListItem button selected onClick={this.closeDialog}>
                   <ListItemText inset primary='All Formats' />
                 </ListItem>
               </List>
@@ -274,8 +274,8 @@ class TicketingView extends React.Component {
           </Box>
           <Box>
             {
-              seleectedVenues.length
-                ? seleectedVenues.map((seleectedVenue) => this.renderVenue(seleectedVenue))
+              movieVenues.length
+                ? movieVenues.map((seleectedVenue) => this.renderVenue(seleectedVenue))
                 : (<Box className={classes.panelBody}>
                       Hmm... we couldn&apos;t find any showtimes for this date and location.
                     </Box>

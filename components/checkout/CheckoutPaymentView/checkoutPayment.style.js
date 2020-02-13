@@ -1,4 +1,4 @@
-export default theme => ({
+export default (theme) => ({
   outerContainer: {
     position: 'relative',
     padding: '20px',
@@ -17,7 +17,7 @@ export default theme => ({
   svgIcon: {
     width: '2rem',
     height: '2rem',
-    marginRight: '10px'
+    marginRight: '10px',
   },
   paymentMethodFields: {
     maxWidth: '80%',
@@ -25,11 +25,11 @@ export default theme => ({
     textAlign: 'center',
   },
   formControl: {
-    marginBottom: '10px',
+    marginBottom: '18px',
   },
   proceedButton: {
     color: theme.palette.common.black,
     backgroundColor: '#FBC43E',
     padding: '12px 24px',
-  }
+  },
 })

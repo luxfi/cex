@@ -24,8 +24,6 @@ export default class TicketingStore {
 
   @observable selectedMovie = {}
 
-  @observable seleectedVenues = []
-
   constructor(initialData = {}, hanzoApi) {
     this.dates = movieDates
     this.locations = locations
@@ -66,7 +64,7 @@ export default class TicketingStore {
   }
 
   selectVenues(location) {
-    this.seleectedVenues = this.venues.filter((venueDetail) => !!(venueDetail.showtimeDetails.filter((showtime) => showtime.productionId === this.selectedMovie.productionId).length
+    this.movieVenues = this.venues.filter((venueDetail) => !!(venueDetail.showtimeDetails.filter((showtime) => showtime.productionId === this.selectedMovie.productionId).length
       && venueDetail.venue.address.city === location.city && venueDetail.venue.address.state === location.state
     ))
   }
