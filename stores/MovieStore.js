@@ -9,6 +9,8 @@ export default class MovieStore {
   @observable movies = []
   @observable isLoading = true
   @observable currentMovie = undefined
+  @observable relatedMovies = []
+  @observable autoplayMovies = []
 
   facets = {
     genres: observable.map(),
@@ -161,10 +163,10 @@ export default class MovieStore {
   }
 
   // TODO: Refactor
-  getRelatedMovies(slug) {
+  @action getRelatedMovies(slug) {
     const requestedMovie = this.getMovieBySlug(slug)
     const allMovies = [...this.movies]
-    return allMovies.map(movie => {
+    const relatedMovies = allMovies.map(movie => {
       let score = 0
       movie.genres.some(genre => {
         requestedMovie.genres.includes(genre) ? score++ : null; 
@@ -187,6 +189,13 @@ export default class MovieStore {
       .filter(movie => movie.movieSlug !== slug)
       .sort((a,b) => b.score - a.score)
       .slice(0,10)
+
+    this.autoplayMovies = relatedMovies
+    this.relatedMovies = relatedMovies
+  }
+
+  @action removeVideoFromList() {
+    this.autoplayMovies.shift()
   }
 }
 
@@ -215,6 +224,8 @@ export class Movie {
   @observable financialDescription = ""
   @observable price = 0.00
   @observable valueDelta = 0.00
+  @observable relatedMovies = []
+  @observable autoplayMovies = []
 
   /**
    * Indicates whether changes in this object

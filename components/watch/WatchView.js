@@ -2,13 +2,14 @@ import React from "react"
 import Link from "next/link"
 import { toJS } from "mobx"
 import { inject, observer } from "mobx-react"
-import { withRouter, Router } from "next/router"
+import Router, { withRouter } from "next/router"
 import classNames from "classnames"
 
 import LikeAndUnlike from '../LikeAndUnlike'
 import VideoDescription from './VideoDescription'
 import ShowingNext from './ShowingNext'
 import Comments from '../comments'
+import YoutubePlayer from './YoutubePlayer'
 
 // @material-ui/core components
 import { 
@@ -56,6 +57,32 @@ const ExternalLink = React.forwardRef(
 @observer
 class Index extends React.Component {
 
+  componentDidMount() {
+    const {
+      store: { movieStore },
+      router: { query: { video: movieSlug } }
+    } = this.props;
+    movieStore.getRelatedMovies(movieSlug)
+  }
+
+  getMovieIdFromMovieSlug = (trailerUrl) => {
+    const videoUrlArray = trailerUrl.split('/')
+    return videoUrlArray[videoUrlArray.length - 1]
+  }
+
+  handleRelatedVideoChange = () => {
+    const {
+      store: { movieStore },
+      router,
+    } = this.props;
+
+    if (movieStore.autoplayMovies.length) {
+      const href = `/watch?video=${movieStore.autoplayMovies[0].movieSlug}`
+      Router.push(href, href, { shallow: true })
+      movieStore.removeVideoFromList()
+    }
+  }
+
   render() {
     const { classes, store } = this.props
 
@@ -73,9 +100,15 @@ class Index extends React.Component {
       return
     }
 
+    const { relatedMovies, autoplayMovies } = movieStore
     const movie = movieStore.getMovieBySlug(movieSlug)
-    const relatedMovies = movieStore.getRelatedMovies(movieSlug)
     const comments = commentStore.comments;
+
+    
+    const videoId = this.getMovieIdFromMovieSlug(movie.trailer)
+    const autoplaydMoviesArray = [...autoplayMovies]
+    const autoplayMoviesIds = autoplaydMoviesArray.map(movie => this.getMovieIdFromMovieSlug(movie.trailer))
+    const lastRelatedMovie = relatedMovies[relatedMovies.length - 1] || movie
 
     const addToWatchlist = t => {
       userPortfolio.addToWatchlist(t)
@@ -89,9 +122,18 @@ class Index extends React.Component {
         >
           <Box className={classes.watchGrid}>
             <Box className={classes.videoContainer}>
-              <Box className="video">
+              { 
+                videoId && <YoutubePlayer
+                  elementId="trailerVideo"
+                  videoId={videoId}
+                  playlist={autoplayMoviesIds}
+                  autoPlay={true}
+                  onVideoComplete={this.handleRelatedVideoChange}
+                />
+              }
+              {/* <Box className="video">
                 <iframe className="video-player" src={movie.trailer + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0"} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-              </Box>
+              </Box> */}
             </Box>
             <Box className="video-metadata">
               <h3>{movie.name}</h3>
@@ -149,7 +191,10 @@ class Index extends React.Component {
               </Box>
               <Divider />
             </Box>
-            <ShowingNext relatedMovies={relatedMovies} />
+            <ShowingNext
+              relatedMovies={autoplayMovies.length ? autoplayMovies : relatedMovies}
+              changeHeader={autoplayMovies.length}
+            />
             <Comments identifierId={movie.id} />
           </Box>
         </Box>
