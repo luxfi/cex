@@ -9,8 +9,11 @@ import {
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import { Formik } from 'formik'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
-import { object, string } from 'yup'
+import { number, object, string } from 'yup'
+
 
 
 import AmericanExpress from '../../../assets/svg/AmericanExpress.svg'
@@ -18,52 +21,50 @@ import DiscoverCard from '../../../assets/svg/DiscoverCard.svg'
 import MasterCard from '../../../assets/svg/MasterCard.svg'
 import VisaCard from '../../../assets/svg/VisaCard.svg'
 
-import { creditCardFormat } from '../../../util'
+import { creditCardFormat, slugFromPath } from '../../../util'
 
 import styles from './checkoutPayment.style'
 
-const validationSchema = object().shape({
-  creditCard: string()
-    .required('Required')
-    .matches(/[^0-9]/, 'Invalid credit card'),
-  nameOnCard: string()
-    .required('Required'),
-  expiryMonth: string()
-    .required('Required')
-    .matches(/([0-9]{2})/),
-  expiryYear: string()
-    .required('Required')
-    .matches(/([0-9]{4})/),
-  postalCode: string()
-    .required('Required'),
-  cvc: string()
-    .required('Required')
-    .matches(/([0-9]{3})/),
+const formValidationSchema = object().shape({
+  creditCard: number()
+    .positive('Invalid card number'),
+  nameOnCard: string(),
+  expiryMonth: number()
+    .positive('Invalid expiry month'),
+  expiryYear: number()
+    .positive('Invalid expiry year'),
+  postalCode: number()
+    .positive('Invalid postal code'),
+  cvc: number()
+    .positive('Invalid CVC'),
 })
 
 const CheckoutPaymentView = ({ classes }) => {
+  const router = useRouter();
+  const urlParams = new URLSearchParams(window.location.search)
+  const id = urlParams.get('id')
+  const movieSlug = router.query.slug || slugFromPath()
+
+
   return (
     <Container maxWidth='sm' className={classes.outerContainer}>
       <Typography variant='h6'>Add Payment Method</Typography>
       <Box className={classes.innerContainer}>
         <Formik
           initialValues={{
-            creditCard: '', expiryDate: '', expiryYear: '', postalCode: '', cvc: '',
+            creditCard: '', nameOnCard: '', expiryMonth: '', expiryYear: '', postalCode: '', cvc: '',
           }}
-          validate={validationSchema}
+          validationSchema={formValidationSchema}
           onSubmit={(values, { setSubmitting }) => {}}
         >
           {({
             values,
             errors,
-            touched,
             handleChange,
-            handleBlur,
             handleSubmit,
-            isSubmitting,
           }) => (
             <>
-              <Grid container justify='center' alignItems='center'>
+              <Grid container justify='center' alignItems='center' className={classes.creditCardIconContainer}>
                 <VisaCard className={classes.svgIcon} />
                 <MasterCard className={classes.svgIcon} />
                 <DiscoverCard className={classes.svgIcon} />
@@ -75,13 +76,14 @@ const CheckoutPaymentView = ({ classes }) => {
                     <TextField
                       id='creditCard'
                       label='Credit Card Number'
-                      placeholder='XXXX-XXXX-XXXX-XXXX'
+                      placeholder='XXXX XXXX XXXX XXXX'
                       variant='outlined'
                       size='small'
                       value={creditCardFormat(values.creditCard)}
                       onChange={handleChange}
                       style={{ margin: '0 8px' }}
-                      type='number'
+                      inputProps={{ maxLength: 19 }}
+                      error={!!(errors.creditCard)}
                     />
                   </FormControl>
                   <FormControl fullWidth className={classes.formControl}>
@@ -92,18 +94,20 @@ const CheckoutPaymentView = ({ classes }) => {
                       size='small'
                       onChange={handleChange}
                       style={{ margin: '0 8px' }}
+                      error={!!(errors.nameOnCard)}
                     />
                   </FormControl>
                   <div className={classes.formControl}>
                     <TextField
-                      id='expirtMonth'
+                      id='expiryMonth'
                       label='Expiration Month'
                       placeholder='MM'
                       variant='outlined'
                       size='small'
                       style={{ marginRight: 5 }}
                       onChange={handleChange}
-                      type='number'
+                      inputProps={{ maxLength: 2 }}
+                      error={!!(errors.expiryMonth)}
                     />
                     <TextField
                       id='expiryYear'
@@ -112,10 +116,11 @@ const CheckoutPaymentView = ({ classes }) => {
                       variant='outlined'
                       size='small'
                       onChange={handleChange}
-                      type='number'
+                      inputProps={{ maxLength: 4 }}
+                      error={!!(errors.expiryYear)}
                     />
                   </div>
-                  <div fullWidth className={classes.formControl}>
+                  <div className={classes.formControl}>
                     <TextField
                       id='cvc'
                       label='CVC'
@@ -124,7 +129,8 @@ const CheckoutPaymentView = ({ classes }) => {
                       size='small'
                       style={{ marginRight: 5 }}
                       onChange={handleChange}
-                      type='number'
+                      inputProps={{ maxLength: 3 }}
+                      error={!!(errors.cvc)}
                     />
                     <TextField
                       id='postalCode'
@@ -132,18 +138,24 @@ const CheckoutPaymentView = ({ classes }) => {
                       variant='outlined'
                       size='small'
                       onChange={handleChange}
-                      type='number'
+                      error={!!(errors.postalCode)}
                     />
                   </div>
                 </Box>
-                <Button
-                  id='credit-card-payment'
-                  type='submit'
-                  variant='contained'
-                  className={classes.proceedButton}
+                <Link
+                  href='/confirmPayment'
+                  as={`/confirmPayment/${movieSlug}?id=${id}`}
                 >
-                  PROCEED
-                </Button>
+                  <Button
+                    id='credit-card-payment'
+                    type='submit'
+                    variant='contained'
+                    className={classes.proceedButton}
+                    color='secondary'
+                  >
+                    PROCEED
+                  </Button>
+                </Link>
               </form>
             </>
           )}

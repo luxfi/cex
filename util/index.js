@@ -131,7 +131,7 @@ function creditCardFormat(value = '') {
   }
 
   if (parts.length) {
-    return parts.join('-')
+    return parts.join(' ')
   }
   return value
 }

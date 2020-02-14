@@ -121,7 +121,7 @@ class CheckoutView extends React.Component {
             <Typography variant='h5' className={classes.subTotal}>{formatCurrency(subTotal)}</Typography>
           </Box>
           <Grid>
-            <Link href='/payment' as={`/payment/checkout/${slug}?id=${id}`}>
+            <Link href='/checkoutPayment' as={`/checkoutPayment/${slug}?id=${id}`}>
               <Button className={classes.nextButton}>NEXT</Button>
             </Link>
           </Grid>

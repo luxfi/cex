@@ -32,4 +32,7 @@ export default (theme) => ({
     backgroundColor: '#FBC43E',
     padding: '12px 24px',
   },
+  creditCardIconContainer: {
+    marginBottom: 10,
+  },
 })
