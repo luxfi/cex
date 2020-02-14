@@ -36,22 +36,27 @@ const YoutubePlayer = ({ elementId, videoId, playlist, autoPlay, onVideoComplete
   const loadVideo = () => {
     window.onYouTubePlayerAPIReady = () => {
       player = new YT.Player(elementId, {
-        autoPlay,
-        rel: 0,
+        videoId,
+        playerVars: {
+          autoPlay,
+          rel: 0,
+          modestbranding: 1,
+          playlist: playlist.join(','),
+        },
         events: {
           onReady: onPlayerReady,
-          onStateChange: onPlayerStateChange
+          onStateChange: onPlayerStateChange,
         },
       })
     }
   };
 
   const onPlayerReady = event => {
-    player.loadPlaylist([videoId, ...playlist])
+    event.target.playVideo()
   };
 
   const onPlayerStateChange = event => {
-    if (event.data ===0 ) {
+    if (event.data === 0 ) {
       if (onVideoComplete) {
         onVideoComplete()
       }  

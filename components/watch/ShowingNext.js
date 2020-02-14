@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Link from "next/link"
 import { withRouter } from "next/router"
 import { inject, observer } from "mobx-react"
@@ -10,15 +10,33 @@ import classNames from "classnames"
 
 import styles from "./style.js"
 
-const ShowingNext = ({ classes, relatedMovies = [], changeHeader }) => {
+const ShowingNext = inject('store')(observer((props) => {
+  const {
+    classes,
+    onClick,
+    store: {
+      trailerStore: { relatedMovies, autoplayMovies, autoPlay },
+      trailerStore,
+    }
+  } = props
+  
   const [state, setState] = useState({
-    autoPlay: true,
+    autoPlay: autoPlay,
   })
+
+  useEffect(() => {
+    setState({ ...state, autoPlay })
+    trailerStore.setAutoplay(state.autoPlay)
+  }, [autoPlay])
 
   const handleChecked = (event) => {
     setState({ ...state, autoPlay: event.target.checked })
+    trailerStore.setAutoplay(event.target.checked)
   }
-  
+
+  const showNextMovies = autoplayMovies.length ? autoplayMovies : relatedMovies
+  const changeHeader = autoplayMovies.length
+
   return (
     <Box className={classes.relatedVideos}>
       <Box className={classes.upNextTop}>
@@ -32,12 +50,13 @@ const ShowingNext = ({ classes, relatedMovies = [], changeHeader }) => {
         </Box>
       </Box>
       {
-        relatedMovies.length && (
-          <Link href={`watch?video=${relatedMovies[0].movieSlug}`} key={`showingNext-${relatedMovies[0].id}`}>
-            <a>
+        showNextMovies.length && (
+          <Link
+            href={`watch?video=${showNextMovies[0].movieSlug}`} key={`showingNext-${showNextMovies[0].id}`}>
+            <a onClick={() => onClick(showNextMovies[0].movieSlug)}>
                 <Box className={classes.singleVideo}>
                   <Box className={classes.imageWrapper}>
-                    <img src={relatedMovies[0].heroImg} />
+                    <img src={showNextMovies[0].heroImg} />
                     <Box className={classes.playTime}>
                       <Typography component="span">6:13</Typography>
                     </Box>
@@ -46,7 +65,7 @@ const ShowingNext = ({ classes, relatedMovies = [], changeHeader }) => {
                     <Typography
                       className={classNames(classes.sidebarMovieTitle, classes.maxTwoLines)}
                     >
-                      {relatedMovies[0].name}
+                      {showNextMovies[0].name}
                     </Typography>
                     <Box className={classes.sidebarVideoMeta}>
                       <Typography className={classes.singleLine}>KinoCheck International</Typography>
@@ -60,9 +79,9 @@ const ShowingNext = ({ classes, relatedMovies = [], changeHeader }) => {
       }
       <Divider style={{ margin: '10px 0 0 0'}} />
       {
-        relatedMovies.length && relatedMovies.slice(1).map(movie => (
+        showNextMovies.length && showNextMovies.slice(1).map(movie => (
           <Link href={`watch?video=${movie.movieSlug}`} key={`showingNext-${movie.id}`}>
-            <a>
+            <a onClick={() => onClick(movie.movieSlug)}>
               <Box className={classes.singleVideo}>
                 <Box className={classes.imageWrapper}>
                   <img src={movie.heroImg} />
@@ -88,6 +107,6 @@ const ShowingNext = ({ classes, relatedMovies = [], changeHeader }) => {
       }
     </Box>
   );
-}
+}))
 
 export default withRouter(withStyles(styles)(ShowingNext))

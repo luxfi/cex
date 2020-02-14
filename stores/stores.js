@@ -15,6 +15,7 @@ import UIStore from "./UIStore"
 import ContentfulStore from "./ContentfulStore"
 import NewsStore from "./NewsStore"
 import CommentStore from "./CommentStore"
+import TrailerStore from "./TrailerStore"
 
 const isServer = typeof window === "undefined"
 useStaticRendering(isServer)
@@ -46,6 +47,7 @@ export default function initializeStore(initialData = _initialData) {
       contentfulStore: new ContentfulStore(initialData.contentfulStore, api),
       newsStore: new NewsStore(initialData.newsStore, api),
       commentStore: new CommentStore(initialData.commentStore, api),
+      trailerStore: new TrailerStore(initialData.trailerStore, api),
     }
   } else if (store === null) {
     // Client stuff
@@ -59,6 +61,7 @@ export default function initializeStore(initialData = _initialData) {
       contentfulStore: new ContentfulStore(initialData.contentfulStore, api),
       newsStore: new NewsStore(initialData.newsStore, api),
       commentStore: new CommentStore(initialData.commentStore, api),
+      trailerStore: new TrailerStore(initialData.trailerStore, api),
     }
 
     store.uiStore.loadState()

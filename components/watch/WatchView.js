@@ -56,13 +56,11 @@ const ExternalLink = React.forwardRef(
 @inject("store")
 @observer
 class Index extends React.Component {
-
   componentDidMount() {
     const {
-      store: { movieStore },
       router: { query: { video: movieSlug } }
     } = this.props;
-    movieStore.getRelatedMovies(movieSlug)
+    this.getUpdatedRelatedMovies(movieSlug);
   }
 
   getMovieIdFromMovieSlug = (trailerUrl) => {
@@ -70,16 +68,25 @@ class Index extends React.Component {
     return videoUrlArray[videoUrlArray.length - 1]
   }
 
+  getUpdatedRelatedMovies = (movieSlug, updateAutoplay=true) => {
+    const { store: { trailerStore } } = this.props;
+    trailerStore.getRelatedMovies(movieSlug, updateAutoplay)
+  }
+
   handleRelatedVideoChange = () => {
     const {
-      store: { movieStore },
-      router,
+      store: { trailerStore },
+      router: { query: { video: movieSlug } }
     } = this.props;
 
-    if (movieStore.autoplayMovies.length) {
-      const href = `/watch?video=${movieStore.autoplayMovies[0].movieSlug}`
-      Router.push(href, href, { shallow: true })
-      movieStore.removeVideoFromList()
+    if (trailerStore.autoplayMovies.length) {
+      const href = `/watch?video=${trailerStore.autoplayMovies[0].movieSlug}`
+      Router.push(href, href)
+      trailerStore.removeVideoFromList()
+
+      if (trailerStore.autoplayMovies.length === 1) {
+        this.getUpdatedRelatedMovies(trailerStore.autoplayMovies[0].movieSlug, false)
+      }
     }
   }
 
@@ -94,21 +101,21 @@ class Index extends React.Component {
       userStore,
       userPortfolio,
       commentStore,
+      trailerStore,
     } = this.props.store
 
     if (!movieSlug) {
       return
     }
 
-    const { relatedMovies, autoplayMovies } = movieStore
+    const { relatedMovies, autoplayMovies, likes, unlikes, autoPlay } = trailerStore
     const movie = movieStore.getMovieBySlug(movieSlug)
     const comments = commentStore.comments;
 
     
     const videoId = this.getMovieIdFromMovieSlug(movie.trailer)
-    const autoplaydMoviesArray = [...autoplayMovies]
-    const autoplayMoviesIds = autoplaydMoviesArray.map(movie => this.getMovieIdFromMovieSlug(movie.trailer))
-    const lastRelatedMovie = relatedMovies[relatedMovies.length - 1] || movie
+    const relatedMoviesArray = [...relatedMovies]
+    const relatedMoviesIds = relatedMoviesArray.map(movie => this.getMovieIdFromMovieSlug(movie.trailer))
 
     const addToWatchlist = t => {
       userPortfolio.addToWatchlist(t)
@@ -126,7 +133,7 @@ class Index extends React.Component {
                 videoId && <YoutubePlayer
                   elementId="trailerVideo"
                   videoId={videoId}
-                  playlist={autoplayMoviesIds}
+                  playlist={autoPlay ? relatedMoviesIds : []}
                   autoPlay={true}
                   onVideoComplete={this.handleRelatedVideoChange}
                 />
@@ -192,8 +199,7 @@ class Index extends React.Component {
               <Divider />
             </Box>
             <ShowingNext
-              relatedMovies={autoplayMovies.length ? autoplayMovies : relatedMovies}
-              changeHeader={autoplayMovies.length}
+              onClick={this.getUpdatedRelatedMovies}
             />
             <Comments identifierId={movie.id} />
           </Box>
