@@ -49,7 +49,7 @@ import {
       display: 'grid',
       gridTemplate: 'auto auto auto 1fr/minmax(0,1280px) 410px',
       justifyContent: 'center',
-      paddingTop: 24,
+      paddingTop: 12,
       columnGap: 24,
       gridColumnGap: 20,
       '& .video': {
@@ -188,6 +188,23 @@ import {
     subScribeButtonText: {
       color: '#000',
       fontSize: 12,
+    },
+
+    topNav: {
+      margin: '20px 0 0 0',
+    },
+
+    linkBackButton: {
+      background: YELLOW,
+    },
+
+    linkBackButtonText: {
+      fontSize: 12,
+      color: '#000',
+    },
+
+    linkBackLink: {
+      textDecoration: 'none',
     },
 
     relatedVideos: {

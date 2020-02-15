@@ -34,8 +34,8 @@ const ShowingNext = inject('store')(observer((props) => {
     trailerStore.setAutoplay(event.target.checked)
   }
 
-  const showNextMovies = autoplayMovies.length ? autoplayMovies : relatedMovies
   const changeHeader = autoplayMovies.length
+  const nextVideo = autoplayMovies[0] || {}
 
   return (
     <Box className={classes.relatedVideos}>
@@ -50,36 +50,38 @@ const ShowingNext = inject('store')(observer((props) => {
         </Box>
       </Box>
       {
-        showNextMovies.length && (
-          <Link
-            href={`watch?video=${showNextMovies[0].movieSlug}`} key={`showingNext-${showNextMovies[0].id}`}>
-            <a onClick={() => onClick(showNextMovies[0].movieSlug)}>
-                <Box className={classes.singleVideo}>
-                  <Box className={classes.imageWrapper}>
-                    <img src={showNextMovies[0].heroImg} />
-                    <Box className={classes.playTime}>
-                      <Typography component="span">6:13</Typography>
+        autoplayMovies.length ? (
+          <>
+            <Link
+              href={`watch?video=${autoplayMovies[0].movieSlug}`} key={`showingNext-${autoplayMovies[0].id}`}>
+              <a onClick={() => onClick(autoplayMovies[0].movieSlug)}>
+                  <Box className={classes.singleVideo}>
+                    <Box className={classes.imageWrapper}>
+                      <img src={autoplayMovies[0].heroImg} />
+                      <Box className={classes.playTime}>
+                        <Typography component="span">6:13</Typography>
+                      </Box>
+                    </Box>
+                    <Box className={classes.sidebarVideoInfo}>
+                      <Typography
+                        className={classNames(classes.sidebarMovieTitle, classes.maxTwoLines)}
+                      >
+                        {autoplayMovies[0].name}
+                      </Typography>
+                      <Box className={classes.sidebarVideoMeta}>
+                        <Typography className={classes.singleLine}>KinoCheck International</Typography>
+                        <Typography className={classes.singleLine}>313K views • a day ago</Typography>
+                      </Box>
                     </Box>
                   </Box>
-                  <Box className={classes.sidebarVideoInfo}>
-                    <Typography
-                      className={classNames(classes.sidebarMovieTitle, classes.maxTwoLines)}
-                    >
-                      {showNextMovies[0].name}
-                    </Typography>
-                    <Box className={classes.sidebarVideoMeta}>
-                      <Typography className={classes.singleLine}>KinoCheck International</Typography>
-                      <Typography className={classes.singleLine}>313K views • a day ago</Typography>
-                    </Box>
-                  </Box>
-                </Box>
-              </a>
-          </Link>
-        )
+                </a>
+            </Link>
+            <Divider style={{ margin: '10px 0 0 0'}} />
+          </>
+        ): ('')
       }
-      <Divider style={{ margin: '10px 0 0 0'}} />
       {
-        showNextMovies.length && showNextMovies.slice(1).map(movie => (
+        relatedMovies.length && relatedMovies.map(movie => nextVideo.id == movie.id ? null : (
           <Link href={`watch?video=${movie.movieSlug}`} key={`showingNext-${movie.id}`}>
             <a onClick={() => onClick(movie.movieSlug)}>
               <Box className={classes.singleVideo}>

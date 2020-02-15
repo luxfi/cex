@@ -21,7 +21,8 @@ import {
   Box,
   Switch,
   TextField,
-  Avatar
+  Avatar,
+  ButtonGroup,
 } from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
 import ShareIcon from '@material-ui/icons/Share';
@@ -164,6 +165,21 @@ class Index extends React.Component {
                   >
                     Share
                   </Button>
+                  <Link href={`/film/${movie.movieSlug}`}>
+                    <a className={classes.linkBackLink}>
+                      <Button  className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Movie Page</Typography></Button>
+                    </a>
+                  </Link>
+                  <Link href={`/trade/${movie.movieSlug}`}>
+                    <a className={classes.linkBackLink}>
+                    <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Invest</Typography></Button>
+                    </a>
+                  </Link>
+                  <Link href={`/pro/${movie.movieSlug}`}>
+                    <a className={classes.linkBackLink}>
+                    <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Trade</Typography></Button>
+                    </a>
+                  </Link>                                  
                   <IconButton onClick={() => {}} className={classes.iconButton}>
                     <AddCircleIcon />
                   </IconButton>
