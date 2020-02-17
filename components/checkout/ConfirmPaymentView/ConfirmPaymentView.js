@@ -1,11 +1,12 @@
 import {
   Box,
   Button,
+  Divider,
   Grid,
   Table,
   TableBody,
-  TableRow,
   TableCell,
+  TableRow,
   TextField,
   Typography,
 } from '@material-ui/core'
@@ -14,9 +15,12 @@ import { inject, observer } from 'mobx-react'
 import { withRouter } from 'next/router'
 import React from 'react'
 
-import { slugFromPath } from '../../../util'
+import MasterCardIcon from '../../../assets/svg/MasterCard.svg'
+
+import { formatCurrency, slugFromPath } from '../../../util'
 
 import styles from './confirmPayment.style'
+
 
 @inject('store')
 @observer
@@ -34,22 +38,23 @@ class ConfirmPaymentView extends React.Component {
     const movie = movieStore.getMovieBySlug(movieSlug)
 
     return (
-      <Grid container className={classes.outerContainer} justify='between' alignItems='flex-start' spacing={3}>
-        <Box>
+      <Grid container className={classes.outerContainer} justify='space-evenly' alignItems='flex-start'>
+        <Box className={classes.ticketContainer}>
           <Box>
-            <Typography variant='h6'>Promo Codes</Typography>
-            <Grid container spacing={2} justify='between'>
+            <Typography className={classes.header} variant='h6'>Promo Codes</Typography>
+            <Grid container justify='flex-start' wrap='nowrap' className={classes.promoCodeContainer}>
               <TextField
                 label='Promo Code'
                 variant='outlined'
                 size='small'
+                className={classes.promoCodeInput}
               />
-              <Button>APPLY</Button>
+              <Button className={classes.applyPromoBtn}>APPLY</Button>
             </Grid>
           </Box>
-          <Box>
-            <Typography variant='h6'>Your Order</Typography>
-            <Table>
+          <Box className={classes.ticketOrderContainer}>
+            <Typography className={classes.header} variant='h6'>Your Order</Typography>
+            <Table className={classes.table}>
               <TableBody>
                 <TableRow>
                   <TableCell>
@@ -88,23 +93,19 @@ class ConfirmPaymentView extends React.Component {
           </Box>
           <Box>
             <Typography variant='h6'>Payment Method</Typography>
-            <Table>
-              <TableBody>
-                <TableRow>
-                  <TableCell>
-                    ending in 5438
-                  </TableCell>
-                  <TableCell>
-                    Edit
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>
-                    Add Payment Method
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
+            <Box className={classes.paymentMethodContainer}>
+              <Grid className={classes.editCardSection} container alignItems='center' justify='space-between' wrap='nowrap'>
+                <Grid container alignItems='center'>
+                  <MasterCardIcon className={classes.creditCardIcon}/>
+                  <span>ending in 5463</span>
+                </Grid>
+                <span className={classes.link}>Edit</span>
+              </Grid>
+              <Divider />
+              <Box className={classes.addPaymentSection}>
+                <span className={classes.link}>Add payment method</span>
+              </Box>
+            </Box>
           </Box>
         </Box>
         <Box>
@@ -115,6 +116,15 @@ class ConfirmPaymentView extends React.Component {
             <Box>Monday at 3:45 PM</Box>
           </Box>
         </Box>
+        <Grid container justify='flex-end' alignItems='center' className={classes.subTotalContainer}>
+          <Box>
+            <Typography variant='h6' className={classes.subTotalText}>SUBTOTAL</Typography>
+            <Typography variant='h5' className={classes.subTotal}>{formatCurrency(56)}</Typography>
+          </Box>
+          <Grid>
+            <Button className={classes.buyBtn}>BUY</Button>
+          </Grid>
+        </Grid>
       </Grid>
     )
   }

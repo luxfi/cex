@@ -6,7 +6,7 @@ import { ConfirmPaymentView } from '../components/checkout'
 class ConfirmPayment extends React.Component {
   render() {
     return (
-      <Container component='main' maxWidth='sm'>
+      <Container component='main' maxWidth='md'>
         <ConfirmPaymentView />
       </Container>
     )
