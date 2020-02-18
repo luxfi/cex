@@ -6,13 +6,14 @@ import {
 
 const whiteColor = '#ffffff'
 const buttons = {
+  padding: '10px 20px',
   textTransform: 'capitalize',
-  backgroundColor: '#0f1a21',
+  backgroundColor: '#333',
   borderColor: 'transparent',
   borderRadius: '4px',
   textAlign: 'left',
   '&:hover': {
-    backgroundColor: '#090909',
+    backgroundColor: 'black',
   },
 }
 const svgIcon = {
@@ -24,7 +25,7 @@ export default () => ({
   movieSummaryHero: {
     padding: '16px',
     borderRadius: '4px',
-    backgroundColor: '#202b35',
+    backgroundColor: '#222',
     ...flexCenteredRow,
     alignItems: 'center',
     margin: '32px auto 0',
@@ -97,7 +98,7 @@ export default () => ({
     textAlign: 'left',
     margin: '16px 0',
     padding: '16px',
-    backgroundColor: '#202b35',
+    backgroundColor: '#222',
     position: 'relative',
     borderRadius: '4px',
   },
@@ -126,7 +127,7 @@ export default () => ({
   },
   panelBody: {
     padding: '16px',
-    backgroundColor: '#202b35',
+    backgroundColor: '#222',
     textAlign: 'center',
   },
   movieVenueIconContainer: {
@@ -168,7 +169,7 @@ export default () => ({
   btnShowtime: {
     position: 'relative',
     color: 'white',
-    backgroundColor: '#202b35',
+    backgroundColor: '#222',
     border: '1px solid #FBC43E',
     borderRadius: '4px',
     padding: '5px 20px',
