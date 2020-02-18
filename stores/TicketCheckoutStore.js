@@ -1,8 +1,10 @@
-import { action, observable } from 'mobx'
+import { action, computed, observable } from 'mobx'
 
 import tickets from '../assets/tempData/tickets'
 
 export default class TicketCheckoutStore {
+  serviceFee = 1.7
+
   @observable subTotal = 0
 
   @observable tickets = []
@@ -24,6 +26,10 @@ export default class TicketCheckoutStore {
       selectedTicket.quantity = currentQuantity - 1
       this.subTotal -= selectedTicket.price
     }
+  }
+
+  @computed get total() {
+    return this.subTotal + this.serviceFee
   }
 
   constructor() {

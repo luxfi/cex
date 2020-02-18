@@ -31,6 +31,12 @@ class ConfirmPaymentView extends React.Component {
       router,
       store: {
         movieStore,
+        ticketCheckoutStore: {
+          serviceFee,
+          subTotal,
+          total,
+          tickets,
+        },
       },
     } = this.props
 
@@ -56,20 +62,22 @@ class ConfirmPaymentView extends React.Component {
             <Typography className={classes.header} variant='h6'>Your Order</Typography>
             <Table className={classes.table}>
               <TableBody>
-                <TableRow>
-                  <TableCell>
-                    Adult ticket
-                  </TableCell>
-                  <TableCell>
-                    $2.17
-                  </TableCell>
-                </TableRow>
+                {tickets.map(((ticket) => (
+                  <TableRow key={ticket.category}>
+                    <TableCell>
+                      {ticket.category} ticket
+                    </TableCell>
+                    <TableCell>
+                      {formatCurrency(ticket.price)}
+                    </TableCell>
+                  </TableRow>
+                )))}
                 <TableRow>
                   <TableCell>
                     Subtotal
                   </TableCell>
                   <TableCell>
-                    $5.17
+                    {formatCurrency(subTotal)}
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -77,7 +85,7 @@ class ConfirmPaymentView extends React.Component {
                     Service fee
                   </TableCell>
                   <TableCell>
-                    $1.17
+                    {formatCurrency(serviceFee)}
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -85,7 +93,7 @@ class ConfirmPaymentView extends React.Component {
                     YOUR TOTAL
                   </TableCell>
                   <TableCell>
-                    $9.17
+                    {formatCurrency(total)}
                   </TableCell>
                 </TableRow>
               </TableBody>
@@ -118,8 +126,8 @@ class ConfirmPaymentView extends React.Component {
         </Box>
         <Grid container justify='flex-end' alignItems='center' className={classes.subTotalContainer}>
           <Box>
-            <Typography variant='h6' className={classes.subTotalText}>SUBTOTAL</Typography>
-            <Typography variant='h5' className={classes.subTotal}>{formatCurrency(56)}</Typography>
+            <Typography variant='h6' className={classes.subTotalText}>TOTAL</Typography>
+            <Typography variant='h5' className={classes.subTotal}>{formatCurrency(total)}</Typography>
           </Box>
           <Grid>
             <Button className={classes.buyBtn}>BUY</Button>
