@@ -3,10 +3,10 @@ import React, { useState } from "react"
 import { Button, Typography, Box } from "@material-ui/core"
 
 const VideoDescription = ({ description }) => {
-  const [collapse, setCollapseState] = useState(true);
+  const [collapse, setCollapseState] = useState(true)
 
   const handleClick = () => {
-    setCollapseState(!collapse);
+    setCollapseState(!collapse)
   }
 
   return (
@@ -35,4 +35,4 @@ const VideoDescription = ({ description }) => {
   );
 }
 
-export default VideoDescription;
+export default VideoDescription

@@ -1,74 +1,69 @@
 import React, { useEffect } from 'react'
 import { Box } from '@material-ui/core'
 
-const YoutubePlayer = ({ elementId, videoId, playlist, autoPlay, onVideoComplete }) => {
+const YoutubePlayer = ({
+  elementId,
+  videoId,
+  playlist,
+  autoPlay,
+  handleVideoChange,
+}) => {
   if (!elementId) {
     throw new Error('specify an element id the youtube player will be mounted on')
   }
-  
-  if (!videoId && !playlist ) {
+
+  if (!videoId && !playlist) {
     throw new Error('Youtube player requires a video id or an array of video ids as playlist')
   }
 
   let player
-  
+
   useEffect(() => {
     if (!window.YT) {
-      const tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      window.onYouTubeIframeAPIReady = loadVideo;
+      const tag = document.createElement('script')
+      tag.src = 'https://www.youtube.com/iframe_api'
+      window.onYouTubeIframeAPIReady = loadVideo
 
-      const firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      const firstScriptTag = document.getElementsByTagName('script')[0]
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
     } else {
-      loadVideo();
+      loadVideo()
     }
-  })
+  }, [])
 
   useEffect(() => {
-    loadVideo();
+    console.log(player, '---')
   }, [playlist])
-
-  useEffect(() => {
-    loadVideo();
-  }, [videoId])
 
   const loadVideo = () => {
     window.onYouTubePlayerAPIReady = () => {
       player = new YT.Player(elementId, {
         videoId,
         playerVars: {
-          autoPlay,
+          autoplay: autoPlay ? 1 : 0,
           rel: 0,
           modestbranding: 1,
           playlist: playlist.join(','),
         },
         events: {
-          onReady: onPlayerReady,
           onStateChange: onPlayerStateChange,
         },
       })
     }
-  };
+  }
 
-  const onPlayerReady = event => {
-    event.target.playVideo()
-  };
-
-  const onPlayerStateChange = event => {
-    if (event.data === 0 ) {
-      if (onVideoComplete) {
-        onVideoComplete()
-      }  
+  const onPlayerStateChange = (event) => {
+    const currentVideoIndex = player.getPlaylistIndex()
+    if (event.data === -1) {
+      handleVideoChange(currentVideoIndex)
     }
   }
 
   return (
     <Box className="video">
-      <div id={elementId} className="video-player"></div>
+      <div id={elementId} className="video-player" />
     </Box>
   )
-
 }
 
 export default YoutubePlayer

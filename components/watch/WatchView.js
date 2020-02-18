@@ -1,44 +1,39 @@
-import React from "react"
-import Link from "next/link"
-import { toJS } from "mobx"
-import { inject, observer } from "mobx-react"
-import Router, { withRouter } from "next/router"
-import classNames from "classnames"
+import React from 'react'
+import Link from 'next/link'
+import { inject, observer } from 'mobx-react'
+import Router, { withRouter } from 'next/router'
 
-import LikeAndUnlike from '../LikeAndUnlike'
-import VideoDescription from './VideoDescription'
-import ShowingNext from './ShowingNext'
-import Comments from '../comments'
-import YoutubePlayer from './YoutubePlayer'
+import styles from './style.js'
 
 // @material-ui/core components
-import { 
+import {
+  Box,
   Button,
-  Grid,
-  Typography,
   Divider,
   IconButton,
-  Box,
-  Switch,
-  TextField,
-  Avatar,
-  ButtonGroup,
-} from "@material-ui/core"
-import { withStyles } from "@material-ui/core/styles"
-import ShareIcon from '@material-ui/icons/Share';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+  Typography,
+} from '@material-ui/core'
 
-import CustomLink from "../app/CustomLink"
+import { withStyles } from '@material-ui/core/styles'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
+import ShareIcon from '@material-ui/icons/Share'
+
+import classNames from 'classnames'
+
 // core components
 import {
   CustomBreadcrumbs,
   InvestNow,
-} from "../app"
+} from '../app'
 
-import styles from "./style.js"
+import Comments from '../comments'
+import LikeAndUnlike from '../LikeAndUnlike'
+import ShowingNext from './ShowingNext'
+import VideoDescription from './VideoDescription'
+import YoutubePlayer from './YoutubePlayer'
+
+import { formatNumber, renderDate } from './utils'
 
 const ExternalLink = React.forwardRef(
   ({ className, href, hrefAs, children }, ref) => (
@@ -57,11 +52,15 @@ const ExternalLink = React.forwardRef(
 @inject("store")
 @observer
 class Index extends React.Component {
+  state = {
+    nextMovieIndex: 1,
+  }
+
   componentDidMount() {
     const {
-      router: { query: { video: movieSlug } }
-    } = this.props;
-    this.getUpdatedRelatedMovies(movieSlug);
+      router: { query: { video: movieSlug } },
+    } = this.props
+    this.getUpdatedRelatedMovies(movieSlug)
   }
 
   getMovieIdFromMovieSlug = (trailerUrl) => {
@@ -69,59 +68,72 @@ class Index extends React.Component {
     return videoUrlArray[videoUrlArray.length - 1]
   }
 
-  getUpdatedRelatedMovies = (movieSlug, updateAutoplay=true) => {
-    const { store: { trailerStore } } = this.props;
+  getUpdatedRelatedMovies = (movieSlug, updateAutoplay = true) => {
+    const { store: { trailerStore } } = this.props
     trailerStore.getRelatedMovies(movieSlug, updateAutoplay)
   }
 
-  handleRelatedVideoChange = () => {
+  handleVideoChange = (currentVideoIndex) => {
     const {
       store: { trailerStore },
-      router: { query: { video: movieSlug } }
-    } = this.props;
+    } = this.props
 
-    if (trailerStore.autoplayMovies.length) {
-      const href = `/watch?video=${trailerStore.autoplayMovies[0].movieSlug}`
+    if (currentVideoIndex <= trailerStore.autoplayMovies.length) {
+      const href = `/watch?video=${trailerStore.autoplayMovies[currentVideoIndex].movieSlug}`
       Router.push(href, href)
-      trailerStore.removeVideoFromList()
+      this.getUpdatedRelatedMovies(trailerStore.autoplayMovies[currentVideoIndex].movieSlug, false)
+    }
 
-      if (trailerStore.autoplayMovies.length === 1) {
-        this.getUpdatedRelatedMovies(trailerStore.autoplayMovies[0].movieSlug, false)
-      }
+    if (trailerStore.autoplayMovies.length >= currentVideoIndex + 1) {
+      this.setState({
+        nextMovieIndex: currentVideoIndex + 1,
+      })
+    } else {
+      this.setState({
+        nextMovieIndex: null,
+      })
     }
   }
 
   render() {
     const { classes, store } = this.props
 
-    // get router slug and find article
     const { router } = this.props
     const { video: movieSlug } = router.query
     const {
       movieStore,
       userStore,
       userPortfolio,
-      commentStore,
       trailerStore,
-    } = this.props.store
+    } = store
+
+    const { nextMovieIndex } = this.state
 
     if (!movieSlug) {
       return
     }
 
-    const { relatedMovies, autoplayMovies, likes, unlikes, autoPlay } = trailerStore
+    const {
+      relatedMovies,
+      likes,
+      unlikes,
+      autoPlaySet,
+      subscribers,
+    } = trailerStore
     const movie = movieStore.getMovieBySlug(movieSlug)
-    const comments = commentStore.comments;
+    const autoPlay = autoPlaySet === 'true' || autoPlaySet === true
 
-    
     const videoId = this.getMovieIdFromMovieSlug(movie.trailer)
     const relatedMoviesArray = [...relatedMovies]
-    const relatedMoviesIds = relatedMoviesArray.map(movie => this.getMovieIdFromMovieSlug(movie.trailer))
+    const relatedMoviesIds = relatedMoviesArray.map((relatedMovie) => this.getMovieIdFromMovieSlug(relatedMovie.trailer))
+
+    trailerStore.loadMovieTrailerDetails(movieSlug)
 
     const addToWatchlist = t => {
       userPortfolio.addToWatchlist(t)
     }
 
+    // eslint-disable-next-line consistent-return
     return (
       <>
         <Box
@@ -130,36 +142,36 @@ class Index extends React.Component {
         >
           <Box className={classes.watchGrid}>
             <Box className={classes.videoContainer}>
-              { 
-                videoId && <YoutubePlayer
-                  elementId="trailerVideo"
+              {
+                (videoId && relatedMoviesIds.length) && <YoutubePlayer
+                  elementId='trailerVideo'
                   videoId={videoId}
+                  autoPlay={autoPlay}
                   playlist={autoPlay ? relatedMoviesIds : []}
-                  autoPlay={true}
-                  onVideoComplete={this.handleRelatedVideoChange}
+                  handleVideoChange={this.handleVideoChange}
                 />
               }
               {/* <Box className="video">
                 <iframe className="video-player" src={movie.trailer + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0"} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
               </Box> */}
             </Box>
-            <Box className="video-metadata">
+            <Box className='video-metadata'>
               <h3>{movie.name}</h3>
               <Box className={classes.videoStats}>
-                <Typography component="span">774,900 views</Typography>
+                <Typography component='span'>{`${movie.trailerDetails.views.toLocaleString()} views`}</Typography>
                 <Box className={classes.videoActions}>
                   <Box className={classes.rating}>
                     <LikeAndUnlike
-                      likeCount="1234"
-                      unlikeCount="3004"
+                      likeCount={likes}
+                      unlikeCount={unlikes}
                     />
                     <Box className={classes.likeUnderline}>
                       <Divider />
                     </Box>
                   </Box>
                   <Button
-                    variant="contained"
-                    size="small"
+                    variant='contained'
+                    size='small'
                     className={classes.shareButton}
                     startIcon={<ShareIcon />}
                   >
@@ -167,7 +179,7 @@ class Index extends React.Component {
                   </Button>
                   <Link href={`/film/${movie.movieSlug}`}>
                     <a className={classes.linkBackLink}>
-                      <Button  className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Movie Page</Typography></Button>
+                      <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Movie Page</Typography></Button>
                     </a>
                   </Link>
                   <Link href={`/trade/${movie.movieSlug}`}>
@@ -179,7 +191,7 @@ class Index extends React.Component {
                     <a className={classes.linkBackLink}>
                     <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Trade</Typography></Button>
                     </a>
-                  </Link>                                  
+                  </Link>
                   <IconButton onClick={() => {}} className={classes.iconButton}>
                     <AddCircleIcon />
                   </IconButton>
@@ -194,20 +206,20 @@ class Index extends React.Component {
             </Box>
             <Box>
               <Box className={classes.videoInfoBox}>
-                <img src="https://yt3.ggpht.com/a/AGF-l78o8C7mo9M3Dmcii6u_pfOt3I9dBS8n8zwVmQ=s240-c-k-c0xffffffff-no-rj-mo" className={classes.videoInfoImage} />
+                <img src={movie.distributorImg} className={classes.videoInfoImage} alt={movie.distributors[0]} />
                 <Box className={classes.videoInfo}>
-                  <Typography className={classes.channelName}>FilmSpot Trailer</Typography>
-                  <Typography className={classes.videoPubDate}>Sun Feb 02 2020</Typography>
+                  <Typography className={classes.channelName}>{movie.distributors[0]}</Typography>
+            <Typography className={classes.videoPubDate}>{renderDate(movie.trailerDetails.createdAt, 'dddd MMM Do YYYY')}</Typography>
                 </Box>
                 <Button
                   className={classes.subScribeButton}
-                  size="small"
+                  size='small'
                 >
                   <Typography
-                    variant="body1"
+                    variant='body1'
                     className={classes.subScribeButtonText}
                   >
-                    Subscribe 3.4M
+                    {`SUBSCRIBE ${formatNumber(subscribers, 1)}`}
                   </Typography>
                 </Button>
                 <VideoDescription description={movie.longDescription} />
@@ -216,15 +228,16 @@ class Index extends React.Component {
             </Box>
             <ShowingNext
               onClick={this.getUpdatedRelatedMovies}
+              nextMovieIndex={nextMovieIndex}
             />
             <Comments identifierId={movie.id} />
           </Box>
         </Box>
         <Box
           className={classNames(classes.container)}
-          style={{ paddingLeft: "0px", paddingRight: "0px" }}
+          style={{ paddingLeft: '0px', paddingRight: '0px' }}
         >
-          {!userStore.token ? <InvestNow /> : ""}
+          {!userStore.token ? <InvestNow /> : ''}
         </Box>
       </>
     )

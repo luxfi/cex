@@ -28,6 +28,14 @@ function parseDescription(str) {
   return str
 }
 
+function randomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+function randomDate(start, end) {
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
+}
+
 // Parse movies.csv and process film data lightly
 function parseMovies() {
   let data = csv
@@ -55,6 +63,17 @@ function parseMovies() {
     movie.director         = movie.directors
     movie.genre            = movie.genres
     movie.writer           = movie.writers
+
+    // data for new trailer video experience
+    movie.trailerDetails   = {
+                              duration: randomNumber(130, 240),
+                              likes: randomNumber(100, 700000),
+                              unlikes: randomNumber(100, 10000),
+                              subscribers: randomNumber(200000, 5000000),
+                              views: randomNumber(60000, 4000000),
+                              createdAt: randomDate(new Date(2019, 12, 12), new Date()),
+                            }
+    movie.distributorImg   = 'http://placehold.it/32x32'
 
     data[i] = movie
   }

@@ -5,7 +5,7 @@ import stores from './stores'
 export default class TrailerStore {
   @observable relatedMovies = []
   @observable autoplayMovies = []
-  @observable autoPlay = false
+  @observable autoPlaySet = true
   @observable likes = 0
   @observable unlikes = 0
   @observable views = 0
@@ -16,7 +16,7 @@ export default class TrailerStore {
     this.api = hanzoApi
     this.getAutoPlay()
   }
-  
+
   getComments(identifierId) {
     // mock api call
     try {
@@ -49,32 +49,39 @@ export default class TrailerStore {
       return {
         score,
         ...movie,
-      }     
+      }
     })
-      .filter(movie => movie.movieSlug !== slug)
-      .sort((a,b) => b.score - a.score)
-      .slice(0,10)
+      .filter((movie) => movie.movieSlug !== slug)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 10)
 
     if (updateAutoplayMovies) {
-      this.autoplayMovies = relatedMovies
+      this.autoplayMovies = [requestedMovie, ...relatedMovies]
     }
     this.relatedMovies = relatedMovies
   }
 
-  @action removeVideoFromList() {
-    this.autoplayMovies.shift()
-  }
-
   @action setAutoplay(value) {
-    this.autoPlay = value
+    this.autoPlaySet = value
     localStorage.setItem('autoplay', value)
   }
 
   @action getAutoPlay() {
     const value = localStorage.getItem('autoplay')
-    this.autoPlay = value
+    if (value) {
+      this.autoPlaySet = value
+    }
   }
-  
+
+
+  @action loadMovieTrailerDetails(slug) {
+    const movieStore = stores().movieStore
+    const movie = movieStore.getMovieBySlug(slug)
+    const { trailerDetails } = movie
+
+    this.likes = trailerDetails.likes
+    this.unlikes = trailerDetails.unlikes
+    this.views = trailerDetails.views
+    this.subscribers = trailerDetails.subscribers
+  }
 }
-
-

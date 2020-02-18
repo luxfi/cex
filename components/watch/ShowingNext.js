@@ -1,94 +1,100 @@
-import React, { useState, useEffect } from "react"
-import Link from "next/link"
-import { withRouter } from "next/router"
-import { inject, observer } from "mobx-react"
+import React, { useState } from 'react'
+import { inject, observer } from 'mobx-react'
+import Link from 'next/link'
+import { withRouter } from 'next/router'
+import classNames from 'classnames'
 
-import { Button, Typography, Divider, Box, Switch } from "@material-ui/core"
-import { withStyles } from "@material-ui/core/styles"
+import {
+  Box, Divider, Switch, Typography,
+} from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
 
-import classNames from "classnames"
+import { formatDuration, formatNumber, calculateDateFrom } from './utils'
 
-import styles from "./style.js"
+import styles from './style.js'
 
 const ShowingNext = inject('store')(observer((props) => {
   const {
     classes,
     onClick,
     store: {
-      trailerStore: { relatedMovies, autoplayMovies, autoPlay },
+      trailerStore: {
+        relatedMovies,
+        autoplayMovies,
+        autoPlaySet,
+      },
       trailerStore,
-    }
+    },
+    nextMovieIndex,
   } = props
-  
+
   const [state, setState] = useState({
-    autoPlay: autoPlay,
+    autoPlay: autoPlaySet,
   })
 
-  useEffect(() => {
-    setState({ ...state, autoPlay })
-    trailerStore.setAutoplay(state.autoPlay)
-  }, [autoPlay])
-
   const handleChecked = (event) => {
-    setState({ ...state, autoPlay: event.target.checked })
+    setState({
+      autoPlay: event.target.checked,
+    })
+
     trailerStore.setAutoplay(event.target.checked)
   }
 
-  const changeHeader = autoplayMovies.length
-  const nextVideo = autoplayMovies[0] || {}
+  const nextVideo = autoplayMovies[nextMovieIndex] || {}
+  const showNext = nextMovieIndex !== null && nextMovieIndex < autoplayMovies.length
 
   return (
     <Box className={classes.relatedVideos}>
       <Box className={classes.upNextTop}>
-        <Typography variant="h4" className="title">{ changeHeader ? 'Up next' : 'Related Movies' }</Typography>
+        <Typography variant='h4' className='title'>{ showNext ? 'Up next' : 'Related Movies' }</Typography>
         <Box className={classes.upNextToggle}>
-          <Typography component="span">Autoplay</Typography>
+          <Typography component='span'>Autoplay</Typography>
           <Switch
-            checked={state.autoPlay}
+            checked={state.autoPlay === 'true' || state.autoPlay === true}
             onChange={handleChecked}
           />
         </Box>
       </Box>
       {
-        autoplayMovies.length ? (
+        showNext ? (
           <>
             <Link
-              href={`watch?video=${autoplayMovies[0].movieSlug}`} key={`showingNext-${autoplayMovies[0].id}`}>
-              <a onClick={() => onClick(autoplayMovies[0].movieSlug)}>
+              href={`watch?video=${nextVideo.movieSlug}`} key={`showingNext-${nextVideo.id}`}>
+              <a onClick={() => onClick(nextVideo.movieSlug)}>
                   <Box className={classes.singleVideo}>
                     <Box className={classes.imageWrapper}>
-                      <img src={autoplayMovies[0].heroImg} />
+                      <img src={nextVideo.heroImg} alt={nextVideo.name} />
                       <Box className={classes.playTime}>
-                        <Typography component="span">6:13</Typography>
+                        <Typography component='span'>{formatDuration(nextVideo.trailerDetails.duration)}</Typography>
                       </Box>
                     </Box>
                     <Box className={classes.sidebarVideoInfo}>
                       <Typography
                         className={classNames(classes.sidebarMovieTitle, classes.maxTwoLines)}
                       >
-                        {autoplayMovies[0].name}
+                        {nextVideo.name}
                       </Typography>
                       <Box className={classes.sidebarVideoMeta}>
-                        <Typography className={classes.singleLine}>KinoCheck International</Typography>
-                        <Typography className={classes.singleLine}>313K views • a day ago</Typography>
+                        <Typography className={classes.singleLine}>{nextVideo.distributors[0]}</Typography>
+                        <Typography className={classes.singleLine}>{`${formatNumber(nextVideo.trailerDetails.views, 1)} views • ${calculateDateFrom(nextVideo.trailerDetails.createdAt)}`}</Typography>
                       </Box>
                     </Box>
                   </Box>
                 </a>
             </Link>
-            <Divider style={{ margin: '10px 0 0 0'}} />
+            <Divider style={{ margin: '10px 0 0 0' }} />
           </>
-        ): ('')
+        ) : ('')
       }
       {
-        relatedMovies.length && relatedMovies.map(movie => nextVideo.id == movie.id ? null : (
+        relatedMovies.length && relatedMovies.map((movie) => (nextVideo.id === movie.id ? null : (
           <Link href={`watch?video=${movie.movieSlug}`} key={`showingNext-${movie.id}`}>
             <a onClick={() => onClick(movie.movieSlug)}>
               <Box className={classes.singleVideo}>
                 <Box className={classes.imageWrapper}>
-                  <img src={movie.heroImg} />
+                  <img src={movie.heroImg} alt={movie.name} />
                   <Box className={classes.playTime}>
-                    <Typography component="span">3:10</Typography>
+                    <Typography component='span'>{formatDuration(movie.trailerDetails.duration)}</Typography>
                   </Box>
                 </Box>
                 <Box className={classes.sidebarVideoInfo}>
@@ -98,17 +104,17 @@ const ShowingNext = inject('store')(observer((props) => {
                     {movie.name}
                   </Typography>
                   <Box className={classes.sidebarVideoMeta}>
-                    <Typography className={classes.singleLine}>FilmSpot Trailer</Typography>
-                    <Typography className={classes.singleLine}>35K views • a day ago</Typography>
+                    <Typography className={classes.singleLine}>{movie.distributors[0]}</Typography>
+                    <Typography className={classes.singleLine}>{`${formatNumber(movie.trailerDetails.views, 1)} views • ${calculateDateFrom(movie.trailerDetails.createdAt)}`}</Typography>
                   </Box>
                 </Box>
               </Box>
             </a>
           </Link>
-        ))
+        )))
       }
     </Box>
-  );
+  )
 }))
 
 export default withRouter(withStyles(styles)(ShowingNext))

@@ -35,7 +35,7 @@ const AddComment = inject('store')(observer(({
       onCancel()
     }
   }
-    
+
   const handleFocus = () => {
     setState({ ...state, showButtons: true })
   }
@@ -51,13 +51,13 @@ const AddComment = inject('store')(observer(({
 
   return (
     <Box className={classNames('add-comment', classes.comment)}>
-      <Avatar src="https://yt3.ggpht.com/a/AGF-l7-p9SFzNRQ3p9NhtvFXwgFTTsZ9bH0XamJ2vw=s48-c-k-c0xffffffff-no-rj-mo" className={classes.commentImage} />
+      <Avatar src="http://placehold.it/32x32" className={classes.commentImage} />
       <Box className={classes.commentInputArea}>
         <TextField
           value={state.comment}
           onFocus={handleFocus}
           InputProps={{
-            className: classes.addCommentInput
+            className: classes.addCommentInput,
           }}
           rows={numOfRows || 3}
           placeholder="add a commment"
