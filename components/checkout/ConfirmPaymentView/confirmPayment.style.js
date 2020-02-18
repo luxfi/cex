@@ -15,7 +15,7 @@ export default () => ({
     height: '300px',
   },
   promoCodeContainer: {
-    backgroundColor: '#202b35',
+    backgroundColor: '#222',
     padding: 12,
   },
   header: {
@@ -33,7 +33,7 @@ export default () => ({
     margin: '18px 0',
   },
   table: {
-    backgroundColor: '#202b35',
+    backgroundColor: '#222',
   },
   creditCardIcon: {
     width: 18,
@@ -41,7 +41,7 @@ export default () => ({
     marginRight: 5,
   },
   paymentMethodContainer: {
-    backgroundColor: '#202b35',
+    backgroundColor: '#222',
     padding: 12,
   },
   editCardSection: {

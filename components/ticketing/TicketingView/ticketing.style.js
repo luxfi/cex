@@ -155,7 +155,7 @@ export default () => ({
   },
   showtimeSchedules: {
     padding: '16px',
-    backgroundColor: '#0f1a21',
+    backgroundColor: '#fac54c',
   },
   formatShowtimesList: {
     listStyle: 'none',

@@ -26,11 +26,11 @@ export default () => ({
   tableBody: {
     padding: '40px 20px',
     borderBottom: '1px solid rgba(255,255,255,0.1)',
-    backgroundColor: '#202b35',
+    backgroundColor: '#222',
   },
   tableFooter: {
     padding: '20px',
-    backgroundColor: '#202b35',
+    backgroundColor: '#222',
     marginRight: 1,
   },
   ticketBtn: {

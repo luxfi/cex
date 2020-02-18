@@ -2,7 +2,7 @@ export const dialogTitleStyles = theme => ({
   root: {
     margin: 0,
     padding: theme.spacing(2),
-    backgroundColor: '#30363e',
+    backgroundColor: '#313131',
     textAlign: 'center',
     color: theme.palette.white,
   },
@@ -21,7 +21,7 @@ export const dialogTitleStyles = theme => ({
 export const dialogContentStyles = theme => ({
   root: {
     padding: '20px',
-    backgroundColor: '#202b35',
+    backgroundColor: '#222',
   },
 })
 

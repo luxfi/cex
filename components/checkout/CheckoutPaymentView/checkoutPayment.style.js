@@ -9,7 +9,7 @@ export default (theme) => ({
   },
   innerContainer: {
     padding: '20px',
-    backgroundColor: '#202b35',
+    backgroundColor: '#222',
   },
   paymentIconContainer: {
     marginBottom: '2px',
