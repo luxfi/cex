@@ -11,7 +11,7 @@ import SortComments from './SortComments'
 
 import styles from './styles/comments.style'
 
-@inject("store")
+@inject('store')
 @observer
 class Comments extends Component {
   componentDidMount() {
@@ -21,17 +21,17 @@ class Comments extends Component {
 
   render() {
     const { classes, store, identifierId } = this.props
-    const { 
+    const {
       isLoading,
       comments,
       comments: {
-        pagination: { totalResults = '' } = {}
-      } = {}
+        pagination: { totalResults = '' } = {},
+      } = {},
     } = store.commentStore
 
     const userComments = comments && comments.comments
-    
-    return(
+
+    return (
       <Box className={classes.commentWrapper}>
         {
          isLoading ? (
@@ -39,9 +39,9 @@ class Comments extends Component {
             <CircularProgress />
           </Box>
          ) : (
-          <>
+           <>
             <Box className={classes.commentHeader}>
-              <Typography component="h4">{`${totalResults || 0} Comments`}</Typography>
+              <Typography component='h4'>{`${totalResults || 0} Comments`}</Typography>
               {comments && <SortComments />}
             </Box>
             <AddComment
@@ -49,11 +49,11 @@ class Comments extends Component {
               identifierId={identifierId}
             />
             <DisplayComments comments={userComments} />
-          </>
-         ) 
+           </>
+         )
         }
       </Box>
-    );
+    )
   }
 }
 

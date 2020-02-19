@@ -4,12 +4,13 @@ import commentsFromJSON from '../assets/tempData/comments'
 export default class CommentStore {
   @observable comments = {}
   @observable isLoading = true
+  @observable sortBy = 'recent'
 
   constructor(initialData = {}, hanzoApi) {
     // Pass down the Hanzo API through a central point
     this.api = hanzoApi
   }
-  
+
   getComments(identifierId) {
     // mock api call
     try {
@@ -31,7 +32,17 @@ export default class CommentStore {
     console.log('comment added: ', commentObject)
   }
 
-  
+  @action sortComments(sortBy) {
+    const sortOptions = {
+      recent: (a, b) => new Date(a.publishedAt) - new Date(b.publishedAt),
+      top: (a, b) => b.likeCount - a.likeCount,
+    }
+
+    if (!sortOptions[sortBy]) {
+      return
+    }
+    this.sortBy = sortBy
+    const sorted = this.comments.comments.slice().sort(sortOptions[sortBy])
+    this.comments.comments = sorted
+  }
 }
-
-

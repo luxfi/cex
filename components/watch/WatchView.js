@@ -17,7 +17,6 @@ import {
 import { withStyles } from '@material-ui/core/styles'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
-import ShareIcon from '@material-ui/icons/Share'
 
 import classNames from 'classnames'
 
@@ -32,6 +31,7 @@ import LikeAndUnlike from '../LikeAndUnlike'
 import ShowingNext from './ShowingNext'
 import VideoDescription from './VideoDescription'
 import YoutubePlayer from './YoutubePlayer'
+import Share from './Share'
 
 import { formatNumber, renderDate } from './utils'
 
@@ -80,7 +80,7 @@ class Index extends React.Component {
 
     if (currentVideoIndex <= trailerStore.autoplayMovies.length) {
       const href = `/watch?video=${trailerStore.autoplayMovies[currentVideoIndex].movieSlug}`
-      Router.push(href, href)
+      Router.push(href, href, { shallow: true })
       this.getUpdatedRelatedMovies(trailerStore.autoplayMovies[currentVideoIndex].movieSlug, false)
     }
 
@@ -115,6 +115,7 @@ class Index extends React.Component {
 
     const {
       relatedMovies,
+      autoplayMovies,
       likes,
       unlikes,
       autoPlaySet,
@@ -138,22 +139,26 @@ class Index extends React.Component {
       <>
         <Box
           className="MuiContainer-maxWidthXl"
-          style={{ padding: '50px 20px'}}
+          style={{ padding: '50px 20px' }}
         >
           <Box className={classes.watchGrid}>
             <Box className={classes.videoContainer}>
               {
-                (videoId && relatedMoviesIds.length) && <YoutubePlayer
+                autoPlay ? (
+                  (videoId && relatedMoviesIds.length) && <YoutubePlayer
                   elementId='trailerVideo'
                   videoId={videoId}
                   autoPlay={autoPlay}
                   playlist={autoPlay ? relatedMoviesIds : []}
+                  autoplayMovies={autoplayMovies}
                   handleVideoChange={this.handleVideoChange}
                 />
+                ) : (
+                  <Box className='video'>
+                    <iframe className='video-player' src={movie.trailer + '?autoplay=0&amp;modestbranding=1&amp;showinfo=0'} frameBorder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowFullScreen></iframe>
+                  </Box>
+                )
               }
-              {/* <Box className="video">
-                <iframe className="video-player" src={movie.trailer + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0"} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-              </Box> */}
             </Box>
             <Box className='video-metadata'>
               <h3>{movie.name}</h3>
@@ -169,14 +174,7 @@ class Index extends React.Component {
                       <Divider />
                     </Box>
                   </Box>
-                  <Button
-                    variant='contained'
-                    size='small'
-                    className={classes.shareButton}
-                    startIcon={<ShareIcon />}
-                  >
-                    Share
-                  </Button>
+                  <Share classes={classes} shareUrl={`http://localhost:3000/film/${movie.movieSlug}`} message={movie.longDescription} />
                   <Link href={`/film/${movie.movieSlug}`}>
                     <a className={classes.linkBackLink}>
                       <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Movie Page</Typography></Button>
@@ -209,7 +207,7 @@ class Index extends React.Component {
                 <img src={movie.distributorImg} className={classes.videoInfoImage} alt={movie.distributors[0]} />
                 <Box className={classes.videoInfo}>
                   <Typography className={classes.channelName}>{movie.distributors[0]}</Typography>
-            <Typography className={classes.videoPubDate}>{renderDate(movie.trailerDetails.createdAt, 'dddd MMM Do YYYY')}</Typography>
+                  <Typography className={classes.videoPubDate}>{renderDate(movie.trailerDetails.createdAt, 'dddd MMM Do YYYY')}</Typography>
                 </Box>
                 <Button
                   className={classes.subScribeButton}

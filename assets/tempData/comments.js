@@ -23,7 +23,7 @@ module.exports = {
       "likeCount": 12,
       "unlikeCount": 11,
       "isPublic": true,
-      "publishedAt": "Fri Feb 07 2020 19:05:22 GMT+0000 (UTC)",
+      "publishedAt": "Tue Feb 04 2020 19:05:22 GMT+0000 (UTC)",
       "updatedAt": "Fri Feb 07 2020 19:05:22 GMT+0000 (UTC)"
     },
     {
@@ -43,7 +43,7 @@ module.exports = {
       "likeCount": 26,
       "unlikeCount": 21,
       "isPublic": true,
-      "publishedAt": "Fri Feb 07 2020 19:05:22 GMT+0000 (UTC)",
+      "publishedAt": "Wed Feb 05 2020 19:05:22 GMT+0000 (UTC)",
       "updatedAt": "Fri Feb 07 2020 19:05:22 GMT+0000 (UTC)"
     },
     {
@@ -62,8 +62,8 @@ module.exports = {
       "parentCommentId": "UC_x5XG1OV2P6uZZ5FSM9Ttw",
       "likeCount": 8,
       "unlikeCount": 16,
-      "isPublic": false,
-      "publishedAt": "Fri Feb 07 2020 19:05:22 GMT+0000 (UTC)",
+      "isPublic": true,
+      "publishedAt": "Thur Feb 06 2020 19:05:22 GMT+0000 (UTC)",
       "updatedAt": "Fri Feb 07 2020 19:05:22 GMT+0000 (UTC)"
     },
     {
@@ -82,7 +82,7 @@ module.exports = {
       "parentCommentId": "UC_x5XG1OV2P6uZZ5FSM9Ttw",
       "likeCount": 24,
       "unlikeCount": 1,
-      "isPublic": false,
+      "isPublic": true,
       "publishedAt": "Fri Feb 07 2020 19:05:22 GMT+0000 (UTC)",
       "updatedAt": "Fri Feb 07 2020 19:05:22 GMT+0000 (UTC)"
     },
@@ -142,7 +142,7 @@ module.exports = {
       "parentCommentId": "UC_x5XG1OV2P6uZZ5FSM9Ttw",
       "likeCount": 29,
       "unlikeCount": 8,
-      "isPublic": true,
+      "isPublic": false,
       "publishedAt": "Fri Feb 07 2020 19:05:22 GMT+0000 (UTC)",
       "updatedAt": "Fri Feb 07 2020 19:05:22 GMT+0000 (UTC)"
     },
