@@ -190,12 +190,11 @@ class Index extends React.Component {
                     <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Trade</Typography></Button>
                     </a>
                   </Link>
-                  <IconButton onClick={() => {}} className={classes.iconButton}>
-                    <AddCircleIcon />
-                  </IconButton>
-                  <IconButton onClick={() => {}} className={classes.iconButton}>
-                    <MoreHorizIcon />
-                  </IconButton>
+                  <Link href={`/ticketing/${movie.movieSlug}`}>
+                    <a className={classes.linkBackLink}>
+                    <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Buy Tickets</Typography></Button>
+                    </a>
+                  </Link>
                 </Box>
               </Box>
               <Box style={{ margin: '0 0 20px 0' }}>
@@ -209,17 +208,25 @@ class Index extends React.Component {
                   <Typography className={classes.channelName}>{movie.distributors[0]}</Typography>
                   <Typography className={classes.videoPubDate}>{renderDate(movie.trailerDetails.createdAt, 'dddd MMM Do YYYY')}</Typography>
                 </Box>
-                <Button
-                  className={classes.subScribeButton}
-                  size='small'
-                >
-                  <Typography
-                    variant='body1'
-                    className={classes.subScribeButtonText}
+                <Box className={classes.subShare}>
+                  <IconButton onClick={() => {}} className={classes.iconButton}>
+                    <AddCircleIcon />
+                  </IconButton>
+                  <IconButton onClick={() => {}} className={classes.iconButton}>
+                    <MoreHorizIcon />
+                  </IconButton>
+                  <Button
+                    className={classes.subScribeButton}
+                    size='small'
                   >
-                    {`SUBSCRIBE ${formatNumber(subscribers, 1)}`}
-                  </Typography>
-                </Button>
+                    <Typography
+                      variant='body1'
+                      className={classes.subScribeButtonText}
+                    >
+                      {`SUBSCRIBE ${formatNumber(subscribers, 1)}`}
+                    </Typography>
+                  </Button>
+                </Box>
                 <VideoDescription description={movie.longDescription} />
               </Box>
               <Divider />
