@@ -11,4 +11,8 @@ module.exports = [
     city: 'Colonia del Rio Number 1',
     state: 'TX',
   },
+  {
+    city: 'Santa Monica',
+    state: 'CA',
+  },
 ]

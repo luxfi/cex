@@ -130,6 +130,9 @@ export default () => ({
     backgroundColor: '#222',
     textAlign: 'center',
   },
+  movieVenue: {
+    marginBottom: 24,
+  },
   movieVenueIconContainer: {
     width: '64px',
     height: '64px',
@@ -157,14 +160,8 @@ export default () => ({
     padding: '16px',
     backgroundColor: '#fac54c',
   },
-  formatShowtimesList: {
-    listStyle: 'none',
-    marginLeft: '30px',
-    padding: '8px 4px 4px 8px',
-    overflow: 'auto',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  formatContainer: {
+    width: '30%',
   },
   btnShowtime: {
     position: 'relative',
@@ -177,6 +174,8 @@ export default () => ({
   },
   showtimeTitle: {
     fontSize: '18px',
+    color: '#2d2d2d',
+    fontWeight: 'bold',
   },
   datesList: {
     width: '100%',

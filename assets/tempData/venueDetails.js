@@ -277,4 +277,786 @@ module.exports = [
       },
     },
   },
+  {
+    venue: {
+      id: 'C00142302674',
+      name: 'AMC Santa Monica 7',
+      address: {
+        line: '1310 3rd Street',
+        city: 'Santa Monica',
+        state: 'CA',
+        postal: '90291',
+        lat: 34.010929,
+        lon: -118.491508,
+      },
+      properties: {
+        supportsConcessions: true,
+        supported: true,
+      },
+    },
+    showtimeDetails: [
+      {
+        showtimeId: 'D00202331695',
+        productionId: 'B00422246210',
+        venueId: 'C00142302674',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T18:00:00Z',
+        localShowtimeStart: '2020-02-16T12:00:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D0043524792',
+        productionId: 'B00422246210',
+        venueId: 'C00142302674',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T18:40:00Z',
+        localShowtimeStart: '2020-02-16T12:40:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00658206365',
+        productionId: 'B00422246210',
+        venueId: 'C00142302674',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T20:30:00Z',
+        localShowtimeStart: '2020-02-16T14:30:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00117971360',
+        productionId: 'B00422246210',
+        venueId: 'C00142302674',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T21:35:00Z',
+        localShowtimeStart: '2020-02-16T15:35:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00117971364',
+        productionId: 'B00422246210',
+        venueId: 'C00142302674',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T23:00:00Z',
+        localShowtimeStart: '2020-02-16T18:00:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+    ],
+  },
+  {
+    venue: {
+      id: 'C00142302675',
+      name: 'AMC Century City 15',
+      address: {
+        line: '10250 Santa Monica Blvd, 2000',
+        city: 'Los Angeles',
+        state: 'CA',
+        postal: '90291',
+        lat: 34.010929,
+        lon: -118.491508,
+      },
+      properties: {
+        supportsConcessions: true,
+        supported: true,
+      },
+    },
+    showtimeDetails: [
+      {
+        showtimeId: 'D00207331691',
+        productionId: 'B00422246210',
+        venueId: 'C00142302675',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T18:00:00Z',
+        localShowtimeStart: '2020-02-16T12:00:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00207331692',
+        productionId: 'B00422246210',
+        venueId: 'C00142302675',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T18:40:00Z',
+        localShowtimeStart: '2020-02-16T12:40:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00207331693',
+        productionId: 'B00422246210',
+        venueId: 'C00142302675',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T20:30:00Z',
+        localShowtimeStart: '2020-02-16T14:30:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00207331694',
+        productionId: 'B00422246210',
+        venueId: 'C00142302675',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T21:35:00Z',
+        localShowtimeStart: '2020-02-16T15:35:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00207331695',
+        productionId: 'B00422246210',
+        venueId: 'C00142302675',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T21:35:00Z',
+        localShowtimeStart: '2020-02-16T18:00:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+    ],
+  },
+  {
+    venue: {
+      id: 'C00142302676',
+      name: 'Cinépolis Luxury Cinemas Pacific Palisades',
+      address: {
+        line: '15255 Palisades Drive',
+        city: 'Pacific Palisades',
+        state: 'CA',
+        postal: '90291',
+        lat: 34.010929,
+        lon: -118.491508,
+      },
+      properties: {
+        supportsConcessions: true,
+        supported: true,
+      },
+    },
+    showtimeDetails: [
+      {
+        showtimeId: 'D00207331681',
+        productionId: 'B00422246210',
+        venueId: 'C00142302676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T18:00:00Z',
+        localShowtimeStart: '2020-02-16T12:00:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00207331682',
+        productionId: 'B00422246210',
+        venueId: 'C00142302676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T18:40:00Z',
+        localShowtimeStart: '2020-02-16T12:40:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00207331683',
+        productionId: 'B00422246210',
+        venueId: 'C00142302676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T20:30:00Z',
+        localShowtimeStart: '2020-02-16T14:30:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00207331684',
+        productionId: 'B00422246210',
+        venueId: 'C00142302676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T21:35:00Z',
+        localShowtimeStart: '2020-02-16T15:35:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+    ],
+  },
+  {
+    venue: {
+      id: 'C00162302676',
+      name: 'Cinemark 18 and XD',
+      address: {
+        line: '6081 Center Drive',
+        city: 'Los Angeles',
+        state: 'CA',
+        postal: '90291',
+        lat: 34.010929,
+        lon: -118.491508,
+      },
+      properties: {
+        supportsConcessions: true,
+        supported: true,
+      },
+    },
+    showtimeDetails: [
+      {
+        showtimeId: 'D00807331681',
+        productionId: 'B00422246210',
+        venueId: 'C00162302676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T18:00:00Z',
+        localShowtimeStart: '2020-02-16T12:00:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00807331682',
+        productionId: 'B00422246210',
+        venueId: 'C00162302676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T18:40:00Z',
+        localShowtimeStart: '2020-02-16T12:40:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00807331683',
+        productionId: 'B00422246210',
+        venueId: 'C00162302676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T20:30:00Z',
+        localShowtimeStart: '2020-02-16T14:30:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00807331684',
+        productionId: 'B00422246210',
+        venueId: 'C00162302676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T21:35:00Z',
+        localShowtimeStart: '2020-02-16T15:35:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00807331685',
+        productionId: 'B00422246210',
+        venueId: 'C00162302676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T21:35:00Z',
+        localShowtimeStart: '2020-02-16T16:30:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00807331686',
+        productionId: 'B00422246210',
+        venueId: 'C00162302676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T21:35:00Z',
+        localShowtimeStart: '2020-02-16T18:00:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00807331687',
+        productionId: 'B00422246210',
+        venueId: 'C00162302676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T21:35:00Z',
+        localShowtimeStart: '2020-02-16T19:35:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00807331688',
+        productionId: 'B00422246210',
+        venueId: 'C00162302676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T21:35:00Z',
+        localShowtimeStart: '2020-02-16T21:00:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00807331689',
+        productionId: 'B00422246210',
+        venueId: 'C00162302676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T21:35:00Z',
+        localShowtimeStart: '2020-02-16T23:00:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+    ],
+  },
+  {
+    venue: {
+      id: 'C00162312676',
+      name: 'ArcLight Sherman Oaks',
+      address: {
+        line: '15301 Ventura Boulevard',
+        city: 'Sherman Oaks',
+        state: 'CA',
+        postal: '90291',
+        lat: 34.010929,
+        lon: -118.491508,
+      },
+      properties: {
+        supportsConcessions: true,
+        supported: true,
+      },
+    },
+    showtimeDetails: [
+      {
+        showtimeId: 'D00807331881',
+        productionId: 'B00422246210',
+        venueId: 'C00162312676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T18:00:00Z',
+        localShowtimeStart: '2020-02-16T12:00:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00807331882',
+        productionId: 'B00422246210',
+        venueId: 'C00162312676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T18:40:00Z',
+        localShowtimeStart: '2020-02-16T12:40:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00807331883',
+        productionId: 'B00422246210',
+        venueId: 'C00162312676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T20:30:00Z',
+        localShowtimeStart: '2020-02-16T14:30:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00807331884',
+        productionId: 'B00422246210',
+        venueId: 'C00162312676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T21:35:00Z',
+        localShowtimeStart: '2020-02-16T15:35:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00807331885',
+        productionId: 'B00422246210',
+        venueId: 'C00162312676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T21:35:00Z',
+        localShowtimeStart: '2020-02-16T16:30:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00807331886',
+        productionId: 'B00422246210',
+        venueId: 'C00162312676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T21:35:00Z',
+        localShowtimeStart: '2020-02-16T18:00:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00807331887',
+        productionId: 'B00422246210',
+        venueId: 'C00162312676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T21:35:00Z',
+        localShowtimeStart: '2020-02-16T19:35:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+      {
+        showtimeId: 'D00807331888',
+        productionId: 'B00422246210',
+        venueId: 'C00162312676',
+        offerData: {
+          offers: [
+            {
+              label: 'Ticket',
+              price: {
+                value: 11.19,
+                currencyCode: 'USD',
+              },
+            },
+          ],
+        },
+        utcShowtimeStart: '2020-02-16T21:35:00Z',
+        localShowtimeStart: '2020-02-16T21:00:00-06:00',
+        attributes: [
+          'RESERVED',
+          'DVS',
+        ],
+      },
+    ],
+  },
 ]

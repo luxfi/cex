@@ -1,5 +1,4 @@
-import { action, computed, observable } from 'mobx'
-import moment from 'moment'
+import { action, observable } from 'mobx'
 
 import locations from '../assets/tempData/locations'
 import movieDates from '../assets/tempData/movieDates'
@@ -25,20 +24,18 @@ export default class TicketingStore {
   @observable selectedMovie = {}
 
   constructor(initialData = {}, hanzoApi) {
+    const [selectedDate] = movieDates
+    const [selectedLocation] = locations.filter((location) => location.city === 'Santa Monica')
+
     this.dates = movieDates
     this.locations = locations
     this.venues = venues
-  }
-
-  @computed get formatedDates() {
-    return this.dates.map((date) => ({
-      formated: moment(date).format('ddd, MMMM DD'),
-      isoFormat: date,
-    }))
+    this.selectedDate = selectedDate
+    this.selectedLocation = selectedLocation
   }
 
   @action setSelectedDate(selected) {
-    const [selectedDate] = this.formatedDates.filter((date) => date.formated === selected.formated)
+    const [selectedDate] = this.dates.filter((date) => date.formated === selected.formated)
     this.selectedDate = selectedDate
   }
 
@@ -61,11 +58,14 @@ export default class TicketingStore {
 
   @action setSelectedMovie(movie) {
     this.selectedMovie = movie
+    this.movieVenues = this.venues.filter((venueDetail) => !!(venueDetail.showtimeDetails.filter((showtime) => showtime.productionId === movie.productionId).length
+      && (venueDetail.venue.address.city === this.selectedLocation.city || venueDetail.venue.address.state === this.selectedLocation.state)
+    ))
   }
 
   selectVenues(location) {
     this.movieVenues = this.venues.filter((venueDetail) => !!(venueDetail.showtimeDetails.filter((showtime) => showtime.productionId === this.selectedMovie.productionId).length
-      && venueDetail.venue.address.city === location.city && venueDetail.venue.address.state === location.state
+      && (venueDetail.venue.address.city === location.city || venueDetail.venue.address.state === location.state)
     ))
   }
 }

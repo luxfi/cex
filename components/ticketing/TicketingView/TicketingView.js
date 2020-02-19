@@ -75,8 +75,8 @@ class TicketingView extends React.Component {
     const slug = router.query.slug || slugFromPath()
 
     return (
-      <Fragment key={seleectedVenue.venue.id}>
-        <Box>
+      <Box key={seleectedVenue.venue.id} className={classes.movieVenue}>
+        <Grid>
           <Grid className={classes.panelBody} container alignContent='flex-start'>
             <Box className={classes.movieVenueIconContainer}>
               <img
@@ -92,10 +92,10 @@ class TicketingView extends React.Component {
               <Box component='span'>{seleectedVenue.venue.address.line}</Box>
             </Grid>
           </Grid>
-        </Box>
-        <Grid container className={classes.showtimeSchedules} alignItems='center'>
-          <Typography variant='h4' className={classes.showtimeTitle}>STANDARD FORMAT</Typography>
-          <ul className={classes.formatShowtimesList}>
+        </Grid>
+        <Grid container className={classes.showtimeSchedules} wrap='nowrap' alignItems='flex-start'>
+          <Box className={classes.formatContainer}><Typography variant='h5' className={classes.showtimeTitle}>STANDARD FORMAT</Typography></Box>
+          <Grid container component='ul' alignContent='space-between' alignItems='center'>
             {
               seleectedVenue.showtimeDetails.length
                 ? seleectedVenue.showtimeDetails.map((showtimeDetail) => (
@@ -107,9 +107,9 @@ class TicketingView extends React.Component {
                 ))
                 : null
             }
-          </ul>
+          </Grid>
         </Grid>
-      </Fragment>
+      </Box>
     )
   }
 
@@ -122,7 +122,7 @@ class TicketingView extends React.Component {
         uiStore,
         ticketingStore: {
           selectedDate,
-          formatedDates,
+          dates,
           location,
           suggestedLocations,
           selectedLocation,
@@ -179,7 +179,7 @@ class TicketingView extends React.Component {
               className={classes.dateLocationStripeDropdown}
               onClick={this.openModal('date')}
             >
-              {selectedDate.formated ? selectedDate.formated : 'Choose date' }
+              {selectedDate.formated ? selectedDate.formated : '...' }
             </Button>
             <CustomDialog
               open={uiStore.dialog.open && uiStore.dialog.name === 'date'}
@@ -187,7 +187,7 @@ class TicketingView extends React.Component {
               handleClose={this.closeDialog}
             >
               <List className={classes.datesList} aria-label='movie date list'>
-                {formatedDates.map((date) => (
+                {dates.map((date) => (
                   <Fragment key={date.isoFormat}>
                     <ListItem
                       onClick={this.selectDate(date)}
@@ -210,7 +210,7 @@ class TicketingView extends React.Component {
             >
               {selectedLocation.city
                 ? `${selectedLocation.city}, ${selectedLocation.state}`
-                : 'Choose location'
+                : '...'
               }
             </Button>
             <CustomDialog
@@ -242,7 +242,7 @@ class TicketingView extends React.Component {
                       <Divider light />
                     </Fragment>
                   ))}
-                  <ListItem button onClick={this.selectLocation({ city: 'New York', state: 'NY' })}>
+                  <ListItem button onClick={this.selectLocation({ city: 'Santa Monica', state: 'CA' })}>
                     <ListItemIcon>
                       <PinDropIcon />
                     </ListItemIcon>
