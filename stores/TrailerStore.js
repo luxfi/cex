@@ -73,7 +73,6 @@ export default class TrailerStore {
     }
   }
 
-
   @action loadMovieTrailerDetails(slug) {
     const movieStore = stores().movieStore
     const movie = movieStore.getMovieBySlug(slug)
@@ -84,4 +83,8 @@ export default class TrailerStore {
     this.views = trailerDetails.views
     this.subscribers = trailerDetails.subscribers
   }
+
+  // @action giveMovieReaction(movieId, userId, type) {
+    
+  // }
 }

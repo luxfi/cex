@@ -31,7 +31,7 @@ class YoutubePlayer extends Component {
     if (
       prevProps.autoplayMovies !== autoplayMovies
     ) {
-      this.player.loadPlaylist([videoId, ...playlist])
+      this.player ? this.player.loadPlaylist([videoId, ...playlist]) : this.loadVideo()
     }
   }
 
