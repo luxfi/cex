@@ -41,7 +41,8 @@ const AddComment = inject('store')(observer(({
 
   const handleFocus = () => {
     if (!loggedIn) {
-      return router.push('/login')
+      const referrer = encodeURI(`/watch?video=${router.query.video}`)
+      return router.push(`/login?ref=${referrer}`)
     }
 
     setState({ ...state, showButtons: true })
