@@ -2,6 +2,7 @@ import { action, observable, computed } from 'mobx'
 import uuid from 'uuid'
 import commentsFromJSON from '../assets/tempData/comments'
 import stores from './stores'
+import { manageCommentReaction } from '../util/storeUtils'
 
 
 export default class CommentStore {
@@ -35,21 +36,19 @@ export default class CommentStore {
   @action addComment(commentObject) {
     this.addCommentLoading = true
     const comment = this.generateCommentObject(commentObject)
-    console.log(comment, 'rejtnjrnter')
     if (!comment.parentCommentId) {
       const newArray = [comment].concat(this.comments.comments)
       this.comments.comments = newArray
     } else {
-      let replyIndex
-      for (let i = 0; i < this.comments.comments.length; i++) {
-        if (this.comments.comments[i].commentId === comment.parentCommentId) {
-          replyIndex = i
-          break
-        }
-      }
-      this.comments.comments[replyIndex].replies.push(comment)
+      const commentParent = this.findParentComment(comment)
+      commentParent.replies.push(comment)
     }
     this.addCommentLoading = false
+  }
+
+  findParentComment(comment) {
+    const parent = this.comments.comments.find((com) => com.commentId === comment.parentCommentId)
+    return parent
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -70,8 +69,12 @@ export default class CommentStore {
       text: commentObject.text,
       replies: commentObject.parentId ? null : [],
       parentCommentId: commentObject.parentId,
-      likeCount: 0,
-      unlikeCount: 0,
+      reaction: {
+        likeCount: 0,
+        unlikeCount: 0,
+        hasReaction: false,
+        reactionType: null,
+      },
       isPublic: true,
       publishedAt: new Date(),
       updatedAt: new Date(),
@@ -90,5 +93,18 @@ export default class CommentStore {
     this.sortBy = sortBy
     const sorted = this.comments.comments.slice().sort(sortOptions[sortBy])
     this.comments.comments = sorted
+  }
+
+  @action addCommentReaction(comment, userId, type) {
+    let reaction
+
+    if (!comment.parentCommentId) {
+      reaction = this.comments.comments.find((com) => com.commentId === comment.commentId).reaction
+    } else {
+      const parentComment = this.findParentComment(comment)
+      reaction = parentComment.replies.find((com) => com.commentId === comment.commentId).reaction
+    }
+
+    manageCommentReaction(reaction, type)
   }
 }

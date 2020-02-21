@@ -95,6 +95,11 @@ class Index extends React.Component {
     }
   }
 
+  handleReactionClick = (movie, userId, type) => {
+    const { store: { trailerStore } } = this.props
+    trailerStore.setMovieReaction(movie, userId, type)
+  }
+
   render() {
     const { classes, store } = this.props
 
@@ -116,8 +121,7 @@ class Index extends React.Component {
     const {
       relatedMovies,
       autoplayMovies,
-      likes,
-      unlikes,
+      reaction,
       autoPlaySet,
       subscribers,
     } = trailerStore
@@ -152,6 +156,7 @@ class Index extends React.Component {
                   playlist={autoPlay ? relatedMoviesIds : []}
                   autoplayMovies={autoplayMovies}
                   handleVideoChange={this.handleVideoChange}
+                  key={autoplayMovies}
                 />
                 ) : (
                   <Box className='video'>
@@ -167,8 +172,12 @@ class Index extends React.Component {
                 <Box className={classes.videoActions}>
                   <Box className={classes.rating}>
                     <LikeAndUnlike
-                      likeCount={likes}
-                      unlikeCount={unlikes}
+                      likeCount={reaction.likeCount}
+                      unlikeCount={reaction.unlikeCount}
+                      hasReaction={reaction.hasReaction}
+                      reactionType={reaction.reactionType}
+                      handleLikeClick={() => this.handleReactionClick(movie, userStore.id, 'like')}
+                      handleUnlikeClick={() => this.handleReactionClick(movie, userStore.id, 'unlike')}
                     />
                     <Box className={classes.likeUnderline}>
                       <Divider />

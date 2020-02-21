@@ -1,13 +1,13 @@
-import React from "react"
+import React, { useEffect } from "react"
 import classNames from "classnames"
 
-import { Box, Typography, Avatar, Button } from "@material-ui/core"
+import { Button } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import ThumbDownIcon from '@material-ui/icons/ThumbDown'
 
-import styles from "./LikeAndUnlike.style"
+import styles from './LikeAndUnlike.style'
 
 const LikeAndUnlike = ({
   likeCount,
@@ -15,16 +15,32 @@ const LikeAndUnlike = ({
   hideUnlike,
   handleLikeClick,
   handleUnlikeClick,
+  hasReaction,
+  reactionType,
 }) => {
   const useMainStyles = makeStyles(styles)
   const classes = useMainStyles()
+
+  const likeButton = classNames(
+    classes.likeButton,
+    { [classes.reacted]: hasReaction && reactionType === 'like' },
+  )
+
+  const unLikeButton = classNames(
+    classes.likeButton,
+    { [classes.reacted]: hasReaction && reactionType === 'unlike' },
+  )
+
+  useEffect(() => {
+
+  }, [likeCount, unlikeCount,])
 
   return (
     <>
       <Button
         variant='contained'
         size='small'
-        className={classes.likeButton}
+        className={likeButton}
         startIcon={<ThumbUpAltIcon />}
         onClick={handleLikeClick}
       >
@@ -35,7 +51,7 @@ const LikeAndUnlike = ({
           <Button
             variant='contained'
             size='small'
-            className={classes.likeButton}
+            className={unLikeButton}
             startIcon={<ThumbDownIcon />}
             onClick={handleUnlikeClick}
           >

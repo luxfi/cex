@@ -1,13 +1,13 @@
 import { action, observable, computed } from "mobx"
-
 import stores from './stores'
+
+import { manageCommentReaction } from '../util/storeUtils'
 
 export default class TrailerStore {
   @observable relatedMovies = []
   @observable autoplayMovies = []
   @observable autoPlaySet = true
-  @observable likes = 0
-  @observable unlikes = 0
+  @observable reaction = {}
   @observable views = 0
   @observable subscribers = 0
 
@@ -78,13 +78,16 @@ export default class TrailerStore {
     const movie = movieStore.getMovieBySlug(slug)
     const { trailerDetails } = movie
 
-    this.likes = trailerDetails.likes
-    this.unlikes = trailerDetails.unlikes
+    this.reaction = trailerDetails.reaction
     this.views = trailerDetails.views
     this.subscribers = trailerDetails.subscribers
   }
 
-  // @action giveMovieReaction(movieId, userId, type) {
-    
-  // }
+  // eslint-disable-next-line class-methods-use-this
+  @action setMovieReaction(movie, userId, type) {
+    const reaction = {...movie.trailerDetails.reaction}
+
+    manageCommentReaction(reaction, type)
+    this.reaction = reaction
+  }
 }

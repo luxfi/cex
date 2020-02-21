@@ -7,6 +7,8 @@ import classNames from 'classnames'
 
 import { withRouter } from 'next/router'
 
+import { isUserLoggedIn } from './utils'
+
 import styles from './styles/comments.style'
 
 const AddComment = inject('store')(observer(({
@@ -24,7 +26,7 @@ const AddComment = inject('store')(observer(({
     showButtons: false,
   })
 
-  const { commentStore, userStore: { loggedIn, currentUser, id }, userStore } = store
+  const { commentStore, userStore: { loggedIn, currentUser, id } } = store
 
   const handleChange = (event) => {
     const { target: { value } } = event
@@ -40,10 +42,7 @@ const AddComment = inject('store')(observer(({
   }
 
   const handleFocus = () => {
-    if (!loggedIn) {
-      const referrer = encodeURI(`/watch?video=${router.query.video}`)
-      return router.push(`/login?ref=${referrer}`)
-    }
+    isUserLoggedIn(loggedIn, `/watch?video=${router.query.video}`, router)
 
     setState({ ...state, showButtons: true })
   }
