@@ -12,6 +12,7 @@ let dynamicRoutes = [
   'checkoutPayment',
   'confirmPayment',
   'account',
+  'pickSeats',
 ]
 
 function Error({ statusCode }) {

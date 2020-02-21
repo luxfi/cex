@@ -40,7 +40,7 @@ const formValidationSchema = object().shape({
 })
 
 const CheckoutPaymentView = ({ classes }) => {
-  const router = useRouter();
+  const router = useRouter()
   const urlParams = new URLSearchParams(window.location.search)
   const id = urlParams.get('id')
   const movieSlug = router.query.slug || slugFromPath()

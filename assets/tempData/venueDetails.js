@@ -11,6 +11,7 @@ module.exports = [
         lat: 32.755577087402344,
         lon: -97.33032989501953,
       },
+      logoIcon: '/images/icons/AmcLogomark.svg',
       properties: {
         supportsConcessions: true,
         supported: true,
@@ -152,6 +153,7 @@ module.exports = [
         lat: 32.76396179199219,
         lon: -97.33688354492188,
       },
+      logoIcon: '',
       properties: {
         supportsConcessions: true,
         supported: true,
@@ -174,6 +176,7 @@ module.exports = [
         lat: 32.74869155883789,
         lon: -97.36319732666016,
       },
+      logoIcon: '',
       properties: {
         supportsConcessions: true,
         supported: true,
@@ -196,6 +199,7 @@ module.exports = [
         lat: 32.744659423828125,
         lon: -97.36984252929688,
       },
+      logoIcon: '',
       properties: {
         supportsConcessions: true,
         supported: true,
@@ -289,6 +293,7 @@ module.exports = [
         lat: 34.010929,
         lon: -118.491508,
       },
+      logoIcon: '/images/icons/AmcLogomark.svg',
       properties: {
         supportsConcessions: true,
         supported: true,
@@ -419,6 +424,7 @@ module.exports = [
         lat: 34.010929,
         lon: -118.491508,
       },
+      logoIcon: '/images/icons/AmcLogomark.svg',
       properties: {
         supportsConcessions: true,
         supported: true,
@@ -549,6 +555,7 @@ module.exports = [
         lat: 34.010929,
         lon: -118.491508,
       },
+      logoIcon: '/images/icons/CinepolisLogomark.svg',
       properties: {
         supportsConcessions: true,
         supported: true,
@@ -657,6 +664,7 @@ module.exports = [
         lat: 34.010929,
         lon: -118.491508,
       },
+      logoIcon: '/images/icons/CinemarkLogomark.svg',
       properties: {
         supportsConcessions: true,
         supported: true,
@@ -875,6 +883,7 @@ module.exports = [
         lat: 34.010929,
         lon: -118.491508,
       },
+      logoIcon: '/images/icons/ArclightLogomark.svg',
       properties: {
         supportsConcessions: true,
         supported: true,

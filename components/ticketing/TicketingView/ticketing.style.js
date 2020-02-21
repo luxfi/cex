@@ -143,6 +143,8 @@ export default () => ({
   movieVenueIcon: {
     width: '64px',
     height: '64px',
+    backgroundColor: '#5a5a5a',
+    borderRadius: '100%',
   },
   movieVenueTitle: {
     margin: 0,

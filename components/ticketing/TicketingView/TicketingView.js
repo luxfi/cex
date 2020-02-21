@@ -81,7 +81,7 @@ class TicketingView extends React.Component {
             <Box className={classes.movieVenueIconContainer}>
               <img
                 className={classes.movieVenueIcon}
-                src='https://images.atomtickets.com/image/upload/v1/client-image-repo/circuit-logo/amc-logomark.svg'
+                src={seleectedVenue.venue.logoIcon}
                 alt='Logo'
               />
             </Box>
@@ -89,7 +89,11 @@ class TicketingView extends React.Component {
               <Typography variant='h6' className={classes.movieVenueTitleLink}>
                 {seleectedVenue.venue.name}
               </Typography>
-              <Box component='span'>{seleectedVenue.venue.address.line}</Box>
+              <Box component='span'>{
+                `${seleectedVenue.venue.address.line}, 
+                ${seleectedVenue.venue.address.city}, 
+                ${seleectedVenue.venue.address.state}`
+                }</Box>
             </Grid>
           </Grid>
         </Grid>
