@@ -7,7 +7,7 @@ import classNames from 'classnames'
 
 import { withRouter } from 'next/router'
 
-import { isUserLoggedIn } from './utils'
+import { isAuthenticated } from '../../util/helpers'
 
 import styles from './styles/comments.style'
 
@@ -42,9 +42,9 @@ const AddComment = inject('store')(observer(({
   }
 
   const handleFocus = () => {
-    isUserLoggedIn(loggedIn, `/watch?video=${router.query.video}`, router)
-
-    setState({ ...state, showButtons: true })
+    if (isAuthenticated(loggedIn, `/watch?video=${router.query.video}`, router)) {
+      setState({ ...state, showButtons: true })
+    }
   }
 
   const handleClick = () => {

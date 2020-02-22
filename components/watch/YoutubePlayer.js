@@ -3,6 +3,7 @@ import { Box } from '@material-ui/core'
 
 class YoutubePlayer extends Component {
   player = null
+  state = {}
 
   componentDidMount() {
     const { elementId, videoId, playlist } = this.props
@@ -27,11 +28,27 @@ class YoutubePlayer extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { autoplayMovies, videoId, playlist } = this.props
+    const { autoplayMovies, videoId, autoPlay } = this.props
     if (
-      prevProps.autoplayMovies !== autoplayMovies
+      (prevProps.autoplayMovies[0] !== autoplayMovies[0])
+      || prevProps.autoPlay !== autoPlay
     ) {
-      this.player ? this.player.loadPlaylist([videoId, ...playlist]) : this.loadVideo()
+      // force the component to re-render when updated autoplayMovies props are recieved then play new videos
+      this.setState({
+        autoplayMovies,
+      }, () => this.playNewVideo(autoPlay, this.player, videoId, autoplayMovies))
+    }
+  }
+
+  playNewVideo = (autoPlay, player, videoId, autoplayMovies) => {
+    if (!player) {
+      return this.loadVideo()
+    }
+
+    if (autoPlay) {
+      player.loadPlaylist(autoplayMovies)
+    } else {
+      player.cueVideoById(videoId)
     }
   }
 
@@ -60,11 +77,11 @@ class YoutubePlayer extends Component {
   }
 
   onPlayerStateChange = (event) => {
-    const { handleVideoChange } = this.props
+    const { handleVideoChange, autoPlay } = this.props
 
-    const currentVideoIndex = this.player.getPlaylistIndex()
-    if (event.data === -1 && handleVideoChange) {
-      handleVideoChange(currentVideoIndex, event.data === 0)
+    if (event.data === -1 && handleVideoChange && autoPlay) {
+      const currentVideoIndex = this.player.getPlaylistIndex()
+      handleVideoChange(currentVideoIndex)
     }
   }
 

@@ -1,12 +1,12 @@
-import React, { useState } from "react"
+import React, { useState } from 'react'
 import { withRouter } from 'next/router'
-import { inject, observer } from "mobx-react"
+import { inject, observer } from 'mobx-react'
 
-import { Box, Typography, Avatar, Button } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
+import { Box, Typography, Avatar, Button } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 
 import LikeAndUnlike from '../LikeAndUnlike'
-import { isUserLoggedIn } from './utils'
+import { isAuthenticated } from '../../util/helpers'
 
 import styles from './styles/comments.style'
 
@@ -27,7 +27,7 @@ const DisplayComments = inject('store')(observer(({
   const imageClassName = isReply ? classes.commentImageReply : classes.commentImage
 
   const handleClick = (comment, userId, type) => {
-    if (isUserLoggedIn(loggedIn, `/watch?video=${router.query.video}`, router)) {
+    if (isAuthenticated(loggedIn, `/watch?video=${router.query.video}`, router)) {
       commentStore.addCommentReaction(comment, userId, type)
     }
   }

@@ -1,4 +1,4 @@
-export const manageCommentReaction = (reaction, type) => {
+export const manageReaction = (reaction, type) => {
   const op = {
     like: 'likeCount',
     unlike: 'unlikeCount',
@@ -20,4 +20,11 @@ export const manageCommentReaction = (reaction, type) => {
   }
 }
 
-export const noop = () => {}
+export const isAuthenticated = (loggedIn, uri, router) => {
+  if (!loggedIn) {
+    const referrer = encodeURI(uri)
+    router.push(`/login?ref=${referrer}`)
+    return false
+  }
+  return true
+}

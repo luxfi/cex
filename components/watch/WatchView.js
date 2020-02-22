@@ -22,7 +22,6 @@ import classNames from 'classnames'
 
 // core components
 import {
-  CustomBreadcrumbs,
   InvestNow,
 } from '../app'
 
@@ -33,21 +32,9 @@ import VideoDescription from './VideoDescription'
 import YoutubePlayer from './YoutubePlayer'
 import Share from './Share'
 
-import { formatNumber, renderDate } from './utils'
+import { isAuthenticated } from '../../util/helpers'
 
-const ExternalLink = React.forwardRef(
-  ({ className, href, hrefAs, children }, ref) => (
-    <a
-      className={className}
-      ref={ref}
-      href={href || ""}
-      as={hrefAs}
-      target="_blank"
-    >
-      {children}
-    </a>
-  )
-)
+import { formatNumber, renderDate } from './utils'
 
 @inject("store")
 @observer
@@ -59,8 +46,32 @@ class Index extends React.Component {
   componentDidMount() {
     const {
       router: { query: { video: movieSlug } },
+      store: { trailerStore, movieStore },
     } = this.props
+    const movie = movieStore.getMovieBySlug(movieSlug)
+
     this.getUpdatedRelatedMovies(movieSlug)
+    trailerStore.setMovieTrailerDetails(movie)
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      router: { query: { video } },
+    } = prevProps
+    const {
+      router: { query: { video: movieSlug } },
+      store: { movieStore, trailerStore },
+    } = this.props
+
+    // handles prop change by updating related and autoplaymovies movies when the browser's back or forward button is clicked
+    window.onpopstate = () => {
+      this.getUpdatedRelatedMovies(movieSlug)
+    }
+
+    if (video !== movieSlug) {
+      const movie = movieStore.getMovieBySlug(movieSlug)
+      trailerStore.setMovieTrailerDetails(movie)
+    }
   }
 
   getMovieIdFromMovieSlug = (trailerUrl) => {
@@ -95,9 +106,17 @@ class Index extends React.Component {
     }
   }
 
-  handleReactionClick = (movie, userId, type) => {
-    const { store: { trailerStore } } = this.props
-    trailerStore.setMovieReaction(movie, userId, type)
+  handleReactionClick = (movie, type) => {
+    const {
+      router,
+      store: {
+        trailerStore,
+        userStore: { loggedIn, currentUser, id },
+      },
+    } = this.props
+    if (isAuthenticated(loggedIn, `/watch?video=${router.query.video}`, router)) {
+      trailerStore.setMovieReaction(movie, id, type)
+    }
   }
 
   render() {
@@ -121,18 +140,19 @@ class Index extends React.Component {
     const {
       relatedMovies,
       autoplayMovies,
-      reaction,
       autoPlaySet,
       subscribers,
+      reaction,
     } = trailerStore
     const movie = movieStore.getMovieBySlug(movieSlug)
     const autoPlay = autoPlaySet === 'true' || autoPlaySet === true
 
     const videoId = this.getMovieIdFromMovieSlug(movie.trailer)
     const relatedMoviesArray = [...relatedMovies]
+    const autoplayMoviesArray = [...autoplayMovies]
     const relatedMoviesIds = relatedMoviesArray.map((relatedMovie) => this.getMovieIdFromMovieSlug(relatedMovie.trailer))
+    const autoplayMoviesIds = autoplayMoviesArray.map((autoPlayMovie) => this.getMovieIdFromMovieSlug(autoPlayMovie.trailer))
 
-    trailerStore.loadMovieTrailerDetails(movieSlug)
 
     const addToWatchlist = t => {
       userPortfolio.addToWatchlist(t)
@@ -148,21 +168,15 @@ class Index extends React.Component {
           <Box className={classes.watchGrid}>
             <Box className={classes.videoContainer}>
               {
-                autoPlay ? (
-                  (videoId && relatedMoviesIds.length) && <YoutubePlayer
-                  elementId='trailerVideo'
-                  videoId={videoId}
-                  autoPlay={autoPlay}
-                  playlist={autoPlay ? relatedMoviesIds : []}
-                  autoplayMovies={autoplayMovies}
-                  handleVideoChange={this.handleVideoChange}
-                  key={autoplayMovies}
-                />
-                ) : (
-                  <Box className='video'>
-                    <iframe className='video-player' src={movie.trailer + '?autoplay=0&amp;modestbranding=1&amp;showinfo=0'} frameBorder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowFullScreen></iframe>
-                  </Box>
-                )
+                (videoId && relatedMoviesIds.length) && <YoutubePlayer
+                elementId='trailerVideo'
+                videoId={videoId}
+                autoPlay={autoPlay}
+                playlist={autoPlay ? relatedMoviesIds : []}
+                autoplayMovies={autoplayMoviesIds}
+                handleVideoChange={this.handleVideoChange}
+                key={autoplayMovies}
+              />
               }
             </Box>
             <Box className='video-metadata'>
@@ -176,8 +190,8 @@ class Index extends React.Component {
                       unlikeCount={reaction.unlikeCount}
                       hasReaction={reaction.hasReaction}
                       reactionType={reaction.reactionType}
-                      handleLikeClick={() => this.handleReactionClick(movie, userStore.id, 'like')}
-                      handleUnlikeClick={() => this.handleReactionClick(movie, userStore.id, 'unlike')}
+                      handleLikeClick={() => this.handleReactionClick(movie, 'like')}
+                      handleUnlikeClick={() => this.handleReactionClick(movie, 'unlike')}
                     />
                     <Box className={classes.likeUnderline}>
                       <Divider />

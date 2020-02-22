@@ -1,7 +1,7 @@
-import { action, observable, computed } from "mobx"
+import { action, observable, computed } from 'mobx'
 import stores from './stores'
 
-import { manageCommentReaction } from '../util/storeUtils'
+import { manageReaction } from '../util/helpers'
 
 export default class TrailerStore {
   @observable relatedMovies = []
@@ -73,11 +73,8 @@ export default class TrailerStore {
     }
   }
 
-  @action loadMovieTrailerDetails(slug) {
-    const movieStore = stores().movieStore
-    const movie = movieStore.getMovieBySlug(slug)
+  @action setMovieTrailerDetails(movie) {
     const { trailerDetails } = movie
-
     this.reaction = trailerDetails.reaction
     this.views = trailerDetails.views
     this.subscribers = trailerDetails.subscribers
@@ -85,9 +82,8 @@ export default class TrailerStore {
 
   // eslint-disable-next-line class-methods-use-this
   @action setMovieReaction(movie, userId, type) {
-    const reaction = {...movie.trailerDetails.reaction}
-
-    manageCommentReaction(reaction, type)
+    const reaction = { ...this.reaction }
+    manageReaction(reaction, type)
     this.reaction = reaction
   }
 }

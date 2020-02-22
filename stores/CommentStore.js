@@ -2,7 +2,7 @@ import { action, observable, computed } from 'mobx'
 import uuid from 'uuid'
 import commentsFromJSON from '../assets/tempData/comments'
 import stores from './stores'
-import { manageCommentReaction } from '../util/storeUtils'
+import { manageReaction } from '../util/helpers'
 
 
 export default class CommentStore {
@@ -105,6 +105,6 @@ export default class CommentStore {
       reaction = parentComment.replies.find((com) => com.commentId === comment.commentId).reaction
     }
 
-    manageCommentReaction(reaction, type)
+    manageReaction(reaction, type)
   }
 }

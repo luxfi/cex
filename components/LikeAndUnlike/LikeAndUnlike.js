@@ -1,8 +1,8 @@
-import React, { useEffect } from "react"
-import classNames from "classnames"
+import React, { useEffect } from 'react'
+import classNames from 'classnames'
 
-import { Button } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
+import { Button } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import ThumbDownIcon from '@material-ui/icons/ThumbDown'
@@ -33,7 +33,7 @@ const LikeAndUnlike = ({
 
   useEffect(() => {
 
-  }, [likeCount, unlikeCount,])
+  }, [likeCount, unlikeCount])
 
   return (
     <>
