@@ -60,20 +60,18 @@ class YoutubePlayer extends Component {
       autoPlay,
     } = this.props
 
-    window.onYouTubePlayerAPIReady = () => {
-      this.player = new YT.Player(elementId, {
-        videoId,
-        playerVars: {
-          autoplay: autoPlay ? 1 : 0,
-          rel: 0,
-          modestbranding: 1,
-          playlist: playlist.join(','),
-        },
-        events: {
-          onStateChange: this.onPlayerStateChange,
-        },
-      })
-    }
+    this.player = new YT.Player(elementId, {
+      videoId,
+      playerVars: {
+        autoplay: autoPlay ? 1 : 0,
+        rel: 0,
+        modestbranding: 1,
+        playlist: playlist.join(','),
+      },
+      events: {
+        onStateChange: this.onPlayerStateChange,
+      },
+    })
   }
 
   onPlayerStateChange = (event) => {
