@@ -58,7 +58,8 @@ class CheckoutView extends React.Component {
     } = this.props
     const slug = router.query.slug || slugFromPath()
     const urlParams = new URLSearchParams(window.location.search)
-    const id = urlParams.get('id')
+    const showtimeId = urlParams.get('showtimeId')
+    const venueId = urlParams.get('venueId')
 
     const movie = movieStore.getMovieBySlug(slug)
 
@@ -121,7 +122,7 @@ class CheckoutView extends React.Component {
             <Typography variant='h5' className={classes.subTotal}>{formatCurrency(subTotal)}</Typography>
           </Box>
           <Grid>
-            <Link href='/pickSeats' as={`/pickSeats/${slug}?id=${id}`}>
+            <Link href='/pickSeats' as={`/pickSeats/${slug}?venueId=${venueId}&showtimeId=${showtimeId}`}>
               <Button className={classes.nextButton}>PICK SEATS</Button>
             </Link>
           </Grid>

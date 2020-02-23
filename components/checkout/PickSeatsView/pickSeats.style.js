@@ -17,6 +17,22 @@ export default () => ({
   },
   seatsTimerContainer: {
     padding: '0 0 10px',
+    fontWeight: 'bold',
+  },
+  seatLegendList: {
+    padding: '10px 50px 10px 20px',
+  },
+  seatLegendbtn: {
+    color: '#00b7ff',
+    cursor: 'pointer',
+    background: 'none',
+    border: 'none',
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+  seatLegendIcon: {
+    width: 20,
+    height: 20,
   },
   screenHeader: {
     width: '100%',
@@ -35,11 +51,11 @@ export default () => ({
   seats: {
     width: '40px',
     height: '40px',
-    margin: '15px 5px',
+    margin: '15px 0',
   },
   seatImage: {
-    width: '40px',
-    height: '40px',
+    width: '30px',
+    height: '30px',
     cursor: 'pointer',
   },
   btnList: {
@@ -48,8 +64,10 @@ export default () => ({
     overflow: 'scroll',
   },
   movieTimeBtn: {
-    border: '1px solid #FBC43E',
     margin: '8px 0 0',
+  },
+  selectedBtn: {
+    border: '1px solid #FBC43E',
   },
   subHeader: {
     fontSize: 12,

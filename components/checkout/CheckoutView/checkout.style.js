@@ -54,7 +54,7 @@ export default () => ({
   agePolicyLink: {
     color: '#00aeef',
     fontSize: '12px',
-    display: 'flex',
+    display: 'inline-flex',
     alignItems: 'center',
     textDecoration: 'none',
   },

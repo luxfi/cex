@@ -75,7 +75,9 @@ export default class UIStore {
 
   openDialog(name) {
     this.dialog.open = true
-    this.dialog.name = name
+    if (name) {
+      this.dialog.name = name
+    }
   }
 
   closeDialog() {

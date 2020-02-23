@@ -104,7 +104,7 @@ class TicketingView extends React.Component {
               seleectedVenue.showtimeDetails.length
                 ? seleectedVenue.showtimeDetails.map((showtimeDetail) => (
                   <li key={showtimeDetail.showtimeId}>
-                    <Link href='/checkout' as={`/checkout/${slug}?id=${showtimeDetail.showtimeId}`}>
+                    <Link href='/checkout' as={`/checkout/${slug}?venueId=${seleectedVenue.venue.id}&showtimeId=${showtimeDetail.showtimeId}`}>
                       <Button className={classes.btnShowtime}>{moment(showtimeDetail.localShowtimeStart).format('hh:mm A')}</Button>
                     </Link>
                   </li>

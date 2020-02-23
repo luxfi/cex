@@ -9,12 +9,15 @@ export default class TicketCheckoutStore {
 
   @observable tickets = []
 
+  @observable ticketsCount = 1
+
   @action addTicket(categoryName) {
     const selectedTicket = this.tickets.find((ticket) => ticket.category === categoryName)
     if (selectedTicket) {
       const currentQuantity = selectedTicket.quantity
       selectedTicket.quantity = currentQuantity + 1
       this.subTotal += selectedTicket.price
+      this.ticketsCount += 1
     }
   }
 
@@ -25,6 +28,7 @@ export default class TicketCheckoutStore {
       const currentQuantity = selectedTicket.quantity
       selectedTicket.quantity = currentQuantity - 1
       this.subTotal -= selectedTicket.price
+      this.ticketsCount -= 1
     }
   }
 
