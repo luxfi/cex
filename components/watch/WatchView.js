@@ -203,12 +203,12 @@ class Index extends React.Component {
                       <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Movie Page</Typography></Button>
                     </a>
                   </Link>
-                  <Link href={`/trade/${movie.movieSlug}`}>
+                  <Link href={`/offering/${movie.movieSlug}`}>
                     <a className={classes.linkBackLink}>
                     <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Invest</Typography></Button>
                     </a>
                   </Link>
-                  <Link href={`/pro/${movie.movieSlug}`}>
+                  <Link href={`/trade/${movie.movieSlug}`}>
                     <a className={classes.linkBackLink}>
                     <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Trade</Typography></Button>
                     </a>

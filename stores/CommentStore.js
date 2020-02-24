@@ -84,7 +84,7 @@ export default class CommentStore {
   @action sortComments(sortBy) {
     const sortOptions = {
       recent: (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt),
-      top: (a, b) => b.likeCount - a.likeCount,
+      top: (a, b) => b.reaction.likeCount - a.reaction.likeCount,
     }
 
     if (!sortOptions[sortBy]) {
