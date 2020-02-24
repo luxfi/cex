@@ -85,6 +85,17 @@ export default () => ({
     fontWeight: 700,
     backgroundColor: '#FBC43E',
     color: '#090909',
+    '&:disabled': {
+      backgroundColor: '#777777',
+      color: '#4a4a4a',
+    },
+  },
+  okButton: {
+    fontWeight: 700,
+    padding: '10px 40px',
+    backgroundColor: '#FFFFFF',
+    color: '#090909',
+    marginTop: 10,
   },
   subTotalContainer: {
     padding: '15px 0',

@@ -24,11 +24,21 @@ import { formatCurrency, slugFromPath } from '../../../util'
 
 import CustomDialog from '../../app/CustomDialog'
 
+
 import styles from './pickSeats.style'
 
 @inject('store')
 @observer
 class PickSeatsView extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      modalOpened: false,
+      modalMessage: '',
+    }
+  }
+
   componentDidMount() {
     const urlParams = new URLSearchParams(window.location.search)
     const venueId = urlParams.get('venueId')
@@ -44,7 +54,7 @@ class PickSeatsView extends React.Component {
     ticketingStore.selectShowtime(showtimeId)
   }
 
-  openModal = () => {
+  openDialog = () => {
     const { store: { uiStore } } = this.props
     uiStore.openDialog()
   }
@@ -54,9 +64,40 @@ class PickSeatsView extends React.Component {
     uiStore.closeDialog()
   }
 
-  selectSeat = (seatName, index) => () => {
-    const { store: { pickSeatStore } } = this.props
-    pickSeatStore.toggleSeatSelection(seatName, index)
+  closeModal = () => {
+    this.setState({
+      modalOpened: false,
+      modalMessage: '',
+    })
+  }
+
+  selectSeat = (seatName, seatStatus, seatType, index) => () => {
+    const {
+      store: {
+        pickSeatStore,
+        ticketCheckoutStore: {
+          ticketsCount,
+        },
+      },
+    } = this.props
+
+    if ((pickSeatStore.totalSeatsCount < ticketsCount) || seatStatus) {
+      pickSeatStore.toggleSeatSelection(seatName, index)
+
+      if (seatType === 'wheelchair' && !seatStatus) {
+        this.setState({
+          modalOpened: true,
+          modalMessage: 'You have selected a wheelchair space, not a seat.',
+        })
+      }
+
+      if (seatType === 'companion' && !seatStatus) {
+        this.setState({
+          modalOpened: true,
+          modalMessage: 'You have selected a wheelchair companion seat and may be asked to move.',
+        })
+      }
+    }
   }
 
   render() {
@@ -67,6 +108,8 @@ class PickSeatsView extends React.Component {
         uiStore,
         pickSeatStore: {
           seats,
+          selectedSeats,
+          totalSeatsCount,
         },
         ticketingStore: {
           venueShowtimes,
@@ -74,10 +117,13 @@ class PickSeatsView extends React.Component {
           selectedShowtime,
         },
         ticketCheckoutStore: {
-          subTotal,
+          total,
+          ticketsCount,
         },
       },
     } = this.props
+    const { modalOpened, modalMessage } = this.state
+
     const urlParams = new URLSearchParams(window.location.search)
     const venueId = urlParams.get('venueId')
     const showtimeId = urlParams.get('showtimeId')
@@ -89,7 +135,7 @@ class PickSeatsView extends React.Component {
           <Box className={classes.seatsSection}>
             <Grid className={classes.seatsTimerContainer} container justify='space-between' alignItems='center'>
               <span>{`${selectedDate.formated} ${moment(selectedShowtime.localShowtimeStart).format('hh:mm A')}`}</span>
-              <button type='button' className={classes.seatLegendbtn} onClick={this.openModal}>Seat Legend</button>
+              <button type='button' className={classes.seatLegendbtn} onClick={this.openDialog}>Seat Legend</button>
               <CustomDialog
                 open={uiStore.dialog.open}
                 title='Seat Legend'
@@ -98,7 +144,7 @@ class PickSeatsView extends React.Component {
                 <List className={classes.seatLegendList}>
                   <ListItem>
                     <ListItemIcon>
-                      <img src='/images/seats/user.png' alt='' className={classes.seatLegendIcon}/>
+                      <img src='/images/seats/selectedSeat.png' alt='' className={classes.seatLegendIcon}/>
                     </ListItemIcon>
                     <ListItemText primary='My Seat' />
                   </ListItem>
@@ -120,6 +166,12 @@ class PickSeatsView extends React.Component {
                     </ListItemIcon>
                     <ListItemText primary='Companion' />
                   </ListItem>
+                  <ListItem>
+                    <ListItemIcon>
+                      <img src='/images/seats/pickedSeat.png' alt='' className={classes.seatLegendIcon}/>
+                    </ListItemIcon>
+                    <ListItemText primary='Unavailable Seat' />
+                  </ListItem>
                 </List>
               </CustomDialog>
             </Grid>
@@ -131,19 +183,33 @@ class PickSeatsView extends React.Component {
                   seats.map((seatRow, index) => (<Grid key={uuid.v4()} container justify='space-evenly' alignItems='center'>
                       { seatRow.map((seatCoulumn) => (
                         <li key={uuid.v4()} className={classes.seats}>
-                          <Tooltip title={seatCoulumn.name} aria-label={seatCoulumn.name}>
-                            <button style={{ border: 'none', background: 'none' }} type='button' onClick={this.selectSeat(seatCoulumn.name, index)}>
+                            <button
+                              disabled={seatCoulumn.picked}
+                              type='button'
+                              style={{ border: 'none', background: 'none' }}
+                              onClick={this.selectSeat(seatCoulumn.name, seatCoulumn.selected, seatCoulumn.type, index)}
+                            >
+                              <Tooltip title={seatCoulumn.name} aria-label={seatCoulumn.name}>
                                 <img
                                   className={classes.seatImage}
-                                  src={`/images/seats/${seatCoulumn.selected ? 'user' : seatCoulumn.type}.png`}
+                                  src={`/images/seats/${seatCoulumn.picked ? 'pickedSeat' : seatCoulumn.selected ? 'selectedSeat' : seatCoulumn.type}.png`}
                                   alt=''
                                 />
-                            </button>
-                          </Tooltip>
+                              </Tooltip>
+                          </button>
                         </li>
                       )) }
                     </Grid>))
                 }
+                <CustomDialog
+                  open={modalOpened}
+                  onClose={this.closeModal}
+                >
+                  <Grid container direction='column' alignItems='center' justify='center'>
+                    <Typography>{modalMessage}</Typography>
+                    <Button className={classes.okButton} onClick={this.closeModal}>OK</Button>
+                  </Grid>
+                </CustomDialog>
               </Box>
             </Box>
           </Box>
@@ -173,18 +239,28 @@ class PickSeatsView extends React.Component {
         </Grid>
         <Grid container justify='space-between' alignItems='flex-start' wrap='nowrap' className={classes.subTotalContainer}>
           <Grid>
-            <Typography variant='h6' className={classes.subHeader}>YOUR SEATS</Typography>
+            <Typography variant='h6' className={classes.subHeader} noWrap>YOUR SEATS</Typography>
             <Typography variant='h5' className={classes.selectedSeats} noWrap>
-              E14, E13, E12, E11, E10, E9
+              {totalSeatsCount < ticketsCount
+                ? (<span>{totalSeatsCount} of {ticketsCount} selected</span>)
+                : selectedSeats.map((selectedSeat) => (
+                <span key={selectedSeat.name}>{selectedSeat.name} </span>
+                ))
+              }
             </Typography>
           </Grid>
           <Grid container justify='flex-end'>
             <Box>
               <Typography variant='h6' className={classes.subHeader}>SUBTOTAL</Typography>
-              <Typography variant='h5' className={classes.subTotal}>{formatCurrency(subTotal)}</Typography>
+              <Typography variant='h5' className={classes.subTotal}>{formatCurrency(total)}</Typography>
             </Box>
             <Grid>
-              <Button className={classes.nextButton}>NEXT</Button>
+              <Button
+                className={classes.nextButton}
+                disabled={totalSeatsCount < ticketsCount}
+              >
+                NEXT
+              </Button>
             </Grid>
           </Grid>
         </Grid>
