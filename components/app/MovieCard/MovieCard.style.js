@@ -101,6 +101,10 @@ export default (theme) => ({
 
   buttonsOuter: {
     marginTop: theme.spacing(3),
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    justifyContent: 'space-around',
   },
 
   hoverButton: {
@@ -112,7 +116,6 @@ export default (theme) => ({
     border: '1px solid ' + theme.palette.background.default,
     backgroundColor: theme.palette.secondary.main,
     color: theme.palette.common.black,
-    marginRight: theme.spacing(2),
   },
 
   textButton: {
