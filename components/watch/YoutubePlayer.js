@@ -45,11 +45,13 @@ class YoutubePlayer extends Component {
       return this.loadVideo()
     }
 
-    if (autoPlay) {
-      player.loadPlaylist(autoplayMovies)
-    } else {
-      player.cueVideoById(videoId)
-    }
+    setTimeout(() => {
+      if (autoPlay) {
+        player.loadPlaylist(autoplayMovies)
+      } else {
+        player.cueVideoById(videoId)
+      }
+    }, 50)
   }
 
   loadVideo = () => {
