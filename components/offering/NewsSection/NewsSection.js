@@ -18,6 +18,7 @@ const NEWS = [
     publisher: 'NME',
     date: '2 hours ago',
     image: 'https://www.nme.com/wp-content/uploads/2020/01/GettyImages-451473112-1392x884.jpg',
+    url: 'https://www.nme.com/news/film/chris-rock-teases-scary-bloody-saw-reboot-2596715',
     heading: 'Chris Rock teases his "really scary and really bloody" Saw reboot',
     details:
       'Asked how his involvement with Saw 9 came about, Rock revealed that it was down to a chance meeting with the franchise\'s production ...',
@@ -26,6 +27,7 @@ const NEWS = [
     publisher: 'MovieWeb',
     date: '2 weeks ago',
     image: 'https://cdn3.movieweb.com/i/article/63Z9ee5ZpXjbWRmNuTzbkNSOz7lf7v/798:75/Saw-9-Chris-Rock-Update.jpg',
+    url: 'https://movieweb.com/saw-9-chris-rock-update/',
     heading:
       'Chris Rock Promises Saw 9 Is Not Scary Movie: It\'s Gory with a Sprinkling of Humor',
     details:
@@ -35,6 +37,7 @@ const NEWS = [
     publisher: 'The Wrap',
     date: '1 month ago',
     image: 'https://www.thewrap.com/wp-content/uploads/2019/05/ChrisRockSaw.jpg',
+    url: 'https://www.thewrap.com/chris-rocks-saw-reboot-moves-up-5-months-to-may-2020-release/',
     heading:
       'Chris Rock\'s "Saw" Reboot Moves Up 5 Months',
     details:
@@ -53,7 +56,7 @@ const NewsSection = ({ newsRef }) => {
           </Box>
         </Typography>
         <Divider />
-        {NEWS.map(({ publisher, image, date, heading, details }, i) => {
+        {NEWS.map(({ publisher, image, url, date, heading, details }, i) => {
           const [hover, setHover] = useState(false)
           const handleMouseOver = () => {
             setHover(true)
@@ -62,7 +65,7 @@ const NewsSection = ({ newsRef }) => {
             setHover(false)
           }
           return (
-            <div key={i}>
+            <a key={i} href={url} style={{textDecoration: 'none', color: 'white'}}>
               <Grid container spacing={4} alignItems="center">
                 <Grid item sm={8}>
                   <Box mb={1} mt={5}>
@@ -112,7 +115,7 @@ const NewsSection = ({ newsRef }) => {
                 </Grid>
               </Grid>
               <Divider />
-            </div>
+            </a>
           )
         })}
       </Box>

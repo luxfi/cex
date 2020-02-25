@@ -8,7 +8,7 @@ export default theme => ({
     '& > *': {
       margin: '0 20px 0 0',
       fontSize: 14,
-    }
+    },
   },
 
   loadingIcon: {
@@ -17,13 +17,12 @@ export default theme => ({
     flexDirection: 'column',
     alignItems: 'center',
     '& svg': {
-      color: YELLOW
-    }
+      color: YELLOW,
+    },
   },
 
   comment: {
     display: 'flex',
-    margin: '0 0 10px 0',  
   },
 
   commentActions: {
@@ -43,6 +42,12 @@ export default theme => ({
     height: 50,
   },
 
+  commentImageReply: {
+    margin: '0 10px 0 0',
+    width: 35,
+    height: 35,
+  },
+
   addCommentInput: {
     padding: 10,
     fontSize: 14,
@@ -50,7 +55,7 @@ export default theme => ({
 
   commentInputArea: {
     width: '100%',
-    margin: '0 0 20px 0'
+    margin: '0 0 20px 0',
   },
 
   submitButtonContainer: {
@@ -59,18 +64,19 @@ export default theme => ({
     width: '100%',
     '& > button': {
       margin: '10px 0 0 0',
-    }
+    },
   },
 
   commentButton: {
     background: '#fff',
     '&:hover': {
       background: YELLOW,
-    }
+    },
   },
 
-
-
+  shoHideComments: {
+    cursor: 'pointer',
+    padding: '0 0 10px 0',
+    fontSize: 14,
+  },
 })
-
-

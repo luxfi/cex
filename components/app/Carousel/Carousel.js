@@ -5,6 +5,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import { CarouselItem } from '../'
 import { useEventListener } from '../../../util'
 import useStyles from './Carousel.style'
+import { ResizeObserver } from '@juggle/resize-observer';
 
 export const Carousel = ({ animationSpeed = 500, ...props }) => {
   const carouselRef = useRef()

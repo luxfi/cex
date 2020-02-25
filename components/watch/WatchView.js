@@ -1,131 +1,223 @@
-import React from "react"
-import Link from "next/link"
-import { toJS } from "mobx"
-import { inject, observer } from "mobx-react"
-import { withRouter, Router } from "next/router"
-import classNames from "classnames"
+import React from 'react'
+import Link from 'next/link'
+import { inject, observer } from 'mobx-react'
+import Router, { withRouter } from 'next/router'
 
-import LikeAndUnlike from '../LikeAndUnlike'
-import VideoDescription from './VideoDescription'
-import ShowingNext from './ShowingNext'
-import Comments from '../comments'
+import styles from './style.js'
 
 // @material-ui/core components
-import { 
+import {
+  Box,
   Button,
-  Grid,
-  Typography,
   Divider,
   IconButton,
-  Box,
-  Switch,
-  TextField,
-  Avatar
-} from "@material-ui/core"
-import { withStyles } from "@material-ui/core/styles"
-import ShareIcon from '@material-ui/icons/Share';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+  Typography,
+} from '@material-ui/core'
 
-import CustomLink from "../app/CustomLink"
+import { withStyles } from '@material-ui/core/styles'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
+
+import classNames from 'classnames'
+
 // core components
 import {
-  CustomBreadcrumbs,
   InvestNow,
-} from "../app"
+} from '../app'
 
-import styles from "./style.js"
+import Comments from '../comments'
+import LikeAndUnlike from '../LikeAndUnlike'
+import ShowingNext from './ShowingNext'
+import VideoDescription from './VideoDescription'
+import YoutubePlayer from './YoutubePlayer'
+import Share from './Share'
 
-const ExternalLink = React.forwardRef(
-  ({ className, href, hrefAs, children }, ref) => (
-    <a
-      className={className}
-      ref={ref}
-      href={href || ""}
-      as={hrefAs}
-      target="_blank"
-    >
-      {children}
-    </a>
-  )
-)
+import { isAuthenticated } from '../../util/helpers'
+
+import { formatNumber, renderDate } from './utils'
 
 @inject("store")
 @observer
 class Index extends React.Component {
+  state = {
+    nextMovieIndex: 1,
+  }
 
   componentDidMount() {
-    const { commentStore } = this.props.store
-    commentStore.loadComments('trailerComment')
+    const {
+      router: { query: { video: movieSlug } },
+      store: { trailerStore, movieStore },
+    } = this.props
+    const movie = movieStore.getMovieBySlug(movieSlug)
+
+    this.getUpdatedRelatedMovies(movieSlug)
+    trailerStore.setMovieTrailerDetails(movie)
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      router: { query: { video } },
+    } = prevProps
+    const {
+      router: { query: { video: movieSlug } },
+      store: { movieStore, trailerStore },
+    } = this.props
+
+    // handles prop change by updating related and autoplaymovies movies when the browser's back or forward button is clicked
+    window.onpopstate = () => {
+      this.getUpdatedRelatedMovies(movieSlug)
+    }
+
+    if (video !== movieSlug) {
+      const movie = movieStore.getMovieBySlug(movieSlug)
+      trailerStore.setMovieTrailerDetails(movie)
+    }
+  }
+
+  getMovieIdFromMovieSlug = (trailerUrl) => {
+    const videoUrlArray = trailerUrl.split('/')
+    return videoUrlArray[videoUrlArray.length - 1]
+  }
+
+  getUpdatedRelatedMovies = (movieSlug, updateAutoplay = true) => {
+    const { store: { trailerStore } } = this.props
+    trailerStore.getRelatedMovies(movieSlug, updateAutoplay)
+  }
+
+  handleVideoChange = (currentVideoIndex) => {
+    const {
+      store: { trailerStore },
+    } = this.props
+
+    if (currentVideoIndex <= trailerStore.autoplayMovies.length) {
+      const href = `/watch?video=${trailerStore.autoplayMovies[currentVideoIndex].movieSlug}`
+      Router.push(href, href, { shallow: true })
+      this.getUpdatedRelatedMovies(trailerStore.autoplayMovies[currentVideoIndex].movieSlug, false)
+    }
+
+    if (trailerStore.autoplayMovies.length >= currentVideoIndex + 1) {
+      this.setState({
+        nextMovieIndex: currentVideoIndex + 1,
+      })
+    } else {
+      this.setState({
+        nextMovieIndex: null,
+      })
+    }
+  }
+
+  handleReactionClick = (movie, type) => {
+    const {
+      router,
+      store: {
+        trailerStore,
+        userStore: { loggedIn, currentUser, id },
+      },
+    } = this.props
+    if (isAuthenticated(loggedIn, `/watch?video=${router.query.video}`, router)) {
+      trailerStore.setMovieReaction(movie, id, type)
+    }
   }
 
   render() {
     const { classes, store } = this.props
 
-    // get router slug and find article
     const { router } = this.props
     const { video: movieSlug } = router.query
     const {
       movieStore,
       userStore,
       userPortfolio,
-      commentStore,
-    } = this.props.store
+      trailerStore,
+    } = store
+
+    const { nextMovieIndex } = this.state
 
     if (!movieSlug) {
       return
     }
 
+    const {
+      relatedMovies,
+      autoplayMovies,
+      autoPlaySet,
+      subscribers,
+      reaction,
+    } = trailerStore
     const movie = movieStore.getMovieBySlug(movieSlug)
-    const relatedMovies = movieStore.getRelatedMovies(movieSlug)
-    const comments = commentStore.comments;
+    const autoPlay = autoPlaySet === 'true' || autoPlaySet === true
+
+    const videoId = this.getMovieIdFromMovieSlug(movie.trailer)
+    const relatedMoviesArray = [...relatedMovies]
+    const autoplayMoviesArray = [...autoplayMovies]
+    const relatedMoviesIds = relatedMoviesArray.map((relatedMovie) => this.getMovieIdFromMovieSlug(relatedMovie.trailer))
+    const autoplayMoviesIds = autoplayMoviesArray.map((autoPlayMovie) => this.getMovieIdFromMovieSlug(autoPlayMovie.trailer))
+
 
     const addToWatchlist = t => {
       userPortfolio.addToWatchlist(t)
     }
 
+    // eslint-disable-next-line consistent-return
     return (
       <>
         <Box
           className="MuiContainer-maxWidthXl"
-          style={{ padding: '50px 20px'}}
+          style={{ padding: '50px 20px' }}
         >
           <Box className={classes.watchGrid}>
             <Box className={classes.videoContainer}>
-              <Box className="video">
-                <iframe className="video-player" src={movie.trailer + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0"} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-              </Box>
+              {
+                (videoId && relatedMoviesIds.length) && <YoutubePlayer
+                elementId='trailerVideo'
+                videoId={videoId}
+                autoPlay={autoPlay}
+                playlist={autoPlay ? relatedMoviesIds : []}
+                autoplayMovies={autoplayMoviesIds}
+                handleVideoChange={this.handleVideoChange}
+                key={autoplayMovies}
+              />
+              }
             </Box>
-            <Box className="video-metadata">
+            <Box className='video-metadata'>
               <h3>{movie.name}</h3>
               <Box className={classes.videoStats}>
-                <Typography component="span">774,900 views</Typography>
+                <Typography component='span'>{`${movie.trailerDetails.views.toLocaleString()} views`}</Typography>
                 <Box className={classes.videoActions}>
                   <Box className={classes.rating}>
                     <LikeAndUnlike
-                      likeCount="1234"
-                      unlikeCount="3004"
+                      likeCount={reaction.likeCount}
+                      unlikeCount={reaction.unlikeCount}
+                      hasReaction={reaction.hasReaction}
+                      reactionType={reaction.reactionType}
+                      handleLikeClick={() => this.handleReactionClick(movie, 'like')}
+                      handleUnlikeClick={() => this.handleReactionClick(movie, 'unlike')}
                     />
                     <Box className={classes.likeUnderline}>
                       <Divider />
                     </Box>
                   </Box>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    className={classes.shareButton}
-                    startIcon={<ShareIcon />}
-                  >
-                    Share
-                  </Button>
-                  <IconButton onClick={() => {}} className={classes.iconButton}>
-                    <AddCircleIcon />
-                  </IconButton>
-                  <IconButton onClick={() => {}} className={classes.iconButton}>
-                    <MoreHorizIcon />
-                  </IconButton>
+                  <Share classes={classes} shareUrl={`http://localhost:3000/film/${movie.movieSlug}`} message={movie.longDescription} />
+                  <Link href={`/film/${movie.movieSlug}`}>
+                    <a className={classes.linkBackLink}>
+                      <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Movie Page</Typography></Button>
+                    </a>
+                  </Link>
+                  <Link href={`/offering/${movie.movieSlug}`}>
+                    <a className={classes.linkBackLink}>
+                    <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Invest</Typography></Button>
+                    </a>
+                  </Link>
+                  <Link href={`/trade/${movie.movieSlug}`}>
+                    <a className={classes.linkBackLink}>
+                    <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Trade</Typography></Button>
+                    </a>
+                  </Link>
+                  <Link href={`/ticketing/${movie.movieSlug}`}>
+                    <a className={classes.linkBackLink}>
+                    <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Buy Tickets</Typography></Button>
+                    </a>
+                  </Link>
                 </Box>
               </Box>
               <Box style={{ margin: '0 0 20px 0' }}>
@@ -134,35 +226,46 @@ class Index extends React.Component {
             </Box>
             <Box>
               <Box className={classes.videoInfoBox}>
-                <img src="https://yt3.ggpht.com/a/AGF-l78o8C7mo9M3Dmcii6u_pfOt3I9dBS8n8zwVmQ=s240-c-k-c0xffffffff-no-rj-mo" className={classes.videoInfoImage} />
+                <img src={movie.distributorImg} className={classes.videoInfoImage} alt={movie.distributors[0]} />
                 <Box className={classes.videoInfo}>
-                  <Typography className={classes.channelName}>FilmSpot Trailer</Typography>
-                  <Typography className={classes.videoPubDate}>Sun Feb 02 2020</Typography>
+                  <Typography className={classes.channelName}>{movie.distributors[0]}</Typography>
+                  <Typography className={classes.videoPubDate}>{renderDate(movie.trailerDetails.createdAt, 'dddd MMM Do YYYY')}</Typography>
                 </Box>
-                <Button
-                  className={classes.subScribeButton}
-                  size="small"
-                >
-                  <Typography
-                    variant="body1"
-                    className={classes.subScribeButtonText}
+                <Box className={classes.subShare}>
+                  <IconButton onClick={() => {}} className={classes.iconButton}>
+                    <AddCircleIcon />
+                  </IconButton>
+                  <IconButton onClick={() => {}} className={classes.iconButton}>
+                    <MoreHorizIcon />
+                  </IconButton>
+                  <Button
+                    className={classes.subScribeButton}
+                    size='small'
                   >
-                    Subscribe 3.4M
-                  </Typography>
-                </Button>
+                    <Typography
+                      variant='body1'
+                      className={classes.subScribeButtonText}
+                    >
+                      {`SUBSCRIBE ${formatNumber(subscribers, 1)}`}
+                    </Typography>
+                  </Button>
+                </Box>
                 <VideoDescription description={movie.longDescription} />
               </Box>
               <Divider />
             </Box>
-            <ShowingNext relatedMovies={relatedMovies} />
-            <Comments type="trailerComment" />
+            <ShowingNext
+              onClick={this.getUpdatedRelatedMovies}
+              nextMovieIndex={nextMovieIndex}
+            />
+            <Comments identifierId={movie.id} />
           </Box>
         </Box>
         <Box
           className={classNames(classes.container)}
-          style={{ paddingLeft: "0px", paddingRight: "0px" }}
+          style={{ paddingLeft: '0px', paddingRight: '0px' }}
         >
-          {!userStore.token ? <InvestNow /> : ""}
+          {!userStore.token ? <InvestNow /> : ''}
         </Box>
       </>
     )
