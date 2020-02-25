@@ -79,10 +79,19 @@ export default ({
 const TrailerImage = ({movie, className}) => {
   const childRef = React.useRef()
   return (
-    <div className={className} onClick={() => childRef.current.handleOpen()}>
-      <FontAwesomeIcon icon={faPlayCircle} size='1x' />
-      <img src={movie.heroImg} />
-      <TrailerSliderModal movie={movie} ref={childRef} />
-    </div>
+    <Link href={`/watch?video=${movie.movieSlug}`}>
+      <a style={{ color: '#fff'}}>
+        <div className={className}>
+          <FontAwesomeIcon icon={faPlayCircle} size='1x' />
+          <img src={movie.heroImg} />
+          <TrailerSliderModal movie={movie} ref={childRef} />
+        </div>
+      </a>
+    </Link>
+    // <div className={className} onClick={() => childRef.current.handleOpen()}>
+    //   <FontAwesomeIcon icon={faPlayCircle} size='1x' />
+    //   <img src={movie.heroImg} />
+    //   <TrailerSliderModal movie={movie} ref={childRef} />
+    // </div>
   )
 }

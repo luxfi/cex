@@ -89,7 +89,8 @@ class LoginForm extends React.Component {
       login(
         () => {
           // setSuccessMessage('You have successfully logged in!')
-          Router.push('/portfolio')
+          const referrer = Router.router.query.ref
+          referrer ? Router.push(decodeURI(referrer)) : Router.push('/portfolio')
         },
         (ex) => {
           setErrorMessage(ex)

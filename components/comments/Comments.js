@@ -11,29 +11,27 @@ import SortComments from './SortComments'
 
 import styles from './styles/comments.style'
 
-const COMMENT_TYPE = 'trailerComment'
-
-@inject("store")
+@inject('store')
 @observer
 class Comments extends Component {
   componentDidMount() {
-    const { store: { commentStore } } = this.props
-    commentStore.loadComments(COMMENT_TYPE)
+    const { store: { commentStore }, identifierId } = this.props
+    commentStore.loadComments(identifierId)
   }
 
   render() {
-    const { classes, store } = this.props
-    const { 
+    const { classes, store, identifierId } = this.props
+    const {
       isLoading,
       comments,
       comments: {
-        pagination: { totalResults = '' } = {}
-      } = {}
+        pagination: { totalResults = '' } = {},
+      } = {},
     } = store.commentStore
 
     const userComments = comments && comments.comments
-    
-    return(
+
+    return (
       <Box className={classes.commentWrapper}>
         {
          isLoading ? (
@@ -41,21 +39,21 @@ class Comments extends Component {
             <CircularProgress />
           </Box>
          ) : (
-          <>
+           <>
             <Box className={classes.commentHeader}>
-              <Typography component="h4">{`${totalResults || 0} Comments`}</Typography>
+              <Typography component='h4'>{`${totalResults || 0} Comments`}</Typography>
               {comments && <SortComments />}
             </Box>
             <AddComment
               numOfRows={3}
-              type={COMMENT_TYPE}
+              identifierId={identifierId}
             />
             <DisplayComments comments={userComments} />
-          </>
-         ) 
+           </>
+         )
         }
       </Box>
-    );
+    )
   }
 }
 
