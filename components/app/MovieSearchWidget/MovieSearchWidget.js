@@ -89,7 +89,8 @@ class MovieSearchWidget extends React.Component {
     let ary = text.split('-')
     if (ary.length < 2) return
     let ticker = ary[ary.length - 1].trim()
-    return this.props.movies.find(m => m.ticker === ticker).movieSlug
+    const searchedMovies = this.props.movies.find(m => m.ticker === ticker)
+    return searchedMovies && searchedMovies.movieSlug
   }
 
   renderSuggestion = (suggestion, { query, isHighlighted }) => {
