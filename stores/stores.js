@@ -11,14 +11,14 @@ import ArticleStore from "./ArticleStore"
 import OrderBook from "./OrderBook"
 import UserStore from "./UserStore"
 import UserPortfolio from "./UserPortfolio"
-import UIStore from "./UIStore"
+import CommentStore from "./CommentStore"
 import ContentfulStore from "./ContentfulStore"
 import NewsStore from "./NewsStore"
-import TicketingStore from './TicketingStore'
-import CommentStore from "./CommentStore"
-import TicketCheckoutStore from './TicketCheckoutStore'
 import PickSeatStore from './PickSeatStore'
+import TicketCheckoutStore from './TicketCheckoutStore'
+import TicketingStore from './TicketingStore'
 import TrailerStore from "./TrailerStore"
+import UIStore from "./UIStore"
 
 const isServer = typeof window === "undefined"
 useStaticRendering(isServer)
@@ -30,13 +30,13 @@ const _initialData = {
   orderBook: {},
   userStore: {},
   userPortfolio: {},
-  uiStore: {},
+  commentStore: {},
   contentfulStore: {},
   newsStore: {},
-  ticketingStore: {},
-  ticketCheckoutStore: {},
-  commentStore: {},
   pickSeatStore: {},
+  ticketCheckoutStore: {},
+  ticketingStore: {},
+  uiStore: {},
 }
 
 export default function initializeStore(initialData = _initialData) {
@@ -49,14 +49,14 @@ export default function initializeStore(initialData = _initialData) {
       orderBook: new OrderBook(initialData.orderBook, api),
       userStore: new UserStore(initialData.userStore, api),
       userPortfolio: new UserPortfolio(initialData.userPortfolio, api),
-      uiStore: new UIStore(initialData.uiStore, api),
+      commentStore: new CommentStore(initialData.commentStore, api),
       contentfulStore: new ContentfulStore(initialData.contentfulStore, api),
       newsStore: new NewsStore(initialData.newsStore, api),
-      ticketingStore: new TicketingStore(initialData.ticketingStore, api),
-      ticketCheckoutStore: new TicketCheckoutStore(initialData.ticketCheckoutStore, api),
-      commentStore: new CommentStore(initialData.commentStore, api),
       pickSeatStore: new PickSeatStore(initialData.pickSeatStore, api),
+      ticketCheckoutStore: new TicketCheckoutStore(initialData.ticketCheckoutStore, api),
+      ticketingStore: new TicketingStore(initialData.ticketingStore, api),
       trailerStore: new TrailerStore(initialData.trailerStore, api),
+      uiStore: new UIStore(initialData.uiStore, api),
     }
   } else if (store === null) {
     // Client stuff
@@ -66,14 +66,14 @@ export default function initializeStore(initialData = _initialData) {
       orderBook: new OrderBook(initialData.orderBook, api),
       userStore: new UserStore(initialData.userStore, api),
       userPortfolio: new UserPortfolio(initialData.userPortfolio, api),
-      uiStore: new UIStore(initialData.uiStore, api),
+      commentStore: new CommentStore(initialData.commentStore, api),
       contentfulStore: new ContentfulStore(initialData.contentfulStore, api),
       newsStore: new NewsStore(initialData.newsStore, api),
-      ticketingStore: new TicketingStore(initialData.ticketingStore, api),
-      ticketCheckoutStore: new TicketCheckoutStore(initialData.ticketCheckoutStore, api),
-      commentStore: new CommentStore(initialData.commentStore, api),
       pickSeatStore: new PickSeatStore(initialData.pickSeatStore, api),
+      ticketCheckoutStore: new TicketCheckoutStore(initialData.ticketCheckoutStore, api),
+      ticketingStore: new TicketingStore(initialData.ticketingStore, api),
       trailerStore: new TrailerStore(initialData.trailerStore, api),
+      uiStore: new UIStore(initialData.uiStore, api),
     }
 
     store.uiStore.loadState()
