@@ -22,6 +22,9 @@ export default () => ({
   seatLegendList: {
     padding: '10px 50px 10px 20px',
   },
+  seatLegendListRow: {
+    padding: 20,
+  },
   seatLegendbtn: {
     color: '#00b7ff',
     cursor: 'pointer',
@@ -33,6 +36,7 @@ export default () => ({
   seatLegendIcon: {
     width: 20,
     height: 20,
+    marginRight: 10,
   },
   screenHeader: {
     width: '100%',
@@ -95,7 +99,7 @@ export default () => ({
     padding: '10px 40px',
     backgroundColor: '#FFFFFF',
     color: '#090909',
-    marginTop: 10,
+    marginTop: 15,
   },
   subTotalContainer: {
     padding: '15px 0',

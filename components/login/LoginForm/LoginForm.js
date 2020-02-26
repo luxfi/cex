@@ -86,6 +86,13 @@ class LoginForm extends React.Component {
 
   handleSubmit(login, isValidLogin, setErrorMessage) {
     if (isValidLogin) {
+      const urlParams = new URLSearchParams(window.location.search)
+      const redirect = urlParams.get('redirect')
+
+      if (redirect) {
+        Router.back()
+      }
+
       login(
         () => {
           // setSuccessMessage('You have successfully logged in!')

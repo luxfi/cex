@@ -100,6 +100,25 @@ class PickSeatsView extends React.Component {
     }
   }
 
+  gotoNextPage = () => {
+    const {
+      router,
+      store: {
+        userStore: { loggedIn },
+      },
+    } = this.props
+
+    const slug = router.query.slug || slugFromPath()
+    const urlParams = new URLSearchParams(window.location.search)
+    const showtimeId = urlParams.get('showtimeId')
+    const venueId = urlParams.get('venueId')
+
+    if (!loggedIn) {
+      return router.push('/login?redirect=true')
+    }
+    return router.push('/confirmPayment', `/confirmPayment/${slug}?venueId=${venueId}&showtimeId=${showtimeId}`)
+  }
+
   render() {
     const {
       classes,
@@ -117,7 +136,7 @@ class PickSeatsView extends React.Component {
           selectedShowtime,
         },
         ticketCheckoutStore: {
-          total,
+          subTotal,
           ticketsCount,
         },
       },
@@ -141,38 +160,34 @@ class PickSeatsView extends React.Component {
                 title='Seat Legend'
                 handleClose={this.closeDialog}
               >
-                <List className={classes.seatLegendList}>
-                  <ListItem>
-                    <ListItemIcon>
+                <Grid container justify='center' alignItems='center' className={classes.seatLegendList}>
+                  <Grid container wrap='nowrap' className={classes.seatLegendListRow}>
+                    <Grid container>
                       <img src='/images/seats/selectedSeat.png' alt='' className={classes.seatLegendIcon}/>
-                    </ListItemIcon>
-                    <ListItemText primary='My Seat' />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
+                      <span>My Seat</span>
+                    </Grid>
+                    <Grid container>
                       <img src='/images/seats/standard.png' alt='' className={classes.seatLegendIcon}/>
-                    </ListItemIcon>
-                    <ListItemText primary='Standard' className={classes.seatLegendIcon} />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
+                      <span>Standard</span>
+                    </Grid>
+                  </Grid>
+                  <Grid container wrap='nowrap' className={classes.seatLegendListRow}>
+                    <Grid container>
                       <img src='/images/seats/wheelchair.png' alt='' className={classes.seatLegendIcon}/>
-                    </ListItemIcon>
-                    <ListItemText primary='Wheelchair' />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
+                      <span>Wheelchair</span>
+                    </Grid>
+                    <Grid container>
                       <img src='/images/seats/companion.png' alt='' className={classes.seatLegendIcon}/>
-                    </ListItemIcon>
-                    <ListItemText primary='Companion' />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
+                      <span>Companion</span>
+                    </Grid>
+                  </Grid>
+                  <Grid container wrap='nowrap' className={classes.seatLegendListRow}>
+                    <Grid container>
                       <img src='/images/seats/pickedSeat.png' alt='' className={classes.seatLegendIcon}/>
-                    </ListItemIcon>
-                    <ListItemText primary='Unavailable Seat' />
-                  </ListItem>
-                </List>
+                      <span>Unavailable Seat</span>
+                    </Grid>
+                  </Grid>
+                </Grid>
               </CustomDialog>
             </Grid>
             <Box className={classes.seatsContainer}>
@@ -203,7 +218,7 @@ class PickSeatsView extends React.Component {
                 }
                 <CustomDialog
                   open={modalOpened}
-                  onClose={this.closeModal}
+                  handleClose={this.closeModal}
                 >
                   <Grid container direction='column' alignItems='center' justify='center'>
                     <Typography>{modalMessage}</Typography>
@@ -252,12 +267,13 @@ class PickSeatsView extends React.Component {
           <Grid container justify='flex-end'>
             <Box>
               <Typography variant='h6' className={classes.subHeader}>SUBTOTAL</Typography>
-              <Typography variant='h5' className={classes.subTotal}>{formatCurrency(total)}</Typography>
+              <Typography variant='h5' className={classes.subTotal}>{formatCurrency(subTotal)}</Typography>
             </Box>
             <Grid>
               <Button
                 className={classes.nextButton}
                 disabled={totalSeatsCount < ticketsCount}
+                onClick={this.gotoNextPage}
               >
                 NEXT
               </Button>

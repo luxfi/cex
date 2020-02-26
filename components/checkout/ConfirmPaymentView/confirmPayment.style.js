@@ -50,6 +50,9 @@ export default () => ({
   link: {
     fontSize: 14,
     color: '#00b7ff',
+    background: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
   },
   addPaymentSection: {
     padding: '10px 0',

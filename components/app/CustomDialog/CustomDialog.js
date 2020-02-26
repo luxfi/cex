@@ -29,18 +29,17 @@ const DialogContent = withStyles(dialogContentStyles)(MuiDialogContent)
 
 const CustomDialog = ({
   handleClose, className, title, children, open,
-}) => (
+}) => {
+  return (
     <Dialog onClose={handleClose} aria-labelledby='customized-dialog-title' open={open} className={className}>
-      {
-        title ? (<DialogTitle id='customized-dialog-title' onClose={handleClose}>
-            {title}
-          </DialogTitle>)
-          : null
-      }
+      <DialogTitle id='customized-dialog-title' onClose={handleClose}>
+        {title}
+      </DialogTitle>
       <DialogContent>
         {children}
       </DialogContent>
     </Dialog>
-)
+  )
+}
 
 export default withStyles(dialogStyles)(CustomDialog)

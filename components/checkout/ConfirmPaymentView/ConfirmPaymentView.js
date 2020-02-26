@@ -3,6 +3,10 @@ import {
   Button,
   Divider,
   Grid,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   Table,
   TableBody,
   TableCell,
@@ -11,6 +15,9 @@ import {
   Typography,
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
+import CreditCardIcon from '@material-ui/icons/CreditCard'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'next/router'
 import React from 'react'
@@ -19,17 +26,30 @@ import MasterCardIcon from '../../../assets/svg/MasterCard.svg'
 
 import { formatCurrency, slugFromPath } from '../../../util'
 
-import styles from './confirmPayment.style'
+import CustomDialog from '../../app/CustomDialog'
 
+
+import styles from './confirmPayment.style'
 
 @inject('store')
 @observer
 class ConfirmPaymentView extends React.Component {
+  openDialog = () => {
+    const { store: { uiStore } } = this.props
+    uiStore.openDialog()
+  }
+
+  closeDialog = () => {
+    const { store: { uiStore } } = this.props
+    uiStore.closeDialog()
+  }
+
   render() {
     const {
       classes,
       router,
       store: {
+        uiStore,
         movieStore,
         ticketCheckoutStore: {
           serviceFee,
@@ -107,12 +127,35 @@ class ConfirmPaymentView extends React.Component {
                   <MasterCardIcon className={classes.creditCardIcon}/>
                   <span>ending in 5463</span>
                 </Grid>
-                <span className={classes.link}>Edit</span>
+                <button type='button' className={classes.link}>Edit</button>
               </Grid>
               <Divider />
               <Box className={classes.addPaymentSection}>
-                <span className={classes.link}>Add payment method</span>
+                <button onClick={this.openDialog} type='button' className={classes.link}>Add payment method</button>
               </Box>
+              <CustomDialog
+                open={uiStore.dialog.open}
+                title='Select Payment Method'
+                handleClose={this.closeDialog}
+              >
+                <List>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <AccountBalanceIcon color='primary' />
+                    </ListItemIcon>
+                    <ListItemText primary='Bank Account' />
+                    <ArrowForwardIosIcon color='disabled' />
+                  </ListItem>
+                  <Divider light />
+                  <ListItem button>
+                    <ListItemIcon>
+                      <CreditCardIcon color='primary' />
+                    </ListItemIcon>
+                    <ListItemText primary='Debit Card' />
+                    <ArrowForwardIosIcon color='disabled' />
+                  </ListItem>
+                </List>
+              </CustomDialog>
             </Box>
           </Box>
         </Box>
