@@ -18,6 +18,7 @@ import TicketingStore from './TicketingStore'
 import CommentStore from "./CommentStore"
 import TicketCheckoutStore from './TicketCheckoutStore'
 import PickSeatStore from './PickSeatStore'
+import TrailerStore from "./TrailerStore"
 
 const isServer = typeof window === "undefined"
 useStaticRendering(isServer)
@@ -55,6 +56,7 @@ export default function initializeStore(initialData = _initialData) {
       ticketCheckoutStore: new TicketCheckoutStore(initialData.ticketCheckoutStore, api),
       commentStore: new CommentStore(initialData.commentStore, api),
       pickSeatStore: new PickSeatStore(initialData.pickSeatStore, api),
+      trailerStore: new TrailerStore(initialData.trailerStore, api),
     }
   } else if (store === null) {
     // Client stuff
@@ -71,6 +73,7 @@ export default function initializeStore(initialData = _initialData) {
       ticketCheckoutStore: new TicketCheckoutStore(initialData.ticketCheckoutStore, api),
       commentStore: new CommentStore(initialData.commentStore, api),
       pickSeatStore: new PickSeatStore(initialData.pickSeatStore, api),
+      trailerStore: new TrailerStore(initialData.trailerStore, api),
     }
 
     store.uiStore.loadState()

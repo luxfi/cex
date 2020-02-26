@@ -13,28 +13,23 @@ export default (theme) => ({
     position: 'relative',
     height: '100%',
     zIndex: 1,
-    //cursor: 'pointer',
-    transition: 'transform 300ms ease 100ms',
+    transition: 'transform 200ms ease 100ms',
     '&:hover': {
       zIndex: 10,
-      transform: 'scale(1.05) !important',
+      transform: 'scale(1.10) !important',
     },
     '&:hover $cardContent': {
       background: `linear-gradient(to top,  rgba(${hoverGradientRGBString}, 1) 0%, rgba(${hoverGradientRGBString}, 0.7) 97%, rgba(${hoverGradientRGBString}, 0.5) 100%)`,
       height: '100%',
     },
-    '&:hover $innerCardContent': {
-      justifyContent: 'flex-start',
-      alignItems: 'flex-start',
-    },
     '&:hover $hoverContent': {
-      visibility: 'visible'
+      display: 'flex',
     },
     '&:hover $standardContent': {
-      visibility: 'hidden'
+      display: 'none',
     },
     '&:hover $trailerImg': {
-      visibility: 'visible'
+      display: 'block',
     },
   },
 
@@ -47,7 +42,6 @@ export default (theme) => ({
     position: 'absolute',
     width: '100%',
     height: '20%',
-//     height: '100%',
     bottom: 0,
     padding: 0,
     background: `linear-gradient(to top,  rgba(${lowerGradientRGBString}, 0.9) 0%, rgba(${lowerGradientRGBString}, 0.3) 75%, rgba(${lowerGradientRGBString}, 0) 100%)`,
@@ -55,15 +49,22 @@ export default (theme) => ({
   },
 
   innerCardContent: {
-    display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-
     width: '100%',
-    padding: theme.spacing(2),
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
     background: 'transparent',
     transition: 'background 0.25s linear 0ms',
+  },
+
+  standardContent: {
+    display: 'flex',
+  },
+
+  hoverContent: {
+    display: 'none',
   },
 
   title: {
@@ -81,12 +82,6 @@ export default (theme) => ({
     marginTop: 0,
   },
 
-  hoverContent: {
-    visibility: 'hidden',
-  },
-
-  standardContent: {
-  },
 
   status: {
     fontWeight: 'bold',
@@ -100,7 +95,12 @@ export default (theme) => ({
   },
 
   buttonsOuter: {
+    width: '90%',
     marginTop: theme.spacing(3),
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    justifyContent: 'space-around',
   },
 
   hoverButton: {
@@ -112,7 +112,6 @@ export default (theme) => ({
     border: '1px solid ' + theme.palette.background.default,
     backgroundColor: theme.palette.secondary.main,
     color: theme.palette.common.black,
-    marginRight: theme.spacing(2),
   },
 
   textButton: {
@@ -123,7 +122,7 @@ export default (theme) => ({
   },
 
   trailerImg: {
-    visibility: 'hidden',
+    display: 'none',
     position: 'relative',
 
     '& svg': {
@@ -139,10 +138,9 @@ export default (theme) => ({
       },
     },
 
-
     '& img': {
       height: 'auto',
-      width: '100%'
-    }
-  }
+      width: '100%',
+    },
+  },
 })

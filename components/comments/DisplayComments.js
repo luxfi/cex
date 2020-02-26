@@ -1,66 +1,104 @@
-import React, { useState } from "react"
+import React, { useReducer } from "react"
 
 import { Box, Typography, Avatar, Button } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
-import LikeAndUnlike from '../LikeAndUnlike';
 import AddComment from './AddComment'
-
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import SingleComment from './SingleComment'
 
 import styles from './styles/comments.style'
 
 const DisplayComments = ({ comments }) => {
   const useMainStyles = makeStyles(styles)
   const classes = useMainStyles()
-  const [state, setState] = useState({
+
+  const [state, setState] = useReducer((state, newState) => ({ ...state, ...newState }), {
     replyComment: false,
     replyCommentId: null,
+    showReply: {},
   })
-
-  const handleReply = (index) => {
-    setState({ ...state, replyComment: !state.replyComment, replyCommentId: index })
+  const handleReply = (commentId) => {
+    setState({ replyComment: !state.replyComment, replyCommentId: commentId })
   }
 
   const onReplyCancel = () => {
-    setState({ ...state, replyComment: false, replyCommentId: null })
+    setState({ replyComment: false, replyCommentId: null })
   }
-    
+
+  const handleShowReplies = (commentId) => {
+    const newShowReply = { ...state.showReply, [commentId]: !state.showReply[commentId] }
+    setState({
+      showReply: newShowReply,
+    })
+  }
+
   return (
     <Box>
       {
         comments && comments.map((comment, index) => comment.isPublic && (
-          <Box className={classes.comment} key={`comment-${comment.commentId}-${index}`}>
-            <Avatar src={comment.author.authorProfileImageUrl} className={classes.commentImage} />
-            <Box>
-              <Typography className={classes.commentUserName}>{comment.author.authorDisplayName}</Typography>
-              <Typography variant="body2">{comment.text}</Typography>
-              <Box className={classes.commentActions}>
-                <Box className="rating">
-                  <LikeAndUnlike
-                    likeCount={comment.likeCount}
-                    unlikeCount={comment.unlikeCount}
-                  />
-                </Box>
-                <Button onClick={() => handleReply(index)} size="small" variant="text">Reply</Button>
-              </Box>
+          <Box key={`comment-${index}-wrapper`}>
+            <SingleComment
+              comment={comment}
+              index={index}
+              onReplyCancel={onReplyCancel}
+              replyCommentId={state.replyCommentId}
+              handleReply={() => handleReply(comment.commentId)}
+              keyValue={`comment-${comment.commentId}-${index}`}
+              showReplyButton
+            />
+            <Box style={{ padding: 10, margin: '0 0 10px 50px' }}>
               {
-                (state.replyCommentId === index) && (
-                  <AddComment
-                    numOfRows={2}
-                    onCancel={onReplyCancel}
-                    comment={comment}
-                    type={comment.type}
-                    isReply={true}
-                  />)
+                (comment.replies.length) ? (
+                  <Typography
+                    onClick={() => handleShowReplies(comment.commentId)}
+                    className={classes.shoHideComments}
+                  >
+                    { state.showReply[comment.commentId] ? 'Hide replies' : `Show ${comment.replies.length} replies` }
+                  </Typography>
+                ) : null
+              }
+              {
+                comment.replies
+                && (state.showReply[comment.commentId])
+                && comment.replies.map((reply, replyIndex) => (
+                  <>
+                    <SingleComment
+                      comment={reply}
+                      index={replyIndex}
+                      onReplyCancel={onReplyCancel}
+                      replyCommentId={state.replyCommentId}
+                      handleReply={() => handleReply(reply.commentId)}
+                      keyValue={`reply-${reply.commentId}-${index}`}
+                      showReplyButton
+                      isReply
+                    />
+                    { (state.replyCommentId === reply.commentId) && <AddComment
+                        numOfRows={2}
+                        onCancel={onReplyCancel}
+                        comment={comment}
+                        identifierId={comment.commentId}
+                        isReply
+                      />
+                    }
+                  </>
+                ))
+              }
+              {
+              (state.replyCommentId === comment.commentId) && (
+                <AddComment
+                  numOfRows={2}
+                  onCancel={onReplyCancel}
+                  comment={comment}
+                  identifierId={comment.commentId}
+                  isReply
+                />)
               }
             </Box>
           </Box>
         ))
       }
     </Box>
-  );
+  )
 }
 
 export default DisplayComments

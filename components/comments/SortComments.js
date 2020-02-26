@@ -1,57 +1,76 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuList from '@material-ui/core/MenuList';
-import SortIcon from '@material-ui/icons/Sort';
+import React, { useRef, useEffect, useReducer } from 'react'
+import { inject, observer } from 'mobx-react'
 
-import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+import Button from '@material-ui/core/Button'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener'
+import Grow from '@material-ui/core/Grow'
+import MenuItem from '@material-ui/core/MenuItem'
+import MenuList from '@material-ui/core/MenuList'
+import Paper from '@material-ui/core/Paper'
+import Popper from '@material-ui/core/Popper'
+import SortIcon from '@material-ui/icons/Sort'
+
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
   paper: {
     marginRight: theme.spacing(2),
   },
-}));
+}))
 
-export default function SortButton() {
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef(null);
+const SortButton = inject('store')(observer(({ store }) => {
+  const classes = useStyles()
+  const [state, setState] = useReducer((state, newState) => ({ ...state, ...newState }), {
+    open: false,
+    sortBy: 'recent',
+  })
+  const anchorRef = useRef(null)
+
+  const { commentStore } = store
 
   const handleToggle = () => {
-    setOpen(prevOpen => !prevOpen);
-  };
+    setState({ open: !state.open })
+  }
 
-  const handleClose = event => {
+  const handleClose = (event) => {
+    event.stopPropagation()
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
+      return
     }
 
-    setOpen(false);
-  };
+    setState({
+      open: false,
+    })
+  }
+
+  const handleSort = (event, sortBy) => {
+    setState({ sortBy })
+    handleClose(event)
+    commentStore.sortComments(sortBy)
+  }
 
   function handleListKeyDown(event) {
     if (event.key === 'Tab') {
-      event.preventDefault();
-      setOpen(false);
+      event.preventDefault()
+      setState({
+        open: false,
+      })
     }
   }
 
   // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current.focus();
+  const prevOpen = useRef(state.open)
+  useEffect(() => {
+    if (prevOpen.current === true && state.open === false) {
+      anchorRef.current.focus()
     }
 
-    prevOpen.current = open;
-  }, [open]);
+    prevOpen.current = state.open
+  }, [state.open])
 
   return (
     <div className={classes.root}>
@@ -59,26 +78,26 @@ export default function SortButton() {
         <Button
           ref={anchorRef}
           onClick={handleToggle}
-          variant="contained"
-          size="small"
+          variant='contained'
+          size='small'
           className={classes.shareButton}
           startIcon={<SortIcon />}
         >
-          Sort
+          {`Sort (${state.sortBy})`}
         </Button>
 
 
-        <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+        <Popper open={state.open} anchorEl={anchorRef.current} role={undefined} transition>
           {({ TransitionProps, placement }) => (
             <Grow
               {...TransitionProps}
               style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
             >
               <Paper>
-                <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={handleClose}>Sort 1</MenuItem>
-                    <MenuItem onClick={handleClose}>Sort 2</MenuItem>
+                <ClickAwayListener mouseEvent='onClick' onClickAway={handleClose}>
+                  <MenuList autoFocusItem={state.open} id='menu-list-grow' onKeyDown={handleListKeyDown}>
+                    <MenuItem selected={state.sortBy === 'recent'} onClick={(event) => handleSort(event, 'recent')}>Most recent</MenuItem>
+                    <MenuItem selected={state.sortBy === 'top'} onClick={(event) => handleSort(event, 'top')}>Top comments</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
@@ -87,5 +106,7 @@ export default function SortButton() {
         </Popper>
       </div>
     </div>
-  );
-}
+  )
+}))
+
+export default SortButton

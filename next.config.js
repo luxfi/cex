@@ -7,9 +7,6 @@ const withTM = require('next-transpile-modules')
 const comments = require('postcss-discard-comments')
 const postcss = require('poststylus')
 const rupture = require('rupture')
-const articlesFromJson = require('./assets/tempData/articles')
-const moviesFromJson = require('./assets/tempData/moviesBuild')
-const facets = require('./settings/facets')
 
 module.exports = withBundleAnalyzer(
   withCSS(
