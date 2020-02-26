@@ -8,8 +8,7 @@ import {
 import { ChevronLeft, ChevronRight} from '@material-ui/icons'
 
 import Slider from 'react-slick'
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
+import './modified-slick.css'
 
 import classNames from 'classnames'
 
@@ -43,38 +42,58 @@ export default (props) => {
     goToMovieOffering,
     goToMovieTrading,
     className,
-    height
+    height,
   } = props
 
   const classes = useStyles()
 
   const sliderSettings = {
     dots: false,
-    arrows: true,
+    //arrows: true,
     infinite: false,
     variableWidth: true,
     speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToScroll: 6,
     swipeToSlide: true,
     prevArrow: <PreviousArrow classes={classes}/>,
     nextArrow: <NextArrow classes={classes}/>,
+      /*
+        TODO:  pass in a "averageWidth" prop, and generate these breakpoints dynamically.
+
+        These are based on ~320px width
+      */
     responsive: [
       {
-        breakpoint: 900,
+        breakpoint: 1700,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-        }
+          slidesToScroll: 4,
+        },
       },
       {
-        breakpoint: 480,
+        breakpoint: 1350,
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ]
+          slidesToScroll: 3,
+        },
+      },
+      {
+        breakpoint: 1000,
+        settings: {
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 700,
+        settings: {
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 330,
+        settings: {
+          slidesToScroll: 1,
+        },
+      },
+    ],
   }
 
   return (
