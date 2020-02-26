@@ -11,3 +11,4 @@
 /account/*      /account.html   404
 /pickSeats/*    /pickSeats.html  404
 /watch/*        /watch.html     404
+/login/*        /login.html     404
