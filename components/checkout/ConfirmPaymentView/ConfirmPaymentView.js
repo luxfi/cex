@@ -22,16 +22,28 @@ import VisaCard from '../../../assets/svg/VisaCard.svg'
 
 import { formatCurrency, slugFromPath } from '../../../util'
 
-import { AddPaymentMethod } from '../../app'
+import { AddPaymentMethodModal } from '../../app'
 
 import styles from './confirmPayment.style'
 
 @inject('store')
 @observer
 class ConfirmPaymentView extends React.Component {
-  openDialog = () => {
+  addPaymentMethod = () => {
     const { store: { uiStore } } = this.props
     uiStore.openDialog()
+  }
+
+  editCardPaymentMethod = (cardIndex) => () => {
+    const { store: { userStore, uiStore } } = this.props
+    uiStore.openDialog()
+    userStore.selectPaymentMethod('card')
+    userStore.enableCardEditMode(cardIndex)
+  }
+
+  choosePaymentMethod = (paymentMethodIndex) => () => {
+    const { store: { userStore } } = this.props
+    userStore.choosePaymentMethod(paymentMethodIndex)
   }
 
   renderCardIcons = (cardType) => {
@@ -55,7 +67,11 @@ class ConfirmPaymentView extends React.Component {
       router,
       store: {
         movieStore,
-        userStore: { paymentOptions },
+        userStore: {
+          paymentOptions,
+          accountBalance,
+          paymentMethodIndex,
+        },
         ticketCheckoutStore: {
           serviceFee,
           subTotal,
@@ -125,22 +141,41 @@ class ConfirmPaymentView extends React.Component {
             </Table>
           </Box>
           <Box>
-            <Typography variant='h6'>Payment Method</Typography>
+            <Typography variant='h6' style={{ marginBottom: 12 }}>Payment Method</Typography>
             <Box className={classes.paymentMethodContainer}>
-              {paymentOptions.length ? paymentOptions.map(({ type, creditCard }) => (
-                <Grid className={classes.editCardSection} container alignItems='center' justify='space-between' wrap='nowrap'>
+              {paymentOptions.length ? paymentOptions.map(({ type, creditCard }, cardIndex) => (
+                <Grid
+                  onClick={this.choosePaymentMethod(cardIndex)}
+                  className={`${classes.editCardSection} ${paymentMethodIndex === cardIndex ? 'selected' : null}`}
+                  container
+                  alignItems='center'
+                  justify='space-between'
+                  wrap='nowrap'
+                >
                   <Grid container alignItems='center'>
                     {this.renderCardIcons(type)}
                     <span>ending in {creditCard.substr(creditCard.length - 4)}</span>
                   </Grid>
-                  <button type='button' className={classes.link}>Edit</button>
+                  <button type='button' className={classes.link} onClick={this.editCardPaymentMethod(cardIndex)}>Edit</button>
                 </Grid>
-              )) : <Box style={{ padding: '10px 0', fontSize: 12 }}>No Payment Method Is Currently Added</Box>}
+              )) : null}
+              <Divider />
+              <Grid
+                onClick={this.choosePaymentMethod(paymentOptions.length)}
+                className={`${classes.editCardSection} ${paymentMethodIndex === paymentOptions.length ? 'selected' : null}`}
+                container
+                alignItems='center'
+                justify='space-between'
+                wrap='nowrap'
+              >
+                <Typography style={{ fontSize: 14 }}>Bank Payment</Typography>
+                <Typography style={{ fontSize: 14 }}>{accountBalance ? 'Connected' : 'Disconnected'}</Typography>
+              </Grid>
               <Divider />
               <Box className={classes.addPaymentSection}>
-                <button onClick={this.openDialog} type='button' className={classes.link}>Add payment method</button>
+                <button onClick={this.addPaymentMethod} type='button' className={classes.link}>Add payment method</button>
               </Box>
-              <AddPaymentMethod />
+              <AddPaymentMethodModal />
             </Box>
           </Box>
         </Box>

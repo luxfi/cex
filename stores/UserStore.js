@@ -51,7 +51,11 @@ export default class UserStore {
   @observable offeringInvestments = []
   @observable selectedPaymentMethod = null
   @observable paymentOptions = []
-  @observable isValidCard = false
+  @observable isValidCard = null
+  @observable editedCard = {}
+  @observable cardEditingMode = false
+  @observable editedCardIndex = null
+  @observable paymentMethodIndex = null
 
   // ** SIGNUP INFO **
   // must initialize to empty string for controlled inputs
@@ -570,24 +574,61 @@ export default class UserStore {
 
   @action addDebitCard(card) {
     const cardType = getCreditCardType(card.creditCard)
+    this.resetCardValidity()
 
-    if (!cardType) {
-      this.isValidCard = false
-      return
-    }
+    if (cardType) {
+      this.isValidCard = true
 
-    this.isValidCard = true
-
-    if (this.paymentOptions.length) {
-      this.paymentOptions.push({...card, amount: 400, type: cardType })
+      if (this.paymentOptions.length) {
+        this.paymentOptions.push({ ...card, amount: 400, type: cardType })
+      } else {
+        this.paymentOptions.push({ ...card, amount: 600, type: cardType })
+      }
+      localStorage.setItem('paymentOptions', JSON.stringify(this.paymentOptions))
     } else {
-      this.paymentOptions.push({ ...card, amount: 600, type: cardType })
+      this.isValidCard = false
     }
-    localStorage.setItem('paymentOptions', JSON.stringify(this.paymentOptions))
+  }
+
+  @action editDebitCard(card) {
+    const cardType = getCreditCardType(card.creditCard)
+    this.resetCardValidity()
+
+    if (cardType) {
+      this.isValidCard = true
+      this.paymentOptions[this.editedCardIndex] = card
+      localStorage.setItem('paymentOptions', JSON.stringify(this.paymentOptions))
+    } else {
+      this.isValidCard = false
+    }
+  }
+
+  @action enableCardEditMode(cardIndex) {
+    this.cardEditingMode = true
+    this.editedCardIndex = cardIndex
+    this.editedCard = this.paymentOptions[cardIndex]
+  }
+
+  @action resetEditedCard() {
+    this.cardEditingMode = false
+    this.editedCardIndex = null
+    this.editedCard = {}
+  }
+
+  resetCardValidity() {
+    this.isValidCard = null
   }
 
   @action selectPaymentMethod(paymentMethod) {
     this.selectedPaymentMethod = paymentMethod
+  }
+
+  @action resetPaymentMethod() {
+    this.selectedPaymentMethod = null
+  }
+
+  @action choosePaymentMethod(paymentMethodIndex) {
+    this.paymentMethodIndex = paymentMethodIndex
   }
 
   @action async addOfferingInvestment(amount, movieSlug, onSuccess, onError) {

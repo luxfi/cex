@@ -42,10 +42,14 @@ export default () => ({
   },
   paymentMethodContainer: {
     backgroundColor: '#222',
-    padding: 12,
+    paddingBottom: 10,
   },
   editCardSection: {
-    padding: '10px 0',
+    padding: '10px 12px',
+    cursor: 'pointer',
+    '&.selected': {
+      backgroundColor: '#4c4c4b',
+    },
   },
   link: {
     fontSize: 14,
