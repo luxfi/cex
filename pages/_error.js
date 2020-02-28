@@ -7,6 +7,11 @@ let dynamicRoutes = [
   'offering',
   'pro',
   'trade',
+  'ticketing',
+  'checkout',
+  'confirmPayment',
+  'account',
+  'pickSeats',
   'watch',
 ]
 

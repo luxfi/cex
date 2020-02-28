@@ -120,6 +120,44 @@ function slugFromPath() {
   }
 }
 
+function creditCardFormat(value = '') {
+  const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
+  const matches = v.match(/\d{4,16}/g)
+  const match = matches ? matches[0] : ''
+  const parts = []
+
+  for (let i = 0; i < match.length; i += 4) {
+    parts.push(match.substring(i, i + 4))
+  }
+
+  if (parts.length) {
+    return parts.join(' ')
+  }
+  return value
+}
+
+function getCreditCardType(value) {
+  const visaRegEx = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/
+  const mastercardRegEx = /^(?:5[1-5][0-9]{14})$/
+  const amexpRegEx = /^(?:3[47][0-9]{13})$/
+  const discoverRegEx = /^(?:6(?:011|5[0-9][0-9])[0-9]{12})$/
+
+  const creditCardNumber = value.replace(/\s/g, '')
+  let creditCardType = ''
+
+  if (visaRegEx.test(creditCardNumber)) {
+    creditCardType = 'visaCard'
+  } else if (mastercardRegEx.test(creditCardNumber)) {
+    creditCardType = 'masterCard'
+  } else if (amexpRegEx.test(creditCardNumber)) {
+    creditCardType = 'amexCard'
+  } else if (discoverRegEx.test(creditCardNumber)) {
+    creditCardType = 'discoverCard'
+  }
+
+  return creditCardType
+}
+
 export {
   formatCurrency,
   googlePageView,
@@ -137,4 +175,6 @@ export {
   truncate,
   toDashString,
   useEventListener,
+  creditCardFormat,
+  getCreditCardType,
 }
