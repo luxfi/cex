@@ -14,7 +14,9 @@ import {
   isPassword,
   isPhone,
   isRequired,
+  getCreditCardType,
 } from '../util'
+
 
 /**
  * Later we'll wrap the fetch stuff up a bit more cleanly and / or use a helper library
@@ -47,6 +49,9 @@ export default class UserStore {
   @observable accountBalance = 0
   @observable balanceHistory = []
   @observable offeringInvestments = []
+  @observable selectedPaymentMethod = null
+  @observable paymentOptions = []
+  @observable isValidCard = false
 
   // ** SIGNUP INFO **
   // must initialize to empty string for controlled inputs
@@ -108,6 +113,11 @@ export default class UserStore {
     // Pass down the Hanzo API through a central point
     this.api = hanzoApi
     this.loadSession()
+
+    const paymentOptions = JSON.parse(localStorage.getItem('paymentOptions'))
+    if (paymentOptions && paymentOptions.length) {
+      this.paymentOptions = paymentOptions
+    }
   }
 
   /**
@@ -556,6 +566,28 @@ export default class UserStore {
     } finally {
       this.updating = false
     }
+  }
+
+  @action addDebitCard(card) {
+    const cardType = getCreditCardType(card.creditCard)
+
+    if (!cardType) {
+      this.isValidCard = false
+      return
+    }
+
+    this.isValidCard = true
+
+    if (this.paymentOptions.length) {
+      this.paymentOptions.push({...card, amount: 400, type: cardType })
+    } else {
+      this.paymentOptions.push({ ...card, amount: 600, type: cardType })
+    }
+    localStorage.setItem('paymentOptions', JSON.stringify(this.paymentOptions))
+  }
+
+  @action selectPaymentMethod(paymentMethod) {
+    this.selectedPaymentMethod = paymentMethod
   }
 
   @action async addOfferingInvestment(amount, movieSlug, onSuccess, onError) {

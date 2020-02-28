@@ -15,7 +15,10 @@ import { inject, observer } from 'mobx-react'
 import { withRouter } from 'next/router'
 import React from 'react'
 
-import MasterCardIcon from '../../../assets/svg/MasterCard.svg'
+import AmericanExpress from '../../../assets/svg/AmericanExpress.svg'
+import DiscoverCard from '../../../assets/svg/DiscoverCard.svg'
+import MasterCard from '../../../assets/svg/MasterCard.svg'
+import VisaCard from '../../../assets/svg/VisaCard.svg'
 
 import { formatCurrency, slugFromPath } from '../../../util'
 
@@ -31,12 +34,28 @@ class ConfirmPaymentView extends React.Component {
     uiStore.openDialog()
   }
 
+  renderCardIcons = (cardType) => {
+    const { classes } = this.props
+
+    if (cardType === 'visaCard') {
+      return <VisaCard className={classes.creditCardIcon}/>
+    }
+    if (cardType === 'masterCard') {
+      return <MasterCard className={classes.creditCardIcon} />
+    }
+    if (cardType === 'amexCard') {
+      return <AmericanExpress className={classes.creditCardIcon} />
+    }
+    return <DiscoverCard className={classes.creditCardIcon} />
+  }
+
   render() {
     const {
       classes,
       router,
       store: {
         movieStore,
+        userStore: { paymentOptions },
         ticketCheckoutStore: {
           serviceFee,
           subTotal,
@@ -108,13 +127,15 @@ class ConfirmPaymentView extends React.Component {
           <Box>
             <Typography variant='h6'>Payment Method</Typography>
             <Box className={classes.paymentMethodContainer}>
-              <Grid className={classes.editCardSection} container alignItems='center' justify='space-between' wrap='nowrap'>
-                <Grid container alignItems='center'>
-                  <MasterCardIcon className={classes.creditCardIcon}/>
-                  <span>ending in 5463</span>
+              {paymentOptions.length ? paymentOptions.map(({ type, creditCard }) => (
+                <Grid className={classes.editCardSection} container alignItems='center' justify='space-between' wrap='nowrap'>
+                  <Grid container alignItems='center'>
+                    {this.renderCardIcons(type)}
+                    <span>ending in {creditCard.substr(creditCard.length - 4)}</span>
+                  </Grid>
+                  <button type='button' className={classes.link}>Edit</button>
                 </Grid>
-                <button type='button' className={classes.link}>Edit</button>
-              </Grid>
+              )) : <Box style={{ padding: '10px 0', fontSize: 12 }}>No Payment Method Is Currently Added</Box>}
               <Divider />
               <Box className={classes.addPaymentSection}>
                 <button onClick={this.openDialog} type='button' className={classes.link}>Add payment method</button>
