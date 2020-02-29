@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Divider,
   Grid,
   Table,
@@ -14,6 +15,8 @@ import { withStyles } from '@material-ui/core/styles'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'next/router'
 import React from 'react'
+import moment from 'moment'
+import faker from 'faker'
 
 import AmericanExpress from '../../../assets/svg/AmericanExpress.svg'
 import DiscoverCard from '../../../assets/svg/DiscoverCard.svg'
@@ -29,6 +32,21 @@ import styles from './confirmPayment.style'
 @inject('store')
 @observer
 class ConfirmPaymentView extends React.Component {
+  state = {
+    processingPayment: false,
+    transactionStatus: null,
+  }
+
+  componentDidMount() {
+    const urlParams = new URLSearchParams(window.location.search)
+    const showtimeId = urlParams.get('showtimeId')
+    const venueId = urlParams.get('venueId')
+
+    const { store: { ticketingStore } } = this.props
+    ticketingStore.selectShowtime(showtimeId)
+    ticketingStore.selectVenue(venueId)
+  }
+
   addPaymentMethod = () => {
     const { store: { uiStore } } = this.props
     uiStore.openDialog()
@@ -41,9 +59,64 @@ class ConfirmPaymentView extends React.Component {
     userStore.enableCardEditMode(cardIndex)
   }
 
-  choosePaymentMethod = (paymentMethodIndex) => () => {
-    const { store: { userStore } } = this.props
-    userStore.choosePaymentMethod(paymentMethodIndex)
+  choosePaymentMethod = (paymentMethodIndex, paymentType, cardInfo) => () => {
+    const { store: { userStore, ticketCheckoutStore } } = this.props
+    userStore.choosePaymentMethod(paymentMethodIndex, paymentType, cardInfo)
+  }
+
+  handleTcketPayment = () => {
+    const {
+      router,
+      store: {
+        userStore: { paymentType, cardInfo, accountBalance },
+        ticketCheckoutStore: { total, numberOfSeats },
+        ticketCheckoutStore,
+        userStore,
+      },
+    } = this.props
+    const urlParams = new URLSearchParams(window.location.search)
+    const showtimeId = urlParams.get('showtimeId')
+    const venueId = urlParams.get('venueId')
+    const transactionId = faker.random.uuid()
+    const ticketId = faker.random.number()
+    const slug = router.query.slug || slugFromPath()
+
+    this.setState({
+      processingPayment: true,
+    })
+    
+    // simulate async operation
+    // TODO setTimeout remove when API is ready
+    setTimeout(() => {
+      if (paymentType === 'bank') {
+        if (accountBalance >= total) {
+          ticketCheckoutStore.addTransaction(venueId, showtimeId, transactionId, ticketId, numberOfSeats)
+          userStore.removeBalance(total)
+
+          this.setState({ transactionStatus: 'successful' }, () => {
+            router.push('/orderDetails', `/orderDetails/${slug}?transactionId=${transactionId}`)
+          })
+        } else {
+          this.setState({ transactionStatus: 'failed' })
+        }
+      } else if (paymentType === 'card') {
+        if (cardInfo.amount >= total) {
+          ticketCheckoutStore.addTransaction(venueId, showtimeId, transactionId, ticketId, numberOfSeats)
+          
+          this.setState({ transactionStatus: 'successful' }, () => {
+            router.push('/orderDetails', `/orderDetails?transactionId=${transactionId}`)
+          })
+        } else {
+          this.setState({ transactionStatus: 'failed' })
+        }
+      } else {
+        this.setState({ transactionStatus: 'failed' })
+      }
+  
+      this.setState({
+        processingPayment: false,
+      })
+    }, 3000)
   }
 
   renderCardIcons = (cardType) => {
@@ -71,6 +144,7 @@ class ConfirmPaymentView extends React.Component {
           paymentOptions,
           accountBalance,
           paymentMethodIndex,
+          paymentOptionSelected,
         },
         ticketCheckoutStore: {
           serviceFee,
@@ -78,8 +152,15 @@ class ConfirmPaymentView extends React.Component {
           total,
           tickets,
         },
+        ticketingStore: {
+          selectedShowtime,
+          selectedVenue,
+          selectedDate,
+        }
       },
     } = this.props
+
+    const { processingPayment, transactionStatus } = this.state
 
     const movieSlug = router.query.slug || slugFromPath()
     const movie = movieStore.getMovieBySlug(movieSlug)
@@ -142,10 +223,15 @@ class ConfirmPaymentView extends React.Component {
           </Box>
           <Box>
             <Typography variant='h6' style={{ marginBottom: 12 }}>Payment Method</Typography>
+            {transactionStatus === 'failed' &&
+              (<Typography color='error'>
+                Transaction failed, try again.
+              </Typography>)
+            }
             <Box className={classes.paymentMethodContainer}>
-              {paymentOptions.length ? paymentOptions.map(({ type, creditCard }, cardIndex) => (
+              {paymentOptions.length ? paymentOptions.map((paymentOption, cardIndex) => (
                 <Grid
-                  onClick={this.choosePaymentMethod(cardIndex)}
+                  onClick={this.choosePaymentMethod(cardIndex, 'card', paymentOption)}
                   className={`${classes.editCardSection} ${paymentMethodIndex === cardIndex ? 'selected' : null}`}
                   container
                   alignItems='center'
@@ -153,20 +239,22 @@ class ConfirmPaymentView extends React.Component {
                   wrap='nowrap'
                 >
                   <Grid container alignItems='center'>
-                    {this.renderCardIcons(type)}
-                    <span>ending in {creditCard.substr(creditCard.length - 4)}</span>
+                    {this.renderCardIcons(paymentOption.type)}
+                    <span>ending in {paymentOption.creditCard.substr(paymentOption.creditCard.length - 4)}</span>
                   </Grid>
                   <button type='button' className={classes.link} onClick={this.editCardPaymentMethod(cardIndex)}>Edit</button>
                 </Grid>
               )) : null}
               <Divider />
               <Grid
-                onClick={this.choosePaymentMethod(paymentOptions.length)}
+                onClick={this.choosePaymentMethod(paymentOptions.length, 'bank')}
                 className={`${classes.editCardSection} ${paymentMethodIndex === paymentOptions.length ? 'selected' : null}`}
                 container
                 alignItems='center'
                 justify='space-between'
                 wrap='nowrap'
+                component='button'
+                disabled={!accountBalance}
               >
                 <Typography style={{ fontSize: 14 }}>Bank Payment</Typography>
                 <Typography style={{ fontSize: 14 }}>{accountBalance ? 'Connected' : 'Disconnected'}</Typography>
@@ -183,8 +271,8 @@ class ConfirmPaymentView extends React.Component {
           <Box><img className={classes.movieImg} src={movie.posterImg} alt='' /></Box>
           <Box>
             <Typography variant='h5'>{movie.name}</Typography>
-            <Box>Cinemark Hollywood USA Movies 15</Box>
-            <Box>Monday at 3:45 PM</Box>
+              <Box>{selectedVenue.venue && selectedVenue.venue.address.line}</Box>
+              <Box>{`${ selectedDate.formated && selectedDate.formated} ${moment(selectedShowtime && selectedShowtime.localShowtimeStart).format('hh:mm A')}`}</Box>
           </Box>
         </Box>
         <Grid container justify='flex-end' alignItems='center' className={classes.subTotalContainer}>
@@ -193,7 +281,13 @@ class ConfirmPaymentView extends React.Component {
             <Typography variant='h5' className={classes.subTotal}>{formatCurrency(total)}</Typography>
           </Box>
           <Grid>
-            <Button className={classes.buyBtn}>BUY</Button>
+            <Button
+              disabled={!paymentOptionSelected}
+              className={classes.buyBtn}
+              onClick={this.handleTcketPayment}
+            >
+              { processingPayment ? <CircularProgress color='inherit' /> : 'BUY' }
+            </Button>
           </Grid>
         </Grid>
       </Grid>

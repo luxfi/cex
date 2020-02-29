@@ -11,6 +11,8 @@ export default class TicketCheckoutStore {
 
   @observable ticketsCount = 1
 
+  @observable ticketTransactions = []
+
   @action addTicket(categoryName) {
     const selectedTicket = this.tickets.find((ticket) => ticket.category === categoryName)
     if (selectedTicket) {
@@ -32,12 +34,38 @@ export default class TicketCheckoutStore {
     }
   }
 
+  @action addTransaction(venueId, showtimeId, transactionId, ticketId, numberOfSeats) {
+    const transaction = {
+      venueId,
+      showtimeId,
+      transactionId,
+      ticketId,
+      numberOfSeats,
+    }
+
+    if (this.ticketTransactions.length) {
+      this.ticketTransactions.push(transaction)
+    } else {
+      this.ticketTransactions.push(transaction)
+    }
+    localStorage.setItem('ticketTransactions', JSON.stringify(this.ticketTransactions))
+  }
+
   @computed get total() {
     return this.subTotal + this.serviceFee
+  }
+
+  @computed get numberOfSeats() {
+    return this.tickets.length
   }
 
   constructor() {
     this.tickets = tickets
     this.subTotal = tickets[0].price
+
+    const ticketTransactions = JSON.parse(localStorage.getItem('ticketTransactions'))
+    if (ticketTransactions && ticketTransactions.length) {
+      this.ticketTransactions = ticketTransactions
+    }
   }
 }

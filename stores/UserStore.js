@@ -56,6 +56,9 @@ export default class UserStore {
   @observable cardEditingMode = false
   @observable editedCardIndex = null
   @observable paymentMethodIndex = null
+  @observable paymentOptionSelected = false
+  @observable cardInfo = {}
+  @observable paymentType = null
 
   // ** SIGNUP INFO **
   // must initialize to empty string for controlled inputs
@@ -627,8 +630,17 @@ export default class UserStore {
     this.selectedPaymentMethod = null
   }
 
-  @action choosePaymentMethod(paymentMethodIndex) {
+  @action choosePaymentMethod(paymentMethodIndex, paymentType, cardInfo) {
+    this.paymentOptionSelected = true
     this.paymentMethodIndex = paymentMethodIndex
+
+    if (paymentType === 'card') {
+      this.cardInfo = cardInfo
+      this.paymentType = paymentType
+    } else {
+      this.cardInfo = {}
+      this.paymentType = paymentType
+    }
   }
 
   @action async addOfferingInvestment(amount, movieSlug, onSuccess, onError) {
