@@ -1,19 +1,14 @@
-import React from 'react'
-import Router from 'next/router'
-
 // Material Components
 import Button from '@material-ui/core/Button'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import TextField from '@material-ui/core/TextField'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
-import Link from '@material-ui/core/Link'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import { withStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import { withStyles } from '@material-ui/core/styles'
+import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
 
-import CustomLink from '../../app/CustomLink'
+import React from 'react'
 
 const styles = (theme) => ({
   paper: {
@@ -35,45 +30,6 @@ class LoginForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = { displayErrors: false }
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleKeypress = this.handleKeypress.bind(this)
-  }
-
-  // submitLogin(e) {
-  //   e.preventDefault()
-  //   if (this.state.email === '' || this.password === '')
-  //     return
-  //   // clear errors for logic flow
-  //   this.setState({ emailError: false })
-  //   this.setState({ passwordError: false })
-  //   let errors = false;
-  //   try {
-  //     isEmail(this.state.email)
-  //   }
-  //   catch (e) {
-  //     errors = true
-  //     this.setState({ emailError: e.message })
-  //   }
-  //   try {
-  //     isPassword(this.state.password)
-  //   }
-  //   catch (e) {
-  //     errors = true
-  //     this.setState({ passwordError: e.message })
-  //   }
-  //   finally {
-  //     if (!errors) {
-  //       Router.push('/')
-  //     }
-  //   }
-  // }
-
-  handleKeypress(e) {
-    const key = e.which || e.keyCode
-    if (key === 13) {
-      // 13 is enter
-      document.getElementById('login-submit-button').click()
-    }
   }
 
   componentDidMount() {
@@ -84,20 +40,19 @@ class LoginForm extends React.Component {
     window.removeEventListener('keypress', this.handleKeypress)
   }
 
-  handleSubmit(login, isValidLogin, setErrorMessage) {
+  handleKeypress = (e) => {
+    const key = e.which || e.keyCode
+    if (key === 13) {
+      // 13 is enter
+      document.getElementById('login-submit-button').click()
+    }
+  }
+
+  handleSubmit = (login, isValidLogin, setErrorMessage) => {
     if (isValidLogin) {
-      const urlParams = new URLSearchParams(window.location.search)
-      const redirect = urlParams.get('redirect')
-
-      if (redirect) {
-        Router.back()
-      }
-
       login(
         () => {
           // setSuccessMessage('You have successfully logged in!')
-          const referrer = Router.router.query.ref
-          referrer ? Router.push(decodeURI(referrer)) : Router.push('/portfolio')
         },
         (ex) => {
           setErrorMessage(ex)
@@ -122,6 +77,8 @@ class LoginForm extends React.Component {
       setSuccessMessage,
     } = this.props
 
+    const { displayErrors } = this.state
+
     return (
       <Container component='main' maxWidth='xs'>
         <CssBaseline />
@@ -138,9 +95,9 @@ class LoginForm extends React.Component {
             label='Email Address'
             name='email'
             autoFocus
-            error={this.state.displayErrors && !validEmail}
+            error={displayErrors && !validEmail}
             helperText={
-              this.state.displayErrors && !validEmail
+              displayErrors && !validEmail
                 ? 'please enter valid email address'
                 : ''
             }
@@ -156,9 +113,9 @@ class LoginForm extends React.Component {
             label='Password'
             type='password'
             id='password'
-            error={ this.state.displayErrors && !validPassword }
+            error={ displayErrors && !validPassword }
             helperText={
-              this.state.displayErrors && !validPassword
+              displayErrors && !validPassword
                 ? 'please make sure the password is long enough'
                 : ''
             }
@@ -188,21 +145,10 @@ class LoginForm extends React.Component {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
-              {/* <Link href='#' variant='body2'> */}
-              Forgot password? [NYI]
-              {/* </Link> */}
-            </Grid>
-            <Grid item>
-              <Link component={CustomLink} href='/signup' variant='body2'>
-                Need an account? Sign Up
-              </Link>
-            </Grid>
-          </Grid>
         </div>
       </Container>
     )
   }
 }
+
 export default withStyles(styles)(LoginForm)

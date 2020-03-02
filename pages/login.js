@@ -1,8 +1,7 @@
-import React from 'react'
-import Router from 'next/router'
 import { inject, observer } from 'mobx-react'
+import React from 'react'
 
-import LoginForm from '../components/login/LoginForm'
+import LoginView from '../components/login/LoginView'
 import { googlePageView } from '../util'
 
 @inject('store')
@@ -13,93 +12,10 @@ class Login extends React.Component {
   }
 
   render() {
-    const { store } = this.props
-    const { userStore, uiStore } = store
-    const {
-      email,
-      password,
-      isValidLogin,
-      validEmail,
-      validPassword,
-    } = userStore
-    const setErrorMessage = (message) => {
-      uiStore.setErrorMessage(message)
-    }
-    const setSuccessMessage = (message) => {
-      uiStore.setSuccessMessage(message)
-    }
     return (
-      <LoginForm
-        setValue={(key, val) => {
-          userStore.setValue(key, val)
-        }}
-        email={email}
-        password={password}
-        login={(onSuccess, onError) => {
-          userStore.login(onSuccess, onError)
-        }}
-        isValidLogin={isValidLogin}
-        validEmail={validEmail}
-        validPassword={validPassword}
-        setErrorMessage={setErrorMessage}
-        setSuccessMessage={setSuccessMessage}
-      />
+      <LoginView />
     )
   }
-
-  // commented out for mobx later...
-  // constructor(props) {
-  //   super(props)
-  // this.emitter = new Emitter()
-
-  // this.emitter.on('login:success', res => {
-  //   this.props.rootData.set('account.token', res.token)
-  //   setIdentity(res.identity)
-
-  //   this.login()
-  // })
-
-  // this.hasIdentity = !!getIdentity()
-
-  // if (this.hasIdentity) {
-  //   this.login()
-  // }
 }
-
-// login() {
-//   if (!!getEncodedPrivateKey()) {
-//     console.log('Pushing /portfolio')
-//     Router.push('/portfolio')
-//   } else {
-//     console.log('Pushing /account/mnemonic')
-//     Router.push('/account/mnemonic')
-//   }
-// }
-
-// componentWillUnmount() {
-//   this.emitter.off('login:success')
-// }
-
-//   render() {
-//     return pug`
-//       if !this.hasIdentity
-//         main#index.hero.columns
-//           .content.columns
-//             .card.login.transparent
-//               .card-header.rows
-//                 h2 Login
-//                 Link(
-//                   href='/signup',
-//                   underline='hover'
-//                 )
-//                   | Create your account
-//               .card-body
-//                 LoginForm(
-//                   data=this.props.data
-//                   emitter=this.emitter
-//                 )
-//     `
-//   }
-// }
 
 export default Login
