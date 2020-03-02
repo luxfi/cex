@@ -23,6 +23,8 @@ export default class TicketingStore {
 
   @observable selectedShowtime = {}
 
+  @observable selectedVenue = {}
+
   @observable movieVenues = []
 
   @observable selectedMovie = {}
@@ -81,5 +83,10 @@ export default class TicketingStore {
     this.movieVenues = this.venues.filter((venueDetail) => !!(venueDetail.showtimeDetails.filter((showtime) => showtime.productionId === this.selectedMovie.productionId).length
       && (venueDetail.venue.address.city === location.city || venueDetail.venue.address.state === location.state)
     ))
+  }
+
+  @action selectVenue(venueId) {
+    const [selectedVenue] = this.venues.filter((venueDetail) => venueDetail.venue.id === venueId)
+    this.selectedVenue = selectedVenue
   }
 }
