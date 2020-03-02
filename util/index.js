@@ -136,6 +136,28 @@ function creditCardFormat(value = '') {
   return value
 }
 
+function getCreditCardType(value) {
+  const visaRegEx = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/
+  const mastercardRegEx = /^(?:5[1-5][0-9]{14})$/
+  const amexpRegEx = /^(?:3[47][0-9]{13})$/
+  const discoverRegEx = /^(?:6(?:011|5[0-9][0-9])[0-9]{12})$/
+
+  const creditCardNumber = value.replace(/\s/g, '')
+  let creditCardType = ''
+
+  if (visaRegEx.test(creditCardNumber)) {
+    creditCardType = 'visaCard'
+  } else if (mastercardRegEx.test(creditCardNumber)) {
+    creditCardType = 'masterCard'
+  } else if (amexpRegEx.test(creditCardNumber)) {
+    creditCardType = 'amexCard'
+  } else if (discoverRegEx.test(creditCardNumber)) {
+    creditCardType = 'discoverCard'
+  }
+
+  return creditCardType
+}
+
 export {
   formatCurrency,
   googlePageView,
@@ -154,4 +176,5 @@ export {
   toDashString,
   useEventListener,
   creditCardFormat,
+  getCreditCardType,
 }

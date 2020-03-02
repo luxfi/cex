@@ -42,10 +42,21 @@ export default () => ({
   },
   paymentMethodContainer: {
     backgroundColor: '#222',
-    padding: 12,
+    paddingBottom: 10,
   },
   editCardSection: {
-    padding: '10px 0',
+    padding: '10px 12px',
+    backgroundColor: '#222',
+    color: 'rgba(255, 255, 255, 0.95)',
+    border: 'none',
+    outline: 'none',
+    cursor: 'pointer',
+    '&.selected': {
+      backgroundColor: '#4c4c4b',
+    },
+    '&:disabled': {
+      backgroundColor: '#313131',
+    },
   },
   link: {
     fontSize: 14,
@@ -65,6 +76,10 @@ export default () => ({
     fontWeight: 700,
     backgroundColor: '#FBC43E',
     color: '#090909',
+    '&:disabled': {
+      color: '#676767',
+      backgroundColor: '#bf9a40',
+    },
   },
   subTotalContainer: {
     padding: '60px 20px',

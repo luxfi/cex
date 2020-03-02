@@ -1,14 +1,5 @@
 export default (theme) => ({
-  outerContainer: {
-    position: 'relative',
-    padding: '20px',
-    backgroundColor: 'rgba(15,21,26,0.8)',
-    boxShadow: 'none',
-    margin: '52px auto 0',
-    textAlign: 'center',
-  },
   innerContainer: {
-    padding: '20px',
     backgroundColor: '#222',
   },
   paymentIconContainer: {
@@ -18,6 +9,9 @@ export default (theme) => ({
     width: '2rem',
     height: '2rem',
     marginRight: '10px',
+    '&.selected': {
+      fill: 'red',
+    },
   },
   paymentMethodFields: {
     maxWidth: '80%',
@@ -29,10 +23,9 @@ export default (theme) => ({
   },
   proceedButton: {
     color: theme.palette.common.black,
+    fontWeight: 'bold',
     backgroundColor: '#FBC43E',
-    padding: '12px 24px',
-  },
-  creditCardIconContainer: {
-    marginBottom: 10,
+    padding: '10px 40px',
+    marginTop: 10,
   },
 })

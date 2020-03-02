@@ -23,6 +23,8 @@ export default class TicketingStore {
 
   @observable selectedShowtime = {}
 
+  @observable selectedVenue = {}
+
   @observable movieVenues = []
 
   @observable selectedMovie = {}
