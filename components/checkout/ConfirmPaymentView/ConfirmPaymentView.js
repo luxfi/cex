@@ -102,9 +102,9 @@ class ConfirmPaymentView extends React.Component {
       } else if (paymentType === 'card') {
         if (cardInfo.amount >= total) {
           ticketCheckoutStore.addTransaction(venueId, showtimeId, transactionId, ticketId, numberOfSeats)
-          
+
           this.setState({ transactionStatus: 'successful' }, () => {
-            router.push('/orderDetails', `/orderDetails?transactionId=${transactionId}`)
+            router.push('/orderDetails', `/orderDetails/${slug}?transactionId=${transactionId}`)
           })
         } else {
           this.setState({ transactionStatus: 'failed' })
