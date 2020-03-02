@@ -13,6 +13,7 @@ let dynamicRoutes = [
   'account',
   'pickSeats',
   'watch',
+  'orderDetails',
 ]
 
 function Error({ statusCode }) {

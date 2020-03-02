@@ -82,4 +82,9 @@ export default class TicketingStore {
       && (venueDetail.venue.address.city === location.city || venueDetail.venue.address.state === location.state)
     ))
   }
+
+  @action selectVenue(venueId) {
+    const [selectedVenue] = this.venues.filter((venueDetail) => venueDetail.venue.id === venueId)
+    this.selectedVenue = selectedVenue
+  }
 }

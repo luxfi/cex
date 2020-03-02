@@ -11,6 +11,10 @@ export default class TicketCheckoutStore {
 
   @observable ticketsCount = 1
 
+  @observable ticketTransactions = []
+
+  @observable currentPurchasedTicket = {}
+
   @action addTicket(categoryName) {
     const selectedTicket = this.tickets.find((ticket) => ticket.category === categoryName)
     if (selectedTicket) {
@@ -30,6 +34,16 @@ export default class TicketCheckoutStore {
       this.subTotal -= selectedTicket.price
       this.ticketsCount -= 1
     }
+  }
+
+  @action isValidPurchasedTicket(ticketId) {
+    const ticket = this.ticketTransactions.find((ticket) => ticket.ticketId === ticketId)
+    this.currentPurchasedTicket = ticket
+    return ticket
+  }
+
+  @action sendTicketEmail(email, url) {
+    // Handle sending of email
   }
 
   @computed get total() {
