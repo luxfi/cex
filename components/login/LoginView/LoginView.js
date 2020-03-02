@@ -1,3 +1,4 @@
+import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Link from '@material-ui/core/Link'
 import { inject, observer } from 'mobx-react'
@@ -48,16 +49,18 @@ class LoginView extends React.Component {
           setErrorMessage={setErrorMessage}
           setSuccessMessage={setSuccessMessage}
         />
-        <Grid container maxWidth='xs'>
-          <Grid item xs>
-            Forgot password? [NYI]
+        <Container component='div' maxWidth='xs'>
+          <Grid container maxWidth='xs'>
+            <Grid item xs>
+              Forgot password? [NYI]
+            </Grid>
+            <Grid item>
+              <Link component={CustomLink} href='/signup' variant='body2'>
+                Need an account? Sign Up
+              </Link>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Link component={CustomLink} href='/signup' variant='body2'>
-              Need an account? Sign Up
-            </Link>
-          </Grid>
-        </Grid>
+        </Container>
       </>
     )
   }

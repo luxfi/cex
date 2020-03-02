@@ -80,7 +80,7 @@ class LoginForm extends React.Component {
     const { displayErrors } = this.state
 
     return (
-      <Container component='main' maxWidth='xs'>
+      <Container component='div' maxWidth='xs'>
         <CssBaseline />
         <div className={classes.paper}>
           <Typography component='h1' variant='h5'>
