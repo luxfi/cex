@@ -34,13 +34,14 @@ export default class TicketCheckoutStore {
     }
   }
 
-  @action addTransaction(venueId, showtimeId, transactionId, ticketId, numberOfSeats) {
+  @action addTransaction(venueId, showtimeId, transactionId, ticketId, numberOfSeats, movieSlug) {
     const transaction = {
       venueId,
       showtimeId,
       transactionId,
       ticketId,
       numberOfSeats,
+      movieSlug,
     }
 
     if (this.ticketTransactions.length) {

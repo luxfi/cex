@@ -79,22 +79,29 @@ class ConfirmPaymentView extends React.Component {
     const venueId = urlParams.get('venueId')
     const transactionId = faker.random.uuid()
     const ticketId = faker.random.number()
-    const slug = router.query.slug || slugFromPath()
+    const movieSlug = router.query.slug || slugFromPath()
 
     this.setState({
       processingPayment: true,
     })
-    
+
     // simulate async operation
     // TODO setTimeout remove when API is ready
     setTimeout(() => {
       if (paymentType === 'bank') {
         if (accountBalance >= total) {
-          ticketCheckoutStore.addTransaction(venueId, showtimeId, transactionId, ticketId, numberOfSeats)
+          ticketCheckoutStore.addTransaction(
+            venueId,
+            showtimeId,
+            transactionId,
+            ticketId,
+            numberOfSeats,
+            movieSlug,
+          )
           userStore.removeBalance(total)
 
           this.setState({ transactionStatus: 'successful' }, () => {
-            router.push('/orderDetails', `/orderDetails/${slug}?transactionId=${transactionId}`)
+            router.push('/orderDetails', `/orderDetails/${movieSlug}?transactionId=${transactionId}`)
           })
         } else {
           this.setState({ transactionStatus: 'failed' })
@@ -104,7 +111,7 @@ class ConfirmPaymentView extends React.Component {
           ticketCheckoutStore.addTransaction(venueId, showtimeId, transactionId, ticketId, numberOfSeats)
 
           this.setState({ transactionStatus: 'successful' }, () => {
-            router.push('/orderDetails', `/orderDetails/${slug}?transactionId=${transactionId}`)
+            router.push('/orderDetails', `/orderDetails/${movieSlug}?transactionId=${transactionId}`)
           })
         } else {
           this.setState({ transactionStatus: 'failed' })
@@ -112,7 +119,7 @@ class ConfirmPaymentView extends React.Component {
       } else {
         this.setState({ transactionStatus: 'failed' })
       }
-  
+
       this.setState({
         processingPayment: false,
       })
