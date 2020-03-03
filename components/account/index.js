@@ -9,3 +9,4 @@ export { default as PhotoIDsForm } from './PhotoIDsForm'
 export { default as PhotoIDRow } from "./PhotoIDRow"
 export { default as PrimaryAddressForm } from './PrimaryAddressForm'
 export { default as TaxDocument } from './TaxDocument'
+export { default as CardCardItem } from './CardCardItem'

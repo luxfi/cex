@@ -50,7 +50,7 @@ export default class UserStore {
   @observable balanceHistory = []
   @observable offeringInvestments = []
   @observable selectedPaymentMethod = null
-  @observable paymentOptions = []
+  @observable cardPaymentOptions = []
   @observable isValidCard = null
   @observable editedCard = {}
   @observable cardEditingMode = false
@@ -121,9 +121,9 @@ export default class UserStore {
     this.api = hanzoApi
     this.loadSession()
 
-    const paymentOptions = JSON.parse(localStorage.getItem('paymentOptions'))
-    if (paymentOptions && paymentOptions.length) {
-      this.paymentOptions = paymentOptions
+    const cardPaymentOptions = JSON.parse(localStorage.getItem('cardPaymentOptions'))
+    if (cardPaymentOptions && cardPaymentOptions.length) {
+      this.cardPaymentOptions = cardPaymentOptions
     }
   }
 
@@ -582,12 +582,12 @@ export default class UserStore {
     if (cardType) {
       this.isValidCard = true
 
-      if (this.paymentOptions.length) {
-        this.paymentOptions.push({ ...card, amount: 400, type: cardType })
+      if (this.cardPaymentOptions.length) {
+        this.cardPaymentOptions.push({ ...card, amount: 400, type: cardType })
       } else {
-        this.paymentOptions.push({ ...card, amount: 600, type: cardType })
+        this.cardPaymentOptions.push({ ...card, amount: 600, type: cardType })
       }
-      localStorage.setItem('paymentOptions', JSON.stringify(this.paymentOptions))
+      localStorage.setItem('cardPaymentOptions', JSON.stringify(this.cardPaymentOptions))
     } else {
       this.isValidCard = false
     }
@@ -599,8 +599,8 @@ export default class UserStore {
 
     if (cardType) {
       this.isValidCard = true
-      this.paymentOptions[this.editedCardIndex] = card
-      localStorage.setItem('paymentOptions', JSON.stringify(this.paymentOptions))
+      this.cardPaymentOptions[this.editedCardIndex] = card
+      localStorage.setItem('cardPaymentOptions', JSON.stringify(this.cardPaymentOptions))
     } else {
       this.isValidCard = false
     }
@@ -609,7 +609,7 @@ export default class UserStore {
   @action enableCardEditMode(cardIndex) {
     this.cardEditingMode = true
     this.editedCardIndex = cardIndex
-    this.editedCard = this.paymentOptions[cardIndex]
+    this.editedCard = this.cardPaymentOptions[cardIndex]
   }
 
   @action resetEditedCard() {
