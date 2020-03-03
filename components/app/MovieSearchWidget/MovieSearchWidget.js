@@ -1,5 +1,6 @@
 import React, { useEffect } from "react"
 import Router from "next/router"
+import { inject } from 'mobx-react'
 import _ from "lodash"
 import deburr from "lodash/deburr"
 
@@ -34,6 +35,7 @@ function getSuggestionValue(suggestion) {
   return suggestion.name
 }
 
+@inject('store')
 class MovieSearchWidget extends React.Component {
 
   suggestionSet = []
@@ -41,7 +43,7 @@ class MovieSearchWidget extends React.Component {
   constructor(props) {
     super(props)
  
-    this.suggestionSet = props.movies.map(movie => ({ name: `${movie.name} - ${movie.ticker}` }))
+    this.suggestionSet = props.movies.map(movie => ({ name: `${movie.name} - ${movie.ticker}`, movie }))
 
     this.state = {
       suggestions: [],
@@ -53,11 +55,15 @@ class MovieSearchWidget extends React.Component {
   setSuggestions = (s) => {
     this.setState({
       suggestions: s
-    })
+    }, () => this.addMovieToStore(s))
   }
-  
+
   handleSuggestionsFetch = ({ value }) => {
-    this.setSuggestions(this.suggestionSet.filter(str => fuzzyMatch(str.name, value)))
+    this.setSuggestions(
+      this.suggestionSet
+        .filter(str => fuzzyMatch(str.name, value))
+        .map(movie => movie.movie)
+    )
   }
 
   handleSuggestionsClear = () => {
@@ -66,16 +72,26 @@ class MovieSearchWidget extends React.Component {
 
   handleChange = name => (event, { newValue }) => {
     this.setState({
-      [name]: newValue
+      [name]: newValue,
     })
+
+    if (!event.target.value) {
+      const { store: { movieStore } } = this.props
+      this.addMovieToStore([], () => movieStore.loadMovies({}))
+    }
   }
 
+  handleInputClick = () => [
+    Router.push('/browse')
+  ]
+
   renderInputComponent = (inputProps) => {
-    const { classes, inputRef = () => {}, ref, ...other } = inputProps
-  
+    const { classes, inputRef = this.noop, ref, ...other } = inputProps
+
     return (
       <InputBase
         placeholder="Search…"
+        onClick={this.handleInputClick}
         classes={{
           root: classes.inputRoot,
           input: classes.inputInput
@@ -85,38 +101,26 @@ class MovieSearchWidget extends React.Component {
     )
   }
 
-  getMovieSlugByString = (text) => {
-    let ary = text.split('-')
-    if (ary.length < 2) return
-    let ticker = ary[ary.length - 1].trim()
-    return this.props.movies.find(m => m.ticker === ticker).movieSlug
+  addMovieToStore = (movie, callback = null) => {
+    const { store: { movieStore } } = this.props
+    movieStore.setMovieSearchResult(movie)
+    if (callback) {
+      callback()
+    }
   }
 
-  renderSuggestion = (suggestion, { query, isHighlighted }) => {
-    const matches = match(suggestion.name, query)
-    const parts = parse(suggestion.name, matches)
-    const href = `/film/${this.getMovieSlugByString(parts.map(t => t.text).join(''))}`
-    return (
-      <MenuItem selected={isHighlighted} component={CustomLink} href={href}>
-        {parts.map(part => (
-          <span key={part.text} style={{ fontWeight: part.highlight ? 500 : 400 }} >
-            {part.text}
-          </span>
-        ))}
-      </MenuItem>
-    )
-  }
+  noop = () => {}
 
   render = () => {
     const { classes, className } = this.props
+    const { suggestions, single } = this.state
 
     const autoSuggestProps = {
       renderInputComponent: this.renderInputComponent,
-      suggestions: this.state.suggestions,
+      suggestions,
       onSuggestionsFetchRequested: this.handleSuggestionsFetch,
-      onSuggestionsClearRequested: this.handleSuggestionsClear,
+      onSuggestionsClearRequested: this.noop,
       getSuggestionValue,
-      renderSuggestion: this.renderSuggestion,
     }
 
     return (
@@ -125,22 +129,12 @@ class MovieSearchWidget extends React.Component {
         <Autosuggest
           {...autoSuggestProps}
           inputProps={{
-            classes: classes,
+            classes,
             id: 'react-autosuggest-simple',
-            value: this.state.single,
-            onChange: this.handleChange('single')
+            value: single,
+            onChange: this.handleChange('single'),
           }}
-          theme={{
-            container: classes.suggestionsContainer,
-            suggestionsContainerOpen: classes.suggestionsContainerOpen,
-            suggestionsList: classes.suggestionsList,
-            suggestion: classes.suggestion
-          }}
-          renderSuggestionsContainer={options => (
-            <Paper {...options.containerProps} square>
-              {options.children}
-            </Paper>
-          )}
+          renderSuggestionsContainer={this.noop}
         />
       </div>
     )
