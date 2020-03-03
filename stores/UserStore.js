@@ -14,7 +14,9 @@ import {
   isPassword,
   isPhone,
   isRequired,
+  getCreditCardType,
 } from '../util'
+
 
 /**
  * Later we'll wrap the fetch stuff up a bit more cleanly and / or use a helper library
@@ -47,6 +49,16 @@ export default class UserStore {
   @observable accountBalance = 0
   @observable balanceHistory = []
   @observable offeringInvestments = []
+  @observable selectedPaymentMethod = null
+  @observable paymentOptions = []
+  @observable isValidCard = null
+  @observable editedCard = {}
+  @observable cardEditingMode = false
+  @observable editedCardIndex = null
+  @observable paymentMethodIndex = null
+  @observable paymentOptionSelected = false
+  @observable cardInfo = {}
+  @observable paymentType = null
 
   // ** SIGNUP INFO **
   // must initialize to empty string for controlled inputs
@@ -108,6 +120,11 @@ export default class UserStore {
     // Pass down the Hanzo API through a central point
     this.api = hanzoApi
     this.loadSession()
+
+    const paymentOptions = JSON.parse(localStorage.getItem('paymentOptions'))
+    if (paymentOptions && paymentOptions.length) {
+      this.paymentOptions = paymentOptions
+    }
   }
 
   /**
@@ -555,6 +572,74 @@ export default class UserStore {
       onError && onError(ex.toString())
     } finally {
       this.updating = false
+    }
+  }
+
+  @action addDebitCard(card) {
+    const cardType = getCreditCardType(card.creditCard)
+    this.resetCardValidity()
+
+    if (cardType) {
+      this.isValidCard = true
+
+      if (this.paymentOptions.length) {
+        this.paymentOptions.push({ ...card, amount: 400, type: cardType })
+      } else {
+        this.paymentOptions.push({ ...card, amount: 600, type: cardType })
+      }
+      localStorage.setItem('paymentOptions', JSON.stringify(this.paymentOptions))
+    } else {
+      this.isValidCard = false
+    }
+  }
+
+  @action editDebitCard(card) {
+    const cardType = getCreditCardType(card.creditCard)
+    this.resetCardValidity()
+
+    if (cardType) {
+      this.isValidCard = true
+      this.paymentOptions[this.editedCardIndex] = card
+      localStorage.setItem('paymentOptions', JSON.stringify(this.paymentOptions))
+    } else {
+      this.isValidCard = false
+    }
+  }
+
+  @action enableCardEditMode(cardIndex) {
+    this.cardEditingMode = true
+    this.editedCardIndex = cardIndex
+    this.editedCard = this.paymentOptions[cardIndex]
+  }
+
+  @action resetEditedCard() {
+    this.cardEditingMode = false
+    this.editedCardIndex = null
+    this.editedCard = {}
+  }
+
+  resetCardValidity() {
+    this.isValidCard = null
+  }
+
+  @action selectPaymentMethod(paymentMethod) {
+    this.selectedPaymentMethod = paymentMethod
+  }
+
+  @action resetPaymentMethod() {
+    this.selectedPaymentMethod = null
+  }
+
+  @action choosePaymentMethod(paymentMethodIndex, paymentType, cardInfo) {
+    this.paymentOptionSelected = true
+    this.paymentMethodIndex = paymentMethodIndex
+
+    if (paymentType === 'card') {
+      this.cardInfo = cardInfo
+      this.paymentType = paymentType
+    } else {
+      this.cardInfo = {}
+      this.paymentType = paymentType
     }
   }
 

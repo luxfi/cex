@@ -25,8 +25,6 @@ import {
 import { googlePageView } from '../util'
 
 
-let modalRef = undefined
-
 // Test moving terminator-dark-fate.js to here
 const heroInfo = {
   slug: 'terminator-dark-fate',

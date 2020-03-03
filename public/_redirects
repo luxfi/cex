@@ -5,4 +5,10 @@
 /offering/*     /offering.html  404
 /pro/*          /pro.html       404
 /trade/*        /trade.html     404
+/ticketing/*    /ticketing.html 404
+/checkout/*     /checkout.html  404
+/confirmPayment/*  /confirmPayment.html   404
+/account/*      /account.html   404
+/pickSeats/*    /pickSeats.html  404
 /watch/*        /watch.html     404
+/login/*        /login.html     404

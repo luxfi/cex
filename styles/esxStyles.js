@@ -191,10 +191,19 @@ const flexCenteredRow = {
   justifyContent: "center"
 }
 
-const flexCenteredColumn = {
+const flexColumn = {
   display: "flex",
   flexDirection: "column",
+}
+
+const flexCenteredColumn = {
+  ...flexColumn,
   alignItems: "center"
+}
+
+const flexStartColumn = {
+  ...flexColumn,
+  alignItems: "flex-start"
 }
 
 export {
@@ -234,4 +243,5 @@ export {
   cardSubtitle,
   flexCenteredRow,
   flexCenteredColumn,
+  flexStartColumn,
 }

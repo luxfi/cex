@@ -2,8 +2,7 @@ import {
   container,
   flexCenteredColumn,
   flexCenteredRow,
-  title,
-} from '../../styles/esxStyles.js'
+} from '../../styles/esxStyles'
 
 const YELLOW = '#FBC43E'
 const GREY = '#808080'
