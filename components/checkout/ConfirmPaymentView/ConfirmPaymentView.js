@@ -249,7 +249,9 @@ class ConfirmPaymentView extends React.Component {
                     <AccountBalanceIcon fontSize='small' />
                     <Typography style={{ fontSize: 14, marginLeft: 5 }}>{formattedAccount.name}</Typography>
                   </Grid>
-                  <Typography style={{ fontSize: 14 }} noWrap>{this.getFundStatus(formattedAccount)}</Typography>
+                  <Grid container justify='flex-end'>
+                    <Typography style={{ fontSize: 14 }}>{this.getFundStatus(formattedAccount)}</Typography>
+                  </Grid>
                 </Grid>
               ))}
               <Divider />

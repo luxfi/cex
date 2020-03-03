@@ -55,7 +55,7 @@ export default () => ({
       backgroundColor: '#4c4c4b',
     },
     '&:disabled': {
-      backgroundColor: '#313131',
+      backgroundColor: '#2d2c2c',
     },
   },
   link: {
