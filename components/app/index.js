@@ -39,3 +39,6 @@ export { default as TopInvestmentPicks } from './TopInvestmentPicks'
 export { default as ToggleVisibleChart } from './ToggleVisibleChart'
 export { default as ViewCard } from './ViewCard'
 export { default as AddPaymentMethodModal } from './AddPaymentMethodModal'
+export { default as CardPaymentForm } from './CardPaymentForm'
+export { default as CreditCardIconType } from './CreditCardIconType'
+

@@ -12,29 +12,30 @@ import {
   Typography,
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
+import faker from 'faker'
 import { inject, observer } from 'mobx-react'
+import moment from 'moment'
 import { withRouter } from 'next/router'
 import React from 'react'
-import moment from 'moment'
-import faker from 'faker'
-
-import AmericanExpress from '../../../assets/svg/AmericanExpress.svg'
-import DiscoverCard from '../../../assets/svg/DiscoverCard.svg'
-import MasterCard from '../../../assets/svg/MasterCard.svg'
-import VisaCard from '../../../assets/svg/VisaCard.svg'
+import uuid from 'uuid'
 
 import { formatCurrency, slugFromPath } from '../../../util'
 
-import { AddPaymentMethodModal } from '../../app'
+import { AddPaymentMethodModal, CreditCardIconType } from '../../app'
 
 import styles from './confirmPayment.style'
 
 @inject('store')
 @observer
 class ConfirmPaymentView extends React.Component {
-  state = {
-    processingPayment: false,
-    transactionStatus: null,
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      processingPayment: false,
+      transactionStatus: null,
+    }
   }
 
   componentDidMount() {
@@ -47,12 +48,12 @@ class ConfirmPaymentView extends React.Component {
     ticketingStore.selectVenue(venueId)
   }
 
-  addPaymentMethod = () => {
+  openAddPaymentMethodModal = () => {
     const { store: { uiStore } } = this.props
     uiStore.openDialog()
   }
 
-  editCardPaymentMethod = (cardIndex) => () => {
+  openEditCardPaymentMethodModal = (cardIndex) => () => {
     const { store: { userStore, uiStore } } = this.props
     uiStore.openDialog()
     userStore.selectPaymentMethod('card')
@@ -60,7 +61,7 @@ class ConfirmPaymentView extends React.Component {
   }
 
   choosePaymentMethod = (paymentMethodIndex, paymentType, cardInfo) => () => {
-    const { store: { userStore, ticketCheckoutStore } } = this.props
+    const { store: { userStore } } = this.props
     userStore.choosePaymentMethod(paymentMethodIndex, paymentType, cardInfo)
   }
 
@@ -126,19 +127,15 @@ class ConfirmPaymentView extends React.Component {
     }, 3000)
   }
 
-  renderCardIcons = (cardType) => {
-    const { classes } = this.props
-
-    if (cardType === 'visaCard') {
-      return <VisaCard className={classes.creditCardIcon}/>
+  getFundStatus = (formattedAccount) => {
+    const { store: { userStore: { accountBalance } } } = this.props
+    if (formattedAccount.name === 'ESX') {
+      if (accountBalance) {
+        return 'Funded'
+      }
+      return 'Not Funded'
     }
-    if (cardType === 'masterCard') {
-      return <MasterCard className={classes.creditCardIcon} />
-    }
-    if (cardType === 'amexCard') {
-      return <AmericanExpress className={classes.creditCardIcon} />
-    }
-    return <DiscoverCard className={classes.creditCardIcon} />
+    return 'Funded'
   }
 
   render() {
@@ -148,8 +145,8 @@ class ConfirmPaymentView extends React.Component {
       store: {
         movieStore,
         userStore: {
-          paymentOptions,
-          accountBalance,
+          cardPaymentOptions,
+          formattedAccounts,
           paymentMethodIndex,
           paymentOptionSelected,
         },
@@ -163,7 +160,7 @@ class ConfirmPaymentView extends React.Component {
           selectedShowtime,
           selectedVenue,
           selectedDate,
-        }
+        },
       },
     } = this.props
 
@@ -230,45 +227,51 @@ class ConfirmPaymentView extends React.Component {
           </Box>
           <Box>
             <Typography variant='h6' style={{ marginBottom: 12 }}>Payment Method</Typography>
-            {transactionStatus === 'failed' &&
-              (<Typography color='error'>
+            {transactionStatus === 'failed'
+              && (<Typography color='error'>
                 Transaction failed, try again.
               </Typography>)
             }
             <Box className={classes.paymentMethodContainer}>
-              {paymentOptions.length ? paymentOptions.map((paymentOption, cardIndex) => (
+              {formattedAccounts.map((formattedAccount, index) => (
                 <Grid
-                  onClick={this.choosePaymentMethod(cardIndex, 'card', paymentOption)}
-                  className={`${classes.editCardSection} ${paymentMethodIndex === cardIndex ? 'selected' : null}`}
+                  key={uuid.v4()}
+                  onClick={this.choosePaymentMethod(index, 'bank')}
+                  className={`${classes.editCardSection} ${paymentMethodIndex === index ? 'selected' : null}`}
+                  container
+                  alignItems='center'
+                  justify='space-between'
+                  wrap='nowrap'
+                  component='button'
+                  disabled={this.getFundStatus(formattedAccount) === 'Not Funded'}
+                >
+                  <Grid container alignItems='center'>
+                    <AccountBalanceIcon fontSize='small' />
+                    <Typography style={{ fontSize: 14, marginLeft: 5 }}>{formattedAccount.name}</Typography>
+                  </Grid>
+                  <Typography style={{ fontSize: 14 }}>{this.getFundStatus(formattedAccount)}</Typography>
+                </Grid>
+              ))}
+              <Divider />
+              {cardPaymentOptions.length ? cardPaymentOptions.map((paymentOption, cardIndex) => (
+                <Grid
+                  onClick={this.choosePaymentMethod(cardIndex + formattedAccounts.length, 'card', paymentOption)}
+                  className={`${classes.editCardSection} ${paymentMethodIndex === (cardIndex + formattedAccounts.length) ? 'selected' : null}`}
                   container
                   alignItems='center'
                   justify='space-between'
                   wrap='nowrap'
                 >
                   <Grid container alignItems='center'>
-                    {this.renderCardIcons(paymentOption.type)}
+                    <CreditCardIconType cardType={paymentOption.type} className={classes.creditCardIcon} />
                     <span>ending in {paymentOption.creditCard.substr(paymentOption.creditCard.length - 4)}</span>
                   </Grid>
-                  <button type='button' className={classes.link} onClick={this.editCardPaymentMethod(cardIndex)}>Edit</button>
+                  <button type='button' className={classes.link} onClick={this.openEditCardPaymentMethodModal(cardIndex)}>Edit</button>
                 </Grid>
               )) : null}
               <Divider />
-              <Grid
-                onClick={this.choosePaymentMethod(paymentOptions.length, 'bank')}
-                className={`${classes.editCardSection} ${paymentMethodIndex === paymentOptions.length ? 'selected' : null}`}
-                container
-                alignItems='center'
-                justify='space-between'
-                wrap='nowrap'
-                component='button'
-                disabled={!accountBalance}
-              >
-                <Typography style={{ fontSize: 14 }}>Bank Payment</Typography>
-                <Typography style={{ fontSize: 14 }}>{accountBalance ? 'Connected' : 'Disconnected'}</Typography>
-              </Grid>
-              <Divider />
               <Box className={classes.addPaymentSection}>
-                <button onClick={this.addPaymentMethod} type='button' className={classes.link}>Add payment method</button>
+                <button onClick={this.openAddPaymentMethodModal} type='button' className={classes.link}>Add payment method</button>
               </Box>
               <AddPaymentMethodModal />
             </Box>
@@ -279,7 +282,7 @@ class ConfirmPaymentView extends React.Component {
           <Box>
             <Typography variant='h5'>{movie.name}</Typography>
               <Box>{selectedVenue.venue && selectedVenue.venue.address.line}</Box>
-              <Box>{`${ selectedDate.formated && selectedDate.formated} ${moment(selectedShowtime && selectedShowtime.localShowtimeStart).format('hh:mm A')}`}</Box>
+              <Box>{`${selectedDate.formated && selectedDate.formated} ${moment(selectedShowtime && selectedShowtime.localShowtimeStart).format('hh:mm A')}`}</Box>
           </Box>
         </Box>
         <Grid container justify='flex-end' alignItems='center' className={classes.subTotalContainer}>

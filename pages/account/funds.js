@@ -3,20 +3,23 @@ import { inject, observer } from 'mobx-react'
 import Router from 'next/router'
 
 import {
+  Button,
   Grid,
+  Divider,
   Container,
   Typography
 } from '@material-ui/core'
 
-import { CustomLink, TabbedNav } from '../../components/app'
+import { AddPaymentMethodModal, TabbedNav } from '../../components/app'
 
 import {
   AccountSection,
-  AddPaymentMethodForm,
+  CardCardItem,
   BankAccountItem,
   ManageFunds,
   BalanceHistoryItem,
 } from '../../components/account'
+
 
 import { googlePageView } from '../../util'
 import AccountTabs from '../../settings/accountTabs'
@@ -30,6 +33,11 @@ class Funds extends React.Component {
     this.props.store.userStore.loadBalanceHistory()
   }
 
+  openAddPaymentMethodModal = () => {
+    const { store: { uiStore } } = this.props
+    uiStore.openDialog()
+  }
+
   render() {
     const store = this.props.store
     const { userStore, uiStore } = store
@@ -38,6 +46,7 @@ class Funds extends React.Component {
       account,
       accountBalance,
       formattedAccounts,
+      cardPaymentOptions,
       balanceHistory,
       addPaymentMethod,
       isValidNewPaymentMethod,
@@ -86,29 +95,34 @@ class Funds extends React.Component {
                     />
                   )
                 })}
-                <AddPaymentMethodForm
-                  addPaymentMethod={addPaymentMethod.bind(userStore)}
-                  validateNewPaymentMethodName={validateNewPaymentMethodName.bind(
-                    userStore,
-                  )}
-                  validateNewPaymentMethodPublicToken={validateNewPaymentMethodPublicToken.bind(
-                    userStore,
-                  )}
-                  validateNewPaymentMethodMetadata={validateNewPaymentMethodMetadata.bind(
-                    userStore,
-                  )}
-                  isValidNewPaymentMethod={isValidNewPaymentMethod}
-                  validNewPaymentMethodName={validNewPaymentMethodName}
-                  validNewPaymentMethodPublicToken={
-                    validNewPaymentMethodPublicToken
-                  }
-                  setValue={setValue.bind(userStore)}
-                  setErrorMessage={setErrorMessage}
-                  refreshSession={() => {
-                    userStore.loadSession()
-                  }}
-                  newPaymentMethodName={newPaymentMethodName}
-                />
+                {cardPaymentOptions.length
+                  ? cardPaymentOptions.map((cardPaymentOption) => {
+                    return (
+                      <CardCardItem
+                        key={cardPaymentOption.creditCard}
+                        nameOnCard={cardPaymentOption.nameOnCard}
+                        creditCardNumber={cardPaymentOption.creditCard}
+                        cardType={cardPaymentOption.type}
+                        expiryMonth={cardPaymentOption.expiryMonth}
+                        expiryYear={cardPaymentOption.expiryYear}
+                        removeAccount={() => {
+                          alert("Remove doesn't work in dev mode!")
+                        }}
+                      />
+                    )
+                  }) : null
+                }
+              </Grid>
+              <Grid container style={{ marginTop: 10 }}>
+                <Button
+                  onClick={this.openAddPaymentMethodModal}
+                  type='button'
+                  variant='outlined'
+                  color='primary'
+                >
+                  Add payment method
+                </Button>
+                <AddPaymentMethodModal />
               </Grid>
             </Grid>
             <Grid item xs={4}>
