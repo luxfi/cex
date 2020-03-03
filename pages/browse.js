@@ -8,6 +8,7 @@ import {
   Tab,
   Toolbar,
   withStyles,
+  Typography,
 } from '@material-ui/core'
 
 import classNames from 'classnames'
@@ -52,12 +53,12 @@ class Browse extends React.Component {
     this.props.store.movieStore.setTradingStatusFilter(tradingStatus.byIndex(i))
   }
 
-    // cannot use fat-arrow for render as it breaks mobx observing :)
+  // cannot use fat-arrow for render as it breaks mobx observing :)
   render() {
     const { classes, store } = this.props
     const movieStore = store.movieStore
 
-      // https://material-ui.com/customization/components/
+    // https://material-ui.com/customization/components/
     const tabGroupClasses = {
       indicator: classes.tabIndicator,
       flexContainer: classes.tabsContainer
@@ -67,7 +68,7 @@ class Browse extends React.Component {
       wrapper: classes.tabWrapper,
       selected: classes.selected, // see reference comment in style file
     }
-  
+
     return (
       <Container maxWidth='xl'>
         <Toolbar className={classNames(
@@ -92,6 +93,7 @@ class Browse extends React.Component {
             />
           </Grid>
         ))}
+        {!movieStore.movies.length && <Typography style={{ textAlign: 'center', width: '100%' }}>No movie found</Typography>}
         </Grid>
       </Container>
     )
