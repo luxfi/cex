@@ -113,7 +113,8 @@ function toDashString(str) {
 
 function slugFromPath() {
   try {
-    const parts = location.pathname.split('/')
+    // const parts = location.pathname.split('/')
+    const parts = location.pathname.match(/[^/]+/g)
     return parts[parts.length-1]
   } catch (err) {
     return ''

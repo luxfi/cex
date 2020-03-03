@@ -37,7 +37,7 @@ export default class TicketCheckoutStore {
   }
 
   @action isValidPurchasedTicket(ticketId) {
-    const ticket = this.ticketTransactions.find((ticket) => ticket.ticketId === ticketId)
+    const ticket = this.ticketTransactions.find((ticket) => parseInt(ticket.ticketId, 10) === parseInt(ticketId, 10))
     this.currentPurchasedTicket = ticket
     return ticket
   }

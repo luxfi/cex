@@ -101,17 +101,17 @@ class ConfirmPaymentView extends React.Component {
           userStore.removeBalance(total)
 
           this.setState({ transactionStatus: 'successful' }, () => {
-            router.push('/orderDetails', `/orderDetails/${movieSlug}?transactionId=${transactionId}`)
+            router.push('/orderDetails', `/orderDetails/${movieSlug}?ticketId=${ticketId}`)
           })
         } else {
           this.setState({ transactionStatus: 'failed' })
         }
       } else if (paymentType === 'card') {
         if (cardInfo.amount >= total) {
-          ticketCheckoutStore.addTransaction(venueId, showtimeId, transactionId, ticketId, numberOfSeats)
+          ticketCheckoutStore.addTransaction(venueId, showtimeId, transactionId, ticketId, numberOfSeats, movieSlug)
 
           this.setState({ transactionStatus: 'successful' }, () => {
-            router.push('/orderDetails', `/orderDetails/${movieSlug}?transactionId=${transactionId}`)
+            router.push('/orderDetails', `/orderDetails/${movieSlug}?ticketId=${ticketId}`)
           })
         } else {
           this.setState({ transactionStatus: 'failed' })

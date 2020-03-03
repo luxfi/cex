@@ -121,7 +121,7 @@ class OrderDetailsView extends React.Component {
     } = this.props
 
     const slug = router.query.slug || slugFromPath()
-    const ticketDetails = ticketCheckoutStore.currentPurchasedTicket
+    const ticketDetails = ticketCheckoutStore.currentPurchasedTicket || {}
     const movie = movieStore.getMovieBySlug(slug)
     const shareUrl = `${window.location.origin}/film/${slug}`
     const ticketUrl = `${window.location.origin}/orderDetails/${slug}?ticketId=${ticketDetails.ticketId}`
@@ -137,7 +137,7 @@ class OrderDetailsView extends React.Component {
         } = {},
       } = {},
     } = movieVenue || {}
-    const movieShowtimeDetails = this.getShowtime(ticketDetails.showtimeId)
+    const movieShowtimeDetails = this.getShowtime(ticketDetails.showtimeId) || {}
     const movieDate = moment(movieShowtimeDetails.localShowtimeStart).format('Do MMM')
     const movieTime = moment(movieShowtimeDetails.localShowtimeStart).format('LT')
 
