@@ -73,7 +73,7 @@ const TicketOrdersView = inject('store')(observer((props) => {
     <>
       <Typography className={classes.heading} variant='h3'>{`${tabTitle} (${ticketTransactions.length})`}</Typography>
       {
-        ticketTransactions.length && ticketTransactions.map((ticket, i) => {
+        (ticketTransactions.length) && ticketTransactions.map((ticket, i) => {
           const movie = movieStore.getMovieBySlug(ticket.movieSlug)
           return <SingleTicketOrder classes={classes} movie={movie} ticket={ticket} showDivider={i < ticketTransactions.length - 1} />
         })
