@@ -7,12 +7,20 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import { withStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
+import { inject, observer } from 'mobx-react'
+import { withRouter } from 'next/router'
 
 import React from 'react'
 
 const styles = (theme) => ({
   paper: {
     marginTop: theme.spacing(12),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  paperWithModal: {
+    marginTop: theme.spacing(1),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -26,6 +34,10 @@ const styles = (theme) => ({
   },
 })
 
+@inject('store')
+@observer
+@withRouter
+@withStyles(styles)
 class LoginForm extends React.Component {
   constructor(props) {
     super(props)
@@ -49,10 +61,17 @@ class LoginForm extends React.Component {
   }
 
   handleSubmit = (login, isValidLogin, setErrorMessage) => {
+    const { router, isModal, store: { uiStore } } = this.props
+
     if (isValidLogin) {
       login(
         () => {
           // setSuccessMessage('You have successfully logged in!')
+          if (isModal) {
+            uiStore.closeAuthModal()
+          } else {
+            router.push('/portfolio')
+          }
         },
         (ex) => {
           setErrorMessage(ex)
@@ -75,6 +94,7 @@ class LoginForm extends React.Component {
       login,
       setErrorMessage,
       setSuccessMessage,
+      isModal,
     } = this.props
 
     const { displayErrors } = this.state
@@ -82,7 +102,7 @@ class LoginForm extends React.Component {
     return (
       <Container component='div' maxWidth='xs'>
         <CssBaseline />
-        <div className={classes.paper}>
+        <div className={isModal ? classes.paperWithModal : classes.paper}>
           <Typography component='h1' variant='h5'>
             Sign in
           </Typography>
@@ -151,4 +171,4 @@ class LoginForm extends React.Component {
   }
 }
 
-export default withStyles(styles)(LoginForm)
+export default LoginForm

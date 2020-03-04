@@ -1,61 +1,80 @@
-import React from "react"
-import { inject, observer } from "mobx-react"
-import Router from "next/router"
-
 // @material-ui/core components
-import Button from "@material-ui/core/Button"
-import CssBaseline from "@material-ui/core/CssBaseline"
-import TextField from "@material-ui/core/TextField"
-import FormControlLabel from "@material-ui/core/FormControlLabel"
-import Checkbox from "@material-ui/core/Checkbox"
-import Grid from "@material-ui/core/Grid"
-import Typography from "@material-ui/core/Typography"
-import { withStyles } from "@material-ui/core/styles"
-import Container from "@material-ui/core/Container"
-import Link from "@material-ui/core/Link"
+import Button from '@material-ui/core/Button'
+import Checkbox from '@material-ui/core/Checkbox'
+import Container from '@material-ui/core/Container'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import { withStyles } from '@material-ui/core/styles'
+import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
+import { inject, observer } from 'mobx-react'
+import { withRouter } from 'next/router'
+import React from 'react'
 
-// Custom Link
-import { CustomLink } from "../../app"
-
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  paperWithModal: {
+    marginTop: theme.spacing(1),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 })
 
-@inject("store")
+@inject('store')
 @observer
+@withStyles(styles)
+@withRouter
 class SignupForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = { checkedOver18: false }
-    this.handleKeypress = this.handleKeypress.bind(this)
-  }
-
-  handleKeypress(e) {
-    var key = e.which || e.keyCode
-    if (key === 13) {
-      // 13 is enter
-      document.getElementById("signup-submit-button").click()
-    }
   }
 
   componentDidMount() {
-    window.addEventListener("keypress", this.handleKeypress)
+    window.addEventListener('keypress', this.handleKeypress)
   }
 
   componentWillUnmount() {
-    window.removeEventListener("keypress", this.handleKeypress)
+    window.removeEventListener('keypress', this.handleKeypress)
+  }
+
+  handleKeypress = (e) => {
+    const key = e.which || e.keyCode
+    if (key === 13) {
+      // 13 is enter
+      document.getElementById('signup-submit-button').click()
+    }
+  }
+
+  handleSubmit = (signUp, isValidLogin, setErrorMessage) => {
+    const { router, isModal, store: { uiStore } } = this.props
+
+    signUp(
+      () => {
+        if (isModal) {
+          uiStore.closeAuthModal()
+        } else {
+          router.push('/account/identity')
+        }
+      },
+      (ex) => {
+        console.log('hit error callback **', ex)
+        setErrorMessage(ex)
+      },
+    )
   }
 
   render() {
@@ -76,149 +95,134 @@ class SignupForm extends React.Component {
       validPassword,
       store,
       setErrorMessage,
+      router,
+      isModal,
     } = this.props
+    const { checkedOver18 } = this.state
 
     const { passwordsMatch } = store.userStore
     // TODO Remove form)
     return (
-      <Container component="main" maxWidth="xs">
+      <Container component='div' maxWidth='xs'>
         <CssBaseline />
-        <div className={classes.paper}>
-          <Typography component="h1" variant="h5">
+        <div className={isModal ? classes.paperWithModal : classes.paper}>
+          <Typography component='h1' variant='h5'>
             Sign Up
           </Typography>
           <TextField
-            variant="outlined"
-            margin="normal"
+            variant='outlined'
+            margin='normal'
             required
             fullWidth
-            id="firstName"
-            name="firstName"
-            type="firstName"
-            label="First name"
-            fullWidth
-            autoComplete="fname"
+            id='firstName'
+            name='firstName'
+            type='firstName'
+            label='First name'
+            autoComplete='fname'
             error={firstName.length >= 2 && !validFirstName}
-            helperText={firstName.length >= 2 && !validFirstName && "Please enter valid first name"}
+            helperText={firstName.length >= 2 && !validFirstName && 'Please enter valid first name'}
             value={firstName}
-            onChange={evt => setValue(evt.target.name, evt.target.value)}
+            onChange={(evt) => setValue(evt.target.name, evt.target.value)}
           />
           <TextField
-            variant="outlined"
-            margin="normal"
+            variant='outlined'
+            margin='normal'
             required
             fullWidth
-            id="lastName"
-            name="lastName"
-            label="Last name"
-            type="lastName"
-            fullWidth
-            autoComplete="lname"
+            id='lastName'
+            name='lastName'
+            label='Last name'
+            type='lastName'
+            autoComplete='lname'
             error={lastName.length >= 2 && !validLastName}
-            helperText={lastName.length >= 2 && !validLastName && "Please enter valid last name"}
+            helperText={lastName.length >= 2 && !validLastName && 'Please enter valid last name'}
             value={lastName}
-            onChange={evt => setValue(evt.target.name, evt.target.value)}
+            onChange={(evt) => setValue(evt.target.name, evt.target.value)}
           />
           <TextField
-            variant="outlined"
-            margin="normal"
+            variant='outlined'
+            margin='normal'
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
+            id='email'
+            label='Email Address'
+            name='email'
             autoFocus
-            error={this.state.checkedOver18 && !validEmail}
+            error={checkedOver18 && !validEmail}
             helperText={
-              this.state.checkedOver18 &&
-              !validEmail &&
-              "please enter a valid email"
+              checkedOver18
+              && !validEmail
+              && 'please enter a valid email'
             }
             value={email}
-            onChange={evt => setValue(evt.target.name, evt.target.value)}
+            onChange={(evt) => setValue(evt.target.name, evt.target.value)}
           />
           <TextField
-            variant="outlined"
-            margin="normal"
+            variant='outlined'
+            margin='normal'
             required
             fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            error={this.state.checkedOver18 && !validPassword}
+            name='password'
+            label='Password'
+            type='password'
+            id='password'
+            error={checkedOver18 && !validPassword}
             helperText={
-              this.state.checkedOver18 &&
-              !validPassword &&
-              "please make sure password is long enough"
+              checkedOver18
+              && !validPassword
+              && 'please make sure password is long enough'
             }
             value={password}
-            onChange={evt => setValue(evt.target.name, evt.target.value)}
+            onChange={(evt) => setValue(evt.target.name, evt.target.value)}
           />
           <TextField
-            variant="outlined"
-            margin="normal"
+            variant='outlined'
+            margin='normal'
             required
             fullWidth
-            name="passwordConfirm"
-            label="Password"
-            type="password"
-            id="passwordConfirm"
+            name='passwordConfirm'
+            label='Password'
+            type='password'
+            id='passwordConfirm'
             error={
-              this.state.checkedOver18 && passwordConfirm && !passwordsMatch
+              checkedOver18 && passwordConfirm && !passwordsMatch
             }
             helperText={
-              this.state.checkedOver18 &&
-              passwordConfirm &&
-              !passwordsMatch &&
-              "passwords do not match"
+              checkedOver18
+              && passwordConfirm
+              && !passwordsMatch
+              && 'passwords do not match'
             }
             value={passwordConfirm}
-            onChange={evt => setValue(evt.target.name, evt.target.value)}
+            onChange={(evt) => setValue(evt.target.name, evt.target.value)}
           />
           <FormControlLabel
             control={
               <Checkbox
-                value="over18"
-                color="primary"
-                name="over18"
+                color='primary'
+                name='over18'
                 value={over18}
                 onClick={() => this.setState({ checkedOver18: true })}
-                onChange={evt => setValue(evt.target.name, evt.target.checked)}
+                onChange={(evt) => setValue(evt.target.name, evt.target.checked)}
               />
             }
-            label="I am over 18."
+            label='I am over 18.'
           />
           <Button
-            id="signup-submit-button"
-            type="submit"
+            id='signup-submit-button'
+            type='submit'
             fullWidth
-            variant="contained"
-            color="primary"
+            variant='contained'
+            color='primary'
             className={classes.submit}
-            disabled={!this.state.checkedOver18 || !isValidSignUp}
-            onClick={() => {
-              signUp(
-                () => Router.push("/account/identity"),
-                ex => {
-                  console.log("hit error callback **", ex)
-                  setErrorMessage(ex)
-                }
-              )
-            }}
+            disabled={!checkedOver18 || !isValidSignUp}
+            onClick={() => (this.handleSubmit(signUp))}
           >
             Sign Up
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link component={CustomLink} href="/login" variant="body2">
-                Sign in?
-              </Link>
-            </Grid>
-          </Grid>
         </div>
       </Container>
     )
   }
 }
-export default withStyles(styles)(SignupForm)
+export default SignupForm

@@ -4,10 +4,6 @@ import {
   Container,
   Divider,
   Grid,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   Tooltip,
   Typography,
 } from '@material-ui/core'
@@ -19,11 +15,9 @@ import { withRouter } from 'next/router'
 import React from 'react'
 import uuid from 'uuid'
 
-
 import { formatCurrency, slugFromPath } from '../../../util'
 
-import CustomDialog from '../../app/CustomDialog'
-
+import { AuthModal, CustomDialog } from '../../app'
 
 import styles from './pickSeats.style'
 
@@ -105,17 +99,19 @@ class PickSeatsView extends React.Component {
       router,
       store: {
         userStore: { loggedIn },
+        uiStore,
       },
     } = this.props
+
+    if (!loggedIn) {
+      return uiStore.openAuthModal()
+    }
 
     const slug = router.query.slug || slugFromPath()
     const urlParams = new URLSearchParams(window.location.search)
     const showtimeId = urlParams.get('showtimeId')
     const venueId = urlParams.get('venueId')
 
-    if (!loggedIn) {
-      return router.push('/login?redirect=true')
-    }
     return router.push('/confirmPayment', `/confirmPayment/${slug}?venueId=${venueId}&showtimeId=${showtimeId}`)
   }
 
@@ -125,6 +121,7 @@ class PickSeatsView extends React.Component {
       router,
       store: {
         uiStore,
+        uiStore: { authModalOpen, tabIndexValue },
         pickSeatStore: {
           seats,
           selectedSeats,
@@ -150,6 +147,7 @@ class PickSeatsView extends React.Component {
 
     return (
       <Container maxWidth='md' className={classes.outerContainer}>
+        <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
         <Grid container alignItems='flex-start' justify='space-evenly'>
           <Box className={classes.seatsSection}>
             <Grid className={classes.seatsTimerContainer} container justify='space-between' alignItems='center'>

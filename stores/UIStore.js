@@ -2,6 +2,8 @@ import { action, observable, computed } from 'mobx'
 
 export default class UIStore {
   @observable snackBarOpen = false
+  @observable authModalOpen = false
+  @observable tabIndexValue = 0
   @observable snackBarVariant = 'error'
   @observable snackBarMessage = ''
   @observable trading = 'pro'
@@ -73,15 +75,27 @@ export default class UIStore {
     this.modal.body = null
   }
 
-  openDialog(name) {
+  @action openAuthModal() {
+    this.authModalOpen = true
+  }
+
+  @action closeAuthModal() {
+    this.authModalOpen = false
+  }
+
+  @action openDialog(name) {
     this.dialog.open = true
     if (name) {
       this.dialog.name = name
     }
   }
 
-  closeDialog() {
+  @action closeDialog() {
     this.dialog.open = false
     this.dialog.name = null
+  }
+
+  @action setTabIndexValue(currentValue) {
+    this.tabIndexValue = currentValue
   }
 }
