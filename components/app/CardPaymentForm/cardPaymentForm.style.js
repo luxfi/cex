@@ -2,9 +2,6 @@ export default (theme) => ({
   innerContainer: {
     backgroundColor: '#222',
   },
-  paymentIconContainer: {
-    marginBottom: '2px',
-  },
   svgIcon: {
     width: '2rem',
     height: '2rem',

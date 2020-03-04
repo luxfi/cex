@@ -203,11 +203,14 @@ class PickSeatsView extends React.Component {
                               onClick={this.selectSeat(seatCoulumn.name, seatCoulumn.selected, seatCoulumn.type, index)}
                             >
                               <Tooltip title={seatCoulumn.name} aria-label={seatCoulumn.name}>
-                                <img
-                                  className={classes.seatImage}
-                                  src={`/images/seats/${seatCoulumn.picked ? 'pickedSeat' : seatCoulumn.selected ? 'selectedSeat' : seatCoulumn.type}.png`}
-                                  alt=''
-                                />
+                                {
+                                  seatCoulumn.type === 'empty' ? <span />
+                                    : (<img
+                                      className={classes.seatImage}
+                                      src={`/images/seats/${seatCoulumn.picked ? 'pickedSeat' : seatCoulumn.selected ? 'selectedSeat' : seatCoulumn.type}.png`}
+                                      alt='Seats'
+                                    />)
+                                }
                               </Tooltip>
                           </button>
                         </li>

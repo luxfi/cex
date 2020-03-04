@@ -160,6 +160,9 @@ export default class MovieStore {
     return this.movies.find(m => m.movieSlug === slug)
   }
 
+  @action setMovieSearchResult(movie) {
+    this.movies = [...movie]
+  }
 }
 
 export class Movie {
