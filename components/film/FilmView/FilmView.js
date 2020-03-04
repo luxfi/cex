@@ -5,6 +5,7 @@ import { toJS } from "mobx"
 import { inject, observer } from "mobx-react"
 import { withRouter, Router } from "next/router"
 
+
 import classNames from "classnames"
 
 // orderbook
@@ -191,6 +192,19 @@ class Index extends React.Component {
             >
               Add to watchlist
             </Button>
+            <Link href="/ticketing" as={`/ticketing/${movie.movieSlug}`}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                className={classes.movieButton}
+              >
+                <Typography
+                  variant="subtitle1"
+                >
+                  Buy Tickets
+                </Typography>
+              </Button>
+            </Link>
           </div>
           <br />
           <br />
