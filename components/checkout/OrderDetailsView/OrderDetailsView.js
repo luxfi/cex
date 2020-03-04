@@ -213,18 +213,22 @@ class OrderDetailsView extends React.Component {
                 </ButtonBase>
               </Box>
             </Grid>
-            {/* <Grid item>
+            <Grid item>
               <Box className={classNames(classes.lighterBg, classes.borderBottom)}>
-                <ButtonBase className={classes.sidebarButton}>
-                  <ViewListIcon fontSize='large' />
-                  <Typography>View order</Typography>
-                </ButtonBase>
-                <ButtonBase className={classes.sidebarButton}>
+                <Link href='/account/ticketOrders'>
+                  <a className={classes.aTags}>
+                    <ButtonBase className={classes.sidebarButton}>
+                      <ViewListIcon fontSize='large' />
+                      <Typography>View orders</Typography>
+                    </ButtonBase>
+                  </a>
+                </Link>
+                {/* <ButtonBase className={classes.sidebarButton}>
                   <CancelIcon fontSize='large' />
                   <Typography>Cancel</Typography>
-                </ButtonBase>
+                </ButtonBase> */}
               </Box>
-            </Grid> */}
+            </Grid>
             <Grid item>
               <Box className={classNames(classes.lighterBg, classes.borderBottom)}>
                 <CopyToClipboard text={shareUrl} onCopy={this.onCopied}>
