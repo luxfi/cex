@@ -54,6 +54,7 @@ export default class TicketCheckoutStore {
       ticketId,
       numberOfSeats,
       movieSlug,
+      date: new Date(),
     }
 
     if (this.ticketTransactions.length) {
