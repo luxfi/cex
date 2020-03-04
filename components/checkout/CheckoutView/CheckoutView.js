@@ -21,7 +21,7 @@ import React from 'react'
 
 import { formatCurrency, slugFromPath } from '../../../util'
 
-import styles from './checkout.style'
+import styles from './checkout.style.js'
 
 @inject('store')
 @observer
@@ -60,8 +60,11 @@ class CheckoutView extends React.Component {
     const urlParams = new URLSearchParams(window.location.search)
     const showtimeId = urlParams.get('showtimeId')
     const venueId = urlParams.get('venueId')
+    const refHash = urlParams.get('ref')
 
     const movie = movieStore.getMovieBySlug(slug)
+
+    const refString = refHash && refHash.length ? `&ref=${refHash}` : ''
 
     return (
       <Grid className={classes.outerContainer}>
@@ -122,7 +125,7 @@ class CheckoutView extends React.Component {
             <Typography variant='h5' className={classes.subTotal}>{formatCurrency(subTotal)}</Typography>
           </Box>
           <Grid>
-            <Link href='/pickSeats' as={`/pickSeats/${slug}?venueId=${venueId}&showtimeId=${showtimeId}`}>
+            <Link href='/pickSeats' as={`/pickSeats/${slug}?venueId=${venueId}&showtimeId=${showtimeId}${refString}`}>
               <Button className={classes.nextButton}>PICK SEATS</Button>
             </Link>
           </Grid>

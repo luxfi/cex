@@ -57,6 +57,7 @@ export default (props) => {
     swipeToSlide: true,
     prevArrow: <PreviousArrow classes={classes}/>,
     nextArrow: <NextArrow classes={classes}/>,
+    
       /*
         TODO:  pass in a "averageWidth" prop, and generate these breakpoints dynamically.
 

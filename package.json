@@ -43,6 +43,7 @@
     "formik": "^2.0.6",
     "formik-material-ui": "1.0.0",
     "hanzo.js": "2.5.13",
+    "hash-sum": "^2.0.0",
     "hdkey": "1.1.1",
     "limit-order-book": "^0.3.0",
     "material-table": "1.54.1",

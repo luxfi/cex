@@ -54,14 +54,14 @@ export default class MovieStore {
     for (let i = 0; i < facetsNamesAsArray.length; i++) {
       const facet = facetsNamesAsArray[i]
       if (this.facets[facet].size === 0) {
-        console.log(`No constraints on ${facet}, so "${movie.name}" matches`)
+        //console.log(`No constraints on ${facet}, so "${movie.name}" matches`)
         facetResults[i] = true
       }
       else {
           // logical OR within a facet
         for (const [key, value] of this.facets[facet]) {
           if (movie[facet].includes(key)) {
-            console.log(`"${movie.name}" matches ${key} for ${facet}`)
+            //console.log(`"${movie.name}" matches ${key} for ${facet}`)
             facetResults[i] = true
             break
           }
@@ -77,10 +77,10 @@ export default class MovieStore {
 
   @action setFacetValue = (name, key, set) => {
     if (set) {
-      console.log(`FACET: ${key} selected for ${name}`)
+      //console.log(`FACET: ${key} selected for ${name}`)
     }
     else {
-      console.log(`FACET: ${key} cleared for ${name}`)
+      //console.log(`FACET: ${key} cleared for ${name}`)
     }
     if (!name in this.facets ) {
       throw new Error('setFacetValue() expects an existing facet name')

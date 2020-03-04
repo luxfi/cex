@@ -25,7 +25,7 @@ import { formatCurrency, slugFromPath } from '../../../util'
 import CustomDialog from '../../app/CustomDialog'
 
 
-import styles from './pickSeats.style'
+import styles from './pickSeats.style.js'
 
 @inject('store')
 @observer
@@ -112,11 +112,15 @@ class PickSeatsView extends React.Component {
     const urlParams = new URLSearchParams(window.location.search)
     const showtimeId = urlParams.get('showtimeId')
     const venueId = urlParams.get('venueId')
+    const refHash = urlParams.get('ref')
+  
 
     if (!loggedIn) {
       return router.push('/login?redirect=true')
     }
-    return router.push('/confirmPayment', `/confirmPayment/${slug}?venueId=${venueId}&showtimeId=${showtimeId}`)
+
+    const refString = (refHash && refHash.length) ? `&ref=${refHash}` : ''
+    return router.push('/confirmPayment', `/confirmPayment/${slug}?venueId=${venueId}&showtimeId=${showtimeId}${refString}`)
   }
 
   render() {
@@ -146,7 +150,9 @@ class PickSeatsView extends React.Component {
     const urlParams = new URLSearchParams(window.location.search)
     const venueId = urlParams.get('venueId')
     const showtimeId = urlParams.get('showtimeId')
+    const refHash = urlParams.get('ref')
     const movieSlug = router.query.slug || slugFromPath()
+    const refString = (refHash && refHash.length) ? `&ref=${refHash}` : ''
 
     return (
       <Container maxWidth='md' className={classes.outerContainer}>
@@ -239,7 +245,7 @@ class PickSeatsView extends React.Component {
               {
                 venueShowtimes.length
                   ? venueShowtimes.map((showtime) => (
-                    <Link key={showtime.showtimeId} href='/pickSeats' as={`/pickSeats/${movieSlug}?venueId=${venueId}&showtimeId=${showtime.showtimeId}`}>
+                      <Link key={showtime.showtimeId} href='/pickSeats' as={`/pickSeats/${movieSlug}?venueId=${venueId}&showtimeId=${showtime.showtimeId}${refString}`}>
                       <Button
                         className={`${classes.movieTimeBtn} 
                           ${showtime.showtimeId === showtimeId && classes.selectedBtn}`}
