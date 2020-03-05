@@ -1,19 +1,25 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { 
+  useEffect, 
+  useRef, 
+  useState
+ } from 'react'
 
-import { Button } from '@material-ui/core'
+import { 
+  Button,
+  ClickAwayListener, 
+  Grow,
+  MenuItem,
+  MenuList,
+  Paper,
+  Popper
+} from '@material-ui/core'
 
-import ClickAwayListener from '@material-ui/core/ClickAwayListener'
-import Grow from '@material-ui/core/Grow'
-import MenuItem from '@material-ui/core/MenuItem'
-import MenuList from '@material-ui/core/MenuList'
-import Paper from '@material-ui/core/Paper'
-import Popper from '@material-ui/core/Popper'
-
-import EmailIcon from '@material-ui/icons/Email'
-import FacebookIcon from '@material-ui/icons/Facebook'
-import LinkedInIcon from '@material-ui/icons/LinkedIn'
-import ShareIcon from '@material-ui/icons/Share'
-import TwitterIcon from '@material-ui/icons/Twitter';
+import {
+  Share,
+  Email,
+  Facebook,
+  Twitter,
+} from '@material-ui/icons'
 
 import {
   EmailShareButton,
@@ -22,7 +28,9 @@ import {
   TwitterShareButton,
 } from 'react-share'
 
-const ShareModal = ({ classes, shareUrl, message }) => {
+import hashSum from 'hash-sum'
+
+const ShareModal = ({ classes, shareUrl, message, emailToCredit }) => {
   const [open, setOpen] = useState(false)
   const anchorRef = useRef(null)
 
@@ -47,12 +55,15 @@ const ShareModal = ({ classes, shareUrl, message }) => {
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = useRef(open)
   useEffect(() => {
-    if (prevOpen.current === true && open === false) {
+    if (prevOpen.current && !open) {
       anchorRef.current.focus()
     }
 
     prevOpen.current = open
   }, [open])
+
+
+  const referralURL = `${shareUrl}?ref=${hashSum(emailToCredit)}`
 
   return (
     <div style={{ display: 'inline-block' }}>
@@ -68,40 +79,32 @@ const ShareModal = ({ classes, shareUrl, message }) => {
       </Button>
 
       <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition>
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList autoFocusItem={open} id='menu-list-grow' onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={handleClose}>
-                        <FacebookShareButton url={shareUrl} quote={message}>
-                            <FacebookIcon />
-                        </FacebookShareButton>
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>
-                        <TwitterShareButton url={shareUrl} quote={message}>
-                            <TwitterIcon />
-                        </TwitterShareButton>
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>
-                        <LinkedinShareButton url={shareUrl} quote={message}>
-                            <LinkedInIcon />
-                        </LinkedinShareButton>
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>
-                        <EmailShareButton url={shareUrl} quote={message}>
-                            <EmailIcon />
-                        </EmailShareButton>
-                    </MenuItem>
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
+      {({ TransitionProps, placement }) => (
+        <Grow {...TransitionProps}  style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }} >
+          <Paper>
+            <ClickAwayListener onClickAway={handleClose}>
+              <MenuList autoFocusItem={open} id='menu-list-grow' onKeyDown={handleListKeyDown}>
+                <MenuItem onClick={handleClose}>
+                  <FacebookShareButton url={referralURL} quote={message}>
+                    <Facebook />
+                  </FacebookShareButton>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <TwitterShareButton url={referralURL} quote={message}>
+                    <Twitter />
+                  </TwitterShareButton>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <EmailShareButton url={referralURL} quote={message}>
+                    <Email />
+                  </EmailShareButton>
+                </MenuItem>
+              </MenuList>
+            </ClickAwayListener>
+          </Paper>
+        </Grow>
+      )}
+      </Popper>
     </div>
   )
 }

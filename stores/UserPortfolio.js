@@ -66,6 +66,7 @@ export default class UserPortfolio {
   constructor(initialData = {}, hanzoApi) {
     // Pass down the Hanzo API through a central point
     this.api = hanzoApi
+    this.getWatchlist()
   }
 
   @action async getWatchlist(onSuccess, onError) {

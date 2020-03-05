@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from "react"
-import classNames from "classnames"
+import { inject } from 'mobx-react'
+
 import {
   Grid,
   Paper,
@@ -12,7 +13,9 @@ import {
 } from "@material-ui/core"
 
 import { makeStyles } from "@material-ui/core/styles"
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+import hashSum from 'hash-sum'
+
 
 import {
   FacebookShareButton,
@@ -34,10 +37,9 @@ import {
   faLinkedinIn
 } from "@fortawesome/free-brands-svg-icons"
 
+import classNames from "classnames"
 import myStyles from "./RewardsView.style.js"
-
 const styles = makeStyles(myStyles)
-
 
 const dummyRewardsURL = "esx.com/rewards/invite/zachk"
 
@@ -182,7 +184,7 @@ const rewards = [
   {
     id: 2,
     title: 'invite a friend',
-    completed: true,
+    completed: false,
   },
   {
     id: 3,
@@ -216,13 +218,35 @@ const rewards = [
   },
 ]
 
-const RewardsView = (props) => {
+
+const getMyReferals = (email) => {
+  const ticketTransactions = JSON.parse(localStorage.getItem('ticketTransactions'))
+
+  if (ticketTransactions == null) {
+    return 0
+  }
+
+  const myHashSum = hashSum(email)
+  let count = 0
+  ticketTransactions.forEach((t) => {
+    if (t.refHash === myHashSum) {
+      count++
+    }
+  })
+
+  return count
+}
+
+
+const RewardsView = inject('store')((props) => {
 
   const { tabIdx, index } = props
   // Not me! Don't render
   if (tabIdx !== index) return null
 
   const classes = styles()
+
+  const { store: { userStore }} = props
 
   const [shareUrlWasCopied, setShareUrlWasCopied] = React.useState(false)
 
@@ -243,11 +267,22 @@ const RewardsView = (props) => {
         />
       </Grid>
       {
-        rewards.map(reward => (
-          <Grid key={reward.id} item xs={12} sm={4}>
-            <RewardCard title={reward.title} points={5} completed={!!reward.completed}/>
-          </Grid>
-        ))
+        rewards.map(reward => {
+          if (reward.title == 'invite a friend') {
+
+            const referrals = getMyReferals(userStore.email)
+            return (
+              <Grid key={reward.id} item xs={12} sm={4}>
+                <RewardCard title={reward.title} points={5 * referrals} completed={(referrals > 0)}/>
+              </Grid>
+            )
+          }
+          return (
+            <Grid key={reward.id} item xs={12} sm={4}>
+              <RewardCard title={reward.title} points={5} completed={!!reward.completed}/>
+            </Grid>
+          )
+        })
       }
     </Grid>
     <br />
@@ -264,6 +299,6 @@ const RewardsView = (props) => {
     />
     </>
   )
-}
+})
 
 export default RewardsView

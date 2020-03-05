@@ -65,7 +65,7 @@ class ConfirmPaymentView extends React.Component {
     userStore.choosePaymentMethod(paymentMethodIndex, paymentType, cardInfo)
   }
 
-  handleTcketPayment = () => {
+  purchaseTickets = () => {
     const {
       router,
       store: {
@@ -78,9 +78,12 @@ class ConfirmPaymentView extends React.Component {
     const urlParams = new URLSearchParams(window.location.search)
     const showtimeId = urlParams.get('showtimeId')
     const venueId = urlParams.get('venueId')
+    const refHash = urlParams.get('ref')
     const transactionId = faker.random.uuid()
     const ticketId = faker.random.number()
     const movieSlug = router.query.slug || slugFromPath()
+
+    const refParamString = (refHash && refHash.length) ? `&ref=${refHash}` : ''
 
     this.setState({
       processingPayment: true,
@@ -98,21 +101,22 @@ class ConfirmPaymentView extends React.Component {
             ticketId,
             numberOfSeats,
             movieSlug,
+            refHash
           )
           userStore.removeBalance(total)
 
           this.setState({ transactionStatus: 'successful' }, () => {
-            router.push('/orderDetails', `/orderDetails/${movieSlug}?ticketId=${ticketId}`)
+            router.push('/orderDetails', `/orderDetails/${movieSlug}?ticketId=${ticketId}${refParamString}`)
           })
         } else {
           this.setState({ transactionStatus: 'failed' })
         }
       } else if (paymentType === 'card') {
         if (cardInfo.amount >= total) {
-          ticketCheckoutStore.addTransaction(venueId, showtimeId, transactionId, ticketId, numberOfSeats, movieSlug)
+          ticketCheckoutStore.addTransaction(venueId, showtimeId, transactionId, ticketId, numberOfSeats, movieSlug, refHash)
 
           this.setState({ transactionStatus: 'successful' }, () => {
-            router.push('/orderDetails', `/orderDetails/${movieSlug}?ticketId=${ticketId}`)
+            router.push('/orderDetails', `/orderDetails/${movieSlug}?ticketId=${ticketId}${refParamString}`)
           })
         } else {
           this.setState({ transactionStatus: 'failed' })
@@ -198,7 +202,7 @@ class ConfirmPaymentView extends React.Component {
                     </TableCell>
                   </TableRow>
                 )))}
-                <TableRow>
+                <TableRow key='Subtotal'>
                   <TableCell>
                     Subtotal
                   </TableCell>
@@ -206,7 +210,7 @@ class ConfirmPaymentView extends React.Component {
                     {formatCurrency(subTotal)}
                   </TableCell>
                 </TableRow>
-                <TableRow>
+                <TableRow key='serviceFee'>
                   <TableCell>
                     Service fee
                   </TableCell>
@@ -214,7 +218,7 @@ class ConfirmPaymentView extends React.Component {
                     {formatCurrency(serviceFee)}
                   </TableCell>
                 </TableRow>
-                <TableRow>
+                <TableRow  key='total'>
                   <TableCell>
                     YOUR TOTAL
                   </TableCell>
@@ -263,6 +267,8 @@ class ConfirmPaymentView extends React.Component {
                   alignItems='center'
                   justify='space-between'
                   wrap='nowrap'
+                  key={uuid.v4()}
+
                 >
                   <Grid container alignItems='center'>
                     <CreditCardIconType cardType={paymentOption.type} className={classes.creditCardIcon} />
@@ -296,7 +302,7 @@ class ConfirmPaymentView extends React.Component {
             <Button
               disabled={!paymentOptionSelected}
               className={classes.buyBtn}
-              onClick={this.handleTcketPayment}
+              onClick={this.purchaseTickets}
             >
               { processingPayment ? <CircularProgress color='inherit' /> : 'BUY' }
             </Button>

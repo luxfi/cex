@@ -64,6 +64,7 @@ class Index extends React.Component {
     } = this.props
 
     // handles prop change by updating related and autoplaymovies movies when the browser's back or forward button is clicked
+    // aa: shouldn't this be in Mount(), ssince it needs to be handled only once.  Also, when do we unsubscribe?
     window.onpopstate = () => {
       this.getUpdatedRelatedMovies(movieSlug)
     }
@@ -120,9 +121,7 @@ class Index extends React.Component {
   }
 
   render() {
-    const { classes, store } = this.props
-
-    const { router } = this.props
+    const { classes, store, router } = this.props
     const { video: movieSlug } = router.query
     const {
       movieStore,
@@ -133,6 +132,7 @@ class Index extends React.Component {
 
     const { nextMovieIndex } = this.state
 
+      // :aa ??
     if (!movieSlug) {
       return
     }
@@ -144,6 +144,7 @@ class Index extends React.Component {
       subscribers,
       reaction,
     } = trailerStore
+
     const movie = movieStore.getMovieBySlug(movieSlug)
     const autoPlay = autoPlaySet === 'true' || autoPlaySet === true
 
@@ -153,6 +154,8 @@ class Index extends React.Component {
     const relatedMoviesIds = relatedMoviesArray.map((relatedMovie) => this.getMovieIdFromMovieSlug(relatedMovie.trailer))
     const autoplayMoviesIds = autoplayMoviesArray.map((autoPlayMovie) => this.getMovieIdFromMovieSlug(autoPlayMovie.trailer))
 
+    const shareURL = `${window.location.origin}/ticketing/${movie.movieSlug}`
+    const sharePrompt = `I just bought tickets for ${movie.name}! Please watch it too!`
 
     const addToWatchlist = t => {
       userPortfolio.addToWatchlist(t)
@@ -197,7 +200,7 @@ class Index extends React.Component {
                       <Divider />
                     </Box>
                   </Box>
-                  <Share classes={classes} shareUrl={`http://localhost:3000/film/${movie.movieSlug}`} message={movie.longDescription} />
+                  <Share classes={classes} shareUrl={shareURL} message={sharePrompt} emailToCredit={store.userStore.currentUser.email}/>
                   <Link href={`/film/${movie.movieSlug}`}>
                     <a className={classes.linkBackLink}>
                       <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Movie Page</Typography></Button>
