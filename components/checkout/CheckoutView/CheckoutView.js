@@ -21,7 +21,7 @@ import React from 'react'
 
 import { formatCurrency, slugFromPath } from '../../../util'
 
-import styles from './checkout.style.js'
+import styles from './checkout.style'
 
 @inject('store')
 @observer
@@ -53,6 +53,7 @@ class CheckoutView extends React.Component {
         ticketCheckoutStore: {
           subTotal,
           tickets,
+          ticketsCount,
         },
       },
     } = this.props
@@ -126,7 +127,7 @@ class CheckoutView extends React.Component {
           </Box>
           <Grid>
             <Link href='/pickSeats' as={`/pickSeats/${slug}?venueId=${venueId}&showtimeId=${showtimeId}${refString}`}>
-              <Button className={classes.nextButton}>PICK SEATS</Button>
+              <Button disabled={ticketsCount <= 0} className={classes.nextButton}>PICK SEATS</Button>
             </Link>
           </Grid>
         </Grid>
