@@ -194,15 +194,10 @@ class Index extends React.Component {
             </Button>
             <Link href="/ticketing" as={`/ticketing/${movie.movieSlug}`}>
               <Button
-                variant="outlined"
-                color="secondary"
+                variant="contained"
                 className={classes.movieButton}
               >
-                <Typography
-                  variant="subtitle1"
-                >
-                  Buy Tickets
-                </Typography>
+                Buy Tickets
               </Button>
             </Link>
           </div>
