@@ -6,6 +6,11 @@ export default () => ({
     flexGrow: 1,
   },
 
+  aTags: {
+    color: '#fff',
+    textDecoration: 'none',
+  },
+
   darkerBg: {
     background: '#222',
   },

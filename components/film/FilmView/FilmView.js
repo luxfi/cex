@@ -111,6 +111,29 @@ class Index extends React.Component {
     }
   }
 
+  renderAddToPlaylistButton(movie) {
+    const { store: { userPortfolio }, classes } = this.props
+    const { watchlist } = userPortfolio
+    const obj = (watchlist.includes(movie.ticker)) ? {
+      func: () => userPortfolio.removeFromWatchlist(movie.ticker),
+      buttonText: 'Remove from watchlist',
+    } : {
+      func: () => userPortfolio.addToWatchlist(movie.ticker),
+      buttonText: 'Add to watchlist',
+    }
+
+    return (
+      <Button
+        rel='noopener noreferrer'
+        variant='contained'
+        className={classes.movieButton}
+        onClick={() => obj.func()}
+      >
+        {obj.buttonText}
+      </Button>
+    )
+  }
+
   renderInvestButton(className, movie, text, onClick) {
     return (
       <Button
@@ -146,7 +169,7 @@ class Index extends React.Component {
     )
   }
 
-  renderAboutMain(classes, movie, addToWatchList) {
+  renderAboutMain(classes, movie) {
     return (
       <Grid container>
         <Grid item xs={12} md={9}>
@@ -184,6 +207,7 @@ class Index extends React.Component {
             >
               Invest
             </Button>
+            {this.renderAddToPlaylistButton(movie)}
             <Button
               rel="noopener noreferrer"
               variant="contained"
@@ -433,10 +457,6 @@ class Index extends React.Component {
     // Load necessary user data
     const maxSell = userPortfolio.getMaxSell(movie.ticker)
 
-    const addToWatchlist = t => {
-      userPortfolio.addToWatchlist(t)
-    }
-
     return (
       <>
         {this.state.selectedTab === "about" &&
@@ -448,7 +468,7 @@ class Index extends React.Component {
               this.state.selectedTab,
               movie
             )}
-            {this.renderAboutMain(classes, movie, addToWatchlist)}
+            {this.renderAboutMain(classes, movie)}
             {this.renderAboutMore(classes, movie)}
           </article>
         }
