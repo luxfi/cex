@@ -1,5 +1,7 @@
 import {
-  Dialog, IconButton, Typography,
+  Dialog,
+  IconButton,
+  Typography,
 } from '@material-ui/core'
 import MuiDialogContent from '@material-ui/core/DialogContent'
 import MuiDialogTitle from '@material-ui/core/DialogTitle'
