@@ -9,7 +9,7 @@ export default class TicketCheckoutStore {
 
   @observable tickets = []
 
-  @observable ticketsCount = 1
+  @observable ticketsCount = 0
 
   @observable ticketTransactions = []
 
@@ -17,7 +17,6 @@ export default class TicketCheckoutStore {
 
   constructor() {
     this.tickets = tickets
-    this.subTotal = tickets[0].price
 
     const ticketTransactions = JSON.parse(localStorage.getItem('ticketTransactions'))
     if (ticketTransactions && ticketTransactions.length) {
@@ -38,7 +37,6 @@ export default class TicketCheckoutStore {
   @action removeTicket(categoryName) {
     const selectedTicket = this.tickets.find((ticket) => ticket.category === categoryName)
     if (selectedTicket) {
-      if (selectedTicket.category === 'Adult' && selectedTicket.quantity === 1) return
       const currentQuantity = selectedTicket.quantity
       selectedTicket.quantity = currentQuantity - 1
       this.subTotal -= selectedTicket.price

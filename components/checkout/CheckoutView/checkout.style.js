@@ -76,6 +76,10 @@ export default () => ({
     fontWeight: 700,
     backgroundColor: '#FBC43E',
     color: '#090909',
+    '&:disabled': {
+      backgroundColor: '#777777',
+      color: '#4a4a4a',
+    },
   },
   subTotalContainer: {
     padding: '60px 20px',

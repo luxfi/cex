@@ -7,7 +7,7 @@ export default class PickSeatStore {
 
   @observable selectedSeats = []
 
-  @observable totalSeatsCount
+  @observable totalSeatsCount = 0
 
   constructor() {
     this.seats = seats
@@ -15,6 +15,7 @@ export default class PickSeatStore {
   }
 
   @action toggleSeatSelection(seatName, index) {
+
     this.seats[index].forEach((seat) => {
       if (seat.name === seatName) {
         seat.selected = !seat.selected

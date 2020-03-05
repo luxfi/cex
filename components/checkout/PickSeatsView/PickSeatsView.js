@@ -19,8 +19,10 @@ import { formatCurrency, slugFromPath } from '../../../util'
 
 import { AuthModal, CustomDialog } from '../../app'
 
-import styles from './pickSeats.style.js'
+import styles from './pickSeats.style'
 
+@withRouter
+@withStyles(styles)
 @inject('store')
 @observer
 class PickSeatsView extends React.Component {
@@ -112,10 +114,9 @@ class PickSeatsView extends React.Component {
     const showtimeId = urlParams.get('showtimeId')
     const venueId = urlParams.get('venueId')
     const refHash = urlParams.get('ref')
-  
 
     if (!loggedIn) {
-      return router.push('/login?redirect=true')
+      return uiStore.openAuthModal()
     }
 
     const refString = (refHash && refHash.length) ? `&ref=${refHash}` : ''
@@ -282,7 +283,7 @@ class PickSeatsView extends React.Component {
             <Grid>
               <Button
                 className={classes.nextButton}
-                disabled={totalSeatsCount < ticketsCount}
+                disabled={totalSeatsCount < ticketsCount || ticketsCount <= 0}
                 onClick={this.gotoNextPage}
               >
                 NEXT
@@ -295,4 +296,4 @@ class PickSeatsView extends React.Component {
   }
 }
 
-export default withRouter(withStyles(styles)(PickSeatsView))
+export default PickSeatsView
