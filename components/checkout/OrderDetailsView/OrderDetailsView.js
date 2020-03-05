@@ -19,14 +19,14 @@ import PrintIcon from '@material-ui/icons/Print'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import ViewListIcon from '@material-ui/icons/ViewList'
 
-
 import classNames from 'classnames'
+import hashSum from 'hash-sum'
 import { inject, observer } from 'mobx-react'
 import moment from 'moment'
-import hashSum from 'hash-sum'
 import Link from 'next/link'
 import { withRouter } from 'next/router'
 import React from 'react'
+import QRCode from 'qrcode.react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import {
   FacebookShareButton,
@@ -146,7 +146,6 @@ class OrderDetailsView extends React.Component {
     const movieDate = moment(movieShowtimeDetails.localShowtimeStart).format('Do MMM')
     const movieTime = moment(movieShowtimeDetails.localShowtimeStart).format('LT')
     const qrCodeData = encodeURI(ticketUrl) // ideally, this should be the ticket information
-    const qrCodeUrl = `https://chart.googleapis.com/chart?cht=qr&chl=${qrCodeData}&chs=300x300&choe=UTF-8`
 
     const { copyURL } = this.state
 
@@ -161,7 +160,7 @@ class OrderDetailsView extends React.Component {
             <Grid item>
               <Box className={classNames(classes.lighterBg, classes.padding20, classes.movieDetails)}>
                 <img src={movie.posterImg} alt={`${movie.name} poster`} />
-                <img src={qrCodeUrl} alt={`${movie.name} qr code`} />
+                <QRCode value={qrCodeData} size={250} level='M' includeMargin />
                 <Typography variant='h4'>{movie.name}</Typography>
               </Box>
             </Grid>
