@@ -1,55 +1,19 @@
-import React from "react"
-import { SignUpForm } from "../components/signup"
-import { inject, observer } from "mobx-react"
+import { inject, observer } from 'mobx-react'
+import React from 'react'
 
-import { googlePageView } from "../util"
+import { SignupView } from '../components/signup'
+import { googlePageView } from '../util'
 
-@inject("store")
+@inject('store')
 @observer
 class SignUp extends React.Component {
   componentDidMount() {
     googlePageView()
   }
-  
+
   render() {
-    const { userStore, uiStore } = this.props.store
-    const {
-      email,
-      password,
-      passwordConfirm,
-      over18,
-      validEmail,
-      validPassword,
-      firstName,
-      lastName,
-      validFirstName,
-      validLastName,
-      isValidSignUp
-    } = userStore
-    const setErrorMessage = message => {
-        uiStore.setErrorMessage(message)
-    }
     return (
-      <SignUpForm
-        setValue={(key, val) => {
-          userStore.setValue(key, val)
-        }}
-        email={email}
-        password={password}
-        passwordConfirm={passwordConfirm}
-        over18={over18}
-        isValidSignUp={isValidSignUp}
-        signUp={(onSuccess, onError) => {
-          userStore.signUp(onSuccess, onError)
-        }}
-        validEmail={validEmail}
-        validPassword={validPassword}
-        firstName={firstName}
-        lastName={lastName}
-        validFirstName={validFirstName}
-        validLastName={validLastName}
-        setErrorMessage={setErrorMessage}
-      />
+      <SignupView />
     )
   }
 }

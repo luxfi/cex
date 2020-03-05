@@ -22,7 +22,9 @@ import {
   TwitterShareButton,
 } from 'react-share'
 
-const ShareModal = ({ classes, shareUrl, message }) => {
+import hashSum from 'hash-sum'
+
+const ShareModal = ({ classes, shareUrl, message, emailToCredit }) => {
   const [open, setOpen] = useState(false)
   const anchorRef = useRef(null)
 
@@ -54,6 +56,9 @@ const ShareModal = ({ classes, shareUrl, message }) => {
     prevOpen.current = open
   }, [open])
 
+
+  const referralURL = `${shareUrl}?ref=${hashSum(emailToCredit)}`
+
   return (
     <div style={{ display: 'inline-block' }}>
       <Button
@@ -77,22 +82,22 @@ const ShareModal = ({ classes, shareUrl, message }) => {
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id='menu-list-grow' onKeyDown={handleListKeyDown}>
                     <MenuItem onClick={handleClose}>
-                        <FacebookShareButton url={shareUrl} quote={message}>
+                        <FacebookShareButton url={referralURL} quote={message}>
                             <FacebookIcon />
                         </FacebookShareButton>
                     </MenuItem>
                     <MenuItem onClick={handleClose}>
-                        <TwitterShareButton url={shareUrl} quote={message}>
+                        <TwitterShareButton url={referralURL} quote={message}>
                             <TwitterIcon />
                         </TwitterShareButton>
                     </MenuItem>
                     <MenuItem onClick={handleClose}>
-                        <LinkedinShareButton url={shareUrl} quote={message}>
+                        <LinkedinShareButton url={referralURL} quote={message}>
                             <LinkedInIcon />
                         </LinkedinShareButton>
                     </MenuItem>
                     <MenuItem onClick={handleClose}>
-                        <EmailShareButton url={shareUrl} quote={message}>
+                        <EmailShareButton url={referralURL} quote={message}>
                             <EmailIcon />
                         </EmailShareButton>
                     </MenuItem>
