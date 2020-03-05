@@ -15,11 +15,10 @@ import {
 } from '@material-ui/core'
 
 import {
-  ShareIcon,
+  Share,
   Email,
-  FacebookIcon,
-  LinkedInIcon,
-  TwitterIcon,
+  Facebook,
+  Twitter,
 } from '@material-ui/icons'
 
 import {
@@ -87,18 +86,13 @@ const ShareModal = ({ classes, shareUrl, message, emailToCredit }) => {
               <MenuList autoFocusItem={open} id='menu-list-grow' onKeyDown={handleListKeyDown}>
                 <MenuItem onClick={handleClose}>
                   <FacebookShareButton url={referralURL} quote={message}>
-                    <FacebookIcon />
+                    <Facebook />
                   </FacebookShareButton>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
                   <TwitterShareButton url={referralURL} quote={message}>
-                    <TwitterIcon />
+                    <Twitter />
                   </TwitterShareButton>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <LinkedinShareButton url={referralURL} quote={message}>
-                    <LinkedInIcon />
-                  </LinkedinShareButton>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
                   <EmailShareButton url={referralURL} quote={message}>
