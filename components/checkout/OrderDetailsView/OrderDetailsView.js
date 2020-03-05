@@ -19,14 +19,14 @@ import PrintIcon from '@material-ui/icons/Print'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import ViewListIcon from '@material-ui/icons/ViewList'
 
-
 import classNames from 'classnames'
+import hashSum from 'hash-sum'
 import { inject, observer } from 'mobx-react'
 import moment from 'moment'
-import hashSum from 'hash-sum'
 import Link from 'next/link'
 import { withRouter } from 'next/router'
 import React from 'react'
+import QRCode from 'qrcode.react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import {
   FacebookShareButton,
@@ -125,9 +125,8 @@ class OrderDetailsView extends React.Component {
     const slug = router.query.slug || slugFromPath()
     const ticketDetails = ticketCheckoutStore.currentPurchasedTicket || {}
     const movie = movieStore.getMovieBySlug(slug)
-    const urlParams = new URLSearchParams(window.location.search)
 
-    
+    const urlParams = new URLSearchParams(window.location.search)
     const refHash = hashSum(userStore.email)
     const shareUrl = `${window.location.origin}/ticketing/${slug}?ref=${refHash}`
     const ticketUrl = `${window.location.origin}/orderDetails/${slug}?ticketId=${ticketDetails.ticketId}&ref=${refHash}`
@@ -146,6 +145,7 @@ class OrderDetailsView extends React.Component {
     const movieShowtimeDetails = this.getShowtime(ticketDetails.showtimeId) || {}
     const movieDate = moment(movieShowtimeDetails.localShowtimeStart).format('Do MMM')
     const movieTime = moment(movieShowtimeDetails.localShowtimeStart).format('LT')
+    const qrCodeData = encodeURI(ticketUrl) // ideally, this should be the ticket information
 
     const { copyURL } = this.state
 
@@ -160,6 +160,7 @@ class OrderDetailsView extends React.Component {
             <Grid item>
               <Box className={classNames(classes.lighterBg, classes.padding20, classes.movieDetails)}>
                 <img src={movie.posterImg} alt={`${movie.name} poster`} />
+                <QRCode value={qrCodeData} size={250} level='M' includeMargin />
                 <Typography variant='h4'>{movie.name}</Typography>
               </Box>
             </Grid>
@@ -250,7 +251,7 @@ class OrderDetailsView extends React.Component {
                   </FacebookShareButton>
                 </ButtonBase>
                 <ButtonBase className={classes.sidebarButton}>
-                  <TwitterShareButton url={shareUrl} quote={shareMessage}>
+                  <TwitterShareButton url={shareUrl} title={shareMessage}>
                     <TwitterIcon fontSize='large' />
                     <Typography>Twitter</Typography>
                   </TwitterShareButton>
