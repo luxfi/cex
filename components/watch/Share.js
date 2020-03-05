@@ -1,12 +1,12 @@
-import React, { 
-  useEffect, 
-  useRef, 
+import React, {
+  useEffect,
+  useRef,
   useState
  } from 'react'
 
-import { 
+import {
   Button,
-  ClickAwayListener, 
+  ClickAwayListener,
   Grow,
   MenuItem,
   MenuList,
@@ -72,7 +72,7 @@ const ShareModal = ({ classes, shareUrl, message, emailToCredit }) => {
         variant='contained'
         size='small'
         className={classes.shareButton}
-        startIcon={<ShareIcon />}
+        startIcon={<Share />}
         onClick={handleToggle}
       >
         Share
