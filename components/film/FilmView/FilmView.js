@@ -207,7 +207,7 @@ class Index extends React.Component {
             >
               Invest
             </Button>
-          {this.renderAddToPlaylistButton(movie)}
+            {this.renderAddToPlaylistButton(movie)}
             <Button
               rel="noopener noreferrer"
               variant="contained"
