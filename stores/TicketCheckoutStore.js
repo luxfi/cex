@@ -64,7 +64,8 @@ export default class TicketCheckoutStore {
       ticketId,
       numberOfSeats,
       movieSlug,
-      refHash
+      date: new Date(),
+      refHash,
     }
 
     this.ticketTransactions.push(transaction)

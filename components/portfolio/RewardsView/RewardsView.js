@@ -221,6 +221,11 @@ const rewards = [
 
 const getMyReferals = (email) => {
   const ticketTransactions = JSON.parse(localStorage.getItem('ticketTransactions'))
+
+  if (ticketTransactions == null) {
+    return 0
+  }
+
   const myHashSum = hashSum(email)
   let count = 0
   ticketTransactions.forEach((t) => {

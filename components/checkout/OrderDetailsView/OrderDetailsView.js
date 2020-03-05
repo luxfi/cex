@@ -23,6 +23,7 @@ import ViewListIcon from '@material-ui/icons/ViewList'
 import classNames from 'classnames'
 import { inject, observer } from 'mobx-react'
 import moment from 'moment'
+import hashSum from 'hash-sum'
 import Link from 'next/link'
 import { withRouter } from 'next/router'
 import React from 'react'
@@ -72,7 +73,8 @@ class OrderDetailsView extends React.Component {
     const ticketDetails = ticketCheckoutStore.isValidPurchasedTicket(ticketId)
 
     if (!ticketDetails || ticketDetails.movieSlug !== slug) {
-      return router.push('/browse', '/browse')
+      router.push('/browse', '/browse')
+      return
     }
 
     ticketingStore.selectVenue(ticketDetails.venueId)
@@ -123,9 +125,13 @@ class OrderDetailsView extends React.Component {
     const slug = router.query.slug || slugFromPath()
     const ticketDetails = ticketCheckoutStore.currentPurchasedTicket || {}
     const movie = movieStore.getMovieBySlug(slug)
-    const shareUrl = `${window.location.origin}/ticketing/${slug}`
-    const ticketUrl = `${window.location.origin}/orderDetails/${slug}?ticketId=${ticketDetails.ticketId}`
-    const shareMessage = 'message'
+    const urlParams = new URLSearchParams(window.location.search)
+
+    
+    const refHash = hashSum(userStore.email)
+    const shareUrl = `${window.location.origin}/ticketing/${slug}?ref=${refHash}`
+    const ticketUrl = `${window.location.origin}/orderDetails/${slug}?ticketId=${ticketDetails.ticketId}&ref=${refHash}`
+    const shareMessage = `I just bought tickets for ${movie.name}! Please watch it too!`
     const movieVenue = ticketingStore.selectedVenue
     const {
       venue: {
@@ -213,18 +219,22 @@ class OrderDetailsView extends React.Component {
                 </ButtonBase>
               </Box>
             </Grid>
-            {/* <Grid item>
+            <Grid item>
               <Box className={classNames(classes.lighterBg, classes.borderBottom)}>
-                <ButtonBase className={classes.sidebarButton}>
-                  <ViewListIcon fontSize='large' />
-                  <Typography>View order</Typography>
-                </ButtonBase>
-                <ButtonBase className={classes.sidebarButton}>
+                <Link href='/account/ticketOrders'>
+                  <a className={classes.aTags}>
+                    <ButtonBase className={classes.sidebarButton}>
+                      <ViewListIcon fontSize='large' />
+                      <Typography>View orders</Typography>
+                    </ButtonBase>
+                  </a>
+                </Link>
+                {/* <ButtonBase className={classes.sidebarButton}>
                   <CancelIcon fontSize='large' />
                   <Typography>Cancel</Typography>
-                </ButtonBase>
+                </ButtonBase> */}
               </Box>
-            </Grid> */}
+            </Grid>
             <Grid item>
               <Box className={classNames(classes.lighterBg, classes.borderBottom)}>
                 <CopyToClipboard text={shareUrl} onCopy={this.onCopied}>
