@@ -83,6 +83,8 @@ class ConfirmPaymentView extends React.Component {
     const ticketId = faker.random.number()
     const movieSlug = router.query.slug || slugFromPath()
 
+    const refParamString = (refHash && refHash.length) ? `&ref=${refHash}` : ''
+
     this.setState({
       processingPayment: true,
     })
@@ -104,7 +106,7 @@ class ConfirmPaymentView extends React.Component {
           userStore.removeBalance(total)
 
           this.setState({ transactionStatus: 'successful' }, () => {
-            router.push('/orderDetails', `/orderDetails/${movieSlug}?ticketId=${ticketId}`)
+            router.push('/orderDetails', `/orderDetails/${movieSlug}?ticketId=${ticketId}${refParamString}`)
           })
         } else {
           this.setState({ transactionStatus: 'failed' })
@@ -114,7 +116,7 @@ class ConfirmPaymentView extends React.Component {
           ticketCheckoutStore.addTransaction(venueId, showtimeId, transactionId, ticketId, numberOfSeats, movieSlug, refHash)
 
           this.setState({ transactionStatus: 'successful' }, () => {
-            router.push('/orderDetails', `/orderDetails/${movieSlug}?ticketId=${ticketId}`)
+            router.push('/orderDetails', `/orderDetails/${movieSlug}?ticketId=${ticketId}${refParamString}`)
           })
         } else {
           this.setState({ transactionStatus: 'failed' })

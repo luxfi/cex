@@ -72,7 +72,6 @@ class TicketingView extends React.Component {
       classes,
       router,
     } = this.props
-    const { store: { ticketingStore } } = this.props
 
     const urlParams = new URLSearchParams(window.location.search)
     const refHash = urlParams.get('ref')
@@ -144,6 +143,8 @@ class TicketingView extends React.Component {
     const slug = router.query.slug || slugFromPath()
 
     const movie = movieStore.getMovieBySlug(slug)
+
+    console.log("MOVIE " + movie + " slug " + slug)
 
     return (
       <Box className={classes.outerContainer}>
