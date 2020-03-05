@@ -28,8 +28,6 @@ import {
   TwitterShareButton,
 } from 'react-share'
 
-import ShareIcon from '@material-ui/icons/Share'
-
 import hashSum from 'hash-sum'
 
 const ShareModal = ({ classes, shareUrl, message, emailToCredit }) => {
