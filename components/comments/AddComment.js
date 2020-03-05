@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import { inject, observer } from 'mobx-react'
+import { AuthModal } from '../app'
 
 import { Avatar, Box, Button, TextField } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
 
 import { withRouter } from 'next/router'
-
-import { isAuthenticated } from '../../util/helpers'
 
 import styles from './styles/comments.style'
 
@@ -17,7 +16,6 @@ const AddComment = inject('store')(observer(({
   identifierId,
   comment,
   store,
-  router,
 }) => {
   const useMainStyles = makeStyles(styles)
   const classes = useMainStyles()
@@ -26,7 +24,12 @@ const AddComment = inject('store')(observer(({
     showButtons: false,
   })
 
-  const { commentStore, userStore: { loggedIn, currentUser, id } } = store
+  const {
+    commentStore,
+    userStore: { loggedIn, currentUser, id },
+    uiStore: { authModalOpen, tabIndexValue },
+    uiStore,
+  } = store
 
   const handleChange = (event) => {
     const { target: { value } } = event
@@ -42,9 +45,12 @@ const AddComment = inject('store')(observer(({
   }
 
   const handleFocus = () => {
-    if (isAuthenticated(loggedIn, `/watch?video=${router.query.video}`, router)) {
-      setState({ ...state, showButtons: true })
+    if (!loggedIn) {
+      uiStore.openAuthModal()
+      return
     }
+
+    setState({ ...state, showButtons: true })
   }
 
   const handleClick = () => {
@@ -59,45 +65,48 @@ const AddComment = inject('store')(observer(({
   }
 
   return (
-    <Box className={classNames('add-comment', classes.comment)}>
-      <Avatar src='http://placehold.it/32x32' className={classes.commentImage} />
-      <Box className={classes.commentInputArea}>
-        <TextField
-          value={state.comment}
-          onFocus={handleFocus}
-          InputProps={{
-            className: classes.addCommentInput,
-          }}
-          rows={numOfRows || 3}
-          placeholder='add a commment'
-          multiline
-          fullWidth
-          onChange={handleChange}
-        />
-        {
-          (state.showButtons || comment) && (
-          <Box className={classes.submitButtonContainer}>
-            <Button
-              variant='outlined'
-              size='small'
-              onClick={handleCancel}
-              style={{ marginRight: 10 }}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant='contained'
-              disabled={!(state.comment.trim())}
-              size='small'
-              className={classes.commentButton}
-              onClick={handleClick}
-            >
-              Post Comment
-            </Button>
-          </Box>)
-        }
+    <>
+      <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
+      <Box className={classNames('add-comment', classes.comment)}>
+        <Avatar src='http://placehold.it/32x32' className={classes.commentImage} />
+        <Box className={classes.commentInputArea}>
+          <TextField
+            value={state.comment}
+            onClick={handleFocus}
+            InputProps={{
+              className: classes.addCommentInput,
+            }}
+            rows={numOfRows || 3}
+            placeholder='add a commment'
+            multiline
+            fullWidth
+            onChange={handleChange}
+          />
+          {
+            (state.showButtons || comment) && (
+            <Box className={classes.submitButtonContainer}>
+              <Button
+                variant='outlined'
+                size='small'
+                onClick={handleCancel}
+                style={{ marginRight: 10 }}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant='contained'
+                disabled={!(state.comment.trim())}
+                size='small'
+                className={classes.commentButton}
+                onClick={handleClick}
+              >
+                Post Comment
+              </Button>
+            </Box>)
+          }
+        </Box>
       </Box>
-    </Box>
+    </>
   )
 }))
 

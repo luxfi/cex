@@ -28,7 +28,7 @@ class YoutubePlayer extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { autoplayMovies, videoId, autoPlay } = this.props
+    const { autoplayMovies, videoId, autoPlay, pauseVideo } = this.props
     // If autoplay is turned off
     if (!autoPlay && prevProps.videoId !== videoId) {
       this.setState({
@@ -43,6 +43,16 @@ class YoutubePlayer extends Component {
       this.setState({
         autoplayMovies,
       }, () => this.playNewVideo(autoPlay, this.player, videoId, autoplayMovies))
+    }
+
+    if (pauseVideo) {
+      this.player.pauseVideo()
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.player) {
+      this.player.destroy()
     }
   }
 

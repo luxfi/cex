@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { inject, observer } from 'mobx-react'
 import Router, { withRouter } from 'next/router'
+import { AuthModal } from '../app'
 
 import styles from './style.js'
 
@@ -31,8 +32,6 @@ import ShowingNext from './ShowingNext'
 import VideoDescription from './VideoDescription'
 import YoutubePlayer from './YoutubePlayer'
 import Share from './Share'
-
-import { isAuthenticated } from '../../util/helpers'
 
 import { formatNumber, renderDate } from './utils'
 
@@ -64,7 +63,6 @@ class Index extends React.Component {
     } = this.props
 
     // handles prop change by updating related and autoplaymovies movies when the browser's back or forward button is clicked
-    // aa: shouldn't this be in Mount(), ssince it needs to be handled only once.  Also, when do we unsubscribe?
     window.onpopstate = () => {
       this.getUpdatedRelatedMovies(movieSlug)
     }
@@ -109,15 +107,19 @@ class Index extends React.Component {
 
   handleReactionClick = (movie, type) => {
     const {
-      router,
       store: {
+        uiStore,
         trailerStore,
         userStore: { loggedIn, currentUser, id },
       },
     } = this.props
-    if (isAuthenticated(loggedIn, `/watch?video=${router.query.video}`, router)) {
-      trailerStore.setMovieReaction(movie, id, type)
+
+    if (!loggedIn) {
+      uiStore.openAuthModal()
+      return
     }
+
+    trailerStore.setMovieReaction(movie, id, type)
   }
 
   render() {
@@ -128,11 +130,12 @@ class Index extends React.Component {
       userStore,
       userPortfolio,
       trailerStore,
+      uiStore: { authModalOpen, tabIndexValue },
     } = store
 
     const { nextMovieIndex } = this.state
 
-      // :aa ??
+    // :aa ??
     if (!movieSlug) {
       return
     }
@@ -164,6 +167,7 @@ class Index extends React.Component {
     // eslint-disable-next-line consistent-return
     return (
       <>
+        <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
         <Box
           className="MuiContainer-maxWidthXl"
           style={{ padding: '50px 20px' }}
@@ -179,6 +183,7 @@ class Index extends React.Component {
                 autoplayMovies={autoplayMoviesIds}
                 handleVideoChange={this.handleVideoChange}
                 key={autoplayMovies}
+                pauseVideo={authModalOpen}
               />
               }
             </Box>
@@ -200,7 +205,7 @@ class Index extends React.Component {
                       <Divider />
                     </Box>
                   </Box>
-                  <Share classes={classes} shareUrl={shareURL} message={sharePrompt} emailToCredit={store.userStore.currentUser.email}/>
+                  <Share classes={classes} shareUrl={shareURL} message={sharePrompt} emailToCredit={userStore.email}/>
                   <Link href={`/film/${movie.movieSlug}`}>
                     <a className={classes.linkBackLink}>
                       <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Movie Page</Typography></Button>
