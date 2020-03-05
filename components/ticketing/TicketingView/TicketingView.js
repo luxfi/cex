@@ -67,32 +67,36 @@ class TicketingView extends React.Component {
     ticketingStore.searchLocation(event.target.value)
   }
 
-  renderVenue = (seleectedVenue) => {
+  renderVenue = (selectedVenue) => {
     const {
       classes,
       router,
     } = this.props
+    const { store: { ticketingStore } } = this.props
+
+    const urlParams = new URLSearchParams(window.location.search)
+    const refHash = urlParams.get('ref')
     const slug = router.query.slug || slugFromPath()
 
     return (
-      <Box key={seleectedVenue.venue.id} className={classes.movieVenue}>
+      <Box key={selectedVenue.venue.id} className={classes.movieVenue}>
         <Grid>
           <Grid className={classes.panelBody} container alignContent='flex-start'>
             <Box className={classes.movieVenueIconContainer}>
               <img
                 className={classes.movieVenueIcon}
-                src={seleectedVenue.venue.logoIcon}
+                src={selectedVenue.venue.logoIcon}
                 alt='Logo'
               />
             </Box>
             <Grid className={classes.movieVenueContainer}>
               <Typography variant='h6' className={classes.movieVenueTitleLink}>
-                {seleectedVenue.venue.name}
+                {selectedVenue.venue.name}
               </Typography>
               <Box component='span'>{
-                `${seleectedVenue.venue.address.line}, 
-                ${seleectedVenue.venue.address.city}, 
-                ${seleectedVenue.venue.address.state}`
+                `${selectedVenue.venue.address.line}, 
+                ${selectedVenue.venue.address.city}, 
+                ${selectedVenue.venue.address.state}`
                 }</Box>
             </Grid>
           </Grid>
@@ -101,14 +105,16 @@ class TicketingView extends React.Component {
           <Box className={classes.formatContainer}><Typography variant='h5' className={classes.showtimeTitle}>STANDARD FORMAT</Typography></Box>
           <Grid container component='ul' alignContent='space-between' alignItems='center'>
             {
-              seleectedVenue.showtimeDetails.length
-                ? seleectedVenue.showtimeDetails.map((showtimeDetail) => (
-                  <li key={showtimeDetail.showtimeId}>
-                    <Link href='/checkout' as={`/checkout/${slug}?venueId=${seleectedVenue.venue.id}&showtimeId=${showtimeDetail.showtimeId}`}>
-                      <Button className={classes.btnShowtime}>{moment(showtimeDetail.localShowtimeStart).format('hh:mm A')}</Button>
-                    </Link>
-                  </li>
-                ))
+              selectedVenue.showtimeDetails.length
+                ? selectedVenue.showtimeDetails.map((showtimeDetail) => {
+                  const refString = (refHash && refHash.length) ? `&ref=${refHash}` : ''
+                  return (
+                    <li key={showtimeDetail.showtimeId}>
+                      <Link href='/checkout' as={`/checkout/${slug}?venueId=${selectedVenue.venue.id}&showtimeId=${showtimeDetail.showtimeId}${refString}`}>
+                        <Button className={classes.btnShowtime}>{moment(showtimeDetail.localShowtimeStart).format('hh:mm A')}</Button>
+                      </Link>
+                    </li>
+                )})
                 : null
             }
           </Grid>
@@ -279,7 +285,7 @@ class TicketingView extends React.Component {
           <Box>
             {
               movieVenues.length
-                ? movieVenues.map((seleectedVenue) => this.renderVenue(seleectedVenue))
+                ? movieVenues.map((selectedVenue) => this.renderVenue(selectedVenue))
                 : (<Box className={classes.panelBody}>
                       Hmm... we couldn&apos;t find any showtimes for this date and location.
                     </Box>

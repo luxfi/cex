@@ -21,8 +21,10 @@ function Error({ statusCode }) {
   if (statusCode === 404) {
     let path = location.pathname.split('/')[1]
     if (dynamicRoutes.indexOf(path) !== -1) {
-      return Router.push('/'+path, location.pathname+location.search)
+      Router.push('/'+path, location.pathname+location.search)
+      return null
     }
+
   }
 
   return (
