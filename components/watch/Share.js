@@ -16,7 +16,7 @@ import {
 
 import {
   ShareIcon,
-  EmailIcon,
+  Email,
   FacebookIcon,
   LinkedInIcon,
   TwitterIcon,
@@ -102,7 +102,7 @@ const ShareModal = ({ classes, shareUrl, message, emailToCredit }) => {
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
                   <EmailShareButton url={referralURL} quote={message}>
-                    <EmailIcon />
+                    <Email />
                   </EmailShareButton>
                 </MenuItem>
               </MenuList>
