@@ -10,6 +10,7 @@ import { NewsFeedView } from '../../components/portfolio'
 import { googlePageView } from '../../util'
 import styles from '../../styles/pages/portfolio.style.js'
 import portfolioTabs from '../../settings/portfolioTabs'
+import { withOnDemandAuth } from '../../util/HOC'
 
 @inject("store")
 @observer
@@ -34,4 +35,4 @@ class Newsfeed extends React.Component {
   }
 }
 
-export default withStyles(styles)(Newsfeed)
+export default withOnDemandAuth(withStyles(styles)(Newsfeed))
