@@ -170,6 +170,7 @@ class Index extends React.Component {
   }
 
   renderAboutMain(classes, movie) {
+    const { store: { userPortfolio } } = this.props
     return (
       <Grid container>
         <Grid item xs={12} md={9}>
