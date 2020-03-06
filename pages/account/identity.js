@@ -9,6 +9,7 @@ import Link from "@material-ui/core/Link"
 import { AccountSection, KYCForm } from '../../components/account'
 import { CustomLink, TabbedNav } from '../../components/app'
 import { googlePageView } from '../../util'
+import { withOnDemandAuth } from '../../util/HOC'
 
 import AccountTabs from '../../settings/accountTabs'
 
@@ -108,4 +109,5 @@ class KYC extends React.Component {
   }
 }
 
-export default KYC
+export default withOnDemandAuth(KYC)
+
