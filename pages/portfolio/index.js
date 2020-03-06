@@ -10,6 +10,7 @@ import { googlePageView } from "../../util"
 
 import styles from '../../styles/pages/portfolio.style.js'
 import portfolioTabs from '../../settings/portfolioTabs'
+import { withOnDemandAuth } from '../../util/HOC'
 
 const isServer = typeof window === "undefined"
 
@@ -73,4 +74,4 @@ class Portfolio extends React.Component {
   }
 }
 
-export default withStyles(styles)(Portfolio)
+export default withOnDemandAuth(withStyles(styles)(Portfolio))

@@ -8,6 +8,7 @@ import { TabbedNav } from '../../components/app'
 
 import { googlePageView } from '../../util'
 import AccountTabs from '../../settings/accountTabs'
+import { withOnDemandAuth } from '../../util/HOC'
 
 @inject("store")
 @observer
@@ -59,4 +60,4 @@ class Documents extends React.Component {
   }
 }
 
-export default Documents
+export default withOnDemandAuth(Documents)

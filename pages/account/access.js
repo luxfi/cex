@@ -1,18 +1,19 @@
-import React from 'react'
-import { inject, observer } from 'mobx-react'
+import { Container, Typography } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-import { Container, Typography, } from '@material-ui/core'
+import { inject, observer } from 'mobx-react'
+import React from 'react'
 
-import {  AccountSection } from '../../components/account'
+import { AccountSection } from '../../components/account'
 import { TabbedNav } from '../../components/app'
 import { APIAccessView } from '../../components/investor'
 
-import { googlePageView } from '../../util'
 import AccountTabs from '../../settings/accountTabs'
-
 import styles from '../../styles/pages/investor.style.js'
+import { googlePageView } from '../../util'
+import { withOnDemandAuth } from '../../util/HOC'
 
-@inject("store")
+
+@inject('store')
 @observer
 class Access extends React.Component {
   componentDidMount() {
@@ -24,7 +25,7 @@ class Access extends React.Component {
     const { userStore } = store
 
     return (
-      <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
+      <Container maxWidth='lg' style={{ marginTop: '70px', marginBottom: '30px' }}>
         <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
           <TabbedNav tabs={AccountTabs} tab='access' />
         </AccountSection>
@@ -34,4 +35,4 @@ class Access extends React.Component {
   }
 }
 
-export default withStyles(styles)(Access)
+export default withOnDemandAuth(withStyles(styles)(Access))
