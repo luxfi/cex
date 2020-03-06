@@ -80,6 +80,7 @@ const TicketOrdersView = inject('store')(observer((props) => {
               classes={classes}
               movie={movie}
               ticket={ticket}
+              key={ticket.ticketId}
               showDivider={i < ticketTransactions.length - 1}
             />
           }) : null

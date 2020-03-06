@@ -1,66 +1,88 @@
-import React, {
-  useEffect,
-  useRef,
-  useState
- } from 'react'
 
 import {
   Button,
+  ButtonBase,
   ClickAwayListener,
+  Fade,
   Grow,
   MenuItem,
   MenuList,
   Paper,
-  Popper
+  Popper,
+  Snackbar,
 } from '@material-ui/core'
 
 import {
-  Share,
   Email,
   Facebook,
+  Share,
   Twitter,
 } from '@material-ui/icons'
 
+import LinkIcon from '@material-ui/icons/Link'
+import hashSum from 'hash-sum'
+import React, {
+  useEffect,
+  useRef,
+  useReducer,
+} from 'react'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 import {
   EmailShareButton,
   FacebookShareButton,
-  LinkedinShareButton,
   TwitterShareButton,
 } from 'react-share'
 
-import hashSum from 'hash-sum'
+const ShareModal = ({
+  classes, shareUrl, message, emailToCredit,
+}) => {
+  // const [open, setOpen] = useState(false)
+  const [state, setState] = useReducer((state, newState) => ({ ...state, ...newState }), {
+    open: false,
+    copyURL: false,
+  })
 
-const ShareModal = ({ classes, shareUrl, message, emailToCredit }) => {
-  const [open, setOpen] = useState(false)
   const anchorRef = useRef(null)
 
   const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen)
+    setState({
+      open: !state.open,
+    })
   }
 
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return
     }
-    setOpen(false)
+    setState({
+      open: false,
+    })
+  }
+
+  const onCopied = () => {
+    setState({
+      copyURL: true,
+    })
   }
 
   function handleListKeyDown(event) {
     if (event.key === 'Tab') {
       event.preventDefault()
-      setOpen(false)
+      setState({
+        open: false,
+      })
     }
   }
 
   // return focus to the button when we transitioned from !open -> open
-  const prevOpen = useRef(open)
+  const prevOpen = useRef(state.open)
   useEffect(() => {
-    if (prevOpen.current && !open) {
+    if (prevOpen.current && !state.open) {
       anchorRef.current.focus()
     }
 
-    prevOpen.current = open
-  }, [open])
+    prevOpen.current = state.open
+  }, [state.open])
 
 
   const referralURL = `${shareUrl}?ref=${hashSum(emailToCredit)}`
@@ -78,26 +100,33 @@ const ShareModal = ({ classes, shareUrl, message, emailToCredit }) => {
         Share
       </Button>
 
-      <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition>
+      <Popper open={state.open} anchorEl={anchorRef.current} role={undefined} transition>
       {({ TransitionProps, placement }) => (
-        <Grow {...TransitionProps}  style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }} >
+        <Grow {...TransitionProps} style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }} >
           <Paper>
             <ClickAwayListener onClickAway={handleClose}>
-              <MenuList autoFocusItem={open} id='menu-list-grow' onKeyDown={handleListKeyDown}>
+              <MenuList autoFocusItem={state.open} id='menu-list-grow' onKeyDown={handleListKeyDown}>
                 <MenuItem onClick={handleClose}>
                   <FacebookShareButton url={referralURL} quote={message}>
                     <Facebook />
                   </FacebookShareButton>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                  <TwitterShareButton url={referralURL} quote={message}>
+                  <TwitterShareButton url={referralURL} title={message}>
                     <Twitter />
                   </TwitterShareButton>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                  <EmailShareButton url={referralURL} quote={message}>
+                  <EmailShareButton url={referralURL} subject={message} title={message} body={`${message}\n${referralURL}`}>
                     <Email />
                   </EmailShareButton>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <CopyToClipboard text={referralURL} onCopy={onCopied}>
+                    <ButtonBase className={classes.sidebarButton}>
+                      <LinkIcon />
+                    </ButtonBase>
+                  </CopyToClipboard>
                 </MenuItem>
               </MenuList>
             </ClickAwayListener>
@@ -105,8 +134,35 @@ const ShareModal = ({ classes, shareUrl, message, emailToCredit }) => {
         </Grow>
       )}
       </Popper>
+      <CopySnackbar
+          open={state.copyURL}
+          handleSnackbarClose={
+            (evt, reason) => {
+              if (reason === 'clickaway') {
+                return
+              }
+              setState({
+                copyURL: false,
+              })
+            }
+          }
+        />
     </div>
   )
 }
+
+const CopySnackbar = ({ open, handleSnackbarClose }) => (
+  <Snackbar
+    anchorOrigin={{
+      vertical: 'top',
+      horizontal: 'right',
+    }}
+    open={open}
+    autoHideDuration={1000}
+    TransitionComponent={Fade}
+    message={<span>Url copied</span>}
+    onClose={handleSnackbarClose}
+  />
+)
 
 export default ShareModal

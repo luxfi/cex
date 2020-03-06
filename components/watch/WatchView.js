@@ -188,7 +188,11 @@ class Index extends React.Component {
               }
             </Box>
             <Box className='video-metadata'>
-              <h3>{movie.name}</h3>
+              <Link href={`/film/${movie.movieSlug}`}>
+                <a className={classes.aTag}>
+                  <h3>{movie.name}</h3>
+                </a>
+              </Link>
               <Box className={classes.videoStats}>
                 <Typography component='span'>{`${movie.trailerDetails.views.toLocaleString()} views`}</Typography>
                 <Box className={classes.videoActions}>
@@ -206,21 +210,21 @@ class Index extends React.Component {
                     </Box>
                   </Box>
                   <Share classes={classes} shareUrl={shareURL} message={sharePrompt} emailToCredit={userStore.email}/>
-                  <Link href={`/film/${movie.movieSlug}`}>
-                    <a className={classes.linkBackLink}>
-                      <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Movie Page</Typography></Button>
-                    </a>
-                  </Link>
-                  <Link href={`/offering/${movie.movieSlug}`}>
-                    <a className={classes.linkBackLink}>
-                    <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Invest</Typography></Button>
-                    </a>
-                  </Link>
-                  <Link href={`/trade/${movie.movieSlug}`}>
-                    <a className={classes.linkBackLink}>
-                    <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Trade</Typography></Button>
-                    </a>
-                  </Link>
+                  {
+                    movie.trading ? (
+                      <Link href={`/trade/${movie.movieSlug}`}>
+                        <a className={classes.linkBackLink}>
+                        <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Trade</Typography></Button>
+                        </a>
+                      </Link>
+                    ) : (
+                      <Link href={`/offering/${movie.movieSlug}`}>
+                        <a className={classes.linkBackLink}>
+                        <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Invest</Typography></Button>
+                        </a>
+                      </Link>
+                    )
+                  }
                   <Link href={`/ticketing/${movie.movieSlug}`}>
                     <a className={classes.linkBackLink}>
                     <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Buy Tickets</Typography></Button>
