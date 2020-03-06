@@ -36,7 +36,7 @@ export default () => ({
 
   movieDetails: {
     textAlign: 'center',
-    '& > img': {
+    '& > *': {
       maxHeight: 250,
       marginBottom: '0.75em',
     },

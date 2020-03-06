@@ -101,7 +101,7 @@ class ConfirmPaymentView extends React.Component {
             ticketId,
             numberOfSeats,
             movieSlug,
-            refHash
+            refHash,
           )
           userStore.removeBalance(total)
 
@@ -192,16 +192,18 @@ class ConfirmPaymentView extends React.Component {
             <Typography className={classes.header} variant='h6'>Your Order</Typography>
             <Table className={classes.table}>
               <TableBody>
-                {tickets.map(((ticket) => (
+                {tickets.map(((ticket) => {
+                  if (!ticket.quantity) return null
+                  return (
                   <TableRow key={ticket.category}>
                     <TableCell>
                       {ticket.category} ticket
                     </TableCell>
                     <TableCell>
-                      {formatCurrency(ticket.price)}
+                      {formatCurrency(ticket.price * ticket.quantity)}
                     </TableCell>
                   </TableRow>
-                )))}
+                )}))}
                 <TableRow key='Subtotal'>
                   <TableCell>
                     Subtotal
