@@ -15,6 +15,7 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import DateRangeIcon from '@material-ui/icons/DateRange'
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline'
 import { inject, observer } from 'mobx-react'
+import moment from 'moment'
 import Link from 'next/link'
 import { withRouter } from 'next/router'
 import React from 'react'
@@ -26,6 +27,16 @@ import styles from './checkout.style'
 @inject('store')
 @observer
 class CheckoutView extends React.Component {
+  componentDidMount() {
+    const urlParams = new URLSearchParams(window.location.search)
+    const showtimeId = urlParams.get('showtimeId')
+    const venueId = urlParams.get('venueId')
+
+    const { store: { ticketingStore } } = this.props
+    ticketingStore.selectShowtime(showtimeId)
+    ticketingStore.selectVenue(venueId)
+  }
+
   addTicket = (categoryName) => () => {
     const {
       store: {
@@ -54,6 +65,11 @@ class CheckoutView extends React.Component {
           subTotal,
           tickets,
           ticketsCount,
+        },
+        ticketingStore: {
+          selectedShowtime,
+          selectedVenue,
+          selectedDate,
         },
       },
     } = this.props
@@ -115,8 +131,8 @@ class CheckoutView extends React.Component {
             <Box><img className={classes.movieImg} src={movie.posterImg} alt='' /></Box>
             <Box>
               <Typography variant='h5'>{movie.name}</Typography>
-              <Box>Cinemark Hollywood USA Movies 15</Box>
-              <Box>Monday at 3:45 PM</Box>
+              <Box>{selectedVenue.venue && selectedVenue.venue.address.line}</Box>
+              <Box>{`${selectedDate.formated && selectedDate.formated} ${moment(selectedShowtime && selectedShowtime.localShowtimeStart).format('hh:mm A')}`}</Box>
             </Box>
           </Box>
         </Grid>
