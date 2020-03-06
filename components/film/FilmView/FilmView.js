@@ -208,14 +208,6 @@ class Index extends React.Component {
               Invest
             </Button>
             {this.renderAddToPlaylistButton(movie)}
-            <Button
-              rel="noopener noreferrer"
-              variant="contained"
-              className={classes.movieButton}
-              onClick={addToWatchList(movie.ticker)}
-            >
-              Add to watchlist
-            </Button>
             <Link href="/ticketing" as={`/ticketing/${movie.movieSlug}`}>
               <Button
                 variant="contained"
