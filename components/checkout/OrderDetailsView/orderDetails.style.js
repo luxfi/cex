@@ -71,6 +71,18 @@ export default () => ({
     },
   },
 
+  mapSectionTitle: {
+    fontSize: '1.5em',
+    margin: '0 0 0.75em 0',
+  },
+
+  venueAddress: {
+    padding: '20px 0 0 0',
+    '& > .name': {
+      fontSize: '1.5em',
+    },
+  },
+
   '@media print': {
     'body *': { visibility: 'hidden' },
     '.print-area *': {
