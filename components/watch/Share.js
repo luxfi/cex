@@ -36,7 +36,6 @@ import {
 const ShareModal = ({
   classes, shareUrl, message, emailToCredit,
 }) => {
-  // const [open, setOpen] = useState(false)
   const [state, setState] = useReducer((state, newState) => ({ ...state, ...newState }), {
     open: false,
     copyURL: false,
