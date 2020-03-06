@@ -21,9 +21,9 @@ import ViewListIcon from '@material-ui/icons/ViewList'
 
 
 import classNames from 'classnames'
+import hashSum from 'hash-sum'
 import { inject, observer } from 'mobx-react'
 import moment from 'moment'
-import hashSum from 'hash-sum'
 import Link from 'next/link'
 import { withRouter } from 'next/router'
 import React from 'react'
@@ -34,6 +34,7 @@ import {
 } from 'react-share'
 
 import { slugFromPath } from '../../../util'
+import Map from '../../app/Map'
 
 import styles from './orderDetails.style'
 
@@ -127,7 +128,6 @@ class OrderDetailsView extends React.Component {
     const movie = movieStore.getMovieBySlug(slug)
     const urlParams = new URLSearchParams(window.location.search)
 
-    
     const refHash = hashSum(userStore.email)
     const shareUrl = `${window.location.origin}/ticketing/${slug}?ref=${refHash}`
     const ticketUrl = `${window.location.origin}/orderDetails/${slug}?ticketId=${ticketDetails.ticketId}&ref=${refHash}`
@@ -140,6 +140,8 @@ class OrderDetailsView extends React.Component {
           line,
           city,
           state,
+          lat,
+          lon,
         } = {},
       } = {},
     } = movieVenue || {}
@@ -198,6 +200,27 @@ class OrderDetailsView extends React.Component {
                   >
                     <Typography component='span'>What to do at the Cinema</Typography>
                   </Button>
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box className={classNames(classes.lighterBg, classes.padding20, classes.borderBottom)}>
+                <Typography className={classes.mapSectionTitle} variant='h4'>Venue details</Typography>
+                <Map
+                  lat={lat}
+                  long={lon}
+                  text={
+                    <div>
+                      <div>{venueName}</div>
+                      <div>{`${line}, ${city}, ${state}`}</div>
+                    </div>
+                  }
+                  height='300px'
+                  width='100%'
+                />
+                <Box className={classes.venueAddress} >
+                  <Typography className='name'>{venueName}</Typography>
+                  <Typography>{`${line}, ${city}, ${state}`}</Typography>
                 </Box>
               </Box>
             </Grid>
