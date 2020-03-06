@@ -170,6 +170,7 @@ class Index extends React.Component {
   }
 
   renderAboutMain(classes, movie) {
+    const { store: { userPortfolio } } = this.props
     return (
       <Grid container>
         <Grid item xs={12} md={9}>
@@ -212,7 +213,7 @@ class Index extends React.Component {
               rel="noopener noreferrer"
               variant="contained"
               className={classes.movieButton}
-              onClick={addToWatchList(movie.ticker)}
+              onClick={userPortfolio.addToWatchlist(movie.ticker)}
             >
               Add to watchlist
             </Button>

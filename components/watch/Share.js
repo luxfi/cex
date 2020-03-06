@@ -24,7 +24,6 @@ import {
 import {
   EmailShareButton,
   FacebookShareButton,
-  LinkedinShareButton,
   TwitterShareButton,
 } from 'react-share'
 
