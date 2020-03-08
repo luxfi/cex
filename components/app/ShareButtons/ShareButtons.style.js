@@ -39,7 +39,7 @@ export default (theme) => ({
   shareButton: {
     cursor: 'pointer',
     '&:hover $shareIcon': {
-      border: '1px solid #fff',
+      border: '1px solid #555',
       borderRadius: '3px',
       backgroundColor: "#fff",
     },
@@ -72,7 +72,7 @@ export default (theme) => ({
   clipboardShareOuter: {
     '&:hover $shareIcon': {
       color: "#111",
-      border: '1px solid #fff',
+      border: '1px solid #555',
       borderRadius: '3px',
       backgroundColor: "#fff",
 
