@@ -13,10 +13,6 @@ export default (theme) => ({
     flexDirection: 'row' 
   },
 
-  shareButton: {
-    cursor: 'pointer'
-  },
-
   shareIcon: {
     display: 'block'
   },
@@ -39,4 +35,51 @@ export default (theme) => ({
     display: 'none'
   },
 
+
+  shareButton: {
+    cursor: 'pointer',
+    '&:hover $shareIcon': {
+      border: '1px solid #fff',
+      borderRadius: '3px',
+      backgroundColor: "#fff",
+    },
+  },
+
+  facebookShareButton: {
+    '&:hover $shareIcon': {
+      color: "#3b5998",
+    },
+  },
+
+  twitterShareButton: {
+    '&:hover $shareIcon': {
+      color: "#00acee",
+    },
+  },
+
+  linkedInShareButton: {
+    '&:hover $shareIcon': {
+      color: "#0e76a8",
+    },
+  },
+
+  emailShareButton: {
+    '&:hover $shareIcon': {
+      color: "#a11",
+    },
+  },
+
+  clipboardShareOuter: {
+    '&:hover $shareIcon': {
+      color: "#111",
+      border: '1px solid #fff',
+      borderRadius: '3px',
+      backgroundColor: "#fff",
+
+    },
+  },
+
+  hiddenTooltip: {
+    display: 'none'
+  }
 })

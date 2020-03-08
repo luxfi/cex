@@ -4,9 +4,9 @@ import classNames from 'classnames'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 import {
-  ButtonBase,
   List,
   ListItem,
+  Tooltip,
   Typography,
   makeStyles,
 } from '@material-ui/core'
@@ -33,6 +33,9 @@ const useStyles = makeStyles(styles)
 
 export default (props) => {
 
+    // 'show' is an array of strings specifying which share buttons are
+    // desired and in what order.
+    // For example, show={['Facebook', 'Twitter', 'LinkedIn', 'CopyURL']}
   const {
     show,
     shareURL,
@@ -82,21 +85,27 @@ export default (props) => {
         case 'Email':
           return (
             <ListItem className={classes.shareListItem}>
-              <EmailShareButton className={classNames(classes.emailShareButton, classes.shareButton)} url={shareURL} title={message}>
-                <EmailIcon className={classes.shareIcon} fontSize={iconSize} />
-                <Typography className={classNames(classes.shareLabel, textClass)}>Email</Typography>
-              </EmailShareButton>
+              <Tooltip title={('hideLabels' in props) ? 'Send the share link by email' : ''} placement='bottom' >
+                <div>
+                  <EmailShareButton className={classNames(classes.emailShareButton, classes.shareButton)} url={shareURL} title={message}>
+                    <EmailIcon className={classes.shareIcon} fontSize={iconSize} />
+                    <Typography className={classNames(classes.shareLabel, textClass)}>Email</Typography>
+                  </EmailShareButton>
+                </div>
+              </Tooltip>
             </ListItem>
           )
         case 'CopyURL':
           return (
             <ListItem className={classes.shareListItem}>
+              <Tooltip title={('hideLabels' in props) ? 'Copy the share link to the clipboard' : ''} placement='bottom' >
               <CopyToClipboard className={classes.clipboardShareOuter} text={shareURL} onCopy={onCopy}>
-                <div class={classNames(classes.clipboardShareButtonBase, classes.shareButton)} >
+                <div class={classNames(classes.copyURLShareButton, classes.shareButton)} >
                   <LinkIcon className={classes.shareIcon} fontSize={iconSize} />
                   <Typography className={classNames(classes.shareLabel, textClass)}>Copy URL</Typography>
                 </div>
               </CopyToClipboard>
+              </Tooltip>
             </ListItem>
           )
         default:

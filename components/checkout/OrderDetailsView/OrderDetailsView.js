@@ -226,7 +226,7 @@ class OrderDetailsView extends React.Component {
                   onCopy={this.onCopy}
                   orientation='horizantal' 
                   iconSize='large'
-                  //hideLabels 
+                  hideLabels 
                 />
               </Box>
             </Grid>
