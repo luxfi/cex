@@ -1,4 +1,4 @@
-export default () => ({
+export default (theme) => ({
   container: {
     margin: '52px auto 0',
     padding: '20px 32px',
@@ -71,6 +71,7 @@ export default () => ({
     },
   },
 
+  
   '@media print': {
     'body *': { visibility: 'hidden' },
     '.print-area *': {

@@ -2,11 +2,18 @@ import React, { useState } from 'react'
 import NextLink from 'next/link'
 
 import {
+  Collapse,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+  makeStyles
+} from '@material-ui/core'
+
+import {
   ExpandLess,
   ExpandMore,
 } from '@material-ui/icons'
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import {
   faAddressCard,
@@ -15,18 +22,10 @@ import {
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons'
 
-import {
-  Collapse,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-} from '@material-ui/core'
-
-import { makeStyles } from '@material-ui/core/styles'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import SideDrawer from '../SideDrawer'
-import styles from './mobileAccountMenu.style'
+import styles from './mobileAccountMenu.style.js'
 
 const useStyles = makeStyles(styles)
 
