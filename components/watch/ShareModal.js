@@ -1,41 +1,26 @@
+import React, {
+  useEffect,
+  useReducer,
+  useRef,
+} from 'react'
+
+import hashSum from 'hash-sum'
 
 import {
   Button,
-  ButtonBase,
   ClickAwayListener,
   Fade,
   Grow,
-  MenuItem,
-  MenuList,
   Paper,
   Popper,
   Snackbar,
 } from '@material-ui/core'
 
-import {
-  Email,
-  Facebook,
-  Share,
-  Twitter,
-} from '@material-ui/icons'
+import { Share as ShareIcon } from '@material-ui/icons'
 
-import LinkIcon from '@material-ui/icons/Link'
-import hashSum from 'hash-sum'
-import React, {
-  useEffect,
-  useRef,
-  useReducer,
-} from 'react'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
-import {
-  EmailShareButton,
-  FacebookShareButton,
-  TwitterShareButton,
-} from 'react-share'
+import { ShareButtons } from '../app'
 
-const ShareModal = ({
-  classes, shareUrl, message, emailToCredit,
-}) => {
+const ShareModal = ({ classes, shareUrl, message, emailToCredit }) => {
   const [state, setState] = useReducer((state, newState) => ({ ...state, ...newState }), {
     open: false,
     copyURL: false,
@@ -93,7 +78,7 @@ const ShareModal = ({
         variant='contained'
         size='small'
         className={classes.shareButton}
-        startIcon={<Share />}
+        startIcon={<ShareIcon/>}
         onClick={handleToggle}
       >
         Share
@@ -101,35 +86,19 @@ const ShareModal = ({
 
       <Popper open={state.open} anchorEl={anchorRef.current} role={undefined} transition>
       {({ TransitionProps, placement }) => (
-        <Grow {...TransitionProps} style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }} >
-          <Paper>
-            <ClickAwayListener onClickAway={handleClose}>
-              <MenuList autoFocusItem={state.open} id='menu-list-grow' onKeyDown={handleListKeyDown}>
-                <MenuItem onClick={handleClose}>
-                  <FacebookShareButton url={referralURL} quote={message}>
-                    <Facebook />
-                  </FacebookShareButton>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <TwitterShareButton url={referralURL} title={message}>
-                    <Twitter />
-                  </TwitterShareButton>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <EmailShareButton url={referralURL} subject={message} title={message} body={`${message}\n${referralURL}`}>
-                    <Email />
-                  </EmailShareButton>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <CopyToClipboard text={referralURL} onCopy={onCopied}>
-                    <ButtonBase className={classes.sidebarButton}>
-                      <LinkIcon />
-                    </ButtonBase>
-                  </CopyToClipboard>
-                </MenuItem>
-              </MenuList>
-            </ClickAwayListener>
-          </Paper>
+        <Grow {...TransitionProps}  style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }} >
+          <ClickAwayListener onClickAway={handleClose}>
+            <Paper>
+              <ShareButtons 
+                show={['Facebook', 'Twitter', 'LinkedIn', 'Email']}
+                shareURL={referralURL} 
+                message={message}
+                iconSize='small'
+                orientation='vertical'
+                onClick={handleClose}
+              />
+            </Paper>
+          </ClickAwayListener>
         </Grow>
       )}
       </Popper>

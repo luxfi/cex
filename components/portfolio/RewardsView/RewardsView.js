@@ -1,49 +1,25 @@
 /* eslint-disable react/prop-types */
 import React from "react"
 import { inject } from 'mobx-react'
-
-import {
-  Grid,
-  Paper,
-  Icon,
-  InputBase,
-  Button,
-  Snackbar,
-  Fade
-} from "@material-ui/core"
-
-import { makeStyles } from "@material-ui/core/styles"
-import { CopyToClipboard } from 'react-copy-to-clipboard'
+import classNames from 'classnames'
 import hashSum from 'hash-sum'
 
-
 import {
-  FacebookShareButton,
-  TwitterShareButton,
-  LinkedinShareButton,
-  EmailShareButton,
-} from 'react-share';
+  Fade,
+  Grid,
+  Icon,
+  Paper,
+  Snackbar,
+  Typography,
+  makeStyles
+} from "@material-ui/core"
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { ShareButtons } from '../../app'
 
-import {
-  faEnvelope,
-  faClipboard
-} from "@fortawesome/free-solid-svg-icons"
-
-import {
-  faFacebook,
-  faTwitter,
-  faLinkedinIn
-} from "@fortawesome/free-brands-svg-icons"
-
-import classNames from "classnames"
 import myStyles from "./RewardsView.style.js"
 const styles = makeStyles(myStyles)
 
-const dummyRewardsURL = "esx.com/rewards/invite/zachk"
-
-const CardOuter = props => {
+const CardOuter = (props) => {
 
   const {
     classes,
@@ -65,7 +41,7 @@ const CardOuter = props => {
   )
 }
 
-const RewardCard = props => {
+const RewardCard = (props) => {
 
   const {
     title,
@@ -91,7 +67,7 @@ const RewardCard = props => {
   )
 }
 
-const TotalCard = props => {
+const TotalCard = (props) => {
 
   const { total, monthTotal } = props
   const classes = styles()
@@ -107,58 +83,28 @@ const TotalCard = props => {
   )
 }
 
+const ReferralCard = (props) => {
 
-const SocialIcons = props => {
-  const {
-    classes,
-    shareUrl,
-    shareQuote
-  } = props
-  return (
-    <div className={classes.socialOuter} >
-      <span className={classes.shareLabel}>Share:&nbsp;</span>
-      <FacebookShareButton url={shareUrl} quote={shareQuote}>
-        <FontAwesomeIcon className={classes.facebookIcon} icon={faFacebook} />
-      </FacebookShareButton>
-      <TwitterShareButton url={shareUrl} quote={shareQuote}>
-        <FontAwesomeIcon className={classes.twitterIcon} icon={faTwitter} />
-      </TwitterShareButton>
-      <LinkedinShareButton url={shareUrl} quote={shareQuote}>
-        <FontAwesomeIcon className={classes.linkedinIcon} icon={faLinkedinIn} />
-      </LinkedinShareButton>
-      <EmailShareButton url={shareUrl} quote={shareQuote}>
-        <FontAwesomeIcon className={classes.emailIcon} icon={faEnvelope} />
-      </EmailShareButton>
-    </div>
-  )
-}
-
-const ReferralCard = props => {
-
-  const { rewardsURL, rewardsShareMessage, onCopied } = props
+  const { rewardsURL, rewardsShareMessage, onCopy } = props
   const classes = styles()
 
   return (
     <CardOuter leftAligned classes={classes} >
-      <h6 className={classes.totalTitle}>Earn 15 points for each friend you invite</h6>
-      <div className={classes.urlCopyOuter}>
-        <InputBase
-          value={rewardsURL}
-          className={classes.urlField}
-          readOnly
-        />
-        <CopyToClipboard text={rewardsURL} onCopy={onCopied}>
-          <Button variant="outlined">
-            <FontAwesomeIcon className={classes.clipboardIcon} icon={faClipboard} />&nbsp;Copy
-          </Button>
-        </CopyToClipboard>
-      </div>
-      <SocialIcons classes={classes} shareUrl={rewardsURL} shareQuote={rewardsShareMessage}/>
+      <Typography className={classes.totalTitle}>Earn 15 points for each friend you invite to ESX</Typography>
+      <ShareButtons 
+        show={['Facebook', 'Twitter', 'LinkedIn', 'Email', 'CopyURL']}
+        shareURL={rewardsURL} 
+        message={rewardsShareMessage}
+        onCopy={onCopy}
+        iconSize='large'
+        orientation='horizantal'
+        hideLabels
+      />
     </CardOuter>
   )
 }
 
-const UrlWasCopiedSnackbar = props => {
+const UrlWasCopiedSnackbar = (props) => {
 
   return (
     <Snackbar
@@ -245,13 +191,11 @@ const RewardsView = inject('store')((props) => {
   if (tabIdx !== index) return null
 
   const classes = styles()
-
   const { store: { userStore }} = props
+  const [wasCopied, setWasCopied] = React.useState(false)
 
-  const [shareUrlWasCopied, setShareUrlWasCopied] = React.useState(false)
-
-  const rewardsURL = dummyRewardsURL;
-  const rewardsShareMessage = "I'm supporting this project.  Check it out!"
+  const rewardsURL = `${window.location.origin}/rewards/invite?ref=${hashSum(userStore.email)}`
+  const rewardsShareMessage = "I'm watching and investing on Entertainment Stock Exchange. Join me!"
 
   return (
     <>
@@ -263,7 +207,7 @@ const RewardsView = inject('store')((props) => {
         <ReferralCard
           rewardsURL={rewardsURL}
           message={rewardsShareMessage}
-          onCopied={(ignore) => {setShareUrlWasCopied(true)}}
+          onCopy={(ignore) => {setWasCopied(true)}}
         />
       </Grid>
       {
@@ -287,13 +231,13 @@ const RewardsView = inject('store')((props) => {
     </Grid>
     <br />
     <UrlWasCopiedSnackbar
-      open={shareUrlWasCopied}
+      open={wasCopied}
       handleSnackbarClose={
         (evt, reason) => {
           if (reason === 'clickaway') {
             return
           }
-          setShareUrlWasCopied(false)
+          setWasCopied(false)
         }
       }
     />
