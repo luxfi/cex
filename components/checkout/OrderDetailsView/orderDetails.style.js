@@ -29,6 +29,10 @@ export default (theme) => ({
     },
   },
 
+  shareLabel: {
+    padding: theme.spacing(1)
+  },
+
   topText: {
     textAlign: 'center',
     marginTop: '3em',

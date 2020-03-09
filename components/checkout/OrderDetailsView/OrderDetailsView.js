@@ -219,6 +219,7 @@ class OrderDetailsView extends React.Component {
             </Grid>
             <Grid item>
               <Box className={classNames(classes.lighterBg, classes.borderBottom)}>
+                <Typography className={classes.shareLabel}>Share this film with others!</Typography>
                 <ShareButtons 
                   show={['Facebook', 'Twitter', 'LinkedIn', 'CopyURL']}
                   shareURL={shareUrl} 
