@@ -23,6 +23,7 @@ import {
 
 import { googlePageView } from '../../util'
 import AccountTabs from '../../settings/accountTabs'
+import { withOnDemandAuth } from '../../util/HOC'
 
 @inject('store')
 @observer
@@ -166,4 +167,4 @@ class Funds extends React.Component {
   }
 }
 
-export default Funds
+export default withOnDemandAuth(Funds)

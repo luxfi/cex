@@ -27,7 +27,7 @@ import {
   ViewList as ViewListIcon,
 } from '@material-ui/icons'
 
-import { ShareButtons } from '../../app'
+import { Map, ShareButtons } from '../../app'
 import { slugFromPath } from '../../../util'
 import styles from './orderDetails.style.js'
 
@@ -108,7 +108,6 @@ class OrderDetailsView extends React.Component {
     const ticketDetails = ticketCheckoutStore.currentPurchasedTicket || {}
     const movie = movieStore.getMovieBySlug(slug)
 
-    const urlParams = new URLSearchParams(window.location.search)
     const refHash = hashSum(userStore.email)
     const shareUrl = `${window.location.origin}/ticketing/${slug}?ref=${refHash}`
     const ticketUrl = `${window.location.origin}/orderDetails/${slug}?ticketId=${ticketDetails.ticketId}&ref=${refHash}`
@@ -121,6 +120,8 @@ class OrderDetailsView extends React.Component {
           line,
           city,
           state,
+          lat,
+          lon,
         } = {},
       } = {},
     } = movieVenue || {}
@@ -180,6 +181,27 @@ class OrderDetailsView extends React.Component {
                   >
                     <Typography component='span'>What to do at the Cinema</Typography>
                   </Button>
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box className={classNames(classes.lighterBg, classes.padding20, classes.borderBottom)}>
+                <Typography className={classes.mapSectionTitle} variant='h4'>Venue details</Typography>
+                <Map
+                  lat={lat}
+                  long={lon}
+                  text={
+                    <div>
+                      <div>{venueName}</div>
+                      <div>{`${line}, ${city}, ${state}`}</div>
+                    </div>
+                  }
+                  height='300px'
+                  width='100%'
+                />
+                <Box className={classes.venueAddress} >
+                  <Typography className='name'>{venueName}</Typography>
+                  <Typography>{`${line}, ${city}, ${state}`}</Typography>
                 </Box>
               </Box>
             </Grid>

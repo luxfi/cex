@@ -24,6 +24,14 @@ export default (theme) => ({
     ...flexCenteredColumn,
   },
 
+  aTag: {
+    textDecoration: 'none',
+    color: '#fff',
+    '&:hover': {
+      color: YELLOW,
+    },
+  },
+
   container: {
     ...container,
     display: 'flex',

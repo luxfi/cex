@@ -14,6 +14,7 @@ import { googlePageView } from '../../util'
 import styles from '../../styles/pages/investor.style.js'
 
 import AccountTabs from '../../settings/accountTabs'
+import { withOnDemandAuth } from '../../util/HOC'
 
 @inject('store')
 @observer
@@ -37,4 +38,4 @@ class Security extends React.Component {
   }
 }
 
-export default withStyles(styles)(Security)
+export default withOnDemandAuth(withStyles(styles)(Security))

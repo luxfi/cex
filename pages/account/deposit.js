@@ -7,6 +7,7 @@ import Step from "@material-ui/core/Step"
 import StepLabel from "@material-ui/core/StepLabel"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
+import { withOnDemandAuth } from '../../util/HOC'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -58,7 +59,7 @@ function getStepContent(step) {
   }
 }
 
-export default function Checkout() {
+function Checkout() {
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
 
@@ -121,3 +122,5 @@ export default function Checkout() {
     </>
   )
 }
+
+export default withOnDemandAuth(Checkout)

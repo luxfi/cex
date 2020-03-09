@@ -1,7 +1,7 @@
 import React, {
   useEffect,
+  useReducer,
   useRef,
-  useState
 } from 'react'
 
 import hashSum from 'hash-sum'
@@ -9,47 +9,64 @@ import hashSum from 'hash-sum'
 import {
   Button,
   ClickAwayListener,
+  Fade,
   Grow,
   Paper,
-  Popper
+  Popper,
+  Snackbar,
 } from '@material-ui/core'
 
 import { Share as ShareIcon } from '@material-ui/icons'
 
-
 import { ShareButtons } from '../app'
 
 const ShareModal = ({ classes, shareUrl, message, emailToCredit }) => {
-  const [open, setOpen] = useState(false)
+  const [state, setState] = useReducer((state, newState) => ({ ...state, ...newState }), {
+    open: false,
+    copyURL: false,
+  })
+
   const anchorRef = useRef(null)
 
   const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen)
+    setState({
+      open: !state.open,
+    })
   }
 
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return
     }
-    setOpen(false)
+    setState({
+      open: false,
+    })
+  }
+
+  const onCopied = () => {
+    setState({
+      copyURL: true,
+    })
   }
 
   function handleListKeyDown(event) {
     if (event.key === 'Tab') {
       event.preventDefault()
-      setOpen(false)
+      setState({
+        open: false,
+      })
     }
   }
 
   // return focus to the button when we transitioned from !open -> open
-  const prevOpen = useRef(open)
+  const prevOpen = useRef(state.open)
   useEffect(() => {
-    if (prevOpen.current && !open) {
+    if (prevOpen.current && !state.open) {
       anchorRef.current.focus()
     }
 
-    prevOpen.current = open
-  }, [open])
+    prevOpen.current = state.open
+  }, [state.open])
 
 
   const referralURL = `${shareUrl}?ref=${hashSum(emailToCredit)}`
@@ -67,7 +84,7 @@ const ShareModal = ({ classes, shareUrl, message, emailToCredit }) => {
         Share
       </Button>
 
-      <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition>
+      <Popper open={state.open} anchorEl={anchorRef.current} role={undefined} transition>
       {({ TransitionProps, placement }) => (
         <Grow {...TransitionProps}  style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }} >
           <ClickAwayListener onClickAway={handleClose}>
@@ -85,8 +102,35 @@ const ShareModal = ({ classes, shareUrl, message, emailToCredit }) => {
         </Grow>
       )}
       </Popper>
+      <CopySnackbar
+          open={state.copyURL}
+          handleSnackbarClose={
+            (evt, reason) => {
+              if (reason === 'clickaway') {
+                return
+              }
+              setState({
+                copyURL: false,
+              })
+            }
+          }
+        />
     </div>
   )
 }
+
+const CopySnackbar = ({ open, handleSnackbarClose }) => (
+  <Snackbar
+    anchorOrigin={{
+      vertical: 'top',
+      horizontal: 'right',
+    }}
+    open={open}
+    autoHideDuration={1000}
+    TransitionComponent={Fade}
+    message={<span>Url copied</span>}
+    onClose={handleSnackbarClose}
+  />
+)
 
 export default ShareModal
