@@ -101,11 +101,13 @@ export default (theme) => ({
     justifyContent: "flex-start",
     alignItems: "stretch"
   },
+
   urlField: {
     border: "1px " + theme.palette.text.secondary + " solid",
     borderRadius: "3px",
     marginRight: theme.spacing(1),
-    padding: "6px 24px 6px 10px",
+    padding: "6px 15px 6px 10px",
+    width: '400px'
   },
 
   socialOuter: {
@@ -135,25 +137,4 @@ export default (theme) => ({
       }
     }
   },
-
-  shareLabel: {
-    display: "block",
-    cursor: "pointer",
-    fontSize: "1.4rem",
-    marginRight: "0.7rem",
-  },
-  facebookIcon: {
-    color: "#3b5998",
-    marginLeft: "-4px",
-  },
-  twitterIcon: {
-    color: "#00acee",
-  },
-  linkedinIcon: {
-    color: "#0e76a8",
-  },
-  emailIcon: {
-    color: blue[600],
-  }
-
 })
