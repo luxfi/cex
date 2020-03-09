@@ -2,32 +2,22 @@ import React, {
   useEffect,
   useRef,
   useState
- } from 'react'
+} from 'react'
+
+import hashSum from 'hash-sum'
 
 import {
   Button,
   ClickAwayListener,
   Grow,
-  MenuItem,
-  MenuList,
   Paper,
   Popper
 } from '@material-ui/core'
 
-import {
-  Share,
-  Email,
-  Facebook,
-  Twitter,
-} from '@material-ui/icons'
+import { Share as ShareIcon } from '@material-ui/icons'
 
-import {
-  EmailShareButton,
-  FacebookShareButton,
-  TwitterShareButton,
-} from 'react-share'
 
-import hashSum from 'hash-sum'
+import { ShareButtons } from '../app'
 
 const ShareModal = ({ classes, shareUrl, message, emailToCredit }) => {
   const [open, setOpen] = useState(false)
@@ -71,7 +61,7 @@ const ShareModal = ({ classes, shareUrl, message, emailToCredit }) => {
         variant='contained'
         size='small'
         className={classes.shareButton}
-        startIcon={<Share />}
+        startIcon={<ShareIcon/>}
         onClick={handleToggle}
       >
         Share
@@ -80,27 +70,18 @@ const ShareModal = ({ classes, shareUrl, message, emailToCredit }) => {
       <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition>
       {({ TransitionProps, placement }) => (
         <Grow {...TransitionProps}  style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }} >
-          <Paper>
-            <ClickAwayListener onClickAway={handleClose}>
-              <MenuList autoFocusItem={open} id='menu-list-grow' onKeyDown={handleListKeyDown}>
-                <MenuItem onClick={handleClose}>
-                  <FacebookShareButton url={referralURL} quote={message}>
-                    <Facebook />
-                  </FacebookShareButton>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <TwitterShareButton url={referralURL} quote={message}>
-                    <Twitter />
-                  </TwitterShareButton>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <EmailShareButton url={referralURL} quote={message}>
-                    <Email />
-                  </EmailShareButton>
-                </MenuItem>
-              </MenuList>
-            </ClickAwayListener>
-          </Paper>
+          <ClickAwayListener onClickAway={handleClose}>
+            <Paper>
+              <ShareButtons 
+                show={['Facebook', 'Twitter', 'LinkedIn', 'Email']}
+                shareURL={referralURL} 
+                message={message}
+                iconSize='small'
+                orientation='vertical'
+                onClick={handleClose}
+              />
+            </Paper>
+          </ClickAwayListener>
         </Grow>
       )}
       </Popper>

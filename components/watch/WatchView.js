@@ -1,8 +1,7 @@
 import React from 'react'
-import Link from 'next/link'
 import { inject, observer } from 'mobx-react'
+import Link from 'next/link'
 import Router, { withRouter } from 'next/router'
-import { AuthModal } from '../app'
 
 import styles from './style.js'
 
@@ -23,6 +22,7 @@ import classNames from 'classnames'
 
 // core components
 import {
+  AuthModal,
   InvestNow,
 } from '../app'
 
@@ -31,7 +31,7 @@ import LikeAndUnlike from '../LikeAndUnlike'
 import ShowingNext from './ShowingNext'
 import VideoDescription from './VideoDescription'
 import YoutubePlayer from './YoutubePlayer'
-import Share from './Share'
+import ShareModal from './ShareModal'
 
 import { formatNumber, renderDate } from './utils'
 
@@ -205,7 +205,7 @@ class Index extends React.Component {
                       <Divider />
                     </Box>
                   </Box>
-                  <Share classes={classes} shareUrl={shareURL} message={sharePrompt} emailToCredit={userStore.email}/>
+                  <ShareModal classes={classes} shareUrl={shareURL} message={sharePrompt} emailToCredit={userStore.email}/>
                   <Link href={`/film/${movie.movieSlug}`}>
                     <a className={classes.linkBackLink}>
                       <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Movie Page</Typography></Button>

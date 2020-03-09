@@ -19,7 +19,10 @@ export default (theme) => ({
 
   horizantalButtonLayout: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    '& $shareLabel': {
+      marginLeft: theme.spacing(1)
+    }
   },
 
   verticalButtonLayout: {
@@ -43,6 +46,9 @@ export default (theme) => ({
       borderRadius: '3px',
       backgroundColor: "#fff",
     },
+    '&:hover $shareLabel': {
+      textDecoration: 'underline'
+    }
   },
 
   facebookShareButton: {

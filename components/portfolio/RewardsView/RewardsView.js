@@ -19,8 +19,6 @@ import { ShareButtons } from '../../app'
 import myStyles from "./RewardsView.style.js"
 const styles = makeStyles(myStyles)
 
-const dummyRewardsURL = "esx.com/rewards/invite/zachk"
-
 const CardOuter = (props) => {
 
   const {
@@ -196,8 +194,8 @@ const RewardsView = inject('store')((props) => {
   const { store: { userStore }} = props
   const [wasCopied, setWasCopied] = React.useState(false)
 
-  const rewardsURL = dummyRewardsURL;
-  const rewardsShareMessage = "I'm enjoying and investing on Entertainment Stock Exchange. Join me!"
+  const rewardsURL = `${window.location.origin}/rewards/invite?ref=${hashSum(userStore.email)}`
+  const rewardsShareMessage = "I'm watching and investing on Entertainment Stock Exchange. Join me!"
 
   return (
     <>
