@@ -31,7 +31,7 @@ import LikeAndUnlike from '../LikeAndUnlike'
 import ShowingNext from './ShowingNext'
 import VideoDescription from './VideoDescription'
 import YoutubePlayer from './YoutubePlayer'
-import ShareModal from './ShareModal'
+import ShareWidget from '../app/ShareWidget'
 
 import { formatNumber, renderDate } from './utils'
 
@@ -209,7 +209,7 @@ class Index extends React.Component {
                       <Divider />
                     </Box>
                   </Box>
-                  <ShareModal classes={classes} shareUrl={shareURL} message={sharePrompt} emailToCredit={userStore.email}/>
+                  <ShareWidget shareUrl={shareURL} message={sharePrompt} emailToCredit={userStore.email}/>
                   {
                     movie.trading ? (
                       <Link href={`/trade/${movie.movieSlug}`}>

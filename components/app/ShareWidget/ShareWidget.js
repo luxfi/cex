@@ -1,10 +1,3 @@
-import React, {
-  useEffect,
-  useReducer,
-  useRef,
-} from 'react'
-
-import hashSum from 'hash-sum'
 
 import {
   Button,
@@ -17,14 +10,26 @@ import {
 } from '@material-ui/core'
 
 import { Share as ShareIcon } from '@material-ui/icons'
+import hashSum from 'hash-sum'
+import React, {
+  useEffect,
+  useReducer,
+  useRef,
+} from 'react'
 
-import { ShareButtons } from '../app'
+import ShareButtons from '../ShareButtons'
 
-const ShareModal = ({ classes, shareUrl, message, emailToCredit }) => {
-  const [state, setState] = useReducer((state, newState) => ({ ...state, ...newState }), {
+import useStyles from './ShareWidget.style'
+
+const ShareWidget = ({
+  className = '', shareUrl, message, emailToCredit,
+}) => {
+  const [state, setState] = useReducer((initialState, newState) => ({ ...state, ...newState }), {
     open: false,
     copyURL: false,
   })
+
+  const classes = useStyles()
 
   const anchorRef = useRef(null)
 
@@ -41,21 +46,6 @@ const ShareModal = ({ classes, shareUrl, message, emailToCredit }) => {
     setState({
       open: false,
     })
-  }
-
-  const onCopied = () => {
-    setState({
-      copyURL: true,
-    })
-  }
-
-  function handleListKeyDown(event) {
-    if (event.key === 'Tab') {
-      event.preventDefault()
-      setState({
-        open: false,
-      })
-    }
   }
 
   // return focus to the button when we transitioned from !open -> open
@@ -77,7 +67,7 @@ const ShareModal = ({ classes, shareUrl, message, emailToCredit }) => {
         ref={anchorRef}
         variant='contained'
         size='small'
-        className={classes.shareButton}
+        className={`${classes.shareButton} ${className}`}
         startIcon={<ShareIcon/>}
         onClick={handleToggle}
       >
@@ -86,12 +76,12 @@ const ShareModal = ({ classes, shareUrl, message, emailToCredit }) => {
 
       <Popper open={state.open} anchorEl={anchorRef.current} role={undefined} transition>
       {({ TransitionProps, placement }) => (
-        <Grow {...TransitionProps}  style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }} >
+        <Grow {...TransitionProps} style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }} >
           <ClickAwayListener onClickAway={handleClose}>
             <Paper>
-              <ShareButtons 
+              <ShareButtons
                 show={['Facebook', 'Twitter', 'LinkedIn', 'Email']}
-                shareURL={referralURL} 
+                shareURL={referralURL}
                 message={message}
                 iconSize='small'
                 orientation='vertical'
@@ -133,4 +123,4 @@ const CopySnackbar = ({ open, handleSnackbarClose }) => (
   />
 )
 
-export default ShareModal
+export default ShareWidget
