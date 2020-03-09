@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
-import { Grid, Typography, Box, Chip, Divider } from '@material-ui/core'
+import { Grid, Typography, Box, Chip, Divider, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import grey from '@material-ui/core/colors/grey'
 import { formatCurrency } from '../../../util'
 import { ESXLinearProgressBar } from '../../app'
 import { OfferingInput, MediaSlider } from '../'
 import Icon from '@material-ui/core/Icon'
+import { BookmarkBorder } from '@material-ui/icons'
+import { withRouter } from 'next/router'
+import { inject, observer } from 'mobx-react'
+
+import { ShareWidget } from '../../app'
+import { slugFromPath } from '../../../util'
 
 const movie = {
   title: 'SAW 9: Spiral',
@@ -106,9 +112,15 @@ const useRaisingStyles = makeStyles(theme => ({
   spacer: {
     flexGrow: 1,
   },
+  followButton: {
+    background: '#fff',
+    '&:hover': {
+      background: '#FBC43E',
+    },
+  },
 }))
 
-const RaisingInformation = ({
+const RaisingInformation = withRouter(inject('store')(observer(({
   raisedAmount,
   fundingGoal,
   amountOfInvestors,
@@ -118,6 +130,8 @@ const RaisingInformation = ({
   setErrorMessage,
   setSuccessMessage,
   checkIfLoggedIn,
+  router,
+  store,
 }) => {
   // note, in future we will use moment(dateFundingEnds).toNow() to caculate relative time
   const percentFunded = ((raisedAmount / fundingGoal) * 100).toLocaleString(
@@ -127,6 +141,15 @@ const RaisingInformation = ({
     },
   )
   const classes = useRaisingStyles()
+  const movieSlug = router.query.slug || slugFromPath()
+
+  const { movieStore, userStore } = store
+
+  const movieDetail = movieStore.getMovieBySlug(movieSlug)
+
+  const shareURL = `${window.location.origin}/offering/${movieSlug}`
+  const sharePrompt = `I just placed an offering for ${movieDetail.name}! Go check it out!`
+
   return (
     <Grid container direction="column" spacing={2}>
       <Grid item xs={12}>
@@ -183,45 +206,22 @@ const RaisingInformation = ({
       </Box>
       <Grid item container xs={12} spacing={3} justify="flex-end">
         <Grid item>
-          <Typography component="span" variant="subtitle2">
-            <Box component="span" pt={0.5}>
-              <Icon color="disabled" fontSize="inherit" component="span">
-                email_outline
-              </Icon>
-            </Box>
-            <Box component="span" ml={1}>
-              Email me
-            </Box>
-          </Typography>
+          <ShareWidget shareUrl={shareURL} message={sharePrompt} emailToCredit={userStore.email} />
         </Grid>
         <Grid item>
-          <Typography component="span" variant="subtitle2">
-            <Box component="span" pt={0.5}>
-              <Icon color="disabled" fontSize="inherit" component="span">
-                share
-              </Icon>
-            </Box>
-            <Box component="span" ml={1}>
-              Share
-            </Box>
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Typography component="span" variant="subtitle2">
-            <Box component="span" pt={0.5}>
-              <Icon color="disabled" fontSize="inherit" component="span">
-                bookmark_border
-              </Icon>
-            </Box>
-            <Box component="span" ml={1}>
-              Follow
-            </Box>
-          </Typography>
+          <Button
+            variant='contained'
+            size='small'
+            className={classes.followButton}
+            startIcon={<BookmarkBorder/>}
+          >
+            Follow
+          </Button>
         </Grid>
       </Grid>
     </Grid>
   )
-}
+})))
 
 const OfferingHeader = ({
   funds,
