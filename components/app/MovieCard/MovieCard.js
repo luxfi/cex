@@ -46,7 +46,11 @@ export default ({
           <Typography className={classes.title} variant="body2">{movie.name}</Typography>
         </Box>
         <Box className={classNames(classes.hoverContent, classes.innerCardContent)}>
-          <Typography className={classes.title} variant="body2">{movie.name}</Typography>
+          <Link href={`/film/${movie.movieSlug}`}>
+            <a className={classes.aTag}>
+              <Typography className={classNames(classes.title, classes.aTag)} variant="body2">{movie.name}</Typography>
+            </a>
+          </Link>
           <Typography className={classes.shortDescription} variant="body1">{truncate(movie.shortDescription, 20)}</Typography>
           <div className={classes.buttonsOuter}>
             <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => { goToMovieDetail(movie) }} ><InfoIcon /></Button>
