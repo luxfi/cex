@@ -10,3 +10,6 @@ yarn.lock
 
 .prettierrc
 
+# js core dumps :)
+report.*.json 
+

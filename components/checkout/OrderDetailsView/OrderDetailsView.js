@@ -1,3 +1,13 @@
+import React from 'react'
+import { inject, observer } from 'mobx-react'
+import Link from 'next/link'
+import { withRouter } from 'next/router'
+
+import classNames from 'classnames'
+import hashSum from 'hash-sum'
+import moment from 'moment'
+import QRCode from 'qrcode.react'
+
 import {
   Box,
   Button,
@@ -6,57 +16,28 @@ import {
   Grid,
   Snackbar,
   Typography,
+  withStyles,
 } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
 
-import CancelIcon from '@material-ui/icons/Cancel'
-import EmailIcon from '@material-ui/icons/Email'
-import FacebookIcon from '@material-ui/icons/Facebook'
-import InfoIcon from '@material-ui/icons/Info'
-import LinkIcon from '@material-ui/icons/Link'
-import LocationOnIcon from '@material-ui/icons/LocationOn'
-import PrintIcon from '@material-ui/icons/Print'
-import TwitterIcon from '@material-ui/icons/Twitter'
-import ViewListIcon from '@material-ui/icons/ViewList'
-
-import classNames from 'classnames'
-import hashSum from 'hash-sum'
-import { inject, observer } from 'mobx-react'
-import moment from 'moment'
-import Link from 'next/link'
-import { withRouter } from 'next/router'
-import React from 'react'
-import QRCode from 'qrcode.react'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
 import {
-  FacebookShareButton,
-  TwitterShareButton,
-} from 'react-share'
+  Email as EmailIcon,
+  Info as InfoIcon,
+  LocationOn as LocationOnIcon,
+  Print as PrintIcon,
+  ViewList as ViewListIcon,
+} from '@material-ui/icons'
 
+import { Map, ShareButtons } from '../../app'
 import { slugFromPath } from '../../../util'
-import Map from '../../app/Map'
+import styles from './orderDetails.style.js'
 
-import styles from './orderDetails.style'
-
-const UrlWasCopiedSnackbar = ({ open, handleSnackbarClose }) => (
-    <Snackbar
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={open}
-      autoHideDuration={1000}
-      TransitionComponent={Fade}
-      message={<span>Movie url copied</span>}
-      onClose={handleSnackbarClose}
-    />
-)
 
 @inject('store')
 @observer
 class OrderDetailsView extends React.Component {
+
   state = {
-    copyURL: false,
+    showCopiedFeedback: false,
   }
 
   componentDidMount() {
@@ -85,9 +66,9 @@ class OrderDetailsView extends React.Component {
     window.print()
   }
 
-  onCopied = () => {
+  onCopy = () => {
     this.setState({
-      copyURL: true,
+      showCopiedFeedback: true,
     })
   }
 
@@ -144,12 +125,11 @@ class OrderDetailsView extends React.Component {
         } = {},
       } = {},
     } = movieVenue || {}
+
     const movieShowtimeDetails = this.getShowtime(ticketDetails.showtimeId) || {}
     const movieDate = moment(movieShowtimeDetails.localShowtimeStart).format('Do MMM')
     const movieTime = moment(movieShowtimeDetails.localShowtimeStart).format('LT')
     const qrCodeData = encodeURI(ticketUrl) // ideally, this should be the ticket information
-
-    const { copyURL } = this.state
 
     return (
       <Box className={classNames(classes.container, classes.padding20)}>
@@ -261,37 +241,29 @@ class OrderDetailsView extends React.Component {
             </Grid>
             <Grid item>
               <Box className={classNames(classes.lighterBg, classes.borderBottom)}>
-                <CopyToClipboard text={shareUrl} onCopy={this.onCopied}>
-                  <ButtonBase className={classes.sidebarButton}>
-                    <LinkIcon fontSize='large' />
-                    <Typography>Copy URL</Typography>
-                  </ButtonBase>
-                </CopyToClipboard>
-                <ButtonBase className={classes.sidebarButton}>
-                  <FacebookShareButton url={shareUrl} quote={shareMessage}>
-                    <FacebookIcon fontSize='large' />
-                    <Typography>Facebook</Typography>
-                  </FacebookShareButton>
-                </ButtonBase>
-                <ButtonBase className={classes.sidebarButton}>
-                  <TwitterShareButton url={shareUrl} title={shareMessage}>
-                    <TwitterIcon fontSize='large' />
-                    <Typography>Twitter</Typography>
-                  </TwitterShareButton>
-                </ButtonBase>
+                <Typography className={classes.shareLabel}>Share this film with others!</Typography>
+                <ShareButtons 
+                  show={['Facebook', 'Twitter', 'LinkedIn', 'CopyURL']}
+                  shareURL={shareUrl} 
+                  message={shareMessage} 
+                  onCopy={this.onCopy}
+                  orientation='horizantal' 
+                  iconSize='large'
+                  hideLabels 
+                />
               </Box>
             </Grid>
           </Grid>
         </Grid>
         <UrlWasCopiedSnackbar
-          open={copyURL}
+          open={this.state.showCopiedFeedback}
           handleSnackbarClose={
             (evt, reason) => {
               if (reason === 'clickaway') {
                 return
               }
               this.setState({
-                copyURL: false,
+                showCopiedFeedback: false,
               })
             }
           }
@@ -300,5 +272,20 @@ class OrderDetailsView extends React.Component {
     )
   }
 }
+
+const UrlWasCopiedSnackbar = ({ open, handleSnackbarClose }) => (
+  <Snackbar
+    anchorOrigin={{
+      vertical: 'top',
+      horizontal: 'right',
+    }}
+    open={open}
+    autoHideDuration={1000}
+    TransitionComponent={Fade}
+    message={<span>Movie url copied</span>}
+    onClose={handleSnackbarClose}
+  />
+)
+
 
 export default withRouter(withStyles(styles)(OrderDetailsView))

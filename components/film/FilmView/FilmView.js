@@ -1,22 +1,20 @@
 import React from "react"
-import Link from "next/link"
-import CustomLink from "../../app/CustomLink"
-import { toJS } from "mobx"
+import { isObservableArray, toJS } from "mobx"
 import { inject, observer } from "mobx-react"
-import { withRouter, Router } from "next/router"
-
-
 import classNames from "classnames"
 
-// orderbook
-import { formatTakeResults } from "../../../util/formatOrderBookDataForChart"
+import Link from "next/link"
+import { withRouter, Router } from "next/router"
 
-// @material-ui/core components
-import { Button, Grid, Typography, Switch } from "@material-ui/core"
-import { withStyles } from "@material-ui/core/styles"
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import { 
+  Button, 
+  Grid, 
+  Typography, 
+  withStyles 
+} from "@material-ui/core"
 
-// core components
+import { PlayArrow as PlayArrowIcon } from '@material-ui/icons';
+
 import {
   CustomBreadcrumbs,
   BasicTrader,
@@ -24,16 +22,13 @@ import {
   ProTrader,
 } from "../../app"
 
+import CustomLink from "../../app/CustomLink"
+import { formatTakeResults } from "../../../util/formatOrderBookDataForChart"
+
 // section
 import { padDollarAmount, slugFromPath } from "../../../util"
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-// the nice looking double chevrons are part of the "pro" package that costs money
-import { faPlay } from "@fortawesome/free-solid-svg-icons"
-
 import styles from "./film.style.js"
-
-import { isObservableArray } from "mobx"
 
 const ExternalLink = React.forwardRef(
   ({ className, href, hrefAs, children }, ref) => (

@@ -1,4 +1,4 @@
-export default () => ({
+export default (theme) => ({
   container: {
     margin: '52px auto 0',
     padding: '20px 32px',
@@ -27,6 +27,10 @@ export default () => ({
     '& > :not(:last-child)': {
       borderBottom: '1px solid #535353',
     },
+  },
+
+  shareLabel: {
+    padding: theme.spacing(1)
   },
 
   topText: {
