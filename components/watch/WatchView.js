@@ -240,7 +240,11 @@ class Index extends React.Component {
               <Box className={classes.videoInfoBox}>
                 <img src={movie.distributorImg} className={classes.videoInfoImage} alt={movie.distributors[0]} />
                 <Box className={classes.videoInfo}>
-                  <Typography className={classes.channelName}>{movie.distributors[0]}</Typography>
+                  <Typography className={classes.channelName}>
+                    <Link href={`/browse?facet=distributors&value=${movie.distributors[0]}`}>
+                      <a className={classes.aTag}>{movie.distributors[0]}</a>
+                    </Link>
+                  </Typography>
                   <Typography className={classes.videoPubDate}>{renderDate(movie.trailerDetails.createdAt, 'dddd MMM Do YYYY')}</Typography>
                 </Box>
                 <Box className={classes.subShare}>

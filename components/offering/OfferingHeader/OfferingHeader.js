@@ -6,6 +6,7 @@ import { formatCurrency } from '../../../util'
 import { ESXLinearProgressBar } from '../../app'
 import { OfferingInput, MediaSlider } from '../'
 import Icon from '@material-ui/core/Icon'
+import Link from 'next/link'
 
 const movie = {
   title: 'SAW 9: Spiral',
@@ -29,6 +30,8 @@ const movie = {
   amountOfInvestors: 24065,
   daysLeft: 23,
   fundingGoal: 5000000,
+  movieSlug: 'saw-9',
+  distributors: ['Paramount Pictures', 'Disney'],
 }
 
 const useTitleStyles = makeStyles(theme => ({
@@ -39,15 +42,28 @@ const useTitleStyles = makeStyles(theme => ({
     background: theme.palette.secondary.main,
     color: grey[900],
   },
+  aTag: {
+    color: theme.palette.common.white,
+    textDecoration: 'none',
+    '&:hover': {
+      color: theme.palette.secondary.main,
+    },
+  },
 }))
 
-const Title = ({ title, tags, highlightedTags }) => {
+const Title = ({ movie, highlightedTags }) => {
   const classes = useTitleStyles()
   return (
     <Grid container direction="column" spacing={0}>
       <Grid item xs={12}>
         <Typography variant="h4" gutterBottom>
-          <Box fontWeight="fontWeightBold">{title}</Box>
+          <Box fontWeight="fontWeightBold">
+            <Link href={`/film/${movie.movieSlug}`}>
+              <a className={classes.aTag}>
+                {movie.title}
+              </a>
+            </Link>
+          </Box>
         </Typography>
       </Grid>
       <Grid item container xs={12} direction="row">
@@ -62,13 +78,24 @@ const Title = ({ title, tags, highlightedTags }) => {
             </Box>
           </Typography>
         ))}
-        {tags.map((tag, i) => (
-          <Typography key={i} variant="h5" component="div">
-            <Box fontWeight="fontWeightBold" mr={0.5}>
-              <Chip size="small" label={tag} className={classes.chip} />
-            </Box>
-          </Typography>
-        ))}
+        {movie.tags.map((tag, i) => {
+          const link = <Link href={`/browse?facet=distributors&value=${tag}`}>
+            <a className={classes.aTag}>{tag}</a>
+          </Link>
+
+          return (
+            <Typography key={i} variant="h5" component="div">
+              <Box fontWeight="fontWeightBold" mr={0.5}>
+                <Chip
+                  size="small"
+                  label={movie.distributors.includes(tag) ? link : tag}
+                  className={classes.chip}
+                />
+              </Box>
+            </Typography>
+          )
+        })
+        }
       </Grid>
     </Grid>
   )
@@ -237,8 +264,7 @@ const OfferingHeader = ({
         <Grid container direction="column" id="offering-tags-container">
           <Box mb={-1}>
             <Title
-              title={movie.title}
-              tags={movie.tags}
+              movie={movie}
               highlightedTags={movie.highlightedTags}
             />
           </Box>

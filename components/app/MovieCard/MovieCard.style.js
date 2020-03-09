@@ -33,6 +33,14 @@ export default (theme) => ({
     },
   },
 
+  aTag: {
+    color: theme.palette.common.white,
+    textDecoration: 'none',
+    '&:hover': {
+      color: theme.palette.secondary.main,
+    },
+  },
+
   cardMedia: {
     objectFit: 'cover',
     height: '100%',

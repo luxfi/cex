@@ -1,27 +1,33 @@
-import React from "react"
-import Router from "next/router"
-
-// nodejs library that concatenates classes
-import classNames from "classnames"
-
-// @material-ui/core components
 import {
   Avatar,
+  Card,
+  CardContent,
   CardHeader,
   Chip,
   Divider,
-  Typography,
-  Card,
   Grid,
-  CardContent,
-} from "@material-ui/core"
-import ContentLoader from "react-content-loader"
+  Typography,
+} from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import classNames from 'classnames'
+import Link from 'next/link'
+import Router from 'next/router'
+import React from 'react'
+
+// nodejs library that concatenates classes
+
+// @material-ui/core components
+import ContentLoader from 'react-content-loader'
 
 import { truncate } from '../../../util'
 
 // styles
-import { makeStyles } from "@material-ui/core/styles"
-import styles from "../../portfolio/TradeView/TradeView.style.js"
+import styles from '../../portfolio/TradeView/TradeView.style.js'
+
+const aTag = {
+  color: '#fff',
+  textDecoration: 'none',
+}
 
 const useStyles = makeStyles(styles)
 
@@ -30,51 +36,51 @@ const MyLoader = () => (
     height={217}
     width={400}
     speed={2}
-    primaryColor="#f3f3f3"
-    secondaryColor="#ecebeb"
+    primaryColor='#f3f3f3'
+    secondaryColor='#ecebeb'
   >
     {/* Only SVG shapes */}
-    <rect x="0" y="0" rx="5" ry="5" width="388" height="217" />
+    <rect x='0' y='0' rx='5' ry='5' width='388' height='217' />
   </ContentLoader>
 )
 
 const dataStub = [
   {
-    title: "Call of the Wild: A Space Odyssey",
+    title: 'Call of the Wild: A Space Odyssey',
     image: <MyLoader />,
     description: `Deep in the human unconscious is a pervasive need for a
     logical universe that makes sense. But the real universe is
     always one step beyond logic.`,
-    releaseDate: "2019",
-    category: "indie",
-    currencySymbol: "$",
-    amount: 760
+    releaseDate: '2019',
+    category: 'indie',
+    currencySymbol: '$',
+    amount: 760,
   },
   {
-    title: "Call of the Wild: A Space Odyssey",
+    title: 'Call of the Wild: A Space Odyssey',
     image: <MyLoader />,
     description: `Deep in the human unconscious is a pervasive need for a
     logical universe that makes sense. But the real universe is
     always one step beyond logic.`,
-    releaseDate: "2019",
-    category: "indie",
-    currencySymbol: "$",
-    amount: 3360
+    releaseDate: '2019',
+    category: 'indie',
+    currencySymbol: '$',
+    amount: 3360,
   },
   {
-    title: "Call of the Wild: A Space Odyssey",
+    title: 'Call of the Wild: A Space Odyssey',
     image: <MyLoader />,
     description: `Deep in the human unconscious is a pervasive need for a
     logical universe that makes sense. But the real universe is
     always one step beyond logic.`,
-    releaseDate: "2019",
-    category: "indie",
-    currencySymbol: "$",
-    amount: 620
-  }
+    releaseDate: '2019',
+    category: 'indie',
+    currencySymbol: '$',
+    amount: 620,
+  },
 ]
 
-export default props => {
+export default (props) => {
   const classes = useStyles()
   const { store, ...rest } = props
   const { investorTopPicks } = store.movieStore
@@ -82,13 +88,13 @@ export default props => {
   const { userPortfolio } = store
 
   // What functions do we need from the movie and user store?
-  const addToWatchlist = t => {
+  const addToWatchlist = (t) => {
     userPortfolio.addToWatchlist(t, findMovieByTicker)
   }
   return (
     <>
       <div className={classes.section}>
-        <h2 className={classes.title} style={{ textAlign: "left" }}>
+        <h2 className={classes.title} style={{ textAlign: 'left' }}>
           Top Picks for You
         </h2>
         <Grid container spacing={3}>
@@ -97,22 +103,22 @@ export default props => {
               <Card className={classes.investmentCard}>
                 <CardHeader
                   avatar={
-                    <Avatar src={d.posterImg} aria-label="avatar-image" />
+                    <Avatar src={d.posterImg} aria-label='avatar-image' />
                   }
                   action={
                     <Chip label={d.genre[0]} className={classes.categoryChip} />
                   }
-                  title={d.name}
+                  title={<Link href={`/film/${d.movieSlug}`}><a style={aTag}>{d.name}</a></Link>}
                   subheader={d.releaseDate}
                 />
                 <CardContent>
-                  <Typography variant="body1"  paragraph>
+                  <Typography variant='body1' paragraph>
                     {truncate(d.shortDescription)}
                   </Typography>
-                  <Divider variant="middle" />
+                  <Divider variant='middle' />
                   <div className={classes.ctaDiv}>
                     <Chip
-                      label="invest"
+                      label='invest'
                       className={classes.ctaChip}
                       clickable
                       onClick={() => {
@@ -121,8 +127,8 @@ export default props => {
                     />
                     <Typography className={classes.earningsAmountText}>
                       <Typography
-                        component="span"
-                        variant="inherit"
+                        component='span'
+                        variant='inherit'
                         className={classes.currencySymbol}
                       >
                         ${/* {d.currencySymbol} */}

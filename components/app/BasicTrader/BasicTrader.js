@@ -75,6 +75,7 @@ export default (props) => {
               ticker={ticker}
               connected={connected}
               marketPrice={marketPrice}
+              movieSlug={movieSlug}
             />
           ) : (
             <React.Fragment>
