@@ -5,14 +5,22 @@ import classNames from 'classnames'
 import hashSum from 'hash-sum'
 
 import {
+  Button,
   Fade,
   Grid,
   Icon,
+  InputBase,
   Paper,
   Snackbar,
   Typography,
   makeStyles
 } from "@material-ui/core"
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
+import { faClipboard } from "@fortawesome/free-solid-svg-icons"
+
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 import { ShareButtons } from '../../app'
 
@@ -91,11 +99,22 @@ const ReferralCard = (props) => {
   return (
     <CardOuter leftAligned classes={classes} >
       <Typography className={classes.totalTitle}>Earn 15 points for each friend you invite to ESX</Typography>
+      <div className={classes.urlCopyOuter}>
+        <InputBase
+          value={rewardsURL}
+          className={classes.urlField}
+          readOnly
+        />
+        <CopyToClipboard text={rewardsURL} onCopy={onCopy}>
+          <Button variant="outlined">
+            <FontAwesomeIcon className={classes.clipboardIcon} icon={faClipboard} />&nbsp;Copy
+          </Button>
+        </CopyToClipboard>
+      </div>
       <ShareButtons 
-        show={['Facebook', 'Twitter', 'LinkedIn', 'Email', 'CopyURL']}
+        show={['Facebook', 'Twitter', 'LinkedIn', 'Email']}
         shareURL={rewardsURL} 
         message={rewardsShareMessage}
-        onCopy={onCopy}
         iconSize='large'
         orientation='horizantal'
         hideLabels

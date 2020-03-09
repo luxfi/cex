@@ -8,7 +8,7 @@ const isEmpty = obj =>
 
 class StockChart extends React.Component {
   render() {
-    const { stock, stockName, ticker, marketPrice } = this.props
+    const { stock, stockName, ticker, marketPrice, movieSlug } = this.props
     const { intradayData, dailyData, previousDayClose } = stock
 
     // the intraday times which the 1D chart will always render
@@ -223,6 +223,7 @@ class StockChart extends React.Component {
         previousDayClose={previousDayClose}
         marketPrice={marketPrice}
         ticker={ticker}
+        movieSlug={movieSlug}
       />
     )
   }

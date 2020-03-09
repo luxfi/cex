@@ -155,13 +155,17 @@ class PickSeatsView extends React.Component {
     const movieSlug = router.query.slug || slugFromPath()
     const refString = (refHash && refHash.length) ? `&ref=${refHash}` : ''
 
+    const localShowtimeStart = selectedShowtime && selectedShowtime.localShowtimeStart
+    const formatedDate = selectedDate && selectedDate.formated
+
     return (
       <Container maxWidth='md' className={classes.outerContainer}>
         <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
         <Grid container alignItems='flex-start' justify='space-evenly'>
           <Box className={classes.seatsSection}>
             <Grid className={classes.seatsTimerContainer} container justify='space-between' alignItems='center'>
-              <span>{`${selectedDate.formated} ${moment(selectedShowtime.localShowtimeStart).format('hh:mm A')}`}</span>
+              <span>
+                {`${formatedDate} ${moment(localShowtimeStart).format('hh:mm A')}`}</span>
               <button type='button' className={classes.seatLegendbtn} onClick={this.openDialog}>Seat Legend</button>
               <CustomDialog
                 open={uiStore.dialog.open}
