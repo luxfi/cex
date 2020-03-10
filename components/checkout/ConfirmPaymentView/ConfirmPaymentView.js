@@ -134,10 +134,7 @@ class ConfirmPaymentView extends React.Component {
   getFundStatus = (formattedAccount) => {
     const { store: { userStore: { accountBalance } } } = this.props
     if (formattedAccount.name === 'ESX') {
-      if (accountBalance) {
-        return 'Funded'
-      }
-      return 'Not Funded'
+      return formatCurrency(accountBalance)
     }
     return 'Funded'
   }
@@ -153,6 +150,7 @@ class ConfirmPaymentView extends React.Component {
           formattedAccounts,
           paymentMethodIndex,
           paymentOptionSelected,
+          accountBalance,
         },
         ticketCheckoutStore: {
           serviceFee,
@@ -203,7 +201,7 @@ class ConfirmPaymentView extends React.Component {
                       {formatCurrency(ticket.price * ticket.quantity)}
                     </TableCell>
                   </TableRow>
-                )}))}
+                  )}))}
                 <TableRow key='Subtotal'>
                   <TableCell>
                     Subtotal
@@ -249,11 +247,13 @@ class ConfirmPaymentView extends React.Component {
                   justify='space-between'
                   wrap='nowrap'
                   component='button'
-                  disabled={this.getFundStatus(formattedAccount) === 'Not Funded'}
+                  disabled={(formattedAccount.name === 'ESX' && !accountBalance)}
                 >
                   <Grid container alignItems='center'>
                     <AccountBalanceIcon fontSize='small' />
-                    <Typography style={{ fontSize: 14, marginLeft: 5 }}>{formattedAccount.name}</Typography>
+                    <Typography style={{ fontSize: 14, marginLeft: 5 }}>
+                      {formattedAccount.name === 'ESX' ? 'Available Deposit' : formattedAccount.name}
+                    </Typography>
                   </Grid>
                   <Grid container justify='flex-end'>
                     <Typography style={{ fontSize: 14 }}>{this.getFundStatus(formattedAccount)}</Typography>
@@ -302,7 +302,7 @@ class ConfirmPaymentView extends React.Component {
           </Box>
           <Grid>
             <Button
-              disabled={!paymentOptionSelected}
+              disabled={!paymentOptionSelected || total === serviceFee}
               className={classes.buyBtn}
               onClick={this.purchaseTickets}
             >
