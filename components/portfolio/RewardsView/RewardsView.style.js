@@ -10,7 +10,10 @@ export default (theme) => ({
   root: {
     margin: theme.spacing(0, 4),
   },
-  referalCard: {
+  invisible: {
+    visibility: 'hidden'
+  },
+  movieReferalCard: {
     alignItems: "flex-start !important",
     padding: theme.spacing(2) + "px !important",
     display: 'flex',
@@ -22,11 +25,13 @@ export default (theme) => ({
     }
   },
   referalCardTitle: {
-    fontSize: "1.6rem",
+    fontSize: "1.5rem",
+    borderBottom: '1px solid #333',
   },
   referalCardContentArea: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    width: '100%'
   },
   rewardIconsRow: {
     display: 'flex',
@@ -45,15 +50,15 @@ export default (theme) => ({
 
   referalCardPointsString: {
     ...miniReset,
-    //marginBottom: "0.4rem",
-    fontSize: '1.4rem',
+    fontSize: '1.1rem',
+    paddingLeft: '8px',
   },
   referalCardCreditsIcon: {
     display: "inline-block",
     position: 'relative',
-    top: '2px',
+    top: '5px',
     color: blue[600],
-    fontSize: '1.4rem',
+    fontSize: '1.2rem',
     paddingRight: '3px',
   },
 
@@ -76,7 +81,6 @@ export default (theme) => ({
 
   title: {
     ...miniReset,
-    //textTransform: "uppercase",
     fontSize: "1rem",
     fontWeight: 200,
     marginBottom: theme.spacing(2)
@@ -93,23 +97,19 @@ export default (theme) => ({
 
   pointsString: {
     ...miniReset,
-    //marginBottom: "0.4rem",
     fontSize: '1rem',
   },
   creditIcon: {
     display: "inline-block",
     position: 'relative',
     top: '2px',
-    //fontSize: '1.2rem',
     color: blue[600],
     fontSize: '1rem',
     paddingRight: '3px',
-    //marginBottom: theme.spacing(1)
   },
   disabledCreditIcon: {
     opacity: '0.7'
   },
-
 
   completedIcon: {
     fontSize: '1rem',
