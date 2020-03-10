@@ -13,6 +13,14 @@ export default (theme) => ({
     flexDirection: 'row' 
   },
 
+  shareListItem: {
+    paddingLeft: 0,
+
+    '&:last-child': {
+      paddingRight: 0
+    }
+  },
+
   shareIcon: {
     display: 'block'
   },
