@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import hashSum from 'hash-sum'
 
 import {
+  Box,
   Button,
   Fade,
   Grid,
@@ -15,6 +16,8 @@ import {
   Typography,
   makeStyles
 } from "@material-ui/core"
+
+import Image from 'material-ui-image'
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
@@ -29,14 +32,18 @@ const styles = makeStyles(myStyles)
 
 const CardOuter = (props) => {
 
+
+  const classes = styles()
+
   const {
-    classes,
     disabled,
-    leftAligned
+    leftAligned,
+    className
   } = props
 
   let names = []
   names.push(classes.paper)
+  names.push(className)
   if (!!disabled) {
     names.push(classes.disabledPaper)
   }
@@ -55,37 +62,69 @@ const RewardCard = (props) => {
     title,
     completed,
     points,
-    double,
+    iconName
   } = props
 
   const classes = styles()
 
-  const pointsString = completed ? points + " points earned" : "earn " + points + " points"
-  const iconClasses = completed ? classes.cardIcon : classNames(classes.cardIcon, classes.disabledIcon)
+  const pointsString = completed ? points + " Credits earned" : "Earn " + points + " Credits"
+  const typeIconClasses = completed ? classes.cardIcon : classNames(classes.cardIcon, classes.disabledIcon)
+  const creditsIconClasses = completed ? classes.creditIcon : classNames(classes.creditIcon, classes.disabledCreditIcon)
     // This ensures that the space occupied by the absent element is maintained
   const completedStringStyle = completed ? { visibility: "visible" } : { visibility: "hidden" }
 
   return (
-    <CardOuter disabled={!completed} classes={classes}>
+    <CardOuter disabled={!completed}>
       <h6 className={classes.title}>{title}</h6>
-      <Icon className={iconClasses}>stars_rounded</Icon>
-      <p className={classes.pointsString}>{pointsString}</p>
+      <Icon className={typeIconClasses} color='secondary'>{iconName}</Icon>
+      <p className={classes.pointsString}><Icon className={creditsIconClasses} >stars_rounded</Icon>&nbsp;{pointsString}</p>
       <p className={classes.completedString} style={completedStringStyle}><Icon className={classes.completedIcon}>check_circle</Icon>Completed</p>
     </CardOuter>
   )
 }
+
+const MovieReferralsCard = (props) => {
+
+  const {
+    movie,
+    referrals,
+  } = props
+
+  const classes = styles()
+
+  let icons = []
+  for (let i = 0; i< referrals; i++) {
+    icons.push(<Icon className={classes.movieReferralIcon} color='secondary'>contact_mail</Icon>)
+  }
+
+  const pointsString = (referrals * 5) + " Credits earned"
+
+  return (
+    <CardOuter className={classes.referalCard}>
+      <img src={movie.posterImg} width='auto' height='100%'/>
+      <div className={classes.referalCardContentArea}>
+        <Typography className={classes.referalCardTitle}>{movie.name}</Typography>
+        <div className={classes.rewardIconsRow}>
+          <Typography className={classes.referalCardReferralLabel}>Referrals:&nbsp;&nbsp;</Typography>{icons}
+        </div>
+        <p className={classes.referalCardPointsString}><Icon className={classes.referalCardCreditsIcon} >stars_rounded</Icon>&nbsp;{pointsString}</p>
+      </div>
+    </CardOuter>
+  )
+}
+
 
 const TotalCard = (props) => {
 
   const { total, monthTotal } = props
   const classes = styles()
   return (
-    <CardOuter classes={classes}>
-      <h6 className={classes.totalTitle}>Rewards</h6>
-      <p className={classes.totalOuter}>
+    <CardOuter>
+      <Typography className={classes.totalTitle}>Total Credits</Typography>
+      <Box className={classes.totalOuter}>
         <Icon className={classes.totalIcon}>stars_rounded</Icon>
         <span className={classes.totalString}>{total}</span>
-      </p>
+      </Box>
       <p className={classes.monthTotalString} >{monthTotal}&nbsp;this month</p>
     </CardOuter>
   )
@@ -97,9 +136,9 @@ const ReferralCard = (props) => {
   const classes = styles()
 
   return (
-    <CardOuter leftAligned classes={classes} >
-      <Typography className={classes.totalTitle}>Earn 15 points for each friend you invite to ESX</Typography>
-      <div className={classes.urlCopyOuter}>
+    <CardOuter leftAligned >
+      <Typography className={classes.totalTitle}>Refer a friend to ESX</Typography>
+      <Box className={classes.urlCopyOuter}>
         <InputBase
           value={rewardsURL}
           className={classes.urlField}
@@ -110,7 +149,7 @@ const ReferralCard = (props) => {
             <FontAwesomeIcon className={classes.clipboardIcon} icon={faClipboard} />&nbsp;Copy
           </Button>
         </CopyToClipboard>
-      </div>
+      </Box>
       <ShareButtons 
         show={['Facebook', 'Twitter', 'LinkedIn', 'Email']}
         shareURL={rewardsURL} 
@@ -143,63 +182,55 @@ const UrlWasCopiedSnackbar = (props) => {
 const rewards = [
   {
     id: 1,
-    title: 'complete your profile',
+    title: 'Complete your Profile',
+    iconName: 'account_box',
     completed: true,
   },
   {
     id: 2,
-    title: 'invite a friend',
-    completed: false,
+    title: 'Add a Payment Option',
+    iconName: 'payment',
+    completed: true,
   },
   {
     id: 3,
-    title: 'add a payment option',
+    title: 'Refer a Friend',
+    iconName: 'person_add',
     completed: true,
   },
   {
     id: 4,
-    title: 'make 1 investment',
-    completed: true,
+    title: 'Make an Investment',
+    iconName: 'shop',
+    completed: false,
   },
-  {
-    id: 5,
-    title: 'make 2 investment',
-  },
-  {
-    id: 6,
-    title: 'make 1 investment',
-  },
-  {
-    id: 7,
-    title: 'make 10 investment',
-  },
-  {
-    id: 8,
-    title: 'make 20 investment',
-  },
-  {
-    id: 9,
-    title: 'make 50 investment',
-  },
-]
+ ]
 
 
 const getMyReferals = (email) => {
   const ticketTransactions = JSON.parse(localStorage.getItem('ticketTransactions'))
 
+  let result = {
+    total: 0,
+    byFilm: {}
+  }
   if (ticketTransactions == null) {
-    return 0
+    return result
   }
 
   const myHashSum = hashSum(email)
-  let count = 0
   ticketTransactions.forEach((t) => {
-    if (t.refHash === myHashSum) {
-      count++
+    if ('refHash' in t && t.refHash === myHashSum) {
+      if (t.movieSlug in result.byFilm) {
+        result.byFilm[t.movieSlug] += t.numberOfSeats
+      }
+      else {
+        result.byFilm[t.movieSlug] = t.numberOfSeats
+      }
+      result.total += t.numberOfSeats
     }
   })
-
-  return count
+  return result
 }
 
 
@@ -210,18 +241,19 @@ const RewardsView = inject('store')((props) => {
   if (tabIdx !== index) return null
 
   const classes = styles()
-  const { store: { userStore }} = props
+  const { store: { userStore, movieStore }} = props
   const [wasCopied, setWasCopied] = React.useState(false)
 
-  const rewardsURL = `${window.location.origin}/rewards/invite?ref=${hashSum(userStore.email)}`
+  const rewardsURL = `${window.location.origin}/invite?ref=${hashSum(userStore.email)}`
   const rewardsShareMessage = "I'm watching and investing on Entertainment Stock Exchange. Join me!"
 
+
+  const referrals = getMyReferals(userStore.email)
+  let totalCredits = 10 // to start
+  totalCredits += referrals.total * 5
   return (
     <>
     <Grid container spacing={3}>
-      <Grid item xs={12} sm={4}>
-        <TotalCard total={45} monthTotal={30} />
-      </Grid>
       <Grid item xs={12} sm={8}>
         <ReferralCard
           rewardsURL={rewardsURL}
@@ -229,26 +261,36 @@ const RewardsView = inject('store')((props) => {
           onCopy={(ignore) => {setWasCopied(true)}}
         />
       </Grid>
-      {
-        rewards.map(reward => {
-          if (reward.title == 'invite a friend') {
-
-            const referrals = getMyReferals(userStore.email)
-            return (
-              <Grid key={reward.id} item xs={12} sm={4}>
-                <RewardCard title={reward.title} points={5 * referrals} completed={(referrals > 0)}/>
-              </Grid>
-            )
-          }
+      <Grid item xs={12} sm={4}>
+        <TotalCard total={totalCredits} monthTotal={totalCredits} />
+      </Grid>
+      {rewards.map(reward => {
+          //'Refer a friend'
+        if (reward.id == 3) {
+          const referralsPoints = referrals.total * 5
           return (
-            <Grid key={reward.id} item xs={12} sm={4}>
-              <RewardCard title={reward.title} points={5} completed={!!reward.completed}/>
+            <Grid key={reward.id} item xs={12} sm={3}>
+              <RewardCard title={reward.title} points={referralsPoints} iconName={reward.iconName} completed={(referralsPoints > 0)}/>
             </Grid>
           )
-        })
-      }
+        }
+        return (
+          <Grid key={reward.id} item xs={12} sm={3}>
+            <RewardCard title={reward.title} points={5}  iconName={reward.iconName} completed={!!reward.completed}/>
+          </Grid>
+        )
+      })}
+      {Object.keys(referrals.byFilm).map((slug, i) => {
+        console.log("SEARCHING FOR " + slug)
+        const movie = movieStore.getMovieBySlug(slug)
+        if (!movie) return null
+        return (
+          <Grid key={slug} item xs={12}>
+            <MovieReferralsCard movie={movie} referrals={referrals.byFilm[slug]} />
+          </Grid>
+        )
+      })}
     </Grid>
-    <br />
     <UrlWasCopiedSnackbar
       open={wasCopied}
       handleSnackbarClose={
