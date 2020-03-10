@@ -10,6 +10,58 @@ export default (theme) => ({
   root: {
     margin: theme.spacing(0, 4),
   },
+  invisible: {
+    visibility: 'hidden'
+  },
+  movieReferalCard: {
+    alignItems: "flex-start !important",
+    padding: theme.spacing(2) + "px !important",
+    display: 'flex',
+    flexDirection: 'row !important',
+    justifyContent: "flex-start !important",
+    '& img': {
+      display: 'block',
+      marginRight: 30
+    }
+  },
+  referalCardTitle: {
+    fontSize: "1.5rem",
+    borderBottom: '1px solid #333',
+  },
+  referalCardContentArea: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%'
+  },
+  rewardIconsRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginTop: '12px',
+    marginBottom: '12px'
+  },
+  movieReferralIcon: {
+    fontSize: "2rem",
+    marginRight: '20px',
+    display: 'block',
+  },
+  referalCardReferralLabel: {
+    fontSize: "1.4rem",
+  },
+
+  referalCardPointsString: {
+    ...miniReset,
+    fontSize: '1.1rem',
+    paddingLeft: '8px',
+  },
+  referalCardCreditsIcon: {
+    display: "inline-block",
+    position: 'relative',
+    top: '5px',
+    color: blue[600],
+    fontSize: '1.2rem',
+    paddingRight: '3px',
+  },
+
   paper: {
     padding: theme.spacing(2),
     height: "216px",
@@ -20,16 +72,15 @@ export default (theme) => ({
     justifyContent: "space-between"
   },
   disabledPaper: {
-    color: theme.palette.text.secondary + " !important",
+   // color: theme.palette.text.secondary + " !important",
   },
   leftAlignedPaper: {
     alignItems: "flex-start !important",
-    paddingLeft: theme.spacing(4)
+    paddingLeft: theme.spacing(6)
   },
 
   title: {
     ...miniReset,
-    textTransform: "uppercase",
     fontSize: "1rem",
     fontWeight: 200,
     marginBottom: theme.spacing(2)
@@ -37,23 +88,34 @@ export default (theme) => ({
 
   cardIcon: {
     display: "block",
-    fontSize: '4.2rem',
-    color: blue[500],
+    fontSize: '4rem',
     marginBottom: theme.spacing(1)
   },
   disabledIcon: {
-    color: theme.palette.grey[300] + " !important",
+    opacity: '0.4'
   },
 
   pointsString: {
     ...miniReset,
-    marginBottom: "0.4rem",
+    fontSize: '1rem',
   },
+  creditIcon: {
+    display: "inline-block",
+    position: 'relative',
+    top: '2px',
+    color: blue[600],
+    fontSize: '1rem',
+    paddingRight: '3px',
+  },
+  disabledCreditIcon: {
+    opacity: '0.7'
+  },
+
   completedIcon: {
     fontSize: '1rem',
     color: green[600],
     marginBottom: "-0.2rem",
-    marginRight: "0.1rem"
+    marginRight: "0.2rem"
   },
   completedString: {
     ...miniReset,
@@ -62,7 +124,7 @@ export default (theme) => ({
 
   totalTitle: {
     ...miniReset,
-    textTransform: "uppercase",
+    //textTransform: "uppercase",
     fontSize: "1.2rem",
     fontWeight: 300,
     marginBottom: theme.spacing(1),
@@ -75,16 +137,17 @@ export default (theme) => ({
     flexDirection: "row",
     alignItems: "center"
   },
+
   totalString: {
     ...miniReset,
     display: "block",
     fontSize: '3.5rem',
   },
   totalIcon: {
-    fontSize: '5.5rem',
+    fontSize: '4rem',
     display: "block",
     color: blue[600],
-    paddingRight: "0.2rem",
+    marginRight:  theme.spacing(1),
   },
 
   monthTotalString: {
@@ -101,11 +164,13 @@ export default (theme) => ({
     justifyContent: "flex-start",
     alignItems: "stretch"
   },
+
   urlField: {
     border: "1px " + theme.palette.text.secondary + " solid",
     borderRadius: "3px",
     marginRight: theme.spacing(1),
-    padding: "6px 24px 6px 10px",
+    padding: "6px 15px 6px 10px",
+    width: '400px'
   },
 
   socialOuter: {
@@ -135,25 +200,4 @@ export default (theme) => ({
       }
     }
   },
-
-  shareLabel: {
-    display: "block",
-    cursor: "pointer",
-    fontSize: "1.4rem",
-    marginRight: "0.7rem",
-  },
-  facebookIcon: {
-    color: "#3b5998",
-    marginLeft: "-4px",
-  },
-  twitterIcon: {
-    color: "#00acee",
-  },
-  linkedinIcon: {
-    color: "#0e76a8",
-  },
-  emailIcon: {
-    color: blue[600],
-  }
-
 })

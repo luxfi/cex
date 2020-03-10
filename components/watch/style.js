@@ -146,14 +146,6 @@ export default (theme) => ({
     gridColumn: '1/span 2',
     gridRow: '2/3',
   },
-
-  shareButton: {
-    background: '#fff',
-    '&:hover': {
-      background: YELLOW,
-    },
-  },
-
   iconButton: {
     padding: 5,
     borderRadius: 8,
