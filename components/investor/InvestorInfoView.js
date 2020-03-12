@@ -161,9 +161,6 @@ export default inject('store')(observer((props) => {
                           value={values.address1}
                           onChange={handleChange}
                           style={style.acctInput}
-                          ininputPropsputProps={{
-                            padding: 15
-                          }}
                         />
                         <TextField
                           required
@@ -176,9 +173,6 @@ export default inject('store')(observer((props) => {
                           value={values.address2}
                           onChange={handleChange}
                           style={style.acctInput}
-                          inputProps={{
-                            padding: 15
-                          }}
                         />
                       </div>
                       <TextField
@@ -190,10 +184,6 @@ export default inject('store')(observer((props) => {
                         error={!!(errors.city)}
                         placeholder='City e.g. San Jose'
                         value={values.city}
-                        onChange={handleChange}
-                        inputProps={{
-                          padding: 15
-                        }}
                       />
                       <TextField
                         required
