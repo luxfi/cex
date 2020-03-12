@@ -736,7 +736,7 @@ export default class UserStore {
         dependants: data.dependants,
       },
       assets: {
-        liquid: data.dependants,
+        liquid: data.liquid,
         netWorth: data.netWorth,
         yearlyIncome: data.yearlyIncome,
       },

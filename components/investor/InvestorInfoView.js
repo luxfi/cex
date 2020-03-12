@@ -152,10 +152,10 @@ export default inject('store')(observer((props) => {
                           required
                           id='address1'
                           name='address1'
-                          label='Address 1'
+                          label='Address'
                           fullWidth
                           error={!!(errors.address1)}
-                          placeholder='234 street lane'
+                          placeholder='Address e.g. 234 street lane'
                           value={values.address1}
                           onChange={handleChange}
                           style={style.acctInput}
@@ -164,10 +164,10 @@ export default inject('store')(observer((props) => {
                           required
                           id='address2'
                           name='address2'
-                          label='Address 2'
+                          label='Address Line 2'
                           fullWidth
                           error={!!(errors.address2)}
-                          placeholder='Apt 23, building 4'
+                          placeholder='Address line 2 e.g. Apt 23, building 4'
                           value={values.address2}
                           onChange={handleChange}
                           style={style.acctInput}
@@ -180,7 +180,7 @@ export default inject('store')(observer((props) => {
                         label='City'
                         fullWidth
                         error={!!(errors.city)}
-                        placeholder='San Jose'
+                        placeholder='City e.g. San Jose'
                         value={values.city}
                         onChange={handleChange}
                       />
@@ -191,7 +191,7 @@ export default inject('store')(observer((props) => {
                         label='State'
                         fullWidth
                         error={!!(errors.state)}
-                        placeholder='Carlifornia'
+                        placeholder='State e.g Carlifornia'
                         value={values.state}
                         onChange={handleChange}
                       />
@@ -202,7 +202,7 @@ export default inject('store')(observer((props) => {
                         label='Postal Code'
                         fullWidth
                         error={!!(errors.postalCode)}
-                        placeholder='18796'
+                        placeholder='Postal Code e.g. 18796'
                         value={values.postalCode}
                         onChange={handleChange}
                       />
@@ -215,7 +215,7 @@ export default inject('store')(observer((props) => {
                         label='Phone'
                         fullWidth
                         error={!!(errors.phone)}
-                        placeholder='4846389012'
+                        placeholder='Phone e.g. 4846389012'
                         value={values.phone}
                         onChange={handleChange}
                       />
@@ -297,16 +297,16 @@ export default inject('store')(observer((props) => {
                     </FieldRow>
                     <FieldRow label='Dependants' classes={classes}>
                       <TextField
-                          required
-                          id='dependants'
-                          name='dependants'
-                          label='Dependants'
-                          fullWidth
-                          placeholder='3'
-                          error={!!(errors.dependants)}
-                          value={values.dependants}
-                          onChange={handleChange}
-                        />
+                        required
+                        id='dependants'
+                        name='dependants'
+                        label='Dependants'
+                        fullWidth
+                        placeholder='3'
+                        error={!!(errors.dependants)}
+                        value={values.dependants}
+                        onChange={handleChange}
+                      />
                     </FieldRow>
                     <SectionTitle label='Assets' classes={classes} />
                     <FieldRow label='Liquid' contents={liquid} classes={classes}>
@@ -431,6 +431,7 @@ export default inject('store')(observer((props) => {
                   color="primary"
                   onClick={handleSubmit}
                   style={{ margin: '20px 0 0 0' }}
+                  disabled={isSubmitting}
                 >
                   Save
                 </Button>
