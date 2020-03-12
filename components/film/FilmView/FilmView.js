@@ -2,6 +2,7 @@ import React from "react"
 import { isObservableArray, toJS } from "mobx"
 import { inject, observer } from "mobx-react"
 import classNames from "classnames"
+import { AuthModal } from '../../app'
 
 import Link from "next/link"
 import { withRouter, Router } from "next/router"
@@ -107,7 +108,10 @@ class Index extends React.Component {
   }
 
   renderAddToPlaylistButton(movie) {
-    const { store: { userPortfolio }, classes } = this.props
+    const {
+      store: { userPortfolio, userStore, uiStore },
+      classes,
+    } = this.props
     const { watchlist } = userPortfolio
     const obj = (watchlist.includes(movie.ticker)) ? {
       func: () => userPortfolio.removeFromWatchlist(movie.ticker),
@@ -116,13 +120,21 @@ class Index extends React.Component {
       func: () => userPortfolio.addToWatchlist(movie.ticker),
       buttonText: 'Add to watchlist',
     }
+    const handleClick = () => {
+      if (!userStore.loggedIn) {
+        uiStore.openAuthModal()
+        return false
+      }
+
+      obj.func()
+    }
 
     return (
       <Button
         rel='noopener noreferrer'
         variant='contained'
         className={classes.movieButton}
-        onClick={() => obj.func()}
+        onClick={handleClick}
       >
         {obj.buttonText}
       </Button>
@@ -417,7 +429,8 @@ class Index extends React.Component {
       movieStore,
       orderBook,
       userStore,
-      userPortfolio
+      userPortfolio,
+      uiStore: { authModalOpen, tabIndexValue },
     } = this.props.store
     const movie = movieStore.getMovieBySlug(slug)
     // orderBook stuff
@@ -524,6 +537,7 @@ class Index extends React.Component {
         >
           {!userStore.token ? <InvestNow /> : ""}
         </div>
+        <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
       </>
     )
   }
