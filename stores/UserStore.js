@@ -709,6 +709,73 @@ export default class UserStore {
     }
   }
 
+  @action async updateAccountInfo(data, onSuccess, onError) {
+    this.updating = true
+    const addressObj = {
+      name: `${this.firstName} ${this.lastName}`,
+      line1: data.address1,
+      line2: data.address2,
+      city: data.city,
+      postalCode: data.postalCode,
+      state: data.state,
+    }
+    const kycObj = {
+      address: addressObj,
+      phone: data.phone,
+    }
+
+    const acctDetails = {
+      accountNumbers: {
+        APEX: data.APEX,
+        RHS: data.RHS,
+      },
+      dayTradeProtection: data.dayTradeProtection,
+      personalDetails: {
+        employment: data.employment,
+        maritalStatus: data.maritalStatus,
+        dependants: data.dependants,
+      },
+      assets: {
+        liquid: data.dependants,
+        netWorth: data.netWorth,
+        yearlyIncome: data.yearlyIncome,
+      },
+      investment: {
+        goal: data.goal,
+        timeLine: data.timeLine,
+        experience: data.experience,
+        riskTolerence: data.riskTolerence,
+        liquidity: data.liquidity,
+      },
+    }
+
+    try {
+      const newAcc = Object.assign(this.account, {
+        kyc: kycObj,
+        firstName: this.firstName,
+        lastName: this.lastName,
+      })
+
+      const updatedUser = await this.api.account.update({
+        ...newAcc,
+        metadata: {
+          ...acctDetails,
+        },
+      })
+
+      // On success
+      this.account = updatedUser
+
+      onSuccess && onSuccess()
+    } catch (ex) {
+      console.log('Error saving KYC options', ex)
+      onError && onError()
+    } finally {
+      this.updating = false
+    }
+  }
+
+
   @action forgetUser() {
     if (this.api.deleteCustomerToken) {
       this.token = this.api.deleteCustomerToken()
