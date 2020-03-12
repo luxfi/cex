@@ -46,7 +46,9 @@ const FieldRow = ({
 }) => (
   <TableRow>
     <TableCell fixedHeader={false} style={{ width: '25%', tableLayout: 'auto' }} size='small' className={classes.tableLabelColumn}>{label}</TableCell>
-    <TableCell style={{ padding: '10px 0' }} className={classes.tableContentsColumn}>{children}</TableCell>
+    <TableCell style={{ padding: '10px 0' }} className={classes.tableContentsColumn}>
+      <FormControl style={{ width: '100%' }}>{children}</FormControl>
+    </TableCell>
   </TableRow>
 )
 
@@ -159,6 +161,9 @@ export default inject('store')(observer((props) => {
                           value={values.address1}
                           onChange={handleChange}
                           style={style.acctInput}
+                          ininputPropsputProps={{
+                            padding: 15
+                          }}
                         />
                         <TextField
                           required
@@ -171,6 +176,9 @@ export default inject('store')(observer((props) => {
                           value={values.address2}
                           onChange={handleChange}
                           style={style.acctInput}
+                          inputProps={{
+                            padding: 15
+                          }}
                         />
                       </div>
                       <TextField
@@ -183,6 +191,9 @@ export default inject('store')(observer((props) => {
                         placeholder='City e.g. San Jose'
                         value={values.city}
                         onChange={handleChange}
+                        inputProps={{
+                          padding: 15
+                        }}
                       />
                       <TextField
                         required
