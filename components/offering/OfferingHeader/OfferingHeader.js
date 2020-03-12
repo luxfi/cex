@@ -13,32 +13,6 @@ import { OfferingInput, MediaSlider } from '../'
 import { ESXLinearProgressBar, ShareWidget } from '../../app'
 import { formatCurrency, slugFromPath } from '../../../util'
 
-const movie = {
-  title: 'SAW 9: Spiral',
-  highlightedTags: ['New Release'],
-  tags: ['2020', 'Paramount Pictures'],
-  youtubeIDs: [
-    'uiisFYRu0DQ',
-    '2RRkauL6Igs',
-    '_3pEEpORjXo',
-    'yVpDn9NSg6s',
-    'BZDhyjk7LrE',
-    'zEu9M1fuTxA',
-    'uiisFYRu0DQ', // repeating the ids until finding more content
-    '2RRkauL6Igs',
-    '_3pEEpORjXo',
-    'yVpDn9NSg6s',
-    'BZDhyjk7LrE',
-    'zEu9M1fuTxA',
-  ],
-  raisedAmount: 4203250.00,
-  amountOfInvestors: 24065,
-  daysLeft: 23,
-  fundingGoal: 5000000,
-  movieSlug: 'saw-9',
-  distributors: ['Paramount Pictures', 'Disney'],
-}
-
 const useTitleStyles = makeStyles(theme => ({
   chip: {
     background: grey[800],
@@ -65,7 +39,7 @@ const Title = ({ movie, highlightedTags }) => {
           <Box fontWeight="fontWeightBold">
             <Link href={`/film/${movie.movieSlug}`}>
               <a className={classes.aTag}>
-                {movie.title}
+                {movie.name}
               </a>
             </Link>
           </Box>
@@ -125,7 +99,7 @@ const Trailer = ({ trailer }) => {
           width: '100%',
           height: '100%',
         }}
-        src={trailer}
+        src={`${trailer}&rel=0`}
         frameBorder="0"
         allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
@@ -174,7 +148,7 @@ const RaisingInformation = withRouter(inject('store')(observer(({
   const movieDetail = movieStore.getMovieBySlug(movieSlug)
 
   const shareURL = `${window.location.origin}/offering/${movieSlug}`
-  const sharePrompt = `I just placed an offering for ${movieDetail.name}! Go check it out!`
+  const sharePrompt = movieDetail ? `I just placed an offering for ${movieDetail.name}! Go check it out!` : ''
 
   return (
     <Grid container direction="column" spacing={2}>
@@ -255,8 +229,9 @@ const OfferingHeader = ({
   setErrorMessage,
   setSuccessMessage,
   checkIfLoggedIn,
+  movie,
 }) => {
-  const [currentMedia, setCurrentMedia] = useState(movie.youtubeIDs[0])
+  const [currentMedia, setCurrentMedia] = useState(movie.trailers[0].trailer)
   return (
     <Grid justify="center" container spacing={4}>
       <Grid item xs={12} lg={10} id="offering-title">
@@ -270,9 +245,9 @@ const OfferingHeader = ({
         </Grid>
       </Grid>
       <Grid item xs={12} lg={7}>
-        <Trailer trailer={'https://www.youtube.com/embed/' + currentMedia} />
+        <Trailer trailer={currentMedia} />
         <MediaSlider
-          youtubeIDs={movie.youtubeIDs}
+          trailers={movie.trailers}
           setCurrentMedia={setCurrentMedia}
         />
       </Grid>
