@@ -129,9 +129,9 @@ const RaisingInformation = withRouter(inject('store')(observer(({
   funds,
   setErrorMessage,
   setSuccessMessage,
-  checkIfLoggedIn,
   router,
   store,
+  movie,
 }) => {
   // note, in future we will use moment(dateFundingEnds).toNow() to caculate relative time
   const percentFunded = ((raisedAmount / fundingGoal) * 100).toLocaleString(
@@ -143,12 +143,10 @@ const RaisingInformation = withRouter(inject('store')(observer(({
   const classes = useRaisingStyles()
   const movieSlug = router.query.slug || slugFromPath()
 
-  const { movieStore, userStore } = store
+  const { userStore } = store
 
-  const movieDetail = movieStore.getMovieBySlug(movieSlug)
-
-  const shareURL = `${window.location.origin}/offering/${movieSlug}`
-  const sharePrompt = movieDetail ? `I just placed an offering for ${movieDetail.name}! Go check it out!` : ''
+  const shareURL = `${window.location.origin}/offering/${movie.movieSlug}`
+  const sharePrompt = movie ? `I just placed an offering for ${movie.name}! Go check it out!` : ''
 
   return (
     <Grid container direction="column" spacing={2}>
@@ -198,7 +196,6 @@ const RaisingInformation = withRouter(inject('store')(observer(({
           funds={funds}
           setErrorMessage={setErrorMessage}
           setSuccessMessage={setSuccessMessage}
-          checkIfLoggedIn={checkIfLoggedIn}
         />
       </Grid>
       <Box mb={2} mt={3}>
@@ -228,7 +225,6 @@ const OfferingHeader = ({
   addOfferingInvestment,
   setErrorMessage,
   setSuccessMessage,
-  checkIfLoggedIn,
   movie,
 }) => {
   const [currentMedia, setCurrentMedia] = useState(movie.trailers[0].trailer)
@@ -254,6 +250,7 @@ const OfferingHeader = ({
       <Grid item lg={3} md={4} sm={6} xs={12}>
         {/* sidebar */}
         <RaisingInformation
+          movie={movie}
           raisedAmount={movie.raisedAmount}
           fundingGoal={movie.fundingGoal}
           amountOfInvestors={movie.amountOfInvestors}
@@ -262,7 +259,6 @@ const OfferingHeader = ({
           funds={funds}
           setErrorMessage={setErrorMessage}
           setSuccessMessage={setSuccessMessage}
-          checkIfLoggedIn={checkIfLoggedIn}
         />
       </Grid>
     </Grid>
