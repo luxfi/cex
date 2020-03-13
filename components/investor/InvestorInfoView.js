@@ -24,6 +24,9 @@ const style = {
   acctInput: {
     width: '48%',
   },
+  padding10: {
+    paddingLeft: 10,
+  },
 }
 
 const formValidationSchema = object().shape({
@@ -161,6 +164,12 @@ export default inject('store')(observer((props) => {
                           value={values.address1}
                           onChange={handleChange}
                           style={style.acctInput}
+                          inputProps={{
+                            style: style.padding10,
+                          }}
+                          InputLabelProps={{
+                            style: style.padding10,
+                          }}
                         />
                         <TextField
                           required
@@ -173,6 +182,12 @@ export default inject('store')(observer((props) => {
                           value={values.address2}
                           onChange={handleChange}
                           style={style.acctInput}
+                          inputProps={{
+                            style: style.padding10,
+                          }}
+                          InputLabelProps={{
+                            style: style.padding10,
+                          }}
                         />
                       </div>
                       <TextField
@@ -184,6 +199,12 @@ export default inject('store')(observer((props) => {
                         error={!!(errors.city)}
                         placeholder='City e.g. San Jose'
                         value={values.city}
+                        inputProps={{
+                          style: style.padding10,
+                        }}
+                        InputLabelProps={{
+                          style: style.padding10,
+                        }}
                       />
                       <TextField
                         required
@@ -195,6 +216,12 @@ export default inject('store')(observer((props) => {
                         placeholder='State e.g Carlifornia'
                         value={values.state}
                         onChange={handleChange}
+                        inputProps={{
+                          style: style.padding10,
+                        }}
+                        InputLabelProps={{
+                          style: style.padding10,
+                        }}
                       />
                       <TextField
                         required
@@ -206,6 +233,12 @@ export default inject('store')(observer((props) => {
                         placeholder='Postal Code e.g. 18796'
                         value={values.postalCode}
                         onChange={handleChange}
+                        inputProps={{
+                          style: style.padding10,
+                        }}
+                        InputLabelProps={{
+                          style: style.padding10,
+                        }}
                       />
                     </FieldRow>
                     <FieldRow label='Phone' classes={classes}>
@@ -219,6 +252,12 @@ export default inject('store')(observer((props) => {
                         placeholder='Phone e.g. 4846389012'
                         value={values.phone}
                         onChange={handleChange}
+                        inputProps={{
+                          style: style.padding10,
+                        }}
+                        InputLabelProps={{
+                          style: style.padding10,
+                        }}
                       />
                     </FieldRow>
                     <FieldRow label='Pattern Day Trade Protection' classes={classes}>
@@ -226,6 +265,7 @@ export default inject('store')(observer((props) => {
                         <Select
                           value={values.dayTradeProtection ? 'yes' : 'no'}
                           onChange={handleChange}
+                          style={style.padding10}
                           inputProps={{
                             name: 'dayTradeProtection',
                             id: 'dayTradeProtection',
@@ -247,8 +287,14 @@ export default inject('store')(observer((props) => {
                           placeholder='5P75152'
                           value={values.APEX}
                           onChange={handleChange}
-                          inputProps={{ maxLength: 30 }}
                           style={style.acctInput}
+                          inputProps={{
+                            style: style.padding10,
+                            maxLength: 30,
+                          }}
+                          InputLabelProps={{
+                            style: style.padding10,
+                          }}
                         />
                         <TextField
                           required
@@ -259,8 +305,14 @@ export default inject('store')(observer((props) => {
                           placeholder='1000744308'
                           value={values.RHS}
                           onChange={handleChange}
-                          inputProps={{ maxLength: 30 }}
                           style={style.acctInput}
+                          inputProps={{
+                            style: style.padding10,
+                            maxLength: 30,
+                          }}
+                          InputLabelProps={{
+                            style: style.padding10,
+                          }}
                         />
                       </div>
                     </FieldRow>
@@ -270,6 +322,7 @@ export default inject('store')(observer((props) => {
                         <Select
                           value={values.employment}
                           onChange={handleChange}
+                          style={style.padding10}
                           inputProps={{
                             name: 'employment',
                             id: 'employment',
@@ -285,6 +338,7 @@ export default inject('store')(observer((props) => {
                         <Select
                           value={values.maritalStatus}
                           onChange={handleChange}
+                          style={style.padding10}
                           inputProps={{
                             name: 'maritalStatus',
                             id: 'maritalStatus',
@@ -307,6 +361,12 @@ export default inject('store')(observer((props) => {
                         error={!!(errors.dependants)}
                         value={values.dependants}
                         onChange={handleChange}
+                        inputProps={{
+                          style: style.padding10,
+                        }}
+                        InputLabelProps={{
+                          style: style.padding10,
+                        }}
                       />
                     </FieldRow>
                     <SectionTitle label='Assets' classes={classes} />
@@ -315,6 +375,7 @@ export default inject('store')(observer((props) => {
                         <Select
                           value={values.liquid}
                           onChange={handleChange}
+                          style={style.padding10}
                           inputProps={{
                             name: 'liquid',
                             id: 'liquid',
@@ -329,6 +390,7 @@ export default inject('store')(observer((props) => {
                         <Select
                           value={values.netWorth}
                           onChange={handleChange}
+                          style={style.padding10}
                           inputProps={{
                             name: 'netWorth',
                             id: 'netWorth',
@@ -343,6 +405,7 @@ export default inject('store')(observer((props) => {
                         <Select
                           value={values.yearlyIncome}
                           onChange={handleChange}
+                          style={style.padding10}
                           inputProps={{
                             name: 'yearlyIncome',
                             id: 'yearlyIncome',
@@ -358,6 +421,7 @@ export default inject('store')(observer((props) => {
                         <Select
                           value={values.goal}
                           onChange={handleChange}
+                          style={style.padding10}
                           inputProps={{
                             name: 'goal',
                             id: 'goal',
@@ -372,6 +436,7 @@ export default inject('store')(observer((props) => {
                         <Select
                           value={values.timeLine}
                           onChange={handleChange}
+                          style={style.padding10}
                           inputProps={{
                             name: 'timeLine',
                             id: 'timeLine',
@@ -386,6 +451,7 @@ export default inject('store')(observer((props) => {
                         <Select
                           value={values.experience}
                           onChange={handleChange}
+                          style={style.padding10}
                           inputProps={{
                             name: 'experience',
                             id: 'experience',
@@ -400,6 +466,7 @@ export default inject('store')(observer((props) => {
                         <Select
                           value={values.riskTolerence}
                           onChange={handleChange}
+                          style={style.padding10}
                           inputProps={{
                             name: 'riskTolerence',
                             id: 'riskTolerence',
@@ -414,6 +481,7 @@ export default inject('store')(observer((props) => {
                         <Select
                           value={values.liquidity}
                           onChange={handleChange}
+                          style={style.padding10}
                           inputProps={{
                             name: 'liquidity',
                             id: 'liquidity',
