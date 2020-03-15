@@ -718,6 +718,7 @@ export default class UserStore {
       city: data.city,
       postalCode: data.postalCode,
       state: data.state,
+      country: data.country,
     }
     const kycObj = {
       address: addressObj,
