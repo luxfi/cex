@@ -17,6 +17,7 @@ export default (theme) => ({
   },
   formControl: {
     marginBottom: '18px',
+    width: '50%',
   },
   proceedButton: {
     color: theme.palette.common.black,

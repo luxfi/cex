@@ -3,6 +3,7 @@ import {
   Button,
   FormControl,
   Grid,
+  MenuItem,
   TextField,
   Typography,
 } from '@material-ui/core'
@@ -33,6 +34,10 @@ const formValidationSchema = object().shape({
     .positive('Invalid postal code'),
   cvc: number()
     .positive('Invalid CVC'),
+  address1: string(),
+  city: string(),
+  state: string(),
+  country: string(),
 })
 
 @inject('store')
@@ -71,7 +76,7 @@ class CardPaymentForm extends React.Component {
   render() {
     const {
       classes,
-      store: { userStore: { isValidCard, editedCard, cardEditingMode } },
+      store: { userStore: { isValidCard, editedCard, cardEditingMode, states, countries } },
     } = this.props
 
     return (
@@ -84,6 +89,10 @@ class CardPaymentForm extends React.Component {
               expiryYear: '',
               postalCode: '',
               cvc: '',
+              address1: '',
+              city: '',
+              state: '',
+              country: '',
               ...editedCard,
             }}
             validationSchema={formValidationSchema}
@@ -108,8 +117,22 @@ class CardPaymentForm extends React.Component {
                     {isValidCard === false && (<Typography color='error'>Invalid card details, try again</Typography>)}
                   </Grid>
                   <form onSubmit={handleSubmit}>
-                      <Box className={classes.paymentMethodFields}>
-                        <FormControl margin='normal'>
+                    <Box className={classes.paymentMethodFields}>
+                        <FormControl margin='normal' className={classes.formControl}>
+                          <TextField
+                            id='nameOnCard'
+                            name='nameOnCard'
+                            label='Name on Card'
+                            variant='outlined'
+                            size='small'
+                            value={values.nameOnCard}
+                            onChange={handleChange}
+                            style={{ margin: '0 8px' }}
+                            error={!!(errors.nameOnCard)}
+                            required
+                          />
+                        </FormControl>
+                        <FormControl margin='normal' className={classes.formControl}>
                           <TextField
                             id='creditCard'
                             name='creditCard'
@@ -121,22 +144,10 @@ class CardPaymentForm extends React.Component {
                             style={{ margin: '0 8px' }}
                             inputProps={{ maxLength: 19 }}
                             error={!!(errors.creditCard)}
+                            required
                           />
                         </FormControl>
-                        <FormControl margin='normal'>
-                          <TextField
-                            id='nameOnCard'
-                            name='nameOnCard'
-                            label='Name on Card'
-                            variant='outlined'
-                            size='small'
-                            value={values.nameOnCard}
-                            onChange={handleChange}
-                            style={{ margin: '0 8px' }}
-                            error={!!(errors.nameOnCard)}
-                          />
-                        </FormControl>
-                        <FormControl margin='normal' >
+                        <FormControl margin='normal' className={classes.formControl} >
                           <TextField
                             id='expiryMonth'
                             name='expiryMonth'
@@ -149,9 +160,10 @@ class CardPaymentForm extends React.Component {
                             onChange={handleChange}
                             inputProps={{ maxLength: 2 }}
                             error={!!(errors.expiryMonth)}
+                            required
                           />
                         </FormControl>
-                        <FormControl margin='normal'>
+                        <FormControl margin='normal' className={classes.formControl}>
                           <TextField
                             id='expiryYear'
                             name='expiryYear'
@@ -164,9 +176,10 @@ class CardPaymentForm extends React.Component {
                             onChange={handleChange}
                             inputProps={{ maxLength: 4 }}
                             error={!!(errors.expiryYear)}
+                            required
                           />
                         </FormControl>
-                        <FormControl margin='normal'>
+                        <FormControl margin='normal' className={classes.formControl}>
                           <TextField
                             id='cvc'
                             name='cvc'
@@ -179,10 +192,61 @@ class CardPaymentForm extends React.Component {
                             onChange={handleChange}
                             inputProps={{ maxLength: 3 }}
                             error={!!(errors.cvc)}
+                            required
                           />
                         </FormControl>
-                        <FormControl margin='normal'>
+                        <FormControl margin='normal' className={classes.formControl}>
                           <TextField
+                            id='address1'
+                            name='address1'
+                            label='Address'
+                            variant='outlined'
+                            size='small'
+                            style={{ margin: '0 8px' }}
+                            value={values.address1}
+                            onChange={handleChange}
+                            error={!!(errors.address1)}
+                            required
+                          />
+                        </FormControl>
+                        <FormControl margin='normal' className={classes.formControl}>
+                          <TextField
+                            id='city'
+                            name='city'
+                            label='City'
+                            variant='outlined'
+                            size='small'
+                            style={{ margin: '0 8px' }}
+                            value={values.city}
+                            onChange={handleChange}
+                            error={!!(errors.city)}
+                            required
+                          />
+                        </FormControl>
+                        <FormControl margin='normal' className={classes.formControl}>
+                          <TextField
+                            id='state'
+                            name='state'
+                            label='State'
+                            variant='outlined'
+                            size='small'
+                            style={{ margin: '0 8px' }}
+                            value={values.state}
+                            onChange={handleChange}
+                            error={!!(errors.state)}
+                            select
+                            required
+                          >
+                            {states.map((option, index) => (
+                              <MenuItem key={option.code} value={option.code}>
+                                {option.name}
+                              </MenuItem>
+                            ))}
+                          </TextField>
+                        </FormControl>
+                        <FormControl margin='normal' className={classes.formControl}>
+                          <TextField
+                            required
                             id='postalCode'
                             name='postalCode'
                             label='Postal Code'
@@ -194,7 +258,28 @@ class CardPaymentForm extends React.Component {
                             error={!!(errors.postalCode)}
                           />
                         </FormControl>
-                        <FormControl margin='normal'>
+                        <FormControl margin='normal' className={classes.formControl}>
+                          <TextField
+                            required
+                            id='country'
+                            name='country'
+                            label='Country'
+                            variant='outlined'
+                            size='small'
+                            style={{ margin: '0 8px' }}
+                            value={values.country}
+                            onChange={handleChange}
+                            error={!!(errors.country)}
+                            select
+                          >
+                            {countries.map((option, index) => (
+                              <MenuItem key={option.code} value={option.code}>
+                                {option.name}
+                              </MenuItem>
+                            ))}
+                          </TextField>
+                        </FormControl>
+                        <FormControl margin='normal' className={classes.formControl}>
                           <Button
                             id='credit-card-payment'
                             type='submit'
@@ -216,6 +301,10 @@ class CardPaymentForm extends React.Component {
                               || errors.expiryMonth
                               || errors.expiryYear
                               || errors.postalCode
+                              || errors.address1
+                              || errors.city
+                              || errors.state
+                              || errors.country
                             }
                           >
                             {isSubmitting ? 'Processing...' : cardEditingMode ? 'Edit Card' : 'Add Card'}
