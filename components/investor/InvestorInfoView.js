@@ -77,6 +77,8 @@ export default inject('store')(observer((props) => {
         postalCode,
         state,
         phone,
+        countries,
+        states = [],
       },
     },
   } = props
@@ -207,7 +209,6 @@ export default inject('store')(observer((props) => {
                         }}
                       />
                       <TextField
-                        required
                         id='state'
                         name='state'
                         label='State'
@@ -216,13 +217,21 @@ export default inject('store')(observer((props) => {
                         placeholder='State e.g Carlifornia'
                         value={values.state}
                         onChange={handleChange}
-                        inputProps={{
+                        SelectProps={{
                           style: style.padding10,
                         }}
                         InputLabelProps={{
                           style: style.padding10,
                         }}
-                      />
+                        select
+                        required
+                      >
+                        {states.map((option, index) => (
+                          <MenuItem key={option.code} value={option.code}>
+                            {option.name}
+                          </MenuItem>
+                        ))}
+                      </TextField>
                       <TextField
                         required
                         id='postalCode'
@@ -240,6 +249,29 @@ export default inject('store')(observer((props) => {
                           style: style.padding10,
                         }}
                       />
+                      <TextField
+                        required
+                        id='country'
+                        name='country'
+                        label='Country'
+                        fullWidth
+                        value={values.country}
+                        onChange={handleChange}
+                        error={!!(errors.country)}
+                        select
+                        SelectProps={{
+                          style: style.padding10,
+                        }}
+                        InputLabelProps={{
+                          style: style.padding10,
+                        }}
+                    >
+                        {countries.map((option, index) => (
+                          <MenuItem key={option.code} value={option.code}>
+                            {option.name}
+                          </MenuItem>
+                        ))}
+                      </TextField>
                     </FieldRow>
                     <FieldRow label='Phone' classes={classes}>
                       <TextField
@@ -318,37 +350,33 @@ export default inject('store')(observer((props) => {
                     </FieldRow>
                     <SectionTitle label='Personal Details' classes={classes} />
                     <FieldRow label='Employment' contents={employment} classes={classes}>
-                      <FormControl className={classes.formControl}>
-                        <Select
-                          value={values.employment}
-                          onChange={handleChange}
-                          style={style.padding10}
-                          inputProps={{
-                            name: 'employment',
-                            id: 'employment',
-                          }}
-                        >
-                          <MenuItem value='employed'>Employed</MenuItem>
-                          <MenuItem value='unemployed'>Unemployed</MenuItem>
-                        </Select>
-                      </FormControl>
+                      <Select
+                        value={values.employment}
+                        onChange={handleChange}
+                        style={style.padding10}
+                        inputProps={{
+                          name: 'employment',
+                          id: 'employment',
+                        }}
+                      >
+                        <MenuItem value='employed'>Employed</MenuItem>
+                        <MenuItem value='unemployed'>Unemployed</MenuItem>
+                      </Select>
                     </FieldRow>
                     <FieldRow label='Marital Status' classes={classes}>
-                      <FormControl className={classes.formControl}>
-                        <Select
-                          value={values.maritalStatus}
-                          onChange={handleChange}
-                          style={style.padding10}
-                          inputProps={{
-                            name: 'maritalStatus',
-                            id: 'maritalStatus',
-                          }}
-                        >
-                          <MenuItem value='single'>Single</MenuItem>
-                          <MenuItem value='married'>Married</MenuItem>
-                          <MenuItem value='divorced'>Divorced</MenuItem>
-                        </Select>
-                      </FormControl>
+                      <Select
+                        value={values.maritalStatus}
+                        onChange={handleChange}
+                        style={style.padding10}
+                        inputProps={{
+                          name: 'maritalStatus',
+                          id: 'maritalStatus',
+                        }}
+                      >
+                        <MenuItem value='single'>Single</MenuItem>
+                        <MenuItem value='married'>Married</MenuItem>
+                        <MenuItem value='divorced'>Divorced</MenuItem>
+                      </Select>
                     </FieldRow>
                     <FieldRow label='Dependants' classes={classes}>
                       <TextField
@@ -371,127 +399,111 @@ export default inject('store')(observer((props) => {
                     </FieldRow>
                     <SectionTitle label='Assets' classes={classes} />
                     <FieldRow label='Liquid' contents={liquid} classes={classes}>
-                      <FormControl className={classes.formControl}>
-                        <Select
-                          value={values.liquid}
-                          onChange={handleChange}
-                          style={style.padding10}
-                          inputProps={{
-                            name: 'liquid',
-                            id: 'liquid',
-                          }}
-                        >
-                          <MenuItem value='$50,000 to $99,999'>$50,000 to $99,999</MenuItem>
-                        </Select>
-                      </FormControl>
+                      <Select
+                        value={values.liquid}
+                        onChange={handleChange}
+                        style={style.padding10}
+                        inputProps={{
+                          name: 'liquid',
+                          id: 'liquid',
+                        }}
+                      >
+                        <MenuItem value='$50,000 to $99,999'>$50,000 to $99,999</MenuItem>
+                      </Select>
                     </FieldRow>
                     <FieldRow label='Net Worth' classes={classes}>
-                      <FormControl className={classes.formControl}>
-                        <Select
-                          value={values.netWorth}
-                          onChange={handleChange}
-                          style={style.padding10}
-                          inputProps={{
-                            name: 'netWorth',
-                            id: 'netWorth',
-                          }}
-                        >
-                          <MenuItem value='$200,000 to $249,999'>$200,000 to $249,999</MenuItem>
-                        </Select>
-                      </FormControl>
+                      <Select
+                        value={values.netWorth}
+                        onChange={handleChange}
+                        style={style.padding10}
+                        inputProps={{
+                          name: 'netWorth',
+                          id: 'netWorth',
+                        }}
+                      >
+                        <MenuItem value='$200,000 to $249,999'>$200,000 to $249,999</MenuItem>
+                      </Select>
                     </FieldRow>
                     <FieldRow label='Yearly Income' classes={classes}>
-                      <FormControl className={classes.formControl}>
-                        <Select
-                          value={values.yearlyIncome}
-                          onChange={handleChange}
-                          style={style.padding10}
-                          inputProps={{
-                            name: 'yearlyIncome',
-                            id: 'yearlyIncome',
-                          }}
-                        >
-                          <MenuItem value='$100,000 to $199,999'>$100,000 to $199,999</MenuItem>
-                        </Select>
-                      </FormControl>
+                      <Select
+                        value={values.yearlyIncome}
+                        onChange={handleChange}
+                        style={style.padding10}
+                        inputProps={{
+                          name: 'yearlyIncome',
+                          id: 'yearlyIncome',
+                        }}
+                      >
+                        <MenuItem value='$100,000 to $199,999'>$100,000 to $199,999</MenuItem>
+                      </Select>
                     </FieldRow>
                     <SectionTitle label='Investment' classes={classes} />
                     <FieldRow label='Goal' classes={classes} >
-                      <FormControl className={classes.formControl}>
-                        <Select
-                          value={values.goal}
-                          onChange={handleChange}
-                          style={style.padding10}
-                          inputProps={{
-                            name: 'goal',
-                            id: 'goal',
-                          }}
-                        >
-                          <MenuItem value='Growth'>Growth</MenuItem>
-                        </Select>
-                      </FormControl>
+                      <Select
+                        value={values.goal}
+                        onChange={handleChange}
+                        style={style.padding10}
+                        inputProps={{
+                          name: 'goal',
+                          id: 'goal',
+                        }}
+                      >
+                        <MenuItem value='Growth'>Growth</MenuItem>
+                      </Select>
                     </FieldRow>
                     <FieldRow label='Timeline' contents={timeLine} classes={classes} >
-                      <FormControl className={classes.formControl}>
-                        <Select
-                          value={values.timeLine}
-                          onChange={handleChange}
-                          style={style.padding10}
-                          inputProps={{
-                            name: 'timeLine',
-                            id: 'timeLine',
-                          }}
-                        >
-                          <MenuItem value='Less than 4 years'>Less than 4 years</MenuItem>
-                        </Select>
-                      </FormControl>
+                      <Select
+                        value={values.timeLine}
+                        onChange={handleChange}
+                        style={style.padding10}
+                        inputProps={{
+                          name: 'timeLine',
+                          id: 'timeLine',
+                        }}
+                      >
+                        <MenuItem value='Less than 4 years'>Less than 4 years</MenuItem>
+                      </Select>
                     </FieldRow>
                     <FieldRow label='Experience' contents={experience} classes={classes} >
-                      <FormControl className={classes.formControl}>
-                        <Select
-                          value={values.experience}
-                          onChange={handleChange}
-                          style={style.padding10}
-                          inputProps={{
-                            name: 'experience',
-                            id: 'experience',
-                          }}
-                        >
-                          <MenuItem value='very little'>Very little</MenuItem>
-                        </Select>
-                      </FormControl>
+                      <Select
+                        value={values.experience}
+                        onChange={handleChange}
+                        style={style.padding10}
+                        inputProps={{
+                          name: 'experience',
+                          id: 'experience',
+                        }}
+                      >
+                        <MenuItem value='very little'>Very little</MenuItem>
+                      </Select>
                     </FieldRow>
                     <FieldRow label='Risk Tolerence' contents={riskTolerence} classes={classes} >
-                      <FormControl className={classes.formControl}>
-                        <Select
-                          value={values.riskTolerence}
-                          onChange={handleChange}
-                          style={style.padding10}
-                          inputProps={{
-                            name: 'riskTolerence',
-                            id: 'riskTolerence',
-                          }}
-                        >
-                          <MenuItem value='Keep all or buy more'>Keep all or buy more</MenuItem>
-                        </Select>
-                      </FormControl>
+                      <Select
+                        value={values.riskTolerence}
+                        onChange={handleChange}
+                        style={style.padding10}
+                        inputProps={{
+                          name: 'riskTolerence',
+                          id: 'riskTolerence',
+                        }}
+                      >
+                        <MenuItem value='Keep all or buy more'>Keep all or buy more</MenuItem>
+                      </Select>
                     </FieldRow>
                     <FieldRow label='Liquidity' contents={liquidity} classes={classes} >
-                      <FormControl className={classes.formControl}>
-                        <Select
-                          value={values.liquidity}
-                          onChange={handleChange}
-                          style={style.padding10}
-                          inputProps={{
-                            name: 'liquidity',
-                            id: 'liquidity',
-                          }}
-                        >
-                          <MenuItem value='not important'>Not important</MenuItem>
-                          <MenuItem value='important'>Important</MenuItem>
-                          <MenuItem value='very important'>Very important</MenuItem>
-                        </Select>
-                      </FormControl>
+                      <Select
+                        value={values.liquidity}
+                        onChange={handleChange}
+                        style={style.padding10}
+                        inputProps={{
+                          name: 'liquidity',
+                          id: 'liquidity',
+                        }}
+                      >
+                        <MenuItem value='not important'>Not important</MenuItem>
+                        <MenuItem value='important'>Important</MenuItem>
+                        <MenuItem value='very important'>Very important</MenuItem>
+                      </Select>
                     </FieldRow>
                   </TableBody>
                 </Table>

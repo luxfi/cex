@@ -826,7 +826,7 @@ export default class UserStore {
     // returns array of objects, countries with code
     // [{ "name": "Afghanistan", "code": "AF" },
     // { "name": "Albania", "code": "AL" }]
-    if (!this.appSettings) return {}
+    if (!this.appSettings) return []
     return this.appSettings.countries.reduce((acc, memo) => {
       acc.push({ name: memo.name, code: memo.code })
       return acc
@@ -837,7 +837,7 @@ export default class UserStore {
     // returns array of objects, states with code
     // [{ name: "Florida", code: "FL" },
     // { name: "Michigan", code: "MI" }]
-    if (!this.appSettings) return {}
+    if (!this.appSettings) return []
     const countryObj = this.appSettings.countries.find(
       country => country.code === this.country,
     )
