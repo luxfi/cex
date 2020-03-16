@@ -124,7 +124,8 @@ class Index extends React.Component {
 
   render() {
     const { classes, store, router } = this.props
-    const { video: movieSlug } = router.query
+    const { video: movieSlug, trailerId } = router.query
+  
     const {
       movieStore,
       userStore,
@@ -151,7 +152,7 @@ class Index extends React.Component {
     const movie = movieStore.getMovieBySlug(movieSlug)
     const autoPlay = autoPlaySet === 'true' || autoPlaySet === true
 
-    const videoId = this.getMovieIdFromMovieSlug(movie.trailer)
+    const videoId = trailerId || this.getMovieIdFromMovieSlug(movie.trailer)
     const relatedMoviesArray = [...relatedMovies]
     const autoplayMoviesArray = [...autoplayMovies]
     const relatedMoviesIds = relatedMoviesArray.map((relatedMovie) => this.getMovieIdFromMovieSlug(relatedMovie.trailer))

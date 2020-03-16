@@ -1,5 +1,27 @@
 module.exports = [
   {
+    trailers: [
+      {
+        trailer: 'https://www.youtube.com/embed/jCyEX6u-Yhs',
+        thumbnail: 'https://img.youtube.com/vi/jCyEX6u-Yhs/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/o-3_aTo8sTM',
+        thumbnail: 'https://img.youtube.com/vi/o-3_aTo8sTM/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/oxy8udgWRmo',
+        thumbnail: 'https://img.youtube.com/vi/oxy8udgWRmo/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/o-3_aTo8sTM',
+        thumbnail: 'https://img.youtube.com/vi/o-3_aTo8sTM/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/oxy8udgWRmo',
+        thumbnail: 'https://img.youtube.com/vi/oxy8udgWRmo/maxresdefault.jpg',
+      },
+    ],
     productionId: 'B00422246210',
     name: 'Terminator: Dark Fate',
     movieSlug: 'terminator-dark-fate',
@@ -40,6 +62,24 @@ module.exports = [
     financialDescription: 'Term Inc. - Class C Capital Stock',
   },
   {
+    trailers: [
+      {
+        trailer: 'https://www.youtube.com/embed/vTfJp2Ts9X8',
+        thumbnail: 'https://img.youtube.com/vi/vTfJp2Ts9X8/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/sS6EE4D3tjQ',
+        thumbnail: 'https://img.youtube.com/vi/sS6EE4D3tjQ/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/vTfJp2Ts9X8',
+        thumbnail: 'https://img.youtube.com/vi/vTfJp2Ts9X8/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/sS6EE4D3tjQ',
+        thumbnail: 'https://img.youtube.com/vi/sS6EE4D3tjQ/maxresdefault.jpg',
+      },
+    ],
     productionId: 'B38787362736',
     name: 'Uncut Gems',
     movieSlug: 'uncut-gems',
@@ -66,6 +106,24 @@ module.exports = [
     financialDescription: 'Uncut Gems Inc. - Class C Capital Stock',
   },
   {
+    trailers: [
+      {
+        trailer: 'https://www.youtube.com/embed/x3HbbzHK5Mc',
+        thumbnail: 'https://img.youtube.com/vi/x3HbbzHK5Mc/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/kGM4uYZzfu0',
+        thumbnail: 'https://img.youtube.com/vi/kGM4uYZzfu0/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/x3HbbzHK5Mc',
+        thumbnail: 'https://img.youtube.com/vi/x3HbbzHK5Mc/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/kGM4uYZzfu0',
+        thumbnail: 'https://img.youtube.com/vi/kGM4uYZzfu0/maxresdefault.jpg',
+      },
+    ],
     productionId: 'B38787362737',
     name: 'Birds of Prey',
     movieSlug: 'birds-of-prey',
@@ -103,6 +161,20 @@ module.exports = [
     financialDescription: 'Birds of Prey Inc. - Class C Capital Stock',
   },
   {
+    trailers: [
+      {
+        trailer: 'https://www.youtube.com/embed/gn5QmllRCn4',
+        thumbnail: 'https://img.youtube.com/vi/gn5QmllRCn4/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/HxKXiQvyG_o',
+        thumbnail: 'https://img.youtube.com/vi/HxKXiQvyG_o/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/TxpjGMpnmx4',
+        thumbnail: 'https://img.youtube.com/vi/TxpjGMpnmx4/maxresdefault.jpg',
+      },
+    ],
     productionId: 'B0062792100',
     name: 'Onward',
     movieSlug: 'onward',
@@ -134,6 +206,32 @@ module.exports = [
     financialDescription: 'Onward 2020 Inc. - Class C Capital Stock',
   },
   {
+    trailers: [
+      {
+        trailer: 'https://www.youtube.com/embed/uiisFYRu0DQ',
+        thumbnail: 'https://img.youtube.com/vi/uiisFYRu0DQ/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/2RRkauL6Igs',
+        thumbnail: 'https://img.youtube.com/vi/2RRkauL6Igs/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/_3pEEpORjXo',
+        thumbnail: 'https://img.youtube.com/vi/_3pEEpORjXo/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/yVpDn9NSg6s',
+        thumbnail: 'https://img.youtube.com/vi/yVpDn9NSg6s/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/BZDhyjk7LrE',
+        thumbnail: 'https://img.youtube.com/vi/BZDhyjk7LrE/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/zEu9M1fuTxA',
+        thumbnail: 'https://img.youtube.com/vi/zEu9M1fuTxA/maxresdefault.jpg',
+      },
+    ],
     productionId: 'B68787362737',
     name: 'SAW 9',
     movieSlug: 'saw-9',
@@ -263,6 +361,14 @@ module.exports = [
         trailer: 'https://www.youtube.com/embed/gNTDoOmc1OQ',
         thumbnail: 'https://img.youtube.com/vi/gNTDoOmc1OQ/maxresdefault.jpg',
       },
+      {
+        trailer: 'https://www.youtube.com/embed/FtSd844cI7U',
+        thumbnail: 'https://img.youtube.com/vi/FtSd844cI7U/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/gNTDoOmc1OQ',
+        thumbnail: 'https://img.youtube.com/vi/gNTDoOmc1OQ/maxresdefault.jpg',
+      },
     ],
     posterImg: 'https://m.media-amazon.com/images/M/MV5BNTE4NWRhYmQtOTY4YS00OWMwLWEwYWUtZjVjNDhhODc5YzNmXkEyXkFqcGdeQXVyODkzNTgxMDg@._V1_QL50.jpg',
     imdbid: 'tt5697572',
@@ -298,6 +404,14 @@ module.exports = [
       {
         trailer: 'https://www.youtube.com/embed/UcmZN0Mbl04',
         thumbnail: 'https://img.youtube.com/vi/UcmZN0Mbl04/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/YqNYrYUiMfg',
+        thumbnail: 'https://img.youtube.com/vi/YqNYrYUiMfg/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/3hSjs2hBa94',
+        thumbnail: 'https://img.youtube.com/vi/3hSjs2hBa94/maxresdefault.jpg',
       },
       {
         trailer: 'https://www.youtube.com/embed/YqNYrYUiMfg',
@@ -453,6 +567,10 @@ module.exports = [
         trailer: 'https://www.youtube.com/embed/nuQ05k_OOQc',
         thumbnail: 'https://img.youtube.com/vi/nuQ05k_OOQc/maxresdefault.jpg',
       },
+      {
+        trailer: 'https://www.youtube.com/embed/dVJxMUqCUxs',
+        thumbnail: 'https://img.youtube.com/vi/dVJxMUqCUxs/maxresdefault.jpg',
+      },
     ],
     posterImg: 'https://m.media-amazon.com/images/M/MV5BYmE5ODc5YzgtMDAyMi00YjYwLWE2ZWYtNzlhNjY5MTNlZDYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_QL50.jpg',
     imdbid: 'tt4916630',
@@ -500,6 +618,14 @@ module.exports = [
         trailer: 'https://www.youtube.com/embed/QiLE3Aafn4c',
         thumbnail: 'https://img.youtube.com/vi/QiLE3Aafn4c/maxresdefault.jpg',
       },
+      {
+        trailer: 'https://www.youtube.com/embed/HzUhz2XkFfE',
+        thumbnail: 'https://img.youtube.com/vi/HzUhz2XkFfE/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/RCW892nm4S4',
+        thumbnail: 'https://img.youtube.com/vi/RCW892nm4S4/maxresdefault.jpg',
+      },
     ],
     posterImg: 'https://m.media-amazon.com/images/M/MV5BOGM2ZDE4NjMtYjY5MC00MDcwLTllZDYtN2YyNDgxOWE5MjI3XkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_QL50.jpg',
     imdbid: 'tt5577494',
@@ -539,6 +665,22 @@ module.exports = [
         trailer: 'https://www.youtube.com/embed/O2NKzO-fxwQ',
         thumbnail: 'https://img.youtube.com/vi/O2NKzO-fxwQ/maxresdefault.jpg',
       },
+      {
+        trailer: 'https://www.youtube.com/embed/Yq5igwyrX9E',
+        thumbnail: 'https://img.youtube.com/vi/Yq5igwyrX9E/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/Oo_c5lu0W0k',
+        thumbnail: 'https://img.youtube.com/vi/Oo_c5lu0W0k/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/Yq5igwyrX9E',
+        thumbnail: 'https://img.youtube.com/vi/Yq5igwyrX9E/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/Oo_c5lu0W0k',
+        thumbnail: 'https://img.youtube.com/vi/Oo_c5lu0W0k/maxresdefault.jpg',
+      },
     ],
     posterImg: 'https://m.media-amazon.com/images/M/MV5BMjY3NWZmOTktMmVhZi00M2Q1LTg2MmQtOGE2NmE3MWNlZjY3XkEyXkFqcGdeQXVyMDA4NzMyOA@@._V1_QL50.jpg',
     imdbid: 'tt3612126',
@@ -563,6 +705,18 @@ module.exports = [
     name: 'The Informer (2019)',
     genre: ['Crime', 'Drama'],
     trailers: [
+      {
+        trailer: 'https://www.youtube.com/embed/zm-wwAyeb44',
+        thumbnail: 'https://img.youtube.com/vi/zm-wwAyeb44/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/mIYrMUPdoWE',
+        thumbnail: 'https://img.youtube.com/vi/mIYrMUPdoWE/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/jUakWaEpCmY',
+        thumbnail: 'https://img.youtube.com/vi/jUakWaEpCmY/maxresdefault.jpg',
+      },
       {
         trailer: 'https://www.youtube.com/embed/zm-wwAyeb44',
         thumbnail: 'https://img.youtube.com/vi/zm-wwAyeb44/maxresdefault.jpg',
@@ -623,10 +777,24 @@ module.exports = [
     ticker: 'WW198',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 23,
     productionId: 'B23837462936',
     name: 'Ghostbusters: Afterlife (2020)',
     genre: ['Action', 'Comedy', 'Drama', 'Fantasy', 'Horror', 'Sci-Fi'],
     trailers: [
+      {
+        trailer: 'https://www.youtube.com/embed/BGq1chBbc30',
+        thumbnail: 'https://img.youtube.com/vi/BGq1chBbc30/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/ahZFCF--uRY',
+        thumbnail: 'https://img.youtube.com/vi/ahZFCF--uRY/maxresdefault.jpg',
+      },
       {
         trailer: 'https://www.youtube.com/embed/BGq1chBbc30',
         thumbnail: 'https://img.youtube.com/vi/BGq1chBbc30/maxresdefault.jpg',
@@ -663,6 +831,26 @@ module.exports = [
         trailer: 'https://www.youtube.com/embed/RxAtuMu_ph4',
         thumbnail: 'https://img.youtube.com/vi/RxAtuMu_ph4/maxresdefault.jpg',
       },
+      {
+        trailer: 'https://www.youtube.com/embed/ybji16u608U',
+        thumbnail: 'https://img.youtube.com/vi/ybji16u608U/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/FU7EQIv3w_g',
+        thumbnail: 'https://img.youtube.com/vi/FU7EQIv3w_g/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/RxAtuMu_ph4',
+        thumbnail: 'https://img.youtube.com/vi/RxAtuMu_ph4/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/ybji16u608U',
+        thumbnail: 'https://img.youtube.com/vi/ybji16u608U/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/FU7EQIv3w_g',
+        thumbnail: 'https://img.youtube.com/vi/FU7EQIv3w_g/maxresdefault.jpg',
+      },
     ],
     posterImg: 'https://m.media-amazon.com/images/M/MV5BNmFjNTA4MDAtMDM3ZS00NjFmLTg3YzQtM2ZkMzI0OTNmODcyXkEyXkFqcGdeQXVyODIyOTEyMzY@._V1_QL50.jpg',
     imdbid: 'tt3480822',
@@ -694,6 +882,14 @@ module.exports = [
       {
         trailer: 'https://www.youtube.com/embed/xRjvmVaFHkk',
         thumbnail: 'https://img.youtube.com/vi/xRjvmVaFHkk/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/jk41yJH3pyQ',
+        thumbnail: 'https://img.youtube.com/vi/jk41yJH3pyQ/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/puva03k1yU0',
+        thumbnail: 'https://img.youtube.com/vi/puva03k1yU0/maxresdefault.jpg',
       },
       {
         trailer: 'https://www.youtube.com/embed/jk41yJH3pyQ',

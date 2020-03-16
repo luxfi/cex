@@ -160,6 +160,15 @@ export default class MovieStore {
     return this.movies.find(m => m.movieSlug === slug)
   }
 
+  getMovieTrailersBySlug(slug) {
+    if (slug) {
+      const movie = this.movies.find(movie => movie.movieSlug === slug)
+      return movie.trailers
+    } else {
+      return []
+    }
+  }
+
   @action setMovieSearchResult(movie) {
     this.movies = [...movie]
   }

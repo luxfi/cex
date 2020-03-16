@@ -2,7 +2,7 @@ import React from "react"
 import { isObservableArray, toJS } from "mobx"
 import { inject, observer } from "mobx-react"
 import classNames from "classnames"
-import { AuthModal } from '../../app'
+import { AuthModal, Trailers } from '../../app'
 
 import Link from "next/link"
 import { withRouter, Router } from "next/router"
@@ -193,7 +193,7 @@ class Index extends React.Component {
             </p>
           </div>
           <div>
-            <Link href={`/watch?video=${movie.movieSlug}`}>
+            {/* <Link href={`/watch?video=${movie.movieSlug}`}>
               <a style={{ textDecoration: 'none'}}>
                 <Button
                   className={`watch-trailer-button button`}
@@ -206,7 +206,7 @@ class Index extends React.Component {
                   </Typography>
                 </Button>
               </a>
-            </Link>
+            </Link> */}
             <Button
               href={"/trade/" + movie.movieSlug}
               rel="noopener noreferrer"
@@ -227,6 +227,10 @@ class Index extends React.Component {
           </div>
           <br />
           <br />
+          <Grid item xs={12} md={10}>
+            <Typography variant="h6">Watch Trailers</Typography>
+            <Trailers />
+          </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
           <img src={movie.posterImg} height="444" />
