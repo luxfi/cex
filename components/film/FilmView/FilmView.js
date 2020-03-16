@@ -193,20 +193,6 @@ class Index extends React.Component {
             </p>
           </div>
           <div>
-            {/* <Link href={`/watch?video=${movie.movieSlug}`}>
-              <a style={{ textDecoration: 'none'}}>
-                <Button
-                  className={`watch-trailer-button button`}
-                  variant="outlined"
-                  size="large"
-                  startIcon={<PlayArrowIcon />}
-                >
-                  <Typography variant="body2">
-                    Play Trailer
-                  </Typography>
-                </Button>
-              </a>
-            </Link> */}
             <Button
               href={"/trade/" + movie.movieSlug}
               rel="noopener noreferrer"
