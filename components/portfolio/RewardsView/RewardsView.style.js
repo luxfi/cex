@@ -1,19 +1,33 @@
 import { green, blue } from '@material-ui/core/colors'
 
-const miniReset = {
+const spacingReset = {
   margin: 0,
   padding: 0
 }
 
 export default (theme) => ({
 
-  root: {
-    margin: theme.spacing(0, 4),
-  },
   invisible: {
     visibility: 'hidden'
   },
-  movieReferalCard: {
+
+  paper: {
+    padding: theme.spacing(2),
+    height: "216px",
+    color: theme.palette.text.primary,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  
+  leftAlignedPaper: {
+    alignItems: "flex-start !important",
+    paddingLeft: theme.spacing(6)
+  },
+ 
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  movieRewardsCard: {
     alignItems: "flex-start !important",
     padding: theme.spacing(2) + "px !important",
     display: 'flex',
@@ -24,11 +38,11 @@ export default (theme) => ({
       marginRight: 30
     }
   },
-  referalCardTitle: {
+  movieCardTitle: {
     fontSize: "1.5rem",
     borderBottom: '1px solid #333',
   },
-  referalCardContentArea: {
+  movieCardContentArea: {
     display: 'flex',
     flexDirection: 'column',
     width: '100%'
@@ -44,12 +58,12 @@ export default (theme) => ({
     marginRight: '20px',
     display: 'block',
   },
-  referalCardReferralLabel: {
+  movieCardReferralLabel: {
     fontSize: "1.4rem",
   },
 
   referalCardPointsString: {
-    ...miniReset,
+    ...spacingReset,
     fontSize: '1.1rem',
     paddingLeft: '8px',
   },
@@ -62,25 +76,9 @@ export default (theme) => ({
     paddingRight: '3px',
   },
 
-  paper: {
-    padding: theme.spacing(2),
-    height: "216px",
-    color: theme.palette.text.primary,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "space-between"
-  },
-  disabledPaper: {
-   // color: theme.palette.text.secondary + " !important",
-  },
-  leftAlignedPaper: {
-    alignItems: "flex-start !important",
-    paddingLeft: theme.spacing(6)
-  },
 
   title: {
-    ...miniReset,
+    ...spacingReset,
     fontSize: "1rem",
     fontWeight: 200,
     marginBottom: theme.spacing(2)
@@ -96,7 +94,7 @@ export default (theme) => ({
   },
 
   pointsString: {
-    ...miniReset,
+    ...spacingReset,
     fontSize: '1rem',
   },
   creditIcon: {
@@ -118,12 +116,12 @@ export default (theme) => ({
     marginRight: "0.2rem"
   },
   completedString: {
-    ...miniReset,
+    ...spacingReset,
     fontSize: '0.7rem',
   },
 
   totalTitle: {
-    ...miniReset,
+    ...spacingReset,
     //textTransform: "uppercase",
     fontSize: "1.2rem",
     fontWeight: 300,
@@ -132,14 +130,14 @@ export default (theme) => ({
   },
 
   totalOuter: {
-    ...miniReset,
+    ...spacingReset,
     display: "flex",
     flexDirection: "row",
     alignItems: "center"
   },
 
   totalString: {
-    ...miniReset,
+    ...spacingReset,
     display: "block",
     fontSize: '3.5rem',
   },
@@ -151,7 +149,7 @@ export default (theme) => ({
   },
 
   monthTotalString: {
-    ...miniReset,
+    ...spacingReset,
     fontWeight: 300,
     marginBottom: theme.spacing(1)
   },
