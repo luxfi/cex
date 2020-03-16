@@ -110,7 +110,7 @@ class ConfirmPaymentView extends React.Component {
         this.setState({ transactionStatus: 'failed' })
       }
     } else if (paymentType === 'card') {
-      const metadata = { venueId, showtimeId, ticketId, numberOfSeats, movieSlug }
+      const metadata = { venueId, showtimeId, ticketId, numberOfSeats, movieSlug, paymentType: 'movieTicket' }
       const transaction = await ticketCheckoutStore.checkoutOrder(total, userStore.account, cardInfo, metadata)
 
       if (transaction && transaction.id) {
