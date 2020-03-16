@@ -15,12 +15,17 @@ export default class TicketCheckoutStore {
 
   @observable currentPurchasedTicket = {}
 
-  constructor() {
+  constructor(initialData = {}, hanzoApi) {
+    this.api = hanzoApi
     this.tickets = tickets
 
-    const ticketTransactions = JSON.parse(localStorage.getItem('ticketTransactions'))
-    if (ticketTransactions && ticketTransactions.length) {
-      this.ticketTransactions = ticketTransactions
+    this.getTicketOrders()
+  }
+
+  @action async getTicketOrders() {
+    const account = await this.api.account.get()
+    if (account.orders && account.orders.length) {
+      this.ticketTransactions = account.orders
     }
   }
 
@@ -45,9 +50,10 @@ export default class TicketCheckoutStore {
   }
 
   @action isValidPurchasedTicket(ticketId) {
-    const ticket = this.ticketTransactions.find((ticket) => parseInt(ticket.ticketId, 10) === parseInt(ticketId, 10))
-    this.currentPurchasedTicket = ticket
-    return ticket
+    const orderedTicket = this.ticketTransactions.find((ticketOrder) => parseInt(ticketOrder.metadata.ticketId, 10) === parseInt(ticketId, 10))
+    const ticket = orderedTicket || {}
+    this.currentPurchasedTicket = ticket.metadata
+    return ticket.metadata
   }
 
   @action sendTicketEmail(email, url) {
@@ -67,7 +73,6 @@ export default class TicketCheckoutStore {
     }
 
     this.ticketTransactions.push(transaction)
-    localStorage.setItem('ticketTransactions', JSON.stringify(this.ticketTransactions))
   }
 
   @computed get total() {
@@ -79,4 +84,3 @@ export default class TicketCheckoutStore {
   }
 
 }
-
