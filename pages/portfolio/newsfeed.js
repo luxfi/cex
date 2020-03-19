@@ -2,9 +2,8 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import { Container, withStyles } from '@material-ui/core'
 
-import { TabbedNav } from '../../components/app'
+import { TabbedNav, AccountSection } from '../../components/app'
 
-import { AccountSection } from '../../components/account'
 import { NewsFeedView } from '../../components/portfolio'
 
 import { googlePageView } from '../../util'

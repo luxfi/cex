@@ -2,8 +2,7 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import { Container, withStyles } from '@material-ui/core'
 
-import { AccountSection } from '../../components/account'
-import { TabbedNav } from '../../components/app'
+import { TabbedNav, AccountSection } from '../../components/app'
 import { TradeView, PortfolioView } from '../../components/portfolio'
 
 import { googlePageView } from "../../util"

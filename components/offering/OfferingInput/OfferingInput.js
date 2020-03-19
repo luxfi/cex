@@ -4,7 +4,6 @@ import {
   InputBase,
   Paper,
   Button,
-  ButtonGroup,
   Typography,
   Box,
 } from '@material-ui/core'

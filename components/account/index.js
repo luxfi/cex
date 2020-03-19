@@ -1,4 +1,3 @@
-export { default as AccountSection } from './AccountSection'
 export { default as AddPaymentMethodForm } from './AddPaymentMethodForm'
 export { default as BalanceHistoryItem } from './BalanceHistoryItem'
 export { default as BankAccountItem } from './BankAccountItem'

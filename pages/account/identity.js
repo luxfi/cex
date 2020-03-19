@@ -4,10 +4,9 @@
 import { inject, observer } from "mobx-react"
 import React from "react"
 import Container from "@material-ui/core/Container"
-import Link from "@material-ui/core/Link"
 
-import { AccountSection, KYCForm } from '../../components/account'
-import { CustomLink, TabbedNav } from '../../components/app'
+import { KYCForm } from '../../components/account'
+import { TabbedNav, AccountSection } from '../../components/app'
 import { googlePageView } from '../../util'
 import { withOnDemandAuth } from '../../util/HOC'
 

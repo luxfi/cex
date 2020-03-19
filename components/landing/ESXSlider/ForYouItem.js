@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import cx from 'classnames';
 import SliderContext from './context'
 import './Item.css'
 import { Card, CardContent } from "@material-ui/core"
 import { withStyles } from '@material-ui/core/styles'
-const { forwardRef, useRef, useImperativeHandle } = React
 
 const TransparentCard = withStyles({
   root: {

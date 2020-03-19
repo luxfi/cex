@@ -6,8 +6,7 @@ import {
   withStyles,
 } from '@material-ui/core'
 
-import { TabbedNav } from '../../components/app'
-import { AccountSection } from '../../components/account'
+import { TabbedNav, AccountSection } from '../../components/app'
 import { SecurityView } from '../../components/investor'
 
 import { googlePageView } from '../../util'

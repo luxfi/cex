@@ -3,8 +3,8 @@ import { inject, observer } from "mobx-react"
 
 import { Container, Typography } from "@material-ui/core"
 
-import { AccountSection, TaxDocument } from '../../components/account'
-import { TabbedNav } from '../../components/app'
+import { TaxDocument } from '../../components/account'
+import { TabbedNav, AccountSection } from '../../components/app'
 
 import { googlePageView } from '../../util'
 import AccountTabs from '../../settings/accountTabs'
