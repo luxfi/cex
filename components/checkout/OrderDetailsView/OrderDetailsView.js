@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { withRouter } from 'next/router'
 
 import classNames from 'classnames'
-import hashSum from 'hash-sum'
 import moment from 'moment'
 import QRCode from 'qrcode.react'
 
@@ -108,7 +107,7 @@ class OrderDetailsView extends React.Component {
     const ticketDetails = ticketCheckoutStore.currentPurchasedTicket || {}
     const movie = movieStore.getMovieBySlug(slug)
 
-    const refHash = hashSum(userStore.email)
+    const refHash = userStore.referrerId
     const shareUrl = `${window.location.origin}/ticketing/${slug}?ref=${refHash}`
     const ticketUrl = `${window.location.origin}/orderDetails/${slug}?ticketId=${ticketDetails.ticketId}&ref=${refHash}`
     const shareMessage = `I just bought tickets for ${movie.name}! Please watch it too!`

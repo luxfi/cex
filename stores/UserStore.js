@@ -2,6 +2,7 @@
 import { action, observable, computed, toJS } from 'mobx'
 import Router from 'next/router'
 import moment from 'moment/moment.js'
+import { REFERRAL_PROGRAM_ID } from '../settings'
 
 import * as ethers from 'ethers'
 const isEmpty = obj =>
@@ -112,6 +113,11 @@ export default class UserStore {
   @observable taxDocuments = []
   @observable accountStatements = []
 
+  // Referrals
+  referrer = []
+
+  referrerId = ''
+
   constructor(initialData = {}, hanzoApi) {
     // TODO Do we still need this?
     // :aa I don't think so.... why would we?
@@ -125,6 +131,8 @@ export default class UserStore {
     if (cardPaymentOptions && cardPaymentOptions.length) {
       this.cardPaymentOptions = cardPaymentOptions
     }
+
+    this.createReferrer()
   }
 
   /**
@@ -716,6 +724,27 @@ export default class UserStore {
     this.account = undefined
     this.currentUser = undefined
     this.setToken(undefined)
+  }
+
+  @action async createReferrer() {
+    const user = await this.api.account.get()
+
+    if (user.referrers) {
+      this.referrer = user.referrers
+      this.referrerId = user.referrers[0].id
+      return
+    }
+
+    try {
+      const referrer = await this.api.referrer.create({
+        programId: REFERRAL_PROGRAM_ID,
+        userId: user.id,
+      })
+      this.referrer.push(referrer)
+      this.referrerId = referrer.id
+    } catch (error) {
+      console.log('error', error)
+    }
   }
 
   @computed get isValidSignUp() {
