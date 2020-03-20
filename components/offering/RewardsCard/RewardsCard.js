@@ -5,6 +5,7 @@ import { fade } from '@material-ui/core/styles'
 import { AccessibilityNew, HelpOutline } from '@material-ui/icons'
 import { common } from '@material-ui/core/colors'
 import { useTheme } from '@material-ui/core/styles'
+import { inject, observer } from 'mobx-react'
 import {
   Grid,
   Typography,
@@ -17,6 +18,9 @@ import {
   Popover,
   Divider,
 } from '@material-ui/core'
+
+import { AuthModal } from '../../app'
+
 import { isStringInteger, formatCurrency } from '../../../util'
 
 const RewardsCard = ({
@@ -26,7 +30,7 @@ const RewardsCard = ({
   setErrorMessage,
   setSuccessMessage,
   addOfferingInvestment,
-  checkIfLoggedIn,
+  store: { uiStore,  userStore },
 }) => {
   const classes = useStyles()
   const {
@@ -37,8 +41,14 @@ const RewardsCard = ({
     disabled,
   } = reward
 
+  const { authModalOpen, tabIndexValue } = uiStore
+  const { loggedIn } = userStore
+  
   const handleSubmit = async () => {
-    if (!checkIfLoggedIn()) return
+    // ondemand loinmovie
+    if (!loggedIn) {
+      return uiStore.openAuthModal()
+    }
     const sufficientFunds = amount <= funds
     if (sufficientFunds) {
       await addOfferingInvestment(
@@ -72,6 +82,7 @@ const RewardsCard = ({
   const id = open ? 'disabled' : undefined
   return (
     <Paper className={classes.paper} style={paperStyle}>
+      <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
       <Grid
         container
         direction="column"
@@ -234,4 +245,4 @@ const RewardsCard = ({
   )
 }
 
-export default RewardsCard
+export default inject('store')(observer(RewardsCard))
