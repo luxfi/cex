@@ -121,8 +121,6 @@ export default class UserStore {
     this.api = hanzoApi
     this.loadSession()
 
-    console.log(this.api.account.get(), '--------+++++++++')
-
     const cardPaymentOptions = JSON.parse(localStorage.getItem('cardPaymentOptions'))
     if (cardPaymentOptions && cardPaymentOptions.length) {
       this.cardPaymentOptions = cardPaymentOptions
