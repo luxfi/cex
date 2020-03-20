@@ -17,7 +17,19 @@ export default (theme) => ({
   },
   formControl: {
     marginBottom: '18px',
-    width: '50%',
+    width: '100%',
+    '& .MuiTextField-root': {
+      width: '100%',
+      '& .MuiOutlinedInput-root': {
+        margin: '0 8px',
+      },
+      '& .MuiFormLabel-root': {
+        margin: '0 8px',
+      },
+    },
+  },
+  toolTip: {
+    fontSize: 14,
   },
   proceedButton: {
     color: theme.palette.common.black,

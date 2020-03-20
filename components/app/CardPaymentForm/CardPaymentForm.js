@@ -5,9 +5,11 @@ import {
   Grid,
   MenuItem,
   TextField,
+  Tooltip,
   Typography,
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
+import HelpIcon from '@material-ui/icons/Help';
 import { Formik } from 'formik'
 import { inject, observer } from 'mobx-react'
 import React from 'react'
@@ -17,6 +19,7 @@ import AmericanExpress from '../../../assets/svg/AmericanExpress.svg'
 import DiscoverCard from '../../../assets/svg/DiscoverCard.svg'
 import MasterCard from '../../../assets/svg/MasterCard.svg'
 import VisaCard from '../../../assets/svg/VisaCard.svg'
+
 
 import { creditCardFormat } from '../../../util'
 
@@ -35,6 +38,7 @@ const formValidationSchema = object().shape({
   cvc: number()
     .positive('Invalid CVC'),
   address1: string(),
+  address2: string(),
   city: string(),
   state: string(),
   country: string(),
@@ -90,6 +94,7 @@ class CardPaymentForm extends React.Component {
               postalCode: '',
               cvc: '',
               address1: '',
+              address2: '',
               city: '',
               state: '',
               country: '',
@@ -127,7 +132,6 @@ class CardPaymentForm extends React.Component {
                             size='small'
                             value={values.nameOnCard}
                             onChange={handleChange}
-                            style={{ margin: '0 8px' }}
                             error={!!(errors.nameOnCard)}
                             required
                           />
@@ -141,72 +145,90 @@ class CardPaymentForm extends React.Component {
                             size='small'
                             value={creditCardFormat(values.creditCard)}
                             onChange={handleChange}
-                            style={{ margin: '0 8px' }}
                             inputProps={{ maxLength: 19 }}
                             error={!!(errors.creditCard)}
                             required
                           />
                         </FormControl>
                         <FormControl margin='normal' className={classes.formControl} >
-                          <TextField
-                            id='expiryMonth'
-                            name='expiryMonth'
-                            label='Expiration Month'
-                            placeholder='MM'
-                            variant='outlined'
-                            size='small'
-                            style={{ margin: '0 8px' }}
-                            value={values.expiryMonth}
-                            onChange={handleChange}
-                            inputProps={{ maxLength: 2 }}
-                            error={!!(errors.expiryMonth)}
-                            required
-                          />
-                        </FormControl>
-                        <FormControl margin='normal' className={classes.formControl}>
-                          <TextField
-                            id='expiryYear'
-                            name='expiryYear'
-                            label='Expiration Year'
-                            placeholder='YYYY'
-                            variant='outlined'
-                            size='small'
-                            style={{ margin: '0 8px' }}
-                            value={values.expiryYear}
-                            onChange={handleChange}
-                            inputProps={{ maxLength: 4 }}
-                            error={!!(errors.expiryYear)}
-                            required
-                          />
-                        </FormControl>
-                        <FormControl margin='normal' className={classes.formControl}>
-                          <TextField
-                            id='cvc'
-                            name='cvc'
-                            label='CVC'
-                            placeholder='XXX'
-                            variant='outlined'
-                            size='small'
-                            style={{ margin: '0 8px' }}
-                            value={values.cvc}
-                            onChange={handleChange}
-                            inputProps={{ maxLength: 3 }}
-                            error={!!(errors.cvc)}
-                            required
-                          />
+                          <Grid container>
+                            <Grid item xs={12} sm={4}>
+                              <TextField
+                                id='expiryMonth'
+                                name='expiryMonth'
+                                label='Exp Month'
+                                placeholder='MM'
+                                variant='outlined'
+                                size='small'
+                                value={values.expiryMonth}
+                                onChange={handleChange}
+                                inputProps={{ maxLength: 2 }}
+                                error={!!(errors.expiryMonth)}
+                                required
+                              />
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                              <TextField
+                                id='expiryYear'
+                                name='expiryYear'
+                                label='Exp Year'
+                                placeholder='YYYY'
+                                variant='outlined'
+                                size='small'
+                                value={values.expiryYear}
+                                onChange={handleChange}
+                                inputProps={{ maxLength: 4 }}
+                                error={!!(errors.expiryYear)}
+                                required
+                              />
+                            </Grid>
+                            <Grid container item xs={12} sm={4} alignItems='center'>
+                              <Grid item xs={10}>
+                                <TextField
+                                  id='cvc'
+                                  name='cvc'
+                                  label='CVC'
+                                  placeholder='XXX'
+                                  variant='outlined'
+                                  size='small'
+                                  value={values.cvc}
+                                  onChange={handleChange}
+                                  inputProps={{ maxLength: 3 }}
+                                  error={!!(errors.cvc)}
+                                  required
+                                />
+                              </Grid>
+                              <Grid item xs={2}>
+                                <Tooltip title={<span className={classes.toolTip}>The three numbers at the back of your card</span>} arrow placement='top'>
+                                  <HelpIcon />
+                                </Tooltip>
+                              </Grid>
+                            </Grid>
+                          </Grid>
                         </FormControl>
                         <FormControl margin='normal' className={classes.formControl}>
                           <TextField
                             id='address1'
                             name='address1'
-                            label='Address'
+                            label='Address Line 1'
                             variant='outlined'
                             size='small'
-                            style={{ margin: '0 8px' }}
                             value={values.address1}
                             onChange={handleChange}
                             error={!!(errors.address1)}
                             required
+                          />
+                        </FormControl>
+                        <FormControl margin='normal' className={classes.formControl}>
+                          <TextField
+                            id='address2'
+                            name='address2'
+                            label='Address Line 2'
+                            variant='outlined'
+                            size='small'
+                            value={values.address2}
+                            onChange={handleChange}
+                            error={!!(errors.address2)}
                           />
                         </FormControl>
                         <FormControl margin='normal' className={classes.formControl}>
@@ -216,7 +238,6 @@ class CardPaymentForm extends React.Component {
                             label='City'
                             variant='outlined'
                             size='small'
-                            style={{ margin: '0 8px' }}
                             value={values.city}
                             onChange={handleChange}
                             error={!!(errors.city)}
@@ -224,60 +245,61 @@ class CardPaymentForm extends React.Component {
                           />
                         </FormControl>
                         <FormControl margin='normal' className={classes.formControl}>
-                          <TextField
-                            id='state'
-                            name='state'
-                            label='State'
-                            variant='outlined'
-                            size='small'
-                            style={{ margin: '0 8px' }}
-                            value={values.state}
-                            onChange={handleChange}
-                            error={!!(errors.state)}
-                            select
-                            required
-                          >
-                            {states.map((option, index) => (
-                              <MenuItem key={option.code} value={option.code}>
-                                {option.name}
-                              </MenuItem>
-                            ))}
-                          </TextField>
-                        </FormControl>
-                        <FormControl margin='normal' className={classes.formControl}>
-                          <TextField
-                            required
-                            id='postalCode'
-                            name='postalCode'
-                            label='Postal Code'
-                            variant='outlined'
-                            size='small'
-                            style={{ margin: '0 8px' }}
-                            value={values.postalCode}
-                            onChange={handleChange}
-                            error={!!(errors.postalCode)}
-                          />
-                        </FormControl>
-                        <FormControl margin='normal' className={classes.formControl}>
-                          <TextField
-                            required
-                            id='country'
-                            name='country'
-                            label='Country'
-                            variant='outlined'
-                            size='small'
-                            style={{ margin: '0 8px' }}
-                            value={values.country}
-                            onChange={handleChange}
-                            error={!!(errors.country)}
-                            select
-                          >
-                            {countries.map((option, index) => (
-                              <MenuItem key={option.code} value={option.code}>
-                                {option.name}
-                              </MenuItem>
-                            ))}
-                          </TextField>
+                          <Grid container>
+                            <Grid item xs={12} sm={4}>
+                              <TextField
+                                id='state'
+                                name='state'
+                                label='State'
+                                variant='outlined'
+                                size='small'
+                                value={values.state}
+                                onChange={handleChange}
+                                error={!!(errors.state)}
+                                select
+                                required
+                              >
+                                {states.map((option, index) => (
+                                  <MenuItem key={option.code} value={option.code}>
+                                    {option.name}
+                                  </MenuItem>
+                                ))}
+                              </TextField>
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                              <TextField
+                                required
+                                id='postalCode'
+                                name='postalCode'
+                                label='Postal Code'
+                                variant='outlined'
+                                size='small'
+                                value={values.postalCode}
+                                onChange={handleChange}
+                                error={!!(errors.postalCode)}
+                              />
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                              <TextField
+                                required
+                                id='country'
+                                name='country'
+                                label='Country'
+                                variant='outlined'
+                                size='small'
+                                value={values.country}
+                                onChange={handleChange}
+                                error={!!(errors.country)}
+                                select
+                              >
+                                {countries.map((option, index) => (
+                                  <MenuItem key={option.code} value={option.code}>
+                                    {option.name}
+                                  </MenuItem>
+                                ))}
+                              </TextField>
+                            </Grid>
+                          </Grid>
                         </FormControl>
                         <FormControl margin='normal' className={classes.formControl}>
                           <Button
@@ -302,6 +324,7 @@ class CardPaymentForm extends React.Component {
                               || errors.expiryYear
                               || errors.postalCode
                               || errors.address1
+                              || errors.address2
                               || errors.city
                               || errors.state
                               || errors.country
