@@ -85,7 +85,7 @@ const TicketOrdersView = inject('store')(observer((props) => {
             />
           }) : null
       }
-      { (!ticketTransactions.length) && <Typography variant='body2'>You don't seem to have bought any movie ticket yet</Typography> }
+      { (!ticketTransactions.length) && <Typography variant='body2'>You don't seem to have bought any movie tickets yet</Typography> }
     </>
   )
 }))
