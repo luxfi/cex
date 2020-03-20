@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Carousel, Image } from '../../app'
+import { Carousel, Image } from '..'
 import useSliderHook from './useSliderHook'
 
 export default function MediaSlider({ youtubeIDs, setCurrentMedia }) {

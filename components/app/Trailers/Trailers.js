@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { Carousel, Image } from '../../app'
-import useSliderHook from '../../offering/MediaSlider/useSliderHook'
+import { Carousel, Image } from '..'
+import useSliderHook from '../MediaSlider/useSliderHook'
 import { observer, inject } from 'mobx-react';
 import { useRouter } from 'next/router'
+import { withStyles } from '@material-ui/core/styles'
 import Link from 'next/link'
 
 import { slugFromPath } from '../../../util'
 
+import styles from './trailers.style';
 
-function Trailers({ store }) {
+
+function Trailers({ store, classes }) {
   const router = useRouter()
   const slidesPerRow = useSliderHook()
 
@@ -31,7 +34,7 @@ function Trailers({ store }) {
                 <Image
                   src={trailerInfo.thumbnail}
                   disableSpinner
-                  style={{ cursor: 'pointer', margin: 'auto 5px', border: '1px solid #5a5a5a' }}
+                  className={classes.image}
                 />
               </a>
             </Link>
@@ -42,4 +45,4 @@ function Trailers({ store }) {
   )
 }
 
-export default inject('store')(observer(Trailers));
+export default inject('store')(observer(withStyles(styles)(Trailers)));

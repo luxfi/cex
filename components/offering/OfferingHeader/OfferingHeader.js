@@ -9,8 +9,8 @@ import grey from '@material-ui/core/colors/grey'
 import Icon from '@material-ui/core/Icon'
 import { BookmarkBorder } from '@material-ui/icons'
 
-import { OfferingInput, MediaSlider } from '../'
-import { ESXLinearProgressBar, ShareWidget } from '../../app'
+import { OfferingInput } from '../'
+import { ESXLinearProgressBar, ShareWidget, MediaSlider } from '../../app'
 import { formatCurrency, slugFromPath } from '../../../util'
 
 const movie = {
