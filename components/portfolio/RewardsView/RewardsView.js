@@ -27,7 +27,7 @@ export default inject('store')((props) => {
   const { store: { userStore, movieStore }} = props
   const [wasCopied, setWasCopied] = React.useState(false)
 
-  const rewardsURL = `${window.location.origin}/invite?ref=${hashSum(userStore.email)}`
+  const rewardsURL = `${window.location.origin}/invite?ref=${userStore.referrerId}`
   const rewardsShareMessage = "I'm watching and investing on Entertainment Stock Exchange. Join me!"
 
   const referrals = getMyReferals(userStore.email)
