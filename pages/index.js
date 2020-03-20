@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { inject, observer } from 'mobx-react'
-import router from 'next/router'
+import { withRouter } from 'next/router'
 
 import { 
   Box, 
@@ -58,14 +58,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default withWidth()(inject('store')(observer((props) => {
+export default withRouter(withWidth()(inject('store')(observer((props) => {
 
   useEffect(() => {
     props.store.userPortfolio.getWatchlist()
     googlePageView()
   }, [])
 
-  const { store, width } = props
+  const { store, width, router } = props
   const heroMovie = store.movieStore.movies.find(m => (m.movieSlug === heroInfo.slug))
   const heroStyles = heroInfo.styles
   if (isWidthDown('sm', width)) {
@@ -103,4 +103,4 @@ export default withWidth()(inject('store')(observer((props) => {
       <StudioSlider />
     </>
   )
-})))
+}))))
