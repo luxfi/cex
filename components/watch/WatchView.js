@@ -34,6 +34,7 @@ import YoutubePlayer from './YoutubePlayer'
 import ShareWidget from '../app/ShareWidget'
 
 import { formatNumber, renderDate } from './utils'
+import { getYoutubeId } from '../../util'
 
 @inject("store")
 @observer
@@ -44,13 +45,14 @@ class Index extends React.Component {
 
   componentDidMount() {
     const {
-      router: { query: { video: movieSlug } },
+      router: { query: { video: movieSlug, trailerId } },
       store: { trailerStore, movieStore },
     } = this.props
     const movie = movieStore.getMovieBySlug(movieSlug)
 
     this.getUpdatedRelatedMovies(movieSlug)
     trailerStore.setMovieTrailerDetails(movie)
+    trailerStore.loadRelatedMovieTrailers(movie, trailerId)
   }
 
   componentDidUpdate(prevProps) {
@@ -71,11 +73,6 @@ class Index extends React.Component {
       const movie = movieStore.getMovieBySlug(movieSlug)
       trailerStore.setMovieTrailerDetails(movie)
     }
-  }
-
-  getMovieIdFromMovieSlug = (trailerUrl) => {
-    const videoUrlArray = trailerUrl.split('/')
-    return videoUrlArray[videoUrlArray.length - 1]
   }
 
   getUpdatedRelatedMovies = (movieSlug, updateAutoplay = true) => {
@@ -147,16 +144,17 @@ class Index extends React.Component {
       autoPlaySet,
       subscribers,
       reaction,
+      selectedMovieTrailer,
     } = trailerStore
 
     const movie = movieStore.getMovieBySlug(movieSlug)
     const autoPlay = autoPlaySet === 'true' || autoPlaySet === true
 
-    const videoId = trailerId || this.getMovieIdFromMovieSlug(movie.trailer)
+    const videoId = selectedMovieTrailer ? trailerId : getYoutubeId(movie.trailer)
     const relatedMoviesArray = [...relatedMovies]
     const autoplayMoviesArray = [...autoplayMovies]
-    const relatedMoviesIds = relatedMoviesArray.map((relatedMovie) => this.getMovieIdFromMovieSlug(relatedMovie.trailer))
-    const autoplayMoviesIds = autoplayMoviesArray.map((autoPlayMovie) => this.getMovieIdFromMovieSlug(autoPlayMovie.trailer))
+    const relatedMoviesIds = relatedMoviesArray.map((relatedMovie) => getYoutubeId(relatedMovie.trailer))
+    const autoplayMoviesIds = autoplayMoviesArray.map((autoPlayMovie) => getYoutubeId(autoPlayMovie.trailer))
 
     const shareURL = `${window.location.origin}/ticketing/${movie.movieSlug}`
     const sharePrompt = `I just bought tickets for ${movie.name}! Please watch it too!`

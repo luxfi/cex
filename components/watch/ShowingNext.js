@@ -22,15 +22,21 @@ const ShowingNext = inject('store')(observer((props) => {
         relatedMovies,
         autoplayMovies,
         autoPlaySet,
+        relatedMovieTrailers,
+        selectedMovieTrailer,
       },
+      movieStore,
       trailerStore,
     },
     nextMovieIndex,
+    router: { query: { video: movieSlug, trailerId } },
   } = props
 
   const [state, setState] = useState({
     autoPlay: autoPlaySet,
   })
+
+  const movie = movieStore.getMovieBySlug(movieSlug)
 
   const handleChecked = (event) => {
     setState({
@@ -52,9 +58,47 @@ const ShowingNext = inject('store')(observer((props) => {
           <Switch
             checked={state.autoPlay === 'true' || state.autoPlay === true}
             onChange={handleChecked}
+            disabled={!!(selectedMovieTrailer)}
           />
         </Box>
       </Box>
+      {
+        trailerId && relatedMovieTrailers.length ? 
+        relatedMovieTrailers.map((relatedMovieTrailer) => (
+          <>
+            <Link
+              href={`watch?video=${movieSlug}&trailerId=${relatedMovieTrailer.youtubeId}`}
+              key={relatedMovieTrailer.youtubeId}
+            >
+                <Box className={classes.singleVideo}>
+                  <Box className={classes.imageWrapper}>
+                    <img src={relatedMovieTrailer.thumbnail} alt={movie.name} />
+                    <Box className={classes.playTime}>
+                      <Typography component='span'>{formatDuration(relatedMovieTrailer.trailerDetails.duration)}</Typography>
+                    </Box>
+                  </Box>
+                  <Box className={classes.sidebarVideoInfo}>
+                    <Typography
+                      className={classNames(classes.sidebarMovieTitle, classes.maxTwoLines)}
+                    >
+                      {movie.name}
+                    </Typography>
+                    <Box className={classes.sidebarVideoMeta}>
+                      <Typography className={classes.singleLine}>{nextVideo.distributors[0]}</Typography>
+                      <Typography className={classes.singleLine}>{`${formatNumber(relatedMovieTrailer.trailerDetails.views, 1)} views • ${calculateDateFrom(relatedMovieTrailer.trailerDetails.createdAt)}`}</Typography>
+                    </Box>
+                  </Box>
+                </Box>
+            </Link>
+            <Divider style={{ margin: '10px 0 0 0' }} />
+          </>
+        )) : null
+      }
+      {
+        (trailerId && relatedMovieTrailers.length)
+          ? (<Typography className={classes.recommendedTitle} variant="h5">Recommended</Typography>)
+          : null
+      }
       {
         showNext ? (
           <>

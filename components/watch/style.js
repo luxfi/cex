@@ -222,6 +222,10 @@ export default (theme) => ({
     },
   },
 
+  recommendedTitle: {
+    margin: '16px 0',
+  },
+
   upNextTop: {
     display: 'flex',
     alignItems: 'center',

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { withStyles } from '@material-ui/core/styles'
 import Link from 'next/link'
 
-import { slugFromPath } from '../../../util'
+import { getYoutubeId, slugFromPath } from '../../../util'
 
 import styles from './trailers.style';
 
@@ -29,7 +29,7 @@ function Trailers({ store, classes }) {
       {
         trailers.length
           ? trailers.map((trailerInfo, i) => (
-            <Link key={i} href={`/watch?video=${movieSlug}&trailerId=${getMovieIdFromMovieSlug(trailerInfo.trailer)}`}>
+            <Link key={i} href={`/watch?video=${movieSlug}&trailerId=${getYoutubeId(trailerInfo.trailer)}`}>
               <a>
                 <Image
                   src={trailerInfo.thumbnail}

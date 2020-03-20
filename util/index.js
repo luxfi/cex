@@ -121,6 +121,11 @@ function slugFromPath() {
   }
 }
 
+function getYoutubeId(trailerUrl) {
+  const videoUrlArray = trailerUrl.split('/')
+  return videoUrlArray[videoUrlArray.length - 1]
+}
+
 function creditCardFormat(value = '') {
   const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
   const matches = v.match(/\d{4,16}/g)
@@ -178,4 +183,5 @@ export {
   useEventListener,
   creditCardFormat,
   getCreditCardType,
+  getYoutubeId,
 }
