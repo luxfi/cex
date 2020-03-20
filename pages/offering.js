@@ -15,7 +15,6 @@ const OfferingBody = ({
   setErrorMessage,
   setSuccessMessage,
   addOfferingInvestment,
-  checkIfLoggedIn,
 }) => {
   const summaryRef = useRef(null)
   const dealTermsRef = useRef(null)
@@ -42,7 +41,6 @@ const OfferingBody = ({
         setErrorMessage={setErrorMessage}
         setSuccessMessage={setSuccessMessage}
         addOfferingInvestment={addOfferingInvestment}
-        checkIfLoggedIn={checkIfLoggedIn}
         {...refs}
       />
     </>
@@ -63,16 +61,6 @@ class Offering extends Component {
     const { accountBalance } = userStore
     const slug  = router.query.slug || slugFromPath()
     const movie = movieStore.getMovieBySlug(slug)
-    const { loggedIn } = userStore
-    const checkIfLoggedIn = () => {
-      if (!loggedIn) {
-        router.push('/login')
-        document.body.scrollTop = 0 // For Safari
-        document.documentElement.scrollTop = 0
-        return false
-      }
-      return true
-    }
 
     const setErrorMessage = message => {
       uiStore.setErrorMessage(message)
@@ -99,7 +87,6 @@ class Offering extends Component {
           setErrorMessage={setErrorMessage}
           setSuccessMessage={setSuccessMessage}
           addOfferingInvestment={addOfferingInvestment}
-          checkIfLoggedIn={checkIfLoggedIn}
         />
         <OfferingBody
           funds={accountBalance}
@@ -107,7 +94,6 @@ class Offering extends Component {
           setErrorMessage={setErrorMessage}
           setSuccessMessage={setSuccessMessage}
           addOfferingInvestment={addOfferingInvestment}
-          checkIfLoggedIn={checkIfLoggedIn}
         />
       </Box>
     )

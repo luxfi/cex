@@ -2,17 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { Carousel, Image } from '..'
 import useSliderHook from './useSliderHook'
 
-export default function MediaSlider({ youtubeIDs, setCurrentMedia }) {
+export default function MediaSlider({ trailers, setCurrentMedia }) {
   const slidesPerRow = useSliderHook()
   return (
     <Carousel slidesPerRow={slidesPerRow}>
-      {youtubeIDs.map((id, i) => (
+      {trailers.map((movieTrailer, i) => (
         <Image
           key={i}
-          src={`https://img.youtube.com/vi/${id}/maxresdefault.jpg`}
-          onClick={() => setCurrentMedia(id)}
-          // style={{ height: 172 }}
-          // aspectRatio={1.56}
+          src={movieTrailer.thumbnail}
+          onClick={() => setCurrentMedia(movieTrailer.trailer)}
           disableSpinner
         />
       ))}

@@ -1,17 +1,15 @@
 module.exports = [
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4803250.00,
+    fundingGoal: 6000000,
+    daysLeft: 23,
     trailers: [
       {
         trailer: 'https://www.youtube.com/embed/jCyEX6u-Yhs',
         thumbnail: 'https://img.youtube.com/vi/jCyEX6u-Yhs/maxresdefault.jpg',
-      },
-      {
-        trailer: 'https://www.youtube.com/embed/o-3_aTo8sTM',
-        thumbnail: 'https://img.youtube.com/vi/o-3_aTo8sTM/maxresdefault.jpg',
-      },
-      {
-        trailer: 'https://www.youtube.com/embed/oxy8udgWRmo',
-        thumbnail: 'https://img.youtube.com/vi/oxy8udgWRmo/maxresdefault.jpg',
       },
       {
         trailer: 'https://www.youtube.com/embed/o-3_aTo8sTM',
@@ -62,15 +60,13 @@ module.exports = [
     financialDescription: 'Term Inc. - Class C Capital Stock',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2019', 'Elara Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 2203250.73,
+    fundingGoal: 4500000,
+    daysLeft: 23,
     trailers: [
-      {
-        trailer: 'https://www.youtube.com/embed/vTfJp2Ts9X8',
-        thumbnail: 'https://img.youtube.com/vi/vTfJp2Ts9X8/maxresdefault.jpg',
-      },
-      {
-        trailer: 'https://www.youtube.com/embed/sS6EE4D3tjQ',
-        thumbnail: 'https://img.youtube.com/vi/sS6EE4D3tjQ/maxresdefault.jpg',
-      },
       {
         trailer: 'https://www.youtube.com/embed/vTfJp2Ts9X8',
         thumbnail: 'https://img.youtube.com/vi/vTfJp2Ts9X8/maxresdefault.jpg',
@@ -106,15 +102,13 @@ module.exports = [
     financialDescription: 'Uncut Gems Inc. - Class C Capital Stock',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Warner Bros'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 50067000,
+    daysLeft: 73,
     trailers: [
-      {
-        trailer: 'https://www.youtube.com/embed/x3HbbzHK5Mc',
-        thumbnail: 'https://img.youtube.com/vi/x3HbbzHK5Mc/maxresdefault.jpg',
-      },
-      {
-        trailer: 'https://www.youtube.com/embed/kGM4uYZzfu0',
-        thumbnail: 'https://img.youtube.com/vi/kGM4uYZzfu0/maxresdefault.jpg',
-      },
       {
         trailer: 'https://www.youtube.com/embed/x3HbbzHK5Mc',
         thumbnail: 'https://img.youtube.com/vi/x3HbbzHK5Mc/maxresdefault.jpg',
@@ -161,6 +155,12 @@ module.exports = [
     financialDescription: 'Birds of Prey Inc. - Class C Capital Stock',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Pixar'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 87,
     trailers: [
       {
         trailer: 'https://www.youtube.com/embed/gn5QmllRCn4',
@@ -206,6 +206,12 @@ module.exports = [
     financialDescription: 'Onward 2020 Inc. - Class C Capital Stock',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 14,
     trailers: [
       {
         trailer: 'https://www.youtube.com/embed/uiisFYRu0DQ',
@@ -272,6 +278,12 @@ module.exports = [
     financialDescription: 'Term Inc. - Class C Capital Stock',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 23,
     productionId: 'B78787362730',
     name: 'Star Wars: The Rise of Skywalker (2019)',
     genre: ['Action', 'Adventure', 'Fantasy', 'Sci-Fi'],
@@ -345,6 +357,12 @@ module.exports = [
     ticker: 'SWTRS',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 23,
     productionId: 'B001080766',
     name: 'Cats (2019)',
     genre: ['Comedy', 'Drama', 'Family', 'Fantasy', 'Musical'],
@@ -397,6 +415,12 @@ module.exports = [
     ticker: 'C',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 23,
     productionId: 'B62751630913',
     name: '1917 (2019)',
     genre: ['Drama', 'War'],
@@ -460,6 +484,12 @@ module.exports = [
     ticker: '1917',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 23,
     productionId: 'B72751630919',
     name: 'Spies in Disguise (2019)',
     genre: ['Animation', 'Action', 'Adventure', 'Comedy', 'Family', 'Sci-Fi'],
@@ -503,6 +533,12 @@ module.exports = [
     ticker: 'SD',
   },
   {
+    highlightedTags: ['Recent Release'],
+    tags: ['2019', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 23,
     productionId: 'B73837462940',
     name: 'Little Women (2019)',
     genre: [''],
@@ -555,6 +591,12 @@ module.exports = [
     ticker: 'LW',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 23,
     productionId: 'B73837462941',
     name: 'Just Mercy (2019)',
     genre: [''],
@@ -610,6 +652,12 @@ module.exports = [
     ticker: 'JM',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 23,
     productionId: 'B73837462942',
     name: 'Clemency (2019)',
     genre: [''],
@@ -657,6 +705,12 @@ module.exports = [
     movieSlug: 'clemency-2019',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 23,
     productionId: 'B73837462943',
     name: 'The Grudge (2020)',
     genre: ['Horror', 'Mystery'],
@@ -664,14 +718,6 @@ module.exports = [
       {
         trailer: 'https://www.youtube.com/embed/O2NKzO-fxwQ',
         thumbnail: 'https://img.youtube.com/vi/O2NKzO-fxwQ/maxresdefault.jpg',
-      },
-      {
-        trailer: 'https://www.youtube.com/embed/Yq5igwyrX9E',
-        thumbnail: 'https://img.youtube.com/vi/Yq5igwyrX9E/maxresdefault.jpg',
-      },
-      {
-        trailer: 'https://www.youtube.com/embed/Oo_c5lu0W0k',
-        thumbnail: 'https://img.youtube.com/vi/Oo_c5lu0W0k/maxresdefault.jpg',
       },
       {
         trailer: 'https://www.youtube.com/embed/Yq5igwyrX9E',
@@ -701,6 +747,12 @@ module.exports = [
     ticker: 'TG',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 23,
     productionId: 'B73837462944',
     name: 'The Informer (2019)',
     genre: ['Crime', 'Drama'],
@@ -749,6 +801,12 @@ module.exports = [
     ticker: 'TI',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 23,
     productionId: 'B73837462945',
     name: 'Wonder Woman 1984 (2020)',
     genre: [''],
@@ -823,22 +881,16 @@ module.exports = [
     ticker: 'GA',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 23,
     productionId: 'B13837462938',
     name: 'Black Widow (2020)',
     genre: [''],
     trailers: [
-      {
-        trailer: 'https://www.youtube.com/embed/RxAtuMu_ph4',
-        thumbnail: 'https://img.youtube.com/vi/RxAtuMu_ph4/maxresdefault.jpg',
-      },
-      {
-        trailer: 'https://www.youtube.com/embed/ybji16u608U',
-        thumbnail: 'https://img.youtube.com/vi/ybji16u608U/maxresdefault.jpg',
-      },
-      {
-        trailer: 'https://www.youtube.com/embed/FU7EQIv3w_g',
-        thumbnail: 'https://img.youtube.com/vi/FU7EQIv3w_g/maxresdefault.jpg',
-      },
       {
         trailer: 'https://www.youtube.com/embed/RxAtuMu_ph4',
         thumbnail: 'https://img.youtube.com/vi/RxAtuMu_ph4/maxresdefault.jpg',
@@ -871,6 +923,12 @@ module.exports = [
     ticker: 'BW',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 23,
     productionId: 'B13837462939',
     name: 'Joker (2019)',
     genre: ['Crime', 'Drama', 'Thriller'],
@@ -951,6 +1009,12 @@ module.exports = [
     ticker: 'J',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 23,
     productionId: 'B00115694668',
     name: 'Shazam! (2019)',
     genre: ['Action', 'Adventure', 'Comedy', 'Fantasy'],
@@ -1015,6 +1079,12 @@ module.exports = [
     ticker: 'S',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 23,
     productionId: 'B00143416877',
     name: 'Toy Story 4 (2019)',
     genre: ['Animation', 'Adventure', 'Comedy', 'Family', 'Fantasy'],
@@ -1066,6 +1136,12 @@ module.exports = [
     ticker: 'TS4',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 23,
     productionId: 'B00503020122',
     name: 'Once Upon a Time... in Hollywood (2019)',
     genre: ['Comedy', 'Drama'],
@@ -1151,6 +1227,12 @@ module.exports = [
     ticker: 'OUTH',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 23,
     productionId: 'B90430818093',
     name: 'The Irishman (2019)',
     genre: ['Biography', 'Crime', 'Drama'],
@@ -1249,6 +1331,12 @@ module.exports = [
     movieSlug: 'the-irishman-2019',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 23,
     productionId: 'B90430818099',
     name: 'John Wick: Chapter 3 - Parabellum (2019)',
     genre: ['Action', 'Crime', 'Thriller'],
@@ -1331,6 +1419,12 @@ module.exports = [
     ticker: 'JWC3P',
   },
   {
+    highlightedTags: ['New Release'],
+    tags: ['2020', 'Paramount Pictures'],
+    amountOfInvestors: 24065,
+    raisedAmount: 4203250.00,
+    fundingGoal: 5000000,
+    daysLeft: 23,
     productionId: 'B70430818097',
     name: 'Alita: Battle Angel (2019)',
     genre: ['Action', 'Adventure', 'Sci-Fi', 'Thriller'],
