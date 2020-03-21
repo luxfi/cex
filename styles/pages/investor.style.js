@@ -74,6 +74,21 @@ export default (theme) => ({
 
   },
 
+  formControl: {
+    width: '100%',
+    marginBottom: '10px',
+    '& .MuiTextField-root': {
+      width: '100%',
+    },
+    '& .MuiInput-root': {
+      padding: '0 10px',
+      marginRight: 10,
+    },
+    '& .MuiFormLabel-root': {
+      margin: '0 10px',
+    },
+  },
+
   sessionsHeaderRow: {
     borderBottom: '1px solid #444',
     marginBottom: theme.spacing(2),

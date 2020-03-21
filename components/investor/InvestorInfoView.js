@@ -2,13 +2,17 @@
 import {
   Button,
   FormControl,
+  Grid,
+  InputLabel,
   MenuItem,
   Select,
   Table,
   TableBody,
   TableCell,
   TableRow,
+  withStyles,
 } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import { Formik } from 'formik'
 import { inject, observer } from 'mobx-react'
@@ -17,15 +21,8 @@ import { number, object, string } from 'yup'
 import { ViewCard } from '../app'
 
 const style = {
-  acctWrapper: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  acctInput: {
-    width: '48%',
-  },
-  padding10: {
-    paddingLeft: 10,
+  formControl: {
+    width: '100%',
   },
 }
 
@@ -49,9 +46,7 @@ const FieldRow = ({
 }) => (
   <TableRow>
     <TableCell fixedHeader={false} style={{ width: '25%', tableLayout: 'auto' }} size='small' className={classes.tableLabelColumn}>{label}</TableCell>
-    <TableCell style={{ padding: '10px 0' }} className={classes.tableContentsColumn}>
-      <FormControl style={{ width: '100%' }}>{children}</FormControl>
-    </TableCell>
+    <TableCell style={{ padding: '10px 0' }} className={classes.tableContentsColumn}>{children}</TableCell>
   </TableRow>
 )
 
@@ -64,7 +59,7 @@ const SectionTitle = ({
   </TableRow>
 )
 
-export default inject('store')(observer((props) => {
+const InvestorInfoView = (props) => {
   const {
     classes,
     store: {
@@ -156,371 +151,373 @@ export default inject('store')(observer((props) => {
                 <Table className={classes.investorInfoTable} padding='none'>
                   <TableBody>
                     <FieldRow label='Address' classes={classes}>
-                      <div style={style.acctWrapper}>
-                        <TextField
-                          required
-                          id='address1'
-                          name='address1'
-                          label='Address'
-                          fullWidth
-                          error={!!(errors.address1)}
-                          placeholder='Address e.g. 234 street lane'
-                          value={values.address1}
-                          onChange={handleChange}
-                          style={style.acctInput}
-                          inputProps={{
-                            style: style.padding10,
-                          }}
-                          InputLabelProps={{
-                            style: style.padding10,
-                          }}
-                        />
-                        <TextField
-                          required
-                          id='address2'
-                          name='address2'
-                          label='Address Line 2'
-                          fullWidth
-                          error={!!(errors.address2)}
-                          placeholder='Address line 2 e.g. Apt 23, building 4'
-                          value={values.address2}
-                          onChange={handleChange}
-                          style={style.acctInput}
-                          inputProps={{
-                            style: style.padding10,
-                          }}
-                          InputLabelProps={{
-                            style: style.padding10,
-                          }}
-                        />
-                      </div>
-                      <TextField
-                        required
-                        id='city'
-                        name='city'
-                        label='City'
-                        fullWidth
-                        error={!!(errors.city)}
-                        placeholder='City e.g. San Jose'
-                        value={values.city}
-                        inputProps={{
-                          style: style.padding10,
-                        }}
-                        InputLabelProps={{
-                          style: style.padding10,
-                        }}
-                      />
-                      <TextField
-                        id='state'
-                        name='state'
-                        label='State'
-                        fullWidth
-                        error={!!(errors.state)}
-                        placeholder='State e.g Carlifornia'
-                        value={values.state}
-                        onChange={handleChange}
-                        SelectProps={{
-                          style: style.padding10,
-                        }}
-                        InputLabelProps={{
-                          style: style.padding10,
-                        }}
-                        select
-                        required
-                      >
-                        {states.map((option, index) => (
-                          <MenuItem key={option.code} value={option.code}>
-                            {option.name}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                      <TextField
-                        required
-                        id='postalCode'
-                        name='postalCode'
-                        label='Postal Code'
-                        fullWidth
-                        error={!!(errors.postalCode)}
-                        placeholder='Postal Code e.g. 18796'
-                        value={values.postalCode}
-                        onChange={handleChange}
-                        inputProps={{
-                          style: style.padding10,
-                        }}
-                        InputLabelProps={{
-                          style: style.padding10,
-                        }}
-                      />
-                      <TextField
-                        required
-                        id='country'
-                        name='country'
-                        label='Country'
-                        fullWidth
-                        value={values.country}
-                        onChange={handleChange}
-                        error={!!(errors.country)}
-                        select
-                        SelectProps={{
-                          style: style.padding10,
-                        }}
-                        InputLabelProps={{
-                          style: style.padding10,
-                        }}
-                    >
-                        {countries.map((option, index) => (
-                          <MenuItem key={option.code} value={option.code}>
-                            {option.name}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    </FieldRow>
-                    <FieldRow label='Phone' classes={classes}>
-                      <TextField
-                        required
-                        id='phone'
-                        name='phone'
-                        label='Phone'
-                        fullWidth
-                        error={!!(errors.phone)}
-                        placeholder='Phone e.g. 4846389012'
-                        value={values.phone}
-                        onChange={handleChange}
-                        inputProps={{
-                          style: style.padding10,
-                        }}
-                        InputLabelProps={{
-                          style: style.padding10,
-                        }}
-                      />
-                    </FieldRow>
-                    <FieldRow label='Pattern Day Trade Protection' classes={classes}>
-                      <FormControl className={classes.formControl}>
-                        <Select
-                          value={values.dayTradeProtection ? 'yes' : 'no'}
-                          onChange={handleChange}
-                          style={style.padding10}
-                          inputProps={{
-                            name: 'dayTradeProtection',
-                            id: 'dayTradeProtection',
-                          }}
-                        >
-                          <MenuItem value='yes'>Yes</MenuItem>
-                          <MenuItem value='no'>no</MenuItem>
-                        </Select>
-                      </FormControl>
+                      <Grid container>
+                        <Grid item xs={12} sm={6}>
+                          <FormControl className={classes.formControl}>
+                            <TextField
+                              required
+                              id='address1'
+                              name='address1'
+                              label='Address'
+                              error={!!(errors.address1)}
+                              placeholder='Address e.g. 234 street lane'
+                              value={values.address1}
+                              onChange={handleChange}
+                            />
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <FormControl className={classes.formControl}>
+                            <TextField
+                              required
+                              id='address2'
+                              name='address2'
+                              label='Address Line 2'
+                              error={!!(errors.address2)}
+                              placeholder='Address line 2 e.g. Apt 23, building 4'
+                              value={values.address2}
+                              onChange={handleChange}
+                            />
+                          </FormControl>
+                        </Grid>
+                      </Grid>
+                      <Grid container>
+                        <Grid item xs={12} sm={6}>
+                          <FormControl className={classes.formControl}>
+                            <TextField
+                              required
+                              id='city'
+                              name='city'
+                              label='City'
+                              error={!!(errors.city)}
+                              placeholder='City e.g. San Jose'
+                              value={values.city}
+                            />
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <FormControl className={classes.formControl}>
+                            <TextField
+                              id='state'
+                              name='state'
+                              label='State'
+                              error={!!(errors.state)}
+                              placeholder='State e.g Carlifornia'
+                              value={values.state}
+                              onChange={handleChange}
+                              select
+                              required
+                            >
+                              {states.map((option, index) => (
+                                <MenuItem key={option.code} value={option.code}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                            </TextField>
+                          </FormControl>
+                        </Grid>
+                      </Grid>
+                      <Grid container>
+                        <Grid item xs={12} sm={6}>
+                          <FormControl className={classes.formControl}>
+                            <TextField
+                              required
+                              id='postalCode'
+                              name='postalCode'
+                              label='Postal Code'
+                              error={!!(errors.postalCode)}
+                              placeholder='Postal Code e.g. 18796'
+                              value={values.postalCode}
+                              onChange={handleChange}
+                            />
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <FormControl className={classes.formControl}>
+                            <TextField
+                              required
+                              id='country'
+                              name='country'
+                              label='Country'
+                              value={values.country}
+                              onChange={handleChange}
+                              error={!!(errors.country)}
+                              select
+                            >
+                              {countries.map((option, index) => (
+                                <MenuItem key={option.code} value={option.code}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                            </TextField>
+                          </FormControl>
+                        </Grid>
+                      </Grid>
+                      <Grid container>
+                        <Grid item xs={12} sm={6}>
+                          <FormControl className={classes.formControl}>
+                            <TextField
+                              required
+                              id='phone'
+                              name='phone'
+                              label='Phone'
+                              error={!!(errors.phone)}
+                              placeholder='Phone e.g. 4846389012'
+                              value={values.phone}
+                              onChange={handleChange}
+                            />
+                          </FormControl>
+                        </Grid>
+                      </Grid>
                     </FieldRow>
                     <FieldRow label='Account Numbers' classes={classes}>
-                      <div style={style.acctWrapper}>
-                        <TextField
-                          required
-                          id='apexAccountNumber'
-                          name='APEX'
-                          label='APEX'
-                          fullWidth
-                          placeholder='5P75152'
-                          value={values.APEX}
-                          onChange={handleChange}
-                          style={style.acctInput}
-                          inputProps={{
-                            style: style.padding10,
-                            maxLength: 30,
-                          }}
-                          InputLabelProps={{
-                            style: style.padding10,
-                          }}
-                        />
-                        <TextField
-                          required
-                          id='rhsAccountNumber'
-                          name='RHS'
-                          label='RHS'
-                          fullWidth
-                          placeholder='1000744308'
-                          value={values.RHS}
-                          onChange={handleChange}
-                          style={style.acctInput}
-                          inputProps={{
-                            style: style.padding10,
-                            maxLength: 30,
-                          }}
-                          InputLabelProps={{
-                            style: style.padding10,
-                          }}
-                        />
-                      </div>
+                      <Grid container>
+                        <Grid item xs={12} sm={6}>
+                          <FormControl className={classes.formControl}>
+                            <TextField
+                              required
+                              id='apexAccountNumber'
+                              name='APEX'
+                              label='APEX'
+                              placeholder='5P75152'
+                              value={values.APEX}
+                              onChange={handleChange}
+                            />
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <FormControl className={classes.formControl}>
+                            <TextField
+                              id='rhsAccountNumber'
+                              name='RHS'
+                              label='RHS'
+                              placeholder='1000744308'
+                              value={values.RHS}
+                              onChange={handleChange}
+                            />
+                          </FormControl>
+                        </Grid>
+                      </Grid>
+                    </FieldRow>
+                    <FieldRow label='Pattern Day Trade Protection' classes={classes}>
+                      <Grid item xs={12} sm={6}>
+                        <FormControl className={classes.formControl}>
+                          <InputLabel shrink>Pattern Day Trade Protection</InputLabel>
+                          <Select
+                            value={values.dayTradeProtection ? 'yes' : 'no'}
+                            onChange={handleChange}
+                            inputProps={{
+                              name: 'dayTradeProtection',
+                              id: 'dayTradeProtection',
+                            }}
+                          >
+                            <MenuItem value='yes'>Yes</MenuItem>
+                            <MenuItem value='no'>no</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Grid>
                     </FieldRow>
                     <SectionTitle label='Personal Details' classes={classes} />
-                    <FieldRow label='Employment' contents={employment} classes={classes}>
-                      <Select
-                        value={values.employment}
-                        onChange={handleChange}
-                        style={style.padding10}
-                        inputProps={{
-                          name: 'employment',
-                          id: 'employment',
-                        }}
-                      >
-                        <MenuItem value='employed'>Employed</MenuItem>
-                        <MenuItem value='unemployed'>Unemployed</MenuItem>
-                      </Select>
-                    </FieldRow>
-                    <FieldRow label='Marital Status' classes={classes}>
-                      <Select
-                        value={values.maritalStatus}
-                        onChange={handleChange}
-                        style={style.padding10}
-                        inputProps={{
-                          name: 'maritalStatus',
-                          id: 'maritalStatus',
-                        }}
-                      >
-                        <MenuItem value='single'>Single</MenuItem>
-                        <MenuItem value='married'>Married</MenuItem>
-                        <MenuItem value='divorced'>Divorced</MenuItem>
-                      </Select>
-                    </FieldRow>
-                    <FieldRow label='Dependants' classes={classes}>
-                      <TextField
-                        required
-                        id='dependants'
-                        name='dependants'
-                        label='Dependants'
-                        fullWidth
-                        placeholder='3'
-                        error={!!(errors.dependants)}
-                        value={values.dependants}
-                        onChange={handleChange}
-                        inputProps={{
-                          style: style.padding10,
-                        }}
-                        InputLabelProps={{
-                          style: style.padding10,
-                        }}
-                      />
+                    <FieldRow contents={employment} classes={classes}>
+                      <Grid container>
+                        <Grid item xs={12} sm={4}>
+                          <FormControl className={classes.formControl}>
+                            <InputLabel shrink>Employment</InputLabel>
+                            <Select
+                              value={values.employment}
+                              onChange={handleChange}
+                              inputProps={{
+                                name: 'employment',
+                                id: 'employment',
+                              }}
+                            >
+                              <MenuItem value='employed'>Employed</MenuItem>
+                              <MenuItem value='unemployed'>Unemployed</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                          <FormControl className={classes.formControl}>
+                            <InputLabel shrink>Marital Status</InputLabel>
+                            <Select
+                              value={values.maritalStatus}
+                              onChange={handleChange}
+                              inputProps={{
+                                name: 'maritalStatus',
+                                id: 'maritalStatus',
+                              }}
+                            >
+                              <MenuItem value='single'>Single</MenuItem>
+                              <MenuItem value='married'>Married</MenuItem>
+                              <MenuItem value='divorced'>Divorced</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                          <FormControl className={classes.formControl}>
+                            <TextField
+                              id='dependants'
+                              name='dependants'
+                              label='Dependants'
+                              placeholder='3'
+                              error={!!(errors.dependants)}
+                              value={values.dependants}
+                              onChange={handleChange}
+                            />
+                          </FormControl>
+                        </Grid>
+                      </Grid>
                     </FieldRow>
                     <SectionTitle label='Assets' classes={classes} />
-                    <FieldRow label='Liquid' contents={liquid} classes={classes}>
-                      <Select
-                        value={values.liquid}
-                        onChange={handleChange}
-                        style={style.padding10}
-                        inputProps={{
-                          name: 'liquid',
-                          id: 'liquid',
-                        }}
-                      >
-                        <MenuItem value='$50,000 to $99,999'>$50,000 to $99,999</MenuItem>
-                      </Select>
-                    </FieldRow>
-                    <FieldRow label='Net Worth' classes={classes}>
-                      <Select
-                        value={values.netWorth}
-                        onChange={handleChange}
-                        style={style.padding10}
-                        inputProps={{
-                          name: 'netWorth',
-                          id: 'netWorth',
-                        }}
-                      >
-                        <MenuItem value='$200,000 to $249,999'>$200,000 to $249,999</MenuItem>
-                      </Select>
-                    </FieldRow>
-                    <FieldRow label='Yearly Income' classes={classes}>
-                      <Select
-                        value={values.yearlyIncome}
-                        onChange={handleChange}
-                        style={style.padding10}
-                        inputProps={{
-                          name: 'yearlyIncome',
-                          id: 'yearlyIncome',
-                        }}
-                      >
-                        <MenuItem value='$100,000 to $199,999'>$100,000 to $199,999</MenuItem>
-                      </Select>
+                    <FieldRow contents={employment} classes={classes}>
+                      <Grid container>
+                        <Grid item xs={12} sm={4}>
+                          <FormControl className={classes.formControl}>
+                            <InputLabel shrink>Liquid</InputLabel>
+                            <Select
+                              value={values.liquid}
+                              onChange={handleChange}
+                              inputProps={{
+                                name: 'liquid',
+                                id: 'liquid',
+                              }}
+                            >
+                              <MenuItem value='$50,000 to $99,999'>$50,000 to $99,999</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                          <FormControl className={classes.formControl}>
+                            <InputLabel shrink>Net Worth</InputLabel>
+                            <Select
+                              value={values.netWorth}
+                              onChange={handleChange}
+                              inputProps={{
+                                name: 'netWorth',
+                                id: 'netWorth',
+                              }}
+                            >
+                              <MenuItem value='$200,000 to $249,999'>$200,000 to $249,999</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                          <FormControl className={classes.formControl}>
+                            <InputLabel shrink>Yearly Income</InputLabel>
+                            <Select
+                              value={values.yearlyIncome}
+                              onChange={handleChange}
+                              inputProps={{
+                                name: 'yearlyIncome',
+                                id: 'yearlyIncome',
+                              }}
+                            >
+                              <MenuItem value='$100,000 to $199,999'>$100,000 to $199,999</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                      </Grid>
                     </FieldRow>
                     <SectionTitle label='Investment' classes={classes} />
                     <FieldRow label='Goal' classes={classes} >
-                      <Select
-                        value={values.goal}
-                        onChange={handleChange}
-                        style={style.padding10}
-                        inputProps={{
-                          name: 'goal',
-                          id: 'goal',
-                        }}
-                      >
-                        <MenuItem value='Growth'>Growth</MenuItem>
-                      </Select>
-                    </FieldRow>
-                    <FieldRow label='Timeline' contents={timeLine} classes={classes} >
-                      <Select
-                        value={values.timeLine}
-                        onChange={handleChange}
-                        style={style.padding10}
-                        inputProps={{
-                          name: 'timeLine',
-                          id: 'timeLine',
-                        }}
-                      >
-                        <MenuItem value='Less than 4 years'>Less than 4 years</MenuItem>
-                      </Select>
-                    </FieldRow>
-                    <FieldRow label='Experience' contents={experience} classes={classes} >
-                      <Select
-                        value={values.experience}
-                        onChange={handleChange}
-                        style={style.padding10}
-                        inputProps={{
-                          name: 'experience',
-                          id: 'experience',
-                        }}
-                      >
-                        <MenuItem value='very little'>Very little</MenuItem>
-                      </Select>
-                    </FieldRow>
-                    <FieldRow label='Risk Tolerence' contents={riskTolerence} classes={classes} >
-                      <Select
-                        value={values.riskTolerence}
-                        onChange={handleChange}
-                        style={style.padding10}
-                        inputProps={{
-                          name: 'riskTolerence',
-                          id: 'riskTolerence',
-                        }}
-                      >
-                        <MenuItem value='Keep all or buy more'>Keep all or buy more</MenuItem>
-                      </Select>
-                    </FieldRow>
-                    <FieldRow label='Liquidity' contents={liquidity} classes={classes} >
-                      <Select
-                        value={values.liquidity}
-                        onChange={handleChange}
-                        style={style.padding10}
-                        inputProps={{
-                          name: 'liquidity',
-                          id: 'liquidity',
-                        }}
-                      >
-                        <MenuItem value='not important'>Not important</MenuItem>
-                        <MenuItem value='important'>Important</MenuItem>
-                        <MenuItem value='very important'>Very important</MenuItem>
-                      </Select>
+                      <Grid container>
+                        <Grid item xs={12} sm={4}>
+                          <FormControl className={classes.formControl}>
+                            <InputLabel shrink>Goal</InputLabel>
+                            <Select
+                              value={values.goal}
+                              onChange={handleChange}
+                              inputProps={{
+                                name: 'goal',
+                                id: 'goal',
+                              }}
+                            >
+                              <MenuItem value='Growth'>Growth</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                          <FormControl className={classes.formControl}>
+                            <InputLabel shrink>Timeline</InputLabel>
+                            <Select
+                              value={values.timeLine}
+                              onChange={handleChange}
+                              inputProps={{
+                                name: 'timeLine',
+                                id: 'timeLine',
+                              }}
+                            >
+                              <MenuItem value='Less than 4 years'>Less than 4 years</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                          <FormControl className={classes.formControl}>
+                            <InputLabel shrink>Experience</InputLabel>
+                            <Select
+                              value={values.experience}
+                              onChange={handleChange}
+                              inputProps={{
+                                name: 'experience',
+                                id: 'experience',
+                              }}
+                            >
+                              <MenuItem value='very little'>Very little</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                          <FormControl className={classes.formControl}>
+                            <InputLabel shrink>Risk Tolerence</InputLabel>
+                            <Select
+                              value={values.riskTolerence}
+                              onChange={handleChange}
+                              inputProps={{
+                                name: 'riskTolerence',
+                                id: 'riskTolerence',
+                              }}
+                            >
+                              <MenuItem value='Keep all or buy more'>Keep all or buy more</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                          <FormControl className={classes.formControl}>
+                            <InputLabel shrink>Liquidity</InputLabel>
+                            <Select
+                              value={values.liquidity}
+                              onChange={handleChange}
+                              inputProps={{
+                                name: 'liquidity',
+                                id: 'liquidity',
+                              }}
+                            >
+                              <MenuItem value='not important'>Not important</MenuItem>
+                              <MenuItem value='important'>Important</MenuItem>
+                              <MenuItem value='very important'>Very important</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                      </Grid>
                     </FieldRow>
                   </TableBody>
                 </Table>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSubmit}
-                  style={{ margin: '20px 0 0 0' }}
-                  disabled={isSubmitting}
-                >
-                  Save
-                </Button>
+                <Grid container justify='flex-end'>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSubmit}
+                    style={{ margin: '20px 0 0 0' }}
+                    disabled={isSubmitting}
+                  >
+                    Save
+                  </Button>
+                </Grid>
             </>
           )}
         </Formik>
     </ViewCard>
   )
-}))
+}
+
+export default inject('store')(observer(InvestorInfoView))
