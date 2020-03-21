@@ -10,21 +10,13 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  withStyles,
 } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import { Formik } from 'formik'
 import { inject, observer } from 'mobx-react'
 import { number, object, string } from 'yup'
 
 import { ViewCard } from '../app'
-
-const style = {
-  formControl: {
-    width: '100%',
-  },
-}
 
 const formValidationSchema = object().shape({
   dependants: number().positive('Invalid number entered for dependants'),
@@ -154,11 +146,12 @@ const InvestorInfoView = (props) => {
                       <Grid container>
                         <Grid item xs={12} sm={6}>
                           <FormControl className={classes.formControl}>
+                            <InputLabel shrink>Address Line 1</InputLabel>
                             <TextField
                               required
                               id='address1'
                               name='address1'
-                              label='Address'
+                              label='Address Line 1'
                               error={!!(errors.address1)}
                               placeholder='Address e.g. 234 street lane'
                               value={values.address1}
@@ -168,6 +161,7 @@ const InvestorInfoView = (props) => {
                         </Grid>
                         <Grid item xs={12} sm={6}>
                           <FormControl className={classes.formControl}>
+                            <InputLabel shrink>Address Line 2</InputLabel>
                             <TextField
                               required
                               id='address2'
@@ -184,6 +178,7 @@ const InvestorInfoView = (props) => {
                       <Grid container>
                         <Grid item xs={12} sm={6}>
                           <FormControl className={classes.formControl}>
+                          <InputLabel shrink>City</InputLabel>
                             <TextField
                               required
                               id='city'
@@ -192,11 +187,13 @@ const InvestorInfoView = (props) => {
                               error={!!(errors.city)}
                               placeholder='City e.g. San Jose'
                               value={values.city}
+                              onChange={handleChange}
                             />
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                           <FormControl className={classes.formControl}>
+                            <InputLabel shrink>State</InputLabel>
                             <TextField
                               id='state'
                               name='state'
@@ -220,6 +217,7 @@ const InvestorInfoView = (props) => {
                       <Grid container>
                         <Grid item xs={12} sm={6}>
                           <FormControl className={classes.formControl}>
+                            <InputLabel shrink>Postal Code</InputLabel>
                             <TextField
                               required
                               id='postalCode'
@@ -234,6 +232,7 @@ const InvestorInfoView = (props) => {
                         </Grid>
                         <Grid item xs={12} sm={6}>
                           <FormControl className={classes.formControl}>
+                            <InputLabel shrink>Country</InputLabel>
                             <TextField
                               required
                               id='country'
@@ -256,6 +255,7 @@ const InvestorInfoView = (props) => {
                       <Grid container>
                         <Grid item xs={12} sm={6}>
                           <FormControl className={classes.formControl}>
+                            <InputLabel shrink>Phone</InputLabel>
                             <TextField
                               required
                               id='phone'
@@ -274,6 +274,7 @@ const InvestorInfoView = (props) => {
                       <Grid container>
                         <Grid item xs={12} sm={6}>
                           <FormControl className={classes.formControl}>
+                            <InputLabel shrink>APEX</InputLabel>
                             <TextField
                               required
                               id='apexAccountNumber'
@@ -287,6 +288,7 @@ const InvestorInfoView = (props) => {
                         </Grid>
                         <Grid item xs={12} sm={6}>
                           <FormControl className={classes.formControl}>
+                            <InputLabel shrink>RHS</InputLabel>
                             <TextField
                               id='rhsAccountNumber'
                               name='RHS'
@@ -355,6 +357,7 @@ const InvestorInfoView = (props) => {
                         </Grid>
                         <Grid item xs={12} sm={4}>
                           <FormControl className={classes.formControl}>
+                            <InputLabel shrink>Dependants</InputLabel>
                             <TextField
                               id='dependants'
                               name='dependants'
@@ -504,11 +507,12 @@ const InvestorInfoView = (props) => {
                 </Table>
                 <Grid container justify='flex-end'>
                   <Button
-                    variant="contained"
-                    color="primary"
+                    variant='contained'
+                    color='primary'
                     onClick={handleSubmit}
                     style={{ margin: '20px 0 0 0' }}
                     disabled={isSubmitting}
+                    size='large'
                   >
                     Save
                   </Button>
