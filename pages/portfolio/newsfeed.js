@@ -2,7 +2,8 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import { Container, withStyles } from '@material-ui/core'
 
-import { TabbedNav, AccountSection } from '../../components/app'
+import { TabbedNav } from '../../components/app'
+import { PortfolioSection } from '../../components/portfolio'
 
 import { NewsFeedView } from '../../components/portfolio'
 
@@ -25,9 +26,9 @@ class Newsfeed extends React.Component {
 
     return (
       <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
-        <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
+        <PortfolioSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
           <TabbedNav tabs={portfolioTabs} tab='newsfeed' />
-        </AccountSection>
+        </PortfolioSection>
         <NewsFeedView feed={newsStore.getFeedItems} />
       </Container>
     )

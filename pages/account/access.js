@@ -3,7 +3,8 @@ import { withStyles } from '@material-ui/core/styles'
 import { inject, observer } from 'mobx-react'
 import React from 'react'
 
-import { TabbedNav, AccountSection } from '../../components/app'
+import { TabbedNav } from '../../components/app'
+import { AccountSection } from '../../components/account'
 import { APIAccessView } from '../../components/investor'
 
 import AccountTabs from '../../settings/accountTabs'

@@ -2,12 +2,12 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import {
   Container,
-  Typography,
   withStyles,
 } from '@material-ui/core'
 
-import { TabbedNav, AccountSection } from '../../components/app'
-import TicketOrdersView from '../../components/account/ticketOrdersView'
+import { TabbedNav } from '../../components/app'
+import { AccountSection } from '../../components/account'
+import TicketsView from '../../components/account/TicketsView'
 
 import { googlePageView } from '../../util'
 import styles from '../../styles/pages/investor.style.js'
@@ -17,7 +17,7 @@ import { withOnDemandAuth } from '../../util/HOC'
 
 @inject('store')
 @observer
-class Security extends React.Component {
+class Tickets extends React.Component {
   componentDidMount() {
     googlePageView()
   }
@@ -28,13 +28,16 @@ class Security extends React.Component {
 
     return (
       <Container maxWidth='lg' style={{ marginTop: '70px', marginBottom: '30px' }}>
-        <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
-          <TabbedNav tabs={AccountTabs} tab='ticketOrders' />
+        <AccountSection
+          title={userStore.getFullName}
+          style={{ marginBottom: '3em' }}
+        >
+          <TabbedNav tabs={AccountTabs} tab='tickets' />
         </AccountSection>
-        <TicketOrdersView tabTitle='Ticket Orders' classes={classes} />
+        <TicketsView tabTitle='Ticket Orders' classes={classes} />
       </Container>
     )
   }
 }
 
-export default withOnDemandAuth(withStyles(styles)(Security))
+export default withOnDemandAuth(withStyles(styles)(Tickets))

@@ -10,7 +10,8 @@ import {
   Typography
 } from '@material-ui/core'
 
-import { AddPaymentMethodModal, TabbedNav, AccountSection } from '../../components/app'
+import { AccountSection } from '../../components/account'
+import { AddPaymentMethodModal } from '../../components/app'
 
 import {
   CardCardItem,

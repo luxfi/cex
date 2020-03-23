@@ -5,8 +5,7 @@ import { inject, observer } from "mobx-react"
 import React from "react"
 import Container from "@material-ui/core/Container"
 
-import { KYCForm } from '../../components/account'
-import { TabbedNav, AccountSection } from '../../components/app'
+import { KYCForm, AccountSection } from '../../components/account'
 import { googlePageView } from '../../util'
 import { withOnDemandAuth } from '../../util/HOC'
 

@@ -25,9 +25,9 @@ export default [
     href: '/account/activity'
   },
   {
-    id: 'ticketOrders',
+    id: 'tickets',
     label: 'Ticket Orders',
-    href: '/account/ticketOrders'
+    href: '/account/tickets'
   },
   {
     id: 'security',

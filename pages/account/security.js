@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core'
 
 import { TabbedNav, AccountSection } from '../../components/app'
+import { AccountSection } from '../../components/account'
 import { SecurityView } from '../../components/investor'
 
 import { googlePageView } from '../../util'
