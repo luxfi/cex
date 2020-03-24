@@ -60,7 +60,13 @@ class SignupForm extends React.Component {
   }
 
   handleSubmit = (signUp, isValidLogin, setErrorMessage) => {
-    const { router, isModal, store: { uiStore } } = this.props
+    const { router, setValue, isModal, store: { uiStore } } = this.props
+    const urlParams = new URLSearchParams(window.location.search)
+    const referralId = urlParams.get('ref')
+
+    if (referralId) {
+      setValue('referralId', referralId)
+    }
 
     signUp(
       () => {

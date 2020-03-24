@@ -113,10 +113,11 @@ export default class UserStore {
   @observable taxDocuments = []
   @observable accountStatements = []
 
-  // Referrals
-  referrer = []
+  @observable referrer = []
 
-  referrerId = ''
+  @observable referrerId = ''
+
+  @observable referralId = ''
 
   constructor(initialData = {}, hanzoApi) {
     // TODO Do we still need this?
@@ -131,8 +132,6 @@ export default class UserStore {
     if (cardPaymentOptions && cardPaymentOptions.length) {
       this.cardPaymentOptions = cardPaymentOptions
     }
-
-    this.createReferrer()
   }
 
   /**
@@ -152,6 +151,7 @@ export default class UserStore {
         let [appSettings, account] = await Promise.all(ps)
         this.appSettings = appSettings
         this.account = account
+        this.createReferrer()
         this.hydrateStore(account)
       } else {
         this.appSettings = await this.api.library.shopjs()
@@ -496,6 +496,7 @@ export default class UserStore {
         lastName: this.lastName,
         password: this.password,
         passwordConfirm: this.passwordConfirm,
+        referrerId: this.referralId,
       })
 
       const i = this.email + this.password

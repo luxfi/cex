@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-import { inject } from 'mobx-react'
+import { inject, observer } from 'mobx-react'
 import hashSum from 'hash-sum'
 
 import {
@@ -18,7 +18,7 @@ import MovieRewardsCard from './MovieRewardsCard'
 import myStyles from './RewardsView.style.js'
 const styles = makeStyles(myStyles)
 
-export default inject('store')((props) => {
+export default inject('store')(observer((props) => {
 
   const { tabIdx, index } = props
     // Not me! Don't render
@@ -27,7 +27,7 @@ export default inject('store')((props) => {
   const { store: { userStore, movieStore }} = props
   const [wasCopied, setWasCopied] = React.useState(false)
 
-  const rewardsURL = `${window.location.origin}/invite?ref=${userStore.referrerId}`
+  const rewardsURL = userStore.referrerId && `${window.location.origin}/invite?ref=${userStore.referrerId}`
   const rewardsShareMessage = "I'm watching and investing on Entertainment Stock Exchange. Join me!"
 
   const referrals = getMyReferals(userStore.email)
@@ -84,7 +84,7 @@ export default inject('store')((props) => {
     />
     </>
   )
-})
+}))
 
 const rewards = [
   {
