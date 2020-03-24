@@ -12,6 +12,10 @@ import {
   Tab,
   Tabs,
   Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
 } from '@material-ui/core'
 
 import {
@@ -137,6 +141,10 @@ const useStyles = makeStyles((theme) => ({
     width: 280,
     height: '100%',
     overflow: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      height: 'auto',
+    },
   },
   orderBookPaper: {
     border: '1px solid',
@@ -152,6 +160,10 @@ const useStyles = makeStyles((theme) => ({
     width: 480,
     height: '100%',
     overflow: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      width: '100% !important',
+      height: 'auto',
+    },
   },
   tradeHistoryBookPaper: {
     // extend: 'orderBookPaper',
@@ -168,6 +180,10 @@ const useStyles = makeStyles((theme) => ({
   exchangeHistoryArea: {
     height: '100%',
     overflow: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      height: '50vh',
+      overflow: 'unset',
+    },
   },
   exchangeHistoryBookPaper: {
     // extend: 'orderBookPaper',
@@ -230,6 +246,16 @@ const useStyles = makeStyles((theme) => ({
   sellButton: {
     backgroundColor: red[500],
     color: theme.palette.common.white,
+  },
+  noMaxWidth: {
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: '100% !important',
+    },
+  },
+  autoHeight: {
+    [theme.breakpoints.down('sm')]: {
+      height: '100% !important',
+    },
   },
 }))
 
@@ -309,7 +335,7 @@ export default (props) => {
   } = useMidstream({
     mode: [0],
     showError: [false],
-    type: ['limit', isRequired, (v) => {
+    type: ['market', isRequired, (v) => {
       // side effects of setting the type if setting
       if (v !== type) {
         setShowError(false)
@@ -318,7 +344,7 @@ export default (props) => {
       }
       return v
     }],
-    price: [0, (v) => (type === 'limit' ? greaterThan0(v) : v)],
+    price: [0, (v) => (type === 'market' ? greaterThan0(v) : v)],
     quantity: [0, greaterThan0],
   })
 
@@ -476,10 +502,19 @@ export default (props) => {
                     }}
                   >
                     {
-                      moviesCleaned.map((m, i) => <MenuItem key={`menu_${i}`} value={m.movieSlug}>
+                      moviesCleaned.map((m, i) => <MenuItem key={`menu_${i}`} value={m.movieSlug}><Grid container spacing={3}>
                         { /*}<Link href={`/pro/${m.movieSlug}`}>{m.ticker}</Link>*/ }
-                        { m.ticker }
-                      </MenuItem>)
+                        {/* { `${m.name} (${m.ticker}) $${parseFloat(book.lastPrice).toFixed(2)}`} */}
+                        <Grid item xs={7} style={{
+                          overflow: 'hidden',
+                          display: '-webkit-box',
+                          boxOrient: 'vertical',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'normal',
+                        }}>{m.name}</Grid>
+                        <Grid item xs={3}>{m.ticker}</Grid>
+                        <Grid item xs={2}>{parseFloat(book.lastPrice).toFixed(2)}</Grid>
+                        </Grid></MenuItem>)
                     }
                   </Select>
                 </Grid>
@@ -490,12 +525,13 @@ export default (props) => {
         <Grid
           container
           spacing={0}
+          className={classes.autoHeight}
           style={{
             minHeight: tradingAreaHeight,
             height: `calc(60vh - (${headerHeight}px + ${topBarHeight}px) / 2)`,
           }}
         >
-          <Grid item xs style={{
+          <Grid item xs={12} className={classes.noMaxWidth} sm style={{
             minWidth: tradingAreaWidth,
             maxWidth: tradingAreaWidth,
           }}>
@@ -534,8 +570,9 @@ export default (props) => {
                     label='Order Type'
                     select
                     options={{
-                      limit: 'Limit',
                       market: 'Market',
+                      limit: 'Limit',
+                      stopLimit: 'Stop Limit',
                     }}
                     showError={ showError }
                     error={ err.type }
@@ -641,7 +678,7 @@ export default (props) => {
               </Box>
             </Paper>
           </Grid>
-          <Grid item xs className={classes.proChart}>
+          <Grid item xs={12} sm className={classes.proChart}>
             <ProChart data={data} />
           </Grid>
         </Grid>

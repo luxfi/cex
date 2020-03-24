@@ -25,7 +25,6 @@ const OfferingContent = ({
   setErrorMessage,
   setSuccessMessage,
   addOfferingInvestment,
-  checkIfLoggedIn,
 }) => {
   return (
     <Grid container justify="center" spacing={4}>
@@ -56,7 +55,6 @@ const OfferingContent = ({
           setErrorMessage={setErrorMessage}
           setSuccessMessage={setSuccessMessage}
           addOfferingInvestment={addOfferingInvestment}
-          checkIfLoggedIn={checkIfLoggedIn}
         />
       </Grid>
     </Grid>

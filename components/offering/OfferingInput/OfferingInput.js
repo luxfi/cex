@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import { inject, observer } from 'mobx-react'
 import {
   InputBase,
   Paper,
@@ -7,6 +8,8 @@ import {
   Typography,
   Box,
 } from '@material-ui/core'
+import { AuthModal } from '../../app'
+
 import { isStringUSCurrency } from '../../../util'
 
 const useStyles = makeStyles(theme => ({
@@ -45,19 +48,25 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function CustomizedInputBase({
+export default inject('store')(observer(function CustomizedInputBase({
   funds,
   addOfferingInvestment,
   setErrorMessage,
   setSuccessMessage,
-  checkIfLoggedIn,
+  store: { uiStore,  userStore },
 }) {
   const classes = useStyles()
   const minimumInvestment = 50
   const [investmentAmount, setInvestmentAmount] = useState('')
 
+  const { authModalOpen, tabIndexValue } = uiStore
+  const { loggedIn } = userStore
+
   const handleSubmit = async () => {
-    checkIfLoggedIn()
+    // ondemand login
+    if (!loggedIn) {
+      return uiStore.openAuthModal()
+    }
     const sufficientFunds = investmentAmount <= funds
     if (sufficientFunds) {
       await addOfferingInvestment(
@@ -89,38 +98,41 @@ export default function CustomizedInputBase({
   }
 
   return (
-    <div className={classes.container}>
-      <Paper className={classes.root}>
-        <Typography
-          variant="h6"
-          color="textSecondary"
-          className={classes.currency}
-          aria-label="$"
+    <>
+    <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
+      <div className={classes.container}>
+        <Paper className={classes.root}>
+          <Typography
+            variant="h6"
+            color="textSecondary"
+            className={classes.currency}
+            aria-label="$"
+          >
+            <Box fontWeight="fontWeightBold">$</Box>
+          </Typography>
+          <Typography variant="h5">
+            <Box fontWeight="fontWeightBold">
+              <InputBase
+                placeholder={minimumInvestment.toString()}
+                classes={{
+                  root: classes.inputText,
+                  input: classes.inputText,
+                }}
+                onChange={evt => handleInputChange(evt)}
+                value={investmentAmount}
+              />
+            </Box>
+          </Typography>
+        </Paper>
+        <Button
+          color="secondary"
+          variant="contained"
+          className={classes.button}
+          onClick={() => handleSubmit()}
         >
-          <Box fontWeight="fontWeightBold">$</Box>
-        </Typography>
-        <Typography variant="h5">
-          <Box fontWeight="fontWeightBold">
-            <InputBase
-              placeholder={minimumInvestment.toString()}
-              classes={{
-                root: classes.inputText,
-                input: classes.inputText,
-              }}
-              onChange={evt => handleInputChange(evt)}
-              value={investmentAmount}
-            />
-          </Box>
-        </Typography>
-      </Paper>
-      <Button
-        color="secondary"
-        variant="contained"
-        className={classes.button}
-        onClick={() => handleSubmit()}
-      >
-        <Typography variant="h6">Invest</Typography>
-      </Button>
-    </div>
+          <Typography variant="h6">Invest</Typography>
+        </Button>
+      </div>
+    </>
   )
-}
+}))
