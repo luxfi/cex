@@ -17,7 +17,7 @@ import { withOnDemandAuth } from '../../util/HOC'
 
 @inject('store')
 @observer
-class Tickets extends React.Component {
+class Orders extends React.Component {
   componentDidMount() {
     googlePageView()
   }
@@ -32,12 +32,12 @@ class Tickets extends React.Component {
           title={userStore.getFullName}
           style={{ marginBottom: '3em' }}
         >
-          <TabbedNav tabs={AccountTabs} tab='tickets' />
+          <TabbedNav tabs={AccountTabs} tab='orders' />
         </AccountSection>
-        <TicketsView tabTitle='Ticket Orders' classes={classes} />
+        <TicketsView tabTitle='Orders' classes={classes} />
       </Container>
     )
   }
 }
 
-export default withOnDemandAuth(withStyles(styles)(Tickets))
+export default withOnDemandAuth(withStyles(styles)(Orders))
