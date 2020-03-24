@@ -4,8 +4,7 @@ import { inject, observer } from 'mobx-react'
 import React from 'react'
 
 import { TabbedNav } from '../../components/app'
-import { AccountSection } from '../../components/account'
-import { APIAccessView } from '../../components/investor'
+import { AccountSection, APIAccessView } from '../../components/account'
 
 import AccountTabs from '../../settings/accountTabs'
 import styles from '../../styles/pages/investor.style.js'

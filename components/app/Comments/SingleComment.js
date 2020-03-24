@@ -5,12 +5,12 @@ import { inject, observer } from 'mobx-react'
 import { Box, Typography, Avatar, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
-import LikeAndUnlike from '../LikeAndUnlike'
-import { isAuthenticated } from '../../util/helpers'
+import LikeAndUnlike from '../../LikeAndUnlike'
+import { isAuthenticated } from '../../../util/helpers'
 
 import styles from './styles/comments.style'
 
-const DisplayComments = inject('store')(observer(({
+const SingleComment = inject('store')(observer(({
   comment,
   handleReply,
   showReplyButton,
@@ -56,4 +56,4 @@ const DisplayComments = inject('store')(observer(({
   )
 }))
 
-export default withRouter(DisplayComments)
+export default withRouter(SingleComment)

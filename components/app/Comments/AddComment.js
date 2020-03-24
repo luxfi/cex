@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { inject, observer } from 'mobx-react'
-import { AuthModal } from '../app'
+import { AuthModal } from '../'
 
 import { Avatar, Box, Button, TextField } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
