@@ -32,7 +32,7 @@ export default inject('store')(observer((props) => {
 
   const referrals = getMyReferals(userStore.email)
   let totalCredits = 10 // to start (profile + payment method = 10)
-  totalCredits += referrals.total * 5
+  totalCredits += (referrals.total + userStore.totalUserReferrals) * 5
 
   const classes = styles()
 
