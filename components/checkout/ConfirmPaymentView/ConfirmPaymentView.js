@@ -65,7 +65,7 @@ class ConfirmPaymentView extends React.Component {
     userStore.choosePaymentMethod(paymentMethodIndex, paymentType, cardInfo)
   }
 
-  purchaseTickets = () => {
+  purchaseTickets = async () => {
     const {
       router,
       store: {
@@ -87,48 +87,47 @@ class ConfirmPaymentView extends React.Component {
 
     this.setState({
       processingPayment: true,
+      transactionStatus: null,
     })
 
-    // simulate async operation
-    // TODO setTimeout remove when API is ready
-    setTimeout(() => {
-      if (paymentType === 'bank') {
-        if (accountBalance >= total) {
-          ticketCheckoutStore.addTransaction(
-            venueId,
-            showtimeId,
-            transactionId,
-            ticketId,
-            numberOfSeats,
-            movieSlug,
-            refHash,
-          )
-          userStore.removeBalance(total)
+    if (paymentType === 'bank') {
+      if (accountBalance >= total) {
+        ticketCheckoutStore.addTransaction(
+          venueId,
+          showtimeId,
+          transactionId,
+          ticketId,
+          numberOfSeats,
+          movieSlug,
+          refHash,
+        )
+        userStore.removeBalance(total)
 
-          this.setState({ transactionStatus: 'successful' }, () => {
-            router.push('/orderDetails', `/orderDetails/${movieSlug}?ticketId=${ticketId}${refParamString}`)
-          })
-        } else {
-          this.setState({ transactionStatus: 'failed' })
-        }
-      } else if (paymentType === 'card') {
-        if (cardInfo.amount >= total) {
-          ticketCheckoutStore.addTransaction(venueId, showtimeId, transactionId, ticketId, numberOfSeats, movieSlug, refHash)
-
-          this.setState({ transactionStatus: 'successful' }, () => {
-            router.push('/orderDetails', `/orderDetails/${movieSlug}?ticketId=${ticketId}${refParamString}`)
-          })
-        } else {
-          this.setState({ transactionStatus: 'failed' })
-        }
+        this.setState({ transactionStatus: 'successful' }, () => {
+          router.push('/orderDetails', `/orderDetails/${movieSlug}?ticketId=${ticketId}${refParamString}`)
+        })
       } else {
         this.setState({ transactionStatus: 'failed' })
       }
+    } else if (paymentType === 'card') {
+      const metadata = { venueId, showtimeId, ticketId, numberOfSeats, movieSlug, paymentType: 'movieTicket' }
+      const transaction = await ticketCheckoutStore.checkoutOrder(total, userStore.account, cardInfo, metadata)
 
-      this.setState({
-        processingPayment: false,
-      })
-    }, 3000)
+      if (transaction && transaction.id) {
+        ticketCheckoutStore.addTransaction(venueId, showtimeId, transaction.id, ticketId, numberOfSeats, movieSlug, refHash)
+        this.setState({ transactionStatus: 'successful' }, () => {
+          router.push('/orderDetails', `/orderDetails/${movieSlug}?ticketId=${ticketId}${refParamString}`)
+        })
+      } else {
+        this.setState({ transactionStatus: 'failed' })
+      }
+    } else {
+      this.setState({ transactionStatus: 'failed' })
+    }
+
+    this.setState({
+      processingPayment: false,
+    })
   }
 
   getFundStatus = (formattedAccount) => {
@@ -157,6 +156,7 @@ class ConfirmPaymentView extends React.Component {
           subTotal,
           total,
           tickets,
+          paymentError,
         },
         ticketingStore: {
           selectedShowtime,
@@ -218,7 +218,7 @@ class ConfirmPaymentView extends React.Component {
                     {formatCurrency(serviceFee)}
                   </TableCell>
                 </TableRow>
-                <TableRow  key='total'>
+                <TableRow key='total'>
                   <TableCell>
                     YOUR TOTAL
                   </TableCell>
@@ -233,7 +233,7 @@ class ConfirmPaymentView extends React.Component {
             <Typography variant='h6' style={{ marginBottom: 12 }}>Payment Method</Typography>
             {transactionStatus === 'failed'
               && (<Typography color='error'>
-                Transaction failed, try again.
+                {paymentError || 'Transaction failed, try again.'}
               </Typography>)
             }
             <Box className={classes.paymentMethodContainer}>
@@ -302,7 +302,7 @@ class ConfirmPaymentView extends React.Component {
           </Box>
           <Grid>
             <Button
-              disabled={!paymentOptionSelected || total === serviceFee}
+              disabled={processingPayment || !paymentOptionSelected || total === serviceFee}
               className={classes.buyBtn}
               onClick={this.purchaseTickets}
             >

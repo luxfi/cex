@@ -84,7 +84,6 @@ const RewardsSection = ({
   setErrorMessage,
   setSuccessMessage,
   addOfferingInvestment,
-  checkIfLoggedIn,
 }) => {
   return (
     <>
@@ -104,7 +103,6 @@ const RewardsSection = ({
             setErrorMessage={setErrorMessage}
             setSuccessMessage={setSuccessMessage}
             addOfferingInvestment={addOfferingInvestment}
-            checkIfLoggedIn={checkIfLoggedIn}
           />
         </Box>
       ))}
