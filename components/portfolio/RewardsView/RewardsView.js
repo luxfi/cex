@@ -55,7 +55,7 @@ export default inject('store')(observer((props) => {
         if (reward.id == 3) {
           return (
             <Grid key={reward.id} item xs={12} sm={3}>
-              <RewardCard {...reward} completed={referrals.total} classes={classes}/>
+              <RewardCard {...reward} completed={userStore.totalUserReferrals} classes={classes}/>
             </Grid>
           )
         }

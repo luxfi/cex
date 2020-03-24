@@ -729,6 +729,7 @@ export default class UserStore {
 
   @action async createReferrer() {
     const user = await this.api.account.get()
+    this.account = user
 
     if (user.referrers) {
       this.referrer = user.referrers
@@ -746,6 +747,15 @@ export default class UserStore {
     } catch (error) {
       console.log('error', error)
     }
+  }
+
+  @computed get totalUserReferrals() {
+    let userReferrals = []
+    if (this.account && this.account.referrals) {
+      userReferrals = [...this.account.referrals].filter(((referral) => referral.event === 'new-user'))
+    }
+
+    return userReferrals.length
   }
 
   @computed get isValidSignUp() {

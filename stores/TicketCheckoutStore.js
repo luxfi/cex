@@ -53,7 +53,14 @@ export default class TicketCheckoutStore {
   }
 
   @action isValidPurchasedTicket(ticketId) {
-    const orderedTicket = this.ticketTransactions.find((ticketOrder) => parseInt(ticketOrder.metadata.ticketId, 10) === parseInt(ticketId, 10))
+    const orderedTicket = this.ticketTransactions.find((ticketOrder) => {
+
+      if (!ticketOrder.metadata) {
+        return false
+      }
+      return parseInt(ticketOrder.metadata.ticketId, 10) === parseInt(ticketId, 10)
+    })
+
     const ticket = orderedTicket || {}
     this.currentPurchasedTicket = ticket.metadata
     return ticket.metadata
@@ -78,12 +85,13 @@ export default class TicketCheckoutStore {
     this.ticketTransactions.push(transaction)
   }
 
-  @action async checkoutOrder(total, user, cardInfo, metadata) {
+  @action async checkoutOrder(total, user, cardInfo, referrerId, metadata) {
     this.paymentError = ''
     const commerceOrder = {
       currency: 'usd',
       subtotal: total * 100,
       mode: 'contribution',
+      referrerId,
       shippingAddress: (Object.keys(user.billingAddress).length) ? user.billingAddress : {
         line1: cardInfo.address1,
         city: cardInfo.city,
@@ -114,8 +122,7 @@ export default class TicketCheckoutStore {
     newCheckout.user = Object.assign(newCheckout.user, commerceUser)
 
     try {
-      const userOrder = await newCheckout.checkout(payment)
-      return userOrder
+      return await newCheckout.checkout(payment)
     } catch (error) {
       this.paymentError = error.message
     }

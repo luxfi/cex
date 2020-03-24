@@ -75,6 +75,10 @@ const TicketOrdersView = inject('store')(observer((props) => {
       {
         (ticketTransactions.length)
           ? ticketTransactions.map((order, i) => {
+            if (!order.metadata) {
+              return
+            }
+
             const movie = movieStore.getMovieBySlug(order.metadata.movieSlug)
             return <SingleTicketOrder
               classes={classes}
