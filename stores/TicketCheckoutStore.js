@@ -133,6 +133,6 @@ export default class TicketCheckoutStore {
   }
 
   @computed get numberOfSeats() {
-    return this.tickets.length
+    return this.ticketsCount
   }
 }

@@ -30,7 +30,7 @@ export default inject('store')(observer((props) => {
   const rewardsURL = userStore.referrerId && `${window.location.origin}/invite?ref=${userStore.referrerId}`
   const rewardsShareMessage = "I'm watching and investing on Entertainment Stock Exchange. Join me!"
 
-  const referrals = getMyReferals(userStore.email)
+  const referrals = getMyReferals(props)
   let totalCredits = 10 // to start (profile + payment method = 10)
   totalCredits += (referrals.total + userStore.totalUserReferrals) * 5
 
@@ -117,18 +117,22 @@ const rewards = [
   },
  ]
 
-const getMyReferals = (email) => {
-  const ticketTransactions = JSON.parse(localStorage.getItem('ticketTransactions'))
+const getMyReferals = (props) => {
+  const { store: { userStore } } = props
 
-  let result = {
+  const ticketTransactions = JSON.parse(localStorage.getItem('ticketTransactions'))
+  const orderReferrals = userStore.orderReferrals
+
+  const result = {
     total: 0,
-    byFilm: {}
+    byFilm: {},
   }
-  if (ticketTransactions == null) {
+
+  if (!orderReferrals.length) {
     return result
   }
 
-  const myHashSum = hashSum(email)
+  const myHashSum = hashSum('kjhgfhj')
   ticketTransactions.forEach((t) => {
     if ('refHash' in t && t.refHash === myHashSum) {
       if (t.movieSlug in result.byFilm) {

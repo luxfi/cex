@@ -749,12 +749,25 @@ export default class UserStore {
     }
   }
 
-  @computed get totalUserReferrals() {
-    let userReferrals = []
+  getReferralByType(type) {
+    let referrals = []
     if (this.account && this.account.referrals) {
-      userReferrals = [...this.account.referrals].filter(((referral) => referral.event === 'new-user'))
+      referrals = [...this.account.referrals].filter(((referral) => referral.event === type))
     }
+    return referrals
+  }
 
+  @computed get orders() {
+    return (this.account && this.account.orders) ? this.account.orders : []
+  }
+
+  @computed get orderReferrals() {
+    const userReferrals = this.getReferralByType('new-order')
+    return userReferrals
+  }
+
+  @computed get totalUserReferrals() {
+    const userReferrals = this.getReferralByType('new-user')
     return userReferrals.length
   }
 
