@@ -510,7 +510,7 @@ const InvestorInfoView = (props) => {
                     variant='contained'
                     color='primary'
                     onClick={handleSubmit}
-                    style={{ margin: '20px 0 0 0' }}
+                    className={classes.largeButton}
                     disabled={isSubmitting}
                     size='large'
                   >

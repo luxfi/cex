@@ -89,6 +89,11 @@ export default (theme) => ({
     },
   },
 
+  largeButton: {
+    margin: '20px 0 0 0',
+    padding: '10px 45px',
+  },
+
   sessionsHeaderRow: {
     borderBottom: '1px solid #444',
     marginBottom: theme.spacing(2),
