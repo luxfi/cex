@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const SortButton = inject('store')(observer(({ store }) => {
+const SortComments = inject('store')(observer(({ store }) => {
   const classes = useStyles()
   const [state, setState] = useReducer((state, newState) => ({ ...state, ...newState }), {
     open: false,
@@ -109,4 +109,4 @@ const SortButton = inject('store')(observer(({ store }) => {
   )
 }))
 
-export default SortButton
+export default SortComments

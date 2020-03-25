@@ -16,7 +16,7 @@ import { Formik } from 'formik'
 import { inject, observer } from 'mobx-react'
 import { number, object, string } from 'yup'
 
-import { ViewCard } from '../app'
+import { ViewCard } from '../../app'
 
 const formValidationSchema = object().shape({
   dependants: number().positive('Invalid number entered for dependants'),

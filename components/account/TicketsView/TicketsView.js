@@ -57,7 +57,7 @@ const SingleTicketOrder = ({
   </Grid>
 )
 
-const TicketOrdersView = inject('store')(observer((props) => {
+const TicketsView = inject('store')(observer((props) => {
   const {
     tabTitle,
     classes,
@@ -74,20 +74,20 @@ const TicketOrdersView = inject('store')(observer((props) => {
       <Typography className={classes.heading} variant='h3'>{`${tabTitle} (${ticketTransactions.length})`}</Typography>
       {
         (ticketTransactions.length)
-          ? ticketTransactions.map((ticket, i) => {
-            const movie = movieStore.getMovieBySlug(ticket.movieSlug)
+          ? ticketTransactions.map((order, i) => {
+            const movie = movieStore.getMovieBySlug(order.metadata.movieSlug)
             return <SingleTicketOrder
               classes={classes}
               movie={movie}
-              ticket={ticket}
-              key={ticket.ticketId}
+              ticket={order.metadata}
+              key={order.metadata.ticketId}
               showDivider={i < ticketTransactions.length - 1}
             />
           }) : null
       }
-      { (!ticketTransactions.length) && <Typography variant='body2'>You don't seem to have bought any movie ticket yet</Typography> }
+      { (!ticketTransactions.length) && <Typography variant='body2'>You don't seem to have bought any movie tickets yet</Typography> }
     </>
   )
 }))
 
-export default withStyles(styles)(TicketOrdersView)
+export default withStyles(styles)(TicketsView)

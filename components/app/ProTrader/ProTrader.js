@@ -12,6 +12,10 @@ import {
   Tab,
   Tabs,
   Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
 } from '@material-ui/core'
 
 import {
@@ -20,14 +24,17 @@ import {
 } from '@material-ui/core/colors'
 
 import { makeStyles } from '@material-ui/core/styles'
+import Hanzo from 'hanzo.js'
 
 import midstream from 'midstream'
 import { toJS } from 'mobx'
 import Link from 'next/link'
 import Router from 'next/router'
-import { useState } from 'react'
+import OrderBookClass from '../../../stores/OrderBook'
+import { useEffect, useRef, useState } from 'react'
 import NumberFormat from 'react-number-format'
 import { Element } from 'react-scroll'
+import { HANZO_KEY, HANZO_ENDPOINT } from '../../../settings'
 
 import { formatCurrency } from '../../../util'
 
@@ -137,6 +144,10 @@ const useStyles = makeStyles((theme) => ({
     width: 280,
     height: '100%',
     overflow: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      height: 'auto',
+    },
   },
   orderBookPaper: {
     border: '1px solid',
@@ -152,6 +163,10 @@ const useStyles = makeStyles((theme) => ({
     width: 480,
     height: '100%',
     overflow: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      width: '100% !important',
+      height: 'auto',
+    },
   },
   tradeHistoryBookPaper: {
     // extend: 'orderBookPaper',
@@ -168,6 +183,10 @@ const useStyles = makeStyles((theme) => ({
   exchangeHistoryArea: {
     height: '100%',
     overflow: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      height: '50vh',
+      overflow: 'unset',
+    },
   },
   exchangeHistoryBookPaper: {
     // extend: 'orderBookPaper',
@@ -231,6 +250,16 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: red[500],
     color: theme.palette.common.white,
   },
+  noMaxWidth: {
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: '100% !important',
+    },
+  },
+  autoHeight: {
+    [theme.breakpoints.down('sm')]: {
+      height: '100% !important',
+    },
+  },
 }))
 
 const greaterThan0 = (v) => {
@@ -285,15 +314,29 @@ export default (props) => {
     return <Typography>Loading chart...</Typography>
   }
 
-  const moviesCleaned = []
+  const moviesCleaned = useRef([])
   const moviesFilter = {}
 
-  for (const movie of movies) {
-    if (!moviesFilter[movie.ticker]) {
-      moviesCleaned.push(movie)
-      moviesFilter[movie.ticker] = true
+  const filterMovies = () => {
+    const api = new Hanzo.Api({ key: HANZO_KEY, endpoint: HANZO_ENDPOINT })
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const movie of movies) {
+      if (!moviesFilter[movie.ticker]) {
+        const movieCopy = { ...movie }
+        movieCopy.orderBook = new OrderBookClass({}, api)
+        movieCopy.orderBook.connect(movieCopy.ticker)
+        movieCopy.orderBook.fetchStockData(movieCopy.ticker)
+        moviesCleaned.current.push(movieCopy)
+        moviesFilter[movie.ticker] = true
+      }
     }
   }
+
+  useEffect(() => {
+    filterMovies()
+  }, [])
+
 
   const stock = toJS(orderBook.stock)
 
@@ -309,7 +352,7 @@ export default (props) => {
   } = useMidstream({
     mode: [0],
     showError: [false],
-    type: ['limit', isRequired, (v) => {
+    type: ['market', isRequired, (v) => {
       // side effects of setting the type if setting
       if (v !== type) {
         setShowError(false)
@@ -318,7 +361,7 @@ export default (props) => {
       }
       return v
     }],
-    price: [0, (v) => (type === 'limit' ? greaterThan0(v) : v)],
+    price: [0, (v) => (type === 'market' ? greaterThan0(v) : v)],
     quantity: [0, greaterThan0],
   })
 
@@ -476,10 +519,19 @@ export default (props) => {
                     }}
                   >
                     {
-                      moviesCleaned.map((m, i) => <MenuItem key={`menu_${i}`} value={m.movieSlug}>
-                        { /*}<Link href={`/pro/${m.movieSlug}`}>{m.ticker}</Link>*/ }
-                        { m.ticker }
-                      </MenuItem>)
+                      moviesCleaned.current.map((m, i) => <MenuItem key={`menu_${i}`} value={m.movieSlug}><Grid container spacing={3}>
+                        <Grid item xs={7} style={{
+                          overflow: 'hidden',
+                          display: '-webkit-box',
+                          boxOrient: 'vertical',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'normal',
+                        }}>{m.name}</Grid>
+                        <Grid item xs={3}>{m.ticker}</Grid>
+                        <Grid item xs={2}>
+                          { isNaN(m.orderBook.book.lastPrice) ? '--' : parseFloat(m.orderBook.book.lastPrice).toFixed(2) }
+                        </Grid>
+                        </Grid></MenuItem>)
                     }
                   </Select>
                 </Grid>
@@ -490,12 +542,13 @@ export default (props) => {
         <Grid
           container
           spacing={0}
+          className={classes.autoHeight}
           style={{
             minHeight: tradingAreaHeight,
             height: `calc(60vh - (${headerHeight}px + ${topBarHeight}px) / 2)`,
           }}
         >
-          <Grid item xs style={{
+          <Grid item xs={12} className={classes.noMaxWidth} sm style={{
             minWidth: tradingAreaWidth,
             maxWidth: tradingAreaWidth,
           }}>
@@ -534,8 +587,9 @@ export default (props) => {
                     label='Order Type'
                     select
                     options={{
-                      limit: 'Limit',
                       market: 'Market',
+                      limit: 'Limit',
+                      stopLimit: 'Stop Limit',
                     }}
                     showError={ showError }
                     error={ err.type }
@@ -641,7 +695,7 @@ export default (props) => {
               </Box>
             </Paper>
           </Grid>
-          <Grid item xs className={classes.proChart}>
+          <Grid item xs={12} sm className={classes.proChart}>
             <ProChart data={data} />
           </Grid>
         </Grid>

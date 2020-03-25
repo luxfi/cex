@@ -5,7 +5,7 @@ import {
   Typography,
 } from '@material-ui/core'
 
-import { ViewCard } from '../app'
+import { ViewCard } from '../../app'
 
 const PhoneNumberDisplay = (props) => {
   const { number, className } = props

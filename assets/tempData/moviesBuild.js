@@ -92,6 +92,12 @@ function mergeData(legacy, parsed) {
       parsed[slug].awards   = legacy[slug].awards
       parsed[slug].trailers = legacy[slug].trailers
       parsed[slug].productionId = legacy[slug].productionId
+      parsed[slug].highlightedTags = legacy[slug].highlightedTags
+      parsed[slug].tags = legacy[slug].tags
+      parsed[slug].amountOfInvestors = legacy[slug].amountOfInvestors
+      parsed[slug].raisedAmount = legacy[slug].raisedAmount
+      parsed[slug].fundingGoal = legacy[slug].fundingGoal
+      parsed[slug].daysLeft = legacy[slug].daysLeft
     } catch (err) {
       console.error(`Failed to update ${slug}: ${err.toString()}`)
     }

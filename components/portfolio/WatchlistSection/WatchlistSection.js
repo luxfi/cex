@@ -10,11 +10,6 @@ import Button from "@material-ui/core/Button"
 import CardActions from '@material-ui/core/CardActions'
 import { Grid, Card, CardContent } from '@material-ui/core'
 
-// core components
-// import GridContainer from "./Grid/GridContainer.js"
-// import GridItem from "./Grid/GridItem.js"
-// import Card from "./Card/Card.js"
-// import CardBody from "./Card/CardBody.js"
 import ContentLoader from "react-content-loader"
 
 import styles from "../../landing/InvestorTopPicks/InvestorTopPicks.style.js"
