@@ -146,31 +146,31 @@ const InvestorInfoView = (props) => {
                       <Grid container>
                         <Grid item xs={12} sm={6}>
                           <FormControl className={classes.formControl}>
-                            <InputLabel shrink>Address Line 1</InputLabel>
                             <TextField
                               required
                               id='address1'
                               name='address1'
                               label='Address Line 1'
                               error={!!(errors.address1)}
-                              placeholder='Address e.g. 234 street lane'
+                              placeholder='e.g. 234 street lane'
                               value={values.address1}
                               onChange={handleChange}
+                              InputLabelProps={{ shrink: true }}
                             />
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                           <FormControl className={classes.formControl}>
-                            <InputLabel shrink>Address Line 2</InputLabel>
                             <TextField
                               required
                               id='address2'
                               name='address2'
                               label='Address Line 2'
                               error={!!(errors.address2)}
-                              placeholder='Address line 2 e.g. Apt 23, building 4'
+                              placeholder='e.g. Apt 23, building 4'
                               value={values.address2}
                               onChange={handleChange}
+                              InputLabelProps={{ shrink: true }}
                             />
                           </FormControl>
                         </Grid>
@@ -178,30 +178,30 @@ const InvestorInfoView = (props) => {
                       <Grid container>
                         <Grid item xs={12} sm={6}>
                           <FormControl className={classes.formControl}>
-                          <InputLabel shrink>City</InputLabel>
                             <TextField
                               required
                               id='city'
                               name='city'
                               label='City'
                               error={!!(errors.city)}
-                              placeholder='City e.g. San Jose'
+                              placeholder='e.g. San Jose'
                               value={values.city}
                               onChange={handleChange}
+                              InputLabelProps={{ shrink: true }}
                             />
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                           <FormControl className={classes.formControl}>
-                            <InputLabel shrink>State</InputLabel>
                             <TextField
                               id='state'
                               name='state'
                               label='State'
                               error={!!(errors.state)}
-                              placeholder='State e.g Carlifornia'
+                              placeholder='e.g Carlifornia'
                               value={values.state}
                               onChange={handleChange}
+                              InputLabelProps={{ shrink: true }}
                               select
                               required
                             >
@@ -217,22 +217,21 @@ const InvestorInfoView = (props) => {
                       <Grid container>
                         <Grid item xs={12} sm={6}>
                           <FormControl className={classes.formControl}>
-                            <InputLabel shrink>Postal Code</InputLabel>
                             <TextField
                               required
                               id='postalCode'
                               name='postalCode'
                               label='Postal Code'
                               error={!!(errors.postalCode)}
-                              placeholder='Postal Code e.g. 18796'
+                              placeholder='e.g. 18796'
                               value={values.postalCode}
                               onChange={handleChange}
+                              InputLabelProps={{ shrink: true }}
                             />
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                           <FormControl className={classes.formControl}>
-                            <InputLabel shrink>Country</InputLabel>
                             <TextField
                               required
                               id='country'
@@ -241,6 +240,7 @@ const InvestorInfoView = (props) => {
                               value={values.country}
                               onChange={handleChange}
                               error={!!(errors.country)}
+                              InputLabelProps={{ shrink: true }}
                               select
                             >
                               {countries.map((option, index) => (
@@ -255,16 +255,16 @@ const InvestorInfoView = (props) => {
                       <Grid container>
                         <Grid item xs={12} sm={6}>
                           <FormControl className={classes.formControl}>
-                            <InputLabel shrink>Phone</InputLabel>
                             <TextField
                               required
                               id='phone'
                               name='phone'
                               label='Phone'
                               error={!!(errors.phone)}
-                              placeholder='Phone e.g. 4846389012'
+                              placeholder='e.g. 4846389012'
                               value={values.phone}
                               onChange={handleChange}
+                              InputLabelProps={{ shrink: true }}
                             />
                           </FormControl>
                         </Grid>
@@ -274,28 +274,28 @@ const InvestorInfoView = (props) => {
                       <Grid container>
                         <Grid item xs={12} sm={6}>
                           <FormControl className={classes.formControl}>
-                            <InputLabel shrink>APEX</InputLabel>
                             <TextField
                               required
                               id='apexAccountNumber'
                               name='APEX'
                               label='APEX'
-                              placeholder='5P75152'
+                              placeholder='e.g. 5P75152'
                               value={values.APEX}
                               onChange={handleChange}
+                              InputLabelProps={{ shrink: true }}
                             />
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                           <FormControl className={classes.formControl}>
-                            <InputLabel shrink>RHS</InputLabel>
                             <TextField
                               id='rhsAccountNumber'
                               name='RHS'
                               label='RHS'
-                              placeholder='1000744308'
+                              placeholder='e.g. 1000744308'
                               value={values.RHS}
                               onChange={handleChange}
+                              InputLabelProps={{ shrink: true }}
                             />
                           </FormControl>
                         </Grid>
@@ -357,15 +357,15 @@ const InvestorInfoView = (props) => {
                         </Grid>
                         <Grid item xs={12} sm={4}>
                           <FormControl className={classes.formControl}>
-                            <InputLabel shrink>Dependants</InputLabel>
                             <TextField
                               id='dependants'
                               name='dependants'
                               label='Dependants'
-                              placeholder='3'
+                              placeholder='e.g. 3'
                               error={!!(errors.dependants)}
                               value={values.dependants}
                               onChange={handleChange}
+                              InputLabelProps={{ shrink: true }}
                             />
                           </FormControl>
                         </Grid>
