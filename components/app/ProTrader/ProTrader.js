@@ -24,14 +24,17 @@ import {
 } from '@material-ui/core/colors'
 
 import { makeStyles } from '@material-ui/core/styles'
+import Hanzo from 'hanzo.js'
 
 import midstream from 'midstream'
 import { toJS } from 'mobx'
 import Link from 'next/link'
 import Router from 'next/router'
-import { useState } from 'react'
+import OrderBookClass from '../../../stores/OrderBook'
+import { useEffect, useRef, useState } from 'react'
 import NumberFormat from 'react-number-format'
 import { Element } from 'react-scroll'
+import { HANZO_KEY, HANZO_ENDPOINT } from '../../../settings'
 
 import { formatCurrency } from '../../../util'
 
@@ -311,15 +314,29 @@ export default (props) => {
     return <Typography>Loading chart...</Typography>
   }
 
-  const moviesCleaned = []
+  const moviesCleaned = useRef([])
   const moviesFilter = {}
 
-  for (const movie of movies) {
-    if (!moviesFilter[movie.ticker]) {
-      moviesCleaned.push(movie)
-      moviesFilter[movie.ticker] = true
+  const filterMovies = () => {
+    const api = new Hanzo.Api({ key: HANZO_KEY, endpoint: HANZO_ENDPOINT })
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const movie of movies) {
+      if (!moviesFilter[movie.ticker]) {
+        const movieCopy = { ...movie }
+        movieCopy.orderBook = new OrderBookClass({}, api)
+        movieCopy.orderBook.connect(movieCopy.ticker)
+        movieCopy.orderBook.fetchStockData(movieCopy.ticker)
+        moviesCleaned.current.push(movieCopy)
+        moviesFilter[movie.ticker] = true
+      }
     }
   }
+
+  useEffect(() => {
+    filterMovies()
+  }, [])
+
 
   const stock = toJS(orderBook.stock)
 
@@ -502,9 +519,7 @@ export default (props) => {
                     }}
                   >
                     {
-                      moviesCleaned.map((m, i) => <MenuItem key={`menu_${i}`} value={m.movieSlug}><Grid container spacing={3}>
-                        { /*}<Link href={`/pro/${m.movieSlug}`}>{m.ticker}</Link>*/ }
-                        {/* { `${m.name} (${m.ticker}) $${parseFloat(book.lastPrice).toFixed(2)}`} */}
+                      moviesCleaned.current.map((m, i) => <MenuItem key={`menu_${i}`} value={m.movieSlug}><Grid container spacing={3}>
                         <Grid item xs={7} style={{
                           overflow: 'hidden',
                           display: '-webkit-box',
@@ -513,7 +528,9 @@ export default (props) => {
                           whiteSpace: 'normal',
                         }}>{m.name}</Grid>
                         <Grid item xs={3}>{m.ticker}</Grid>
-                        <Grid item xs={2}>{parseFloat(book.lastPrice).toFixed(2)}</Grid>
+                        <Grid item xs={2}>
+                          { isNaN(m.orderBook.book.lastPrice) ? '--' : parseFloat(m.orderBook.book.lastPrice).toFixed(2) }
+                        </Grid>
                         </Grid></MenuItem>)
                     }
                   </Select>
