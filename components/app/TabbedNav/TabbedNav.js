@@ -18,7 +18,7 @@ export default props => {
   return (
     <Tabs value={tab} aria-label="Navigation Tabs">
       {
-        tabs.map((t, i) => (
+        tabs && tabs.map((t, i) => (
             <Tab key={`tab_${i}`} label={t.label} value={t.id} id={t.id} component={CustomLink} to={t.href} href={t.href} />
           )
         )

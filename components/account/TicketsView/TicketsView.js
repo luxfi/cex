@@ -57,7 +57,7 @@ const SingleTicketOrder = ({
   </Grid>
 )
 
-const TicketOrdersView = inject('store')(observer((props) => {
+const TicketsView = inject('store')(observer((props) => {
   const {
     tabTitle,
     classes,
@@ -94,4 +94,4 @@ const TicketOrdersView = inject('store')(observer((props) => {
   )
 }))
 
-export default withStyles(styles)(TicketOrdersView)
+export default withStyles(styles)(TicketsView)

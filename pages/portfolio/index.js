@@ -2,9 +2,9 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import { Container, withStyles } from '@material-ui/core'
 
-import { AccountSection } from '../../components/account'
+import { PortfolioSection } from '../../components/portfolio'
 import { TabbedNav } from '../../components/app'
-import { TradeView, PortfolioView } from '../../components/portfolio'
+import { TradeView } from '../../components/portfolio'
 
 import { googlePageView } from "../../util"
 
@@ -49,9 +49,9 @@ class Portfolio extends React.Component {
 
     return (
       <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
-        <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
+        <PortfolioSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
           <TabbedNav tabs={portfolioTabs} tab='' />
-        </AccountSection>
+        </PortfolioSection>
         <TradeView
           investments={userPortfolio.topInvestments}
           findMovieByTicker={findMovieByTicker}

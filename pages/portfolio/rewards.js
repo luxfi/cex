@@ -3,8 +3,7 @@ import { inject, observer } from 'mobx-react'
 import { Container, withStyles } from '@material-ui/core'
 
 import { TabbedNav } from '../../components/app'
-import { AccountSection } from '../../components/account'
-import { RewardsView } from '../../components/portfolio'
+import { RewardsView, PortfolioSection } from '../../components/portfolio'
 
 import { googlePageView } from '../../util'
 import styles from '../../styles/pages/portfolio.style.js'
@@ -25,9 +24,9 @@ class Rewards extends React.Component {
 
     return (
       <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
-        <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
+        <PortfolioSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
           <TabbedNav tabs={portfolioTabs} tab='rewards' />
-        </AccountSection>
+        </PortfolioSection>
         <RewardsView />
       </Container>
     )

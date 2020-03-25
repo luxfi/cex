@@ -26,12 +26,11 @@ import {
   InvestNow,
 } from '../app'
 
-import Comments from '../comments'
+import { Comments, ShareWidget } from '../app'
 import LikeAndUnlike from '../LikeAndUnlike'
 import ShowingNext from './ShowingNext'
 import VideoDescription from './VideoDescription'
 import YoutubePlayer from './YoutubePlayer'
-import ShareWidget from '../app/ShareWidget'
 
 import { formatNumber, renderDate } from './utils'
 
