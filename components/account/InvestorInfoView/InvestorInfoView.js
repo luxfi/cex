@@ -6,7 +6,7 @@ import {
   TableRow,
 } from '@material-ui/core'
 
-import { ViewCard } from '../app'
+import { ViewCard } from '../../app'
 
 const data = {
   name: 'Zach Kelling',

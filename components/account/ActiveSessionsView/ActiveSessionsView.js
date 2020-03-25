@@ -8,7 +8,7 @@ import {
   Typography,
 } from '@material-ui/core'
 
-import { ViewCard } from '../app'
+import { ViewCard } from '../../app'
 import fakeData from './fixture/fakeActiveSessions'
 
 const data = fakeData()

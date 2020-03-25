@@ -7,8 +7,7 @@ import {
 } from '@material-ui/core'
 
 import { TabbedNav } from '../../components/app'
-import { AccountSection } from '../../components/account'
-import { InvestorInfoView } from '../../components/investor'
+import { AccountSection, InvestorInfoView } from '../../components/account'
 
 import { googlePageView } from '../../util'
 import styles from '../../styles/pages/investor.style.js'

@@ -19,14 +19,13 @@ import {
   HelpOutline as HelpOutlineIcon,
 } from '@material-ui/icons/'
 import useStyles from './buySellWidget.style'
-import { isStringInteger } from '../../../util'
 import {
   errorNotEnoughFunds,
   errorNotEnoughShares,
   validNumberOfShares,
   QUOTE_NOT_MARKET_WARNING,
 } from './widgetMessages'
-import { formatCurrency } from '../../../util'
+import { formatCurrency, isStringInteger } from '../../../util'
 
 const useMarketPriceStyles = makeStyles(theme => ({
   container: {
