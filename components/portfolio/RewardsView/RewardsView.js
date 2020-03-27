@@ -120,7 +120,7 @@ const rewards = [
 const getMyReferals = (props) => {
   const { store: { userStore } } = props
 
-  const ticketTransactions = JSON.parse(localStorage.getItem('ticketTransactions'))
+  const ticketTransactions = JSON.parse(localStorage.getItem('ticketTransactions')) || []
   const orderReferrals = userStore.orderReferrals
 
   const result = {

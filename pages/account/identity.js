@@ -10,6 +10,7 @@ import { googlePageView } from '../../util'
 import { withOnDemandAuth } from '../../util/HOC'
 
 import AccountTabs from '../../settings/accountTabs'
+import { TabbedNav } from '../../components/app'
 
 @inject("store")
 @observer
