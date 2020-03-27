@@ -52,17 +52,21 @@ export default class TicketCheckoutStore {
     }
   }
 
-  @action isValidPurchasedTicket(ticketId) {
+  @action async isValidPurchasedTicket(ticketId, callback) {
+    await this.getTicketOrders()
     const orderedTicket = this.ticketTransactions.find((ticketOrder) => {
-
       if (!ticketOrder.metadata) {
         return false
       }
-      return parseInt(ticketOrder.metadata.ticketId, 10) === parseInt(ticketId, 10)
+      return ticketOrder.metadata.ticketId == ticketId
     })
 
     const ticket = orderedTicket || {}
     this.currentPurchasedTicket = ticket.metadata
+
+    if (callback) {
+      callback()
+    }
     return ticket.metadata
   }
 
@@ -70,19 +74,8 @@ export default class TicketCheckoutStore {
     // Handle sending of email
   }
 
-  @action addTransaction(venueId, showtimeId, transactionId, ticketId, numberOfSeats, movieSlug, refHash) {
-    const transaction = {
-      venueId,
-      showtimeId,
-      transactionId,
-      ticketId,
-      numberOfSeats,
-      movieSlug,
-      date: new Date(),
-      refHash,
-    }
-
-    this.ticketTransactions.push(transaction)
+  @action addTransaction(order) {
+    this.ticketTransactions.push(order)
   }
 
   @action async checkoutOrder(total, user, cardInfo, referrerId, metadata) {
