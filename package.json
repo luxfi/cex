@@ -23,6 +23,7 @@
     "@material-ui/icons": "4.5.1",
     "@material-ui/lab": "4.0.0-alpha.27",
     "@material-ui/pickers": "^3.2.8",
+    "@sentry/browser": "^5.15.4",
     "@svgr/webpack": "^5.1.0",
     "@zeit/next-css": "^1.0.1",
     "akasha": "0.1.13",
