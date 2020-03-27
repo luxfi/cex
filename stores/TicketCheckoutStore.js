@@ -52,10 +52,21 @@ export default class TicketCheckoutStore {
     }
   }
 
-  @action isValidPurchasedTicket(ticketId) {
-    const orderedTicket = this.ticketTransactions.find((ticketOrder) => parseInt(ticketOrder.metadata.ticketId, 10) === parseInt(ticketId, 10))
+  @action async isValidPurchasedTicket(ticketId, callback) {
+    await this.getTicketOrders()
+    const orderedTicket = this.ticketTransactions.find((ticketOrder) => {
+      if (!ticketOrder.metadata) {
+        return false
+      }
+      return ticketOrder.metadata.ticketId == ticketId
+    })
+
     const ticket = orderedTicket || {}
     this.currentPurchasedTicket = ticket.metadata
+
+    if (callback) {
+      callback()
+    }
     return ticket.metadata
   }
 
@@ -63,27 +74,17 @@ export default class TicketCheckoutStore {
     // Handle sending of email
   }
 
-  @action addTransaction(venueId, showtimeId, transactionId, ticketId, numberOfSeats, movieSlug, refHash) {
-    const transaction = {
-      venueId,
-      showtimeId,
-      transactionId,
-      ticketId,
-      numberOfSeats,
-      movieSlug,
-      date: new Date(),
-      refHash,
-    }
-
-    this.ticketTransactions.push(transaction)
+  @action addTransaction(order) {
+    this.ticketTransactions.push(order)
   }
 
-  @action async checkoutOrder(total, user, cardInfo, metadata) {
+  @action async checkoutOrder(total, user, cardInfo, referrerId, metadata) {
     this.paymentError = ''
     const commerceOrder = {
       currency: 'usd',
       subtotal: total * 100,
       mode: 'contribution',
+      referrerId,
       shippingAddress: (Object.keys(user.billingAddress).length) ? user.billingAddress : {
         line1: cardInfo.address1,
         city: cardInfo.city,
@@ -114,8 +115,7 @@ export default class TicketCheckoutStore {
     newCheckout.user = Object.assign(newCheckout.user, commerceUser)
 
     try {
-      const userOrder = await newCheckout.checkout(payment)
-      return userOrder
+      return await newCheckout.checkout(payment)
     } catch (error) {
       this.paymentError = error.message
     }
@@ -126,6 +126,6 @@ export default class TicketCheckoutStore {
   }
 
   @computed get numberOfSeats() {
-    return this.tickets.length
+    return this.ticketsCount
   }
 }

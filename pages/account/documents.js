@@ -9,6 +9,7 @@ import { TaxDocument, AccountSection } from '../../components/account'
 import { googlePageView } from '../../util'
 import AccountTabs from '../../settings/accountTabs'
 import { withOnDemandAuth } from '../../util/HOC'
+import { TabbedNav } from '../../components/app'
 
 @inject("store")
 @observer

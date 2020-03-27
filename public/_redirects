@@ -13,3 +13,4 @@
 /watch/*        /watch.html     404
 /login/*        /login.html     404
 /orderDetails/*        /orderDetails.html     404
+/invite/*       /invite.html    404
