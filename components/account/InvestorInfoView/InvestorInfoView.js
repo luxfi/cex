@@ -467,9 +467,9 @@ const InvestorInfoView = (props) => {
                                 id: 'timeLine',
                               }}
                             >
-                              <MenuItem value='0,3'>Less than 4 years</MenuItem>
-                              <MenuItem value='4,7'>4 to 7 years</MenuItem>
-                              <MenuItem value='8,max'>7 or more years</MenuItem>
+                              <MenuItem value='0-3'>Less than 4 years</MenuItem>
+                              <MenuItem value='4-7'>4 to 7 years</MenuItem>
+                              <MenuItem value='8-max'>7 or more years</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
