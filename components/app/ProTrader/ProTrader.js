@@ -315,6 +315,7 @@ export default (props) => {
   }
 
   const moviesCleaned = useRef([])
+  const [selectState, setSelectState] = useState(false)
   const moviesFilter = {}
 
   const filterMovies = () => {
@@ -517,21 +518,44 @@ export default (props) => {
                         Router.push(`/pro/${e.target.value}`)
                       }
                     }}
+                    onOpen={() => {
+                      setSelectState(true)
+                    }}
+                    onClose={() => {
+                      setSelectState(false)
+                    }}
+
                   >
                     {
-                      moviesCleaned.current.map((m, i) => <MenuItem key={`menu_${i}`} value={m.movieSlug}><Grid container spacing={3}>
-                        <Grid item xs={7} style={{
-                          overflow: 'hidden',
-                          display: '-webkit-box',
-                          boxOrient: 'vertical',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'normal',
-                        }}>{m.name}</Grid>
-                        <Grid item xs={3}>{m.ticker}</Grid>
-                        <Grid item xs={2}>
-                          { isNaN(m.orderBook.book.lastPrice) ? '--' : parseFloat(m.orderBook.book.lastPrice).toFixed(2) }
-                        </Grid>
-                        </Grid></MenuItem>)
+                      moviesCleaned.current.map((m, i) => {
+                        if (!m.orderBook.book.lastPrice) {
+                          return null
+                        }
+
+                        const selectItem = selectState ? (
+                          <MenuItem key={`menu_${i}`} value={m.movieSlug}>
+                            <Grid container spacing={3}>
+                              <Grid item xs={7} style={{
+                                overflow: 'hidden',
+                                display: '-webkit-box',
+                                boxOrient: 'vertical',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'normal',
+                              }}>
+                                {m.name}
+                              </Grid>
+                              <Grid item xs={3}>{m.ticker}</Grid>
+                              <Grid item xs={2}>
+                                { isNaN(m.orderBook.book.lastPrice) ? '--' : parseFloat(m.orderBook.book.lastPrice).toFixed(2) }
+                              </Grid>
+                            </Grid>
+                          </MenuItem>
+                        ) : (
+                          <MenuItem key={`menu_${i}`} value={m.movieSlug}>{m.name}</MenuItem>
+                        )
+
+                        return selectItem
+                      })
                     }
                   </Select>
                 </Grid>
