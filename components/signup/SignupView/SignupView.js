@@ -44,6 +44,10 @@ class SignupView extends React.Component {
     const setErrorMessage = (message) => {
       uiStore.setErrorMessage(message)
     }
+    const urlParams = new URLSearchParams(window.location.search)
+    const referralId = urlParams.get('ref')
+    const ref = referralId ? `?ref=${referralId}` : ''
+
     const linkText = 'Sign in?'
 
     return (
@@ -89,7 +93,7 @@ class SignupView extends React.Component {
                   {linkText}
                 </button>)
                 : (
-                  <Link component={CustomLink} href='/login' variant='body2'>
+                  <Link component={CustomLink} href={`/login${ref}`} variant='body2'>
                     {linkText}
                   </Link>
                 )

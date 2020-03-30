@@ -73,7 +73,7 @@ class CheckoutView extends React.Component {
         },
       },
     } = this.props
-    const slug = router.query.slug || slugFromPath()
+    const slug = slugFromPath()
     const urlParams = new URLSearchParams(window.location.search)
     const showtimeId = urlParams.get('showtimeId')
     const venueId = urlParams.get('venueId')

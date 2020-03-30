@@ -92,29 +92,32 @@ class ConfirmPaymentView extends React.Component {
 
     if (paymentType === 'bank') {
       if (accountBalance >= total) {
-        ticketCheckoutStore.addTransaction(
-          venueId,
-          showtimeId,
-          transactionId,
-          ticketId,
-          numberOfSeats,
-          movieSlug,
-          refHash,
-        )
+        ticketCheckoutStore.addTransaction({
+          metadata: {
+            venueId,
+            showtimeId,
+            transactionId,
+            ticketId,
+            numberOfSeats,
+            movieSlug,
+          },
+          referrerId: refHash,
+          date: new Date(),
+        })
         userStore.removeBalance(total)
 
         this.setState({ transactionStatus: 'successful' }, () => {
-          router.push('/orderDetails', `/orderDetails/${movieSlug}?ticketId=${ticketId}${refParamString}`)
+          router.push('/orderDetails', `/orderDetails/${movieSlug}? ticketId=${ticketId}${refParamString}`)
         })
       } else {
         this.setState({ transactionStatus: 'failed' })
       }
     } else if (paymentType === 'card') {
       const metadata = { venueId, showtimeId, ticketId, numberOfSeats, movieSlug, paymentType: 'movieTicket' }
-      const transaction = await ticketCheckoutStore.checkoutOrder(total, userStore.account, cardInfo, metadata)
+      const transaction = await ticketCheckoutStore.checkoutOrder(total, userStore.account, cardInfo, refHash, metadata)
 
       if (transaction && transaction.id) {
-        ticketCheckoutStore.addTransaction(venueId, showtimeId, transaction.id, ticketId, numberOfSeats, movieSlug, refHash)
+        ticketCheckoutStore.addTransaction(transaction)
         this.setState({ transactionStatus: 'successful' }, () => {
           router.push('/orderDetails', `/orderDetails/${movieSlug}?ticketId=${ticketId}${refParamString}`)
         })

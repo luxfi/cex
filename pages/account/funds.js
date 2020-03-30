@@ -23,6 +23,7 @@ import {
 
 import { googlePageView } from '../../util'
 import AccountTabs from '../../settings/accountTabs'
+import { TabbedNav } from '../../components/app'
 import { withOnDemandAuth } from '../../util/HOC'
 
 @inject('store')

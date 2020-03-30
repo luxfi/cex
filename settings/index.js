@@ -14,3 +14,5 @@ export let EOS_NODE               = 'http://jungle2.cryptolions.io:80'
 
 export let ETH_TOKEN_ADDRESS      = '0x6790bc91af5480B4345F6F01f4FB6Cc37633e0b9'
 export let ETH_REGISTRY_ADDRESS   = '0x7fEd7A56962Dd5296D5D181BCA6A2405EA545DC1'
+
+export const REFERRAL_PROGRAM_ID  = 'x8tA8g5rTmz6gA'

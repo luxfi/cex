@@ -2,6 +2,7 @@
 import { action, observable, computed, toJS } from 'mobx'
 import Router from 'next/router'
 import moment from 'moment/moment.js'
+import { REFERRAL_PROGRAM_ID } from '../settings'
 
 import * as ethers from 'ethers'
 const isEmpty = obj =>
@@ -112,6 +113,12 @@ export default class UserStore {
   @observable taxDocuments = []
   @observable accountStatements = []
 
+  @observable referrer = []
+
+  @observable referrerId = ''
+
+  @observable referralId = ''
+
   constructor(initialData = {}, hanzoApi) {
     // TODO Do we still need this?
     // :aa I don't think so.... why would we?
@@ -144,6 +151,7 @@ export default class UserStore {
         let [appSettings, account] = await Promise.all(ps)
         this.appSettings = appSettings
         this.account = account
+        this.createReferrer()
         this.hydrateStore(account)
       } else {
         this.appSettings = await this.api.library.shopjs()
@@ -488,6 +496,7 @@ export default class UserStore {
         lastName: this.lastName,
         password: this.password,
         passwordConfirm: this.passwordConfirm,
+        referrerId: this.referralId,
       })
 
       const i = this.email + this.password
@@ -716,6 +725,50 @@ export default class UserStore {
     this.account = undefined
     this.currentUser = undefined
     this.setToken(undefined)
+  }
+
+  @action async createReferrer() {
+    const user = await this.api.account.get()
+    this.account = user
+
+    if (user.referrers) {
+      this.referrer = user.referrers
+      this.referrerId = user.referrers[0].id
+      return
+    }
+
+    try {
+      const referrer = await this.api.referrer.create({
+        programId: REFERRAL_PROGRAM_ID,
+        userId: user.id,
+      })
+      this.referrer.push(referrer)
+      this.referrerId = referrer.id
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  getReferralByType(type) {
+    let referrals = []
+    if (this.account && this.account.referrals) {
+      referrals = [...this.account.referrals].filter(((referral) => referral.event === type))
+    }
+    return referrals
+  }
+
+  @computed get orders() {
+    return (this.account && this.account.orders) ? this.account.orders : []
+  }
+
+  @computed get orderReferrals() {
+    const userReferrals = this.getReferralByType('new-order')
+    return userReferrals
+  }
+
+  @computed get totalUserReferrals() {
+    const userReferrals = this.getReferralByType('new-user')
+    return userReferrals.length
   }
 
   @computed get isValidSignUp() {
