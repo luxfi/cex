@@ -14,11 +14,15 @@ export default (theme) => ({
   },
 
   shareListItem: {
-    paddingLeft: 0,
+    padding: '10px 15px',
 
     '&:last-child': {
       paddingRight: 0
-    }
+    },
+
+    '&:hover': {
+      background: '#2f2f2f',
+    },
   },
 
   shareIcon: {
@@ -55,7 +59,7 @@ export default (theme) => ({
       backgroundColor: "#fff",
     },
     '&:hover $shareLabel': {
-      textDecoration: 'underline'
+      textDecoration: 'none',
     }
   },
 
