@@ -86,7 +86,22 @@ export default (theme) => ({
     },
     '& .MuiFormLabel-root': {
       margin: '0 10px',
+      color: '#dcdcdc',
     },
+    '& .MuiSvgIcon-root': {
+      width: '0.8em',
+      height: '0.8em',
+    },
+    '& .MuiIconButton-root': {
+      padding: 5,
+    },
+    '& .MuiFormControlLabel-label': {
+      fontSize: '1em',
+    },
+  },
+
+  radioGroup: {
+    marginTop: 16,
   },
 
   largeButton: {

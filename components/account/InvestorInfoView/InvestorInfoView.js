@@ -2,9 +2,12 @@
 import {
   Button,
   FormControl,
+  FormControlLabel,
   Grid,
   InputLabel,
   MenuItem,
+  Radio,
+  RadioGroup,
   Select,
   Table,
   TableBody,
@@ -55,6 +58,7 @@ const InvestorInfoView = (props) => {
   const {
     classes,
     store: {
+      uiStore,
       userStore,
       userStore: {
         account,
@@ -96,11 +100,16 @@ const InvestorInfoView = (props) => {
     } = {},
   } = metadata || {}
 
+  const onSuccess = () => {
+    uiStore.setSuccessMessage('Profile updated successfully')
+  }
+
   const handleSubmit = (values, { setSubmitting }) => {
     setSubmitting(true)
-    userStore.updateAccountInfo(values)
+    userStore.updateAccountInfo(values, onSuccess)
     setSubmitting(false)
   }
+
 
   return (
     <ViewCard title={`${firstName} ${lastName}`} >
@@ -152,7 +161,7 @@ const InvestorInfoView = (props) => {
                               name='address1'
                               label='Address Line 1'
                               error={!!(errors.address1)}
-                              placeholder='e.g. 234 street lane'
+                              placeholder='234 street lane'
                               value={values.address1}
                               onChange={handleChange}
                               InputLabelProps={{ shrink: true }}
@@ -167,7 +176,7 @@ const InvestorInfoView = (props) => {
                               name='address2'
                               label='Address Line 2'
                               error={!!(errors.address2)}
-                              placeholder='e.g. Apt 23, building 4'
+                              placeholder='Apt 23, building 4'
                               value={values.address2}
                               onChange={handleChange}
                               InputLabelProps={{ shrink: true }}
@@ -184,7 +193,7 @@ const InvestorInfoView = (props) => {
                               name='city'
                               label='City'
                               error={!!(errors.city)}
-                              placeholder='e.g. San Jose'
+                              placeholder='San Jose'
                               value={values.city}
                               onChange={handleChange}
                               InputLabelProps={{ shrink: true }}
@@ -223,7 +232,7 @@ const InvestorInfoView = (props) => {
                               name='postalCode'
                               label='Postal Code'
                               error={!!(errors.postalCode)}
-                              placeholder='e.g. 18796'
+                              placeholder='18796'
                               value={values.postalCode}
                               onChange={handleChange}
                               InputLabelProps={{ shrink: true }}
@@ -261,7 +270,7 @@ const InvestorInfoView = (props) => {
                               name='phone'
                               label='Phone'
                               error={!!(errors.phone)}
-                              placeholder='e.g. 4846389012'
+                              placeholder='4846389012'
                               value={values.phone}
                               onChange={handleChange}
                               InputLabelProps={{ shrink: true }}
@@ -279,10 +288,11 @@ const InvestorInfoView = (props) => {
                               id='apexAccountNumber'
                               name='APEX'
                               label='APEX'
-                              placeholder='e.g. 5P75152'
+                              placeholder='5P75152'
                               value={values.APEX}
                               onChange={handleChange}
                               InputLabelProps={{ shrink: true }}
+                              disabled
                             />
                           </FormControl>
                         </Grid>
@@ -292,10 +302,11 @@ const InvestorInfoView = (props) => {
                               id='rhsAccountNumber'
                               name='RHS'
                               label='RHS'
-                              placeholder='e.g. 1000744308'
+                              placeholder='1000744308'
                               value={values.RHS}
                               onChange={handleChange}
                               InputLabelProps={{ shrink: true }}
+                              disabled
                             />
                           </FormControl>
                         </Grid>
@@ -325,34 +336,20 @@ const InvestorInfoView = (props) => {
                         <Grid item xs={12} sm={4}>
                           <FormControl className={classes.formControl}>
                             <InputLabel shrink>Employment</InputLabel>
-                            <Select
-                              value={values.employment}
-                              onChange={handleChange}
-                              inputProps={{
-                                name: 'employment',
-                                id: 'employment',
-                              }}
-                            >
-                              <MenuItem value='employed'>Employed</MenuItem>
-                              <MenuItem value='unemployed'>Unemployed</MenuItem>
-                            </Select>
+                            <RadioGroup className={classes.radioGroup} name='employment' value={values.employment} onChange={handleChange}>
+                              <FormControlLabel value='employed' control={<Radio />} label='Employed' />
+                              <FormControlLabel value='unemployed' control={<Radio />} label='Unemployed' />
+                            </RadioGroup>
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={4}>
                           <FormControl className={classes.formControl}>
                             <InputLabel shrink>Marital Status</InputLabel>
-                            <Select
-                              value={values.maritalStatus}
-                              onChange={handleChange}
-                              inputProps={{
-                                name: 'maritalStatus',
-                                id: 'maritalStatus',
-                              }}
-                            >
-                              <MenuItem value='single'>Single</MenuItem>
-                              <MenuItem value='married'>Married</MenuItem>
-                              <MenuItem value='divorced'>Divorced</MenuItem>
-                            </Select>
+                            <RadioGroup className={classes.radioGroup} name='maritalStatus' value={values.maritalStatus} onChange={handleChange}>
+                              <FormControlLabel value='single' control={<Radio />} label='Single' />
+                              <FormControlLabel value='married' control={<Radio />} label='Married' />
+                              <FormControlLabel value='divorced' control={<Radio />} label='Divorced' />
+                            </RadioGroup>
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={4}>
@@ -361,7 +358,7 @@ const InvestorInfoView = (props) => {
                               id='dependants'
                               name='dependants'
                               label='Dependants'
-                              placeholder='e.g. 3'
+                              placeholder='3'
                               error={!!(errors.dependants)}
                               value={values.dependants}
                               onChange={handleChange}
@@ -385,7 +382,13 @@ const InvestorInfoView = (props) => {
                                 id: 'liquid',
                               }}
                             >
-                              <MenuItem value='$50,000 to $99,999'>$50,000 to $99,999</MenuItem>
+                              <MenuItem value='50000-99999'>$50,000 to $99,999</MenuItem>
+                              <MenuItem value='100000-199999'>$100,000 to $199,999</MenuItem>
+                              <MenuItem value='200000-299999'>$200,000 to $299,999</MenuItem>
+                              <MenuItem value='400000-499999'>$400,000 to $499,999</MenuItem>
+                              <MenuItem value='500000-999999'>$500,000 to $999,999</MenuItem>
+                              <MenuItem value='1000000-4999999'>$1,000,000 to $4,999,999</MenuItem>
+                              <MenuItem value='5000000-max'>$5,000,000 or higher</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
@@ -400,7 +403,13 @@ const InvestorInfoView = (props) => {
                                 id: 'netWorth',
                               }}
                             >
-                              <MenuItem value='$200,000 to $249,999'>$200,000 to $249,999</MenuItem>
+                              <MenuItem value='50000-99999'>$50,000 to $99,999</MenuItem>
+                              <MenuItem value='100000-199999'>$100,000 to $199,999</MenuItem>
+                              <MenuItem value='200000-299999'>$200,000 to $299,999</MenuItem>
+                              <MenuItem value='400000-499999'>$400,000 to $499,999</MenuItem>
+                              <MenuItem value='500000-999999'>$500,000 to $999,999</MenuItem>
+                              <MenuItem value='1000000-4999999'>$1,000,000 to $4,999,999</MenuItem>
+                              <MenuItem value='5000000-max'>$5,000,000 or higher</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
@@ -415,7 +424,12 @@ const InvestorInfoView = (props) => {
                                 id: 'yearlyIncome',
                               }}
                             >
-                              <MenuItem value='$100,000 to $199,999'>$100,000 to $199,999</MenuItem>
+                              <MenuItem value='75000-99999'>$75,000 to $99,999</MenuItem>
+                              <MenuItem value='100000-199999'>$100,000 to $199,999</MenuItem>
+                              <MenuItem value='200000-299999'>$200,000 to $299,999</MenuItem>
+                              <MenuItem value='300000-499999'>$300,000 to $499,999</MenuItem>
+                              <MenuItem value='500000-1999999'>$500,000 to $1,199,999</MenuItem>
+                              <MenuItem value='1200000-max'>$1,200,000 or Higher</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
@@ -435,7 +449,11 @@ const InvestorInfoView = (props) => {
                                 id: 'goal',
                               }}
                             >
-                              <MenuItem value='Growth'>Growth</MenuItem>
+                              <MenuItem value='preserveMySavings'>Preserve my savings</MenuItem>
+                              <MenuItem value='growth'>Growth</MenuItem>
+                              <MenuItem value='sourceOfIncome'>A source of income</MenuItem>
+                              <MenuItem value='speculationTrading'>Speculation Trading</MenuItem>
+                              <MenuItem value='somethingElse'>Something else</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
@@ -450,7 +468,9 @@ const InvestorInfoView = (props) => {
                                 id: 'timeLine',
                               }}
                             >
-                              <MenuItem value='Less than 4 years'>Less than 4 years</MenuItem>
+                              <MenuItem value='0,3'>Less than 4 years</MenuItem>
+                              <MenuItem value='4,7'>4 to 7 years</MenuItem>
+                              <MenuItem value='8,max'>7 or more years</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
@@ -465,7 +485,10 @@ const InvestorInfoView = (props) => {
                                 id: 'experience',
                               }}
                             >
-                              <MenuItem value='very little'>Very little</MenuItem>
+                              <MenuItem value='none'>None</MenuItem>
+                              <MenuItem value='notMuch'>Not much</MenuItem>
+                              <MenuItem value='knowMuch'>I know what I'm doing</MenuItem>
+                              <MenuItem value='expert'>I'm an expert</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
@@ -480,7 +503,9 @@ const InvestorInfoView = (props) => {
                                 id: 'riskTolerence',
                               }}
                             >
-                              <MenuItem value='Keep all or buy more'>Keep all or buy more</MenuItem>
+                              <MenuItem value='sellAll'>Sell all your investment</MenuItem>
+                              <MenuItem value='sellSome'>Sell some</MenuItem>
+                              <MenuItem value='keepAll'>Keep all or buy more</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
@@ -495,9 +520,9 @@ const InvestorInfoView = (props) => {
                                 id: 'liquidity',
                               }}
                             >
-                              <MenuItem value='not important'>Not important</MenuItem>
-                              <MenuItem value='important'>Important</MenuItem>
-                              <MenuItem value='very important'>Very important</MenuItem>
+                              <MenuItem value='notImportant'>Not important</MenuItem>
+                              <MenuItem value='somewhatImportant'>Somewhat important</MenuItem>
+                              <MenuItem value='veryImportant'>Very important</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
