@@ -325,9 +325,12 @@ export default (props) => {
     for (const movie of movies) {
       if (!moviesFilter[movie.ticker]) {
         const movieCopy = { ...movie }
-        movieCopy.orderBook = new OrderBookClass({}, api)
-        movieCopy.orderBook.connect(movieCopy.ticker)
-        movieCopy.orderBook.fetchStockData(movieCopy.ticker)
+
+        if (movieCopy.ticker) {
+          movieCopy.orderBook = new OrderBookClass({}, api)
+          movieCopy.orderBook.connect(movieCopy.ticker)
+          movieCopy.orderBook.fetchStockData(movieCopy.ticker)
+        }
         moviesCleaned.current.push(movieCopy)
         moviesFilter[movie.ticker] = true
       }
@@ -528,8 +531,12 @@ export default (props) => {
                   >
                     {
                       moviesCleaned.current.map((m, i) => {
-                        if (!m.orderBook.book.lastPrice) {
+                        if (!m.orderBook) {
                           return null
+                        }
+
+                        if (!m.orderBook.book.lastPrice) {
+                          return <MenuItem key={`menu_${i}`} value={m.movieSlug}>{m.name}</MenuItem>
                         }
 
                         const selectItem = selectState ? (
