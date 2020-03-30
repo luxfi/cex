@@ -358,7 +358,6 @@ const InvestorInfoView = (props) => {
                               id='dependants'
                               name='dependants'
                               label='Dependants'
-                              placeholder='3'
                               error={!!(errors.dependants)}
                               value={values.dependants}
                               onChange={handleChange}
