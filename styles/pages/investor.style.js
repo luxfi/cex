@@ -74,6 +74,41 @@ export default (theme) => ({
 
   },
 
+  formControl: {
+    width: '100%',
+    marginBottom: '10px',
+    '& .MuiTextField-root': {
+      width: '100%',
+    },
+    '& .MuiInput-root': {
+      padding: '0 10px',
+      marginRight: 10,
+    },
+    '& .MuiFormLabel-root': {
+      margin: '0 10px',
+      color: '#dcdcdc',
+    },
+    '& .MuiSvgIcon-root': {
+      width: '0.8em',
+      height: '0.8em',
+    },
+    '& .MuiIconButton-root': {
+      padding: 5,
+    },
+    '& .MuiFormControlLabel-label': {
+      fontSize: '1em',
+    },
+  },
+
+  radioGroup: {
+    marginTop: 16,
+  },
+
+  largeButton: {
+    margin: '20px 0 0 0',
+    padding: '10px 45px',
+  },
+
   sessionsHeaderRow: {
     borderBottom: '1px solid #444',
     marginBottom: theme.spacing(2),
