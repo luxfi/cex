@@ -12,8 +12,8 @@ export default theme => ({
     top: '64px',  // app bar height
     zIndex: 20,
     transition: 'background 0.75s ease-in-out',
-
-      // TODO move this into a custom mixin into the theme
+    maxWidth: 1400,
+    // TODO move this into a custom mixin into the theme
     paddingLeft: theme.spacing(3), // 32px
     paddingRight: theme.spacing(3),
     [theme.breakpoints.down('xs')]: {
@@ -24,9 +24,9 @@ export default theme => ({
       paddingLeft: theme.spacing(8),
       paddingRight: theme.spacing(8),
     },
-
+    
     marginLeft: tabOffsetMargin,
-
+    
     ...theme.mixins.toolbar,
   },
 
@@ -45,7 +45,7 @@ export default theme => ({
 
 
   main: {
-    paddingTop: '128px', // 2 X 64px toolbar 
+    paddingTop: '64px',
     marginTop: 0
   },
 

@@ -17,10 +17,15 @@ export default (theme) => ({
       },
     },
   },
+  header: {
+    maxWidth: 1400,
+  },
   main: {
     flexGrow: 1,
+    maxWidth: 1400,
+    marginTop: '64px',
+    padding: theme.spacing(2),
     minHeight: '50vh',
-    //paddingTop: theme.spacing(8),
     '& .slide-button': {
       margin: 0,
       background: 'transparent !important',
@@ -30,4 +35,16 @@ export default (theme) => ({
       width: '100%',
     },
   },
+
+  discoverMain: {
+    maxWidth: '100%',
+  },
+  footer: {
+    maxWidth: 1400,
+    padding: theme.spacing(2),
+  },
+  discoverFooter: {
+    maxWidth: '100%',
+    padding: theme.spacing(2),
+  }
 })

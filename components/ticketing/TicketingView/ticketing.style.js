@@ -28,7 +28,7 @@ export default () => ({
     backgroundColor: '#222',
     ...flexCenteredRow,
     alignItems: 'center',
-    margin: '32px auto 0',
+    margin: '0 auto 0',
   },
   movieSummaryHeroTitle: {
     fontSize: '28px',
@@ -52,8 +52,7 @@ export default () => ({
     marginLeft: '16px',
   },
   outerContainer: {
-    marginTop: '64px',
-    padding: '0 32px',
+    padding: '0',
   },
   movieSummaryHeroMetadata: {
     marginBottom: '16px',

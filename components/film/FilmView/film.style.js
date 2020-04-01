@@ -23,13 +23,6 @@ export default theme => ({
     color: theme.palette.text.primary
   },
 
-  outermost: {
-    paddingTop: 64,
-    paddingLeft: 32,
-    paddingRight: 32,
-    paddingBottom: 32,
-  },
-
   breadcrumbRow: {
     marginBottom: "30px"
   },

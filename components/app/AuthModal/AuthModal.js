@@ -1,5 +1,5 @@
 import {
-  Box, Container,
+  Box,
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import { inject, observer } from 'mobx-react'
@@ -47,7 +47,7 @@ class AuthModal extends React.Component {
     } = this.props
 
     return (
-      <Container maxWidth='lg'>
+      <Box maxWidth='lg'>
         <CustomDialog
           open={authModalOpen}
           handleClose={this.closeDialog}
@@ -61,7 +61,7 @@ class AuthModal extends React.Component {
             </TabPanel>
           </div>
         </CustomDialog>
-      </Container>
+      </Box>
     )
   }
 }

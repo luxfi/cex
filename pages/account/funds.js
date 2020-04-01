@@ -6,7 +6,7 @@ import {
   Button,
   Grid,
   Divider,
-  Container,
+  Box,
   Typography
 } from '@material-ui/core'
 
@@ -66,10 +66,7 @@ class Funds extends React.Component {
     }
 
     return (
-      <Container
-        maxWidth="lg"
-        style={{ marginTop: '70px', marginBottom: '30px' }}
-      >
+      <Box>
         <AccountSection
           title={userStore.getFullName}
           style={{ marginBottom: '3em' }}
@@ -163,7 +160,7 @@ class Funds extends React.Component {
             </Grid>
           </Grid>
         </AccountSection>
-      </Container>
+      </Box>
     )
   }
 }

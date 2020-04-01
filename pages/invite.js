@@ -1,8 +1,6 @@
 import {
   Box,
-  Container,
   Grid,
-  Link,
   Typography,
   withStyles,
 } from '@material-ui/core'
@@ -13,12 +11,6 @@ import SignUpForm from '../components/signup/SignUpForm'
 
 import styles from '../styles/pages/invite.style'
 import { googlePageView } from '../util'
-
-
-const containerStyles = {
-  flexGrow: 1,
-  margin: '70px 0 0 0',
-}
 
 @inject('store')
 @observer

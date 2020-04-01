@@ -1,8 +1,7 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
 import {
-  Container,
-  Typography,
+  Box,
   withStyles,
 } from '@material-ui/core'
 
@@ -27,12 +26,12 @@ class Profile extends React.Component {
     const { userStore } = store
 
     return (
-      <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
+      <Box>
         <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
           <TabbedNav tabs={AccountTabs} tab='' />
         </AccountSection>
         <InvestorInfoView tabTitle='Profile' classes={classes}/>
-      </Container>
+      </Box>
     )
   }
 }

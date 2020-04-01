@@ -1,7 +1,6 @@
 export default () => ({
   outerContainer: {
-    marginTop: '64px',
-    padding: '0 32px',
+    padding: '0',
   },
   innerContainer: {
     backgroundColor: '#0f151acc',

@@ -244,7 +244,7 @@ class Footer extends React.Component {
     })
 
     return (
-      <footer className={classNames(rootClassName, classes.root)}>
+      <footer>
         <Grid container className={classes.gridContainer}>
           <Grid item lg={3} className={classes.logoAreaGridItem}>
             <LogoAndByline classes={classes} />

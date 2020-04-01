@@ -1,7 +1,7 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
 import {
-  Container,
+  Box,
   Typography,
   withStyles,
 } from '@material-ui/core'
@@ -27,12 +27,12 @@ class Security extends React.Component {
     const { userStore } = store
 
     return (
-      <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
+      <Box>
         <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
           <TabbedNav tabs={AccountTabs} tab='security' />
         </AccountSection>
         <SecurityView tabTitle='Security' classes={classes} />
-      </Container>
+      </Box>
     )
   }
 }

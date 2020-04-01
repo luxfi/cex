@@ -1,6 +1,6 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import { Container, withStyles } from '@material-ui/core'
+import { Box, withStyles } from '@material-ui/core'
 
 import { TabbedNav } from '../../components/app'
 import { RewardsView, PortfolioSection } from '../../components/portfolio'
@@ -19,16 +19,16 @@ class Rewards extends React.Component {
   }
 
   render() {
-    const { classes, store } = this.props
+    const { store } = this.props
     const { userStore } = store
 
     return (
-      <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
+      <Box>
         <PortfolioSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
           <TabbedNav tabs={portfolioTabs} tab='rewards' />
         </PortfolioSection>
         <RewardsView />
-      </Container>
+      </Box>
     )
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import { Container, withStyles } from '@material-ui/core'
+import { Box, withStyles } from '@material-ui/core'
 
 import { PortfolioSection } from '../../components/portfolio'
 import { TabbedNav } from '../../components/app'
@@ -48,7 +48,7 @@ class Portfolio extends React.Component {
     }
 
     return (
-      <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
+      <Box>
         <PortfolioSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
           <TabbedNav tabs={portfolioTabs} tab='' />
         </PortfolioSection>
@@ -69,7 +69,7 @@ class Portfolio extends React.Component {
           removeFromWatchlist={removeFromWatchlist}
           accountBalance={userStore.accountBalance}
         />
-      </Container>
+      </Box>
     )
   }
 }
