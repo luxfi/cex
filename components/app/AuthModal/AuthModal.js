@@ -47,7 +47,7 @@ class AuthModal extends React.Component {
     } = this.props
 
     return (
-      <Box maxWidth='lg'>
+      <Box>
         <CustomDialog
           open={authModalOpen}
           handleClose={this.closeDialog}
