@@ -21,9 +21,9 @@ const svgIcon = {
   height: '1rem',
 }
 
-export default () => ({
+export default (theme) => ({
   movieSummaryHero: {
-    padding: '16px',
+    padding: theme.spacing(2),
     borderRadius: '4px',
     backgroundColor: '#222',
     ...flexCenteredRow,

@@ -1,6 +1,6 @@
-export default () => ({
+export default (theme) => ({
   outerContainer: {
-    padding: '0',
+    padding: theme.spacing(0),
   },
   innerContainer: {
     backgroundColor: '#0f151acc',
@@ -33,7 +33,7 @@ export default () => ({
     marginRight: 1,
   },
   ticketBtn: {
-    padding: 0,
+    padding: theme.spacing(0),
     backgroundColor: 'transparent',
     border: 'none',
     cursor: 'pointer',

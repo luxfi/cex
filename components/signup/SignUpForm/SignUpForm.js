@@ -13,7 +13,7 @@ import React from 'react'
 
 const styles = (theme) => ({
   root: {
-    maxWidth: 480,
+    maxWidth: theme.spacing(60),
     marginLeft: 'auto',
     marginRight: 'auto',
   },
