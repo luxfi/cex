@@ -1,5 +1,5 @@
 import Router from 'next/router'
-import Error as NextError from 'next/error'
+import NextError from 'next/error'
 
 let dynamicRoutes = [
   'account',
@@ -11,7 +11,6 @@ let dynamicRoutes = [
   'film',
   'invite',
   'offering',
-  'orderDetails',
   'orderDetails',
   'pickSeats',
   'pro',
