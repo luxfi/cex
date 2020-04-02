@@ -1,21 +1,23 @@
 import Router from 'next/router'
+import Error as NextError from 'next/error'
 
 let dynamicRoutes = [
+  'account',
   'article',
   'browse',
-  'film',
-  'offering',
-  'pro',
-  'trade',
-  'ticketing',
+  'careers',
   'checkout',
   'confirmPayment',
-  'account',
-  'pickSeats',
-  'watch',
-  'orderDetails',
+  'film',
   'invite',
-  'careers',
+  'offering',
+  'orderDetails',
+  'orderDetails',
+  'pickSeats',
+  'pro',
+  'ticketing',
+  'trade',
+  'watch',
 ]
 
 function Error({ statusCode }) {
@@ -26,19 +28,9 @@ function Error({ statusCode }) {
       Router.push('/'+path, location.pathname+location.search)
       return null
     }
-
   }
 
-  return (
-    <>
-      <h1>Error</h1>
-      <p>
-        {statusCode
-          ? `An error ${statusCode} occurred on server`
-          : 'An error occurred on client'}
-      </p>
-    </>
-  )
+  return <NextError statusCode={statusCode} />
 }
 
 Error.getInitialProps = ({ res, err }) => {
