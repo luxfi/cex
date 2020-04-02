@@ -1,5 +1,7 @@
 import { createMuiTheme } from "@material-ui/core/styles"
-import { red } from '@material-ui/core/colors'
+
+
+
 
 const baseTheme = {
 
@@ -32,7 +34,8 @@ const baseTheme = {
   typography: {
     fontFamily: "‘BWHaasGroteskTF-55Roman-Web, sans-serif’, sans-serif",
     useNextVariants: true
-  }
+  },
+  maxStagingWidth: 1400
 }
 
 export const darkTheme = createMuiTheme(Object.assign({}, baseTheme, {

@@ -17,12 +17,9 @@ export default (theme) => ({
       },
     },
   },
-  header: {
-    maxWidth: 1400,
-  },
   main: {
     flexGrow: 1,
-    maxWidth: 1400,
+    maxWidth: theme.maxStagingWidth,
     marginTop: '64px',
     padding: theme.spacing(2),
     minHeight: '50vh',
@@ -40,7 +37,7 @@ export default (theme) => ({
     maxWidth: '100%',
   },
   footer: {
-    maxWidth: 1400,
+    maxWidth: theme.maxStagingWidth,
     padding: theme.spacing(2),
   },
   discoverFooter: {

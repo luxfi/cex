@@ -22,7 +22,7 @@ export default () => {
   return (
     <>
       <NextLink href='/'>
-        <img src='/static/images/esx/esx-white-logo.png' alt='ESX' className={classes.logo} height='42px' />
+        <img src='/static/images/esx/u1.png' alt='ESX' className={classes.logo} height='90px' />
       </NextLink>
       <div className={classes.navOuter}>
         <div className={classes.navSpacer} />

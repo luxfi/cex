@@ -3,10 +3,6 @@ import { inject, observer } from 'mobx-react'
 import { withRouter } from 'next/router'
 
 import { 
-  Box, 
-  Card,
-  CardContent,
-  Typography, 
   makeStyles, 
   withWidth,
   isWidthDown, 

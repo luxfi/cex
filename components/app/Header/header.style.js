@@ -2,12 +2,14 @@ export default theme => ({
   appBar: {
     color: 'inherit',
     boxShadow: 'none',
+
     padding: `0px ${theme.spacing(3)}px`,   
     [theme.breakpoints.down('xs')]: {
-      padding: `0px ${theme.spacing(2)}px`,   
+      padding: 0 //`0px ${theme.spacing(2)}px`,   
     },
+
     [theme.breakpoints.up('lg')]: {
-      padding: `0px ${theme.spacing(8)}px`,   
+      padding: 0,   
     },
     transition: 'background 0.5s ease-in-out',
   },
@@ -28,13 +30,11 @@ export default theme => ({
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
-    maxWidth: 1400,
+    maxWidth: theme.maxStagingWidth,
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
   },
-  fullWidthToolbar: {
-    maxWidth: '100%',
-  },
+
   menuButton: {
     paddingLeft: 0,
   },

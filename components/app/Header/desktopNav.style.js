@@ -1,7 +1,7 @@
 export default (theme) => ({
   logo: {
     display: 'inline-block',
-    marginTop: '-16px',
+    //marginTop: '-16px',
     cursor: 'pointer',
   },
 

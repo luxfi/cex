@@ -1,4 +1,4 @@
-import { Commerce, Order } from 'commerce.js'
+import { Commerce } from 'commerce.js'
 import { action, computed, observable } from 'mobx'
 
 import tickets from '../assets/tempData/tickets'

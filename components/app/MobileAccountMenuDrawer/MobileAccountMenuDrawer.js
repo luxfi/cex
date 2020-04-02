@@ -18,16 +18,18 @@ import {
 import {
   faAddressCard,
   faChartArea,
-  faIdCard,
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import SideDrawer from '../SideDrawer'
-import styles from './mobileAccountMenu.style.js'
 
-const useStyles = makeStyles(styles)
+const useStyles = makeStyles((theme) => ({
+  accountOuter: {
+      display: "block",
+  },
+}))
 
 const menuElements = {
   loggedIn: [
@@ -58,7 +60,6 @@ const menuElements = {
     },
   ],
 }
-
 
 export default ({
   open,

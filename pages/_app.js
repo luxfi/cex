@@ -1,34 +1,36 @@
-import { config } from '@fortawesome/fontawesome-svg-core'
-
-import { CssBaseline, NoSsr, Container } from '@material-ui/core'
-import { MuiThemeProvider, withStyles } from '@material-ui/core/styles'
-import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
-
+import React from 'react'
+import ReactGA from 'react-ga'
 import { Provider, observer } from 'mobx-react'
 
 import App from 'next/app'
 import { withRouter } from 'next/router'
 import Head from 'next/head'
-import classNames from 'classnames'
 
-import React from 'react'
-import ReactGA from 'react-ga'
-
-import 'react-html5-camera-photo/build/css/index.css'
+import { 
+  Container, 
+  CssBaseline, 
+  MuiThemeProvider,
+  NoSsr,
+  withStyles, 
+} from '@material-ui/core'
 
 // This ensures that the icon CSS is loaded immediately before attempting
 // to render icons
 import '@fortawesome/fontawesome-svg-core/styles.css'
+import { config } from '@fortawesome/fontawesome-svg-core'
+import classNames from 'classnames'
+
 // Prevent fontawesome from dynamically adding its css since we did it
 // manually above
+import 'react-html5-camera-photo/build/css/index.css'
 
 import {
   CustomModal,
   CustomSnackbar,
   Footer,
   Header,
-  MobileAccountMenu,
-  MobileNavMenu,
+  MobileAccountMenuDrawer,
+  MobileNavMenuDrawer,
 } from '../components/app'
 
 import initializeStore from '../stores/stores'
@@ -59,21 +61,16 @@ class MobxApp extends App {
   }
 
   render() {
+
     const {
       Component,
       pageProps,
-      width,
       classes,
       router,
     } = this.props
 
-    const showDesktopNav = isWidthUp('md', width)
-    const showDesktopProfileMenu = isWidthUp('sm', width)
-    const isDiscoverPage = router.route === '/'
-
     const mainClassNames = classNames(classes.main, { [classes.discoverMain]: isDiscoverPage })
     const footerclassNames = classNames(classes.footer, { [classes.discoverFooter]: isDiscoverPage })
-
 
     return (
       <>
@@ -85,25 +82,20 @@ class MobxApp extends App {
           <div className={classes.root}>
             <CssBaseline />
             <NoSsr>
-              <Container className={classes.header}>
-                <Header
-                  showDesktopNav={showDesktopNav}
-                  showDesktopProfileMenu={showDesktopProfileMenu}
-                  isLoggedIn={this.mobxStore.userStore.loggedIn}
-                  openLeftDrawer={() => (
-                    this.mobxStore.uiStore.setLeftDrawerOpen(true)
-                  )}
-                  openRightDrawer={() => (
-                    this.mobxStore.uiStore.setRightDrawerOpen(true)
-                  )}
-                  handleLogout={() => {
-                    this.mobxStore.userStore.logout()
-                  }}
-                  movies={this.mobxStore.movieStore.filteredMovies}
-                  isDiscoverPage={isDiscoverPage}
-                />
-              </Container>
-              <MobileNavMenu
+              <Header
+                isLoggedIn={this.mobxStore.userStore.loggedIn}
+                movies={this.mobxStore.movieStore.filteredMovies}
+                openMobileNavMenu={() => (
+                  this.mobxStore.uiStore.setLeftDrawerOpen(true)
+                )}
+                openMobileAccountMenu={() => (
+                  this.mobxStore.uiStore.setRightDrawerOpen(true)
+                )}
+                handleLogout={() => {
+                  this.mobxStore.userStore.logout()
+                }}
+              />
+              <MobileNavMenuDrawer
                 open={this.mobxStore.uiStore.drawers.left}
                 setOpen={this.mobxStore.uiStore.setLeftDrawerOpen}
               />
@@ -118,7 +110,7 @@ class MobxApp extends App {
               />
 
               <CustomSnackbar />
-              <MobileAccountMenu
+              <MobileAccountMenuDrawer
                 open={this.mobxStore.uiStore.drawers.right}
                 setOpen={this.mobxStore.uiStore.setRightDrawerOpen}
                 isLoggedIn={this.mobxStore.userStore.loggedIn}
@@ -146,4 +138,4 @@ class MobxApp extends App {
   }
 }
 
-export default withWidth()(withRouter(withStyles(styles)(MobxApp)))
+export default withRouter(withStyles(styles)(MobxApp))

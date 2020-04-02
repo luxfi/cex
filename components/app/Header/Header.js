@@ -2,13 +2,14 @@ import React from 'react'
 import {
   AppBar,
   IconButton,
+  isWidthUp,
+  makeStyles,
   Toolbar,
   useScrollTrigger,
+  withWidth
 } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
 
 import { AccountCircle, MenuRounded } from '@material-ui/icons'
-
 import classNames from 'classnames'
 
 import DesktopNav from './DesktopNav'
@@ -17,17 +18,19 @@ import styles from './header.style.js'
 
 const useStyles = makeStyles(styles)
 
-export default (props) => {
+export default withWidth()((props) => {
+
   const {
-    showDesktopNav,
-    showDesktopProfileMenu,
-    openLeftDrawer,
-    openRightDrawer,
+    openMobileNavMenu,
+    openMobileAccountMenu,
     handleLogout,
     isLoggedIn,
+    width,
     movies,
-    isDiscoverPage,
   } = props
+
+  const showDesktopNav = isWidthUp('md', width)
+  const showDesktopProfileMenu = isWidthUp('sm', width)
 
   const trigger = useScrollTrigger({ threshold: 0, disableHysteresis: true })
   const classes = useStyles()
@@ -41,14 +44,11 @@ export default (props) => {
         showDesktopProfileMenu ? classes.mobile : '',
       )}
     >
-      <Toolbar disableGutters className={classNames(
-          classes.toolbar,
-          { [classes.fullWidthToolbar]: isDiscoverPage }
-        )}>
+      <Toolbar disableGutters className={classes.toolbar}>
         {showDesktopNav ? (
           <DesktopNav />
         ) : (
-          <IconButton onClick={openLeftDrawer} className={classes.menuButton}>
+          <IconButton onClick={openMobileNavMenu} className={classes.menuButton}>
             <MenuRounded className={classes.mobileHamburgerIcon} />
           </IconButton>
         )}
@@ -66,13 +66,13 @@ export default (props) => {
               className={classes.mobileLogo}
               height='26px'
             />
-            <AccountMenu openAccountMenu={openRightDrawer} classes={classes} />
+            <AccountMenu openAccountMenu={openMobileAccountMenu} classes={classes} />
           </>
         )}
       </Toolbar>
     </AppBar>
   )
-}
+})
 
 const AccountMenu = (props) => {
   const { openAccountMenu, classes } = props
