@@ -1,7 +1,7 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
 
-import { Container, Typography } from "@material-ui/core"
+import { Box, Typography } from "@material-ui/core"
 
 import { TaxDocument, AccountSection } from '../../components/account'
 
@@ -24,7 +24,7 @@ class Documents extends React.Component {
     const { userStore } = store
 
     return (
-      <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
+      <Box>
         <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
           <TabbedNav tabs={AccountTabs} tab='documents' />
         </AccountSection>
@@ -56,7 +56,7 @@ class Documents extends React.Component {
             : <Typography variant='body2'>There are no account statements for you!</Typography>
           }
         </AccountSection>
-      </Container>
+      </Box>
     )
   }
 }

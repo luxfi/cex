@@ -219,7 +219,7 @@ export default function KYCForm({
   return (
     <>
       <CssBaseline />
-      <main className={classes.layout}>
+      <div className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h5" align="left">
             Please verify your identity
@@ -323,7 +323,7 @@ export default function KYCForm({
             )}
           </>
         </Paper>
-      </main>
+      </div>
     </>
   )
 }

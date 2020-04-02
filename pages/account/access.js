@@ -1,4 +1,4 @@
-import { Container, Typography } from '@material-ui/core'
+import { Box } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import { inject, observer } from 'mobx-react'
 import React from 'react'
@@ -24,12 +24,12 @@ class Access extends React.Component {
     const { userStore } = store
 
     return (
-      <Container maxWidth='lg' style={{ marginTop: '70px', marginBottom: '30px' }}>
+      <Box>
         <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
           <TabbedNav tabs={AccountTabs} tab='access' />
         </AccountSection>
         <APIAccessView tabTitle='API Access' classes={classes} />
-      </Container>
+      </Box>
     )
   }
 }

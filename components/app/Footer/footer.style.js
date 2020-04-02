@@ -1,24 +1,4 @@
 export default (theme) => ({
-  root: {
-    paddingTop: theme.spacing(8),
-    [theme.breakpoints.up('xl')]: {
-      width: 1800,
-      margin: '0 auto',
-    },
-    [theme.breakpoints.up('md')]: {
-      paddingLeft: theme.spacing(8),
-      paddingRight: theme.spacing(8),
-    },
-    [theme.breakpoints.only('sm')]: {
-      paddingLeft: theme.spacing(4),
-      paddingRight: theme.spacing(4),
-    },
-    [theme.breakpoints.only('xs')]: {
-      paddingLeft: theme.spacing(3),
-      paddingRight: theme.spacing(3),
-    },
-  },
-
   logoAreaGridItem: {
     [theme.breakpoints.up('lg')]: {
       paddingRight: theme.spacing(3),

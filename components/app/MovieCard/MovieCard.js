@@ -76,10 +76,5 @@ const TrailerImage = ({movie, className}) => {
         </div>
       </a>
     </Link>
-    // <div className={className} onClick={() => childRef.current.handleOpen()}>
-    //   <FontAwesomeIcon icon={faPlayCircle} size='1x' />
-    //   <img src={movie.heroImg} />
-    //   <TrailerSliderModal movie={movie} ref={childRef} />
-    // </div>
   )
 }

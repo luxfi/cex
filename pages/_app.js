@@ -1,6 +1,6 @@
 import { config } from '@fortawesome/fontawesome-svg-core'
 
-import { CssBaseline, NoSsr } from '@material-ui/core'
+import { CssBaseline, NoSsr, Container } from '@material-ui/core'
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 
@@ -9,6 +9,7 @@ import { Provider, observer } from 'mobx-react'
 import App from 'next/app'
 import { withRouter } from 'next/router'
 import Head from 'next/head'
+import classNames from 'classnames'
 
 import React from 'react'
 import ReactGA from 'react-ga'
@@ -48,27 +49,6 @@ const hideFooter = (page) => {
 
 @observer
 class MobxApp extends App {
-  //static async getInitialProps(appContext)
-  //  //
-  //  // Use getInitialProps as a step in the lifecycle when
-  //  // we can initialize our store (nextJS DOCS)
-  //  //
-
-  //  const isServer = typeof window === 'undefined'
-  //  appContext.ctx.mobxStore = mobxStore
-
-  //  let pageProps = {}
-
-  //  const appProps = await App.getInitialProps(appContext)
-  //  pageProps = appProps.pageProps
-
-  //  return {
-  //    pageProps,
-  //    isServer,
-  //    initialMobxState: mobxStore,
-  //  }
-  //}
-
   constructor(props) {
     super(props)
     this.mobxStore = initializeStore()
@@ -89,6 +69,11 @@ class MobxApp extends App {
 
     const showDesktopNav = isWidthUp('md', width)
     const showDesktopProfileMenu = isWidthUp('sm', width)
+    const isDiscoverPage = router.route === '/'
+
+    const mainClassNames = classNames(classes.main, { [classes.discoverMain]: isDiscoverPage })
+    const footerclassNames = classNames(classes.footer, { [classes.discoverFooter]: isDiscoverPage })
+
 
     return (
       <>
@@ -100,28 +85,31 @@ class MobxApp extends App {
           <div className={classes.root}>
             <CssBaseline />
             <NoSsr>
-              <Header
-                showDesktopNav={showDesktopNav}
-                showDesktopProfileMenu={showDesktopProfileMenu}
-                isLoggedIn={this.mobxStore.userStore.loggedIn}
-                openLeftDrawer={() => (
-                  this.mobxStore.uiStore.setLeftDrawerOpen(true)
-                )}
-                openRightDrawer={() => (
-                  this.mobxStore.uiStore.setRightDrawerOpen(true)
-                )}
-                handleLogout={() => {
-                  this.mobxStore.userStore.logout()
-                }}
-                movies={this.mobxStore.movieStore.filteredMovies}
-              />
+              <Container className={classes.header}>
+                <Header
+                  showDesktopNav={showDesktopNav}
+                  showDesktopProfileMenu={showDesktopProfileMenu}
+                  isLoggedIn={this.mobxStore.userStore.loggedIn}
+                  openLeftDrawer={() => (
+                    this.mobxStore.uiStore.setLeftDrawerOpen(true)
+                  )}
+                  openRightDrawer={() => (
+                    this.mobxStore.uiStore.setRightDrawerOpen(true)
+                  )}
+                  handleLogout={() => {
+                    this.mobxStore.userStore.logout()
+                  }}
+                  movies={this.mobxStore.movieStore.filteredMovies}
+                  isDiscoverPage={isDiscoverPage}
+                />
+              </Container>
               <MobileNavMenu
                 open={this.mobxStore.uiStore.drawers.left}
                 setOpen={this.mobxStore.uiStore.setLeftDrawerOpen}
               />
-              <div component='main' className={classes.main}>
+              <Container component='main' className={mainClassNames}>
                 <Component {...pageProps} pathName={router.route} />
-              </div>
+              </Container>
               <CustomModal
                 open={this.mobxStore.uiStore.modal.open}
                 handleClose={() => this.mobxStore.uiStore.closeModal()}
@@ -140,13 +128,14 @@ class MobxApp extends App {
               />
               {
                 !hideFooter(router.route) ? (
-                  <Footer
-                    rootClassName={classes.footer}
-                    isLoggedIn={this.mobxStore.userStore.loggedIn}
-                    handleLogout={() => {
-                      this.mobxStore.userStore.logout()
-                    }}
-                  />) : null
+                  <Container className={footerclassNames}>
+                    <Footer
+                      isLoggedIn={this.mobxStore.userStore.loggedIn}
+                      handleLogout={() => {
+                        this.mobxStore.userStore.logout()
+                      }}
+                    />
+                  </Container>) : null
               }
             </NoSsr>
           </div>
@@ -155,12 +144,6 @@ class MobxApp extends App {
       </>
     )
   }
-
-  // componentDidCatch(error, errorInfo) {
-  //   console.log('CUSTOM ERROR HANDLING: ', error)
-  //   // This is needed to render errors correctly in development / production
-  //   super.componentDidCatch(error, errorInfo)
-  // }
 }
 
 export default withWidth()(withRouter(withStyles(styles)(MobxApp)))

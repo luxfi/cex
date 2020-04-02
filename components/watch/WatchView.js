@@ -169,7 +169,6 @@ class Index extends React.Component {
         <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
         <Box
           className="MuiContainer-maxWidthXl"
-          style={{ padding: '50px 20px' }}
         >
           <Box className={classes.watchGrid}>
             <Box className={classes.videoContainer}>

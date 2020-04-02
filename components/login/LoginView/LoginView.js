@@ -1,5 +1,4 @@
 import Box from '@material-ui/core/Box'
-import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Link from '@material-ui/core/Link'
 import { inject, observer } from 'mobx-react'
@@ -64,7 +63,7 @@ class LoginView extends React.Component {
           setSuccessMessage={setSuccessMessage}
           isModal={isModal}
         />
-        <Container component='div' maxWidth='xs'>
+        <Box>
           <Grid container justify='space-between' alignItems='center'>
             <Grid item>
               Forgot password? [NYI]
@@ -91,7 +90,7 @@ class LoginView extends React.Component {
             }
             </Grid>
           </Grid>
-        </Container>
+        </Box>
       </>
     )
   }

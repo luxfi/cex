@@ -141,7 +141,6 @@ const RaisingInformation = withRouter(inject('store')(observer(({
     },
   )
   const classes = useRaisingStyles()
-  const movieSlug = router.query.slug || slugFromPath()
 
   const { userStore } = store
 

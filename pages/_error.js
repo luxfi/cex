@@ -15,6 +15,7 @@ let dynamicRoutes = [
   'watch',
   'orderDetails',
   'invite',
+  'careers',
 ]
 
 function Error({ statusCode }) {

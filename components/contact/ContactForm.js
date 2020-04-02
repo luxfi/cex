@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 import {
   Button,
-  Container,
+  Box,
   Typography,
   TextField,
 } from "@material-ui/core";
@@ -57,7 +57,7 @@ class ContactForm extends React.Component {
   render = () => {
     const { classes } = this.props;
     return (
-      <Container component="main" maxWidth="xs">
+      <Box>
         <div className={classes.paper}>
           <Typography component="h1" variant="h5">
             Contact
@@ -199,7 +199,7 @@ class ContactForm extends React.Component {
             }}
           </Formik>
         </div>
-      </Container>
+      </Box>
     );
   };
 }

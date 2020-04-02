@@ -2,7 +2,7 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import router from 'next/router'
 import {
-  Container,
+  Box,
   Grid,
   Tabs,
   Tab,
@@ -70,7 +70,7 @@ class Browse extends React.Component {
     }
 
     return (
-      <Container maxWidth='xl'>
+      <Box>
         <Toolbar className={classNames(
           classes.toolbar,
           this.state.scrollTrigger ? classes.solid : classes.transparent
@@ -95,7 +95,7 @@ class Browse extends React.Component {
         ))}
         {!movieStore.movies.length && <Typography style={{ textAlign: 'center', width: '100%' }}>No movie found</Typography>}
         </Grid>
-      </Container>
+      </Box>
     )
   }
 }

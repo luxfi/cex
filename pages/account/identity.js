@@ -3,7 +3,7 @@
 // Most of this info is visible in the "Portfolio" now
 import { inject, observer } from "mobx-react"
 import React from "react"
-import Container from "@material-ui/core/Container"
+import Box from "@material-ui/core/Box"
 
 import { KYCForm, AccountSection } from '../../components/account'
 import { googlePageView } from '../../util'
@@ -57,7 +57,7 @@ class KYC extends React.Component {
         uiStore.setErrorMessage(message)
     }
     return (
-      <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
+      <Box>
         <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
           <TabbedNav tabs={AccountTabs} tab='identity' />
           <KYCForm
@@ -103,7 +103,7 @@ class KYC extends React.Component {
             setActiveStep={step => userStore.setActiveStep(step)}
           />
         </AccountSection>
-      </Container>
+      </Box>
     )
   }
 }
