@@ -274,10 +274,10 @@ export default class UserStore {
   @action setToken(token) {
     if (!!token) {
       this.token = token
-      window.localStorage.setItem('token', token)
+      localStorage.setItem('token', token)
     } else {
       this.token = undefined
-      window.localStorage.removeItem('token')
+      localStorage.removeItem('token')
     }
   }
 
@@ -288,7 +288,7 @@ export default class UserStore {
         ? Number.parseFloat(localStorage.getItem('accountBalance'))
         : 0
       let newBalance = (oldBalance + parsedVal).toFixed(2)
-      window.localStorage.setItem('accountBalance', newBalance)
+      localStorage.setItem('accountBalance', newBalance)
       this.accountBalance = newBalance
       onSuccess && onSuccess()
     } else {
@@ -307,7 +307,7 @@ export default class UserStore {
         ? Number.parseFloat(localStorage.getItem('accountBalance'))
         : 0
       let newBalance = (oldBalance - parsedVal).toFixed(2)
-      window.localStorage.setItem('accountBalance', newBalance)
+      localStorage.setItem('accountBalance', newBalance)
       this.accountBalance = newBalance
       onSuccess && onSuccess()
     } else {
@@ -344,7 +344,7 @@ export default class UserStore {
         newBalance = (oldBalance - parsedVal).toFixed(2)
       }
       // Save amount
-      window.localStorage.setItem('accountBalance', newBalance)
+      localStorage.setItem('accountBalance', newBalance)
       this.accountBalance = newBalance
 
       // Update history

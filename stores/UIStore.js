@@ -25,7 +25,7 @@ export default class UIStore {
   }
 
   @action loadState = () => {
-    const trading = window.localStorage.getItem('trading')
+    const trading = localStorage.getItem('trading')
 
     if (trading) {
       this.trading = trading
@@ -34,7 +34,7 @@ export default class UIStore {
 
   @action setTrading = (mode) => {
     this.trading = mode
-    window.localStorage.setItem('trading', mode)
+    localStorage.setItem('trading', mode)
   }
 
   @action setLeftDrawerOpen = (openModal) => {
