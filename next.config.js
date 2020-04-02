@@ -23,12 +23,11 @@ module.exports = withBundleAnalyzer(
         ],
       },
 
-      exportPathMap: async function(defaultPathMap, {dev, dir, outDir, distDir, buildId}) {
-        console.log(defaultPathMap)
-        return {
-          '/': { page: '/' },
-        }
-      },
+      // exportPathMap: async function(defaultPathMap, {dev, dir, outDir, distDir, buildId}) {
+      //   return {
+      //     '/': { page: '/' },
+      //   }
+      // },
 
       webpack: config => {
         // Disable for performance boost during dev, but breaks source maps
