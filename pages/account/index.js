@@ -1,15 +1,15 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import {
-  Box,
-  withStyles,
-} from '@material-ui/core'
 
-import { TabbedNav } from '../../components/app'
-import { AccountSection, InvestorInfoView } from '../../components/account'
+import {
+  TabbedNav,
+  SideMenuSection,
+  PageSections,
+  MainContentSection,
+} from '../../components/app'
+import { InvestorInfoView } from '../../components/account'
 
 import { googlePageView } from '../../util'
-import styles from '../../styles/pages/investor.style.js'
 
 import AccountTabs from '../../settings/accountTabs'
 import { withOnDemandAuth } from '../../util/HOC'
@@ -26,14 +26,16 @@ class Profile extends React.Component {
     const { userStore } = store
 
     return (
-      <Box>
-        <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
-          <TabbedNav tabs={AccountTabs} tab='' />
-        </AccountSection>
-        <InvestorInfoView tabTitle='Profile' classes={classes}/>
-      </Box>
+      <PageSections>
+        <SideMenuSection title={userStore.getFullName}>
+          <TabbedNav tabs={AccountTabs} tab='' orientation='vertical' />
+        </SideMenuSection>
+        <MainContentSection>
+          <InvestorInfoView tabTitle='Profile'/>
+        </MainContentSection>
+      </PageSections>
     )
   }
 }
 
-export default withOnDemandAuth(withStyles(styles)(Profile))
+export default withOnDemandAuth(Profile)

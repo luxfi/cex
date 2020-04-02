@@ -1,11 +1,11 @@
 import {
-  Typography,
   Paper,
   makeStyles,
 } from '@material-ui/core'
 
 const styles = (theme) => ({
   sectionOuter: {
+    width: '100%',
     padding: theme.spacing(4),
     paddingTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
@@ -20,23 +20,15 @@ const styles = (theme) => ({
 })
 
 export default (props) => {
-  const { title, controlUI, children } = props
+  const { children } = props
   let { classes } = props
 
   if (!classes) {
     classes = makeStyles(styles)()
   }
 
-  const control = (!controlUI) ? null :
-    <div className={classes.sectionControlUI}>
-      {controlUI}
-    </div>
-
   return (
     <Paper className={classes.sectionOuter}>
-      {/* <div className={classes.sectionTitleOuter} >
-        {control}
-      </div> */}
       <div className={classes.sectionBody}>
         {children}
       </div>
