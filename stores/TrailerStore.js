@@ -14,7 +14,6 @@ export default class TrailerStore {
   constructor(initialData = {}, hanzoApi) {
     // Pass down the Hanzo API through a central point
     this.api = hanzoApi
-    this.getAutoPlay()
   }
 
   getComments(identifierId) {
@@ -34,7 +33,7 @@ export default class TrailerStore {
     const relatedMovies = allMovies.map(movie => {
       let score = 0
       movie.genres.some(genre => {
-        requestedMovie.genres.includes(genre) ? score++ : null; 
+        requestedMovie.genres.includes(genre) ? score++ : null;
       })
       movie.distributors.some(distributor=> {
         requestedMovie.genres.includes(distributor) ? score++ : null

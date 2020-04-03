@@ -6,12 +6,12 @@ import App from 'next/app'
 import { withRouter } from 'next/router'
 import Head from 'next/head'
 
-import { 
-  Container, 
-  CssBaseline, 
+import {
+  Container,
+  CssBaseline,
   MuiThemeProvider,
   NoSsr,
-  withStyles, 
+  withStyles,
 } from '@material-ui/core'
 
 // This ensures that the icon CSS is loaded immediately before attempting
@@ -61,7 +61,6 @@ class MobxApp extends App {
   }
 
   render() {
-
     const {
       Component,
       pageProps,
@@ -69,6 +68,7 @@ class MobxApp extends App {
       router,
     } = this.props
 
+    const isDiscoverPage = router.route === '/'
     const mainClassNames = classNames(classes.main, { [classes.discoverMain]: isDiscoverPage })
     const footerclassNames = classNames(classes.footer, { [classes.discoverFooter]: isDiscoverPage })
 

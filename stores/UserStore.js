@@ -120,25 +120,18 @@ export default class UserStore {
   @observable referralId = ''
 
   constructor(initialData = {}, hanzoApi) {
-    // TODO Do we still need this?
-    // :aa I don't think so.... why would we?
-    // E: This might be required for persisting state across page changes
-
-    // Pass down the Hanzo API through a central point
     this.api = hanzoApi
-    this.loadSession()
-
-    const cardPaymentOptions = JSON.parse(localStorage.getItem('cardPaymentOptions'))
-    if (cardPaymentOptions && cardPaymentOptions.length) {
-      this.cardPaymentOptions = cardPaymentOptions
-    }
   }
 
-  /**
-   * Fetches all todos from the server
-   */
   @action async loadSession() {
     this.isLoading = true
+
+    if (!this.cardPaymentOptions) {
+      const cardPaymentOptions = JSON.parse(localStorage.getItem('cardPaymentOptions'))
+      if (cardPaymentOptions && cardPaymentOptions.length) {
+        this.cardPaymentOptions = cardPaymentOptions
+      }
+    }
 
     this.token = this.api.getCustomerToken()
     try {

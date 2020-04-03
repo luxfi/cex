@@ -21,8 +21,6 @@ export default class TicketCheckoutStore {
   constructor(initialData = {}, hanzoApi) {
     this.api = hanzoApi
     this.tickets = tickets
-
-    this.getTicketOrders()
   }
 
   @action async getTicketOrders() {
