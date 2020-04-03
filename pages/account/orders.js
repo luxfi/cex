@@ -1,13 +1,13 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
 import {
-  Container,
+  Box,
   withStyles,
 } from '@material-ui/core'
 
 import { TabbedNav } from '../../components/app'
 import { AccountSection } from '../../components/account'
-import TicketsView from '../../components/account/TicketsView'
+import OrdersView from '../../components/account/OrdersView'
 
 import { googlePageView } from '../../util'
 import styles from '../../styles/pages/investor.style.js'
@@ -27,15 +27,15 @@ class Orders extends React.Component {
     const { userStore } = store
 
     return (
-      <Container maxWidth='lg' style={{ marginTop: '70px', marginBottom: '30px' }}>
+      <Box>
         <AccountSection
           title={userStore.getFullName}
           style={{ marginBottom: '3em' }}
         >
           <TabbedNav tabs={AccountTabs} tab='orders' />
         </AccountSection>
-        <TicketsView tabTitle='Orders' classes={classes} />
-      </Container>
+        <OrdersView tabTitle='Orders' classes={classes} />
+      </Box>
     )
   }
 }

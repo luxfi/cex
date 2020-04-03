@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Container,
   Divider,
   Grid,
   Tooltip,
@@ -159,7 +158,7 @@ class PickSeatsView extends React.Component {
     const formatedDate = selectedDate && selectedDate.formated
 
     return (
-      <Container maxWidth='md' className={classes.outerContainer}>
+      <Box className={classes.outerContainer}>
         <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
         <Grid container alignItems='flex-start' justify='space-evenly'>
           <Box className={classes.seatsSection}>
@@ -295,7 +294,7 @@ class PickSeatsView extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-      </Container>
+      </Box>
     )
   }
 }

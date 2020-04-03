@@ -28,6 +28,12 @@ export default theme => ({
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
+    maxWidth: 1400,
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+  },
+  fullWidthToolbar: {
+    maxWidth: '100%',
   },
   menuButton: {
     paddingLeft: 0,

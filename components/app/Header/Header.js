@@ -25,7 +25,8 @@ export default (props) => {
     openRightDrawer,
     handleLogout,
     isLoggedIn,
-    movies
+    movies,
+    isDiscoverPage,
   } = props
 
   const trigger = useScrollTrigger({ threshold: 0, disableHysteresis: true })
@@ -40,7 +41,10 @@ export default (props) => {
         showDesktopProfileMenu ? classes.mobile : '',
       )}
     >
-      <Toolbar disableGutters className={classes.toolbar}>
+      <Toolbar disableGutters className={classNames(
+          classes.toolbar,
+          { [classes.fullWidthToolbar]: isDiscoverPage }
+        )}>
         {showDesktopNav ? (
           <DesktopNav />
         ) : (

@@ -1,14 +1,14 @@
 import React from 'react'
-import { Container } from "@material-ui/core"
+import { Box } from "@material-ui/core"
 
 import { CheckoutView } from '../components/checkout'
 
 class Checkout extends React.Component {
   render() {
     return (
-      <Container component="main" maxWidth="lg">
+      <Box>
         <CheckoutView />
-      </Container>
+      </Box>
     )
   }
 }

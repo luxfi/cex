@@ -9,7 +9,7 @@ export { default as PhotoIDRow } from "./PhotoIDRow"
 export { default as PrimaryAddressForm } from './PrimaryAddressForm'
 export { default as TaxDocument } from './TaxDocument'
 export { default as CardCardItem } from './CardCardItem'
-export { default as TicketsView } from './TicketsView'
+export { default as OrdersView } from './OrdersView'
 export { default as AccountSection } from './AccountSection'
 export { default as InvestorInfoView } from './InvestorInfoView'
 export { default as APIAccessView } from './APIAccessView'

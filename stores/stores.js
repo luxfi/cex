@@ -19,6 +19,7 @@ import TicketCheckoutStore from './TicketCheckoutStore'
 import TicketingStore from './TicketingStore'
 import TrailerStore from "./TrailerStore"
 import UIStore from "./UIStore"
+import CareerStore from "./CareerStore"
 
 const isServer = typeof window === "undefined"
 useStaticRendering(isServer)
@@ -37,6 +38,7 @@ const _initialData = {
   ticketCheckoutStore: {},
   ticketingStore: {},
   uiStore: {},
+  careerStore: {},
 }
 
 export default function initializeStore(initialData = _initialData) {
@@ -57,6 +59,7 @@ export default function initializeStore(initialData = _initialData) {
       ticketingStore: new TicketingStore(initialData.ticketingStore, api),
       trailerStore: new TrailerStore(initialData.trailerStore, api),
       uiStore: new UIStore(initialData.uiStore, api),
+      careerStore: new CareerStore(initialData.uiStore, api),
     }
   } else if (store === null) {
     // Client stuff
@@ -74,6 +77,7 @@ export default function initializeStore(initialData = _initialData) {
       ticketingStore: new TicketingStore(initialData.ticketingStore, api),
       trailerStore: new TrailerStore(initialData.trailerStore, api),
       uiStore: new UIStore(initialData.uiStore, api),
+      careerStore: new CareerStore(initialData.uiStore, api),
     }
 
     store.uiStore.loadState()

@@ -1,6 +1,6 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import { Container, withStyles } from '@material-ui/core'
+import { Box, withStyles } from '@material-ui/core'
 
 import { TabbedNav } from '../../components/app'
 import { PortfolioSection } from '../../components/portfolio'
@@ -25,12 +25,12 @@ class Newsfeed extends React.Component {
     const { userStore, newsStore } = store
 
     return (
-      <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
+      <Box>
         <PortfolioSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
           <TabbedNav tabs={portfolioTabs} tab='newsfeed' />
         </PortfolioSection>
         <NewsFeedView feed={newsStore.getFeedItems} />
-      </Container>
+      </Box>
     )
   }
 }
