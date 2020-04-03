@@ -70,6 +70,7 @@ class MobxApp extends App {
     const showDesktopNav = isWidthUp('md', width)
     const showDesktopProfileMenu = isWidthUp('sm', width)
     const isDiscoverPage = router.route === '/'
+    const fullWidthHeader = router.route.startsWith('/account')
 
     const mainClassNames = classNames(classes.main, { [classes.discoverMain]: isDiscoverPage })
     const footerclassNames = classNames(classes.footer, { [classes.discoverFooter]: isDiscoverPage })
@@ -100,7 +101,7 @@ class MobxApp extends App {
                     this.mobxStore.userStore.logout()
                   }}
                   movies={this.mobxStore.movieStore.filteredMovies}
-                  isDiscoverPage={isDiscoverPage}
+                  fullWidth={isDiscoverPage || fullWidthHeader}
                 />
               </Container>
               <MobileNavMenu
