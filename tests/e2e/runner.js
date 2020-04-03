@@ -1,6 +1,8 @@
+const { exec } = require('child_process')
 const jest = require('jest')
 const yargs = require('yargs')
 const jestE2EConfig = require('../../jest.config.integration')
+
 
 const {
   show,
@@ -26,11 +28,32 @@ if (yargs.argv._.length) {
   testPath = `${__dirname}/${_[0]}`
 }
 
-jest
-  .runCLI(jestE2EConfig, [testPath])
-  .then((success) => {
-    console.log('<<<< Test completed >>>>')
+const executeCommand = (cmd, callback) => new Promise((resolve, reject) => {
+  exec(cmd, (error, stdout, stderr) => {
+    if (error) {
+      console.error(error)
+      return false
+    }
+
+    resolve(stdout || stderr)
+
+    if (callback) {
+      callback()
+    }
   })
-  .catch((failure) => {
-    console.error(failure)
-  })
+})
+
+const runTest = () => {
+  console.log('<<<<<<<<<<  Running E2E tests  >>>>>>>>>>')
+  jest
+    .runCLI(jestE2EConfig, [testPath])
+    .then((success) => {
+      console.log('<<<< Test completed >>>>')
+    })
+    .catch((failure) => {
+      console.error(failure)
+    })
+}
+
+console.log('<<<<<<<<<<  building static files  >>>>>>>>>>')
+executeCommand('npm run export', runTest)
