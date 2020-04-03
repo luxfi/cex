@@ -3,9 +3,14 @@ import {
   Icon,
   IconButton,
   Typography,
+  makeStyles,
 } from '@material-ui/core'
 
 import { ViewCard } from '../../app'
+
+import styles from '../../../styles/pages/account.style'
+
+const useStyles = makeStyles(styles);
 
 const labels = {
   apiKeys: {
@@ -67,7 +72,8 @@ const APIVersionAndNotifications = (props) => {
 }
 
 export default (props) => {
-  const { classes } = props
+  const classes = useStyles()
+
   return (
     <>
       <FillableSection
