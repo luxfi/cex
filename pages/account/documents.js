@@ -1,9 +1,9 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
 
-import { Box, Typography } from "@material-ui/core"
+import { Typography } from "@material-ui/core"
 
-import { TaxDocument, AccountSection } from '../../components/account'
+import { TaxDocument } from '../../components/account'
 
 
 import { googlePageView } from '../../util'
