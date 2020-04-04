@@ -1,5 +1,6 @@
 import React from 'react'
 import NextLink from 'next/link'
+import classNames from 'classnames'
 
 import {
     Button,
@@ -14,7 +15,7 @@ import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state'
 import styles from './cascadingMenu.style.js'
 const myStyles = makeStyles(styles)
 
-export default ({ structure }) => {
+export default ({ structure, className }) => {
 
   const s = myStyles()
 
@@ -43,7 +44,7 @@ export default ({ structure }) => {
     )
   })
   return (
-    <div className={s.menuOuter}>
+    <div className={classNames(s.menuOuter, className)}>
       {elements}
     </div>
   )

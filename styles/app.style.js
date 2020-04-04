@@ -17,11 +17,12 @@ export default (theme) => ({
       },
     },
   },
+
   main: {
     flexGrow: 1,
     maxWidth: theme.maxStagingWidth,
     marginTop: '64px',
-    padding: theme.spacing(2),
+    padding: 0, //`0px ${theme.spacing(2)}px`,
     minHeight: '50vh',
     '& .slide-button': {
       margin: 0,
@@ -35,6 +36,7 @@ export default (theme) => ({
 
   discoverMain: {
     maxWidth: '100%',
+    marginTop: '0px',
   },
   footer: {
     maxWidth: theme.maxStagingWidth,

@@ -1,4 +1,4 @@
-export default theme => ({
+export default (theme) => ({
   appBar: {
     color: 'inherit',
     boxShadow: 'none',
@@ -28,26 +28,43 @@ export default theme => ({
 
   toolbar: {
     flexGrow: 1,
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'space-between',
-    //maxWidth: theme.maxStagingWidth,
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(2),
   },
 
-  menuButton: {
-    paddingLeft: 0,
+  logo: {
+    cursor: 'pointer',
+    alignSelf: 'flex-start',
+    marginTop: '2px'
   },
-  mobileLogo: {
-    height: '26px',
-    display: 'block',
-  },
-  accountMenuButton: {
-    paddingRight: 0,
-  },
-  mobile: {
+
+  desktopElementsOuter : {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'center',
+  },
+
+  navMenu: {
+    marginRight: theme.spacing(8),
+    color: theme.palette.primary.dark,
+    '& *': {
+      color: 'inherit'
+    }
+  },
+
+  hamburgerMenuButton: {
+    paddingLeft: 0,
+  },
+
+  accountOuter: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  accountIcon: {
+    width: 36,
+    height: 36,
   },
 })

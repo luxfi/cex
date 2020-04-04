@@ -1,4 +1,6 @@
 import React from 'react'
+import NextLink from 'next/link'
+
 import {
   AppBar,
   IconButton,
@@ -9,12 +11,16 @@ import {
   withWidth
 } from '@material-ui/core'
 
-import { AccountCircle, MenuRounded } from '@material-ui/icons'
+import { MenuRounded } from '@material-ui/icons'
 import classNames from 'classnames'
 
-import DesktopNav from './DesktopNav'
-import DesktopProfileAndSearch from './DesktopProfileAndSearch'
+import HeaderLogo from './HeaderLogo'
+import CascadingMenu from '../CascadingMenu'
+import DesktopUserMenu from './DesktopUserMenu'
 import styles from './header.style.js'
+
+import structure from '../../../settings/navStructure'
+
 
 const useStyles = makeStyles(styles)
 
@@ -22,15 +28,13 @@ export default withWidth()((props) => {
 
   const {
     openMobileNavMenu,
-    openMobileAccountMenu,
     handleLogout,
-    isLoggedIn,
+    loggedIn,
     width,
-    movies,
+    //movies,
   } = props
 
   const showDesktopNav = isWidthUp('md', width)
-  const showDesktopProfileMenu = isWidthUp('sm', width)
 
   const trigger = useScrollTrigger({ threshold: 0, disableHysteresis: true })
   const classes = useStyles()
@@ -39,54 +43,25 @@ export default withWidth()((props) => {
     <AppBar
       className={classNames(
         classes.appBar,
-        showDesktopNav && trigger ? classes.solid : classes.transparent,
-        !showDesktopNav ? classes.translucent : null,
-        showDesktopProfileMenu ? classes.mobile : '',
+        showDesktopNav && trigger ? classes.solid : classes.translucent,
+        !showDesktopNav ? classes.translucent : null
       )}
     >
       <Toolbar disableGutters className={classes.toolbar}>
+        <NextLink href='/'>
+          <HeaderLogo className={classes.logo} />
+        </NextLink>
         {showDesktopNav ? (
-          <DesktopNav />
+          <div className={classes.desktopElementsOuter}>
+            <CascadingMenu structure={structure} className={classes.navMenu}/>
+            <DesktopUserMenu loggedIn={loggedIn} handleLogout={handleLogout} classes={classes}/>
+          </div>
         ) : (
-          <IconButton onClick={openMobileNavMenu} className={classes.menuButton}>
+          <IconButton onClick={openMobileNavMenu} className={classes.hamburgerMenuButton}>
             <MenuRounded className={classes.mobileHamburgerIcon} />
           </IconButton>
-        )}
-        {showDesktopProfileMenu ? (
-          <DesktopProfileAndSearch
-            isLoggedIn={isLoggedIn}
-            handleLogout={handleLogout}
-            movies={movies}
-          />
-        ) : (
-          <>
-            <img
-              src='/static/images/esx/esx-white-logo.png'
-              alt='ESX'
-              className={classes.mobileLogo}
-              height='26px'
-            />
-            <AccountMenu openAccountMenu={openMobileAccountMenu} classes={classes} />
-          </>
         )}
       </Toolbar>
     </AppBar>
   )
 })
-
-const AccountMenu = (props) => {
-  const { openAccountMenu, classes } = props
-
-  return (
-    <div className={classes.accountOuter}>
-      <IconButton
-        aria-controls='menu'
-        aria-haspopup='true'
-        onClick={openAccountMenu}
-        className={classes.accountMenuButton}
-      >
-        <AccountCircle style={{ fontSize: '2rem' }} />
-      </IconButton>
-    </div>
-  )
-}

@@ -24,7 +24,7 @@ import TerminatorHero from '../../../assets/images/terminator-hero.jpg'
 import TerminatorLogo from '../../../assets/svg/terminator-logo.svg'
 import UncutGemsHero from '../../../assets/images/uncut-gems-hero.jpg'
 
-import styles from './Hero.style'
+import styles from './Hero.style.js'
 
 // core components
 import { HeroImg, TrailerModal } from '..'

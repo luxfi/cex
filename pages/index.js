@@ -61,7 +61,7 @@ export default withRouter(withWidth()(inject('store')(observer((props) => {
     googlePageView()
   }, [])
 
-  const { store, width, router } = props
+  const { store, width, router, pathName } = props
   const heroMovie = store.movieStore.movies.find(m => (m.movieSlug === heroInfo.slug))
   const heroStyles = heroInfo.styles
   if (isWidthDown('sm', width)) {

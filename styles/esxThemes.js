@@ -19,7 +19,8 @@ const baseTheme = {
       white: "#F0f0f0"
     },
     primary: {
-      main: "#5fb8ff", // desaturaed logo blue per Material recommendations for dark mode
+      main: '#0099ff',
+      light: '#5fb8ff', // desaturaed logo blue per Material recommendations for dark mode
     },
     secondary: {
       main: "#fac54c",  // logo yellow
