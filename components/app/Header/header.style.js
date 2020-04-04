@@ -28,7 +28,7 @@ export default theme => ({
 
   toolbar: {
     flexGrow: 1,
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'space-between',
     //maxWidth: theme.maxStagingWidth,
     paddingLeft: theme.spacing(1),

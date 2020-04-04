@@ -1,6 +1,6 @@
 export default (theme) => ({
   logo: {
-    marginTop: '-8px',
+    marginTop: '1px',
     cursor: 'pointer',
   },
 
