@@ -3,13 +3,15 @@ import NextLink from 'next/link'
 
 import {
   Button,
-  Popover,
+  makeStyles,
   MenuItem,
-  makeStyles
+  Popover,
 } from '@material-ui/core'
 
   // This one is recommended in the MUI docs themselves :)
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state'
+
+import HeaderLogo from './HeaderLogo' 
 
 import styles from './desktopNav.style.js'
 const useStyles = makeStyles(styles)
@@ -22,7 +24,7 @@ export default () => {
   return (
     <>
       <NextLink href='/'>
-        <img src='/static/images/esx/u1.png' alt='ESX' className={classes.logo} height='90px' />
+        <HeaderLogo />
       </NextLink>
       <div className={classes.navOuter}>
         <div className={classes.navSpacer} />
