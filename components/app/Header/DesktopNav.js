@@ -1,110 +1,24 @@
 import React from 'react'
 import NextLink from 'next/link'
 
-import {
-  Button,
-  makeStyles,
-  MenuItem,
-  Popover,
-} from '@material-ui/core'
+import { makeStyles } from '@material-ui/core'
 
-  // This one is recommended in the MUI docs themselves :)
-import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state'
-
-import HeaderLogo from './HeaderLogo' 
+import HeaderLogo from './HeaderLogo'
+import CascadingMenu from '../CascadingMenu'
 
 import styles from './desktopNav.style.js'
+import structure from '../../../settings/navStructure'
+
 const useStyles = makeStyles(styles)
-
-import navStructure from '../../../settings/navStructure'
-
 export default () => {
   const classes = useStyles()
 
   return (
     <>
-      <NextLink href='/'>
-        <HeaderLogo />
-      </NextLink>
-      <div className={classes.navOuter}>
-        <div className={classes.navSpacer} />
-        <DesktopMainNav
-          nav={navStructure}
-          classes={classes}
-        />
-      </div>
+    <NextLink href='/'>
+      <HeaderLogo className={classes.logo} />
+    </NextLink>
+    <CascadingMenu structure={structure} />
     </>
   )
 }
-
-const MainNavDropdown = ({ menuDefinition, classes }) => (
-  <PopupState variant='popover' popupId='menu-popover'>
-    {(popupState) => (
-      <>
-      <Button
-        {...bindTrigger(popupState)}
-        className={classes.navButton}
-      >
-        {menuDefinition.title}
-      </Button >
-      <Popover
-        {...bindPopover(popupState)}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-        className={classes.menu}
-      >
-        {menuDefinition.items.map(
-          (item) => {
-            const href = ('link' in item)
-              ? item.link
-              : ({
-                pathname: '/placeholder',
-                query: { title: item.placeholder },
-              })
-            return (
-              <NextLink href={href} key={item.title}>
-                <MenuItem onClick={popupState.close}>
-                  <span className={classes.subMenuItemText}>
-                    {item.title}
-                  </span>
-                </MenuItem>
-              </NextLink>
-            )
-          },
-        )}
-      </Popover>
-      </>
-    )}
-  </PopupState>
-)
-
-const DesktopMainNav = ({ nav, classes }) => (
-  nav.map((navElement) => {
-    let href = null
-    if ('placeholder' in navElement) {
-      href = { pathname: '/placeholder', query: { title: navElement.title } }
-    } else if ('link' in navElement) {
-      href = navElement.link
-    }
-
-    if (href) {
-      return (
-        <NextLink href={href} key={`link+${navElement.title}`}>
-          <Button
-            className={classes.navButton}
-          >
-            {navElement.title}
-          </Button>
-        </NextLink>
-      )
-    }
-
-    return (
-      <MainNavDropdown
-        classes={classes}
-        menuDefinition={navElement}
-        key={`dropdown+${navElement.title}`}
-      />
-    )
-  })
-)

@@ -30,8 +30,8 @@ export default theme => ({
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
-    maxWidth: theme.maxStagingWidth,
-    paddingLeft: theme.spacing(2),
+    //maxWidth: theme.maxStagingWidth,
+    paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(2),
   },
 

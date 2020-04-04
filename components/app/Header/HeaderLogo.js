@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core'
+import classNames from 'classnames'
 
 const LOGO = '/static/images/esx/logo-esx-mixed-color-72x42.png'
 
@@ -12,10 +13,10 @@ const myStyles = makeStyles({
   }    
 })
 
-export default (props) => {
+export default ({className}) => {
 
   const s = myStyles()
   return (
-    <div className={s.root} />
+    <div className={classNames(s.root, className)} />
   )
 }
