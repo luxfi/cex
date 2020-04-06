@@ -112,7 +112,7 @@ export default (props) => {
                   subheader={d.releaseDate}
                 />
                 <CardContent>
-                  <Typography variant='body1' paragraph>
+                  <Typography variant='body1' paragraph className={classes.paragraph}>
                     {truncate(d.shortDescription)}
                   </Typography>
                   <Divider variant='middle' />
