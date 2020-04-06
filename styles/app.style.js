@@ -33,17 +33,16 @@ export default (theme) => ({
       width: '100%',
     },
   },
-
-  discoverMain: {
-    maxWidth: '100%',
+  fullScreenMain: {
+    maxWidth: 'none',
     marginTop: '0px',
   },
+
   footer: {
     maxWidth: theme.maxStagingWidth,
     padding: theme.spacing(2),
   },
-  discoverFooter: {
-    maxWidth: '100%',
-    padding: theme.spacing(2),
+  fullScreenFooter: {
+    maxWidth: 'none',
   }
 })

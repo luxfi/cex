@@ -2,7 +2,7 @@ import React from 'react'
 import ReactGA from 'react-ga'
 import { Provider, observer } from 'mobx-react'
 
-import App from 'next/app'
+import NextApp from 'next/app'
 import { withRouter } from 'next/router'
 import Head from 'next/head'
 
@@ -38,19 +38,8 @@ import styles from '../styles/app.style.js'
 import { darkTheme } from '../styles/esxThemes'
 
 config.autoAddCss = false
-
-const hideFooter = (page) => {
-  const noFooterPages = ['/pro']
-  let hide = false
-  noFooterPages.forEach((p) => {
-    if (hide) return
-    hide = page === p
-  })
-  return hide
-}
-
 @observer
-class MobxApp extends App {
+class ESXApp extends NextApp {
   constructor(props) {
     super(props)
     this.mobxStore = initializeStore()
@@ -68,9 +57,7 @@ class MobxApp extends App {
       router,
     } = this.props
 
-    const isDiscoverPage = router.route === '/'
-    const mainClassNames = classNames(classes.main, { [classes.discoverMain]: isDiscoverPage })
-    const footerclassNames = classNames(classes.footer, { [classes.discoverFooter]: isDiscoverPage })
+    const fullScreen = isFullScreen(router.route)
 
     return (
       <>
@@ -99,7 +86,7 @@ class MobxApp extends App {
                 open={this.mobxStore.uiStore.drawers.left}
                 setOpen={this.mobxStore.uiStore.setLeftDrawerOpen}
               />
-              <Container component='main' className={mainClassNames}>
+              <Container component='main' className={classNames({ [classes.main]: true, [classes.fullScreenMain]: fullScreen })}>
                 <Component {...pageProps} pathName={router.route} />
               </Container>
               <CustomModal
@@ -118,17 +105,16 @@ class MobxApp extends App {
                   this.mobxStore.userStore.logout()
                 }}
               />
-              {
-                !hideFooter(router.route) ? (
-                  <Container className={footerclassNames}>
-                    <Footer
-                      isLoggedIn={this.mobxStore.userStore.loggedIn}
-                      handleLogout={() => {
-                        this.mobxStore.userStore.logout()
-                      }}
-                    />
-                  </Container>) : null
-              }
+              {hideFooter(router.route) ? null : (
+                <Container className={classNames({ [classes.footer]: true, [classes.fullScreenFooter]: fullScreen })}>
+                  <Footer
+                    isLoggedIn={this.mobxStore.userStore.loggedIn}
+                    handleLogout={() => {
+                      this.mobxStore.userStore.logout()
+                    }}
+                  />
+                </Container>
+              )}
             </NoSsr>
           </div>
         </MuiThemeProvider>
@@ -138,4 +124,18 @@ class MobxApp extends App {
   }
 }
 
-export default withRouter(withStyles(styles)(MobxApp))
+const hideFooter = (page) => {
+  const noFooterPages = ['/pro']
+  let hide = false
+  noFooterPages.forEach((p) => {
+    if (hide) return
+    hide = page === p
+  })
+  return hide
+}
+
+const isFullScreen = (route) => {
+  return route === '/'
+}
+
+export default withRouter(withStyles(styles)(ESXApp))
