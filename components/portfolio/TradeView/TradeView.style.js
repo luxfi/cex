@@ -5,8 +5,11 @@ const grayText = 'rgb(102, 112, 121)'
 export default (theme) => ({
   cardTitle,
   title,
-  paragraph: {
-    minHeight: 72,
+  cardContent: {
+    minHeight: 190,
+  },
+  cardHeader: {
+    minHeight: 92,
   },
   categoryChip: {
     backgroundColor: 'rgb(239, 239, 240)',

@@ -100,7 +100,7 @@ export default (props) => {
         <Grid container spacing={3}>
           {investorTopPicks.map((d, i) => (
             <Grid item key={`picks_${i}`} xs={12} sm={12} md={4}>
-              <Card className={classes.investmentCard}>
+              <Card>
                 <CardHeader
                   avatar={
                     <Avatar src={d.posterImg} aria-label='avatar-image' />
@@ -110,8 +110,9 @@ export default (props) => {
                   }
                   title={<Link href={`/film/${d.movieSlug}`}><a style={aTag}>{d.name}</a></Link>}
                   subheader={d.releaseDate}
+                  className={classes.cardHeader}
                 />
-                <CardContent>
+                <CardContent className={classes.cardContent}>
                   <Typography variant='body1' paragraph className={classes.paragraph}>
                     {truncate(d.shortDescription)}
                   </Typography>
