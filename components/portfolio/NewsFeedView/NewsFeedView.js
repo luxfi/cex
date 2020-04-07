@@ -59,7 +59,7 @@ const Item = props => {
     <Grid item xs={12} sm={6} md={4} className={classes.newsCard}>
       <h6 className={classes.itemTitle}>{title}</h6>
       {
-        image ? <img src={image} className={classes.image} /> : null
+        image ? <img src={image} className={classes.image} /> : <ImgLoader width="100%" height={255} />
       }
       <p className={classes.itemCopy}>{author} - {moment(date).format('MM-DD-YYYY')}</p>
       <div className={classes.itemCategories}>
@@ -84,8 +84,6 @@ const NewsFeedSection = props => {
 
   return (
     <>
-      {/* <h2 className={classes.sectionTitle}>{title}</h2> */}
-      {/* <br /> */}
       <Grid container spacing={3}>
         {children}
       </Grid>

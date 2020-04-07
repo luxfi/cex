@@ -1,6 +1,6 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import { Box, withStyles } from '@material-ui/core'
+import { Box, Grid, withStyles } from '@material-ui/core'
 
 import { TabbedNav } from '../../components/app'
 import { PortfolioSection } from '../../components/portfolio'
@@ -21,15 +21,19 @@ class Newsfeed extends React.Component {
   }
 
   render() {
-    const { classes, store } = this.props
-    const { userStore, newsStore } = store
+    const { store } = this.props
+    const { userStore, newsStore: { getFeedItems, loading } } = store
 
     return (
       <Box>
         <PortfolioSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
           <TabbedNav tabs={portfolioTabs} tab='newsfeed' />
         </PortfolioSection>
-        <NewsFeedView feed={newsStore.getFeedItems} />
+        {
+          loading
+            ? <Grid item>Loading News Feeds...</Grid>
+            : <NewsFeedView feed={getFeedItems} />
+        }
       </Box>
     )
   }
