@@ -2,7 +2,7 @@
 import { defaultNavigationTimeout, defaultSelectorTimeout } from '../../../utils/constants'
 
 let page
-const url = 'http://localhost:3000'
+const url = 'http://localhost:8080'
 const slideClass = '.slick-slide'
 const watchTrailerButton = '.watch-trailer-button'
 
