@@ -15,7 +15,6 @@ const {
   devtools,
   serial,
   _,
-  noBuild,
 } = yargs.argv
 
 const testDir = __dirname
@@ -35,35 +34,6 @@ if (yargs.argv._.length) {
 }
 
 jestE2EConfig.testEnvironmentOptions = { puppeteerConfig, _: filePathObj }
-
-const executeCommand = (cmd, callback) => new Promise((resolve, reject) => {
-  const obj = new Spinner({
-    text: 'building... %s',
-    stream: process.stderr,
-    onTick(msg) {
-      this.clearLine(this.stream)
-      this.stream.write(msg)
-    },
-  })
-  obj.setSpinnerString(0)
-  obj.start()
-
-  exec(cmd, (error, stdout, stderr) => {
-    if (error) {
-      obj.stop(false)
-      console.error(error)
-      return false
-    }
-
-    obj.stop(false)
-    resolve(stdout || stderr)
-    console.log(`\n${stdout || stderr}`)
-
-    if (callback) {
-      callback()
-    }
-  })
-})
 
 const runTest = async () => {
   console.log('<<<<<<<<<<  Running E2E tests  >>>>>>>>>>')
@@ -89,13 +59,4 @@ const runServer = () => {
   })
 }
 
-const runE2E = () => {
-  if (noBuild) {
-    return runServer()
-  }
-
-  console.log('<<<<<<<<<<  building static files  >>>>>>>>>>')
-  executeCommand('npm run export', runServer)
-}
-
-runE2E()
+runServer()
