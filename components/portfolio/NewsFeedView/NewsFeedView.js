@@ -51,26 +51,15 @@ const ImgLoader = (props) => {
   )
 }
 
-const Item2 = props => {
-  const content = {__html: props.content}
-  return (
-    <Grid item xs={12} sm={4}>
-      <div dangerouslySetInnerHTML={content} />
-    </Grid>
-  )
-}
-
 const Item = props => {
 
   const { classes, title, author, date, blurb, link, categories, image } = props
 
   return (
-    <Grid item xs={12} sm={4} style={{ height: 'auto' }}>
-      {/* <ImgLoader width={500} height={400} /> */}
+    <Grid item xs={12} sm={6} md={4} className={classes.newsCard}>
       <h6 className={classes.itemTitle}>{title}</h6>
       {
-        image ?
-          <img src={image} height={225} /> : null
+        image ? <img src={image} className={classes.image} /> : null
       }
       <p className={classes.itemCopy}>{author} - {moment(date).format('MM-DD-YYYY')}</p>
       <div className={classes.itemCategories}>
