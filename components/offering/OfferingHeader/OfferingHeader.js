@@ -108,7 +108,7 @@ const Trailer = ({ trailer }) => {
           width: '100%',
           height: '100%',
         }}
-        src={`${trailer}&rel=0`}
+        src={trailer}
         frameBorder="0"
         allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
