@@ -23,8 +23,8 @@ export default (theme) => ({
   main: {
     flexGrow: 1,
     maxWidth: 1400,
-    marginTop: '64px',
-    padding: theme.spacing(2),
+    padding: theme.spacing(0),
+    paddingTop: theme.spacing(8),
     minHeight: '50vh',
     '& .slide-button': {
       margin: 0,
@@ -38,7 +38,13 @@ export default (theme) => ({
 
   discoverMain: {
     maxWidth: '100%',
+    padding: theme.spacing(0),
   },
+
+  fullWidth: {
+    maxWidth: '100%',
+  },
+
   footer: {
     maxWidth: 1400,
     padding: theme.spacing(2),

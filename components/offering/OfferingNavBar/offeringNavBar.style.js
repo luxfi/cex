@@ -30,6 +30,10 @@ const tabItemStyles = ({ breakpoints, spacing }) => ({
 const navStyles = ({ spacing, palette, breakpoints }) => ({
   navBar: {
     boxShadow: `inset 0 -1px 0 0 ${palette.divider}`,
+    [breakpoints.up('md')]: {
+      paddingLeft: spacing(3),
+      paddingRight: spacing(3),
+    },
   },
   sticky: {
     position: 'sticky',
@@ -46,8 +50,8 @@ const navStyles = ({ spacing, palette, breakpoints }) => ({
       margin: '0 auto',
     },
     [breakpoints.up('md')]: {
-      paddingLeft: spacing(5),
-      paddingRight: spacing(5),
+      paddingLeft: spacing(2),
+      paddingRight: spacing(2),
     },
     [breakpoints.only('sm')]: {
       paddingLeft: spacing(1),

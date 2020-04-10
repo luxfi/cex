@@ -154,7 +154,7 @@ class Index extends React.Component {
     return (
       <>
         <article>
-          <Box p={3} pt={8}>
+          <Box pt={8}>
             <BasicTrader
               chartData={chartData}
               yDomain={yDomain}

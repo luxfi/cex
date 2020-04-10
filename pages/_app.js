@@ -70,8 +70,12 @@ class MobxApp extends App {
     const showDesktopNav = isWidthUp('md', width)
     const showDesktopProfileMenu = isWidthUp('sm', width)
     const isDiscoverPage = router.route === '/'
+    const isFullWidthPage = ['/', '/pro'].includes(router.route);
 
-    const mainClassNames = classNames(classes.main, { [classes.discoverMain]: isDiscoverPage })
+    const mainClassNames = classNames(classes.main, {
+      [classes.discoverMain]: isDiscoverPage,
+      [classes.fullWidth]: isFullWidthPage,
+    })
     const footerclassNames = classNames(classes.footer, { [classes.discoverFooter]: isDiscoverPage })
 
 
@@ -85,24 +89,22 @@ class MobxApp extends App {
           <div className={classes.root}>
             <CssBaseline />
             <NoSsr>
-              <Container className={classes.header}>
-                <Header
-                  showDesktopNav={showDesktopNav}
-                  showDesktopProfileMenu={showDesktopProfileMenu}
-                  isLoggedIn={this.mobxStore.userStore.loggedIn}
-                  openLeftDrawer={() => (
-                    this.mobxStore.uiStore.setLeftDrawerOpen(true)
-                  )}
-                  openRightDrawer={() => (
-                    this.mobxStore.uiStore.setRightDrawerOpen(true)
-                  )}
-                  handleLogout={() => {
-                    this.mobxStore.userStore.logout()
-                  }}
-                  movies={this.mobxStore.movieStore.filteredMovies}
-                  isDiscoverPage={isDiscoverPage}
-                />
-              </Container>
+              <Header
+                showDesktopNav={showDesktopNav}
+                showDesktopProfileMenu={showDesktopProfileMenu}
+                isLoggedIn={this.mobxStore.userStore.loggedIn}
+                openLeftDrawer={() => (
+                  this.mobxStore.uiStore.setLeftDrawerOpen(true)
+                )}
+                openRightDrawer={() => (
+                  this.mobxStore.uiStore.setRightDrawerOpen(true)
+                )}
+                handleLogout={() => {
+                  this.mobxStore.userStore.logout()
+                }}
+                movies={this.mobxStore.movieStore.filteredMovies}
+                isFullWidthPage={isFullWidthPage}
+              />
               <MobileNavMenu
                 open={this.mobxStore.uiStore.drawers.left}
                 setOpen={this.mobxStore.uiStore.setLeftDrawerOpen}

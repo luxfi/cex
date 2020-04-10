@@ -73,14 +73,7 @@ class Offering extends Component {
     }
 
     return (
-      <Box
-        m={3}
-        mt={8}
-        mb={20}
-        style={{
-          overflowX: 'unset',
-        }}
-      >
+      <Box>
         <OfferingHeader
           funds={accountBalance}
           movie={movie}
