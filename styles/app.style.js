@@ -41,7 +41,7 @@ export default (theme) => ({
     padding: theme.spacing(0),
   },
 
-  fullWidth: {
+  fullWidthMain: {
     maxWidth: '100%',
   },
 
@@ -49,7 +49,7 @@ export default (theme) => ({
     maxWidth: 1400,
     padding: theme.spacing(2),
   },
-  discoverFooter: {
+  fullWidthFooter: {
     maxWidth: '100%',
     padding: theme.spacing(2),
   }

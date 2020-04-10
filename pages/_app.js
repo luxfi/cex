@@ -74,9 +74,9 @@ class MobxApp extends App {
 
     const mainClassNames = classNames(classes.main, {
       [classes.discoverMain]: isDiscoverPage,
-      [classes.fullWidth]: isFullWidthPage,
+      [classes.fullWidthMain]: isFullWidthPage,
     })
-    const footerclassNames = classNames(classes.footer, { [classes.discoverFooter]: isDiscoverPage })
+    const footerclassNames = classNames(classes.footer, { [classes.fullWidthFooter]: isDiscoverPage || isFullWidthPage })
 
 
     return (
