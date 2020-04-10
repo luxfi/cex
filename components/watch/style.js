@@ -53,30 +53,27 @@ export default (theme) => ({
   },
 
   watchGrid: {
-    display: 'grid',
-    gridTemplate: 'auto auto auto 1fr/minmax(0,1280px) 410px',
-    justifyContent: 'center',
     paddingTop: 12,
-    columnGap: 24,
-    gridColumnGap: 20,
     '& .video': {
-      gridColumn: '1/2',
-      gridRow: '1/2',
       '& .video-player': {
         minHeight: 480,
         width: '100%',
-        height: '100%',
+        height: 'auto',
+        [theme.breakpoints.down(960)]: {
+          minHeight: '100%',
+        },
       },
     },
     '& .videoInfoBox': {
-      gridColumn: '1/2',
-      gridRow: '3/4',
+      // gridColumn: '1/2',
+      // gridRow: '3/4',
     },
   },
 
   videoContainer: {
     position: 'relative',
     width: '100%',
+    flex: 1,
     '& .video': {
       top: 0,
       left: 0,
@@ -85,17 +82,44 @@ export default (theme) => ({
     },
   },
 
+  deskTopShowNextSection: {
+    [theme.breakpoints.down(960)]: {
+      display: 'none',
+    },
+  },
+
+  mobileShowNextSection: {
+    display: 'none',
+
+    [theme.breakpoints.down(960)]: {
+      display: 'flex',
+    },
+  },
+
+  videoControlSection: {
+    // order: 3,
+  },
+
+  commentSection: {
+    // order: 5,
+  },
+
+  videoMetadata: {
+    // order: 2
+  },
+
   videoInfoBox: {
-    display: 'grid',
-    grid: 'auto auto/60px auto max-content',
+    // display: 'grid',
+    // grid: 'auto auto/60px auto max-content',
     alignItems: 'center',
-    gridRowGap: 10,
-    gridColumn: '1/2',
-    gridRow: '3/4',
+    order: 2,
+    // gridRowGap: 10,
+    // gridColumn: '1/2',
+    // gridRow: '3/4',
     '& .video-description': {
       maxWidth: 615,
-      gridRow: '2/3',
-      gridColumn: '2/3',
+      // gridRow: '2/3',
+      // gridColumn: '2/3',
       fontSize: 13,
       lineHeight: '16px',
       '& .collapsed': {
@@ -115,11 +139,11 @@ export default (theme) => ({
   },
 
   rating: {
-    display: 'inline-grid',
-    grid: 'auto auto/max-content max-content',
-    gridColumnGap: 16,
-    columnGap: 16,
-    gridRowGap: 4,
+    // display: 'inline-grid',
+    // grid: 'auto auto/max-content max-content',
+    // gridColumnGap: 16,
+    // columnGap: 16,
+    // gridRowGap: 4,
   },
 
   videoStats: {
@@ -143,8 +167,8 @@ export default (theme) => ({
   likeUnderline: {
     position: 'relative',
     display: 'block',
-    gridColumn: '1/span 2',
-    gridRow: '2/3',
+    // gridColumn: '1/span 2',
+    // gridRow: '2/3',
   },
   iconButton: {
     padding: 5,
@@ -159,13 +183,13 @@ export default (theme) => ({
     height: 50,
     borderRadius: 50,
     overflow: 'hidden',
-    gridRow: '1/2',
-    gridColumn: '1/2',
+    // gridRow: '1/2',
+    // gridColumn: '1/2',
   },
 
   videoInfo: {
-    gridRow: '1/2',
-    gridColumn: '2/3',
+    // gridRow: '1/2',
+    // gridColumn: '2/3',
   },
 
   videoPubDate: {
@@ -184,8 +208,8 @@ export default (theme) => ({
   },
 
   subScribeButton: {
-    gridRow: '1/2',
-    gridColumn: '3/4',
+    // gridRow: '1/2',
+    // gridColumn: '3/4',
     background: YELLOW,
     padding: '7px 15px',
   },
@@ -213,8 +237,6 @@ export default (theme) => ({
   },
 
   relatedVideos: {
-    gridColumn: '2/3',
-    gridRow: '1/span 4',
     '& > a': {
       lineHeight: 1,
       textDecoration: 'none',
@@ -239,24 +261,19 @@ export default (theme) => ({
   },
 
   singleVideo: {
-    display: 'grid',
-    grid: 'auto/210px auto',
-    gridColumnGap: 10,
+    // display: 'grid',
+    // grid: 'auto/210px auto',
+    // gridColumnGap: 10,
     margin: '10px 0 0 0',
   },
 
   imageWrapper: {
     position: 'relative',
-    gridRow: '1/2',
-    gridColumn: '1/2',
+    // gridRow: '1/2',
+    // gridColumn: '1/2',
     '& img': {
       maxWidth: '100%',
     },
-  },
-
-  sidebarVideoInfo: {
-    gridRow: '1/2',
-    gridColumn: '2/3',
   },
 
   playTime: {

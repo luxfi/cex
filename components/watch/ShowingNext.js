@@ -5,7 +5,7 @@ import { withRouter } from 'next/router'
 import classNames from 'classnames'
 
 import {
-  Box, Divider, Switch, Typography,
+  Box, Divider, Grid, Switch, Typography,
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 
@@ -61,14 +61,14 @@ const ShowingNext = inject('store')(observer((props) => {
             <Link
               href={`watch?video=${nextVideo.movieSlug}`} key={`showingNext-${nextVideo.id}`}>
               <a onClick={() => onClick(nextVideo.movieSlug)}>
-                  <Box className={classes.singleVideo}>
-                    <Box className={classes.imageWrapper}>
+                  <Grid container className={classes.singleVideo} spacing={2}>
+                    <Grid item xs={6} className={classes.imageWrapper}>
                       <img src={nextVideo.heroImg} alt={nextVideo.name} />
                       <Box className={classes.playTime}>
                         <Typography component='span'>{formatDuration(nextVideo.trailerDetails.duration)}</Typography>
                       </Box>
-                    </Box>
-                    <Box className={classes.sidebarVideoInfo}>
+                    </Grid>
+                    <Grid item xs={6}>
                       <Typography
                         className={classNames(classes.sidebarMovieTitle, classes.maxTwoLines)}
                       >
@@ -78,8 +78,8 @@ const ShowingNext = inject('store')(observer((props) => {
                         <Typography className={classes.singleLine}>{nextVideo.distributors[0]}</Typography>
                         <Typography className={classes.singleLine}>{`${formatNumber(nextVideo.trailerDetails.views, 1)} views • ${calculateDateFrom(nextVideo.trailerDetails.createdAt)}`}</Typography>
                       </Box>
-                    </Box>
-                  </Box>
+                    </Grid>
+                  </Grid>
                 </a>
             </Link>
             <Divider style={{ margin: '10px 0 0 0' }} />
@@ -90,14 +90,14 @@ const ShowingNext = inject('store')(observer((props) => {
         relatedMovies.length && relatedMovies.map((movie) => (nextVideo.id === movie.id ? null : (
           <Link href={`watch?video=${movie.movieSlug}`} key={`showingNext-${movie.id}`}>
             <a onClick={() => onClick(movie.movieSlug)}>
-              <Box className={classes.singleVideo}>
-                <Box className={classes.imageWrapper}>
+              <Grid container className={classes.singleVideo} spacing={2}>
+                <Grid item xs={6} className={classes.imageWrapper}>
                   <img src={movie.heroImg} alt={movie.name} />
                   <Box className={classes.playTime}>
                     <Typography component='span'>{formatDuration(movie.trailerDetails.duration)}</Typography>
                   </Box>
-                </Box>
-                <Box className={classes.sidebarVideoInfo}>
+                </Grid>
+                <Grid item xs={6}>
                   <Typography
                     className={classNames(classes.sidebarMovieTitle, classes.maxTwoLines)}
                   >
@@ -107,8 +107,8 @@ const ShowingNext = inject('store')(observer((props) => {
                     <Typography className={classes.singleLine}>{movie.distributors[0]}</Typography>
                     <Typography className={classes.singleLine}>{`${formatNumber(movie.trailerDetails.views, 1)} views • ${calculateDateFrom(movie.trailerDetails.createdAt)}`}</Typography>
                   </Box>
-                </Box>
-              </Box>
+                </Grid>
+              </Grid>
             </a>
           </Link>
         )))
