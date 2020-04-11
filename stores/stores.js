@@ -41,16 +41,15 @@ let _initialData = {
   userStore: {},
 }
 
-let store = null
-
-export default function initializeStore(initialData = _initialData) {
+let stores = null
+export default (initialData = _initialData) => {
   let api = null
 
   if (!isServer) {
     api = new Hanzo.Api({key: HANZO_KEY, endpoint: HANZO_ENDPOINT})
   }
 
-  store = {
+  stores = {
     articleStore: new ArticleStore(initialData.articleStore, api),
     careerStore: new CareerStore(initialData.uiStore, api),
     commentStore: new CommentStore(initialData.commentStore, api),
@@ -69,13 +68,13 @@ export default function initializeStore(initialData = _initialData) {
 
   if (!isServer) {
     // Should any of these be called here?
-    store.ticketCheckoutStore.getTicketOrders()
-    store.trailerStore.getAutoPlay()
-    store.uiStore.loadState()
-    store.userPortfolio.getWatchlist()
-    store.userStore.loadSession()
+    stores.ticketCheckoutStore.getTicketOrders()
+    stores.trailerStore.getAutoPlay()
+    stores.uiStore.loadState()
+    stores.userPortfolio.getWatchlist()
+    stores.userStore.loadSession()
   }
 
   // Otherwise we don't need to re-initialize the store
-  return store
+  return stores
 }

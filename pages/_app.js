@@ -4,7 +4,7 @@ import { Provider, observer } from 'mobx-react'
 
 import NextApp from 'next/app'
 import { withRouter } from 'next/router'
-import Head from 'next/head'
+import NextHead from 'next/head'
 
 import {
   Container,
@@ -33,7 +33,7 @@ import {
   MobileNavMenuDrawer,
 } from '../components/app'
 
-import initializeStore from '../stores/stores'
+import initializeStores from '../stores/stores'
 import styles from '../styles/app.style.js'
 import { darkTheme } from '../styles/esxThemes'
 
@@ -42,7 +42,7 @@ config.autoAddCss = false
 class ESXApp extends NextApp {
   constructor(props) {
     super(props)
-    this.mobxStore = initializeStore()
+    this.stores = initializeStores()
   }
 
   componentDidMount() {
@@ -61,56 +61,56 @@ class ESXApp extends NextApp {
 
     return (
       <>
-      <Head>
+      <NextHead>
         <title>ESX | Entertainment Stock X</title>
-      </Head>
-      <Provider store={this.mobxStore}>
+      </NextHead>
+      <Provider store={this.stores}>
         <MuiThemeProvider theme={darkTheme}>
           <div className={classes.root}>
             <CssBaseline />
             <NoSsr>
               <Header
-                isLoggedIn={this.mobxStore.userStore.loggedIn}
-                movies={this.mobxStore.movieStore.filteredMovies}
+                isLoggedIn={this.stores.userStore.loggedIn}
+                movies={this.stores.movieStore.filteredMovies}
                 openMobileNavMenu={() => (
-                  this.mobxStore.uiStore.setLeftDrawerOpen(true)
+                  this.stores.uiStore.setLeftDrawerOpen(true)
                 )}
                 openMobileAccountMenu={() => (
-                  this.mobxStore.uiStore.setRightDrawerOpen(true)
+                  this.stores.uiStore.setRightDrawerOpen(true)
                 )}
                 handleLogout={() => {
-                  this.mobxStore.userStore.logout()
+                  this.stores.userStore.logout()
                 }}
               />
               <MobileNavMenuDrawer
-                open={this.mobxStore.uiStore.drawers.left}
-                setOpen={this.mobxStore.uiStore.setLeftDrawerOpen}
+                open={this.stores.uiStore.drawers.left}
+                setOpen={this.stores.uiStore.setLeftDrawerOpen}
               />
               <Container component='main' className={classNames({ [classes.main]: true, [classes.fullScreenMain]: fullScreen })}>
                 <Component {...pageProps} pathName={router.route} />
               </Container>
               <CustomModal
-                open={this.mobxStore.uiStore.modal.open}
-                handleClose={() => this.mobxStore.uiStore.closeModal()}
-                body={this.mobxStore.uiStore.modal.body}
-                title={this.mobxStore.uiStore.modal.title}
+                open={this.stores.uiStore.modal.open}
+                handleClose={() => this.stores.uiStore.closeModal()}
+                body={this.stores.uiStore.modal.body}
+                title={this.stores.uiStore.modal.title}
               />
 
               <CustomSnackbar />
               <MobileAccountMenuDrawer
-                open={this.mobxStore.uiStore.drawers.right}
-                setOpen={this.mobxStore.uiStore.setRightDrawerOpen}
-                isLoggedIn={this.mobxStore.userStore.loggedIn}
+                open={this.stores.uiStore.drawers.right}
+                setOpen={this.stores.uiStore.setRightDrawerOpen}
+                isLoggedIn={this.stores.userStore.loggedIn}
                 handleLogout={() => {
-                  this.mobxStore.userStore.logout()
+                  this.stores.userStore.logout()
                 }}
               />
               {hideFooter(router.route) ? null : (
                 <Container className={classNames({ [classes.footer]: true, [classes.fullScreenFooter]: fullScreen })}>
                   <Footer
-                    isLoggedIn={this.mobxStore.userStore.loggedIn}
+                    isLoggedIn={this.stores.userStore.loggedIn}
                     handleLogout={() => {
-                      this.mobxStore.userStore.logout()
+                      this.stores.userStore.logout()
                     }}
                   />
                 </Container>
