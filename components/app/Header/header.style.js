@@ -49,7 +49,7 @@ export default (theme) => ({
 
   navMenu: {
     marginRight: theme.spacing(8),
-    color: theme.palette.primary.dark,
+    color: '#fff', // theme.palette.common.white,  (true white, not palette white)
     '& *': {
       color: 'inherit'
     }
