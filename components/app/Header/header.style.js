@@ -1,5 +1,5 @@
 export default (theme) => ({
-  appBar: {
+  appBarCommon: {
     color: 'inherit',
     boxShadow: 'none',
 
@@ -14,15 +14,17 @@ export default (theme) => ({
     transition: 'background 0.5s ease-in-out',
   },
 
-  transparent: {
-    background: 'transparent',
+  appBarDesktopTop: {
+    backgroundColor: 'transparent',
+    backgroundImage: 'linear-gradient(to bottom, rgba(17, 17, 17, 0.7), rgba(17, 17, 17, 0.0))'
   },
 
-  solid: {
-    background: theme.palette.common.black,
+  appBarDesktopScrolled: {
+    backgroundImage: 'none',
+    backgroundColor: theme.palette.common.black,
   },
 
-  translucent: {
+  appBarMobile: {
     background: 'rgba(17, 17, 17, 0.7)',
   },
 

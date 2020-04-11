@@ -17,12 +17,11 @@ import classNames from 'classnames'
 import HeaderLogo from './HeaderLogo'
 import CascadingMenu from '../CascadingMenu'
 import DesktopUserMenu from './DesktopUserMenu'
-import styles from './header.style.js'
 
 import structure from '../../../settings/navStructure'
 
-
-const useStyles = makeStyles(styles)
+import styles from './header.style.js'
+const myStyles = makeStyles(styles)
 
 export default withWidth()((props) => {
 
@@ -37,28 +36,30 @@ export default withWidth()((props) => {
   const showDesktopNav = isWidthUp('md', width)
 
   const trigger = useScrollTrigger({ threshold: 0, disableHysteresis: true })
-  const classes = useStyles()
+  const s = myStyles()
+
+  let appBarClass = ''
+  if (showDesktopNav) {
+    appBarClass = (trigger) ? s.appBarDesktopScrolled : s.appBarDesktopTop
+  }
+  else {
+    appBarClass = s.appBarMobile
+  }
 
   return (
-    <AppBar
-      className={classNames(
-        classes.appBar,
-        showDesktopNav && trigger ? classes.solid : classes.translucent,
-        !showDesktopNav ? classes.translucent : null
-      )}
-    >
-      <Toolbar disableGutters className={classes.toolbar}>
+    <AppBar className={classNames(s.appBarCommon, appBarClass)}>
+      <Toolbar disableGutters className={s.toolbar}>
         <NextLink href='/'>
-          <HeaderLogo className={classes.logo} />
+          <HeaderLogo className={s.logo} />
         </NextLink>
         {showDesktopNav ? (
-          <div className={classes.desktopElementsOuter}>
-            <CascadingMenu structure={structure} className={classes.navMenu}/>
-            <DesktopUserMenu loggedIn={loggedIn} handleLogout={handleLogout} classes={classes}/>
+          <div className={s.desktopElementsOuter}>
+            <CascadingMenu structure={structure} className={s.navMenu}/>
+            <DesktopUserMenu loggedIn={loggedIn} handleLogout={handleLogout} classes={s}/>
           </div>
         ) : (
-          <IconButton onClick={openMobileNavMenu} className={classes.hamburgerMenuButton}>
-            <MenuRounded className={classes.mobileHamburgerIcon} />
+          <IconButton onClick={openMobileNavMenu} className={s.hamburgerMenuButton}>
+            <MenuRounded className={s.mobileHamburgerIcon} />
           </IconButton>
         )}
       </Toolbar>
