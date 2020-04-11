@@ -29,8 +29,6 @@ export default theme => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     maxWidth: 1400,
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
   },
   fullWidthToolbar: {
     maxWidth: '100%',
