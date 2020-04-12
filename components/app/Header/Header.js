@@ -1,92 +1,82 @@
 import React from 'react'
+import NextLink from 'next/link'
+
 import {
   AppBar,
   IconButton,
+  isWidthUp,
+  makeStyles,
   Toolbar,
   useScrollTrigger,
+  withWidth
 } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
 
-import { AccountCircle, MenuRounded } from '@material-ui/icons'
-
+import { MenuRounded as MenuIcon, Search as SearchIcon } from '@material-ui/icons'
 import classNames from 'classnames'
 
-import DesktopNav from './DesktopNav'
-import DesktopProfileAndSearch from './DesktopProfileAndSearch'
+import { CascadingMenu, MovieSearchWidget } from '..'
+
+import HeaderLogo from './HeaderLogo'
+import DesktopUserMenu from './DesktopUserMenu'
+import structure from '../../../settings/navStructure'
+
 import styles from './header.style.js'
+const myStyles = makeStyles(styles)
 
-const useStyles = makeStyles(styles)
+export default withWidth()((props) => {
 
-export default (props) => {
   const {
-    showDesktopNav,
-    showDesktopProfileMenu,
-    openLeftDrawer,
-    openRightDrawer,
+    openMobileMenu,
     handleLogout,
-    isLoggedIn,
+    handleSearch,
+    loggedIn,
+    width,
     movies,
-    isFullWidthPage,
+    showFullSearchWidget
   } = props
 
+  const showDesktopNav = isWidthUp('md', width)
+
   const trigger = useScrollTrigger({ threshold: 0, disableHysteresis: true })
-  const classes = useStyles()
+  const s = myStyles()
+
+  let appBarClass = ''
+  if (showDesktopNav) {
+    appBarClass = (trigger) ? s.appBarDesktopScrolled : s.appBarDesktopTop
+  }
+  else {
+    appBarClass = s.appBarMobile
+  }
 
   return (
-    <AppBar
-      className={classNames(
-        classes.appBar,
-        showDesktopNav && trigger ? classes.solid : classes.transparent,
-        !showDesktopNav ? classes.translucent : null,
-        showDesktopProfileMenu ? classes.mobile : '',
-      )}
-    >
-      <Toolbar disableGutters className={classNames(
-          classes.toolbar,
-          { [classes.fullWidthToolbar]: isFullWidthPage }
-        )}>
+    <AppBar className={classNames(s.appBarCommon, appBarClass)}>
+      <Toolbar disableGutters className={s.toolbar}>
+        <div className={s.logoArea}>
+          <NextLink href='/'><HeaderLogo className={s.logo} /></NextLink>
+          {(showFullSearchWidget) ? (<MovieSearchWidget className={s.searchWidget} movies={movies} />) : null}
+        </div>
         {showDesktopNav ? (
-          <DesktopNav />
+          <div className={s.desktopElementsOuter}>
+            {(!showFullSearchWidget) ? (<SearchButton onClick={handleSearch} classes={s} />) : null}
+            <CascadingMenu structure={structure} className={s.navMenu}/>
+            <DesktopUserMenu loggedIn={loggedIn} handleLogout={handleLogout} classes={s}/>
+          </div>
         ) : (
-          <IconButton onClick={openLeftDrawer} className={classes.menuButton}>
-            <MenuRounded className={classes.mobileHamburgerIcon} />
-          </IconButton>
-        )}
-        {showDesktopProfileMenu ? (
-          <DesktopProfileAndSearch
-            isLoggedIn={isLoggedIn}
-            handleLogout={handleLogout}
-            movies={movies}
-          />
-        ) : (
-          <>
-            <img
-              src='/static/images/esx/esx-white-logo.png'
-              alt='ESX'
-              className={classes.mobileLogo}
-              height='26px'
-            />
-            <AccountMenu openAccountMenu={openRightDrawer} classes={classes} />
-          </>
+          <BurgerMenuButton classes={s} onClick={openMobileMenu}/>
         )}
       </Toolbar>
     </AppBar>
   )
-}
+})
 
-const AccountMenu = (props) => {
-  const { openAccountMenu, classes } = props
+const BurgerMenuButton = ({ onClick, classes }) => (
+  <IconButton onClick={onClick} className={classes.hamburgerMenuButton}>
+    <MenuIcon className={classes.mobileHamburgerIcon} />
+  </IconButton>
+)
 
-  return (
-    <div className={classes.accountOuter}>
-      <IconButton
-        aria-controls='menu'
-        aria-haspopup='true'
-        onClick={openAccountMenu}
-        className={classes.accountMenuButton}
-      >
-        <AccountCircle style={{ fontSize: '2rem' }} />
-      </IconButton>
-    </div>
-  )
-}
+const SearchButton = ({ onClick, classes }) => (
+  <IconButton onClick={onClick} className={classes.searchButton}>
+    <SearchIcon className={classes.searchButtonIcon} />
+  </IconButton>
+)

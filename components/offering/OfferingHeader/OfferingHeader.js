@@ -16,8 +16,8 @@ import { formatCurrency, slugFromPath } from '../../../util'
 const useOfferingHeaderStyles = makeStyles(theme => ({
   card: {
     [theme.breakpoints.down('md')]: {
-      paddingRight: theme.spacing(3),
-      paddingLeft: theme.spacing(3)
+      //paddingRight: theme.spacing(3),
+      //paddingLeft: theme.spacing(3)
     }
   },
 }))
