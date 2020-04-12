@@ -17,7 +17,7 @@ export default makeStyles(theme => ({
   investButton: {
     textTransform: 'none',
     backgroundColor: '#FBC43E',
-    padding: `${theme.spacing(1.5)}px ${theme.spacing(3)}px`,
+    padding: `${theme.spacing(1.5)} ${theme.spacing(3)}`,
     marginTop: theme.spacing(0.5),
   },
   investButtonText: {

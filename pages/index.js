@@ -42,6 +42,18 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     zIndex: 1
   },
+  main: {
+          // to match header.style.js and other elements
+    padding: `0px ${theme.spacing(3)}`,
+    
+    [theme.breakpoints.up('lg')]: {
+      padding: `0px ${theme.spacing(8)}`,
+    },
+    [theme.breakpoints.down('xs')]: {
+      padding: `0px ${theme.spacing(2)}`,
+    },
+      
+  },
   fundingSlider: {
     marginTop: '-80px',
     position: 'relative',
@@ -77,26 +89,28 @@ export default withRouter(withWidth()(inject('store')(observer((props) => {
       <Hero image={heroInfo.img} styles={heroStyles} className={classes.hero}>
         <HeroElements movie={heroMovie} logo={heroInfo.logo}/>
       </Hero>
-      <MovieSlider 
-        movies={store.movieStore.fundingMovies} 
-        title='Now Funding' 
-        goToMovieDetail={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
-        goToMovieOffering={(movie) => {router.push(`/offering/${movie.movieSlug}`)}} 
-        goToMovieTrading={(movie) => {router.push(`/trade/${movie.movieSlug}`)}} 
-        className={classes.fundingSlider}
-        height='480px'
-      />
-      <MovieSlider 
-        movies={store.movieStore.tradingMovies} 
-        title='Now Trading' 
-        goToMovieDetail={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
-        goToMovieOffering={(movie) => {router.push(`/offering/${movie.movieSlug}`)}} 
-        goToMovieTrading={(movie) => {router.push(`/trade/${movie.movieSlug}`)}} 
-        className={classes.tradingSlider}
-        height='480px'
-      />
-      <CategorySlider />
-      <StudioSlider />
+      <div className={classes.main}>
+        <MovieSlider 
+          movies={store.movieStore.fundingMovies} 
+          title='Now Funding' 
+          goToMovieDetail={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
+          goToMovieOffering={(movie) => {router.push(`/offering/${movie.movieSlug}`)}} 
+          goToMovieTrading={(movie) => {router.push(`/trade/${movie.movieSlug}`)}} 
+          className={classes.fundingSlider}
+          height='480px'
+        />
+        <MovieSlider 
+          movies={store.movieStore.tradingMovies} 
+          title='Now Trading' 
+          goToMovieDetail={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
+          goToMovieOffering={(movie) => {router.push(`/offering/${movie.movieSlug}`)}} 
+          goToMovieTrading={(movie) => {router.push(`/trade/${movie.movieSlug}`)}} 
+          className={classes.tradingSlider}
+          height='480px'
+        />
+        <CategorySlider />
+        <StudioSlider />
+      </div>
     </>
   )
 }))))

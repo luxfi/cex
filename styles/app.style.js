@@ -1,5 +1,6 @@
 // https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/
 export default (theme) => ({
+
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -22,7 +23,7 @@ export default (theme) => ({
     flexGrow: 1,
     maxWidth: theme.maxStagingWidth,
     marginTop: '64px',
-    padding: 0, //`0px ${theme.spacing(2)}px`,
+    padding: 0, //`0px ${theme.spacing(2)}`,
     minHeight: '50vh',
     '& .slide-button': {
       margin: 0,

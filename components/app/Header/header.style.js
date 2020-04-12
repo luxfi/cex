@@ -3,9 +3,9 @@ export default (theme) => ({
     color: 'inherit',
     boxShadow: 'none',
 
-    padding: `0px ${theme.spacing(3)}px`,   
+    padding: `0px ${theme.spacing(3)}`,   
     [theme.breakpoints.down('xs')]: {
-      padding: 0 //`0px ${theme.spacing(2)}px`,   
+      padding: 0 //`0px ${theme.spacing(2)}`,   
     },
 
     [theme.breakpoints.up('lg')]: {
@@ -63,6 +63,10 @@ export default (theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    color: '#fff', // theme.palette.common.white,  (true white, not palette white)
+    '& *': {
+      color: 'inherit'
+    }
   },
 
   accountIcon: {

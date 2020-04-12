@@ -35,7 +35,7 @@ import {
 
 import initializeStores from '../stores/stores'
 import styles from '../styles/app.style.js'
-import { darkTheme } from '../styles/esxThemes'
+import theme from '../styles/esxTheme'
 
 config.autoAddCss = false
 @observer
@@ -65,7 +65,7 @@ class ESXApp extends NextApp {
         <title>ESX | Entertainment Stock X</title>
       </NextHead>
       <Provider store={this.stores}>
-        <MuiThemeProvider theme={darkTheme}>
+        <MuiThemeProvider theme={theme}>
           <div className={classes.root}>
             <CssBaseline />
             <NoSsr>
