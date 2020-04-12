@@ -11,7 +11,7 @@ import {
   withWidth
 } from '@material-ui/core'
 
-import { MenuRounded } from '@material-ui/icons'
+import { MenuRounded as MenuIcon, Search as SearchIcon } from '@material-ui/icons'
 import classNames from 'classnames'
 
 import { CascadingMenu, MovieSearchWidget } from '..'
@@ -26,11 +26,13 @@ const myStyles = makeStyles(styles)
 export default withWidth()((props) => {
 
   const {
-    openMobileNavMenu,
+    openMobileMenu,
     handleLogout,
+    handleSearch,
     loggedIn,
     width,
     movies,
+    showFullSearchWidget
   } = props
 
   const showDesktopNav = isWidthUp('md', width)
@@ -50,22 +52,31 @@ export default withWidth()((props) => {
     <AppBar className={classNames(s.appBarCommon, appBarClass)}>
       <Toolbar disableGutters className={s.toolbar}>
         <div className={s.logoArea}>
-          <NextLink href='/'>
-            <HeaderLogo className={s.logo} />
-          </NextLink>
-          <MovieSearchWidget className={s.searchWidget} movies={movies} />
+          <NextLink href='/'><HeaderLogo className={s.logo} /></NextLink>
+          {(showFullSearchWidget) ? (<MovieSearchWidget className={s.searchWidget} movies={movies} />) : null}
         </div>
         {showDesktopNav ? (
           <div className={s.desktopElementsOuter}>
+            {(!showFullSearchWidget) ? (<SearchButton onClick={handleSearch} classes={s} />) : null}
             <CascadingMenu structure={structure} className={s.navMenu}/>
             <DesktopUserMenu loggedIn={loggedIn} handleLogout={handleLogout} classes={s}/>
           </div>
         ) : (
-          <IconButton onClick={openMobileNavMenu} className={s.hamburgerMenuButton}>
-            <MenuRounded className={s.mobileHamburgerIcon} />
-          </IconButton>
+          <BurgerMenuButton classes={s} onClick={openMobileMenu}/>
         )}
       </Toolbar>
     </AppBar>
   )
 })
+
+const BurgerMenuButton = ({ onClick, classes }) => (
+  <IconButton onClick={onClick} className={classes.hamburgerMenuButton}>
+    <MenuIcon className={classes.mobileHamburgerIcon} />
+  </IconButton>
+)
+
+const SearchButton = ({ onClick, classes }) => (
+  <IconButton onClick={onClick} className={classes.searchButton}>
+    <SearchIcon className={classes.searchButtonIcon} />
+  </IconButton>
+)

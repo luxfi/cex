@@ -59,9 +59,11 @@ class MovieSearchWidget extends React.Component {
     }
   }
 
+    /*
   handleInputClick = () => [
-    // TODO Router.push('/browse')
+    Router.push('/browse')
   ]
+    */
 
   renderInputComponent = (inputProps) => {
     const { classes, inputRef = this.noop, ref, ...other } = inputProps
@@ -69,7 +71,7 @@ class MovieSearchWidget extends React.Component {
     return (
       <InputBase
         placeholder="Search…"
-        onClick={this.handleInputClick}
+        //onClick={this.handleInputClick}
         classes={{
           root: classes.inputRoot,
           input: classes.inputInput

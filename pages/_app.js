@@ -72,15 +72,10 @@ class ESXApp extends NextApp {
               <Header
                 isLoggedIn={this.stores.userStore.loggedIn}
                 movies={this.stores.movieStore.filteredMovies}
-                openMobileNavMenu={() => (
-                  this.stores.uiStore.setLeftDrawerOpen(true)
-                )}
-                openMobileAccountMenu={() => (
-                  this.stores.uiStore.setRightDrawerOpen(true)
-                )}
-                handleLogout={() => {
-                  this.stores.userStore.logout()
-                }}
+                openMobileMenu={() => {this.stores.uiStore.setRightDrawerOpen(true)}}
+                handleLogout={() => {this.stores.userStore.logout()}}
+                handleSearch={() => { router.push('/browse') }}
+                showFullSearchWidget={showFullSearchWidget(router.route)}
               />
               <MobileNavMenuDrawer
                 open={this.stores.uiStore.drawers.left}
@@ -136,6 +131,10 @@ const hideFooter = (page) => {
 
 const isFullScreen = (route) => {
   return route === '/'
+}
+
+const showFullSearchWidget = (route) => {
+  return route.startsWith('/browse')
 }
 
 export default withRouter(withStyles(styles)(ESXApp))

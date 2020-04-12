@@ -30,6 +30,7 @@ export default (theme) => ({
     [theme.breakpoints.up("sm")]: {
       position: "relative",
       width: 160,
+      borderRadius: '8px', 
       "&:focus-within": {
         backgroundColor: fade(theme.palette.common.white, 0.15),
         width: 175
@@ -37,17 +38,17 @@ export default (theme) => ({
       display: "inline-block",
     },
     [theme.breakpoints.up("md")]: {
-      width: 40,
+      //width: 40,
       height: 40,
-      borderRadius: '50%', 
+      width: 160,
+      borderRadius: '8px', 
+      //borderRadius: '50%', 
 
       "&:hover": {
         width: 200,
-        borderRadius: '8px', 
       },
       "&:focus-within": {
         width: 200,
-        borderRadius: '8px', 
       },
     },
     display: "none"
@@ -68,8 +69,14 @@ export default (theme) => ({
   },
 
   inputInput: {
+    display: 'block',
     padding: theme.spacing(1, 1, 1, 5),
-    width: '100%'
+    width: '100%',
+    '&::placeholder': {
+      display: 'block',
+      position: 'relative',
+      top: '3px'
+    }
   },
 
   select: {
