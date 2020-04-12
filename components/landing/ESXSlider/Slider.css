@@ -5,7 +5,7 @@
 
 .slider__container {
   display: flex;
-  padding: 0 55px;
+  padding: 0;
   transition: transform 300ms ease 100ms;
   z-index: 3;
   width: 100%;

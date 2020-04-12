@@ -1,4 +1,20 @@
 export default (theme) => ({
+
+  footer: {
+    // to match header.style.js and other elements
+    padding: `0px ${theme.spacing(3)}`,
+    marginTop: theme.spacing(3),
+
+    [theme.breakpoints.up('lg')]: {
+      padding: `0px ${theme.spacing(8)}`,
+      marginTop: theme.spacing(8),
+    },
+    [theme.breakpoints.down('xs')]: {
+      padding: `0px ${theme.spacing(2)}`,
+      marginTop: theme.spacing(2),
+    },
+  },
+
   logoAreaGridItem: {
     [theme.breakpoints.up('lg')]: {
       paddingRight: theme.spacing(3),
