@@ -130,7 +130,7 @@ const hideFooter = (page) => {
 }
 
 const isFullScreen = (route) => {
-  return route === '/'
+  return route === '/' || route.startsWith('/browse')
 }
 
 const showFullSearchWidget = (route) => {

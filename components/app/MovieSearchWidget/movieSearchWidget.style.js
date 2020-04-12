@@ -21,37 +21,39 @@ export default (theme) => ({
 
   searchOuter: {
     backgroundColor: fade(theme.palette.common.white, 0.10),
+    position: "relative",
+    display: "inline-block",
+    width: 160,
     "&:hover": {
       backgroundColor: fade(theme.palette.common.white, 0.15),
       width: 175
     },
-    transition: theme.transitions.create(["width", "border-radius"]),
-    //transition: theme.transitions.create("border-radius"),
+    borderRadius: '8px', 
+    transition: theme.transitions.create("width"),
+    /*
     [theme.breakpoints.up("sm")]: {
       position: "relative",
       width: 160,
-      borderRadius: '8px', 
       "&:focus-within": {
         backgroundColor: fade(theme.palette.common.white, 0.15),
         width: 175
       },
       display: "inline-block",
     },
+    */
     [theme.breakpoints.up("md")]: {
-      //width: 40,
       height: 40,
-      width: 160,
+      width: 200,
       borderRadius: '8px', 
-      //borderRadius: '50%', 
 
       "&:hover": {
-        width: 200,
+        width: 220,
       },
       "&:focus-within": {
-        width: 200,
+        width: 220,
       },
     },
-    display: "none"
+    //display: "none"
   },
 
   searchIcon: {
