@@ -14,7 +14,7 @@ import {
 
 import { SideDrawer, CustomLink } from ".."
 
-import styles from './mobileNavMenu.style.js'
+import styles from './mobileNavMenuDrawer.style.js'
 const useStyles = makeStyles(styles)
 
 import navStructure from "../../../settings/navStructure"

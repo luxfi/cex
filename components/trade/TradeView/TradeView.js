@@ -16,7 +16,6 @@ import { withStyles } from '@material-ui/core/styles'
 
 // core components
 import { CustomBreadcrumbs, BasicTrader, InvestNow, ProTrader } from '../../app'
-import { TrailerModal } from '../../landing'
 
 // section
 import { padDollarAmount, slugFromPath } from '../../../util'
@@ -154,7 +153,7 @@ class Index extends React.Component {
     return (
       <>
         <article>
-          <Box p={3} pt={8}>
+          <Box pt={8}>
             <BasicTrader
               chartData={chartData}
               yDomain={yDomain}

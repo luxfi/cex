@@ -1,19 +1,10 @@
 export default (theme) => ({
-  logo: {
-    display: 'inline-block',
-    marginTop: '-16px',
-    cursor: 'pointer',
-  },
 
-  navOuter: {
+  menuOuter: {
     display: 'flex',
     flexWrap: 'noWrap',
     justifyContent: 'space-between',
     flexDirection: 'row',
-  },
-
-  navSpacer: {
-    width: theme.spacing(12),
   },
 
   menuItem: {
@@ -30,7 +21,7 @@ export default (theme) => ({
     height: 24,
   },
 
-  navButton: {
+  menuButton: {
     marginRight: theme.spacing(2),
     [theme.breakpoints.down('sm')]: {
       marginRight: theme.spacing(1),
@@ -43,15 +34,4 @@ export default (theme) => ({
     },
   },
 
-  accountOuter: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginLeft: 'auto',
-    alignItems: 'center',
-  },
-
-  accountIcon: {
-    width: 36,
-    height: 36,
-  },
 })
