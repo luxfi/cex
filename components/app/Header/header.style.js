@@ -37,10 +37,23 @@ export default (theme) => ({
     paddingRight: theme.spacing(2),
   },
 
+  logoArea: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+
+  },
+
   logo: {
     cursor: 'pointer',
-    alignSelf: 'flex-start',
     marginTop: '2px'
+  },
+
+  searchWidget: {
+    marginTop: '14px',
+    marginLeft: '40px',
+    alignSelf: 'flex-end'
   },
 
   desktopElementsOuter : {

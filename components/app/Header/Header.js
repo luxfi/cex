@@ -14,10 +14,10 @@ import {
 import { MenuRounded } from '@material-ui/icons'
 import classNames from 'classnames'
 
-import HeaderLogo from './HeaderLogo'
-import CascadingMenu from '../CascadingMenu'
-import DesktopUserMenu from './DesktopUserMenu'
+import { CascadingMenu, MovieSearchWidget } from '..'
 
+import HeaderLogo from './HeaderLogo'
+import DesktopUserMenu from './DesktopUserMenu'
 import structure from '../../../settings/navStructure'
 
 import styles from './header.style.js'
@@ -30,7 +30,7 @@ export default withWidth()((props) => {
     handleLogout,
     loggedIn,
     width,
-    //movies,
+    movies,
   } = props
 
   const showDesktopNav = isWidthUp('md', width)
@@ -49,9 +49,12 @@ export default withWidth()((props) => {
   return (
     <AppBar className={classNames(s.appBarCommon, appBarClass)}>
       <Toolbar disableGutters className={s.toolbar}>
-        <NextLink href='/'>
-          <HeaderLogo className={s.logo} />
-        </NextLink>
+        <div className={s.logoArea}>
+          <NextLink href='/'>
+            <HeaderLogo className={s.logo} />
+          </NextLink>
+          <MovieSearchWidget placeholder='Search…' className={s.searchWidget} movies={movies} />
+        </div>
         {showDesktopNav ? (
           <div className={s.desktopElementsOuter}>
             <CascadingMenu structure={structure} className={s.navMenu}/>

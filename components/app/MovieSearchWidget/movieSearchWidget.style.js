@@ -31,14 +31,14 @@ export default (theme) => {
       transition: theme.transitions.create("width"),
       [theme.breakpoints.up("sm")]: {
         position: "relative",
-        marginLeft: 0,
+        //marginLeft: 0,
         width: 160,
         "&:focus-within": {
           backgroundColor: fade(theme.palette.common.white, 0.15),
           width: 175
         },
         display: "inline-block",
-        marginRight: theme.spacing(6),
+        //marginRight: theme.spacing(6),
       },
       [theme.breakpoints.up("md")]: {
         width: 170,
