@@ -53,7 +53,7 @@ export default withWidth()((props) => {
           <NextLink href='/'>
             <HeaderLogo className={s.logo} />
           </NextLink>
-          <MovieSearchWidget placeholder='Search…' className={s.searchWidget} movies={movies} />
+          <MovieSearchWidget className={s.searchWidget} movies={movies} />
         </div>
         {showDesktopNav ? (
           <div className={s.desktopElementsOuter}>

@@ -1,39 +1,17 @@
-import React, { useEffect } from "react"
+import React from "react"
 import Router from "next/router"
 import { inject } from 'mobx-react'
-import _ from "lodash"
-import deburr from "lodash/deburr"
 
+import _ from 'lodash'
 import Autosuggest from "react-autosuggest"
-import match from "autosuggest-highlight/match"
-import parse from "autosuggest-highlight/parse"
-
 import classNames from 'classnames'
 
-import {
-  InputBase,
-  MenuItem,
-  Paper,
-  withStyles
-} from '@material-ui/core'
-import Search from '@material-ui/icons/Search'
+import { InputBase, withStyles } from '@material-ui/core'
 
-import { CustomLink } from '..'
+import Search from '@material-ui/icons/Search'
 
 import styles from './movieSearchWidget.style.js'
 
-const fuzzyMatch = (str, pattern) => {
-  const cache = _.memoize(function (str) {
-    return new RegExp("^" + str.replace(/./g, function (x) {
-      return /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/.test(x) ? "\\" + x + "?" : x + "?"
-    }) + "$")
-  })
-  return cache(str.toLowerCase()).test(pattern.toLowerCase())
-}
-
-function getSuggestionValue(suggestion) {
-  return suggestion.name
-}
 
 @inject('store')
 class MovieSearchWidget extends React.Component {
@@ -82,7 +60,7 @@ class MovieSearchWidget extends React.Component {
   }
 
   handleInputClick = () => [
-    Router.push('/browse')
+    // TODO Router.push('/browse')
   ]
 
   renderInputComponent = (inputProps) => {
@@ -140,5 +118,17 @@ class MovieSearchWidget extends React.Component {
     )
   }
 }
+
+const fuzzyMatch = (str, pattern) => {
+  const cache = _.memoize(function (str) {
+    return new RegExp("^" + str.replace(/./g, function (x) {
+      return /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/.test(x) ? "\\" + x + "?" : x + "?"
+    }) + "$")
+  })
+  return cache(str.toLowerCase()).test(pattern.toLowerCase())
+}
+
+const getSuggestionValue = (suggestion) => (suggestion.name)
+
 
 export default withStyles(styles)(MovieSearchWidget)

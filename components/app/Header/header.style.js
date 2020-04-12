@@ -33,8 +33,6 @@ export default (theme) => ({
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(2),
   },
 
   logoArea: {
@@ -70,7 +68,7 @@ export default (theme) => ({
   },
 
   hamburgerMenuButton: {
-    paddingLeft: 0,
+    marginRight: '-12px', // so button appears round on hover but is aligned w left margin
   },
 
   accountOuter: {
