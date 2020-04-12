@@ -14,11 +14,31 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
-const useStyles = makeStyles ((theme) => (
+const myStyles = makeStyles((theme) => ({
 
-{
-  gridContainer: {
+  container: {
+    maxWidth: '600px'
   },
+
+  label: {
+    marginBottom: theme.spacing(2)
+  },
+  labelESX: {
+    fontSize: '24px',
+    fontWeight: 'bold',
+    display: 'block'
+  },
+  labelOffering: {
+    fontSize: '20px',
+    fontWeight: 100,
+    display: 'block'
+  },
+
+  description: {
+    fontSize: '20px',
+    marginBottom: theme.spacing(2)
+  },
+
   buttonGridContainer: {
     [theme.breakpoints.down('sm')]: {
       '& > *': {
@@ -45,75 +65,65 @@ const useStyles = makeStyles ((theme) => (
   watchTrailerButtonText: {
     color: 'inherit !important',
   },
-}
-))
-
-
+}))
 
 export default (props) => {
 
-  const classes = useStyles()
-
+  const s = myStyles()
   const { movie, logo } = props
-
   const hrefLink = `/film/${movie.movieSlug}`
-
 
   return (
     <Grid
-    container
-    direction='row'
-    justify='flex-start'
-    alignItems='flex-end'
-    className={classes.gridContainer}
+      container
+      direction='row'
+      justify='flex-start'
+      alignItems='flex-end'
+      className={s.container}
     >
-      <Grid justify='flex-start' container item xs={12} sm={6} md={6} style={{ textAlign: 'left' }} >
-        <Grid item xs>
-          <Box lineHeight={1} letterSpacing={2}>
-            <Typography className='esx-initial-offering' variant='h5'>
-              <Box fontWeight='bold' fontSize={24}>
-                ESX
-            </Box>
-              <Box fontWeight={100} fontSize={20}>
-                INITIAL OFFERING
-            </Box>
-            </Typography>
-            {logo}
-            <Typography variant='body2'>
-              {movie.shortDescription}
-            </Typography>
-          </Box>
-        </Grid>
-        <Grid container item spacing={2} justify='flex-start' className={classes.buttonGridContainer}>
-          <Grid item>
-            <NextLink href={`/watch?video=${movie.movieSlug}`}>
-              <a style={{ textDecoration: 'none'}}>
-                <Button
-                  className={`watch-trailer-button button ${classes.watchTrailerButton}`}
-                  variant="outlined"
-                  size="large"
-                  startIcon={<PlayArrowIcon />}
-                >
-                  <Typography variant="body2">
-                    Play Trailer
-                  </Typography>
-                </Button>
-              </a>
-            </NextLink>
-          </Grid>
-          <Grid item>
-            <Button
-              className={classes.investButton}
-              size='large'
-              startIcon={<MonetizationOnIcon />}
-            >
-              <NextLink href={hrefLink}>
-                <Typography variant='body2' className={classes.watchTrailerButtonText}>
-                  INVEST IN {movie.name}
+      <Grid item xs>
+        <Typography className={s.label} variant='h5'>
+          <span className={s.labelESX} >
+            ESX
+          </span>
+          <span className={s.labelOffering} >
+            INITIAL OFFERING
+          </span>
+        </Typography>
+        {logo}
+        <Typography variant='body2' className={s.description} >
+          {movie.shortDescription}
+        </Typography>
+      </Grid>
+      <Grid container item spacing={2} justify='flex-start' className={s.buttonGridContainer}>
+        <Grid item >
+          <NextLink href={`/watch?video=${movie.movieSlug}`}>
+            <a style={{ textDecoration: 'none'}}>
+              <Button
+                className={`watch-trailer-button button ${s.watchTrailerButton}`}
+                variant="outlined"
+                size="large"
+                startIcon={<PlayArrowIcon />}
+              >
+                <Typography variant="body2">
+                  Play Trailer
                 </Typography>
-              </NextLink>
-            </Button>
-          </Grid>
+              </Button>
+            </a>
+          </NextLink>
+        </Grid>
+        <Grid item >
+          <Button
+            className={s.investButton}
+            size='large'
+            startIcon={<MonetizationOnIcon />}
+          >
+            <NextLink href={hrefLink}>
+              <Typography variant='body2' className={s.watchTrailerButtonText}>
+                INVEST IN {movie.name}
+              </Typography>
+            </NextLink>
+          </Button>
         </Grid>
       </Grid>
     </Grid>

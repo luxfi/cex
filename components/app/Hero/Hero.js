@@ -5,7 +5,6 @@ import classNames from 'classnames'
 const useStyles = makeStyles(theme => ({
   image: {
     height: '90vh',
-    maxHeight: 800,
     minHeight: 600,
 
 

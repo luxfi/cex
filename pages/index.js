@@ -31,8 +31,8 @@ const heroInfo = {
   },
   logo: (<TerminatorLogo style={{
     fill: "#F0f0f0",
-    width: "60%",
-    height: "60%"
+    width: "100%",
+    height: "auto"
   }}/>)
 }
 
