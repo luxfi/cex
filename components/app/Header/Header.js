@@ -1,92 +1,68 @@
 import React from 'react'
+import NextLink from 'next/link'
+
 import {
   AppBar,
   IconButton,
+  isWidthUp,
+  makeStyles,
   Toolbar,
   useScrollTrigger,
+  withWidth
 } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
 
-import { AccountCircle, MenuRounded } from '@material-ui/icons'
-
+import { MenuRounded } from '@material-ui/icons'
 import classNames from 'classnames'
 
-import DesktopNav from './DesktopNav'
-import DesktopProfileAndSearch from './DesktopProfileAndSearch'
+import HeaderLogo from './HeaderLogo'
+import CascadingMenu from '../CascadingMenu'
+import DesktopUserMenu from './DesktopUserMenu'
+
+import structure from '../../../settings/navStructure'
+
 import styles from './header.style.js'
+const myStyles = makeStyles(styles)
 
-const useStyles = makeStyles(styles)
+export default withWidth()((props) => {
 
-export default (props) => {
   const {
-    showDesktopNav,
-    showDesktopProfileMenu,
-    openLeftDrawer,
-    openRightDrawer,
+    openMobileNavMenu,
     handleLogout,
-    isLoggedIn,
-    movies,
-    isDiscoverPage,
+    loggedIn,
+    width,
+    //movies,
   } = props
 
+  const showDesktopNav = isWidthUp('md', width)
+
   const trigger = useScrollTrigger({ threshold: 0, disableHysteresis: true })
-  const classes = useStyles()
+  const s = myStyles()
+
+  let appBarClass = ''
+  if (showDesktopNav) {
+    appBarClass = (trigger) ? s.appBarDesktopScrolled : s.appBarDesktopTop
+  }
+  else {
+    appBarClass = s.appBarMobile
+  }
 
   return (
-    <AppBar
-      className={classNames(
-        classes.appBar,
-        showDesktopNav && trigger ? classes.solid : classes.transparent,
-        !showDesktopNav ? classes.translucent : null,
-        showDesktopProfileMenu ? classes.mobile : '',
-      )}
-    >
-      <Toolbar disableGutters className={classNames(
-          classes.toolbar,
-          { [classes.fullWidthToolbar]: isDiscoverPage }
-        )}>
+    <AppBar className={classNames(s.appBarCommon, appBarClass)}>
+      <Toolbar disableGutters className={s.toolbar}>
+        <NextLink href='/'>
+          <HeaderLogo className={s.logo} />
+        </NextLink>
         {showDesktopNav ? (
-          <DesktopNav />
+          <div className={s.desktopElementsOuter}>
+            <CascadingMenu structure={structure} className={s.navMenu}/>
+            <DesktopUserMenu loggedIn={loggedIn} handleLogout={handleLogout} classes={s}/>
+          </div>
         ) : (
-          <IconButton onClick={openLeftDrawer} className={classes.menuButton}>
-            <MenuRounded className={classes.mobileHamburgerIcon} />
+          <IconButton onClick={openMobileNavMenu} className={s.hamburgerMenuButton}>
+            <MenuRounded className={s.mobileHamburgerIcon} />
           </IconButton>
-        )}
-        {showDesktopProfileMenu ? (
-          <DesktopProfileAndSearch
-            isLoggedIn={isLoggedIn}
-            handleLogout={handleLogout}
-            movies={movies}
-          />
-        ) : (
-          <>
-            <img
-              src='/static/images/esx/esx-white-logo.png'
-              alt='ESX'
-              className={classes.mobileLogo}
-              height='26px'
-            />
-            <AccountMenu openAccountMenu={openRightDrawer} classes={classes} />
-          </>
         )}
       </Toolbar>
     </AppBar>
   )
-}
-
-const AccountMenu = (props) => {
-  const { openAccountMenu, classes } = props
-
-  return (
-    <div className={classes.accountOuter}>
-      <IconButton
-        aria-controls='menu'
-        aria-haspopup='true'
-        onClick={openAccountMenu}
-        className={classes.accountMenuButton}
-      >
-        <AccountCircle style={{ fontSize: '2rem' }} />
-      </IconButton>
-    </div>
-  )
-}
+})

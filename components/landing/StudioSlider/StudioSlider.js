@@ -68,7 +68,7 @@ import Slider from '../ESXSlider'
 
 @inject("store")
 @observer
-export default class TrailerSlider extends React.Component {
+export default class extends React.Component {
   render() {
     const { store } = this.props
     return (

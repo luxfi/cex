@@ -5,7 +5,6 @@ import classNames from 'classnames'
 const useStyles = makeStyles(theme => ({
   image: {
     height: '90vh',
-    maxHeight: 800,
     minHeight: 600,
 
 
@@ -16,10 +15,6 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: 'cover',
     position: 'relative',    
   },
-  content: {
-    width: '100%',
-    height: '100%'
-  }
 }))
 
 export default (props) => {

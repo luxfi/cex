@@ -12,7 +12,7 @@ export default theme => ({
     top: '64px',  // app bar height
     zIndex: 20,
     transition: 'background 0.75s ease-in-out',
-    maxWidth: 1400,
+    maxWidth: theme.maxStagingWidth,
     // TODO move this into a custom mixin into the theme
     paddingLeft: theme.spacing(3), // 32px
     paddingRight: theme.spacing(3),
