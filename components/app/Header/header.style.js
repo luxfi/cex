@@ -3,14 +3,15 @@ export default (theme) => ({
     color: 'inherit',
     boxShadow: 'none',
 
-    padding: `0px ${theme.spacing(3)}`,   
+    padding: `0px ${theme.spacing(3)}`,
+  
+    [theme.breakpoints.up('lg')]: {
+      padding: `0px ${theme.spacing(8)}`,
+    },
     [theme.breakpoints.down('xs')]: {
-      padding: 0 //`0px ${theme.spacing(2)}`,   
+      padding: `0px ${theme.spacing(2)}`,
     },
 
-    [theme.breakpoints.up('lg')]: {
-      padding: 0,   
-    },
     transition: 'background 0.5s ease-in-out',
   },
 

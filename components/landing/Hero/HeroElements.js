@@ -18,20 +18,6 @@ const useStyles = makeStyles ((theme) => (
 
 {
   gridContainer: {
-    maxWidth: theme.breakpoints.lg,
-    width: '100%',
-    height: '100%',
-    padding: `${theme.spacing(3)}px ${theme.spacing(8)}px 150px`,
-    [theme.breakpoints.down('md')]: {
-      padding: `${theme.spacing(3)}px ${theme.spacing(4)}px 150px`,
-    },
-    [theme.breakpoints.down('xs')]: {
-      padding: `${theme.spacing(3)}px ${theme.spacing(3)}px 150px`,
-    },
-    [theme.breakpoints.up('xl')]: {
-      maxWidth: 1800,
-      margin: '0 auto',
-    },
   },
   buttonGridContainer: {
     [theme.breakpoints.down('sm')]: {
@@ -92,17 +78,12 @@ export default (props) => {
                 INITIAL OFFERING
             </Box>
             </Typography>
-            <br />
             {logo}
-            <br />
-            <br />
             <Typography variant='body2'>
               {movie.shortDescription}
             </Typography>
-            <br />
           </Box>
         </Grid>
-        <br />
         <Grid container item spacing={2} justify='flex-start' className={classes.buttonGridContainer}>
           <Grid item>
             <NextLink href={`/watch?video=${movie.movieSlug}`}>

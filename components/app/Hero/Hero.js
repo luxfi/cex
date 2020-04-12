@@ -16,10 +16,6 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: 'cover',
     position: 'relative',    
   },
-  content: {
-    width: '100%',
-    height: '100%'
-  }
 }))
 
 export default (props) => {

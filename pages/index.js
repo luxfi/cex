@@ -20,7 +20,6 @@ import {
 
 import { googlePageView } from '../util'
 
-
 // Test moving terminator-dark-fate.js to here
 const heroInfo = {
   slug: 'terminator-dark-fate',
@@ -37,13 +36,36 @@ const heroInfo = {
   }}/>)
 }
 
+const SLIDER_OFFSET = 80
+const HERO_CONTENT_BOTTOM_PADDING = 90
+
 const useStyles = makeStyles((theme) => ({
   hero: {
-    position: 'relative',
-    zIndex: 1
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-end',
+
+      // to match header.style.js and other elements
+    padding: `0px ${theme.spacing(3)}`,
+
+    [theme.breakpoints.up('lg')]: {
+      padding: `0px ${theme.spacing(8)}`,
+    },
+    [theme.breakpoints.down('xs')]: {
+      padding: `0px ${theme.spacing(2)}`,
+    },
+
+    paddingBottom: `${SLIDER_OFFSET + HERO_CONTENT_BOTTOM_PADDING}px !important`,
   },
+
   main: {
-          // to match header.style.js and other elements
+
+    marginTop: `-${SLIDER_OFFSET}px`,
+    position: 'relative',
+    zIndex: 2,
+
+      // to match header.style.js and other elements
     padding: `0px ${theme.spacing(3)}`,
     
     [theme.breakpoints.up('lg')]: {
@@ -54,16 +76,6 @@ const useStyles = makeStyles((theme) => ({
     },
       
   },
-  fundingSlider: {
-    marginTop: '-80px',
-    position: 'relative',
-    zIndex: 2
-  },
-  tradingSlider: {
-    //marginTop: '-80px',
-    position: 'relative',
-    zIndex: 3
-  }
 }))
 
 export default withRouter(withWidth()(inject('store')(observer((props) => {
