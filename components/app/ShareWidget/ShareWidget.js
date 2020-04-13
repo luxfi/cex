@@ -64,7 +64,7 @@ const ShareWidget = (props) => {
   const referralURL = `${shareUrl}?ref=${userStore.referrerId}`
 
   return (
-    <div style={{ display: 'inline-block' }}>
+    <div className={classes.root}>
       <Button
         ref={anchorRef}
         variant='contained'

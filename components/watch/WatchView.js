@@ -194,68 +194,75 @@ class Index extends React.Component {
                   nextMovieIndex={nextMovieIndex}
                 />
               </Grid>
-              <Grid item className={classes.videoControlSection}>
+              <Grid item xs={12}>
                 <Box>
                   <Link href={`/film/${movie.movieSlug}`}>
                     <a className={classes.aTag}>
                       <h3>{movie.name}</h3>
                     </a>
                   </Link>
-                  <Box className={classes.videoStats}>
-                    <Typography component='span'>{`${movie.trailerDetails.views.toLocaleString()} views`}</Typography>
-                    <Box className={classes.videoActions}>
-                      <Box className={classes.rating}>
-                        <LikeAndUnlike
-                          likeCount={reaction.likeCount}
-                          unlikeCount={reaction.unlikeCount}
-                          hasReaction={reaction.hasReaction}
-                          reactionType={reaction.reactionType}
-                          handleLikeClick={() => this.handleReactionClick(movie, 'like')}
-                          handleUnlikeClick={() => this.handleReactionClick(movie, 'unlike')}
-                        />
-                        <Box className={classes.likeUnderline}>
-                          <Divider />
-                        </Box>
+                  <Grid container spacing={2} className={classes.videoStats}>
+                    <Grid item xs={6} sm={3} lg={6}>
+                      <Typography component='span'>{`${movie.trailerDetails.views.toLocaleString()} views`}</Typography>
+                    </Grid>
+                    <Grid item xs={6} sm={4} lg={2}>
+                      <LikeAndUnlike
+                        likeCount={reaction.likeCount}
+                        unlikeCount={reaction.unlikeCount}
+                        hasReaction={reaction.hasReaction}
+                        reactionType={reaction.reactionType}
+                        handleLikeClick={() => this.handleReactionClick(movie, 'like')}
+                        handleUnlikeClick={() => this.handleReactionClick(movie, 'unlike')}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={5} lg={4} className={classes.buttonSection}>
+                      <Box className={classes.buttonContainer}>
+                        <ShareWidget shareUrl={shareURL} message={sharePrompt} emailToCredit={userStore.email}/>
                       </Box>
-                      <ShareWidget shareUrl={shareURL} message={sharePrompt} emailToCredit={userStore.email}/>
-                      {
-                        movie.trading ? (
-                          <Link href={`/trade/${movie.movieSlug}`}>
-                            <a className={classes.linkBackLink}>
-                            <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Trade</Typography></Button>
-                            </a>
-                          </Link>
-                        ) : (
-                          <Link href={`/offering/${movie.movieSlug}`}>
-                            <a className={classes.linkBackLink}>
-                            <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Invest</Typography></Button>
-                            </a>
-                          </Link>
-                        )
-                      }
-                      <Link href={`/ticketing/${movie.movieSlug}`}>
-                        <a className={classes.linkBackLink}>
-                        <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Buy Tickets</Typography></Button>
-                        </a>
-                      </Link>
-                    </Box>
-                  </Box>
+                      <Box className={classes.buttonContainer}>
+                        {
+                          movie.trading ? (
+                            <Link href={`/trade/${movie.movieSlug}`}>
+                              <a className={classes.linkBackLink}>
+                                <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText} noWrap>Trade</Typography></Button>
+                              </a>
+                            </Link>
+                          ) : (
+                            <Link href={`/offering/${movie.movieSlug}`}>
+                              <a className={classes.linkBackLink}>
+                                <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText} noWrap>Invest</Typography></Button>
+                              </a>
+                            </Link>
+                          )
+                        }
+                      </Box>
+                      <Box>
+                        <Link href={`/ticketing/${movie.movieSlug}`}>
+                          <a className={classes.linkBackLink}>
+                            <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText} noWrap>Buy Tickets</Typography></Button>
+                          </a>
+                        </Link>
+                      </Box>
+                    </Grid>
+                  </Grid>
                   <Box style={{ margin: '0 0 20px 0' }}>
                     <Divider />
                   </Box>
                 </Box>
                 <Box className={classes.videoInfoBox}>
-                  <Box>
-                    <img src={movie.distributorImg} className={classes.videoInfoImage} alt={movie.distributors[0]} />
-                    <Box className={classes.videoInfo}>
-                      <Typography className={classes.channelName}>
-                        <Link href={`/browse?facet=distributors&value=${movie.distributors[0]}`}>
-                          <a className={classes.aTag}>{movie.distributors[0]}</a>
-                        </Link>
-                      </Typography>
-                      <Typography className={classes.videoPubDate}>{renderDate(movie.trailerDetails.createdAt, 'dddd MMM Do YYYY')}</Typography>
-                    </Box>
-                    <Box className={classes.subShare}>
+                  <Grid container className={classes.movieInfoContainer}>
+                    <Grid item wrap="nowrap" className={classes.movieInfo}>
+                      <img src={movie.distributorImg} className={classes.videoInfoImage} alt={movie.distributors[0]} />
+                      <Box className={classes.videoInfo}>
+                        <Typography className={classes.channelName}>
+                          <Link href={`/browse?facet=distributors&value=${movie.distributors[0]}`}>
+                            <a className={classes.aTag}>{movie.distributors[0]}</a>
+                          </Link>
+                        </Typography>
+                        <Typography className={classes.videoPubDate}>{renderDate(movie.trailerDetails.createdAt, 'dddd MMM Do YYYY')}</Typography>
+                      </Box>
+                    </Grid>
+                    <Grid item className={classes.subShare} alignItems="center">
                       <IconButton onClick={() => {}} className={classes.iconButton}>
                         <AddCircleIcon />
                       </IconButton>
@@ -267,13 +274,15 @@ class Index extends React.Component {
                         size='small'
                       >
                         <Typography
-                          variant='body1'
+                          noWrap
                           className={classes.subScribeButtonText}
                         >
                           {`SUBSCRIBE ${formatNumber(subscribers, 1)}`}
                         </Typography>
                       </Button>
-                    </Box>
+                    </Grid>
+                  </Grid>
+                  <Box>
                     <VideoDescription description={movie.longDescription} />
                   </Box>
                   <Divider />
