@@ -3,10 +3,6 @@ import { inject, observer } from 'mobx-react'
 import { withRouter } from 'next/router'
 
 import { 
-  Box, 
-  Card,
-  CardContent,
-  Typography, 
   makeStyles, 
   withWidth,
   isWidthDown, 
@@ -24,7 +20,6 @@ import {
 
 import { googlePageView } from '../util'
 
-
 // Test moving terminator-dark-fate.js to here
 const heroInfo = {
   slug: 'terminator-dark-fate',
@@ -36,26 +31,51 @@ const heroInfo = {
   },
   logo: (<TerminatorLogo style={{
     fill: "#F0f0f0",
-    width: "60%",
-    height: "60%"
+    width: "100%",
+    height: "auto"
   }}/>)
 }
 
+const SLIDER_OFFSET = 80
+const HERO_CONTENT_BOTTOM_PADDING = 90
+
 const useStyles = makeStyles((theme) => ({
   hero: {
-    position: 'relative',
-    zIndex: 1
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-end',
+
+      // to match header.style.js and other elements
+    padding: `0px ${theme.spacing(3)}`,
+
+    [theme.breakpoints.up('lg')]: {
+      padding: `0px ${theme.spacing(8)}`,
+    },
+    [theme.breakpoints.down('xs')]: {
+      padding: `0px ${theme.spacing(2)}`,
+    },
+
+    paddingBottom: `${SLIDER_OFFSET + HERO_CONTENT_BOTTOM_PADDING}px !important`,
   },
-  fundingSlider: {
-    marginTop: '-80px',
+
+  main: {
+
+    marginTop: `-${SLIDER_OFFSET}px`,
     position: 'relative',
-    zIndex: 2
+    zIndex: 2,
+
+      // to match header.style.js and other elements
+    padding: `0px ${theme.spacing(3)}`,
+    
+    [theme.breakpoints.up('lg')]: {
+      padding: `0px ${theme.spacing(8)}`,
+    },
+    [theme.breakpoints.down('xs')]: {
+      padding: `0px ${theme.spacing(2)}`,
+    },
+      
   },
-  tradingSlider: {
-    //marginTop: '-80px',
-    position: 'relative',
-    zIndex: 3
-  }
 }))
 
 export default withRouter(withWidth()(inject('store')(observer((props) => {
@@ -65,7 +85,7 @@ export default withRouter(withWidth()(inject('store')(observer((props) => {
     googlePageView()
   }, [])
 
-  const { store, width, router } = props
+  const { store, width, router, pathName } = props
   const heroMovie = store.movieStore.movies.find(m => (m.movieSlug === heroInfo.slug))
   const heroStyles = heroInfo.styles
   if (isWidthDown('sm', width)) {
@@ -81,26 +101,28 @@ export default withRouter(withWidth()(inject('store')(observer((props) => {
       <Hero image={heroInfo.img} styles={heroStyles} className={classes.hero}>
         <HeroElements movie={heroMovie} logo={heroInfo.logo}/>
       </Hero>
-      <MovieSlider 
-        movies={store.movieStore.fundingMovies} 
-        title='Now Funding' 
-        goToMovieDetail={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
-        goToMovieOffering={(movie) => {router.push(`/offering/${movie.movieSlug}`)}} 
-        goToMovieTrading={(movie) => {router.push(`/trade/${movie.movieSlug}`)}} 
-        className={classes.fundingSlider}
-        height='480px'
-      />
-      <MovieSlider 
-        movies={store.movieStore.tradingMovies} 
-        title='Now Trading' 
-        goToMovieDetail={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
-        goToMovieOffering={(movie) => {router.push(`/offering/${movie.movieSlug}`)}} 
-        goToMovieTrading={(movie) => {router.push(`/trade/${movie.movieSlug}`)}} 
-        className={classes.tradingSlider}
-        height='480px'
-      />
-      <CategorySlider />
-      <StudioSlider />
+      <div className={classes.main}>
+        <MovieSlider 
+          movies={store.movieStore.fundingMovies} 
+          title='Now Funding' 
+          goToMovieDetail={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
+          goToMovieOffering={(movie) => {router.push(`/offering/${movie.movieSlug}`)}} 
+          goToMovieTrading={(movie) => {router.push(`/trade/${movie.movieSlug}`)}} 
+          className={classes.fundingSlider}
+          height='480px'
+        />
+        <MovieSlider 
+          movies={store.movieStore.tradingMovies} 
+          title='Now Trading' 
+          goToMovieDetail={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
+          goToMovieOffering={(movie) => {router.push(`/offering/${movie.movieSlug}`)}} 
+          goToMovieTrading={(movie) => {router.push(`/trade/${movie.movieSlug}`)}} 
+          className={classes.tradingSlider}
+          height='480px'
+        />
+        <CategorySlider />
+        <StudioSlider />
+      </div>
     </>
   )
 }))))

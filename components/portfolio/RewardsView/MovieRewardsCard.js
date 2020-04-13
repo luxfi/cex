@@ -5,14 +5,15 @@ import {
   Icon,
   Paper,
   Typography,
+  useTheme
 } from "@material-ui/core"
 
 import { SVGIcon } from '../../app'
-import { darkTheme as theme } from '../../../styles/esxThemes'
 
 export default (props) => {
 
   const { movie, referrals, classes } = props
+  const theme = useTheme()
 
   let icons = []
   for (let i = 0; i< referrals; i++) {

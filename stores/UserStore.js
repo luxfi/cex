@@ -120,25 +120,18 @@ export default class UserStore {
   @observable referralId = ''
 
   constructor(initialData = {}, hanzoApi) {
-    // TODO Do we still need this?
-    // :aa I don't think so.... why would we?
-    // E: This might be required for persisting state across page changes
-
-    // Pass down the Hanzo API through a central point
     this.api = hanzoApi
-    this.loadSession()
-
-    const cardPaymentOptions = JSON.parse(localStorage.getItem('cardPaymentOptions'))
-    if (cardPaymentOptions && cardPaymentOptions.length) {
-      this.cardPaymentOptions = cardPaymentOptions
-    }
   }
 
-  /**
-   * Fetches all todos from the server
-   */
   @action async loadSession() {
     this.isLoading = true
+
+    if (!this.cardPaymentOptions) {
+      const cardPaymentOptions = JSON.parse(localStorage.getItem('cardPaymentOptions'))
+      if (cardPaymentOptions && cardPaymentOptions.length) {
+        this.cardPaymentOptions = cardPaymentOptions
+      }
+    }
 
     this.token = this.api.getCustomerToken()
     try {
@@ -274,10 +267,10 @@ export default class UserStore {
   @action setToken(token) {
     if (!!token) {
       this.token = token
-      window.localStorage.setItem('token', token)
+      localStorage.setItem('token', token)
     } else {
       this.token = undefined
-      window.localStorage.removeItem('token')
+      localStorage.removeItem('token')
     }
   }
 
@@ -288,7 +281,7 @@ export default class UserStore {
         ? Number.parseFloat(localStorage.getItem('accountBalance'))
         : 0
       let newBalance = (oldBalance + parsedVal).toFixed(2)
-      window.localStorage.setItem('accountBalance', newBalance)
+      localStorage.setItem('accountBalance', newBalance)
       this.accountBalance = newBalance
       onSuccess && onSuccess()
     } else {
@@ -307,7 +300,7 @@ export default class UserStore {
         ? Number.parseFloat(localStorage.getItem('accountBalance'))
         : 0
       let newBalance = (oldBalance - parsedVal).toFixed(2)
-      window.localStorage.setItem('accountBalance', newBalance)
+      localStorage.setItem('accountBalance', newBalance)
       this.accountBalance = newBalance
       onSuccess && onSuccess()
     } else {
@@ -344,7 +337,7 @@ export default class UserStore {
         newBalance = (oldBalance - parsedVal).toFixed(2)
       }
       // Save amount
-      window.localStorage.setItem('accountBalance', newBalance)
+      localStorage.setItem('accountBalance', newBalance)
       this.accountBalance = newBalance
 
       // Update history

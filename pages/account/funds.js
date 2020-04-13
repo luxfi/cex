@@ -1,17 +1,11 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import Router from 'next/router'
 
 import {
   Button,
   Grid,
-  Divider,
-  Box,
   Typography
 } from '@material-ui/core'
-
-import { AccountSection } from '../../components/account'
-import { AddPaymentMethodModal } from '../../components/app'
 
 import {
   CardCardItem,
@@ -23,7 +17,14 @@ import {
 
 import { googlePageView } from '../../util'
 import AccountTabs from '../../settings/accountTabs'
-import { TabbedNav } from '../../components/app'
+import {
+  TabbedNav,
+  SideMenuSection,
+  PageSections,
+  MainContentSection,
+  MainContent,
+  AddPaymentMethodModal,
+} from '../../components/app'
 import { withOnDemandAuth } from '../../util/HOC'
 
 @inject('store')
@@ -42,125 +43,112 @@ class Funds extends React.Component {
 
   render() {
     const store = this.props.store
-    const { userStore, uiStore } = store
+    const { userStore } = store
     const {
-      setValue,
-      account,
       accountBalance,
       formattedAccounts,
       cardPaymentOptions,
       balanceHistory,
-      addPaymentMethod,
-      isValidNewPaymentMethod,
-      validNewPaymentMethodName,
-      validNewPaymentMethodPublicToken,
-      validateNewPaymentMethodName,
-      validateNewPaymentMethodPublicToken,
-      validateNewPaymentMethodMetadata,
       handleFunds,
-      newPaymentMethodName,
     } = userStore
 
-    const setErrorMessage = message => {
-      uiStore.setErrorMessage(message)
-    }
-
     return (
-      <Box>
-        <AccountSection
+      <PageSections>
+        <SideMenuSection
           title={userStore.getFullName}
-          style={{ marginBottom: '3em' }}
         >
-          <TabbedNav tabs={AccountTabs} tab="funds" />
-        </AccountSection>
-        <AccountSection title="Linked Accounts" style={{ marginBottom: '3em' }}>
-          <Grid container>
-            <Grid item xs={8}>
-              <Grid container direction="column">
-                {formattedAccounts.map((a, i) => {
-                  if (a.name === 'ESX') return null
-                  return (
-                    <BankAccountItem
-                      key={`account_${i}`}
-                      accountName={a.name}
-                      accountNumber={a.account.mask}
-                      accountType={a.account.type}
-                      institution={a.institution.name}
-                      subtype={a.account.subtype}
-                      removeAccount={() => {
-                        alert("Remove doesn't work in dev mode!")
-                        console.log('Removing the account!', a.id)
-                      }}
-                    />
-                  )
-                })}
-                {cardPaymentOptions.length
-                  ? cardPaymentOptions.map((cardPaymentOption) => {
+          <TabbedNav tabs={AccountTabs} tab="funds" orientation="vertical" />
+        </SideMenuSection>
+        <MainContentSection>
+          <MainContent title="Linked Accounts">
+            <Grid container>
+              <Grid item xs={8}>
+                <Grid container direction="column">
+                  {formattedAccounts.map((a, i) => {
+                    if (a.name === 'ESX') return null
                     return (
-                      <CardCardItem
-                        key={cardPaymentOption.creditCard}
-                        nameOnCard={cardPaymentOption.nameOnCard}
-                        creditCardNumber={cardPaymentOption.creditCard}
-                        cardType={cardPaymentOption.type}
-                        expiryMonth={cardPaymentOption.expiryMonth}
-                        expiryYear={cardPaymentOption.expiryYear}
+                      <BankAccountItem
+                        key={`account_${i}`}
+                        accountName={a.name}
+                        accountNumber={a.account.mask}
+                        accountType={a.account.type}
+                        institution={a.institution.name}
+                        subtype={a.account.subtype}
                         removeAccount={() => {
                           alert("Remove doesn't work in dev mode!")
+                          console.log('Removing the account!', a.id)
                         }}
                       />
                     )
-                  }) : null
-                }
+                  })}
+                  {cardPaymentOptions.length
+                    ? cardPaymentOptions.map((cardPaymentOption) => {
+                      return (
+                        <CardCardItem
+                          key={cardPaymentOption.creditCard}
+                          nameOnCard={cardPaymentOption.nameOnCard}
+                          creditCardNumber={cardPaymentOption.creditCard}
+                          cardType={cardPaymentOption.type}
+                          expiryMonth={cardPaymentOption.expiryMonth}
+                          expiryYear={cardPaymentOption.expiryYear}
+                          removeAccount={() => {
+                            alert("Remove doesn't work in dev mode!")
+                          }}
+                        />
+                      )
+                    }) : null
+                  }
+                </Grid>
+                <Grid container style={{ marginTop: 10 }}>
+                  <Button
+                    onClick={this.openAddPaymentMethodModal}
+                    type='button'
+                    variant='outlined'
+                    color='primary'
+                  >
+                    Add payment method
+                  </Button>
+                  <AddPaymentMethodModal />
+                </Grid>
               </Grid>
-              <Grid container style={{ marginTop: 10 }}>
-                <Button
-                  onClick={this.openAddPaymentMethodModal}
-                  type='button'
-                  variant='outlined'
-                  color='primary'
-                >
-                  Add payment method
-                </Button>
-                <AddPaymentMethodModal />
-              </Grid>
-            </Grid>
-            <Grid item xs={4}>
-              <Grid container direction="column" alignItems="center">
-                <ManageFunds
-                  accountBalance={accountBalance}
-                  accountList={formattedAccounts}
-                  handleFunds={handleFunds.bind(userStore)}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-        </AccountSection>
-        <AccountSection title="Complete Transfers">
-          <Grid container>
-            <Grid item xs={8}>
-              <Grid container direction="column">
-                {balanceHistory && balanceHistory.length > 0 ? (
-                  balanceHistory.map((r, i) => {
-                    return (
-                      <BalanceHistoryItem
-                        key={`history_${i}`}
-                        name={r.accountName}
-                        amount={r.amount}
-                        date={r.date}
-                        deposit={r.deposit}
-                      />
-                    )
-                  })
-                ) : (
-                  <Typography variant="h6">
-                    No transfers have been made yet!
-                  </Typography>
-                )}
+              <Grid item xs={4}>
+                <Grid container direction="column" alignItems="center">
+                  <ManageFunds
+                    accountBalance={accountBalance}
+                    accountList={formattedAccounts}
+                    handleFunds={handleFunds.bind(userStore)}
+                  />
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        </AccountSection>
-      </Box>
+          </MainContent>
+          <MainContent title="Complete Transfers">
+            <Grid container>
+              <Grid item xs={8}>
+                <Grid container direction="column">
+                  {balanceHistory && balanceHistory.length > 0 ? (
+                    balanceHistory.map((r, i) => {
+                      return (
+                        <BalanceHistoryItem
+                          key={`history_${i}`}
+                          name={r.accountName}
+                          amount={r.amount}
+                          date={r.date}
+                          deposit={r.deposit}
+                        />
+                      )
+                    })
+                  ) : (
+                    <Typography variant="h6">
+                      No transfers have been made yet!
+                    </Typography>
+                  )}
+                </Grid>
+              </Grid>
+            </Grid>
+          </MainContent>
+        </MainContentSection>
+      </PageSections>
     )
   }
 }
