@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Divider,
   Grid,
@@ -15,7 +16,10 @@ const noUnderline = {
   textDecoration: 'none',
 }
 
-const styles = {
+const styles = (theme) => ({
+  root: {
+    padding: theme.spacing(2),
+  },
   noUnderline,
   link: {
     color: '#fff',
@@ -28,7 +32,7 @@ const styles = {
     fontSize: '1.8em',
     margin: '0 0 2em 0',
   },
-}
+})
 
 const SingleTicketOrder = ({
   movie, ticket, classes, showDivider,
@@ -71,7 +75,7 @@ const OrdersView = inject('store')(observer((props) => {
   } = props
 
   return (
-    <>
+    <Box className={classes.root}>
       <Typography className={classes.heading} variant='h3'>{`${tabTitle} (${ticketTransactions.length})`}</Typography>
       {
         (ticketTransactions.length)
@@ -91,7 +95,7 @@ const OrdersView = inject('store')(observer((props) => {
           }) : null
       }
       { (!ticketTransactions.length) && <Typography variant='body2'>You don't seem to have bought any movie tickets yet</Typography> }
-    </>
+    </Box>
   )
 }))
 

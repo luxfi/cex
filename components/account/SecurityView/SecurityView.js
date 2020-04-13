@@ -3,9 +3,13 @@ import {
   Icon,
   IconButton,
   Typography,
+  makeStyles,
 } from '@material-ui/core'
 
 import { ViewCard } from '../../app'
+import styles from '../../../styles/pages/account.style'
+
+const useStyles = makeStyles(styles)
 
 const PhoneNumberDisplay = (props) => {
   const { number, className } = props
@@ -70,7 +74,8 @@ const TwoStepVerification = (props) => {
 }
 
 export default (props) => {
-  const { classes } = props
+  const classes = useStyles()
+
   return (
     <>
       <PhoneSection phoneNumber='2154551234' classes={classes} />

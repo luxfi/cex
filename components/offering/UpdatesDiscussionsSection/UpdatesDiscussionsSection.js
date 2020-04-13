@@ -1,9 +1,14 @@
-import { Box, Typography, RootRef } from '@material-ui/core'
-import { fade } from '@material-ui/core/styles'
+import { 
+  Box, 
+  Collapse, 
+  fade, 
+  makeStyles, 
+  Typography, 
+  RootRef 
+} from '@material-ui/core'
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab'
-import { makeStyles } from '@material-ui/core/styles'
+
 import { UpdatesContainer, DiscussionsContainer } from '../'
-import Collapse from '@material-ui/core/Collapse'
 
 const useStyles = makeStyles(theme => ({
   hover: {
@@ -20,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     border: `2px solid ${theme.palette.secondary.main}`,
     fontWeight: 'bold',
     height: 40,
-    padding: `${theme.spacing(0)}px ${theme.spacing(3)}px`,
+    padding: `${theme.spacing(0)} ${theme.spacing(3)}`,
     fontSize: theme.typography.pxToRem(11),
     '&$selected': {
       color: theme.palette.secondary.contrastText,
@@ -85,7 +90,7 @@ const DISCUSSIONS = [
   },
 ]
 
-const UpdatesDiscussionsSection = ({ updatesDiscussionsRef }) => {
+export default ({ updatesDiscussionsRef }) => {
   const [view, toggleView] = React.useState('updates')
 
   const handleChange = (event, newToggle) => {
@@ -135,5 +140,3 @@ const UpdatesDiscussionsSection = ({ updatesDiscussionsRef }) => {
     </RootRef>
   )
 }
-
-export default UpdatesDiscussionsSection

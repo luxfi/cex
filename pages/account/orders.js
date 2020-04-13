@@ -5,12 +5,15 @@ import {
   withStyles,
 } from '@material-ui/core'
 
-import { TabbedNav } from '../../components/app'
-import { AccountSection } from '../../components/account'
+import {
+  TabbedNav,
+  SideMenuSection,
+  PageSections,
+  MainContentSection,
+} from '../../components/app'
 import OrdersView from '../../components/account/OrdersView'
 
 import { googlePageView } from '../../util'
-import styles from '../../styles/pages/investor.style.js'
 
 import AccountTabs from '../../settings/accountTabs'
 import { withOnDemandAuth } from '../../util/HOC'
@@ -27,17 +30,18 @@ class Orders extends React.Component {
     const { userStore } = store
 
     return (
-      <Box>
-        <AccountSection
+      <PageSections>
+        <SideMenuSection
           title={userStore.getFullName}
-          style={{ marginBottom: '3em' }}
         >
-          <TabbedNav tabs={AccountTabs} tab='orders' />
-        </AccountSection>
-        <OrdersView tabTitle='Orders' classes={classes} />
-      </Box>
+          <TabbedNav tabs={AccountTabs} tab='orders' orientation="vertical" />
+        </SideMenuSection>
+        <MainContentSection>
+          <OrdersView tabTitle='Orders' />
+        </MainContentSection>
+      </PageSections>
     )
   }
 }
 
-export default withOnDemandAuth(withStyles(styles)(Orders))
+export default withOnDemandAuth(Orders)
