@@ -17,10 +17,10 @@ import {
   Link,
   IconButton,
   Grid,
+  withStyles
 } from '@material-ui/core'
 
-import { CustomLink } from '..'
-
+import NextMuiLink  from '../NextMuiLink'
 import FinePrint from './FinePrint.js'
 
 const EXTERNAL_LINKS = {
@@ -38,7 +38,6 @@ const EXTERNAL_LINKS = {
 
 const BYLINE = 'Own your entertainment'
 
-import { withStyles } from '@material-ui/core/styles'
 import styles from './footer.style.js'
 
 const footerNav = [
@@ -137,7 +136,7 @@ const FooterNav = ({ classes, nav }) => (
           const title = (typeof item === 'object' && 'title' in item) ? item.title : item
           const href = (activeLink) ? item.link : { pathname: '/placeholder', query: { title } }
           // cannot use external links with NextLinks
-          const component = (activeLink && 'external' in item) ? 'a' : CustomLink
+          const component = (activeLink && 'external' in item) ? 'a' : NextMuiLink
 
           return (
             <li key={title}>

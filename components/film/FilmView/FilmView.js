@@ -23,7 +23,7 @@ import {
   ProTrader,
 } from "../../app"
 
-import CustomLink from "../../app/CustomLink"
+import NextMuiLink from "../../app/NextMuiLink"
 import { formatTakeResults } from "../../../util/formatOrderBookDataForChart"
 
 // section
@@ -144,7 +144,7 @@ class Index extends React.Component {
   renderInvestButton(className, movie, text, onClick) {
     return (
       <Button
-        component={CustomLink}
+        component={NextMuiLink}
         style={{
           color: "black",
           height: "48px"
