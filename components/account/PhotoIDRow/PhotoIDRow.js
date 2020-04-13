@@ -3,6 +3,7 @@ import { ListItem, ListItemText, Fab, Box, Paper } from "@material-ui/core"
 import AddIcon from "@material-ui/icons/Backup"
 import CameraIcon from "@material-ui/icons/CameraAlt"
 import DeleteIcon from "@material-ui/icons/Delete"
+import classNames from 'classnames'
 import { useDropzone } from "react-dropzone"
 import RootRef from "@material-ui/core/RootRef"
 import { makeStyles } from "@material-ui/core/styles"
@@ -88,7 +89,7 @@ const PhotoIDRow = props => {
   const rootProps = { classes, ...props }
   return (
     <>
-      <ListItem className={classes.listItem}>
+      <ListItem className={classNames(classes.listItem, photo.className)}>
         <ListItemText primary={photo.name} secondary={photo.desc} />
         {photo.dataUri ? (
           <PhotoPreview {...rootProps} />

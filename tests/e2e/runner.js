@@ -8,6 +8,12 @@ const yargs = require('yargs')
 
 // require('regenerator-runtime')
 const jestE2EConfig = require('../../jest.config.integration')
+const { ENVIRONMENTS } = require('./utils/constants')
+
+const testDir = __dirname
+let filePathObj
+let server
+let testHost
 
 const {
   show,
@@ -17,10 +23,6 @@ const {
   _,
   noBuild,
 } = yargs.argv
-
-const testDir = __dirname
-let filePathObj
-let server
 
 const puppeteerConfig = {
   args: ['--incognito', '--no-sandbox'],
@@ -34,36 +36,19 @@ if (yargs.argv._.length) {
   filePathObj = [`${__dirname}/${_[0]}`]
 }
 
-jestE2EConfig.testEnvironmentOptions = { puppeteerConfig, _: filePathObj }
+if (process.env.NODE_ENV === 'prod') {
+  testHost = ENVIRONMENTS.PROD.host
+} else if (process.env.NODE_ENV === 'staging') {
+  testHost = ENVIRONMENTS.STAGING.host
+} else {
+  testHost = ENVIRONMENTS.DEV.host
+}
 
-const executeCommand = (cmd, callback) => new Promise((resolve, reject) => {
-  const obj = new Spinner({
-    text: 'building... %s',
-    stream: process.stderr,
-    onTick(msg) {
-      this.clearLine(this.stream)
-      this.stream.write(msg)
-    },
-  })
-  obj.setSpinnerString(0)
-  obj.start()
-
-  exec(cmd, (error, stdout, stderr) => {
-    if (error) {
-      obj.stop(false)
-      console.error(error)
-      return false
-    }
-
-    obj.stop(false)
-    resolve(stdout || stderr)
-    console.log(`\n${stdout || stderr}`)
-
-    if (callback) {
-      callback()
-    }
-  })
-})
+jestE2EConfig.testEnvironmentOptions = {
+  puppeteerConfig,
+  testHost,
+  _: filePathObj,
+}
 
 const runTest = async () => {
   console.log('<<<<<<<<<<  Running E2E tests  >>>>>>>>>>')
@@ -89,13 +74,4 @@ const runServer = () => {
   })
 }
 
-const runE2E = () => {
-  if (noBuild) {
-    return runServer()
-  }
-
-  console.log('<<<<<<<<<<  building static files  >>>>>>>>>>')
-  executeCommand('npm run export', runServer)
-}
-
-runE2E()
+runServer()

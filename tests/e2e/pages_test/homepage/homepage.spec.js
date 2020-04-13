@@ -1,16 +1,18 @@
-/* global browser */
-import { defaultNavigationTimeout, defaultSelectorTimeout } from '../../utils/constants'
+import {
+  defaultNavigationTimeout,
+  defaultViewport,
+  defaultWaitUntil,
+} from '../../utils/constants'
 
 let page
-const url = 'http://localhost:8080'
-
+const url = global.host
 
 describe('Home page', () => {
   beforeAll(async () => {
-    page = await browser.newPage()
+    page = await global.browser.newPage()
     page.setDefaultNavigationTimeout(defaultNavigationTimeout)
-    await page.setViewport({ width: 1280, height: 1024 })
-    await page.goto(url, { waitUntil: 'load', timeout: 0 })
+    await page.setViewport(defaultViewport.desktop)
+    await page.goto(url, defaultWaitUntil)
   })
 
   afterAll(async () => {

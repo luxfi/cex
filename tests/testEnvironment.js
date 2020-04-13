@@ -5,10 +5,11 @@ class PuppeteerTestEnvironment extends NodeEnvironment {
   async setup() {
     await super.setup()
 
-    const { puppeteerConfig } = this.context
+    const { puppeteerConfig, testHost } = this.context
 
     this.browser = await puppeteer.launch(puppeteerConfig)
-    this.global.browser = await this.browser.createIncognitoBrowserContext()
+    this.global.browser = this.browser
+    this.global.host = testHost
   }
 
   async teardown() {

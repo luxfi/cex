@@ -15,6 +15,7 @@ import {
   TableRow,
 } from '@material-ui/core'
 import TextField from '@material-ui/core/TextField'
+import classNames from 'classnames'
 import { Formik } from 'formik'
 import { inject, observer } from 'mobx-react'
 import { number, object, string } from 'yup'
@@ -215,7 +216,7 @@ const InvestorInfoView = (props) => {
                               required
                             >
                               {states.map((option, index) => (
-                                <MenuItem key={option.code} value={option.code}>
+                                <MenuItem className='state' key={option.code} value={option.code}>
                                   {option.name}
                                 </MenuItem>
                               ))}
@@ -253,7 +254,7 @@ const InvestorInfoView = (props) => {
                               select
                             >
                               {countries.map((option, index) => (
-                                <MenuItem key={option.code} value={option.code}>
+                                <MenuItem className='country' key={option.code} value={option.code}>
                                   {option.name}
                                 </MenuItem>
                               ))}
@@ -324,8 +325,8 @@ const InvestorInfoView = (props) => {
                               id: 'dayTradeProtection',
                             }}
                           >
-                            <MenuItem value='yes'>Yes</MenuItem>
-                            <MenuItem value='no'>no</MenuItem>
+                            <MenuItem className='dayTradeProtection' value='yes'>Yes</MenuItem>
+                            <MenuItem className='dayTradeProtection' value='no'>no</MenuItem>
                           </Select>
                         </FormControl>
                       </Grid>
@@ -381,13 +382,13 @@ const InvestorInfoView = (props) => {
                                 id: 'liquid',
                               }}
                             >
-                              <MenuItem value='50000-99999'>$50,000 to $99,999</MenuItem>
-                              <MenuItem value='100000-199999'>$100,000 to $199,999</MenuItem>
-                              <MenuItem value='200000-299999'>$200,000 to $299,999</MenuItem>
-                              <MenuItem value='400000-499999'>$400,000 to $499,999</MenuItem>
-                              <MenuItem value='500000-999999'>$500,000 to $999,999</MenuItem>
-                              <MenuItem value='1000000-4999999'>$1,000,000 to $4,999,999</MenuItem>
-                              <MenuItem value='5000000-max'>$5,000,000 or higher</MenuItem>
+                              <MenuItem className='liquid' value='50000-99999'>$50,000 to $99,999</MenuItem>
+                              <MenuItem className='liquid' value='100000-199999'>$100,000 to $199,999</MenuItem>
+                              <MenuItem className='liquid' value='200000-299999'>$200,000 to $299,999</MenuItem>
+                              <MenuItem className='liquid' value='400000-499999'>$400,000 to $499,999</MenuItem>
+                              <MenuItem className='liquid' value='500000-999999'>$500,000 to $999,999</MenuItem>
+                              <MenuItem className='liquid' value='1000000-4999999'>$1,000,000 to $4,999,999</MenuItem>
+                              <MenuItem className='liquid' value='5000000-max'>$5,000,000 or higher</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
@@ -402,13 +403,13 @@ const InvestorInfoView = (props) => {
                                 id: 'netWorth',
                               }}
                             >
-                              <MenuItem value='50000-99999'>$50,000 to $99,999</MenuItem>
-                              <MenuItem value='100000-199999'>$100,000 to $199,999</MenuItem>
-                              <MenuItem value='200000-299999'>$200,000 to $299,999</MenuItem>
-                              <MenuItem value='400000-499999'>$400,000 to $499,999</MenuItem>
-                              <MenuItem value='500000-999999'>$500,000 to $999,999</MenuItem>
-                              <MenuItem value='1000000-4999999'>$1,000,000 to $4,999,999</MenuItem>
-                              <MenuItem value='5000000-max'>$5,000,000 or higher</MenuItem>
+                              <MenuItem className='netWorth' value='50000-99999'>$50,000 to $99,999</MenuItem>
+                              <MenuItem className='netWorth' value='100000-199999'>$100,000 to $199,999</MenuItem>
+                              <MenuItem className='netWorth' value='200000-299999'>$200,000 to $299,999</MenuItem>
+                              <MenuItem className='netWorth' value='400000-499999'>$400,000 to $499,999</MenuItem>
+                              <MenuItem className='netWorth' value='500000-999999'>$500,000 to $999,999</MenuItem>
+                              <MenuItem className='netWorth' value='1000000-4999999'>$1,000,000 to $4,999,999</MenuItem>
+                              <MenuItem className='netWorth' value='5000000-max'>$5,000,000 or higher</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
@@ -423,12 +424,12 @@ const InvestorInfoView = (props) => {
                                 id: 'yearlyIncome',
                               }}
                             >
-                              <MenuItem value='75000-99999'>$75,000 to $99,999</MenuItem>
-                              <MenuItem value='100000-199999'>$100,000 to $199,999</MenuItem>
-                              <MenuItem value='200000-299999'>$200,000 to $299,999</MenuItem>
-                              <MenuItem value='300000-499999'>$300,000 to $499,999</MenuItem>
-                              <MenuItem value='500000-1999999'>$500,000 to $1,199,999</MenuItem>
-                              <MenuItem value='1200000-max'>$1,200,000 or Higher</MenuItem>
+                              <MenuItem className='yearlyIncome' value='75000-99999'>$75,000 to $99,999</MenuItem>
+                              <MenuItem className='yearlyIncome' value='100000-199999'>$100,000 to $199,999</MenuItem>
+                              <MenuItem className='yearlyIncome' value='200000-299999'>$200,000 to $299,999</MenuItem>
+                              <MenuItem className='yearlyIncome' value='300000-499999'>$300,000 to $499,999</MenuItem>
+                              <MenuItem className='yearlyIncome' value='500000-1999999'>$500,000 to $1,199,999</MenuItem>
+                              <MenuItem className='yearlyIncome' value='1200000-max'>$1,200,000 or Higher</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
@@ -448,11 +449,11 @@ const InvestorInfoView = (props) => {
                                 id: 'goal',
                               }}
                             >
-                              <MenuItem value='preserveMySavings'>Preserve my savings</MenuItem>
-                              <MenuItem value='growth'>Growth</MenuItem>
-                              <MenuItem value='sourceOfIncome'>A source of income</MenuItem>
-                              <MenuItem value='speculationTrading'>Speculation Trading</MenuItem>
-                              <MenuItem value='somethingElse'>Something else</MenuItem>
+                              <MenuItem className='goal' value='preserveMySavings'>Preserve my savings</MenuItem>
+                              <MenuItem className='goal' value='growth'>Growth</MenuItem>
+                              <MenuItem className='goal' value='sourceOfIncome'>A source of income</MenuItem>
+                              <MenuItem className='goal' value='speculationTrading'>Speculation Trading</MenuItem>
+                              <MenuItem className='goal' value='somethingElse'>Something else</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
@@ -467,9 +468,9 @@ const InvestorInfoView = (props) => {
                                 id: 'timeLine',
                               }}
                             >
-                              <MenuItem value='0-3'>Less than 4 years</MenuItem>
-                              <MenuItem value='4-7'>4 to 7 years</MenuItem>
-                              <MenuItem value='8-max'>7 or more years</MenuItem>
+                              <MenuItem className='timeLine' value='0-3'>Less than 4 years</MenuItem>
+                              <MenuItem className='timeLine' value='4-7'>4 to 7 years</MenuItem>
+                              <MenuItem className='timeLine' value='8-max'>7 or more years</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
@@ -484,10 +485,10 @@ const InvestorInfoView = (props) => {
                                 id: 'experience',
                               }}
                             >
-                              <MenuItem value='none'>None</MenuItem>
-                              <MenuItem value='notMuch'>Not much</MenuItem>
-                              <MenuItem value='knowMuch'>I know what I'm doing</MenuItem>
-                              <MenuItem value='expert'>I'm an expert</MenuItem>
+                              <MenuItem className='experience' value='none'>None</MenuItem>
+                              <MenuItem className='experience' value='notMuch'>Not much</MenuItem>
+                              <MenuItem className='experience' value='knowMuch'>I know what I'm doing</MenuItem>
+                              <MenuItem className='experience' value='expert'>I'm an expert</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
@@ -502,9 +503,9 @@ const InvestorInfoView = (props) => {
                                 id: 'riskTolerence',
                               }}
                             >
-                              <MenuItem value='sellAll'>Sell all your investment</MenuItem>
-                              <MenuItem value='sellSome'>Sell some</MenuItem>
-                              <MenuItem value='keepAll'>Keep all or buy more</MenuItem>
+                              <MenuItem className='riskTolerence' value='sellAll'>Sell all your investment</MenuItem>
+                              <MenuItem className='riskTolerence' value='sellSome'>Sell some</MenuItem>
+                              <MenuItem className='riskTolerence' value='keepAll'>Keep all or buy more</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
@@ -519,9 +520,9 @@ const InvestorInfoView = (props) => {
                                 id: 'liquidity',
                               }}
                             >
-                              <MenuItem value='notImportant'>Not important</MenuItem>
-                              <MenuItem value='somewhatImportant'>Somewhat important</MenuItem>
-                              <MenuItem value='veryImportant'>Very important</MenuItem>
+                              <MenuItem className='liquidity' value='notImportant'>Not important</MenuItem>
+                              <MenuItem className='liquidity' value='somewhatImportant'>Somewhat important</MenuItem>
+                              <MenuItem className='liquidity' value='veryImportant'>Very important</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
@@ -534,7 +535,7 @@ const InvestorInfoView = (props) => {
                     variant='contained'
                     color='primary'
                     onClick={handleSubmit}
-                    className={classes.largeButton}
+                    className={classNames(classes.largeButton, 'submitProfileButton')}
                     disabled={isSubmitting}
                     size='large'
                   >

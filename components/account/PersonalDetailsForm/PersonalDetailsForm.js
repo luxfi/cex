@@ -132,10 +132,10 @@ class PersonalDetails extends React.Component {
                 id: "gender"
               }}
             >
-              <MenuItem value={"male"}>Male</MenuItem>
-              <MenuItem value={"female"}>Female</MenuItem>
-              <MenuItem value={"other"}>Other</MenuItem>
-              <MenuItem value={"unspecified"}>Unspecified</MenuItem>
+              <MenuItem className='genderItem' value={"male"}>Male</MenuItem>
+              <MenuItem className='genderItem' value={"female"}>Female</MenuItem>
+              <MenuItem className='genderItem' value={"other"}>Other</MenuItem>
+              <MenuItem className='genderItem' value={"unspecified"}>Unspecified</MenuItem>
             </Select>
           </FormControl>
         </Grid>

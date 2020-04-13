@@ -5,6 +5,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
+import classNames from 'classnames'
 import { inject, observer } from 'mobx-react'
 import moment from 'moment/moment'
 import Link from 'next/link'
@@ -36,14 +37,14 @@ const SingleTicketOrder = ({
     <Grid container item>
       <Grid item xs={10}>
       <Link href={`/orderDetails/${movie.movieSlug}/?ticketId=${ticket.ticketId}`}>
-          <a className={classes.link}>
+          <a className={classNames(classes.link, 'order-link')}>
             <Typography variant='body2'>{`${movie.name} (#${ticket.ticketId}) - ${moment(ticket.date).format('MMM Do, YYYY')}`}</Typography>
           </a>
         </Link>
       </Grid>
       <Grid item xs={2}>
         <Link href={`/orderDetails/${movie.movieSlug}/?ticketId=${ticket.ticketId}`}>
-          <a className={classes.noUnderline}>
+          <a className={classNames(classes.noUnderline, 'order-button')}>
             <Button className={classes.link}>See Details</Button>
           </a>
         </Link>
