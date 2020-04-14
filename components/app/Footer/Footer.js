@@ -40,6 +40,8 @@ const BYLINE = 'Own your entertainment'
 
 import styles from './footer.style.js'
 
+
+  // TODO move this to settings area
 const footerNav = [
   {
     title: 'Company',
@@ -215,6 +217,7 @@ class Footer extends React.Component {
 
     const nav = footerNav.slice(0)
 
+        // TODO move this to settings area
     nav.push({
       title: 'Account',
       links: isLoggedIn ? ([
