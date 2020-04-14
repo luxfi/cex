@@ -82,7 +82,7 @@ const AnalystSection = ({}) => {
         </Box>
       </Typography>
       <Grid container spacing={4}>
-        <Grid item xs={2}>
+        <Grid item xs={12} sm={3} md={2}>
           <Typography component="div" variant="h2">
             <Box fontWeight="fontWeightBold" mt={1.5}>
               51%
@@ -92,7 +92,7 @@ const AnalystSection = ({}) => {
             <Box fontWeight="fontWeightBold">of 43 ratings</Box>
           </Typography>
         </Grid>
-        <Grid item xs={10}>
+        <Grid item xs={12} sm={9} md={8}>
           <Grid container spacing={0}>
             {analystRatings.map((data, i) => {
               // TODO: Figure out how to fix this with themes
