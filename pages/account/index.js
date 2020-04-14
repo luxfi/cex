@@ -8,22 +8,14 @@ import {
   Typography
 } from '@material-ui/core'
 
-import {
-  TabbedNav,
-  //SideMenuSection,
-  //PageSections,
-  //MainContentSection,
-  SidebarLayout
-} from '../../components/app'
+import { SidebarLayout } from '../../components/app'
 
 import { 
   InvestorInfoView,
  } from '../../components/account'
 
 import { googlePageView, toDashString, withOnDemandAuth } from '../../util'
-
 //import AccountTabs from '../../settings/accountTabs'
-
 
 @inject("store")
 @observer

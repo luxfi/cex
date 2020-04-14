@@ -46,7 +46,9 @@ export default createMuiTheme({
     useNextVariants: true
   },
 
+  overrides: {
+  },
+
   defaultSVGColor: "#F0f0f0",
-  maxStagingWidth: 1400
 })
 

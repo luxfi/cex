@@ -81,7 +81,7 @@ class ESXApp extends NextApp {
                 open={this.stores.uiStore.drawers.left}
                 setOpen={this.stores.uiStore.setLeftDrawerOpen}
               />
-              <Container component='main' className={classNames({ [classes.main]: true, [classes.fullScreenMain]: fullScreen })}>
+              <Container component='main' className={classNames({ [classes.main]: true,  [classes.container]: true, [classes.fullScreenContainer]: fullScreen })}>
                 <Component {...pageProps} pathName={router.route} />
               </Container>
               <CustomModal
@@ -101,14 +101,11 @@ class ESXApp extends NextApp {
                 }}
               />
               {hideFooter(router.route) ? null : (
-                <Container className={classNames({ [classes.footer]: true, [classes.fullScreenFooter]: fullScreen })}>
-                  <Footer
-                    isLoggedIn={this.stores.userStore.loggedIn}
-                    handleLogout={() => {
-                      this.stores.userStore.logout()
-                    }}
-                  />
-                </Container>
+                <Footer 
+                  loggedIn={this.stores.userStore.loggedIn} 
+                  handleLogout={this.stores.userStore.logout} 
+                  className ={classNames({ [classes.footer]: true,  [classes.container]: true, [classes.fullScreenContainer]: fullScreen })}
+                />
               )}
             </NoSsr>
           </div>

@@ -1,3 +1,5 @@
+import { calculateDateFrom } from "../components/watch/utils";
+
 // https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/
 export default (theme) => ({
 
@@ -21,17 +23,7 @@ export default (theme) => ({
 
   main: {
     flexGrow: 1,
-    maxWidth: theme.maxStagingWidth,
     marginTop: '64px',
-
-    padding: `0px ${theme.spacing(3)}`,
-  
-    [theme.breakpoints.up('lg')]: {
-      padding: `0px ${theme.spacing(8)}`,
-    },
-    [theme.breakpoints.down('xs')]: {
-      padding: `0px ${theme.spacing(2)}`,
-    },
 
     minHeight: '50vh',
     '& .slide-button': {
@@ -42,18 +34,37 @@ export default (theme) => ({
     '& .slider-wrapper': {
       width: '100%',
     },
+
+    backgroundColor: '#ccc', // TEMP
   },
   
-  fullScreenMain: {
-    maxWidth: 'none',
+  footer: {
+    marginTop: theme.spacing(3),
+  }, 
+
+  fullScreenContainer: {
+    maxWidth: 'none !important',
     marginTop: '0px',
   },
 
-  footer: {
-    maxWidth: theme.maxStagingWidth,
-    padding: theme.spacing(2),
+    // maxWidth is taken care of in definition
+  container: {
+
+    padding: `0px ${theme.spacing(3)}px`,
+
+      // the "bump" edgecase :)
+    ['@media (min-width:1280px) and (max-width:1400px) ']: {
+      paddingLeft: 'calc(64px - (50% - 640px)) !important',
+      paddingRight: 'calc(64px - (50% - 640px)) !important'
+    },
+
+    [theme.breakpoints.up('lg')]: {
+      padding: 0, // float in space, so no need for
+    },
+       
+    [theme.breakpoints.down('xs')]: {
+      padding: `0px ${theme.spacing(2)}px`
+    },
   },
-  fullScreenFooter: {
-    maxWidth: 'none',
-  }
+
 })
