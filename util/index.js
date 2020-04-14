@@ -1,4 +1,5 @@
 import useEventListener from './useEventListener'
+import { withOnDemandAuth } from './HOC'
 
 import ReactGA from 'react-ga'
 
@@ -178,4 +179,5 @@ export {
   useEventListener,
   creditCardFormat,
   getCreditCardType,
+  withOnDemandAuth
 }

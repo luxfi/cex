@@ -2,10 +2,10 @@ import React from 'react'
 
 import { makeStyles } from '@material-ui/core'
 
-export default ({ left, top, main }) => {
+export default ({ left, top, children, minHeight }) => {
   const s = myStyles()
   return (
-    <div className={s.outer} >
+    <div className={s.outer} style={{minHeight: (minHeight || '90vh')}}>
       <div className={s.top} >
         {top}
       </div>
@@ -14,7 +14,7 @@ export default ({ left, top, main }) => {
           {left}          
         </div>
         <div className={s.main} >
-          {main}  
+          {children}  
         </div>
       </div>
     </div>
@@ -27,11 +27,10 @@ const myStyles = makeStyles((theme) => ({
       display: 'flex',
       flexDirection: 'column',
       flexWrap: 'nowrap',
-      minHeight: '90vh' 
     },
     top: {
       flex: '0 0 auto', // disable grow, disable shrink (rely on item's height)
-      //backgroundColor: '#eaa'
+          //backgroundColor: '#eaa' // dev
     },
     bottom: {
       flex: '1 0 auto', // enable grow, disable shrink
@@ -42,7 +41,7 @@ const myStyles = makeStyles((theme) => ({
     left: {
       minHeight: '100%',
       flex: '0 0 auto', // disable grow, disable shrink (rely on item's width)
-      //backgroundColor: '#aea',
+          //backgroundColor: '#aea', // dev
       
       '& > *': {
         minHeight: '100%',
@@ -51,7 +50,7 @@ const myStyles = makeStyles((theme) => ({
     },
     main: {
       flex: '1 0 auto', // enable grow, disable shrink
-      //backgroundColor: '#aae',
+          //backgroundColor: '#aae',  // dev
       '& > *': {
         width: '100%',
         minHeight: '100%',
@@ -68,8 +67,9 @@ export default (props) => (
   <SidebarLayout 
     top={<Header height={100}/>}
     left={<Sidebar width={200}/>}
-    main={<Main />}
-  />
+  >
+    <Main />
+  </SidebarLayout>
 )
 
 
