@@ -36,7 +36,7 @@ const LikeAndUnlike = ({
   }, [likeCount, unlikeCount])
 
   return (
-    <Grid container spacing={3}>
+    <Grid container>
       <Grid item xs={6}>
         <Button
           variant='contained'

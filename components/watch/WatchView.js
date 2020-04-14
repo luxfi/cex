@@ -202,10 +202,10 @@ class Index extends React.Component {
                     </a>
                   </Link>
                   <Grid container spacing={2} className={classes.videoStats}>
-                    <Grid item xs={6} sm={3} lg={6}>
+                    <Grid item xs={6} sm={3} lg={5}>
                       <Typography component='span'>{`${movie.trailerDetails.views.toLocaleString()} views`}</Typography>
                     </Grid>
-                    <Grid item xs={6} sm={4} lg={2}>
+                    <Grid item xs={6} sm={4} lg={3}>
                       <LikeAndUnlike
                         likeCount={reaction.likeCount}
                         unlikeCount={reaction.unlikeCount}
