@@ -15,10 +15,6 @@ const tabItemStyles = ({ breakpoints, spacing }) => ({
     textTransform: 'initial',
     margin: spacing(0, 0),
     minWidth: 0,
-    [breakpoints.up('md')]: {
-      minWidth: 0,
-    },
-    // whiteSpace: 'nowrap',
   },
   wrapper: {
     fontWeight: 'normal',
@@ -29,10 +25,6 @@ const tabItemStyles = ({ breakpoints, spacing }) => ({
 const navStyles = ({ spacing, palette, breakpoints }) => ({
   navBar: {
     boxShadow: `inset 0 -1px 0 0 ${palette.divider}`,
-    [breakpoints.up('md')]: {
-      //paddingLeft: spacing(3),
-      //paddingRight: spacing(3),
-    },
   },
   sticky: {
     position: 'sticky',
@@ -44,18 +36,6 @@ const navStyles = ({ spacing, palette, breakpoints }) => ({
   },
   root: {
     marginTop: spacing(7),
-    [breakpoints.up('xl')]: {
-      //width: '1800px',
-      //margin: '0 auto',
-    },
-    [breakpoints.up('md')]: {
-      //paddingLeft: spacing(2),
-      //paddingRight: spacing(2),
-    },
-    [breakpoints.only('sm')]: {
-      //paddingLeft: spacing(1),
-      //paddingRight: spacing(1),
-    },
     [breakpoints.only('xs')]: {
       paddingLeft: spacing(0),
       paddingRight: spacing(0),

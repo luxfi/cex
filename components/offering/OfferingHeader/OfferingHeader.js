@@ -257,7 +257,7 @@ const OfferingHeader = ({
           setCurrentMedia={setCurrentMedia}
         />
       </Grid>
-      <Grid item lg={3} md={4} sm={6} xs={12}>
+      <Grid item lg={3} md={6} sm={8} xs={12}>
         {/* sidebar */}
         <RaisingInformation
           movie={movie}

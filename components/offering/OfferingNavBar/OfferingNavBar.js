@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Tabs, Tab, Grid, Box, Typography } from '@material-ui/core'
+import { Tabs, Tab, Grid, useMediaQuery } from '@material-ui/core'
 import { tabsStylesHook, navStylesHook } from './offeringNavBar.style.js'
 import classNames from 'classnames'
 import { SpeakerNotesOff } from '@material-ui/icons'
@@ -23,6 +23,7 @@ const OfferingNavBar = ({
   risksDisclosuresRef,
   updatesDiscussionsRef,
 }) => {
+  const isMobileDevice = useMediaQuery(theme => theme.breakpoints.down('sm'));
   const sectionRefs = [
     { section: 'Summary', ref: summaryRef, index: 0 },
     { section: 'DealTerms', ref: dealTermsRef, index: 1 },
@@ -110,7 +111,7 @@ const OfferingNavBar = ({
           <Grid item container lg={12} justify="center">
             <Tabs
               classes={tabsStyles}
-              variant="fullWidth"
+              variant={isMobileDevice ? "scrollable" : "fullWidth"}
               value={tabIndex}
               onChange={(e, index) => {
                 setTabIndex(index)

@@ -1,10 +1,11 @@
 import { 
-  Box, 
-  Collapse, 
-  fade, 
-  makeStyles, 
-  Typography, 
-  RootRef 
+  Box,
+  Collapse,
+  Grid,
+  fade,
+  makeStyles,
+  Typography,
+  RootRef,
 } from '@material-ui/core'
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab'
 
@@ -16,6 +17,13 @@ const useStyles = makeStyles(theme => ({
   },
   pointer: {
     cursor: 'pointer',
+  },
+  discussionContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'flex-start',
+    }
   },
   viewButtonGroup: {
     backgroundColor: 'transparent',
@@ -100,35 +108,37 @@ export default ({ updatesDiscussionsRef }) => {
   return (
     <RootRef rootRef={updatesDiscussionsRef}>
       <Box mb={4}>
-        <Box display="flex" mb={3} mt={5}>
-          <Box width="100%">
-            <Typography variant="h4">
-              <Box fontWeight="fontWeightBold">Updates &amp; Discussions</Box>
-            </Typography>
-          </Box>
-          <Box flexShrink={1}>
-            <ToggleButtonGroup
-              value={view}
-              exclusive
-              onChange={handleChange}
-              className={classes.viewButtonGroup}
-            >
-              <ToggleButton
-                classes={{ root: classes.root, selected: classes.selected }}
-                key={1}
-                value="updates"
+        <Box mb={3} mt={5}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <Typography variant="h4">
+                <Box fontWeight="fontWeightBold">Updates &amp; Discussions</Box>
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} className={classes.discussionContainer}>
+              <ToggleButtonGroup
+                value={view}
+                exclusive
+                onChange={handleChange}
+                className={classes.viewButtonGroup}
               >
-                Updates
-              </ToggleButton>
-              <ToggleButton
-                classes={{ root: classes.root, selected: classes.selected }}
-                key={2}
-                value="discussions"
-              >
-                Discussions
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Box>
+                <ToggleButton
+                  classes={{ root: classes.root, selected: classes.selected }}
+                  key={1}
+                  value="updates"
+                >
+                  Updates
+                </ToggleButton>
+                <ToggleButton
+                  classes={{ root: classes.root, selected: classes.selected }}
+                  key={2}
+                  value="discussions"
+                >
+                  Discussions
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </Grid>
+          </Grid>
         </Box>
         <Collapse in={view === 'updates'}>
           <UpdatesContainer updates={UPDATES} />
