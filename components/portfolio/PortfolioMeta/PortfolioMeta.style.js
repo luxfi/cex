@@ -2,7 +2,9 @@ import { cardTitle, title } from "../../../styles/esxStyles.js"
 
 const grayText = 'rgb(102, 112, 121)' // 'rgba(0, 0, 0, .8)'
 
-export default Object.assign({}, { cardTitle, title }, {
+export default (theme) => ({
+  cardTitle,
+  title,
   card: {
     padding: '.5em 1em'
   },
@@ -77,6 +79,9 @@ export default Object.assign({}, { cardTitle, title }, {
     color: 'rgb(135, 147, 158)',
     fontWeight: 600,
     letterSpacing: '1px',
-    marginRight: '10px'
+    marginRight: 10,
+    [theme.breakpoints.down('sm')]: {
+      marginRight: '5px',
+    }
   }
 })

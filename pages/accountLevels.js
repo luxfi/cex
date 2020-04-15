@@ -2,7 +2,7 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 
 import {
-  Container,
+  Box,
   Typography,
   Grid,
   Paper,
@@ -71,7 +71,7 @@ class AccountLevels extends React.Component {
     const { classes } = this.props
 
     return (
-      <Container >
+      <Box>
         <Typography variant='h4' className={classes.pageTitle}>Account Levels</Typography>
         <Grid container spacing={3} alignItems='stretch' alignContent='stretch'>
           <Grid item sm={12} md={6}>
@@ -92,7 +92,7 @@ class AccountLevels extends React.Component {
             </Paper>
           </Grid>
         </Grid>
-      </Container>
+      </Box>
     )
   }
 }

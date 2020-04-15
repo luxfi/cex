@@ -1,7 +1,7 @@
 // Material Components
 import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox'
-import Container from '@material-ui/core/Container'
+import Box from '@material-ui/core/Box'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import { withStyles } from '@material-ui/core/styles'
@@ -13,6 +13,11 @@ import { withRouter } from 'next/router'
 import React from 'react'
 
 const styles = (theme) => ({
+  root: {
+    maxWidth: theme.spacing(60),
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
   paper: {
     marginTop: theme.spacing(12),
     display: 'flex',
@@ -100,7 +105,7 @@ class LoginForm extends React.Component {
     const { displayErrors } = this.state
 
     return (
-      <Container component='div' maxWidth='xs'>
+      <Box className={classes.root}>
         <CssBaseline />
         <div className={isModal ? classes.paperWithModal : classes.paper}>
           <Typography component='h1' variant='h5'>
@@ -166,7 +171,7 @@ class LoginForm extends React.Component {
             Sign In
           </Button>
         </div>
-      </Container>
+      </Box>
     )
   }
 }

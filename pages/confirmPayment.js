@@ -1,4 +1,4 @@
-import { Container } from '@material-ui/core'
+import { Box } from '@material-ui/core'
 import React from 'react'
 
 import { ConfirmPaymentView } from '../components/checkout'
@@ -6,9 +6,9 @@ import { ConfirmPaymentView } from '../components/checkout'
 class ConfirmPayment extends React.Component {
   render() {
     return (
-      <Container component='main' maxWidth='md'>
+      <Box>
         <ConfirmPaymentView />
-      </Container>
+      </Box>
     )
   }
 }

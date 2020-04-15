@@ -1,26 +1,31 @@
-export default theme => ({
-  appBar: {
+export default (theme) => ({
+  appBarCommon: {
     color: 'inherit',
     boxShadow: 'none',
-    padding: `0px ${theme.spacing(3)}px`,   
-    [theme.breakpoints.down('xs')]: {
-      padding: `0px ${theme.spacing(2)}px`,   
-    },
+
+    padding: `0px ${theme.spacing(3)}`,
+  
     [theme.breakpoints.up('lg')]: {
-      padding: `0px ${theme.spacing(8)}px`,   
+      padding: `0px ${theme.spacing(8)}`,
     },
+    [theme.breakpoints.down('xs')]: {
+      padding: `0px ${theme.spacing(2)}`,
+    },
+
     transition: 'background 0.5s ease-in-out',
   },
 
-  transparent: {
-    background: 'transparent',
+  appBarDesktopTop: {
+    backgroundColor: 'transparent',
+    backgroundImage: 'linear-gradient(to bottom, rgba(17, 17, 17, 0.7), rgba(17, 17, 17, 0.0))'
   },
 
-  solid: {
-    background: theme.palette.common.black,
+  appBarDesktopScrolled: {
+    backgroundImage: 'none',
+    backgroundColor: theme.palette.common.black,
   },
 
-  translucent: {
+  appBarMobile: {
     background: 'rgba(17, 17, 17, 0.7)',
   },
 
@@ -29,19 +34,55 @@ export default theme => ({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  menuButton: {
-    paddingLeft: 0,
-  },
-  mobileLogo: {
-    height: '26px',
-    display: 'block',
-  },
-  accountMenuButton: {
-    paddingRight: 0,
-  },
-  mobile: {
+
+  logoArea: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+
+  },
+
+  logo: {
+    cursor: 'pointer',
+    marginTop: '2px'
+  },
+
+  searchWidget: {
+    marginTop: '14px',
+    marginLeft: '40px',
+    alignSelf: 'flex-end'
+  },
+
+  desktopElementsOuter : {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+
+  navMenu: {
+    marginRight: theme.spacing(8),
+    color: '#fff', // theme.palette.common.white,  (true white, not palette white)
+    '& *': {
+      color: 'inherit'
+    }
+  },
+
+  hamburgerMenuButton: {
+    marginRight: '-12px', // so button appears round on hover but is aligned w left margin
+  },
+
+  accountOuter: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    color: '#fff', // theme.palette.common.white,  (true white, not palette white)
+    '& *': {
+      color: 'inherit'
+    }
+  },
+
+  accountIcon: {
+    width: 36,
+    height: 36,
   },
 })

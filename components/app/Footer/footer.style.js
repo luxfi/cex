@@ -1,21 +1,17 @@
 export default (theme) => ({
-  root: {
-    paddingTop: theme.spacing(8),
-    [theme.breakpoints.up('xl')]: {
-      width: 1800,
-      margin: '0 auto',
+
+  footer: {
+    // to match header.style.js and other elements
+    padding: `0px ${theme.spacing(3)}`,
+    marginTop: theme.spacing(3),
+
+    [theme.breakpoints.up('lg')]: {
+      padding: `0px ${theme.spacing(8)}`,
+      marginTop: theme.spacing(8),
     },
-    [theme.breakpoints.up('md')]: {
-      paddingLeft: theme.spacing(8),
-      paddingRight: theme.spacing(8),
-    },
-    [theme.breakpoints.only('sm')]: {
-      paddingLeft: theme.spacing(4),
-      paddingRight: theme.spacing(4),
-    },
-    [theme.breakpoints.only('xs')]: {
-      paddingLeft: theme.spacing(3),
-      paddingRight: theme.spacing(3),
+    [theme.breakpoints.down('xs')]: {
+      padding: `0px ${theme.spacing(2)}`,
+      marginTop: theme.spacing(2),
     },
   },
 

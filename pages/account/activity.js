@@ -1,18 +1,15 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import {
-  Container,
-  Typography,
-  withStyles,
-} from "@material-ui/core"
 
-import { AccountSection } from '../../components/account'
-import { TabbedNav } from '../../components/app'
-import { ActiveSessionsView } from '../../components/investor'
+import {
+  TabbedNav,
+  SideMenuSection,
+  PageSections,
+  MainContentSection,
+} from '../../components/app'
+import { ActiveSessionsView } from '../../components/account'
 
 import { googlePageView } from '../../util'
-
-import styles from '../../styles/pages/investor.style.js'
 
 import AccountTabs from '../../settings/accountTabs'
 import { withOnDemandAuth } from '../../util/HOC'
@@ -29,14 +26,16 @@ class Activity extends React.Component {
     const { userStore } = store
 
     return (
-      <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
-        <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
-          <TabbedNav tabs={AccountTabs} tab='activity' />
-        </AccountSection>
-        <ActiveSessionsView tabTitle='Account Activity' classes={classes} />
-      </Container>
+      <PageSections>
+        <SideMenuSection title={userStore.getFullName}>
+          <TabbedNav tabs={AccountTabs} tab='activity' orientation="vertical" />
+        </SideMenuSection>
+        <MainContentSection>
+          <ActiveSessionsView tabTitle='Account Activity' />
+        </MainContentSection>
+      </PageSections>
     )
   }
 }
 
-export default withOnDemandAuth(withStyles(styles)(Activity))
+export default withOnDemandAuth(Activity)

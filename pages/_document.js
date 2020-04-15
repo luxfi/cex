@@ -5,6 +5,9 @@ import Document, {
   NextScript,
 } from 'next/document'
 
+import * as Sentry from '@sentry/browser'
+Sentry.init({dsn: "https://6199b466b9424e1d90ce51afb81d9158@sentry.io/5178018"})
+
 export default class MyDocument extends Document {
   render() {
     return (

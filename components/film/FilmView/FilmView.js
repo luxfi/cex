@@ -309,16 +309,6 @@ class Index extends React.Component {
     )
     return (
       <div>
-        {/* <h1 className={classes.investCompanyName}>{movie.name}</h1>
-        <h3 className={classes.investCompanyDescription}>
-          {movie.financialDescription}
-        </h3>
-        <div className={classes.investPrice}>
-          <span className={classes.dollarSign}>$</span>
-          <span className={classes.dollarValue}>{price[0]}</span>
-          <span className={classes.centsValue}>.{price[1]}</span>
-        </div>
-        <div className={classes.deltaRow}>{deltaString}</div> */}
         {!loggedIn &&
           this.renderInvestButton(
             classNames(classes.movieButton, classes.statsButton),

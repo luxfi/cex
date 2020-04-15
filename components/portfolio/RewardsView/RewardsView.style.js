@@ -168,7 +168,15 @@ export default (theme) => ({
     borderRadius: "3px",
     marginRight: theme.spacing(1),
     padding: "6px 15px 6px 10px",
-    width: '400px'
+    width: '400px',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      '& .MuiInputBase-input': {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+      }
+    }
   },
 
   socialOuter: {

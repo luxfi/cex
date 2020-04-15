@@ -10,24 +10,26 @@ import {
 } from '@material-ui/core'
 
 import { Share as ShareIcon } from '@material-ui/icons'
-import hashSum from 'hash-sum'
+import { inject, observer } from 'mobx-react'
 import React, {
   useEffect,
   useReducer,
   useRef,
 } from 'react'
 
+
 import ShareButtons from '../ShareButtons'
 
 import useStyles from './ShareWidget.style'
 
-const ShareWidget = ({
-  className = '', shareUrl, message, emailToCredit,
-}) => {
+const ShareWidget = (props) => {
   const [state, setState] = useReducer((initialState, newState) => ({ ...state, ...newState }), {
     open: false,
     copyURL: false,
   })
+  const {
+    store: { userStore }, className = '', shareUrl, message,
+  } = props
 
   const classes = useStyles()
 
@@ -59,10 +61,10 @@ const ShareWidget = ({
   }, [state.open])
 
 
-  const referralURL = `${shareUrl}?ref=${hashSum(emailToCredit)}`
+  const referralURL = `${shareUrl}?ref=${userStore.referrerId}`
 
   return (
-    <div style={{ display: 'inline-block' }}>
+    <div className={classes.root}>
       <Button
         ref={anchorRef}
         variant='contained'
@@ -123,4 +125,4 @@ const CopySnackbar = ({ open, handleSnackbarClose }) => (
   />
 )
 
-export default ShareWidget
+export default inject('store')(observer(ShareWidget))

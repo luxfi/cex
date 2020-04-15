@@ -1,5 +1,4 @@
 import Box from '@material-ui/core/Box'
-import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Link from '@material-ui/core/Link'
 import { inject, observer } from 'mobx-react'
@@ -42,6 +41,9 @@ class LoginView extends React.Component {
       uiStore.setSuccessMessage(message)
     }
     const linkText = 'Need an account? Sign Up'
+    const urlParams = new URLSearchParams(window.location.search)
+    const referralId = urlParams.get('ref')
+    const ref = referralId ? `?ref=${referralId}` : ''
 
     return (
       <>
@@ -61,7 +63,7 @@ class LoginView extends React.Component {
           setSuccessMessage={setSuccessMessage}
           isModal={isModal}
         />
-        <Container component='div' maxWidth='xs'>
+        <Box>
           <Grid container justify='space-between' alignItems='center'>
             <Grid item>
               Forgot password? [NYI]
@@ -81,14 +83,14 @@ class LoginView extends React.Component {
                   {linkText}
                 </button>)
                 : (
-                  <Link component={CustomLink} href='/signup' variant='body2'>
+                  <Link component={CustomLink} href={`/signup${ref}`} variant='body2'>
                     {linkText}
                   </Link>
                 )
             }
             </Grid>
           </Grid>
-        </Container>
+        </Box>
       </>
     )
   }

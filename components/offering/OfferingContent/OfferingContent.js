@@ -29,7 +29,7 @@ const OfferingContent = ({
   return (
     <Grid container justify="center" spacing={4}>
       {/* https://material-ui.com/components/grid/ See negative margin for overflow issue */}
-      <Grid item xs={12} lg={7} style={{ overflowX: 'hidden' }}>
+      <Grid item xs={12} lg={9} style={{ overflowX: 'hidden' }}>
         <SummarySection summaryRef={summaryRef} />
         <Divider />
         <Grid container justify="space-between" spacing={8}>

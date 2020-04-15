@@ -10,9 +10,11 @@ import {
   Box,
   Button,
   Divider,
+  Grid,
   IconButton,
   Typography,
 } from '@material-ui/core'
+
 
 import { withStyles } from '@material-ui/core/styles'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
@@ -26,12 +28,11 @@ import {
   InvestNow,
 } from '../app'
 
-import Comments from '../comments'
+import { Comments, ShareWidget } from '../app'
 import LikeAndUnlike from '../LikeAndUnlike'
 import ShowingNext from './ShowingNext'
 import VideoDescription from './VideoDescription'
 import YoutubePlayer from './YoutubePlayer'
-import ShareWidget from '../app/ShareWidget'
 
 import { formatNumber, renderDate } from './utils'
 import { getYoutubeId } from '../../util'
@@ -169,112 +170,134 @@ class Index extends React.Component {
         <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
         <Box
           className="MuiContainer-maxWidthXl"
-          style={{ padding: '50px 20px' }}
         >
-          <Box className={classes.watchGrid}>
-            <Box className={classes.videoContainer}>
-              {
-                (videoId && relatedMoviesIds.length) && <YoutubePlayer
-                elementId='trailerVideo'
-                videoId={videoId}
-                autoPlay={autoPlay}
-                playlist={autoPlay ? relatedMoviesIds : []}
-                autoplayMovies={autoplayMoviesIds}
-                handleVideoChange={this.handleVideoChange}
-                key={autoplayMovies}
-                pauseVideo={authModalOpen}
-              />
-              }
-            </Box>
-            <Box className='video-metadata'>
-              <Link href={`/film/${movie.movieSlug}`}>
-                <a className={classes.aTag}>
-                  <h3>{movie.name}</h3>
-                </a>
-              </Link>
-              <Box className={classes.videoStats}>
-                <Typography component='span'>{`${movie.trailerDetails.views.toLocaleString()} views`}</Typography>
-                <Box className={classes.videoActions}>
-                  <Box className={classes.rating}>
-                    <LikeAndUnlike
-                      likeCount={reaction.likeCount}
-                      unlikeCount={reaction.unlikeCount}
-                      hasReaction={reaction.hasReaction}
-                      reactionType={reaction.reactionType}
-                      handleLikeClick={() => this.handleReactionClick(movie, 'like')}
-                      handleUnlikeClick={() => this.handleReactionClick(movie, 'unlike')}
-                    />
-                    <Box className={classes.likeUnderline}>
-                      <Divider />
-                    </Box>
-                  </Box>
-                  <ShareWidget shareUrl={shareURL} message={sharePrompt} emailToCredit={userStore.email}/>
-                  {
-                    movie.trading ? (
-                      <Link href={`/trade/${movie.movieSlug}`}>
-                        <a className={classes.linkBackLink}>
-                        <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Trade</Typography></Button>
-                        </a>
-                      </Link>
-                    ) : (
-                      <Link href={`/offering/${movie.movieSlug}`}>
-                        <a className={classes.linkBackLink}>
-                        <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Invest</Typography></Button>
-                        </a>
-                      </Link>
-                    )
-                  }
-                  <Link href={`/ticketing/${movie.movieSlug}`}>
-                    <a className={classes.linkBackLink}>
-                    <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText}>Buy Tickets</Typography></Button>
+          <Grid className={classes.watchGrid} container spacing={2} justify="flex-start">
+            <Grid item xs={12}  md={8} >
+              <Grid item className={classes.videoContainer}>
+                {
+                  (videoId && relatedMoviesIds.length) && <YoutubePlayer
+                  elementId='trailerVideo'
+                  videoId={videoId}
+                  autoPlay={autoPlay}
+                  playlist={autoPlay ? relatedMoviesIds : []}
+                  autoplayMovies={autoplayMoviesIds}
+                  handleVideoChange={this.handleVideoChange}
+                  key={autoplayMovies}
+                  pauseVideo={authModalOpen}
+                />
+                }
+              </Grid>
+              <Grid item xs={12} className={classes.mobileShowNextSection}>
+                <ShowingNext
+                  onClick={this.getUpdatedRelatedMovies}
+                  nextMovieIndex={nextMovieIndex}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Box>
+                  <Link href={`/film/${movie.movieSlug}`}>
+                    <a className={classes.aTag}>
+                      <h3>{movie.name}</h3>
                     </a>
                   </Link>
+                  <Grid container spacing={2} className={classes.videoStats}>
+                    <Grid item xs={6} sm={3} lg={5}>
+                      <Typography component='span'>{`${movie.trailerDetails.views.toLocaleString()} views`}</Typography>
+                    </Grid>
+                    <Grid item xs={6} sm={4} lg={3}>
+                      <LikeAndUnlike
+                        likeCount={reaction.likeCount}
+                        unlikeCount={reaction.unlikeCount}
+                        hasReaction={reaction.hasReaction}
+                        reactionType={reaction.reactionType}
+                        handleLikeClick={() => this.handleReactionClick(movie, 'like')}
+                        handleUnlikeClick={() => this.handleReactionClick(movie, 'unlike')}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={5} lg={4} className={classes.buttonSection}>
+                      <Box className={classes.buttonContainer}>
+                        <ShareWidget shareUrl={shareURL} message={sharePrompt} emailToCredit={userStore.email}/>
+                      </Box>
+                      <Box className={classes.buttonContainer}>
+                        {
+                          movie.trading ? (
+                            <Link href={`/trade/${movie.movieSlug}`}>
+                              <a className={classes.linkBackLink}>
+                                <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText} noWrap>Trade</Typography></Button>
+                              </a>
+                            </Link>
+                          ) : (
+                            <Link href={`/offering/${movie.movieSlug}`}>
+                              <a className={classes.linkBackLink}>
+                                <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText} noWrap>Invest</Typography></Button>
+                              </a>
+                            </Link>
+                          )
+                        }
+                      </Box>
+                      <Box>
+                        <Link href={`/ticketing/${movie.movieSlug}`}>
+                          <a className={classes.linkBackLink}>
+                            <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText} noWrap>Buy Tickets</Typography></Button>
+                          </a>
+                        </Link>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                  <Box style={{ margin: '0 0 20px 0' }}>
+                    <Divider />
+                  </Box>
                 </Box>
-              </Box>
-              <Box style={{ margin: '0 0 20px 0' }}>
-                <Divider />
-              </Box>
-            </Box>
-            <Box>
-              <Box className={classes.videoInfoBox}>
-                <img src={movie.distributorImg} className={classes.videoInfoImage} alt={movie.distributors[0]} />
-                <Box className={classes.videoInfo}>
-                  <Typography className={classes.channelName}>
-                    <Link href={`/browse?facet=distributors&value=${movie.distributors[0]}`}>
-                      <a className={classes.aTag}>{movie.distributors[0]}</a>
-                    </Link>
-                  </Typography>
-                  <Typography className={classes.videoPubDate}>{renderDate(movie.trailerDetails.createdAt, 'dddd MMM Do YYYY')}</Typography>
+                <Box className={classes.videoInfoBox}>
+                  <Grid container className={classes.movieInfoContainer}>
+                    <Grid item wrap="nowrap" className={classes.movieInfo}>
+                      <img src={movie.distributorImg} className={classes.videoInfoImage} alt={movie.distributors[0]} />
+                      <Box className={classes.videoInfo}>
+                        <Typography className={classes.channelName}>
+                          <Link href={`/browse?facet=distributors&value=${movie.distributors[0]}`}>
+                            <a className={classes.aTag}>{movie.distributors[0]}</a>
+                          </Link>
+                        </Typography>
+                        <Typography className={classes.videoPubDate}>{renderDate(movie.trailerDetails.createdAt, 'dddd MMM Do YYYY')}</Typography>
+                      </Box>
+                    </Grid>
+                    <Grid item className={classes.subShare} alignItems="center">
+                      <IconButton onClick={() => {}} className={classes.iconButton}>
+                        <AddCircleIcon />
+                      </IconButton>
+                      <IconButton onClick={() => {}} className={classes.iconButton}>
+                        <MoreHorizIcon />
+                      </IconButton>
+                      <Button
+                        className={classes.subScribeButton}
+                        size='small'
+                      >
+                        <Typography
+                          noWrap
+                          className={classes.subScribeButtonText}
+                        >
+                          {`SUBSCRIBE ${formatNumber(subscribers, 1)}`}
+                        </Typography>
+                      </Button>
+                    </Grid>
+                  </Grid>
+                  <Box>
+                    <VideoDescription description={movie.longDescription} />
+                  </Box>
+                  <Divider />
                 </Box>
-                <Box className={classes.subShare}>
-                  <IconButton onClick={() => {}} className={classes.iconButton}>
-                    <AddCircleIcon />
-                  </IconButton>
-                  <IconButton onClick={() => {}} className={classes.iconButton}>
-                    <MoreHorizIcon />
-                  </IconButton>
-                  <Button
-                    className={classes.subScribeButton}
-                    size='small'
-                  >
-                    <Typography
-                      variant='body1'
-                      className={classes.subScribeButtonText}
-                    >
-                      {`SUBSCRIBE ${formatNumber(subscribers, 1)}`}
-                    </Typography>
-                  </Button>
-                </Box>
-                <VideoDescription description={movie.longDescription} />
-              </Box>
-              <Divider />
-            </Box>
-            <ShowingNext
-              onClick={this.getUpdatedRelatedMovies}
-              nextMovieIndex={nextMovieIndex}
-            />
-            <Comments identifierId={movie.id} />
-          </Box>
+              </Grid>
+              <Grid className={classes.commentSection}>
+                <Comments identifierId={movie.id} />
+              </Grid>
+            </Grid>
+            <Grid item xs={12}  md={4} className={classes.deskTopShowNextSection}>
+              <ShowingNext
+                onClick={this.getUpdatedRelatedMovies}
+                nextMovieIndex={nextMovieIndex}
+              />
+            </Grid>
+          </Grid>
         </Box>
         <Box
           className={classNames(classes.container)}

@@ -23,9 +23,15 @@ module.exports = withBundleAnalyzer(
         ],
       },
 
+      // exportPathMap: async function(defaultPathMap, {dev, dir, outDir, distDir, buildId}) {
+      //   return {
+      //     '/': { page: '/' },
+      //   }
+      // },
+
       webpack: config => {
-        // Performance boost during dev, but breaks source maps
-        // config.devtool = 'cheap-module-source-map'
+        // Disable for performance boost during dev, but breaks source maps
+        config.devtool = 'eval-source-map'
 
         config.module.rules.push({
           test: /\.mjs$/,

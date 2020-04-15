@@ -75,7 +75,7 @@ class TicketingView extends React.Component {
 
     const urlParams = new URLSearchParams(window.location.search)
     const refHash = urlParams.get('ref')
-    const slug = router.query.slug || slugFromPath()
+    const slug = slugFromPath()
 
     return (
       <Box key={selectedVenue.venue.id} className={classes.movieVenue}>
@@ -140,7 +140,7 @@ class TicketingView extends React.Component {
       },
     } = this.props
 
-    const slug = router.query.slug || slugFromPath()
+    const slug = slugFromPath()
 
     const movie = movieStore.getMovieBySlug(slug)
 

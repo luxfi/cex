@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-      width: 600,
+      width: '100%',
       marginLeft: "auto",
       marginRight: "auto"
     }
@@ -219,7 +219,7 @@ export default function KYCForm({
   return (
     <>
       <CssBaseline />
-      <main className={classes.layout}>
+      <div className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h5" align="left">
             Please verify your identity
@@ -323,7 +323,7 @@ export default function KYCForm({
             )}
           </>
         </Paper>
-      </main>
+      </div>
     </>
   )
 }

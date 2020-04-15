@@ -1,17 +1,20 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
 import {
-  Container,
+  Box,
   Typography,
   withStyles,
 } from '@material-ui/core'
 
-import { TabbedNav } from '../../components/app'
-import { AccountSection } from '../../components/account'
-import { SecurityView } from '../../components/investor'
+import {
+  TabbedNav,
+  SideMenuSection,
+  PageSections,
+  MainContentSection,
+} from '../../components/app'
+import { SecurityView } from '../../components/account'
 
 import { googlePageView } from '../../util'
-import styles from '../../styles/pages/investor.style.js'
 
 import AccountTabs from '../../settings/accountTabs'
 import { withOnDemandAuth } from '../../util/HOC'
@@ -28,14 +31,16 @@ class Security extends React.Component {
     const { userStore } = store
 
     return (
-      <Container maxWidth="lg" style={{ marginTop: '70px', marginBottom: '30px' }}>
-        <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
-          <TabbedNav tabs={AccountTabs} tab='security' />
-        </AccountSection>
-        <SecurityView tabTitle='Security' classes={classes} />
-      </Container>
+      <PageSections>
+        <SideMenuSection title={userStore.getFullName}>
+          <TabbedNav tabs={AccountTabs} tab='security' orientation="vertical" />
+        </SideMenuSection>
+        <MainContentSection>
+          <SecurityView tabTitle='Security' />
+        </MainContentSection>
+      </PageSections>
     )
   }
 }
 
-export default withOnDemandAuth(withStyles(styles)(Security))
+export default withOnDemandAuth(Security)

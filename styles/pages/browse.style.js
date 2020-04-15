@@ -5,7 +5,23 @@ import { fade } from '@material-ui/core/styles'
 const tabOffsetMargin = '-15px'
 
 export default theme => ({
+
+  main: {
+      // to match header.style.js and other elements
+      padding: `0px ${theme.spacing(3)}`,
+    
+      [theme.breakpoints.up('lg')]: {
+        padding: `0px ${theme.spacing(8)}`,
+      },
+      [theme.breakpoints.down('xs')]: {
+        padding: `0px ${theme.spacing(2)}`,
+      },
+      marginTop: '136px', // 64px + 64px + 8px (margin)
+  },
+
+
   toolbar: {
+
     position: 'fixed',
     left: 0,
     right: 0,
@@ -13,21 +29,18 @@ export default theme => ({
     zIndex: 20,
     transition: 'background 0.75s ease-in-out',
 
-      // TODO move this into a custom mixin into the theme
-    paddingLeft: theme.spacing(3), // 32px
-    paddingRight: theme.spacing(3),
-    [theme.breakpoints.down('xs')]: {
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
-    },
+    //marginLeft: tabOffsetMargin,
+    // to match header.style.js and other elements
+    padding: `0px ${theme.spacing(3)}`,
+  
     [theme.breakpoints.up('lg')]: {
-      paddingLeft: theme.spacing(8),
-      paddingRight: theme.spacing(8),
+      padding: `0px ${theme.spacing(8)}`,
     },
-
-    marginLeft: tabOffsetMargin,
-
-    ...theme.mixins.toolbar,
+    [theme.breakpoints.down('xs')]: {
+      padding: `0px ${theme.spacing(2)}`,
+    },
+    
+    //...theme.mixins.toolbar,
   },
 
   transparent: {
@@ -40,13 +53,6 @@ export default theme => ({
 
   search: {
     marginLeft: theme.spacing(4)
-  },
-
-
-
-  main: {
-    paddingTop: '128px', // 2 X 64px toolbar 
-    marginTop: 0
   },
 
   tabsContainer: {
@@ -86,4 +92,6 @@ export default theme => ({
   tabIndicator: {
     width: '110px !important',
   },
+
+  resultsOuter: {},
 })

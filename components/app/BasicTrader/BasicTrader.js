@@ -28,6 +28,12 @@ const useStyles = makeStyles(theme => ({
   label: {
     textTransform: 'capitalize',
   },
+  card: {
+    [theme.breakpoints.down('md')]: {
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+    }
+  }
 }))
 
 export default (props) => {
@@ -66,8 +72,8 @@ export default (props) => {
   const inWatchlist = watchlist.includes(ticker)
   return (
     <>
-      <Grid justify="center" container spacing={4}>
-        <Grid item xs={12} lg={7}>
+      <Grid justify="center" container spacing={4} className={classes.card}>
+        <Grid item lg={9} md={8} xs={12} spacing={4}>
           {orderBook.isReady ? (
             <StockChart
               stock={stock}
@@ -85,7 +91,7 @@ export default (props) => {
             </React.Fragment>
           )}
         </Grid>
-        <Grid item lg={3} md={4} sm={6} xs={12}>
+        <Grid item lg={3} md={4} xs={12} spacing={4}>
           <Grid container direction="column">
             <Grid item xs={12}>
               <BuySellWidget
@@ -180,8 +186,8 @@ export default (props) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid justify="center" container spacing={4}>
-        <Grid item xs={12} lg={7}>
+      <Grid justify="center" container spacing={4} className={classes.card}>
+        <Grid item xs={12}  md={8} lg={9} spacing={4}>
           <AboutSection />
           <Divider />
           <FinancialsSection />
@@ -194,7 +200,7 @@ export default (props) => {
           <Divider />
           <OtherFilmsTrading movies={movies} />
         </Grid>
-        <Grid item lg={3} md={4} sm={6} xs={12} />
+        <Grid item lg={3} md={4} xs={12} />
       </Grid>
     </>
   )

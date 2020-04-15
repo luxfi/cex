@@ -2,6 +2,7 @@
 import { action, observable, computed, toJS } from 'mobx'
 import Router from 'next/router'
 import moment from 'moment/moment.js'
+import { REFERRAL_PROGRAM_ID } from '../settings'
 
 import * as ethers from 'ethers'
 const isEmpty = obj =>
@@ -112,26 +113,25 @@ export default class UserStore {
   @observable taxDocuments = []
   @observable accountStatements = []
 
+  @observable referrer = []
+
+  @observable referrerId = ''
+
+  @observable referralId = ''
+
   constructor(initialData = {}, hanzoApi) {
-    // TODO Do we still need this?
-    // :aa I don't think so.... why would we?
-    // E: This might be required for persisting state across page changes
-
-    // Pass down the Hanzo API through a central point
     this.api = hanzoApi
-    this.loadSession()
-
-    const cardPaymentOptions = JSON.parse(localStorage.getItem('cardPaymentOptions'))
-    if (cardPaymentOptions && cardPaymentOptions.length) {
-      this.cardPaymentOptions = cardPaymentOptions
-    }
   }
 
-  /**
-   * Fetches all todos from the server
-   */
   @action async loadSession() {
     this.isLoading = true
+
+    if (!this.cardPaymentOptions) {
+      const cardPaymentOptions = JSON.parse(localStorage.getItem('cardPaymentOptions'))
+      if (cardPaymentOptions && cardPaymentOptions.length) {
+        this.cardPaymentOptions = cardPaymentOptions
+      }
+    }
 
     this.token = this.api.getCustomerToken()
     try {
@@ -144,6 +144,7 @@ export default class UserStore {
         let [appSettings, account] = await Promise.all(ps)
         this.appSettings = appSettings
         this.account = account
+        this.createReferrer()
         this.hydrateStore(account)
       } else {
         this.appSettings = await this.api.library.shopjs()
@@ -266,10 +267,10 @@ export default class UserStore {
   @action setToken(token) {
     if (!!token) {
       this.token = token
-      window.localStorage.setItem('token', token)
+      localStorage.setItem('token', token)
     } else {
       this.token = undefined
-      window.localStorage.removeItem('token')
+      localStorage.removeItem('token')
     }
   }
 
@@ -280,7 +281,7 @@ export default class UserStore {
         ? Number.parseFloat(localStorage.getItem('accountBalance'))
         : 0
       let newBalance = (oldBalance + parsedVal).toFixed(2)
-      window.localStorage.setItem('accountBalance', newBalance)
+      localStorage.setItem('accountBalance', newBalance)
       this.accountBalance = newBalance
       onSuccess && onSuccess()
     } else {
@@ -299,7 +300,7 @@ export default class UserStore {
         ? Number.parseFloat(localStorage.getItem('accountBalance'))
         : 0
       let newBalance = (oldBalance - parsedVal).toFixed(2)
-      window.localStorage.setItem('accountBalance', newBalance)
+      localStorage.setItem('accountBalance', newBalance)
       this.accountBalance = newBalance
       onSuccess && onSuccess()
     } else {
@@ -336,7 +337,7 @@ export default class UserStore {
         newBalance = (oldBalance - parsedVal).toFixed(2)
       }
       // Save amount
-      window.localStorage.setItem('accountBalance', newBalance)
+      localStorage.setItem('accountBalance', newBalance)
       this.accountBalance = newBalance
 
       // Update history
@@ -488,6 +489,7 @@ export default class UserStore {
         lastName: this.lastName,
         password: this.password,
         passwordConfirm: this.passwordConfirm,
+        referrerId: this.referralId,
       })
 
       const i = this.email + this.password
@@ -709,6 +711,74 @@ export default class UserStore {
     }
   }
 
+  @action async updateAccountInfo(data, onSuccess, onError) {
+    this.updating = true
+    const addressObj = {
+      name: `${this.firstName} ${this.lastName}`,
+      line1: data.address1,
+      line2: data.address2,
+      city: data.city,
+      postalCode: data.postalCode,
+      state: data.state,
+      country: data.country,
+    }
+    const kycObj = {
+      address: addressObj,
+      phone: data.phone,
+    }
+
+    const acctDetails = {
+      accountNumbers: {
+        APEX: data.APEX,
+        RHS: data.RHS,
+      },
+      dayTradeProtection: data.dayTradeProtection,
+      personalDetails: {
+        employment: data.employment,
+        maritalStatus: data.maritalStatus,
+        dependants: data.dependants,
+      },
+      assets: {
+        liquid: data.liquid,
+        netWorth: data.netWorth,
+        yearlyIncome: data.yearlyIncome,
+      },
+      investment: {
+        goal: data.goal,
+        timeLine: data.timeLine,
+        experience: data.experience,
+        riskTolerence: data.riskTolerence,
+        liquidity: data.liquidity,
+      },
+    }
+
+    try {
+      const newAcc = Object.assign(this.account, {
+        kyc: kycObj,
+        firstName: this.firstName,
+        lastName: this.lastName,
+      })
+
+      const updatedUser = await this.api.account.update({
+        ...newAcc,
+        metadata: {
+          ...acctDetails,
+        },
+      })
+
+      // On success
+      this.account = updatedUser
+
+      onSuccess && onSuccess()
+    } catch (ex) {
+      console.log('Error saving KYC options', ex)
+      onError && onError()
+    } finally {
+      this.updating = false
+    }
+  }
+
+
   @action forgetUser() {
     if (this.api.deleteCustomerToken) {
       this.token = this.api.deleteCustomerToken()
@@ -716,6 +786,50 @@ export default class UserStore {
     this.account = undefined
     this.currentUser = undefined
     this.setToken(undefined)
+  }
+
+  @action async createReferrer() {
+    const user = await this.api.account.get()
+    this.account = user
+
+    if (user.referrers) {
+      this.referrer = user.referrers
+      this.referrerId = user.referrers[0].id
+      return
+    }
+
+    try {
+      const referrer = await this.api.referrer.create({
+        programId: REFERRAL_PROGRAM_ID,
+        userId: user.id,
+      })
+      this.referrer.push(referrer)
+      this.referrerId = referrer.id
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  getReferralByType(type) {
+    let referrals = []
+    if (this.account && this.account.referrals) {
+      referrals = [...this.account.referrals].filter(((referral) => referral.event === type))
+    }
+    return referrals
+  }
+
+  @computed get orders() {
+    return (this.account && this.account.orders) ? this.account.orders : []
+  }
+
+  @computed get orderReferrals() {
+    const userReferrals = this.getReferralByType('new-order')
+    return userReferrals
+  }
+
+  @computed get totalUserReferrals() {
+    const userReferrals = this.getReferralByType('new-user')
+    return userReferrals.length
   }
 
   @computed get isValidSignUp() {
@@ -759,7 +873,7 @@ export default class UserStore {
     // returns array of objects, countries with code
     // [{ "name": "Afghanistan", "code": "AF" },
     // { "name": "Albania", "code": "AL" }]
-    if (!this.appSettings) return {}
+    if (!this.appSettings) return []
     return this.appSettings.countries.reduce((acc, memo) => {
       acc.push({ name: memo.name, code: memo.code })
       return acc
@@ -770,7 +884,7 @@ export default class UserStore {
     // returns array of objects, states with code
     // [{ name: "Florida", code: "FL" },
     // { name: "Michigan", code: "MI" }]
-    if (!this.appSettings) return {}
+    if (!this.appSettings) return []
     const countryObj = this.appSettings.countries.find(
       country => country.code === this.country,
     )

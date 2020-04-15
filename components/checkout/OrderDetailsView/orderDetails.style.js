@@ -87,6 +87,16 @@ export default (theme) => ({
     },
   },
 
+  loadingIcon: {
+    margin: '20px 0',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    '& svg': {
+      color: '#FBC43E',
+    },
+  },
+
   '@media print': {
     'body *': { visibility: 'hidden' },
     '.print-area *': {

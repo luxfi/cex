@@ -13,6 +13,15 @@ import { OfferingInput } from '../'
 import { ESXLinearProgressBar, ShareWidget, MediaSlider } from '../../app'
 import { formatCurrency, slugFromPath } from '../../../util'
 
+const useOfferingHeaderStyles = makeStyles(theme => ({
+  card: {
+    [theme.breakpoints.down('md')]: {
+      //paddingRight: theme.spacing(3),
+      //paddingLeft: theme.spacing(3)
+    }
+  },
+}))
+
 const useTitleStyles = makeStyles(theme => ({
   chip: {
     background: grey[800],
@@ -99,7 +108,7 @@ const Trailer = ({ trailer }) => {
           width: '100%',
           height: '100%',
         }}
-        src={`${trailer}&rel=0`}
+        src={trailer}
         frameBorder="0"
         allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
@@ -141,7 +150,6 @@ const RaisingInformation = withRouter(inject('store')(observer(({
     },
   )
   const classes = useRaisingStyles()
-  const movieSlug = router.query.slug || slugFromPath()
 
   const { userStore } = store
 
@@ -228,9 +236,11 @@ const OfferingHeader = ({
   movie,
 }) => {
   const [currentMedia, setCurrentMedia] = useState(movie.trailers[0].trailer)
+  const classes = useOfferingHeaderStyles()
+
   return (
-    <Grid justify="center" container spacing={4}>
-      <Grid item xs={12} lg={10} id="offering-title">
+    <Grid justify="center" container spacing={4} className={classes.card}>
+      <Grid item xs={12} id="offering-title">
         <Grid container direction="column" id="offering-tags-container">
           <Box mb={-1}>
             <Title
@@ -240,7 +250,7 @@ const OfferingHeader = ({
           </Box>
         </Grid>
       </Grid>
-      <Grid item xs={12} lg={7}>
+      <Grid item xs={12} lg={9}>
         <Trailer trailer={currentMedia} />
         <MediaSlider
           trailers={movie.trailers}

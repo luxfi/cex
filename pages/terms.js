@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Box } from "@material-ui/core"
+import { Box } from "@material-ui/core"
 
 import { googlePageView } from '../util'
 
@@ -11,9 +11,9 @@ class Terms extends React.Component {
 
   render() {
     return (
-      <Container component="main" maxWidth="xl">
+      <Box>
         <h1>Terms of Use</h1>
-      </Container>
+      </Box>
     )
   }
 }

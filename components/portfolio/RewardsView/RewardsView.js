@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-import { inject } from 'mobx-react'
+import { inject, observer } from 'mobx-react'
 import hashSum from 'hash-sum'
 
 import {
@@ -18,7 +18,7 @@ import MovieRewardsCard from './MovieRewardsCard'
 import myStyles from './RewardsView.style.js'
 const styles = makeStyles(myStyles)
 
-export default inject('store')((props) => {
+export default inject('store')(observer((props) => {
 
   const { tabIdx, index } = props
     // Not me! Don't render
@@ -27,12 +27,12 @@ export default inject('store')((props) => {
   const { store: { userStore, movieStore }} = props
   const [wasCopied, setWasCopied] = React.useState(false)
 
-  const rewardsURL = `${window.location.origin}/invite?ref=${hashSum(userStore.email)}`
+  const rewardsURL = userStore.referrerId && `${window.location.origin}/invite?ref=${userStore.referrerId}`
   const rewardsShareMessage = "I'm watching and investing on Entertainment Stock Exchange. Join me!"
 
-  const referrals = getMyReferals(userStore.email)
+  const referrals = getMyReferals(props)
   let totalCredits = 10 // to start (profile + payment method = 10)
-  totalCredits += referrals.total * 5
+  totalCredits += (referrals.total + userStore.totalUserReferrals) * 5
 
   const classes = styles()
 
@@ -55,7 +55,7 @@ export default inject('store')((props) => {
         if (reward.id == 3) {
           return (
             <Grid key={reward.id} item xs={12} sm={3}>
-              <RewardCard {...reward} completed={referrals.total} classes={classes}/>
+              <RewardCard {...reward} completed={userStore.totalUserReferrals} classes={classes}/>
             </Grid>
           )
         }
@@ -84,7 +84,7 @@ export default inject('store')((props) => {
     />
     </>
   )
-})
+}))
 
 const rewards = [
   {
@@ -117,18 +117,22 @@ const rewards = [
   },
  ]
 
-const getMyReferals = (email) => {
-  const ticketTransactions = JSON.parse(localStorage.getItem('ticketTransactions'))
+const getMyReferals = (props) => {
+  const { store: { userStore } } = props
 
-  let result = {
+  const ticketTransactions = JSON.parse(localStorage.getItem('ticketTransactions')) || []
+  const orderReferrals = userStore.orderReferrals
+
+  const result = {
     total: 0,
-    byFilm: {}
+    byFilm: {},
   }
-  if (ticketTransactions == null) {
+
+  if (!orderReferrals.length) {
     return result
   }
 
-  const myHashSum = hashSum(email)
+  const myHashSum = hashSum('kjhgfhj')
   ticketTransactions.forEach((t) => {
     if ('refHash' in t && t.refHash === myHashSum) {
       if (t.movieSlug in result.byFilm) {

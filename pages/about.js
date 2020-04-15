@@ -1,7 +1,7 @@
 import React from "react"
 import { inject, observer } from "mobx-react"
 import { withStyles } from "@material-ui/core/styles"
-import { Container, Typography, Grid, Box } from "@material-ui/core"
+import { Typography, Grid, Box } from "@material-ui/core"
 import { NestedMenu } from "../components/app"
 import * as Scroll from "react-scroll"
 import { InvestNow } from "../components/app"
@@ -103,36 +103,34 @@ class About extends React.Component {
     const { loggedIn } = store.userStore
     return (
       <>
-        <Container component="main" maxWidth="md">
-          <Box mt={8} mb={16}>
-            <Grid container spacing={10}>
-              <Grid item xs={4}>
-                <Box
-                  id="floating-nav"
-                  style={{
-                    position: "fixed",
-                    width: "307px",
-                    top: "128px"
-                  }}
-                >
-                  <Menu />
-                </Box>
-              </Grid>
-              <Grid item xs={8} style={{ marginTop: "70px" }}>
-                {content.map(section => (
-                  <Element name={section.key} className="element">
-                    <Box mb={10}>
-                      <Typography gutterBottom variant="h4">
-                        {section.title}
-                      </Typography>
-                      <Typography paragraph>{section.paragraph}</Typography>
-                    </Box>
-                  </Element>
-                ))}
-              </Grid>
+        <Box>
+          <Grid container spacing={10}>
+            <Grid item xs={4}>
+              <Box
+                id="floating-nav"
+                style={{
+                  position: "fixed",
+                  width: "307px",
+                  top: "128px"
+                }}
+              >
+                <Menu />
+              </Box>
             </Grid>
-          </Box>
-        </Container>
+            <Grid item xs={8} style={{ marginTop: "70px" }}>
+              {content.map(section => (
+                <Element name={section.key} className="element">
+                  <Box mb={10}>
+                    <Typography gutterBottom variant="h4">
+                      {section.title}
+                    </Typography>
+                    <Typography paragraph>{section.paragraph}</Typography>
+                  </Box>
+                </Element>
+              ))}
+            </Grid>
+          </Grid>
+        </Box>
         <InvestNow loggedIn={loggedIn} noPadding />
       </>
     )
