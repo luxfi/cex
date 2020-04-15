@@ -8,7 +8,15 @@ export default ({ loading, children }) => {
     <Box>
       {
         loading
-          ? <Box justifyContent="center" display="flex" p={8}><CircularProgress size={100} /></Box>
+          ? <Box
+              justifyContent="center"
+              display="flex"
+              alignItems="center"
+              minHeight={500}
+              p={8}
+            >
+              <CircularProgress size={100} />
+            </Box>
           : children
             ? children
             : null
