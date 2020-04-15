@@ -2,7 +2,7 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import { Box, Grid, withStyles } from '@material-ui/core'
 
-import { TabbedNav } from '../../components/app'
+import { TabbedNav, Loading } from '../../components/app'
 import { PortfolioSection } from '../../components/portfolio'
 
 import { NewsFeedView } from '../../components/portfolio'
@@ -29,11 +29,9 @@ class Newsfeed extends React.Component {
         <PortfolioSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
           <TabbedNav tabs={portfolioTabs} tab='newsfeed' />
         </PortfolioSection>
-        {
-          loading
-            ? <Grid item>Loading News Feeds...</Grid>
-            : <NewsFeedView feed={getFeedItems} />
-        }
+        <Loading loading={loading}>
+          <NewsFeedView feed={getFeedItems} />
+        </Loading>
       </Box>
     )
   }

@@ -16,7 +16,7 @@ import uuid from 'uuid'
 
 import { formatCurrency, slugFromPath } from '../../../util'
 
-import { AuthModal, CustomDialog } from '../../app'
+import { AuthModal, CustomDialog, Loading } from '../../app'
 
 import styles from './pickSeats.style'
 
@@ -247,9 +247,9 @@ class PickSeatsView extends React.Component {
               <Typography className={classes.formatHeader} align='center' variant='h6'>STANDARD FORMAT</Typography>
             </Grid>
             <Grid container direction='column' wrap='nowrap' className={classes.btnList}>
-              {
-                venueShowtimes.length
-                  ? venueShowtimes.map((showtime) => (
+              <Loading loading={!venueShowtimes.length}>
+                {
+                  venueShowtimes.map((showtime) => (
                       <Link key={showtime.showtimeId} href='/pickSeats' as={`/pickSeats/${movieSlug}?venueId=${venueId}&showtimeId=${showtime.showtimeId}${refString}`}>
                       <Button
                         className={`${classes.movieTimeBtn} 
@@ -261,8 +261,8 @@ class PickSeatsView extends React.Component {
                       </Button>
                     </Link>
                   ))
-                  : 'Loading...'
-              }
+                }
+              </Loading>
             </Grid>
           </Box>
         </Grid>
