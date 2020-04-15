@@ -3,11 +3,15 @@ import { withStyles } from '@material-ui/core/styles'
 import { inject, observer } from 'mobx-react'
 import React from 'react'
 
-import { TabbedNav } from '../../components/app'
-import { AccountSection, APIAccessView } from '../../components/account'
+import {
+  TabbedNav,
+  SideMenuSection,
+  PageSections,
+  MainContentSection,
+} from '../../components/app'
+import { APIAccessView } from '../../components/account'
 
 import AccountTabs from '../../settings/accountTabs'
-import styles from '../../styles/pages/investor.style.js'
 import { googlePageView } from '../../util'
 import { withOnDemandAuth } from '../../util/HOC'
 
@@ -24,14 +28,16 @@ class Access extends React.Component {
     const { userStore } = store
 
     return (
-      <Box>
-        <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
-          <TabbedNav tabs={AccountTabs} tab='access' />
-        </AccountSection>
-        <APIAccessView tabTitle='API Access' classes={classes} />
-      </Box>
+      <PageSections>
+        <SideMenuSection title={userStore.getFullName}>
+          <TabbedNav tabs={AccountTabs} tab='access' orientation="vertical" />
+        </SideMenuSection>
+        <MainContentSection>
+          <APIAccessView tabTitle='API Access' />
+        </MainContentSection>
+      </PageSections>
     )
   }
 }
 
-export default withOnDemandAuth(withStyles(styles)(Access))
+export default withOnDemandAuth(Access)

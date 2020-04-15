@@ -65,7 +65,7 @@ export default props => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} sm={8}>
+      <Grid item xs={12} lg={6}>
         <Card className={classes.card}>
           <CardContent>
             <Grid container>
@@ -142,7 +142,7 @@ export default props => {
           </CardContent>
         </Card>
       </Grid>
-      <Grid item xs={12} sm={4}>
+      <Grid item xs={12} lg={6}>
         <Card className={classes.card} style={{ minHeight: "221px" }}>
           <CardContent>
             <Grid container
@@ -236,22 +236,24 @@ export default props => {
                 >
                   Top Categories
                 </Typography>
-                {topCategories.length > 0 ? (
-                  topCategories.map((c, i) => (
-                    <Chip
-                      key={`topCategoryChip_${i}`}
-                      label={c.key}
-                      className={classes.topCategoriesChip}
-                    />
-                  ))
-                ) : (
-                  <Typography
-                    className={classes.earningsChangeText}
-                    gutterBottom
-                  >
-                    Start investing to see your top categories!
-                  </Typography>
-                )}
+                <Grid item xs={12}>
+                  {topCategories.length > 0 ? (
+                    topCategories.map((c, i) => (
+                      <Chip
+                        key={`topCategoryChip_${i}`}
+                        label={c.key}
+                        className={classes.topCategoriesChip}
+                      />
+                    ))
+                  ) : (
+                    <Typography
+                      className={classes.earningsChangeText}
+                      gutterBottom
+                    >
+                      Start investing to see your top categories!
+                    </Typography>
+                  )}
+                </Grid>
               </Grid>
             </Grid>
           </CardContent>

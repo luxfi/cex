@@ -38,8 +38,8 @@ const useStyles = makeStyles((theme) => ({
     borderColor: theme.palette.background.paper,
     borderLeft: 0,
     borderRight: 0,
-    margin: `0 -${theme.spacing(2)}px`,
-    padding: `0 ${theme.spacing(2)}px`,
+    margin: `0 -${theme.spacing(2)}`,
+    padding: `0 ${theme.spacing(2)}`,
   },
   orderBookHeader: {
     borderBottom: '1px solid',

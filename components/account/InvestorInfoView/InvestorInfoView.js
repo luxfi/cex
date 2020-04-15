@@ -13,6 +13,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
+  makeStyles
 } from '@material-ui/core'
 import TextField from '@material-ui/core/TextField'
 import { Formik } from 'formik'
@@ -20,6 +21,10 @@ import { inject, observer } from 'mobx-react'
 import { number, object, string } from 'yup'
 
 import { ViewCard } from '../../app'
+
+import styles from '../../../styles/pages/account.style.js'
+
+const useStyles = makeStyles(styles)
 
 const formValidationSchema = object().shape({
   dependants: number().positive('Invalid number entered for dependants'),
@@ -55,8 +60,8 @@ const SectionTitle = ({
 )
 
 const InvestorInfoView = (props) => {
+  const classes = useStyles()
   const {
-    classes,
     store: {
       uiStore,
       userStore,

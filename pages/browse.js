@@ -70,7 +70,7 @@ class Browse extends React.Component {
     }
 
     return (
-      <Box>
+      <div className={classes.main}>
         <Toolbar className={classNames(
           classes.toolbar,
           this.state.scrollTrigger ? classes.solid : classes.transparent
@@ -82,7 +82,7 @@ class Browse extends React.Component {
           </Tabs>
           <Facets movieStore={movieStore} facets={facets} />
         </Toolbar>
-        <Grid container spacing={3} className={classes.main} alignItems='stretch'>
+        <Grid container spacing={3} className={classes.resultsOuter} alignItems='stretch'>
         {movieStore.filteredMovies.map((m, i) => (
           <Grid xs={12} sm={6} md={3} lg={2} item key={m.imdbid + i} >
             <MovieCard 
@@ -95,7 +95,7 @@ class Browse extends React.Component {
         ))}
         {!movieStore.movies.length && <Typography style={{ textAlign: 'center', width: '100%' }}>No movie found</Typography>}
         </Grid>
-      </Box>
+      </div>
     )
   }
 }

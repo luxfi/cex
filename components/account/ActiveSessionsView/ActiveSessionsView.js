@@ -6,10 +6,15 @@ import {
   TableHead,
   TableRow,
   Typography,
+  makeStyles,
 } from '@material-ui/core'
 
 import { ViewCard } from '../../app'
 import fakeData from './fixture/fakeActiveSessions'
+
+import styles from '../../../styles/pages/account.style'
+
+const useStyles = makeStyles(styles)
 
 const data = fakeData()
 
@@ -107,7 +112,8 @@ const CloseAccount = (props) => {
 }
 
 export default (props) => {
-  const { classes } = props
+  const classes = useStyles()
+
   return (
     <>
       <ThirdPartyApps classes={classes} />

@@ -107,7 +107,7 @@ const OfferingNavBar = ({
     >
       <div className={classNames(navStyles.root)}>
         <Grid container justify="center" className={navStyles.navBar}>
-          <Grid item container lg={7} justify="center">
+          <Grid item container lg={12} justify="center">
             <Tabs
               classes={tabsStyles}
               variant="fullWidth"

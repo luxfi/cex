@@ -3,14 +3,18 @@
 // Most of this info is visible in the "Portfolio" now
 import { inject, observer } from "mobx-react"
 import React from "react"
-import Box from "@material-ui/core/Box"
 
-import { KYCForm, AccountSection } from '../../components/account'
+import { KYCForm } from '../../components/account'
 import { googlePageView } from '../../util'
 import { withOnDemandAuth } from '../../util/HOC'
 
 import AccountTabs from '../../settings/accountTabs'
-import { TabbedNav } from '../../components/app'
+import {
+  TabbedNav,
+  SideMenuSection,
+  PageSections,
+  MainContentSection,
+} from '../../components/app'
 
 @inject("store")
 @observer
@@ -57,9 +61,11 @@ class KYC extends React.Component {
         uiStore.setErrorMessage(message)
     }
     return (
-      <Box>
-        <AccountSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
-          <TabbedNav tabs={AccountTabs} tab='identity' />
+      <PageSections>
+        <SideMenuSection title={userStore.getFullName}>
+          <TabbedNav tabs={AccountTabs} tab='identity' orientation="vertical" />
+        </SideMenuSection>
+        <MainContentSection>
           <KYCForm
             phone={phone}
             taxId={taxId}
@@ -102,8 +108,8 @@ class KYC extends React.Component {
             activeStep={activeStep}
             setActiveStep={step => userStore.setActiveStep(step)}
           />
-        </AccountSection>
-      </Box>
+        </MainContentSection>
+      </PageSections>
     )
   }
 }

@@ -1,10 +1,12 @@
 // https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/
 export default (theme) => ({
+
   root: {
     display: 'flex',
     flexDirection: 'column',
     minHeight: '100vh',
     overflowX: 'hidden',
+    padding: 0,
     // Default Filled Input Changes
     '& .MuiInput-underline': {
       borderRadius: 4,
@@ -17,14 +19,18 @@ export default (theme) => ({
       },
     },
   },
-  header: {
-    maxWidth: 1400,
-  },
+
   main: {
     flexGrow: 1,
-    maxWidth: 1400,
+    maxWidth: theme.maxStagingWidth,
     marginTop: '64px',
-    padding: theme.spacing(2),
+
+    padding: theme.spacing(0),
+
+    [theme.breakpoints.down('xs')]: {
+      padding: `0px ${theme.spacing(2)}`,
+    },
+
     minHeight: '50vh',
     '& .slide-button': {
       margin: 0,
@@ -35,16 +41,17 @@ export default (theme) => ({
       width: '100%',
     },
   },
+  
+  fullScreenMain: {
+    maxWidth: 'none',
+    marginTop: '0px',
+  },
 
-  discoverMain: {
-    maxWidth: '100%',
-  },
   footer: {
-    maxWidth: 1400,
+    maxWidth: theme.maxStagingWidth,
     padding: theme.spacing(2),
   },
-  discoverFooter: {
-    maxWidth: '100%',
-    padding: theme.spacing(2),
+  fullScreenFooter: {
+    maxWidth: 'none',
   }
 })
