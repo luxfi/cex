@@ -48,6 +48,7 @@ export default props => {
               <Grid item xs={6}>
                 <Select
                   value={fromAccountId}
+                  id='sendFrom'
                   onChange={(evt) => {
                     console.log('onChange val', evt.target.value)
                     if (evt.target.value !== 'esx') {
@@ -64,7 +65,7 @@ export default props => {
                   {
                     accountList ? 
                     accountList.map((account, k) =>
-                      <MenuItem key={`account_${k}`} value={account.id}>{account.name}</MenuItem>
+                      <MenuItem className='sendFrom' key={`account_${k}`} value={account.id}>{account.name}</MenuItem>
                     ) : null
                   }
                 </Select>
@@ -77,6 +78,7 @@ export default props => {
               <Grid item xs={6}>
                 <Select
                   value={toAccountId}
+                  id='sendTo'
                   onChange={(evt) => {
                     // console.log('onChange val', evt.target.value)
                     if (evt.target.value !== 'esx') {
@@ -93,7 +95,7 @@ export default props => {
                   {
                     accountList ? 
                     accountList.map((account, k) =>
-                      <MenuItem key={`account_${k}`} value={account.id}>{account.name}</MenuItem>
+                      <MenuItem className='sendTo' key={`account_${k}`} value={account.id}>{account.name}</MenuItem>
                     ) : null
                   }
                 </Select>
@@ -128,7 +130,8 @@ export default props => {
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
               <Button 
-                variant="outlined" 
+                variant="outlined"
+                id='manageFundSubmit'
                 disabled={!amount || !accountList || accountList.length < 2 || overdraw}
                 onClick={
                   () => {

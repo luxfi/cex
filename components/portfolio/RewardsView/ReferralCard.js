@@ -30,7 +30,7 @@ export default (props) => {
       <Box className={classes.urlCopyOuter}>
         <InputBase value={rewardsURL} className={classes.urlField} readOnly />
         <CopyToClipboard text={rewardsURL} onCopy={onCopy}>
-          <Button variant="outlined"><FontAwesomeIcon className={classes.clipboardIcon} icon={faClipboard} />&nbsp;Copy</Button>
+          <Button id='copyButton' variant="outlined"><FontAwesomeIcon className={classes.clipboardIcon} icon={faClipboard} />&nbsp;Copy</Button>
         </CopyToClipboard>
       </Box>
       <ShareButtons 

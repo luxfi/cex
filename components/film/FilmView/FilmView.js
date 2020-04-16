@@ -133,6 +133,7 @@ class Index extends React.Component {
       <Button
         rel='noopener noreferrer'
         variant='contained'
+        id='watchlistButton'
         className={classes.movieButton}
         onClick={handleClick}
       >
@@ -208,6 +209,7 @@ class Index extends React.Component {
               </a>
             </Link>
             <Button
+              id='tradeButton'
               href={"/trade/" + movie.movieSlug}
               rel="noopener noreferrer"
               variant="contained"
@@ -218,6 +220,7 @@ class Index extends React.Component {
             {this.renderAddToPlaylistButton(movie)}
             <Link href="/ticketing" as={`/ticketing/${movie.movieSlug}`}>
               <Button
+                id='buyTicketsButton'
                 variant="contained"
                 className={classes.movieButton}
               >
@@ -253,10 +256,10 @@ class Index extends React.Component {
     return (
       <>
         <div className={classes.aboutMoreTitleArea}>
-          <h1 className={classes.sectionTitle}>About</h1>
-          <h2 className={classes.sectionByline}>
+          <h2 className={classes.sectionTitle}>About</h2>
+          <h3 className={classes.sectionByline}>
             More about the film
-                    </h2>
+                    </h3>
         </div>
         <div className={classes.aboutMoreCopyArea}>
           <div className={classes.aboutMoreStats}>

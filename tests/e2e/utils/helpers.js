@@ -89,3 +89,12 @@ export const selectDateFromCalender = async (page, selector) => {
   await page.waitForSelector(okButton)
   await page.click(okButton)
 }
+
+export const getElementForSelector = async (page, selector) => {
+  await page.waitForSelector(selector)
+  return await page.$(selector) || undefined
+}
+
+export const waitForElementToHide = async (page, selector) => {
+  await page.waitForFunction((sel) => document.querySelector(sel), {}, selector)
+}

@@ -77,7 +77,10 @@ class AddPaymentMethodForm extends React.Component {
             id="payment-method-name"
             value={newPaymentMethodName}
             onBlur={validateNewPaymentMethodName}
-            onChange={evt => setValue(evt.target.name, evt.target.value)}
+            onChange={evt => {
+              setValue(evt.target.name, evt.target.value)
+              validateNewPaymentMethodName(newPaymentMethodName)
+            }}
             error={this.state.displayErrors && !validNewPaymentMethodName}
             helperText={
               this.state.displayErrors && !validNewPaymentMethodName
@@ -90,6 +93,7 @@ class AddPaymentMethodForm extends React.Component {
           <Button
             variant="outlined"
             disabled={!newPaymentMethodName || !validNewPaymentMethodName}
+            id='addBankPaymentMethod'
             onClick={() => {
               this.plaidRef.current.handleOnClick()
             }}
@@ -105,6 +109,7 @@ class AddPaymentMethodForm extends React.Component {
             env="sandbox"
             ref={this.plaidRef}
             style={{ display: 'none' }}
+            className='plaid-comp'
             product={["auth", "transactions"]}
             publicKey={PLAID_PUBLIC_KEY}
             onSuccess={(pub_token, meta) => {

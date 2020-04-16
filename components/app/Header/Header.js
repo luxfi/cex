@@ -76,7 +76,7 @@ const BurgerMenuButton = ({ onClick, classes }) => (
 )
 
 const SearchButton = ({ onClick, classes }) => (
-  <IconButton onClick={onClick} className={classes.searchButton}>
+  <IconButton onClick={onClick} className={classNames(classes.searchButton, 'search-button')}>
     <SearchIcon className={classes.searchButtonIcon} />
   </IconButton>
 )

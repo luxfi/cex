@@ -38,7 +38,7 @@ export default ({
   const style = (height) ? { height: height, width: 'auto' } : {}
 
   return (
-    <Card className={classNames(classes.card, className, movie.movieSlug)} >
+    <Card className={classNames(classes.card, className, movie.movieSlug, 'movie-card')} >
       <CardMedia src={movie.posterImg} className={classes.cardMedia} component='img' style={style}/>
       <CardContent className={classes.cardContent}>
         <TrailerImage movie={movie} className={classes.trailerImg}/>

@@ -1,4 +1,3 @@
-import { userProfile } from '../../testfixtures'
 import {
   defaultNavigationTimeout,
   defaultSelectorTimeout,
@@ -6,10 +5,7 @@ import {
   defaultWaitUntil,
 } from '../../utils/constants'
 import {
-  deleteOldContentAndType,
   login,
-  selectDateFromCalender,
-  selectFromDropDown,
   waitForProperty,
 } from '../../utils/helpers'
 
@@ -38,11 +34,12 @@ describe('User Orders', () => {
   it('should go to order details page when the order link is clicked', async () => {
     await page.waitFor(orderLink, defaultSelectorTimeout)
     await page.click(orderLink)
+    await waitForProperty(page, 'h4', 'innerText', "You're all set")
   })
 
   it('should go to order details page when the see details button is clicked', async () => {
-    await page.waitFor(orderButton, defaultSelectorTimeout)
     await page.goto(url, defaultWaitUntil)
+    await page.waitFor(orderButton, defaultSelectorTimeout)
     await page.click(orderButton)
   })
 })

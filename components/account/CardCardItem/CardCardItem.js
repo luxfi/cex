@@ -39,6 +39,7 @@ export default (props) => {
               onClick={removeAccount}
               variant='outlined'
               style={{ height: '55px' }}
+              id='removeLinkedCardButton'
             >
               Remove
             </Button>

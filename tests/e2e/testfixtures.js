@@ -30,3 +30,18 @@ export const userProfile = {
   riskTolerence: ['sellAll', 'sellSome', 'keepAll'][getRandomInteger(0, 2)],
   liquidity: ['notImportant', 'somewhatImportant', 'veryImportant'][getRandomInteger(0, 2)],
 }
+
+export const validCreditCard = {
+  nameOnCard: `${userProfile.firstName} ${userProfile.lastName}`,
+  cardNumber: '4242424242424242',
+  expiryMonth: '12',
+  expiryYear: '2090',
+  cvc: '123',
+}
+export const invalidCreditCard = {
+  nameOnCard: `${userProfile.firstName} ${userProfile.lastName}`,
+  cardNumber: '9803782901890345',
+  expiryMonth: '12',
+  expiryYear: '2020',
+  cvc: '123',
+}
