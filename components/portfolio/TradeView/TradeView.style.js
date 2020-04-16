@@ -2,7 +2,15 @@ import { cardTitle, title } from "../../../styles/esxStyles.js"
 
 const grayText = 'rgb(102, 112, 121)'
 
-export default Object.assign({}, { cardTitle, title }, {
+export default (theme) => ({
+  cardTitle,
+  title,
+  cardContent: {
+    minHeight: 190,
+  },
+  cardHeader: {
+    minHeight: 92,
+  },
   categoryChip: {
     backgroundColor: 'rgb(239, 239, 240)',
     color: 'rgb(135, 147, 158)',
@@ -26,7 +34,4 @@ export default Object.assign({}, { cardTitle, title }, {
   currencySymbol: {
     color: grayText
   },
-  investmentCard: {
-    // padding: '.5em 1em'
-  }
 })
