@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import LikeAndUnlike from '../../LikeAndUnlike'
 import { isAuthenticated } from '../../../util/helpers'
+import { getYoutubeId } from '../../../util'
 
 import styles from './styles/comments.style'
 
@@ -21,13 +22,14 @@ const SingleComment = inject('store')(observer(({
     userStore: { loggedIn, currentUser, id },
   },
   router,
+  router: { video: movieSlug, trailerId }
 }) => {
   const useMainStyles = makeStyles(styles)
   const classes = useMainStyles()
   const imageClassName = isReply ? classes.commentImageReply : classes.commentImage
 
   const handleClick = (comment, userId, type) => {
-    if (isAuthenticated(loggedIn, `/watch?video=${router.query.video}`, router)) {
+    if (isAuthenticated(loggedIn, `/watch?video=${movieSlug}&trailerId=${trailerId}`, router)) {
       commentStore.addCommentReaction(comment, userId, type)
     }
   }

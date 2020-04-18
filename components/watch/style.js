@@ -53,6 +53,9 @@ export default (theme) => ({
   },
 
   watchGrid: {
+    [theme.breakpoints.down('lg')]: {
+      padding: theme.spacing(0, 2),
+    },
     paddingTop: 12,
     '& .video': {
       width: '100%',
@@ -115,6 +118,10 @@ export default (theme) => ({
     [theme.breakpoints.down(960)]: {
       maxHeight: 500,
     },
+  },
+
+  videoSectionText: {
+    color: '#FBC43E',
   },
 
   imageWrapper: {

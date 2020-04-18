@@ -1,5 +1,4 @@
 import React from 'react'
-import NextLink from 'next/link'
 
 import {
   AppBar,
@@ -14,7 +13,7 @@ import {
 import { MenuRounded as MenuIcon, Search as SearchIcon } from '@material-ui/icons'
 import classNames from 'classnames'
 
-import { CascadingMenu, MovieSearchWidget } from '..'
+import { CascadingMenu, MovieSearchWidget, CustomLink } from '..'
 
 import HeaderLogo from './HeaderLogo'
 import DesktopUserMenu from './DesktopUserMenu'
@@ -32,7 +31,7 @@ export default withWidth()((props) => {
     loggedIn,
     width,
     movies,
-    showFullSearchWidget
+    showFullSearchWidget,
   } = props
 
   const showDesktopNav = isWidthUp('md', width)
@@ -52,7 +51,7 @@ export default withWidth()((props) => {
     <AppBar className={classNames(s.appBarCommon, appBarClass)}>
       <Toolbar disableGutters className={s.toolbar}>
         <div className={s.logoArea}>
-          <NextLink href='/'><HeaderLogo className={s.logo} /></NextLink>
+          <CustomLink href='/'><HeaderLogo className={s.logo} /></CustomLink>
           {(showFullSearchWidget) ? (<MovieSearchWidget className={s.searchWidget} movies={movies} />) : null}
         </div>
         {showDesktopNav ? (

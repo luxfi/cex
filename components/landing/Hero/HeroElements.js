@@ -14,6 +14,8 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
+import { getYoutubeId } from '../../../util'
+
 const myStyles = makeStyles((theme) => ({
 
   container: {
@@ -97,7 +99,7 @@ export default (props) => {
       </Grid>
       <Grid container item spacing={2} justify='flex-start' className={s.buttonGridContainer}>
         <Grid item >
-          <NextLink href={`/watch?video=${movie.movieSlug}`}>
+          <NextLink href={`/watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`}>
             <a style={{ textDecoration: 'none'}}>
               <Button
                 className={`watch-trailer-button button ${s.watchTrailerButton}`}

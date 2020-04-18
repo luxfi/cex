@@ -64,16 +64,14 @@ export default class TrailerStore {
   }
 
   @action loadRelatedMovieTrailers(movie, trailerId) {
-    this.selectMovieTrailer(movie, trailerId)
     const relatedMovieTrailers = movie.trailers
       .filter((trailerDetail) => getYoutubeId(trailerDetail.trailer) !== trailerId)
-      .map((trailerDetail) => ({ ...trailerDetail, youtubeId: getYoutubeId(trailerDetail.trailer) }))
-    
-    if (relatedMovieTrailers.length < movie.trailers.length) {
-      this.relatedMovieTrailers = relatedMovieTrailers
-    } else {
-      this.relatedMovieTrailers = []
-    }
+      .map((trailerDetail) => {
+        const trailerId = getYoutubeId(trailerDetail.trailer)
+        return { ...movie, thumbnail: trailerDetail.thumbnail, trailerId }
+      })
+  
+    this.relatedMovieTrailers = relatedMovieTrailers
   }
 
   @action selectMovieTrailer(movie, trailerId) {

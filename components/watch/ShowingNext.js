@@ -9,7 +9,12 @@ import {
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 
-import { formatDuration, formatNumber, calculateDateFrom } from './utils'
+import {
+  formatDuration,
+  formatNumber,
+  calculateDateFrom,
+  getYoutubeId,
+} from '../../util'
 
 import styles from './style.js'
 
@@ -23,20 +28,15 @@ const ShowingNext = inject('store')(observer((props) => {
         autoplayMovies,
         autoPlaySet,
         relatedMovieTrailers,
-        selectedMovieTrailer,
       },
-      movieStore,
       trailerStore,
     },
     nextMovieIndex,
-    router: { query: { video: movieSlug, trailerId } },
   } = props
 
   const [state, setState] = useState({
     autoPlay: autoPlaySet,
   })
-
-  const movie = movieStore.getMovieBySlug(movieSlug)
 
   const handleChecked = (event) => {
     setState({
@@ -52,22 +52,61 @@ const ShowingNext = inject('store')(observer((props) => {
   return (
     <Box>
       <Box className={classes.upNextTop}>
-        <Typography variant='h4' className='title'>{ showNext ? 'Up next' : 'Related Movies' }</Typography>
+        <Typography variant='h4' className='title'>Related Movies</Typography>
         <Box className={classes.upNextToggle}>
           <Typography component='span'>Autoplay</Typography>
           <Switch
             checked={state.autoPlay === 'true' || state.autoPlay === true}
             onChange={handleChecked}
-            disabled={!!(selectedMovieTrailer)}
           />
         </Box>
       </Box>
       <Box className={classes.videoList}>
+        <Box paddingY={3}>
+          <Typography variant="h6" className={classes.videoSectionText}>Related Movie Trailers</Typography>
+          <Divider />
+        </Box>
+        {
+          relatedMovieTrailers.length && relatedMovieTrailers.map((movie) => (
+            <Link
+              href={`watch?video=${movie.movieSlug}&trailerId=${movie.trailerId}`}
+              key={`RelatedTrailer-${movie.id}`}
+            >
+              <a onClick={() => onClick(movie.movieSlug)}>
+                <Grid container spacing={2}>
+                  <Grid item xs={6} className={classes.imageWrapper}>
+                    <img src={movie.thumbnail} alt={movie.name} className={classes.movieImage} />
+                    <Box className={classes.playTime}>
+                      <Typography component='span'>{formatDuration(movie.trailerDetails.duration)}</Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography
+                      className={classNames(classes.sidebarMovieTitle, classes.maxTwoLines)}
+                    >
+                      {movie.name}
+                    </Typography>
+                    <Box className={classes.sidebarVideoMeta}>
+                      <Typography className={classes.singleLine}>{movie.distributors[0]}</Typography>
+                      <Typography className={classes.singleLine}>{`${formatNumber(movie.trailerDetails.views, 1)} views • ${calculateDateFrom(movie.trailerDetails.createdAt)}`}</Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </a>
+            </Link>
+          ))
+        }
+        <Box paddingY={3}>
+          <Typography variant="h6" className={classes.videoSectionText}>Recommended</Typography>
+          <Divider />
+        </Box>
         {
           showNext ? (
             <>
               <Link
-                href={`watch?video=${nextVideo.movieSlug}`} key={`showingNext-${nextVideo.id}`}>
+                href={`watch?video=${nextVideo.movieSlug}&trailerId=${getYoutubeId(nextVideo.trailer)}`}
+                key={`showingNext-${nextVideo.id}`}
+              >
                 <a onClick={() => onClick(nextVideo.movieSlug)}>
                   <Grid container spacing={2}>
                     <Grid item xs={6} className={classes.imageWrapper}>
@@ -96,7 +135,10 @@ const ShowingNext = inject('store')(observer((props) => {
         }
         {
           relatedMovies.length && relatedMovies.map((movie) => (nextVideo.id === movie.id ? null : (
-            <Link href={`watch?video=${movie.movieSlug}`} key={`showingNext-${movie.id}`}>
+            <Link
+              href={`watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`}
+              key={`recommended-${movie.id}`}
+            >
               <a onClick={() => onClick(movie.movieSlug)}>
                 <Grid container spacing={2}>
                   <Grid item xs={6} className={classes.imageWrapper}>

@@ -19,6 +19,10 @@ module.exports = [
         trailer: 'https://www.youtube.com/embed/oxy8udgWRmo',
         thumbnail: 'https://img.youtube.com/vi/oxy8udgWRmo/maxresdefault.jpg',
       },
+      {
+        trailer: 'https://www.youtube.com/embed/4grCkAPtTLQ',
+        thumbnail: 'https://img.youtube.com/vi/4grCkAPtTLQ/maxresdefault.jpg',
+      },
     ],
     productionId: 'B00422246210',
     name: 'Terminator: Dark Fate',
@@ -75,6 +79,14 @@ module.exports = [
         trailer: 'https://www.youtube.com/embed/sS6EE4D3tjQ',
         thumbnail: 'https://img.youtube.com/vi/sS6EE4D3tjQ/maxresdefault.jpg',
       },
+      {
+        trailer: 'https://www.youtube.com/embed/PtR5llR2NEM',
+        thumbnail: 'https://img.youtube.com/vi/PtR5llR2NEM/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/VVbvmo4DZy8',
+        thumbnail: 'https://img.youtube.com/vi/VVbvmo4DZy8/maxresdefault.jpg',
+      },
     ],
     productionId: 'B38787362736',
     name: 'Uncut Gems',
@@ -110,12 +122,20 @@ module.exports = [
     daysLeft: 73,
     trailers: [
       {
+        trailer: 'https://www.youtube.com/embed/YjpsGw7YlU8',
+        thumbnail: 'https://img.youtube.com/vi/YjpsGw7YlU8/maxresdefault.jpg',
+      },
+      {
         trailer: 'https://www.youtube.com/embed/x3HbbzHK5Mc',
         thumbnail: 'https://img.youtube.com/vi/x3HbbzHK5Mc/maxresdefault.jpg',
       },
       {
         trailer: 'https://www.youtube.com/embed/kGM4uYZzfu0',
         thumbnail: 'https://img.youtube.com/vi/kGM4uYZzfu0/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/mLYJNbitXoE',
+        thumbnail: 'https://img.youtube.com/vi/mLYJNbitXoE/maxresdefault.jpg',
       },
     ],
     productionId: 'B38787362737',
@@ -213,6 +233,10 @@ module.exports = [
     fundingGoal: 5000000,
     daysLeft: 14,
     trailers: [
+      {
+        trailer: 'https://www.youtube.com/embed/oxy8udgWRmo',
+        thumbnail: 'https://img.youtube.com/vi/oxy8udgWRmo/maxresdefault.jpg',
+      },
       {
         trailer: 'https://www.youtube.com/embed/uiisFYRu0DQ',
         thumbnail: 'https://img.youtube.com/vi/uiisFYRu0DQ/maxresdefault.jpg',
@@ -380,12 +404,12 @@ module.exports = [
         thumbnail: 'https://img.youtube.com/vi/gNTDoOmc1OQ/maxresdefault.jpg',
       },
       {
-        trailer: 'https://www.youtube.com/embed/FtSd844cI7U',
-        thumbnail: 'https://img.youtube.com/vi/FtSd844cI7U/maxresdefault.jpg',
+        trailer: 'https://www.youtube.com/embed/gq50F-IDXDc',
+        thumbnail: 'https://img.youtube.com/vi/gq50F-IDXDc/maxresdefault.jpg',
       },
       {
-        trailer: 'https://www.youtube.com/embed/gNTDoOmc1OQ',
-        thumbnail: 'https://img.youtube.com/vi/gNTDoOmc1OQ/maxresdefault.jpg',
+        trailer: 'https://www.youtube.com/embed/SoCnxpqyjWY',
+        thumbnail: 'https://img.youtube.com/vi/SoCnxpqyjWY/maxresdefault.jpg',
       },
     ],
     posterImg: 'https://m.media-amazon.com/images/M/MV5BNTE4NWRhYmQtOTY4YS00OWMwLWEwYWUtZjVjNDhhODc5YzNmXkEyXkFqcGdeQXVyODkzNTgxMDg@._V1_QL50.jpg',
@@ -438,12 +462,12 @@ module.exports = [
         thumbnail: 'https://img.youtube.com/vi/3hSjs2hBa94/maxresdefault.jpg',
       },
       {
-        trailer: 'https://www.youtube.com/embed/YqNYrYUiMfg',
-        thumbnail: 'https://img.youtube.com/vi/YqNYrYUiMfg/maxresdefault.jpg',
+        trailer: 'https://www.youtube.com/embed/gZjQROMAh_s',
+        thumbnail: 'https://img.youtube.com/vi/gZjQROMAh_s/maxresdefault.jpg',
       },
       {
-        trailer: 'https://www.youtube.com/embed/3hSjs2hBa94',
-        thumbnail: 'https://img.youtube.com/vi/3hSjs2hBa94/maxresdefault.jpg',
+        trailer: 'https://www.youtube.com/embed/75j8s2832JA',
+        thumbnail: 'https://img.youtube.com/vi/75j8s2832JA/maxresdefault.jpg',
       },
     ],
     posterImg: 'https://m.media-amazon.com/images/M/MV5BOTdmNTFjNDEtNzg0My00ZjkxLTg1ZDAtZTdkMDc2ZmFiNWQ1XkEyXkFqcGdeQXVyNTAzNzgwNTg@._V1_QL50.jpg',
@@ -502,6 +526,18 @@ module.exports = [
         trailer: 'https://www.youtube.com/embed/9eY2W7uUkDE',
         thumbnail: 'https://img.youtube.com/vi/9eY2W7uUkDE/maxresdefault.jpg',
       },
+      {
+        trailer: 'https://www.youtube.com/embed/A05s7OM-8Oc',
+        thumbnail: 'https://img.youtube.com/vi/A05s7OM-8Oc/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/CRg68F2lyQM',
+        thumbnail: 'https://img.youtube.com/vi/CRg68F2lyQM/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/ccByAVGIoCY',
+        thumbnail: 'https://img.youtube.com/vi/ccByAVGIoCY/maxresdefault.jpg',
+      },
     ],
     posterImg: 'https://m.media-amazon.com/images/M/MV5BNzg1MzM3OWUtNjgzZC00NjMzLWE1NzAtOThiMDgyMjhhZDBhXkEyXkFqcGdeQXVyODkzNTgxMDg@._V1_QL50.jpg',
     imdbid: 'tt5814534',
@@ -546,6 +582,18 @@ module.exports = [
       {
         trailer: 'https://www.youtube.com/embed/AST2-4db4ic',
         thumbnail: 'https://img.youtube.com/vi/AST2-4db4ic/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/3cEg2HCl50I',
+        thumbnail: 'https://img.youtube.com/vi/3cEg2HCl50I/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/F6_2RpKqJ7k',
+        thumbnail: 'https://img.youtube.com/vi/F6_2RpKqJ7k/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/t86vvCy1yq0',
+        thumbnail: 'https://img.youtube.com/vi/t86vvCy1yq0/maxresdefault.jpg',
       },
     ],
     posterImg: 'https://m.media-amazon.com/images/M/MV5BY2QzYTQyYzItMzAwYi00YjZlLThjNTUtNzMyMDdkYzJiNWM4XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_QL50.jpg',
@@ -613,6 +661,10 @@ module.exports = [
         trailer: 'https://www.youtube.com/embed/dVJxMUqCUxs',
         thumbnail: 'https://img.youtube.com/vi/dVJxMUqCUxs/maxresdefault.jpg',
       },
+      {
+        trailer: 'https://www.youtube.com/embed/5dcU51Ad_QE',
+        thumbnail: 'https://img.youtube.com/vi/5dcU51Ad_QE/maxresdefault.jpg',
+      },
     ],
     posterImg: 'https://m.media-amazon.com/images/M/MV5BYmE5ODc5YzgtMDAyMi00YjYwLWE2ZWYtNzlhNjY5MTNlZDYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_QL50.jpg',
     imdbid: 'tt4916630',
@@ -674,6 +726,14 @@ module.exports = [
         trailer: 'https://www.youtube.com/embed/RCW892nm4S4',
         thumbnail: 'https://img.youtube.com/vi/RCW892nm4S4/maxresdefault.jpg',
       },
+      {
+        trailer: 'https://www.youtube.com/embed/r-E8-yPtQcY',
+        thumbnail: 'https://img.youtube.com/vi/r-E8-yPtQcY/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/pXnGJ5GKAE8',
+        thumbnail: 'https://img.youtube.com/vi/pXnGJ5GKAE8/maxresdefault.jpg',
+      },
     ],
     posterImg: 'https://m.media-amazon.com/images/M/MV5BOGM2ZDE4NjMtYjY5MC00MDcwLTllZDYtN2YyNDgxOWE5MjI3XkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_QL50.jpg',
     imdbid: 'tt5577494',
@@ -727,6 +787,10 @@ module.exports = [
         trailer: 'https://www.youtube.com/embed/Oo_c5lu0W0k',
         thumbnail: 'https://img.youtube.com/vi/Oo_c5lu0W0k/maxresdefault.jpg',
       },
+      {
+        trailer: 'https://www.youtube.com/embed/FmCCyPoX_k4',
+        thumbnail: 'https://img.youtube.com/vi/FmCCyPoX_k4/maxresdefault.jpg',
+      },
     ],
     posterImg: 'https://m.media-amazon.com/images/M/MV5BMjY3NWZmOTktMmVhZi00M2Q1LTg2MmQtOGE2NmE3MWNlZjY3XkEyXkFqcGdeQXVyMDA4NzMyOA@@._V1_QL50.jpg',
     imdbid: 'tt3612126',
@@ -770,16 +834,16 @@ module.exports = [
         thumbnail: 'https://img.youtube.com/vi/jUakWaEpCmY/maxresdefault.jpg',
       },
       {
-        trailer: 'https://www.youtube.com/embed/zm-wwAyeb44',
-        thumbnail: 'https://img.youtube.com/vi/zm-wwAyeb44/maxresdefault.jpg',
+        trailer: 'https://www.youtube.com/embed/IL9TYN0RIhY',
+        thumbnail: 'https://img.youtube.com/vi/IL9TYN0RIhY/maxresdefault.jpg',
       },
       {
-        trailer: 'https://www.youtube.com/embed/mIYrMUPdoWE',
-        thumbnail: 'https://img.youtube.com/vi/mIYrMUPdoWE/maxresdefault.jpg',
+        trailer: 'https://www.youtube.com/embed/TQxKnZw2whQ',
+        thumbnail: 'https://img.youtube.com/vi/TQxKnZw2whQ/maxresdefault.jpg',
       },
       {
-        trailer: 'https://www.youtube.com/embed/jUakWaEpCmY',
-        thumbnail: 'https://img.youtube.com/vi/jUakWaEpCmY/maxresdefault.jpg',
+        trailer: 'https://www.youtube.com/embed/Abr5lb4_0Xs',
+        thumbnail: 'https://img.youtube.com/vi/Abr5lb4_0Xs/maxresdefault.jpg',
       },
     ],
     posterImg: 'https://m.media-amazon.com/images/M/MV5BN2YyYTgxYmYtNjg3My00YzI4LWJlZWItYmZhZGEyYTYxNWY3XkEyXkFqcGdeQXVyMjAwNTYzNDg@._V1_QL50.jpg',
@@ -814,6 +878,18 @@ module.exports = [
       {
         trailer: 'https://www.youtube.com/embed/sfM7_JLk-84',
         thumbnail: 'https://img.youtube.com/vi/sfM7_JLk-84/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/vNUcjqP11OY',
+        thumbnail: 'https://img.youtube.com/vi/vNUcjqP11OY/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/yGY484EPe5U',
+        thumbnail: 'https://img.youtube.com/vi/yGY484EPe5U/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/jWcg2uGhT88',
+        thumbnail: 'https://img.youtube.com/vi/jWcg2uGhT88/maxresdefault.jpg',
       },
     ],
     posterImg: 'https://m.media-amazon.com/images/M/MV5BYzAyOGJkMzUtMmRjYS00NGJmLWExNGEtYzI2YjVmMmQzMzFiXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_QL50.jpg',
@@ -854,12 +930,16 @@ module.exports = [
         thumbnail: 'https://img.youtube.com/vi/ahZFCF--uRY/maxresdefault.jpg',
       },
       {
-        trailer: 'https://www.youtube.com/embed/BGq1chBbc30',
-        thumbnail: 'https://img.youtube.com/vi/BGq1chBbc30/maxresdefault.jpg',
+        trailer: 'https://www.youtube.com/embed/E47JEgJ2kMM',
+        thumbnail: 'https://img.youtube.com/vi/E47JEgJ2kMM/maxresdefault.jpg',
       },
       {
-        trailer: 'https://www.youtube.com/embed/ahZFCF--uRY',
-        thumbnail: 'https://img.youtube.com/vi/ahZFCF--uRY/maxresdefault.jpg',
+        trailer: 'https://www.youtube.com/embed/GvPPbJsSey0',
+        thumbnail: 'https://img.youtube.com/vi/GvPPbJsSey0/maxresdefault.jpg',
+      },
+      {
+        trailer: 'https://www.youtube.com/embed/VIR96-Rdw7I',
+        thumbnail: 'https://img.youtube.com/vi/VIR96-Rdw7I/maxresdefault.jpg',
       },
     ],
     posterImg: 'https://m.media-amazon.com/images/M/MV5BMGZmOGJjYjYtMWFkZi00NTE2LTk5NjktOGZiNDM2ZjBiMjk5XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_QL50.jpg',
@@ -940,14 +1020,6 @@ module.exports = [
       {
         trailer: 'https://www.youtube.com/embed/xRjvmVaFHkk',
         thumbnail: 'https://img.youtube.com/vi/xRjvmVaFHkk/maxresdefault.jpg',
-      },
-      {
-        trailer: 'https://www.youtube.com/embed/jk41yJH3pyQ',
-        thumbnail: 'https://img.youtube.com/vi/jk41yJH3pyQ/maxresdefault.jpg',
-      },
-      {
-        trailer: 'https://www.youtube.com/embed/puva03k1yU0',
-        thumbnail: 'https://img.youtube.com/vi/puva03k1yU0/maxresdefault.jpg',
       },
       {
         trailer: 'https://www.youtube.com/embed/jk41yJH3pyQ',
