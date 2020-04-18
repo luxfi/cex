@@ -2,9 +2,10 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 
 import {
+  withStyles,
+  Paper, 
   Tab,
   Tabs,
-  makeStyles, 
   Typography
 } from '@material-ui/core'
 
@@ -12,19 +13,51 @@ import { SidebarLayout } from '../../components/app'
 
 import { 
   InvestorInfoView,
- } from '../../components/account'
+  FundsView
+} from '../../components/account'
 
-import { googlePageView, toDashString, withOnDemandAuth } from '../../util'
+import { 
+  googlePageView, 
+  toDashString, 
+  loginRequired 
+} from '../../util'
+
 //import AccountTabs from '../../settings/accountTabs'
 
-@inject("store")
+const styles = (theme) => ({
+  header: {
+    marginBottom: theme.spacing(2)
+  },
+  tabs: {
+    //marginTop: '2px'
+  },
+  tabsIndicator: {
+    display: 'none'
+  },
+  tab: {
+    '&:hover': {
+      textDecoration: 'underline'
+    }
+  },
+  tabSelected: {
+    backgroundColor: theme.palette.background.paper,
+    borderTopLeftRadius: theme.shape.borderRadius,
+    borderBottomLeftRadius: theme.shape.borderRadius,
+    '&:hover': {
+      textDecoration: 'none',
+      cursor: 'default'
+    }
+  }
+}) 
+
+@loginRequired
+@withStyles(styles)
+@inject('store')
 @observer
-class Profile extends React.Component {
+export default class extends React.Component {
 
   constructor(props) {
     super(props)
-    this.userStore = props.store.userStore
-    this.classes = props.classes
     this.state = {
       tabIndex: (props.tabIndex || 0)
     }
@@ -35,22 +68,28 @@ class Profile extends React.Component {
   }
 
   Tabs = () => (
-    <Tabs value={this.state.tabIndex} onChange={(ignore, i) => { this.setState({tabIndex: i})}} orientation='vertical' /* classes={tabsClasses} */>
+    <Tabs 
+      value={this.state.tabIndex} 
+      onChange={(ignore, i) => { this.setState({tabIndex: i})}} 
+      orientation='vertical'
+      classes={{root: this.props.classes.tabs, indicator: this.props.classes.tabsIndicator}} 
+    >
     {tabbedViews.map((child, i) => (
       <Tab
         label={child.props.tabTitle}
         disableFocusRipple
+        disableRipple
         key={`${toDashString(child.props.tabTitle)}-tab-key-${i}`}
-        //classes={tabClasses}
+        classes={{root: this.props.classes.tab, selected: this.props.classes.tabSelected}}
       />
     ))}
     </Tabs>
   ) 
 
   Header = () => (
-    <div style={{height: '50px'}} >
-      <Typography variant='h4'>{`${this.userStore.getFullName}: ${tabbedViews[this.state.tabIndex].props.tabTitle}`}</Typography>
-    </div>
+    <Paper classes={{root: this.props.classes.header}}>
+      <Typography variant='h4'>{`${this.props.store.userStore.getFullName}: ${tabbedViews[this.state.tabIndex].props.tabTitle}`}</Typography>
+    </Paper>
   ) 
   
   render() {
@@ -62,19 +101,19 @@ class Profile extends React.Component {
   }
 }
 
-
-const Funds = (props) => (
-  <h1> TESTING FUNDS</h1>
+const Third = (props) => (
+  <Paper >
+  <h1> Third FUNDS</h1>
+  </Paper>
 )
 
 const tabbedViews = [
   <InvestorInfoView tabTitle='Profile'/>,
-  <Funds tabTitle='Funds' /> 
+  <FundsView tabTitle='Funds' />, 
+  <Third tabTitle='third' />
 ]
 
 
-
-export default withOnDemandAuth(Profile)
 
 /*
 <PageSections>

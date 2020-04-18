@@ -1,4 +1,4 @@
-export default () => ({
+export default (theme) => ({
   outerContainer: {
     marginTop: '64px',
     padding: '20px 32px',

@@ -18,7 +18,7 @@ import { formatCurrency, slugFromPath } from '../../../util'
 
 import { AuthModal, CustomDialog } from '../../app'
 
-import styles from './pickSeats.style'
+import styles from './pickSeats.style.js'
 
 @withRouter
 @withStyles(styles)

@@ -35,7 +35,7 @@ export default (theme) => ({
       width: '100%',
     },
 
-    backgroundColor: '#ccc', // TEMP
+    //backgroundColor: '#ccc', // TEMP
   },
   
   footer: {

@@ -47,6 +47,14 @@ export default createMuiTheme({
   },
 
   overrides: {
+    MuiPaper: {
+      root: {
+        padding: spacingPx(4)
+      },
+      elevation3: {
+        backgroundColor: '#333'
+      }
+    }
   },
 
   defaultSVGColor: "#F0f0f0",

@@ -1,5 +1,6 @@
 import useEventListener from './useEventListener'
 import { withOnDemandAuth } from './HOC'
+import loginRequired from './loginRequired'
 
 import ReactGA from 'react-ga'
 
@@ -171,6 +172,7 @@ export {
   isServer,
   isStringInteger,
   isStringUSCurrency,
+  loginRequired,
   padDollarAmount,
   pluralize,
   slugFromPath,
@@ -179,5 +181,5 @@ export {
   useEventListener,
   creditCardFormat,
   getCreditCardType,
-  withOnDemandAuth
+  withOnDemandAuth  // deprecate in favor of @loginRequired decorator
 }

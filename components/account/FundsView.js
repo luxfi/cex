@@ -1,0 +1,133 @@
+import React from 'react'
+import { inject, observer } from 'mobx-react'
+
+import {
+  Button,
+  Grid,
+  Paper,
+  Typography,
+  withStyles
+} from '@material-ui/core'
+
+import {
+  CardCardItem,
+  BankAccountItem,
+  ManageFunds,
+  BalanceHistoryItem,
+} from '.'
+
+import { googlePageView } from '../../util'
+
+import { MainContent, AddPaymentMethodModal } from '../app'
+
+const styles = (theme) => ({
+  linkedAccountsPaper: {
+    marginBottom: theme.spacing(2)
+  }
+})
+
+
+@inject('store')
+@observer
+@withStyles(styles)
+export default class extends React.Component {
+  
+  componentDidMount() {
+    googlePageView()
+    this.props.store.userStore.loadAccountBalance()
+    this.props.store.userStore.loadBalanceHistory()
+  }
+
+  openAddPaymentMethodModal = () => {
+    const { store: { uiStore } } = this.props
+    uiStore.openDialog()
+  }
+
+  render() {
+    const { store, classes } = this.props
+    const { userStore } = store
+    const {
+      accountBalance,
+      formattedAccounts,
+      cardPaymentOptions,
+      balanceHistory,
+      handleFunds,
+    } = userStore
+
+    return (
+      <Paper>
+        <Grid container spacing={4}>
+          <Grid item xs={8} >
+            <Paper elevation={3} classes={{root: classes.linkedAccountsPaper}}>
+              <Typography variant="h6" gutterBottom>Linked Accounts</Typography>
+              {formattedAccounts.map((a, i) => ((a.name === 'ESX') ? null : (
+                <BankAccountItem
+                  key={`account_${i}`}
+                  accountName={a.name}
+                  accountNumber={a.account.mask}
+                  accountType={a.account.type}
+                  institution={a.institution.name}
+                  subtype={a.account.subtype}
+                  removeAccount={() => {
+                    alert("Remove doesn't work in dev mode!")
+                    console.log('Removing the account!', a.id)
+                  }}
+                />
+              )))}
+              {cardPaymentOptions.map((cardPaymentOption) => (
+                <CardCardItem
+                  key={cardPaymentOption.creditCard}
+                  nameOnCard={cardPaymentOption.nameOnCard}
+                  creditCardNumber={cardPaymentOption.creditCard}
+                  cardType={cardPaymentOption.type}
+                  expiryMonth={cardPaymentOption.expiryMonth}
+                  expiryYear={cardPaymentOption.expiryYear}
+                  removeAccount={() => {
+                    alert("Remove doesn't work in dev mode!")
+                  }}
+                />
+              ))}
+              <Button
+              onClick={this.openAddPaymentMethodModal}
+              type='button'
+              variant='outlined'
+              color='primary'
+            >
+              Add payment method
+            </Button>
+              <AddPaymentMethodModal />
+            </Paper>
+            <Paper elevation={3}>
+              <Typography variant="h6">Complete Transfers</Typography>
+              {(balanceHistory && balanceHistory.length > 0) ? (
+                balanceHistory.map((r, i) => (
+                <BalanceHistoryItem
+                  key={`history_${i}`}
+                  name={r.accountName}
+                  amount={r.amount}
+                  date={r.date}
+                  deposit={r.deposit}
+                />
+              ))
+             ) : (
+              <Typography variant="h6">
+                No transfers have been made yet!
+              </Typography>
+              )}
+            </Paper>
+          </Grid>
+          <Grid item xs={4} >
+            <Paper elevation={3}>
+            <ManageFunds
+              accountBalance={accountBalance}
+              accountList={formattedAccounts}
+              handleFunds={handleFunds.bind(userStore)}
+            />
+          </Paper>
+          </Grid>
+        </Grid>
+      </Paper>
+    )
+  }
+}
+

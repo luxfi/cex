@@ -6,7 +6,7 @@ import { Box, Typography, Avatar, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
 import LikeAndUnlike from '../../LikeAndUnlike'
-import { isAuthenticated } from '../../../util/helpers'
+import { isAuthenticated } from '../../../util/helpers' // refactor... only used once :aa
 
 import styles from './styles/comments.style'
 

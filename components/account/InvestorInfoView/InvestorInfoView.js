@@ -6,6 +6,7 @@ import {
   Grid,
   InputLabel,
   MenuItem,
+  Paper,
   Radio,
   RadioGroup,
   Select,
@@ -20,7 +21,7 @@ import { Formik } from 'formik'
 import { inject, observer } from 'mobx-react'
 import { number, object, string } from 'yup'
 
-import { ViewCard } from '../../app'
+//import { ViewCard } from '../../app'
 
 import styles from '../../../styles/pages/account.style.js'
 
@@ -117,7 +118,7 @@ const InvestorInfoView = (props) => {
 
 
   return (
-    <ViewCard title={`${firstName} ${lastName}`} >
+    <Paper  >
       <Formik
           enableReinitialize
           initialValues={{
@@ -549,7 +550,7 @@ const InvestorInfoView = (props) => {
             </>
           )}
         </Formik>
-    </ViewCard>
+    </Paper>
   )
 }
 
