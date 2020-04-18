@@ -51,8 +51,17 @@ export default createMuiTheme({
       root: {
         padding: spacingPx(4)
       },
-      elevation3: {
+      elevation2: {
         backgroundColor: '#333'
+      },
+      elevation3: {
+        backgroundColor: '#3F3F3F'
+      },
+      elevation4: {
+        backgroundColor: '#444'
+      },
+      elevation5: {
+        backgroundColor: '#4F4F4F'
       }
     }
   },

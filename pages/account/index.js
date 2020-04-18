@@ -1,5 +1,6 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
+import { withRouter } from 'next/router'
 
 import {
   withStyles,
@@ -19,17 +20,25 @@ import {
 import { 
   googlePageView, 
   toDashString, 
-  loginRequired 
+  loginRequired,
+  isNullQuery 
 } from '../../util'
+
 
 //import AccountTabs from '../../settings/accountTabs'
 
+const BASE_ROUTE = '/account'
+
 const styles = (theme) => ({
   header: {
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
+    borderLeft: `1px solid ${theme.palette.secondary.main}`,
+      // To match left edge of selected tab      
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
   },
   tabs: {
-    //marginTop: '2px'
+
   },
   tabsIndicator: {
     display: 'none'
@@ -39,10 +48,13 @@ const styles = (theme) => ({
       textDecoration: 'underline'
     }
   },
+  tabText: {
+    textAlign: 'left',
+  },
   tabSelected: {
     backgroundColor: theme.palette.background.paper,
-    borderTopLeftRadius: theme.shape.borderRadius,
-    borderBottomLeftRadius: theme.shape.borderRadius,
+    borderLeft: `1px solid ${theme.palette.secondary.main}`,
+
     '&:hover': {
       textDecoration: 'none',
       cursor: 'default'
@@ -51,6 +63,7 @@ const styles = (theme) => ({
 }) 
 
 @loginRequired
+@withRouter
 @withStyles(styles)
 @inject('store')
 @observer
@@ -65,12 +78,32 @@ export default class extends React.Component {
 
   componentDidMount() {
     googlePageView()
-  }
+    const { query } = this.props.router
+    if (!isNullQuery(query) && 'tab' in query) {
+      this.setState({tabIndex: parseInt(query.tab)})
+    }
+      // from back or refresh action
+    else if (
+      window &&
+      window.location.search &&
+      window.location.search.contains('tab')
+    ) {
+      const params = new URLSearchParams(window.location.search)
+      this.setState({tabIndex: parseInt(params('tab'))})
+    }
+}
+
+
+  onTabSelected = (i) => {
+    this.setState({tabIndex: i})
+    const href = `${BASE_ROUTE}?tab=${i}`
+    this.props.router.push(href, href, {shallow: true})
+  } 
 
   Tabs = () => (
     <Tabs 
       value={this.state.tabIndex} 
-      onChange={(ignore, i) => { this.setState({tabIndex: i})}} 
+      onChange={(ignore, i) => {this.onTabSelected(i)}} 
       orientation='vertical'
       classes={{root: this.props.classes.tabs, indicator: this.props.classes.tabsIndicator}} 
     >
@@ -80,7 +113,7 @@ export default class extends React.Component {
         disableFocusRipple
         disableRipple
         key={`${toDashString(child.props.tabTitle)}-tab-key-${i}`}
-        classes={{root: this.props.classes.tab, selected: this.props.classes.tabSelected}}
+        classes={{root: this.props.classes.tab, wrapper: this.props.classes.tabText, selected: this.props.classes.tabSelected}}
       />
     ))}
     </Tabs>
@@ -95,11 +128,14 @@ export default class extends React.Component {
   render() {
     return (
       <SidebarLayout top={this.Header()} left={this.Tabs()} minHeight='60vh'>
-        {tabbedViews.map((child, i) => ((i === this.state.tabIndex) ? child : null))}
+        {tabbedViews[this.state.tabIndex]}
       </SidebarLayout>
     )
   }
 }
+
+//         {tabbedViews.map((child, i) => ((i === this.state.tabIndex) ? child : null))}
+
 
 const Third = (props) => (
   <Paper >

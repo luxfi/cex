@@ -32,10 +32,6 @@ export default (Component) => inject('store')(observer((props) => {
     }
   }, [userStore.loggedIn])
 
-
-  console.log(JSON.stringify(props, null, 2))
-
-
   return (
     <>
       <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
@@ -44,7 +40,6 @@ export default (Component) => inject('store')(observer((props) => {
     </>
   )
 }))
-
 
 const LogInText = ({ onClick }) => (
   <Box

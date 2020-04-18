@@ -58,7 +58,7 @@ export default class extends React.Component {
       <Paper>
         <Grid container spacing={4}>
           <Grid item xs={8} >
-            <Paper elevation={3} classes={{root: classes.linkedAccountsPaper}}>
+            <Paper elevation={2} classes={{root: classes.linkedAccountsPaper}}>
               <Typography variant="h6" gutterBottom>Linked Accounts</Typography>
               {formattedAccounts.map((a, i) => ((a.name === 'ESX') ? null : (
                 <BankAccountItem
@@ -97,7 +97,7 @@ export default class extends React.Component {
             </Button>
               <AddPaymentMethodModal />
             </Paper>
-            <Paper elevation={3}>
+            <Paper elevation={2}>
               <Typography variant="h6">Complete Transfers</Typography>
               {(balanceHistory && balanceHistory.length > 0) ? (
                 balanceHistory.map((r, i) => (
@@ -117,7 +117,7 @@ export default class extends React.Component {
             </Paper>
           </Grid>
           <Grid item xs={4} >
-            <Paper elevation={3}>
+            <Paper elevation={2}>
             <ManageFunds
               accountBalance={accountBalance}
               accountList={formattedAccounts}

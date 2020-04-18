@@ -161,10 +161,15 @@ function getCreditCardType(value) {
   return creditCardType
 }
 
+const isNullQuery = (query) => (
+  !query || Object.entries(query).length === 0
+)
+
 export {
   formatCurrency,
   googlePageView,
   isEmail,
+  isNullQuery,
   isNumber,
   isPassword,
   isPhone,
