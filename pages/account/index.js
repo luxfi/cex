@@ -13,7 +13,7 @@ import {
 import { SidebarLayout } from '../../components/app'
 
 import { 
-  InvestorInfoView,
+  ProfileView,
   FundsView
 } from '../../components/account'
 
@@ -144,14 +144,14 @@ const Third = (props) => (
 )
 
 const tabbedViews = [
-  <InvestorInfoView tabTitle='Profile'/>,
+  <ProfileView tabTitle='Profile'/>,
   <FundsView tabTitle='Funds' />, 
   <Third tabTitle='third' />
 ]
 
 
 
-/*
+/* Keep so we can remove these utility classes later
 <PageSections>
 <SideMenuSection title={userStore.getFullName}>
   <TabbedNav tabs={AccountTabs} tab='' orientation='vertical' />

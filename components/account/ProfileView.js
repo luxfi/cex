@@ -1,4 +1,7 @@
 /* eslint-disable jsx-quotes */
+import React from 'react'
+import { inject, observer } from 'mobx-react'
+
 import {
   Button,
   FormControl,
@@ -14,54 +17,21 @@ import {
   TableBody,
   TableCell,
   TableRow,
+  TextField,
+  Typography,
   makeStyles
 } from '@material-ui/core'
-import TextField from '@material-ui/core/TextField'
+
 import { Formik } from 'formik'
-import { inject, observer } from 'mobx-react'
 import { number, object, string } from 'yup'
 
-//import { ViewCard } from '../../app'
-
-import styles from '../../../styles/pages/account.style.js'
-
-const useStyles = makeStyles(styles)
-
-const formValidationSchema = object().shape({
-  dependants: number().positive('Invalid number entered for dependants'),
-  address1: string(),
-  address2: string(),
-  city: string(),
-  state: string(),
-  postalCode: number()
-    .positive('Invalid postal code'),
-  phone: number()
-    .positive('Invalid phone number'),
-})
+import styles from '../../styles/pages/account.style.js'
+const myStyles = makeStyles(styles)
 
 
-const FieldRow = ({
-  label,
-  classes,
-  children,
-}) => (
-  <TableRow>
-    <TableCell fixedHeader={false} style={{ width: '25%', tableLayout: 'auto' }} size='small' className={classes.tableLabelColumn}>{label}</TableCell>
-    <TableCell style={{ padding: '10px 0' }} className={classes.tableContentsColumn}>{children}</TableCell>
-  </TableRow>
-)
+export default inject('store')(observer((props) => {
 
-const SectionTitle = ({
-  label,
-  classes,
-}) => (
-  <TableRow className={classes.tableSectionRow}>
-    <TableCell colSpan="2" >{label}</TableCell>
-  </TableRow>
-)
-
-const InvestorInfoView = (props) => {
-  const classes = useStyles()
+  const s = myStyles()
   const {
     store: {
       uiStore,
@@ -80,7 +50,9 @@ const InvestorInfoView = (props) => {
       },
     },
   } = props
+
   const { metadata, firstName, lastName } = account || {}
+  
   const {
     accountNumbers: {
       APEX,
@@ -155,140 +127,120 @@ const InvestorInfoView = (props) => {
             isSubmitting,
           }) => (
             <>
-                <Table className={classes.investorInfoTable} padding='none'>
+              <Paper elevation={2}>
+                <Typography variant='h6'>Address</Typography>
+                <FormControl className={s.formControl}>
+                  <TextField
+                    required
+                    id='address1'
+                    name='address1'
+                    label='Address Line 1'
+                    error={!!(errors.address1)}
+                    placeholder='234 street lane'
+                    value={values.address1}
+                    onChange={handleChange}
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </FormControl>
+                <FormControl className={s.formControl}>
+                  <TextField
+                    required
+                    id='address2'
+                    name='address2'
+                    label='Address Line 2'
+                    error={!!(errors.address2)}
+                    placeholder='Apt 23, building 4'
+                    value={values.address2}
+                    onChange={handleChange}
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </FormControl>
+                <FormControl className={s.formControl}>
+                  <TextField
+                    required
+                    id='city'
+                    name='city'
+                    label='City'
+                    error={!!(errors.city)}
+                    placeholder='San Jose'
+                    value={values.city}
+                    onChange={handleChange}
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </FormControl>
+                <FormControl className={s.formControl}>
+                  <TextField
+                    id='state'
+                    name='state'
+                    label='State'
+                    error={!!(errors.state)}
+                    placeholder='e.g Carlifornia'
+                    value={values.state}
+                    onChange={handleChange}
+                    InputLabelProps={{ shrink: true }}
+                    select
+                    required
+                  >
+                    {states.map((option, index) => (
+                      <MenuItem key={option.code} value={option.code}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </FormControl>
+                <FormControl className={s.formControl}>
+                  <TextField
+                    required
+                    id='postalCode'
+                    name='postalCode'
+                    label='Postal Code'
+                    error={!!(errors.postalCode)}
+                    placeholder='18796'
+                    value={values.postalCode}
+                    onChange={handleChange}
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </FormControl>
+                <FormControl className={s.formControl}>
+                  <TextField
+                    required
+                    id='country'
+                    name='country'
+                    label='Country'
+                    value={values.country}
+                    onChange={handleChange}
+                    error={!!(errors.country)}
+                    InputLabelProps={{ shrink: true }}
+                    select
+                  >
+                    {countries.map((option, index) => (
+                      <MenuItem key={option.code} value={option.code}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </FormControl>
+                <FormControl className={s.formControl}>
+                  <TextField
+                    required
+                    id='phone'
+                    name='phone'
+                    label='Phone'
+                    error={!!(errors.phone)}
+                    placeholder='4846389012'
+                    value={values.phone}
+                    onChange={handleChange}
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </FormControl>
+              </Paper>
+                
+                <Table className={s.investorInfoTable} padding='none'>
                   <TableBody>
-                    <FieldRow label='Address' classes={classes}>
+                    <FieldRow label='Account Numbers' classes={s}>
                       <Grid container>
                         <Grid item xs={12} sm={6}>
-                          <FormControl className={classes.formControl}>
-                            <TextField
-                              required
-                              id='address1'
-                              name='address1'
-                              label='Address Line 1'
-                              error={!!(errors.address1)}
-                              placeholder='234 street lane'
-                              value={values.address1}
-                              onChange={handleChange}
-                              InputLabelProps={{ shrink: true }}
-                            />
-                          </FormControl>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <FormControl className={classes.formControl}>
-                            <TextField
-                              required
-                              id='address2'
-                              name='address2'
-                              label='Address Line 2'
-                              error={!!(errors.address2)}
-                              placeholder='Apt 23, building 4'
-                              value={values.address2}
-                              onChange={handleChange}
-                              InputLabelProps={{ shrink: true }}
-                            />
-                          </FormControl>
-                        </Grid>
-                      </Grid>
-                      <Grid container>
-                        <Grid item xs={12} sm={6}>
-                          <FormControl className={classes.formControl}>
-                            <TextField
-                              required
-                              id='city'
-                              name='city'
-                              label='City'
-                              error={!!(errors.city)}
-                              placeholder='San Jose'
-                              value={values.city}
-                              onChange={handleChange}
-                              InputLabelProps={{ shrink: true }}
-                            />
-                          </FormControl>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <FormControl className={classes.formControl}>
-                            <TextField
-                              id='state'
-                              name='state'
-                              label='State'
-                              error={!!(errors.state)}
-                              placeholder='e.g Carlifornia'
-                              value={values.state}
-                              onChange={handleChange}
-                              InputLabelProps={{ shrink: true }}
-                              select
-                              required
-                            >
-                              {states.map((option, index) => (
-                                <MenuItem key={option.code} value={option.code}>
-                                  {option.name}
-                                </MenuItem>
-                              ))}
-                            </TextField>
-                          </FormControl>
-                        </Grid>
-                      </Grid>
-                      <Grid container>
-                        <Grid item xs={12} sm={6}>
-                          <FormControl className={classes.formControl}>
-                            <TextField
-                              required
-                              id='postalCode'
-                              name='postalCode'
-                              label='Postal Code'
-                              error={!!(errors.postalCode)}
-                              placeholder='18796'
-                              value={values.postalCode}
-                              onChange={handleChange}
-                              InputLabelProps={{ shrink: true }}
-                            />
-                          </FormControl>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <FormControl className={classes.formControl}>
-                            <TextField
-                              required
-                              id='country'
-                              name='country'
-                              label='Country'
-                              value={values.country}
-                              onChange={handleChange}
-                              error={!!(errors.country)}
-                              InputLabelProps={{ shrink: true }}
-                              select
-                            >
-                              {countries.map((option, index) => (
-                                <MenuItem key={option.code} value={option.code}>
-                                  {option.name}
-                                </MenuItem>
-                              ))}
-                            </TextField>
-                          </FormControl>
-                        </Grid>
-                      </Grid>
-                      <Grid container>
-                        <Grid item xs={12} sm={6}>
-                          <FormControl className={classes.formControl}>
-                            <TextField
-                              required
-                              id='phone'
-                              name='phone'
-                              label='Phone'
-                              error={!!(errors.phone)}
-                              placeholder='4846389012'
-                              value={values.phone}
-                              onChange={handleChange}
-                              InputLabelProps={{ shrink: true }}
-                            />
-                          </FormControl>
-                        </Grid>
-                      </Grid>
-                    </FieldRow>
-                    <FieldRow label='Account Numbers' classes={classes}>
-                      <Grid container>
-                        <Grid item xs={12} sm={6}>
-                          <FormControl className={classes.formControl}>
+                          <FormControl className={s.formControl}>
                             <TextField
                               required
                               id='apexAccountNumber'
@@ -303,7 +255,7 @@ const InvestorInfoView = (props) => {
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                          <FormControl className={classes.formControl}>
+                          <FormControl className={s.formControl}>
                             <TextField
                               id='rhsAccountNumber'
                               name='RHS'
@@ -318,9 +270,9 @@ const InvestorInfoView = (props) => {
                         </Grid>
                       </Grid>
                     </FieldRow>
-                    <FieldRow label='Pattern Day Trade Protection' classes={classes}>
+                    <FieldRow label='Pattern Day Trade Protection' classes={s}>
                       <Grid item xs={12} sm={6}>
-                        <FormControl className={classes.formControl}>
+                        <FormControl className={s.formControl}>
                           <InputLabel shrink>Pattern Day Trade Protection</InputLabel>
                           <Select
                             value={values.dayTradeProtection ? 'yes' : 'no'}
@@ -336,22 +288,22 @@ const InvestorInfoView = (props) => {
                         </FormControl>
                       </Grid>
                     </FieldRow>
-                    <SectionTitle label='Personal Details' classes={classes} />
-                    <FieldRow contents={employment} classes={classes}>
+                    <SectionTitle label='Personal Details' classes={s} />
+                    <FieldRow contents={employment} classes={s}>
                       <Grid container>
                         <Grid item xs={12} sm={4}>
-                          <FormControl className={classes.formControl}>
+                          <FormControl className={s.formControl}>
                             <InputLabel shrink>Employment</InputLabel>
-                            <RadioGroup className={classes.radioGroup} name='employment' value={values.employment} onChange={handleChange}>
+                            <RadioGroup className={s.radioGroup} name='employment' value={values.employment} onChange={handleChange}>
                               <FormControlLabel value='employed' control={<Radio />} label='Employed' />
                               <FormControlLabel value='unemployed' control={<Radio />} label='Unemployed' />
                             </RadioGroup>
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={4}>
-                          <FormControl className={classes.formControl}>
+                          <FormControl className={s.formControl}>
                             <InputLabel shrink>Marital Status</InputLabel>
-                            <RadioGroup className={classes.radioGroup} name='maritalStatus' value={values.maritalStatus} onChange={handleChange}>
+                            <RadioGroup className={s.radioGroup} name='maritalStatus' value={values.maritalStatus} onChange={handleChange}>
                               <FormControlLabel value='single' control={<Radio />} label='Single' />
                               <FormControlLabel value='married' control={<Radio />} label='Married' />
                               <FormControlLabel value='divorced' control={<Radio />} label='Divorced' />
@@ -359,7 +311,7 @@ const InvestorInfoView = (props) => {
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={4}>
-                          <FormControl className={classes.formControl}>
+                          <FormControl className={s.formControl}>
                             <TextField
                               id='dependants'
                               name='dependants'
@@ -373,11 +325,11 @@ const InvestorInfoView = (props) => {
                         </Grid>
                       </Grid>
                     </FieldRow>
-                    <SectionTitle label='Assets' classes={classes} />
-                    <FieldRow contents={employment} classes={classes}>
+                    <SectionTitle label='Assets' classes={s} />
+                    <FieldRow contents={employment} classes={s}>
                       <Grid container>
                         <Grid item xs={12} sm={4}>
-                          <FormControl className={classes.formControl}>
+                          <FormControl className={s.formControl}>
                             <InputLabel shrink>Liquid</InputLabel>
                             <Select
                               value={values.liquid}
@@ -398,7 +350,7 @@ const InvestorInfoView = (props) => {
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={4}>
-                          <FormControl className={classes.formControl}>
+                          <FormControl className={s.formControl}>
                             <InputLabel shrink>Net Worth</InputLabel>
                             <Select
                               value={values.netWorth}
@@ -419,7 +371,7 @@ const InvestorInfoView = (props) => {
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={4}>
-                          <FormControl className={classes.formControl}>
+                          <FormControl className={s.formControl}>
                             <InputLabel shrink>Yearly Income</InputLabel>
                             <Select
                               value={values.yearlyIncome}
@@ -440,11 +392,11 @@ const InvestorInfoView = (props) => {
                         </Grid>
                       </Grid>
                     </FieldRow>
-                    <SectionTitle label='Investment' classes={classes} />
-                    <FieldRow label='Goal' classes={classes} >
+                    <SectionTitle label='Investment' classes={s} />
+                    <FieldRow label='Goal' classes={s} >
                       <Grid container>
                         <Grid item xs={12} sm={4}>
-                          <FormControl className={classes.formControl}>
+                          <FormControl className={s.formControl}>
                             <InputLabel shrink>Goal</InputLabel>
                             <Select
                               value={values.goal}
@@ -463,7 +415,7 @@ const InvestorInfoView = (props) => {
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={4}>
-                          <FormControl className={classes.formControl}>
+                          <FormControl className={s.formControl}>
                             <InputLabel shrink>Timeline</InputLabel>
                             <Select
                               value={values.timeLine}
@@ -480,7 +432,7 @@ const InvestorInfoView = (props) => {
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={4}>
-                          <FormControl className={classes.formControl}>
+                          <FormControl className={s.formControl}>
                             <InputLabel shrink>Experience</InputLabel>
                             <Select
                               value={values.experience}
@@ -498,7 +450,7 @@ const InvestorInfoView = (props) => {
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={4}>
-                          <FormControl className={classes.formControl}>
+                          <FormControl className={s.formControl}>
                             <InputLabel shrink>Risk Tolerence</InputLabel>
                             <Select
                               value={values.riskTolerence}
@@ -515,7 +467,7 @@ const InvestorInfoView = (props) => {
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={4}>
-                          <FormControl className={classes.formControl}>
+                          <FormControl className={s.formControl}>
                             <InputLabel shrink>Liquidity</InputLabel>
                             <Select
                               value={values.liquidity}
@@ -540,7 +492,7 @@ const InvestorInfoView = (props) => {
                     variant='contained'
                     color='primary'
                     onClick={handleSubmit}
-                    className={classes.largeButton}
+                    className={s.largeButton}
                     disabled={isSubmitting}
                     size='large'
                   >
@@ -552,6 +504,169 @@ const InvestorInfoView = (props) => {
         </Formik>
     </Paper>
   )
-}
+}))
 
-export default inject('store')(observer(InvestorInfoView))
+/*
+                    <FieldRow label='Address' classes={s}>
+                      <Grid container>
+                        <Grid item xs={12} sm={6}>
+                          <FormControl className={s.formControl}>
+                            <TextField
+                              required
+                              id='address1'
+                              name='address1'
+                              label='Address Line 1'
+                              error={!!(errors.address1)}
+                              placeholder='234 street lane'
+                              value={values.address1}
+                              onChange={handleChange}
+                              InputLabelProps={{ shrink: true }}
+                            />
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <FormControl className={s.formControl}>
+                            <TextField
+                              required
+                              id='address2'
+                              name='address2'
+                              label='Address Line 2'
+                              error={!!(errors.address2)}
+                              placeholder='Apt 23, building 4'
+                              value={values.address2}
+                              onChange={handleChange}
+                              InputLabelProps={{ shrink: true }}
+                            />
+                          </FormControl>
+                        </Grid>
+                      </Grid>
+                      <Grid container>
+                        <Grid item xs={12} sm={6}>
+                          <FormControl className={s.formControl}>
+                            <TextField
+                              required
+                              id='city'
+                              name='city'
+                              label='City'
+                              error={!!(errors.city)}
+                              placeholder='San Jose'
+                              value={values.city}
+                              onChange={handleChange}
+                              InputLabelProps={{ shrink: true }}
+                            />
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <FormControl className={s.formControl}>
+                            <TextField
+                              id='state'
+                              name='state'
+                              label='State'
+                              error={!!(errors.state)}
+                              placeholder='e.g Carlifornia'
+                              value={values.state}
+                              onChange={handleChange}
+                              InputLabelProps={{ shrink: true }}
+                              select
+                              required
+                            >
+                              {states.map((option, index) => (
+                                <MenuItem key={option.code} value={option.code}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                            </TextField>
+                          </FormControl>
+                        </Grid>
+                      </Grid>
+                      <Grid container>
+                        <Grid item xs={12} sm={6}>
+                          <FormControl className={s.formControl}>
+                            <TextField
+                              required
+                              id='postalCode'
+                              name='postalCode'
+                              label='Postal Code'
+                              error={!!(errors.postalCode)}
+                              placeholder='18796'
+                              value={values.postalCode}
+                              onChange={handleChange}
+                              InputLabelProps={{ shrink: true }}
+                            />
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <FormControl className={s.formControl}>
+                            <TextField
+                              required
+                              id='country'
+                              name='country'
+                              label='Country'
+                              value={values.country}
+                              onChange={handleChange}
+                              error={!!(errors.country)}
+                              InputLabelProps={{ shrink: true }}
+                              select
+                            >
+                              {countries.map((option, index) => (
+                                <MenuItem key={option.code} value={option.code}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                            </TextField>
+                          </FormControl>
+                        </Grid>
+                      </Grid>
+                      <Grid container>
+                        <Grid item xs={12} sm={6}>
+                          <FormControl className={s.formControl}>
+                            <TextField
+                              required
+                              id='phone'
+                              name='phone'
+                              label='Phone'
+                              error={!!(errors.phone)}
+                              placeholder='4846389012'
+                              value={values.phone}
+                              onChange={handleChange}
+                              InputLabelProps={{ shrink: true }}
+                            />
+                          </FormControl>
+                        </Grid>
+                      </Grid>
+                    </FieldRow>
+*/
+
+const formValidationSchema = object().shape({
+  dependants: number().positive('Invalid number entered for dependants'),
+  address1: string(),
+  address2: string(),
+  city: string(),
+  state: string(),
+  postalCode: number()
+    .positive('Invalid postal code'),
+  phone: number()
+    .positive('Invalid phone number'),
+})
+
+
+const FieldRow = ({
+  label,
+  classes,
+  children,
+}) => (
+  <TableRow>
+    <TableCell fixedHeader={false} style={{ width: '25%', tableLayout: 'auto' }} size='small' className={classes.tableLabelColumn}>{label}</TableCell>
+    <TableCell style={{ padding: '10px 0' }} className={classes.tableContentsColumn}>{children}</TableCell>
+  </TableRow>
+)
+
+const SectionTitle = ({
+  label,
+  classes,
+}) => (
+  <TableRow className={classes.tableSectionRow}>
+    <TableCell colSpan="2" >{label}</TableCell>
+  </TableRow>
+)
+
