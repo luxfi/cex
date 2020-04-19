@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react'
 import Link from 'next/link'
 import { withRouter } from 'next/router'
 import classNames from 'classnames'
+import uuid from 'uuid';
 
 import {
   Box, Divider, Grid, Switch, Typography,
@@ -22,15 +23,11 @@ const ShowingNext = inject('store')(observer((props) => {
   const {
     classes,
     onClick,
-    store: {
-      trailerStore: {
-        relatedMovies,
-        autoplayMovies,
-        autoPlaySet,
-        relatedMovieTrailers,
-      },
-      trailerStore,
-    },
+    trailerStore,
+    relatedMovies,
+    autoplayMovies,
+    autoPlaySet,
+    relatedMovieTrailers,
     nextMovieIndex,
   } = props
 
@@ -46,7 +43,7 @@ const ShowingNext = inject('store')(observer((props) => {
     trailerStore.setAutoplay(event.target.checked)
   }
 
-  const nextVideo = autoplayMovies[nextMovieIndex] || {}
+  const nextVideo = autoplayMovies.length > 1 ? autoplayMovies[nextMovieIndex] : {}
   const showNext = nextMovieIndex !== null && nextMovieIndex < autoplayMovies.length
 
   return (
@@ -67,10 +64,10 @@ const ShowingNext = inject('store')(observer((props) => {
           <Divider />
         </Box>
         {
-          relatedMovieTrailers.length && relatedMovieTrailers.map((movie) => (
+          relatedMovieTrailers.length ? relatedMovieTrailers.map((movie) => (
             <Link
               href={`watch?video=${movie.movieSlug}&trailerId=${movie.trailerId}`}
-              key={`RelatedTrailer-${movie.id}`}
+              key={uuid.v4()}
             >
               <a onClick={() => onClick(movie.movieSlug)}>
                 <Grid container spacing={2}>
@@ -94,7 +91,7 @@ const ShowingNext = inject('store')(observer((props) => {
                 </Grid>
               </a>
             </Link>
-          ))
+          )) : null
         }
         <Box paddingY={3}>
           <Typography variant="h6" className={classes.videoSectionText}>Recommended</Typography>
@@ -131,13 +128,13 @@ const ShowingNext = inject('store')(observer((props) => {
               </Link>
               <Divider style={{ margin: '10px 0 0 0' }} />
             </>
-          ) : ('')
+          ) : null
         }
         {
-          relatedMovies.length && relatedMovies.map((movie) => (nextVideo.id === movie.id ? null : (
+          relatedMovies.length ? relatedMovies.map((movie) => (nextVideo.id === movie.id ? null : (
             <Link
               href={`watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`}
-              key={`recommended-${movie.id}`}
+              key={uuid.v4()}
             >
               <a onClick={() => onClick(movie.movieSlug)}>
                 <Grid container spacing={2}>
@@ -161,7 +158,7 @@ const ShowingNext = inject('store')(observer((props) => {
                 </Grid>
               </a>
             </Link>
-          )))
+          ))) : null
         }
       </Box>
     </Box>

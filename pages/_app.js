@@ -7,6 +7,7 @@ import { withRouter } from 'next/router'
 import NextHead from 'next/head'
 
 import {
+  Box,
   Container,
   CssBaseline,
   MuiThemeProvider,
@@ -66,52 +67,52 @@ class ESXApp extends NextApp {
       </NextHead>
       <Provider store={this.stores}>
         <MuiThemeProvider theme={theme}>
-          <div className={classes.root}>
-            <CssBaseline />
-            <NoSsr>
-              <Header
-                loggedIn={this.stores.userStore.loggedIn}
-                movies={this.stores.movieStore.filteredMovies}
-                openMobileMenu={() => {this.stores.uiStore.setRightDrawerOpen(true)}}
-                handleLogout={() => {this.stores.userStore.logout()}}
-                handleSearch={() => { router.push('/browse') }}
-                showFullSearchWidget={showFullSearchWidget(router.route)}
-              />
-              <MobileNavMenuDrawer
-                open={this.stores.uiStore.drawers.left}
-                setOpen={this.stores.uiStore.setLeftDrawerOpen}
-              />
-              <Container component='main' className={classNames({ [classes.main]: true, [classes.fullScreenMain]: fullScreen })}>
-                <Component {...pageProps} pathName={router.route} />
-              </Container>
-              <CustomModal
-                open={this.stores.uiStore.modal.open}
-                handleClose={() => this.stores.uiStore.closeModal()}
-                body={this.stores.uiStore.modal.body}
-                title={this.stores.uiStore.modal.title}
-              />
-
-              <CustomSnackbar />
-              <MobileAccountMenuDrawer
-                open={this.stores.uiStore.drawers.right}
-                setOpen={this.stores.uiStore.setRightDrawerOpen}
-                isLoggedIn={this.stores.userStore.loggedIn}
-                handleLogout={() => {
-                  this.stores.userStore.logout()
-                }}
-              />
-              {hideFooter(router.route) ? null : (
-                <Container className={classNames({ [classes.footer]: true, [classes.fullScreenFooter]: fullScreen })}>
-                  <Footer
-                    isLoggedIn={this.stores.userStore.loggedIn}
-                    handleLogout={() => {
-                      this.stores.userStore.logout()
-                    }}
-                  />
+          <NoSsr>
+            <Box className={classes.root}>
+              <CssBaseline />
+                <Header
+                  loggedIn={this.stores.userStore.loggedIn}
+                  movies={this.stores.movieStore.filteredMovies}
+                  openMobileMenu={() => {this.stores.uiStore.setRightDrawerOpen(true)}}
+                  handleLogout={() => {this.stores.userStore.logout()}}
+                  handleSearch={() => { router.push('/browse') }}
+                  showFullSearchWidget={showFullSearchWidget(router.route)}
+                />
+                <MobileNavMenuDrawer
+                  open={this.stores.uiStore.drawers.left}
+                  setOpen={this.stores.uiStore.setLeftDrawerOpen}
+                />
+                <Container component='main' className={classNames({ [classes.main]: true, [classes.fullScreenMain]: fullScreen })}>
+                  <Component {...pageProps} pathName={router.route} />
                 </Container>
-              )}
-            </NoSsr>
-          </div>
+                <CustomModal
+                  open={this.stores.uiStore.modal.open}
+                  handleClose={() => this.stores.uiStore.closeModal()}
+                  body={this.stores.uiStore.modal.body}
+                  title={this.stores.uiStore.modal.title}
+                />
+
+                <CustomSnackbar />
+                <MobileAccountMenuDrawer
+                  open={this.stores.uiStore.drawers.right}
+                  setOpen={this.stores.uiStore.setRightDrawerOpen}
+                  isLoggedIn={this.stores.userStore.loggedIn}
+                  handleLogout={() => {
+                    this.stores.userStore.logout()
+                  }}
+                />
+                {hideFooter(router.route) ? null : (
+                  <Container className={classNames({ [classes.footer]: true, [classes.fullScreenFooter]: fullScreen })}>
+                    <Footer
+                      isLoggedIn={this.stores.userStore.loggedIn}
+                      handleLogout={() => {
+                        this.stores.userStore.logout()
+                      }}
+                    />
+                  </Container>
+                )}
+            </Box>
+          </NoSsr>
         </MuiThemeProvider>
       </Provider>
       </>

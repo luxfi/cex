@@ -154,9 +154,16 @@ export default class MovieStore {
   }
 
   getMovieBySlug(slug) {
-    if (slug == null || slug === '') {
+    if (!slug) {
       throw new Error('getMovieBySlug() requires slug to be defined')
     }
+
+    // if (slug) {
+    //   return this.movies.find(movie => movie.movieSlug === slug)
+    // }
+  
+    // return null
+
     return this.movies.find(m => m.movieSlug === slug)
   }
 
