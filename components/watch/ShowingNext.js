@@ -23,7 +23,7 @@ const ShowingNext = inject('store')(observer((props) => {
   const {
     classes,
     onClick,
-    trailerStore,
+    store: { trailerStore },
     relatedMovies,
     autoplayMovies,
     autoPlaySet,

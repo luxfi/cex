@@ -75,7 +75,7 @@ class Index extends React.Component {
     }
 
     if (prevTrailerId !== nextTrailerId) {
-      trailerStore.loadRelatedMovieTrailers(movie, trailerId)
+      trailerStore.loadRelatedMovieTrailers(movie, nextTrailerId)
     }
   }
 
