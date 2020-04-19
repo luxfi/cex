@@ -75,10 +75,11 @@ export default (theme) => ({
   },
 
   formControl: {
-    width: '100%',
+    display: 'block',
+    //width: '100%',
     marginBottom: '10px',
     '& .MuiTextField-root': {
-      width: '100%',
+      //width: '100%',
     },
     '& .MuiInput-root': {
       padding: '0 10px',

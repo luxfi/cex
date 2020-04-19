@@ -49,7 +49,7 @@ const myStyles = makeStyles((theme) => ({
       
     },
     main: {
-      flex: '1 0 auto', // enable grow, disable shrink
+      flex: '1 1 auto', // enable grow, enable shrink
           //backgroundColor: '#aae',  // dev
       '& > *': {
         width: '100%',

@@ -18,7 +18,7 @@ const COLORS = {
 }
 
 const PAPER_SHADES = [
-  COLORS.common.black,
+  COLORS.common.black,  // zeroth el, so paper elevations match
   '#222',
   '#333',
   '#3f3f3f',
@@ -89,10 +89,10 @@ export default createMuiTheme({
         }
       },
       elevation2: {
-        backgroundColor:  PAPER_SHADES[3],
+        backgroundColor:  PAPER_SHADES[2],
         '& MuiInput': {
           root: {
-            backgroundColor: PAPER_SHADES[4]            
+            backgroundColor: PAPER_SHADES[3]            
           }
         }
       },
