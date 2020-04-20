@@ -6,7 +6,6 @@ import { getYoutubeId } from '../util'
 
 export default class TrailerStore {
   @observable relatedMovies = []
-  @observable autoplayMovies = []
   @observable autoPlaySet = true
   @observable reaction = {}
   @observable views = 0
@@ -57,9 +56,6 @@ export default class TrailerStore {
       .sort((a, b) => b.score - a.score)
       .slice(0, 10)
 
-    if (updateAutoplayMovies) {
-      this.autoplayMovies = [requestedMovie, ...relatedMovies]
-    }
     this.relatedMovies = relatedMovies
   }
 

@@ -90,13 +90,13 @@ class Index extends React.Component {
       router: { query: { trailerId } },
     } = this.props
 
-    if (currentVideoIndex <= trailerStore.autoplayMovies.length) {
-      const href = `/watch?video=${trailerStore.autoplayMovies[currentVideoIndex].movieSlug}&trailerId=${trailerId}`
+    if (currentVideoIndex <= trailerStore.relatedMovieTrailers.length) {
+      const href = `/watch?video=${trailerStore.relatedMovieTrailers[currentVideoIndex].movieSlug}&trailerId=${trailerId}`
       Router.push(href, href, { shallow: true })
-      this.getUpdatedRelatedMovies(trailerStore.autoplayMovies[currentVideoIndex].movieSlug, false)
+      this.getUpdatedRelatedMovies(trailerStore.relatedMovieTrailers[currentVideoIndex].movieSlug, false)
     }
 
-    if (trailerStore.autoplayMovies.length >= currentVideoIndex + 1) {
+    if (trailerStore.relatedMovieTrailers.length >= currentVideoIndex + 1) {
       this.setState({
         nextMovieIndex: currentVideoIndex + 1,
       })
@@ -112,7 +112,7 @@ class Index extends React.Component {
       store: {
         uiStore,
         trailerStore,
-        userStore: { loggedIn, currentUser, id },
+        userStore: { loggedIn },
       },
     } = this.props
 
@@ -132,7 +132,6 @@ class Index extends React.Component {
         userStore,
         trailerStore: {
           relatedMovies,
-          autoplayMovies,
           autoPlaySet,
           subscribers,
           reaction,
@@ -157,11 +156,7 @@ class Index extends React.Component {
 
     const autoPlay = autoPlaySet === 'true' || autoPlaySet === true
 
-    const relatedMoviesArray = [...relatedMovies]
-    const autoplayMoviesArray = [...autoplayMovies]
-    // const relatedMovieTrailerIds = relatedMovieTrailers.map(relatedMovieTrailer => relatedMovieTrailer.trailerId)
-    const relatedMoviesIds = relatedMoviesArray.map((relatedMovie) => getYoutubeId(relatedMovie.trailer))
-    const autoplayMoviesIds = autoplayMoviesArray.map((autoPlayMovie) => getYoutubeId(autoPlayMovie.trailer))
+    const relatedMovieTrailerIds = relatedMovieTrailers.map(relatedMovieTrailer => relatedMovieTrailer.trailerId)
 
     const shareURL = `${window.location.origin}/ticketing/${movie.movieSlug}`
     const sharePrompt = `I just bought tickets for ${movie.name}! Please watch it too!`
@@ -176,15 +171,14 @@ class Index extends React.Component {
             <Grid item xs={12}  md={8} >
               <Grid item className={classes.videoContainer}>
                 {
-                  (trailerId && relatedMoviesIds.length) ? <YoutubePlayer
+                  (trailerId && relatedMovieTrailerIds.length) ? <YoutubePlayer
                   elementId='trailerVideo'
                   videoId={trailerId}
                   movieSlug={movieSlug}
                   autoPlay={autoPlay}
-                  playlist={autoPlay ? relatedMoviesIds : []}
-                  autoplayMovies={autoplayMoviesIds}
+                  playlist={autoPlay ? relatedMovieTrailerIds : []}
+                  autoplayMovies={relatedMovieTrailerIds}
                   handleVideoChange={this.handleVideoChange}
-                  key={autoplayMovies}
                   pauseVideo={authModalOpen}
                 /> : null
                 }
@@ -288,7 +282,6 @@ class Index extends React.Component {
                   onClick={this.getUpdatedRelatedMovies}
                   nextMovieIndex={nextMovieIndex}
                   relatedMovies={relatedMovies}
-                  autoplayMovies={autoplayMovies}
                   autoPlaySet={autoPlaySet}
                   relatedMovieTrailers={relatedMovieTrailers}
                 />
@@ -302,7 +295,6 @@ class Index extends React.Component {
                 onClick={this.getUpdatedRelatedMovies}
                 nextMovieIndex={nextMovieIndex}
                 relatedMovies={relatedMovies}
-                autoplayMovies={autoplayMovies}
                 autoPlaySet={autoPlaySet}
                 relatedMovieTrailers={relatedMovieTrailers}
               />

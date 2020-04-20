@@ -25,7 +25,6 @@ const ShowingNext = inject('store')(observer((props) => {
     onClick,
     store: { trailerStore },
     relatedMovies,
-    autoplayMovies,
     autoPlaySet,
     relatedMovieTrailers,
     nextMovieIndex,
@@ -43,8 +42,7 @@ const ShowingNext = inject('store')(observer((props) => {
     trailerStore.setAutoplay(event.target.checked)
   }
 
-  const nextVideo = autoplayMovies.length > 1 ? autoplayMovies[nextMovieIndex] : {}
-  const showNext = nextMovieIndex !== null && nextMovieIndex < autoplayMovies.length
+  const nextVideo = relatedMovieTrailers.length > 1 ? relatedMovieTrailers[nextMovieIndex] : {}
 
   return (
     <Box>
@@ -98,40 +96,6 @@ const ShowingNext = inject('store')(observer((props) => {
           <Typography variant="h6" className={classes.videoSectionText}>Recommended</Typography>
           <Divider />
         </Box>
-        {
-          showNext ? (
-            <>
-              <Link
-                as={`watch?video=${nextVideo.movieSlug}&trailerId=${getYoutubeId(nextVideo.trailer)}`}
-                href={`watch?video=${nextVideo.movieSlug}&trailerId=${getYoutubeId(nextVideo.trailer)}`}
-                key={`showingNext-${nextVideo.id}`}
-              >
-                <a onClick={() => onClick(nextVideo.movieSlug)}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={6} className={classes.imageWrapper}>
-                      <img src={nextVideo.heroImg} alt={nextVideo.name} className={classes.movieImage} />
-                      <Box className={classes.playTime}>
-                        <Typography component='span'>{formatDuration(nextVideo.trailerDetails.duration)}</Typography>
-                      </Box>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Typography
-                        className={classNames(classes.sidebarMovieTitle, classes.maxTwoLines)}
-                      >
-                        {nextVideo.name}
-                      </Typography>
-                      <Box className={classes.sidebarVideoMeta}>
-                        <Typography className={classes.singleLine}>{nextVideo.distributors[0]}</Typography>
-                        <Typography className={classes.singleLine}>{`${formatNumber(nextVideo.trailerDetails.views, 1)} views • ${calculateDateFrom(nextVideo.trailerDetails.createdAt)}`}</Typography>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </a>
-              </Link>
-              <Divider style={{ margin: '10px 0 0 0' }} />
-            </>
-          ) : null
-        }
         {
           relatedMovies.length ? relatedMovies.map((movie) => (nextVideo.id === movie.id ? null : (
             <Link
