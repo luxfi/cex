@@ -234,10 +234,6 @@ module.exports = [
     daysLeft: 14,
     trailers: [
       {
-        trailer: 'https://www.youtube.com/embed/oxy8udgWRmo',
-        thumbnail: 'https://img.youtube.com/vi/oxy8udgWRmo/maxresdefault.jpg',
-      },
-      {
         trailer: 'https://www.youtube.com/embed/uiisFYRu0DQ',
         thumbnail: 'https://img.youtube.com/vi/uiisFYRu0DQ/maxresdefault.jpg',
       },
@@ -268,7 +264,7 @@ module.exports = [
     atomTicketsSlug: 'saw-9',
     articles: ['edward-furlong-edward-furlong-terminator-dark-fate'],
     genre: ['Action', 'Adventure', 'Sci-Fi'],
-    trailer: 'https://www.youtube.com/embed/oxy8udgWRmo',
+    trailer: 'https://www.youtube.com/embed/uiisFYRu0DQ',
     posterImg:
       'https://m.media-amazon.com/images/M/MV5BMTUwNWI2ZDQtODRjNy00OGE1LThlNGEtYzU2NDU5ZGMzN2RmXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg',
     heroImg:
