@@ -21,7 +21,6 @@ const {
   devtools,
   serial,
   _,
-  noBuild,
 } = yargs.argv
 
 const puppeteerConfig = {
