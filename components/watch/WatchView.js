@@ -223,13 +223,13 @@ class Index extends React.Component {
                         {
                           movie.trading ? (
                             <Link href={`/trade/${movie.movieSlug}`}>
-                              <a className={classes.linkBackLink}>
+                              <a id='tradeButton' className={classes.linkBackLink}>
                                 <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText} noWrap>Trade</Typography></Button>
                               </a>
                             </Link>
                           ) : (
                             <Link href={`/offering/${movie.movieSlug}`}>
-                              <a className={classes.linkBackLink}>
+                              <a id='offeringButton' className={classes.linkBackLink}>
                                 <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText} noWrap>Invest</Typography></Button>
                               </a>
                             </Link>
@@ -238,7 +238,7 @@ class Index extends React.Component {
                       </Box>
                       <Box>
                         <Link href={`/ticketing/${movie.movieSlug}`}>
-                          <a className={classes.linkBackLink}>
+                          <a id='buyTicketButton' className={classes.linkBackLink}>
                             <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText} noWrap>Buy Tickets</Typography></Button>
                           </a>
                         </Link>
@@ -256,7 +256,7 @@ class Index extends React.Component {
                       <Box className={classes.videoInfo}>
                         <Typography className={classes.channelName}>
                           <Link href={`/browse?facet=distributors&value=${movie.distributors[0]}`}>
-                            <a className={classes.aTag}>{movie.distributors[0]}</a>
+                            <a id='distributorName' className={classes.aTag}>{movie.distributors[0]}</a>
                           </Link>
                         </Typography>
                         <Typography className={classes.videoPubDate}>{renderDate(movie.trailerDetails.createdAt, 'dddd MMM Do YYYY')}</Typography>

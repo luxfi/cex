@@ -74,7 +74,7 @@ const AddComment = inject('store')(observer(({
             value={state.comment}
             onClick={handleFocus}
             InputProps={{
-              className: classes.addCommentInput,
+              className: classNames(classes.addCommentInput, 'addCommentInput'),
             }}
             rows={numOfRows || 3}
             placeholder='add a commment'
@@ -86,6 +86,7 @@ const AddComment = inject('store')(observer(({
             (state.showButtons || comment) && (
             <Box className={classes.submitButtonContainer}>
               <Button
+                className='cancelCommentButton'
                 variant='outlined'
                 size='small'
                 onClick={handleCancel}
@@ -97,7 +98,7 @@ const AddComment = inject('store')(observer(({
                 variant='contained'
                 disabled={!(state.comment.trim())}
                 size='small'
-                className={classes.commentButton}
+                className={classNames(classes.commentButton, 'postCommentButton')}
                 onClick={handleClick}
               >
                 Post Comment

@@ -41,7 +41,7 @@ const LikeAndUnlike = ({
         <Button
           variant='contained'
           size='small'
-          className={likeButton}
+          className={classNames(likeButton, 'likeButton')}
           startIcon={<ThumbUpAltIcon />}
           onClick={handleLikeClick}
         >
@@ -54,7 +54,7 @@ const LikeAndUnlike = ({
             <Button
               variant='contained'
               size='small'
-              className={unLikeButton}
+              className={classNames(unLikeButton, 'unlikeButton')}
               startIcon={<ThumbDownIcon />}
               onClick={handleUnlikeClick}
             >
