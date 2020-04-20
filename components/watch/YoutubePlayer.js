@@ -28,7 +28,7 @@ class YoutubePlayer extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { autoplayMovies, videoId, autoPlay, pauseVideo } = this.props
+    const { autoplayMovies, videoId, autoPlay, pauseVideo, movieSlug } = this.props
     // If autoplay is turned off
     if (!autoPlay && prevProps.videoId !== videoId) {
       this.setState({
@@ -42,6 +42,10 @@ class YoutubePlayer extends Component {
       // force the component to re-render when updated autoplayMovies props are recieved then play new videos
       this.setState({
         autoplayMovies,
+      }, () => this.playNewVideo(autoPlay, this.player, videoId, autoplayMovies))
+    } else if (movieSlug === prevProps.movieSlug && prevProps.videoId !== videoId) {
+      this.setState({
+        videoId,
       }, () => this.playNewVideo(autoPlay, this.player, videoId, autoplayMovies))
     }
 

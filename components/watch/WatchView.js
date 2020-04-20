@@ -179,6 +179,7 @@ class Index extends React.Component {
                   (trailerId && relatedMoviesIds.length) ? <YoutubePlayer
                   elementId='trailerVideo'
                   videoId={trailerId}
+                  movieSlug={movieSlug}
                   autoPlay={autoPlay}
                   playlist={autoPlay ? relatedMoviesIds : []}
                   autoplayMovies={autoplayMoviesIds}

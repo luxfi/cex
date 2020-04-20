@@ -66,6 +66,7 @@ const ShowingNext = inject('store')(observer((props) => {
         {
           relatedMovieTrailers.length ? relatedMovieTrailers.map((movie) => (
             <Link
+              as={`watch?video=${movie.movieSlug}&trailerId=${movie.trailerId}`}
               href={`watch?video=${movie.movieSlug}&trailerId=${movie.trailerId}`}
               key={uuid.v4()}
             >
@@ -101,6 +102,7 @@ const ShowingNext = inject('store')(observer((props) => {
           showNext ? (
             <>
               <Link
+                as={`watch?video=${nextVideo.movieSlug}&trailerId=${getYoutubeId(nextVideo.trailer)}`}
                 href={`watch?video=${nextVideo.movieSlug}&trailerId=${getYoutubeId(nextVideo.trailer)}`}
                 key={`showingNext-${nextVideo.id}`}
               >
@@ -134,6 +136,7 @@ const ShowingNext = inject('store')(observer((props) => {
           relatedMovies.length ? relatedMovies.map((movie) => (nextVideo.id === movie.id ? null : (
             <Link
               href={`watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`}
+              as={`watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`}
               key={uuid.v4()}
             >
               <a onClick={() => onClick(movie.movieSlug)}>
