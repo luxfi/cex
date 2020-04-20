@@ -13,9 +13,7 @@
     "e2e": "node tests/e2e/runner.js",
     "integration": "jest -c ./jest.config.integration.js",
     "jest": "NODE_ENV=test jest",
-    "prepare": "git config core.hooksPath .githooks",
     "start": "npm run prepare && next",
-    "test":  "next build && next export && npm run e2e"
   },
   "dependencies": {
     "@date-io/moment": "^1.3.11",
