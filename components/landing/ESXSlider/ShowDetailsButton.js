@@ -1,13 +1,11 @@
-import React from 'react';
+import React from 'react'
 import IconArrowDown from '../Icons/IconArrowDown'
-import './ShowDetailsButton.css'
+import s from './ShowDetailsButton.module.css'
 
-const ShowDetailsButton = ({ onClick }) => (
-  <button onClick={onClick} className="show-details-button">
+export default ({ onClick }) => (
+  <button onClick={onClick} className={s.showDetailsButton}>
     <span>
       <IconArrowDown />
     </span>
   </button>
-);
-
-export default ShowDetailsButton;
+)

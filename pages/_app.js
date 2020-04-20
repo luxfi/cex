@@ -37,6 +37,9 @@ import initializeStores from '../stores/stores'
 import styles from '../styles/app.style.js'
 import theme from '../styles/esxTheme'
 
+import '../components/app/MovieSlider/modified-slick.css'
+
+
 config.autoAddCss = false
 @observer
 class ESXApp extends NextApp {

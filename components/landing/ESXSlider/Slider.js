@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import cx from 'classnames';
+import React, { useState } from 'react'
+import cx from 'classnames'
+
+import IconArrowDown from '../Icons/IconArrowDown'
+
 import SliderContext from './context'
 import Content from './Content'
-import SlideButton from './SlideButton'
-import SliderWrapper from './SliderWrapper'
 import useSliding from './useSliding'
 import useSizeElement from './useSizeElement'
-import './Slider.css'
+import s from './Slider.module.css'
 
-const Slider = ({ children, activeSlide }) => {
+export default ({ children, activeSlide }) => {
   const [currentSlide, setCurrentSlide] = useState(activeSlide);
   const [noHover, setNoHover] = useState(false);
   const { width, elementRef } = useSizeElement();
@@ -52,20 +53,34 @@ const Slider = ({ children, activeSlide }) => {
     }, 1000);
   }
 
+
+  let classNames = [s.slider]
+  if (currentSlide != null) {
+    classNames.push(s.sliderOpen)
+  }
+  if (noHover) {
+    classNames.push(noHover)
+  }
+
   return (
     <SliderContext.Provider value={contextValue}>
-      <SliderWrapper>
+      <div className={s.sliderWrapper}>
         <div
-          className={cx('slider', { 'slider--open': currentSlide != null }, { 'no-hover': noHover })}
+          className={cx(classNames)}
         >
-          <div ref={containerRef} className="slider__container" {...slideProps}>{children}</div>
+          <div ref={containerRef} className={s.sliderContainer} {...slideProps}>{children}</div>
         </div>
         {hasPrev && <SlideButton onClick={() => pauseHover(handlePrev)} type="prev" />}
         {hasNext && <SlideButton onClick={() => pauseHover(handleNext)} type="next" />}
-      </SliderWrapper>
+      </div>
       {currentSlide && <Content movie={currentSlide} onClose={handleClose} />}
     </SliderContext.Provider>
-  );
-};
+  )
+}
 
-export default Slider;
+const SlideButton = ({ onClick, type }) => (
+  <button className={classNames(s.button, (type === 'prev') ? s.buttonPrev : s.buttonNext)} onClick={onClick}>
+    <span><IconArrowDown /></span>
+  </button>
+)
+

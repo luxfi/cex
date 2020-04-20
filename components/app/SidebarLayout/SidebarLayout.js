@@ -1,9 +1,7 @@
 import React from 'react'
-
-import { makeStyles } from '@material-ui/core'
+import s from './SidebarLayout.module.scss'
 
 export default ({ left, top, children, minHeight }) => {
-  const s = myStyles()
   return (
     <div className={s.outer} style={{minHeight: (minHeight || '90vh')}}>
       <div className={s.top} >
@@ -21,6 +19,7 @@ export default ({ left, top, children, minHeight }) => {
   )
 }
 
+/*
 const myStyles = makeStyles((theme) => ({
 
     outer: {
@@ -57,7 +56,7 @@ const myStyles = makeStyles((theme) => ({
       }
     }
 }))
-
+*/
 /* Test with...
 
 import React from 'react'

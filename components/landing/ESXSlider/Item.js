@@ -1,12 +1,10 @@
-import React from 'react';
-import cx from 'classnames';
-import SliderContext from './context'
-import ShowDetailsButton from './ShowDetailsButton'
-import Mark from './Mark'
-import './Item.css'
+import React, { useRef } from 'react'
+
 import { Card, CardContent } from "@material-ui/core"
+
+import SliderContext from './context'
 import { TrailerSliderModal } from "../"
-const { forwardRef, useRef, useImperativeHandle } = React
+import s from './Item.module.css'
 
 const Item = ({ movie }) => {
   const childRef = useRef()
@@ -17,7 +15,7 @@ const Item = ({ movie }) => {
           return (
             <div
               ref={elementRef}
-              className="item"
+              className={s.item}
               style={{
                 flex: "0 0 19.7%",
                 textAlign: "center",
