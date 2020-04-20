@@ -26,8 +26,6 @@ export default (theme) => ({
     padding: theme.spacing(2),
     borderRadius: '4px',
     backgroundColor: '#222',
-    ...flexCenteredRow,
-    alignItems: 'center',
     margin: '0 auto 0',
   },
   movieSummaryHeroTitle: {
@@ -36,6 +34,10 @@ export default (theme) => ({
     lineHeight: 1,
     marginBottom: '8px',
     marginTop: 0,
+    textAlign: 'center',
+    [theme.breakpoints.up('md')]: {
+      textAlign: 'left',
+    }
   },
   whiteSvgIcon: {
     ...svgIcon,
@@ -46,30 +48,64 @@ export default (theme) => ({
   },
   watchTrailerButton: {
     ...buttons,
+  
+    [theme.breakpoints.down(424)]: {
+      width: 165,
+    }
   },
   bookmarkButton: {
     ...buttons,
-    marginLeft: '16px',
+    marginLeft: theme.spacing(2),
+  
+    [theme.breakpoints.down(424)]: {
+      marginLeft: theme.spacing(0),
+      marginTop: theme.spacing(2),
+      width: 165,
+    }
   },
   outerContainer: {
-    padding: '0',
+    padding: theme.spacing(0),
+
+    [theme.breakpoints.down('lg')]: {
+      padding: theme.spacing(0, 3),
+    }
   },
   movieSummaryHeroMetadata: {
-    marginBottom: '16px',
+    marginBottom: '5px',
+    justifyContent: 'center',
+
+    [theme.breakpoints.up('md')]: {
+      justifyContent: 'flex-start',
+      marginBottom: '16px',
+    }
+  },
+  buttonContainer: {
+    justifyContent: 'center',
+
+    [theme.breakpoints.up('md')]: {
+      justifyContent: 'flex-start',
+    },
+
+    [theme.breakpoints.down(424)]: {
+      ...flexCenteredColumn,
+    }
   },
   movieSummaryHeroPoster: {
-    display: 'table-cell',
-    position: 'relative',
+    ...flexCenteredRow,
+
+    [theme.breakpoints.up('md')]: {
+      ...flexStartColumn,
+    }
   },
   heroImage: {
-    width: '107px',
+    width: '170px',
     height: '170px',
+    objectFit: 'cover',
   },
   movieSummaryHeroInfo: {
-    display: 'table-cell',
-    width: '100%',
-    verticalAlign: 'middle',
-    paddingLeft: '24px',
+    [theme.breakpoints.down('md')]: {
+      margin: theme.spacing(1, 0),
+    }
   },
   rRatedContainer: {
     fontSize: '12px',
@@ -84,7 +120,13 @@ export default (theme) => ({
   },
   movieSummaryHeroSynopsis: {
     marginBottom: '16px',
-    maxWidth: '700px',
+    maxWidth: '100%',
+    textAlign: 'center',
+  
+    [theme.breakpoints.up('md')]: {
+      maxWidth: '700px',
+      textAlign: 'left',
+    }
   },
   movieSummaryHeroInfoLink: {
     fontWeight: 600,

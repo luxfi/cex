@@ -144,25 +144,23 @@ class TicketingView extends React.Component {
 
     const movie = movieStore.getMovieBySlug(slug)
 
-    console.log("MOVIE " + movie + " slug " + slug)
-
     return (
       <Box className={classes.outerContainer}>
         <Box>
-          <Box className={classes.movieSummaryHero}>
-            <Box className={classes.movieSummaryHeroPoster}>
+          <Grid container alignContent="center" justify="center" className={classes.movieSummaryHero}>
+            <Grid item xs={12} md={3} lg={2} className={classes.movieSummaryHeroPoster}>
               <img className={classes.heroImage} src={movie.posterImg} alt='' role='presentation' />
-            </Box>
-            <Box className={classes.movieSummaryHeroInfo}>
+            </Grid>
+            <Grid item xs={12} md={9} lg={10} className={classes.movieSummaryHeroInfo}>
               <Typography variant='h1' className={classes.movieSummaryHeroTitle}>{movie.name}</Typography>
-              <Grid container alignItems='center' className={classes.movieSummaryHeroMetadata}>
-                {movie.rated ? (<span className={classes.rRatedContainer}>{movie.rated}</span>) : ''}
-                {movie.releaseDate ? (<span className={classes.movieTimer}>Release Date: <b>{movie.releaseDate}</b></span>) : ''}
-              </Grid>
-              <Box className={classes.movieSummaryHeroSynopsis}>
-                {movie.shortDescription}
+              <Box display="flex" alignItems='center' className={classes.movieSummaryHeroMetadata}>
+                {movie.rated ? (<Typography variant="subtitle2" className={classes.rRatedContainer}>{movie.rated}</Typography>) : ''}
+                {movie.releaseDate ? (<Typography variant="subtitle2" className={classes.movieTimer}>Release Date: <b>{movie.releaseDate}</b></Typography>) : ''}
               </Box>
-              <Grid>
+              <Box className={classes.movieSummaryHeroSynopsis}>
+                <Typography variant="subtitle2">{movie.shortDescription}</Typography>
+              </Box>
+              <Box display="flex" alignItems="center" className={classes.buttonContainer}>
                 <Button
                   href={movie.trailer}
                   className={classes.watchTrailerButton}
@@ -176,9 +174,9 @@ class TicketingView extends React.Component {
                 >
                   Add To Watchlist
                 </Button>
-              </Grid>
-            </Box>
-          </Box>
+              </Box>
+            </Grid>
+          </Grid>
         </Box>
         <Box>
           <Box className={classes.dateLocationStripe}>
