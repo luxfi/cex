@@ -19,44 +19,6 @@ export default ({ left, top, children, minHeight }) => {
   )
 }
 
-/*
-const myStyles = makeStyles((theme) => ({
-
-    outer: {
-      display: 'flex',
-      flexDirection: 'column',
-      flexWrap: 'nowrap',
-    },
-    top: {
-      flex: '0 0 auto', // disable grow, disable shrink (rely on item's height)
-          //backgroundColor: '#eaa' // dev
-    },
-    bottom: {
-      flex: '1 0 auto', // enable grow, disable shrink
-      display: 'flex',
-      flexDirection: 'row',
-      flexWrap: 'nowrap',
-    },
-    left: {
-      minHeight: '100%',
-      flex: '0 0 auto', // disable grow, disable shrink (rely on item's width)
-          //backgroundColor: '#aea', // dev
-      
-      '& > *': {
-        minHeight: '100%',
-      }
-      
-    },
-    main: {
-      flex: '1 1 auto', // enable grow, enable shrink
-          //backgroundColor: '#aae',  // dev
-      '& > *': {
-        width: '100%',
-        minHeight: '100%',
-      }
-    }
-}))
-*/
 /* Test with...
 
 import React from 'react'

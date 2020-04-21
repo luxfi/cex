@@ -6,6 +6,7 @@ import {
   Button,
   FormControl,
   FormControlLabel,
+  FormLabel,
   Grid,
   InputLabel,
   MenuItem,
@@ -13,10 +14,6 @@ import {
   Radio,
   RadioGroup,
   Select,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
   TextField,
   Typography,
   makeStyles
@@ -25,7 +22,7 @@ import {
 import { Formik } from 'formik'
 import { number, object, string } from 'yup'
 
-import styles from '../../styles/pages/account.style.js'
+import styles from './profileView.style.js'
 const myStyles = makeStyles(styles)
 
 
@@ -51,7 +48,7 @@ export default inject('store')(observer((props) => {
     },
   } = props
 
-  const { metadata, firstName, lastName } = account || {}
+  const { metadata } = account || {}
   
   const {
     accountNumbers: {
@@ -88,9 +85,8 @@ export default inject('store')(observer((props) => {
     setSubmitting(false)
   }
 
-
   return (
-    <Paper  >
+    <Paper className={s.root}>
       <Formik
           enableReinitialize
           initialValues={{
@@ -128,150 +124,133 @@ export default inject('store')(observer((props) => {
           }) => (
             <>
               <Grid container spacing={4}>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={6} md={4}>
                   <Paper elevation={2}>
                     <Typography variant='h6'>Address</Typography>
-                    <FormControl className={s.formControl}>
-                      <TextField
-                        required
-                        id='address1'
-                        name='address1'
-                        label='Address Line 1'
-                        error={!!(errors.address1)}
-                        placeholder='234 street lane'
-                        value={values.address1}
-                        onChange={handleChange}
-                        InputLabelProps={{ shrink: true }}
-                      />
-                    </FormControl>
-                    <FormControl className={s.formControl}>
-                      <TextField
-                        required
-                        id='address2'
-                        name='address2'
-                        label='Address Line 2'
-                        error={!!(errors.address2)}
-                        placeholder='Apt 23, building 4'
-                        value={values.address2}
-                        onChange={handleChange}
-                        InputLabelProps={{ shrink: true }}
-                      />
-                    </FormControl>
-                    <FormControl className={s.formControl}>
-                      <TextField
-                        required
-                        id='city'
-                        name='city'
-                        label='City'
-                        error={!!(errors.city)}
-                        placeholder='San Jose'
-                        value={values.city}
-                        onChange={handleChange}
-                        InputLabelProps={{ shrink: true }}
-                      />
-                    </FormControl>
-                    <FormControl className={s.formControl}>
-                      <TextField
-                        id='state'
-                        name='state'
-                        label='State'
-                        error={!!(errors.state)}
-                        placeholder='e.g Carlifornia'
-                        value={values.state}
-                        onChange={handleChange}
-                        InputLabelProps={{ shrink: true }}
-                        select
-                        required
-                      >
-                        {states.map((option, index) => (
-                          <MenuItem key={option.code} value={option.code}>
-                            {option.name}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    </FormControl>
-                    <FormControl className={s.formControl}>
-                      <TextField
-                        required
-                        id='postalCode'
-                        name='postalCode'
-                        label='Postal Code'
-                        error={!!(errors.postalCode)}
-                        placeholder='18796'
-                        value={values.postalCode}
-                        onChange={handleChange}
-                        InputLabelProps={{ shrink: true }}
-                      />
-                    </FormControl>
-                    <FormControl className={s.formControl}>
-                      <TextField
-                        required
-                        id='country'
-                        name='country'
-                        label='Country'
-                        value={values.country}
-                        onChange={handleChange}
-                        error={!!(errors.country)}
-                        InputLabelProps={{ shrink: true }}
-                        select
-                      >
-                        {countries.map((option, index) => (
-                          <MenuItem key={option.code} value={option.code}>
-                            {option.name}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    </FormControl>
-                    <FormControl className={s.formControl}>
-                      <TextField
-                        required
-                        id='phone'
-                        name='phone'
-                        label='Phone'
-                        error={!!(errors.phone)}
-                        placeholder='4846389012'
-                        value={values.phone}
-                        onChange={handleChange}
-                        InputLabelProps={{ shrink: true }}
-                      />
-                    </FormControl>
+                    <TextField
+                      required
+                      id='address1'
+                      name='address1'
+                      label='Address Line 1'
+                      error={!!(errors.address1)}
+                      placeholder='234 street lane'
+                      value={values.address1}
+                      onChange={handleChange}
+                      InputLabelProps={{ shrink: true }}
+                    />
+                    <TextField
+                      required
+                      id='address2'
+                      name='address2'
+                      label='Address Line 2'
+                      error={!!(errors.address2)}
+                      placeholder='Apt 23, building 4'
+                      value={values.address2}
+                      onChange={handleChange}
+                      InputLabelProps={{ shrink: true }}
+                    />
+                    <TextField
+                      required
+                      id='city'
+                      name='city'
+                      label='City'
+                      error={!!(errors.city)}
+                      placeholder='San Jose'
+                      value={values.city}
+                      onChange={handleChange}
+                      InputLabelProps={{ shrink: true }}
+                    />
+                    <TextField
+                      id='state'
+                      name='state'
+                      label='State'
+                      error={!!(errors.state)}
+                      placeholder='e.g Carlifornia'
+                      value={values.state}
+                      onChange={handleChange}
+                      InputLabelProps={{ shrink: true }}
+                      select
+                      required
+                    >
+                      {states.map((option, index) => (
+                        <MenuItem key={option.code} value={option.code}>
+                          {option.name}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                    <TextField
+                      required
+                      id='postalCode'
+                      name='postalCode'
+                      label='Postal Code'
+                      error={!!(errors.postalCode)}
+                      placeholder='18796'
+                      value={values.postalCode}
+                      onChange={handleChange}
+                      InputLabelProps={{ shrink: true }}
+                    />
+                    <TextField
+                      required
+                      id='country'
+                      name='country'
+                      label='Country'
+                      value={values.country}
+                      onChange={handleChange}
+                      error={!!(errors.country)}
+                      InputLabelProps={{ shrink: true }}
+                      select
+                    >
+                      {countries.map((option, index) => (
+                        <MenuItem key={option.code} value={option.code}>
+                          {option.name}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                    <TextField
+                      required
+                      id='phone'
+                      name='phone'
+                      label='Phone'
+                      error={!!(errors.phone)}
+                      placeholder='4846389012'
+                      value={values.phone}
+                      onChange={handleChange}
+                      InputLabelProps={{ shrink: true }}
+                    />
                   </Paper>
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={6} md={4}>
                   <Paper elevation={2}>
                     <Typography variant='h6'>Personal Details</Typography>
-                    <FormControl className={s.formControl}>
-                      <InputLabel shrink>Employment</InputLabel>
+                    <FormControl component="fieldset">
+                      <FormLabel component="legend">Employment</FormLabel>
                       <RadioGroup className={s.radioGroup} name='employment' value={values.employment} onChange={handleChange}>
                         <FormControlLabel value='employed' control={<Radio />} label='Employed' />
                         <FormControlLabel value='unemployed' control={<Radio />} label='Unemployed' />
                       </RadioGroup>
                     </FormControl>
-                    <FormControl className={s.formControl}>
-                      <InputLabel shrink>Marital Status</InputLabel>
+                    <FormControl component="fieldset">
+                      <FormLabel component="legend">Marital Status</FormLabel>
                       <RadioGroup className={s.radioGroup} name='maritalStatus' value={values.maritalStatus} onChange={handleChange}>
                         <FormControlLabel value='single' control={<Radio />} label='Single' />
                         <FormControlLabel value='married' control={<Radio />} label='Married' />
                         <FormControlLabel value='divorced' control={<Radio />} label='Divorced' />
                       </RadioGroup>
                     </FormControl>
-                    <FormControl className={s.formControl}>
-                      <TextField
-                        id='dependants'
-                        name='dependants'
-                        label='Dependants'
-                        error={!!(errors.dependants)}
-                        value={values.dependants}
-                        onChange={handleChange}
-                        InputLabelProps={{ shrink: true }}
-                      />
-                    </FormControl>
+                    <TextField
+                      id='dependants'
+                      name='dependants'
+                      label='Dependants'
+                      error={!!(errors.dependants)}
+                      value={values.dependants}
+                      onChange={handleChange}
+                      InputLabelProps={{ shrink: true }}
+                    />
                   </Paper>
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={6} md={4}>
                   <Paper elevation={2}>
                     <Typography variant='h6'>Accounts</Typography>
-                    <FormControl className={s.formControl}>
                       <TextField
                         required
                         id='apexAccountNumber'
@@ -283,8 +262,6 @@ export default inject('store')(observer((props) => {
                         InputLabelProps={{ shrink: true }}
                         disabled
                       />
-                    </FormControl>
-                    <FormControl className={s.formControl}>
                       <TextField
                         id='rhsAccountNumber'
                         name='RHS'
@@ -295,9 +272,8 @@ export default inject('store')(observer((props) => {
                         InputLabelProps={{ shrink: true }}
                         disabled
                       />
-                    </FormControl>
-                    <FormControl className={s.formControl}>
-                      <InputLabel shrink>Pattern Day Trade Protection</InputLabel>
+                    <FormControl component="fieldset">
+                      <InputLabel htmlFor="dayTradeProtection">Pattern Day Trade Protection</InputLabel>
                       <Select
                         value={values.dayTradeProtection ? 'yes' : 'no'}
                         onChange={handleChange}
@@ -306,156 +282,145 @@ export default inject('store')(observer((props) => {
                           id: 'dayTradeProtection',
                         }}
                       >
-                        <MenuItem value='yes'>Yes</MenuItem>
-                        <MenuItem value='no'>no</MenuItem>
+                        <option aria-label='None' value='' />
+                        <option value='yes'>Yes</option>
+                        <option value='no'>no</option>
                       </Select>
                     </FormControl>
                   </Paper>
                 </Grid> 
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={6} md={4}>
                   <Paper elevation={2}>
                     <Typography variant='h6'>Assets</Typography>
-                    <FormControl className={s.formControl}>
-                      <InputLabel shrink>Liquid</InputLabel>
-                      <Select
-                        value={values.liquid}
-                        onChange={handleChange}
-                        inputProps={{
+                    <FormControl component="fieldset">
+                      <FormLabel component="legend">Liquid</FormLabel>
+                      <RadioGroup className={s.radioGroup} name='employment' value={values.liquid} onChange={handleChange} inputProps={{
                           name: 'liquid',
                           id: 'liquid',
-                        }}
-                      >
-                        <MenuItem value='50000-99999'>$50,000 to $99,999</MenuItem>
-                        <MenuItem value='100000-199999'>$100,000 to $199,999</MenuItem>
-                        <MenuItem value='200000-299999'>$200,000 to $299,999</MenuItem>
-                        <MenuItem value='400000-499999'>$400,000 to $499,999</MenuItem>
-                        <MenuItem value='500000-999999'>$500,000 to $999,999</MenuItem>
-                        <MenuItem value='1000000-4999999'>$1,000,000 to $4,999,999</MenuItem>
-                        <MenuItem value='5000000-max'>$5,000,000 or higher</MenuItem>
-                      </Select>
+                        }}>
+                        <FormControlLabel value='50000-99999' control={<Radio />} label='$50,000 to $99,999'/>
+                        <FormControlLabel value='100000-199999' control={<Radio />} label='$100,000 to $199,999'/>
+                        <FormControlLabel value='200000-299999' control={<Radio />} label='$200,000 to $299,999'/>
+                        <FormControlLabel value='300000-399999' control={<Radio />} label='$300,000 to $399,999'/>
+                        <FormControlLabel value='400000-499999' control={<Radio />} label='$400,000 to $499,999'/>
+                        <FormControlLabel value='500000-999999' control={<Radio />} label='$500,000 to $999,999'/>
+                        <FormControlLabel value='1000000-4999999' control={<Radio />} label='$1,000,000 to $4,999,999'/>
+                        <FormControlLabel value='5000000-max' control={<Radio />} label='$5,000,000 or higher'/>
+                      </RadioGroup>
                     </FormControl>
-                    <FormControl className={s.formControl}>
-                      <InputLabel shrink>Net Worth</InputLabel>
-                      <Select
-                        value={values.netWorth}
-                        onChange={handleChange}
-                        inputProps={{
+
+                    <FormControl component="fieldset">
+                      <FormLabel component="legend">Net Worth</FormLabel>
+                      <RadioGroup className={s.radioGroup} name='employment' value={values.netWorth} onChange={handleChange} inputProps={{
                           name: 'netWorth',
                           id: 'netWorth',
-                        }}
-                      >
-                        <MenuItem value='50000-99999'>$50,000 to $99,999</MenuItem>
-                        <MenuItem value='100000-199999'>$100,000 to $199,999</MenuItem>
-                        <MenuItem value='200000-299999'>$200,000 to $299,999</MenuItem>
-                        <MenuItem value='400000-499999'>$400,000 to $499,999</MenuItem>
-                        <MenuItem value='500000-999999'>$500,000 to $999,999</MenuItem>
-                        <MenuItem value='1000000-4999999'>$1,000,000 to $4,999,999</MenuItem>
-                        <MenuItem value='5000000-max'>$5,000,000 or higher</MenuItem>
-                      </Select>
+                        }}>
+
+                        <FormControlLabel value='50000-99999' control={<Radio />} label='$50,000 to $99,999'/>
+                        <FormControlLabel value='100000-199999' control={<Radio />} label='$100,000 to $199,999'/>
+                        <FormControlLabel value='200000-299999' control={<Radio />} label='$200,000 to $299,999'/>
+                        <FormControlLabel value='300000-399999' control={<Radio />} label='$300,000 to $399,999'/>
+                        <FormControlLabel value='400000-499999' control={<Radio />} label='$400,000 to $499,999'/>
+                        <FormControlLabel value='500000-999999' control={<Radio />} label='$500,000 to $999,999'/>
+                        <FormControlLabel value='1000000-4999999' control={<Radio />} label='$1,000,000 to $4,999,999'/>
+                        <FormControlLabel value='5000000-max' control={<Radio />} label='$5,000,000 or higher'/>
+                      </RadioGroup>
                     </FormControl>
-                    <FormControl className={s.formControl}>
-                      <InputLabel shrink>Yearly Income</InputLabel>
-                      <Select
-                        value={values.yearlyIncome}
-                        onChange={handleChange}
-                        inputProps={{
-                          name: 'yearlyIncome',
-                          id: 'yearlyIncome',
-                        }}
-                      >
-                        <MenuItem value='75000-99999'>$75,000 to $99,999</MenuItem>
-                        <MenuItem value='100000-199999'>$100,000 to $199,999</MenuItem>
-                        <MenuItem value='200000-299999'>$200,000 to $299,999</MenuItem>
-                        <MenuItem value='300000-499999'>$300,000 to $499,999</MenuItem>
-                        <MenuItem value='500000-1999999'>$500,000 to $1,199,999</MenuItem>
-                        <MenuItem value='1200000-max'>$1,200,000 or Higher</MenuItem>
-                      </Select>
+                    <FormControl component="fieldset">
+                      <FormLabel component="legend">Yearly Income</FormLabel>
+                      <RadioGroup className={s.radioGroup} name='yearlyIncome' id='yearlyIncome' value={values.yearlyIncome} onChange={handleChange} >
+                        <FormControlLabel value='75000-99999' control={<Radio />} label='$75,000 to $99,999'/>
+                        <FormControlLabel value='100000-199999' control={<Radio />} label='$100,000 to $199,999'/>
+                        <FormControlLabel value='200000-299999' control={<Radio />} label='$200,000 to $299,999'/>
+                        <FormControlLabel value='300000-499999' control={<Radio />} label='$300,000 to $499,999'/>
+                        <FormControlLabel value='500000-1199999' control={<Radio />} label='$500,000 to $1,199,999'/>
+                        <FormControlLabel value='1200000-max' control={<Radio />} label='$1,200,000 or Higher'/>
+                      </RadioGroup>
                     </FormControl>
                   </Paper>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                <Paper elevation={2}>
-
-                  <Typography variant='h6'>Investment Profile</Typography>
-                  <FormControl className={s.formControl}>
-                    <InputLabel shrink>Goal</InputLabel>
-                    <Select
-                      value={values.goal}
-                      onChange={handleChange}
-                      inputProps={{
-                        name: 'goal',
-                        id: 'goal',
-                      }}
-                    >
-                      <MenuItem value='preserveMySavings'>Preserve my savings</MenuItem>
-                      <MenuItem value='growth'>Growth</MenuItem>
-                      <MenuItem value='sourceOfIncome'>A source of income</MenuItem>
-                      <MenuItem value='speculationTrading'>Speculation Trading</MenuItem>
-                      <MenuItem value='somethingElse'>Something else</MenuItem>
-                    </Select>
-                  </FormControl>
-                  <FormControl className={s.formControl}>
-                    <InputLabel shrink>Timeline</InputLabel>
-                    <Select
-                      value={values.timeLine}
-                      onChange={handleChange}
-                      inputProps={{
-                        name: 'timeLine',
-                        id: 'timeLine',
-                      }}
-                    >
-                      <MenuItem value='0-3'>Less than 4 years</MenuItem>
-                      <MenuItem value='4-7'>4 to 7 years</MenuItem>
-                      <MenuItem value='8-max'>7 or more years</MenuItem>
-                    </Select>
-                  </FormControl>
-                  <FormControl className={s.formControl}>
-                    <InputLabel shrink>Experience</InputLabel>
-                    <Select
-                      value={values.experience}
-                      onChange={handleChange}
-                      inputProps={{
-                        name: 'experience',
-                        id: 'experience',
-                      }}
-                    >
-                      <MenuItem value='none'>None</MenuItem>
-                      <MenuItem value='notMuch'>Not much</MenuItem>
-                      <MenuItem value='knowMuch'>I know what I'm doing</MenuItem>
-                      <MenuItem value='expert'>I'm an expert</MenuItem>
-                    </Select>
-                  </FormControl>
-                  <FormControl className={s.formControl}>
-                    <InputLabel shrink>Risk Tolerence</InputLabel>
-                    <Select
-                      value={values.riskTolerence}
-                      onChange={handleChange}
-                      inputProps={{
-                        name: 'riskTolerence',
-                        id: 'riskTolerence',
-                      }}
-                    >
-                      <MenuItem value='sellAll'>Sell all your investment</MenuItem>
-                      <MenuItem value='sellSome'>Sell some</MenuItem>
-                      <MenuItem value='keepAll'>Keep all or buy more</MenuItem>
-                    </Select>
-                  </FormControl>
-                  <FormControl className={s.formControl}>
-                    <InputLabel shrink>Liquidity</InputLabel>
-                    <Select
-                      value={values.liquidity}
-                      onChange={handleChange}
-                      inputProps={{
-                        name: 'liquidity',
-                        id: 'liquidity',
-                      }}
-                    >
-                      <MenuItem value='notImportant'>Not important</MenuItem>
-                      <MenuItem value='somewhatImportant'>Somewhat important</MenuItem>
-                      <MenuItem value='veryImportant'>Very important</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Paper>
+                <Grid item xs={12} sm={6} md={4}>
+                  <Paper elevation={2}>
+                    <Typography variant='h6'>Investment Profile</Typography>
+                    <FormControl>
+                      <InputLabel shrink>Goal</InputLabel>
+                      <Select
+                        value={values.goal}
+                        onChange={handleChange}
+                        inputProps={{
+                          name: 'goal',
+                          id: 'goal',
+                        }}
+                      >
+                        <MenuItem value='preserveMySavings'>Preserve my savings</MenuItem>
+                        <MenuItem value='growth'>Growth</MenuItem>
+                        <MenuItem value='sourceOfIncome'>A source of income</MenuItem>
+                        <MenuItem value='speculationTrading'>Speculation Trading</MenuItem>
+                        <MenuItem value='somethingElse'>Something else</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <FormControl>
+                      <InputLabel shrink>Timeline</InputLabel>
+                      <Select
+                        value={values.timeLine}
+                        onChange={handleChange}
+                        inputProps={{
+                          name: 'timeLine',
+                          id: 'timeLine',
+                        }}
+                      >
+                        <MenuItem value='0-3'>Less than 4 years</MenuItem>
+                        <MenuItem value='4-7'>4 to 7 years</MenuItem>
+                        <MenuItem value='8-max'>7 or more years</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <FormControl>
+                      <InputLabel shrink>Experience</InputLabel>
+                      <Select
+                        value={values.experience}
+                        onChange={handleChange}
+                        inputProps={{
+                          name: 'experience',
+                          id: 'experience',
+                        }}
+                      >
+                        <MenuItem value='none'>None</MenuItem>
+                        <MenuItem value='notMuch'>Not much</MenuItem>
+                        <MenuItem value='knowMuch'>I know what I'm doing</MenuItem>
+                        <MenuItem value='expert'>I'm an expert</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <FormControl>
+                      <InputLabel shrink>Risk Tolerence</InputLabel>
+                      <Select
+                        value={values.riskTolerence}
+                        onChange={handleChange}
+                        inputProps={{
+                          name: 'riskTolerence',
+                          id: 'riskTolerence',
+                        }}
+                      >
+                        <MenuItem value='sellAll'>Sell all your investment</MenuItem>
+                        <MenuItem value='sellSome'>Sell some</MenuItem>
+                        <MenuItem value='keepAll'>Keep all or buy more</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <FormControl>
+                      <InputLabel shrink>Liquidity</InputLabel>
+                      <Select
+                        value={values.liquidity}
+                        onChange={handleChange}
+                        inputProps={{
+                          name: 'liquidity',
+                          id: 'liquidity',
+                        }}
+                      >
+                        <MenuItem value='notImportant'>Not important</MenuItem>
+                        <MenuItem value='somewhatImportant'>Somewhat important</MenuItem>
+                        <MenuItem value='veryImportant'>Very important</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Paper>
                 </Grid>
               </Grid>
 
@@ -463,7 +428,7 @@ export default inject('store')(observer((props) => {
                 variant='contained'
                 color='primary'
                 onClick={handleSubmit}
-                className={s.largeButton}
+                className={s.mainButton}
                 disabled={isSubmitting}
                 size='large'
               >
@@ -476,190 +441,6 @@ export default inject('store')(observer((props) => {
   )
 }))
 
-/*
-                    <FieldRow label='Address' classes={s}>
-                      <Grid container>
-                        <Grid item xs={12} sm={6}>
-                          <FormControl className={s.formControl}>
-                            <TextField
-                              required
-                              id='address1'
-                              name='address1'
-                              label='Address Line 1'
-                              error={!!(errors.address1)}
-                              placeholder='234 street lane'
-                              value={values.address1}
-                              onChange={handleChange}
-                              InputLabelProps={{ shrink: true }}
-                            />
-                          </FormControl>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <FormControl className={s.formControl}>
-                            <TextField
-                              required
-                              id='address2'
-                              name='address2'
-                              label='Address Line 2'
-                              error={!!(errors.address2)}
-                              placeholder='Apt 23, building 4'
-                              value={values.address2}
-                              onChange={handleChange}
-                              InputLabelProps={{ shrink: true }}
-                            />
-                          </FormControl>
-                        </Grid>
-                      </Grid>
-                      <Grid container>
-                        <Grid item xs={12} sm={6}>
-                          <FormControl className={s.formControl}>
-                            <TextField
-                              required
-                              id='city'
-                              name='city'
-                              label='City'
-                              error={!!(errors.city)}
-                              placeholder='San Jose'
-                              value={values.city}
-                              onChange={handleChange}
-                              InputLabelProps={{ shrink: true }}
-                            />
-                          </FormControl>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <FormControl className={s.formControl}>
-                            <TextField
-                              id='state'
-                              name='state'
-                              label='State'
-                              error={!!(errors.state)}
-                              placeholder='e.g Carlifornia'
-                              value={values.state}
-                              onChange={handleChange}
-                              InputLabelProps={{ shrink: true }}
-                              select
-                              required
-                            >
-                              {states.map((option, index) => (
-                                <MenuItem key={option.code} value={option.code}>
-                                  {option.name}
-                                </MenuItem>
-                              ))}
-                            </TextField>
-                          </FormControl>
-                        </Grid>
-                      </Grid>
-                      <Grid container>
-                        <Grid item xs={12} sm={6}>
-                          <FormControl className={s.formControl}>
-                            <TextField
-                              required
-                              id='postalCode'
-                              name='postalCode'
-                              label='Postal Code'
-                              error={!!(errors.postalCode)}
-                              placeholder='18796'
-                              value={values.postalCode}
-                              onChange={handleChange}
-                              InputLabelProps={{ shrink: true }}
-                            />
-                          </FormControl>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <FormControl className={s.formControl}>
-                            <TextField
-                              required
-                              id='country'
-                              name='country'
-                              label='Country'
-                              value={values.country}
-                              onChange={handleChange}
-                              error={!!(errors.country)}
-                              InputLabelProps={{ shrink: true }}
-                              select
-                            >
-                              {countries.map((option, index) => (
-                                <MenuItem key={option.code} value={option.code}>
-                                  {option.name}
-                                </MenuItem>
-                              ))}
-                            </TextField>
-                          </FormControl>
-                        </Grid>
-                      </Grid>
-                      <Grid container>
-                        <Grid item xs={12} sm={6}>
-                          <FormControl className={s.formControl}>
-                            <TextField
-                              required
-                              id='phone'
-                              name='phone'
-                              label='Phone'
-                              error={!!(errors.phone)}
-                              placeholder='4846389012'
-                              value={values.phone}
-                              onChange={handleChange}
-                              InputLabelProps={{ shrink: true }}
-                            />
-                          </FormControl>
-                        </Grid>
-                      </Grid>
-                    </FieldRow>
-
-                        <FormControl className={s.formControl}>
-                          <InputLabel shrink>Pattern Day Trade Protection</InputLabel>
-                          <Select
-                            value={values.dayTradeProtection ? 'yes' : 'no'}
-                            onChange={handleChange}
-                            inputProps={{
-                              name: 'dayTradeProtection',
-                              id: 'dayTradeProtection',
-                            }}
-                          >
-                            <MenuItem value='yes'>Yes</MenuItem>
-                            <MenuItem value='no'>no</MenuItem>
-                          </Select>
-                        </FormControl>
-                    <SectionTitle label='Personal Details' classes={s} />
-                    <FieldRow contents={employment} classes={s}>
-                      <Grid container>
-                        <Grid item xs={12} sm={4}>
-                          <FormControl className={s.formControl}>
-                            <InputLabel shrink>Employment</InputLabel>
-                            <RadioGroup className={s.radioGroup} name='employment' value={values.employment} onChange={handleChange}>
-                              <FormControlLabel value='employed' control={<Radio />} label='Employed' />
-                              <FormControlLabel value='unemployed' control={<Radio />} label='Unemployed' />
-                            </RadioGroup>
-                          </FormControl>
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                          <FormControl className={s.formControl}>
-                            <InputLabel shrink>Marital Status</InputLabel>
-                            <RadioGroup className={s.radioGroup} name='maritalStatus' value={values.maritalStatus} onChange={handleChange}>
-                              <FormControlLabel value='single' control={<Radio />} label='Single' />
-                              <FormControlLabel value='married' control={<Radio />} label='Married' />
-                              <FormControlLabel value='divorced' control={<Radio />} label='Divorced' />
-                            </RadioGroup>
-                          </FormControl>
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                          <FormControl className={s.formControl}>
-                            <TextField
-                              id='dependants'
-                              name='dependants'
-                              label='Dependants'
-                              error={!!(errors.dependants)}
-                              value={values.dependants}
-                              onChange={handleChange}
-                              InputLabelProps={{ shrink: true }}
-                            />
-                          </FormControl>
-                        </Grid>
-                      </Grid>
-                    </FieldRow>
-
-
-*/
 
 const formValidationSchema = object().shape({
   dependants: number().positive('Invalid number entered for dependants'),
@@ -672,25 +453,3 @@ const formValidationSchema = object().shape({
   phone: number()
     .positive('Invalid phone number'),
 })
-
-
-const FieldRow = ({
-  label,
-  classes,
-  children,
-}) => (
-  <TableRow>
-    <TableCell fixedHeader={false} style={{ width: '25%', tableLayout: 'auto' }} size='small' className={classes.tableLabelColumn}>{label}</TableCell>
-    <TableCell style={{ padding: '10px 0' }} className={classes.tableContentsColumn}>{children}</TableCell>
-  </TableRow>
-)
-
-const SectionTitle = ({
-  label,
-  classes,
-}) => (
-  <TableRow className={classes.tableSectionRow}>
-    <TableCell colSpan="2" >{label}</TableCell>
-  </TableRow>
-)
-
