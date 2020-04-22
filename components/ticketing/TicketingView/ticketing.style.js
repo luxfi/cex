@@ -29,14 +29,16 @@ export default (theme) => ({
     margin: '0 auto 0',
   },
   movieSummaryHeroTitle: {
-    fontSize: '28px',
+    fontSize: '24px',
     fontWeight: 600,
     lineHeight: 1,
     marginBottom: '8px',
     marginTop: 0,
     textAlign: 'center',
+  
     [theme.breakpoints.up('md')]: {
       textAlign: 'left',
+      fontSize: '28px',
     }
   },
   whiteSvgIcon: {
@@ -142,6 +144,32 @@ export default (theme) => ({
     backgroundColor: '#222',
     position: 'relative',
     borderRadius: '4px',
+
+    [theme.breakpoints.down('lg')]: {
+      justifyContent: 'center',
+    }
+  },
+  findMovieHeaderSection: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    marginBottom: theme.spacing(0),
+
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'center',
+      marginBottom: theme.spacing(2),
+    }
+  },
+  buttonSection: {
+    display: 'flex',
+    justifyContent: 'justify-start',
+
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'center',
+    },
+
+    [theme.breakpoints.down(551)]: {
+      ...flexCenteredColumn,
+    }
   },
   dateLocationStripeHeading: {
     display: 'inline-block',
@@ -155,6 +183,9 @@ export default (theme) => ({
     verticalAlign: 'middle',
     marginRight: '8px',
     fontSize: '16px',
+    [theme.breakpoints.down('md')]: {
+      display: 'none'
+    }
   },
   dateLocationStripeDropdown: {
     backgroundColor: whiteColor,
@@ -165,8 +196,13 @@ export default (theme) => ({
     '&:hover': {
       backgroundColor: whiteColor,
     },
+    marginBottom: theme.spacing(0),
+
+    [theme.breakpoints.down(551)]: {
+      marginBottom: theme.spacing(2),
+    }
   },
-  panelBody: {
+  notFoundSection: {
     padding: '16px',
     backgroundColor: '#222',
     textAlign: 'center',
@@ -177,7 +213,7 @@ export default (theme) => ({
   movieVenueIconContainer: {
     width: '64px',
     height: '64px',
-    paddingRight: '16px',
+    marginRight: '16px',
     verticalAlign: 'middle',
     ...flexCenteredColumn,
   },
@@ -193,18 +229,48 @@ export default (theme) => ({
   movieVenueTitleLink: {
     color: '#00aeef',
     textDecoration: 'none',
-    fontSize: '20px',
+    fontSize: '16px',
+
+    [theme.breakpoints.up('md')]: {
+      fontSize: '20px',
+    }
+  },
+  venueName: {
+    fontSize: '14px',
+
+    [theme.breakpoints.up('md')]: {
+      fontSize: '18px',
+    }
   },
   movieVenueContainer: {
     padding: '16px 0',
     ...flexStartColumn,
   },
+  panelBody: {
+    padding: '16px',
+    backgroundColor: '#222',
+  },
   showtimeSchedules: {
     padding: '16px',
     backgroundColor: '#fac54c',
+    display: 'flex',
+    alignItems: 'flex-start',
+
+    [theme.breakpoints.down(600)]: {
+      ...flexCenteredColumn,
+      justifyContent: 'center',
+    }
   },
   formatContainer: {
     width: '30%',
+    textAlign: 'left',
+    marginBottom: theme.spacing(0),
+
+    [theme.breakpoints.down(600)]: {
+       width: '100%',
+      textAlign: 'center',
+      marginBottom: theme.spacing(2),
+    }
   },
   btnShowtime: {
     position: 'relative',
