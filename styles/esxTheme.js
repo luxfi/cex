@@ -91,7 +91,21 @@ export default createMuiTheme({
     MuiInputLabel: {
       formControl: {
         position: 'static'
-      }
+      },
+    },
+
+    MuiFormLabel: {
+      root: {
+        fontSize: '0.8rem', // to somewhat match the MuiInputLabel-shrink labels  
+        lineHeight: '1rem',
+        '&.MuiInputLabel-shrink': {
+          fontSize: '1.1rem',
+          lineHeight: '1.3rem',
+        },
+        '&.Mui-focused': {
+          color: 'inherit'  
+        },
+      },
     },
 
     MuiInput: {
@@ -109,11 +123,28 @@ export default createMuiTheme({
       }
     },
 
-
-
     MuiFormControl: {
       root: {
-        display: 'flex' // not 'inline-flex'
+        display: 'flex', // not 'inline-flex'
+        '& legend': {
+          marginBottom: '3px'
+        }
+      },
+    },
+
+    MuiFormControlLabel: {
+      root: {
+        marginLeft: 0,
+        marginRight: 0,
+      },
+      label: {
+        fontSize: '0.8rem'
+      }
+    },
+
+    MuiRadio: {
+      root: {
+        padding: '2px'
       }
     },
 

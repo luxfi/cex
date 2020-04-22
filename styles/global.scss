@@ -8,3 +8,8 @@ $SPACING_BASE: 8px; // to match theme
 select.MuiSelect-root > option {
   min-height: 0;
 }
+
+.MuiIconButton-label svg.MuiSvgIcon-root {
+  width: 0.8rem;
+  height: 0.8rem;
+}

@@ -128,228 +128,230 @@ export default inject('store')(observer((props) => {
           validationSchema={formValidationSchema}
           onSubmit={handleSubmit}
         >
-          {({
-            values,
-            errors,
-            handleChange,
-            handleSubmit,
-            isSubmitting,
-          }) => (
-            <>
-              <Grid container spacing={4}>
-                <Grid item xs={12} sm={6} md={4}>
-                  <Paper elevation={2}>
-                    <Typography variant='h6'>Address</Typography>
-                    <TextField
-                      required
-                      name='address1'
-                      label='Address 1'
-                      error={!!(errors.address1)}
-                      placeholder='123 Main St.'
-                      value={values.address1}
-                      onChange={handleChange}
-                    />
-                    <TextField
-                      required
-                      name='address2'
-                      label='Address 2'
-                      error={!!(errors.address2)}
-                      placeholder='Apt. 23'
-                      value={values.address2}
-                      onChange={handleChange}
-                    />
-                    <TextField
-                      required
-                      name='city'
-                      label='City'
-                      error={!!(errors.city)}
-                      placeholder='San Jose'
-                      value={values.city}
-                      onChange={handleChange}
-                    />
-                    <div className={s.stateAndZip}>
-                      <NativeSelect 
-                        name='state' 
-                        label='State'
-                        value={values.state}
-                        values={states.map((s, i) => ({value: s.code, label: s.code}))}
-                        onChange={handleChange}
-                      />
-                      <TextField
-                        required
-                        name='postalCode'
-                        label='Postal Code'
-                        error={!!(errors.postalCode)}
-                        placeholder='12345'
-                        value={values.postalCode}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <TextField
-                      required
-                      name='country'
-                      label='Country'
-                      value={values.country}
-                      onChange={handleChange}
-                      error={!!(errors.country)}
-                      select
-                    >
-                      {countries.map((option, index) => (
-                        <MenuItem key={option.code} value={option.code}>
-                          {option.name}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                    <TextField
-                      required
-                      name='phone'
-                      label='Phone'
-                      error={!!(errors.phone)}
-                      placeholder='9999999999'
-                      value={values.phone}
-                      onChange={handleChange}
-                    />
-                  </Paper>
-                </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                  <Paper elevation={2}>
-                    <Typography variant='h6'>Personal Details</Typography>
-                    <RadioGroupEx 
-                      label={employmentGroup.groupLabel} 
-                      name={employmentGroup.groupName} 
-                      value={values.employment} 
-                      onChange={handleChange} 
-                      values={employmentGroup.values} 
-                    />
-                    <RadioGroupEx 
-                      label={maritalStatusGroup.groupLabel} 
-                      name={maritalStatusGroup.groupName} 
-                      value={values.maritalStatus} 
-                      onChange={handleChange} 
-                      values={maritalStatusGroup.values} 
-                    />
-                    <TextField
-                      name='dependants'
-                      label='Dependants'
-                      error={!!(errors.dependants)}
-                      value={values.dependants}
-                      onChange={handleChange}
-                    />
-                  </Paper>
-                </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                  <Paper elevation={2}>
-                    <Typography variant='h6'>Accounts</Typography>
-                      <TextField
-                        required
-                        name='APEX'
-                        label='APEX'
-                        placeholder='5P75152'
-                        value={values.APEX}
-                        onChange={handleChange}
-                        disabled
-                      />
-                      <TextField
-                        name='RHS'
-                        label='RHS'
-                        placeholder='1000744308'
-                        value={values.RHS}
-                        onChange={handleChange}
-                        disabled
-                      />
-                    <NativeSelect
-                      label='Pattern Day Trade Protection'
-                      name={dayTradeProtection}
-                      value={values.dayTradeProtection ? 'yes' : 'no'}
-                      onChange={handleChange}
-                      values={[
-                        { value: '', ariaLabel: 'None'},
-                        { value: 'yes', label: 'Yes' },
-                        { value: 'no', label: 'No' }
-                      ]}
-                    />
-                  </Paper>
-                </Grid> 
-                <Grid item xs={12} sm={6} md={4}>
-                  <Paper elevation={2}>
-                    <Typography variant='h6'>Assets</Typography>
-                    <RadioGroupEx 
-                      label={liquidGroup.groupLabel} 
-                      name={liquidGroup.groupName} 
-                      value={values.liquid} 
-                      onChange={handleChange} 
-                      values={liquidGroup.values} 
-                    />
-                    <RadioGroupEx 
-                      label={netWorthGroup.groupLabel} 
-                      name={netWorthGroup.groupName} 
-                      value={values.netWorth} 
-                      onChange={handleChange} 
-                      values={netWorthGroup.values} 
-                    />
-                    <RadioGroupEx 
-                      label={yearlyIncomeGroup.groupLabel} 
-                      name={yearlyIncomeGroup.groupName} 
-                      value={values.yearlyIncome} 
-                      onChange={handleChange} 
-                      values={yearlyIncomeGroup.values} 
-                    />
-                  </Paper>
-                </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                  <Paper elevation={2}>
-                    <Typography variant='h6'>Investment Profile</Typography>
-                    <RadioGroupEx 
-                      label={goalGroup.groupLabel} 
-                      name={goalGroup.groupName} 
-                      value={values.goal} 
-                      onChange={handleChange} 
-                      values={goalGroup.values} 
-                    />
-                    <RadioGroupEx 
-                      label={timelineGroup.groupLabel} 
-                      name={timelineGroup.groupName} 
-                      value={values.timeLine} 
-                      onChange={handleChange} 
-                      values={timelineGroup.values} 
-                    />
-                    <RadioGroupEx 
-                      label={experienceGroup.groupLabel} 
-                      name={experienceGroup.groupName} 
-                      value={values.experience} 
-                      onChange={handleChange} 
-                      values={experienceGroup.values} 
-                    />
-                    <RadioGroupEx 
-                      label={riskTolerenceGroup.groupLabel} 
-                      name={riskTolerenceGroup.groupName} 
-                      value={values.riskTolerence} 
-                      onChange={handleChange} 
-                      values={riskTolerenceGroup.values} 
-                    />
-                    <RadioGroupEx 
-                      label={liquidityGroup.groupLabel} 
-                      name={liquidityGroup.groupName} 
-                      value={values.liquidity} 
-                      onChange={handleChange} 
-                      values={liquidityGroup.values} 
-                    />
-                  </Paper>
-                </Grid>
-              </Grid>
+        {({
+          values,
+          errors,
+          handleChange,
+          handleSubmit,
+          isSubmitting,
+        }) => (
+          <>
+          <Grid container spacing={4}>
+            <Grid item xs={12} sm={6} md={4}>
+              <Paper elevation={2}>
+                <Typography variant='h6'>Address</Typography>
+                <TextField
+                  required
+                  name='address1'
+                  label='Address 1'
+                  error={!!(errors.address1)}
+                  placeholder='123 Main St.'
+                  value={values.address1}
+                  onChange={handleChange}
+                />
+                <TextField
+                  required
+                  name='address2'
+                  label='Address 2'
+                  error={!!(errors.address2)}
+                  placeholder='Apt. 23'
+                  value={values.address2}
+                  onChange={handleChange}
+                />
+                <TextField
+                  required
+                  name='city'
+                  label='City'
+                  error={!!(errors.city)}
+                  placeholder='San Jose'
+                  value={values.city}
+                  onChange={handleChange}
+                />
+                <div className={s.stateAndZip}>
+                  <NativeSelect 
+                    name='state' 
+                    label='State'
+                    value={values.state}
+                    values={states.map((s, i) => ({value: s.code, label: s.code}))}
+                    onChange={handleChange}
+                    required
+                  />
+                  <TextField
+                    required
+                    name='postalCode'
+                    label='Postal Code'
+                    error={!!(errors.postalCode)}
+                    placeholder='12345'
+                    value={values.postalCode}
+                    onChange={handleChange}
+                  />
+                </div>
+                <TextField
+                  required
+                  name='country'
+                  label='Country'
+                  value={values.country}
+                  onChange={handleChange}
+                  error={!!(errors.country)}
+                  select
+                >
+                  {countries.map((option, index) => (
+                    <MenuItem key={option.code} value={option.code}>
+                      {option.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
+                <TextField
+                  required
+                  name='phone'
+                  label='Phone'
+                  error={!!(errors.phone)}
+                  placeholder='9999999999'
+                  value={values.phone}
+                  onChange={handleChange}
+                />
+              </Paper>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Paper elevation={2}>
+                <Typography variant='h6'>Personal Details</Typography>
+                <MUIRadioGroup 
+                  label={employmentGroup.groupLabel} 
+                  name={employmentGroup.groupName} 
+                  value={values.employment} 
+                  onChange={handleChange} 
+                  values={employmentGroup.values} 
+                />
+                <MUIRadioGroup 
+                  label={maritalStatusGroup.groupLabel} 
+                  name={maritalStatusGroup.groupName} 
+                  value={values.maritalStatus} 
+                  onChange={handleChange} 
+                  values={maritalStatusGroup.values} 
+                />
+                <TextField
+                  name='dependants'
+                  label='Dependants'
+                  error={!!(errors.dependants)}
+                  value={values.dependants}
+                  onChange={handleChange}
+                />
+              </Paper>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Paper elevation={2}>
+                <Typography variant='h6'>Accounts</Typography>
+                <TextField
+                  required
+                  name='APEX'
+                  label='APEX'
+                  placeholder='5P75152'
+                  value={values.APEX}
+                  onChange={handleChange}
+                  disabled
+                />
+                <TextField
+                  name='RHS'
+                  label='RHS'
+                  placeholder='1000744308'
+                  value={values.RHS}
+                  onChange={handleChange}
+                  disabled
+                />
+                <NativeSelect
+                  label='Pattern Day Trade Protection'
+                  name={dayTradeProtection}
+                  value={values.dayTradeProtection ? 'yes' : 'no'}
+                  onChange={handleChange}
+                  values={[
+                    { value: '', ariaLabel: 'None'},
+                    { value: 'yes', label: 'Yes' },
+                    { value: 'no', label: 'No' }
+                  ]}
+                  required
+                />
+              </Paper>
+            </Grid> 
+            <Grid item xs={12} sm={6} md={4}>
+              <Paper elevation={2}>
+                <Typography variant='h6'>Assets</Typography>
+                <MUIRadioGroup 
+                  label={liquidGroup.groupLabel} 
+                  name={liquidGroup.groupName} 
+                  value={values.liquid} 
+                  onChange={handleChange} 
+                  values={liquidGroup.values} 
+                />
+                <MUIRadioGroup 
+                  label={netWorthGroup.groupLabel} 
+                  name={netWorthGroup.groupName} 
+                  value={values.netWorth} 
+                  onChange={handleChange} 
+                  values={netWorthGroup.values} 
+                />
+                <MUIRadioGroup 
+                  label={yearlyIncomeGroup.groupLabel} 
+                  name={yearlyIncomeGroup.groupName} 
+                  value={values.yearlyIncome} 
+                  onChange={handleChange} 
+                  values={yearlyIncomeGroup.values} 
+                />
+              </Paper>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Paper elevation={2}>
+                <Typography variant='h6'>Investment Profile</Typography>
+                <MUIRadioGroup 
+                  label={goalGroup.groupLabel} 
+                  name={goalGroup.groupName} 
+                  value={values.goal} 
+                  onChange={handleChange} 
+                  values={goalGroup.values} 
+                />
+                <MUIRadioGroup 
+                  label={timelineGroup.groupLabel} 
+                  name={timelineGroup.groupName} 
+                  value={values.timeLine} 
+                  onChange={handleChange} 
+                  values={timelineGroup.values} 
+                />
+                <MUIRadioGroup 
+                  label={experienceGroup.groupLabel} 
+                  name={experienceGroup.groupName} 
+                  value={values.experience} 
+                  onChange={handleChange} 
+                  values={experienceGroup.values} 
+                />
+                <MUIRadioGroup 
+                  label={riskTolerenceGroup.groupLabel} 
+                  name={riskTolerenceGroup.groupName} 
+                  value={values.riskTolerence} 
+                  onChange={handleChange} 
+                  values={riskTolerenceGroup.values} 
+                />
+                <MUIRadioGroup 
+                  label={liquidityGroup.groupLabel} 
+                  name={liquidityGroup.groupName} 
+                  value={values.liquidity} 
+                  onChange={handleChange} 
+                  values={liquidityGroup.values} 
+                />
+              </Paper>
+            </Grid>
+          </Grid>
 
-              <Button
-                variant='contained'
-                color='primary'
-                onClick={handleSubmit}
-                className={s.mainButton}
-                disabled={isSubmitting}
-                size='large'
-              >
-                Save
-              </Button>
-            </>
-          )}
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={handleSubmit}
+            className={s.mainButton}
+            disabled={isSubmitting}
+            size='large'
+          >
+            Save
+          </Button>
+          </>
+        )}
         </Formik>
     </Paper>
   )
@@ -368,28 +370,27 @@ const formValidationSchema = object().shape({
     .positive('Invalid phone number'),
 })
 
-const RadioGroupEx = ({label, name, value, onChange, values}) => (
+  // As per MUI docs
+const MUIRadioGroup = ({label, name, value, onChange, values, required}) => (
   <FormControl component="fieldset">
-    <InputLabel required >{label}</InputLabel>
+    <FormLabel component="legend" required={!!required} >{label}</FormLabel>
     <RadioGroup name={name} value={value} onChange={onChange} >
     {values.map((v, i) => (
-      <FormControlLabel value={v.value} control={<Radio />} label={v.label}/>
+      <FormControlLabel value={v.value} control={<Radio color='inherit'/>} label={v.label} />
     ))}
     </RadioGroup>
   </FormControl>
 )
 
-const NativeSelect = ({name, label, value, values, onChange}) => (
-  <FormControl component="fieldset">
-    <InputLabel htmlFor={name} required >{label}</InputLabel>
+const NativeSelect = ({name, label, value, values, onChange, required}) => (
+  <FormControl >
+    <InputLabel id={`label-id-${name}`} required={!!required}>{label}</InputLabel>
     <Select
       native
+      labelId={`label-id-${name}`}
       value={value}
       onChange={onChange}
-      inputProps={{
-        name: name,
-        id: name,
-      }}
+      inputProps={{name: name}}
     >
     {values.map((v, i) => (
       ('ariaLabel' in v) 
@@ -402,49 +403,22 @@ const NativeSelect = ({name, label, value, values, onChange}) => (
   </FormControl> 
 )
 
-/*
-                      label='Pattern Day Trade Protection'
-                      name={dayTradeProtection}
-                      value={values.dayTradeProtection ? 'yes' : 'no'}
-                      onChange={handleChange}
-                      values={[
-                        {
-                          value: '',
-                          ariaLabel: 'None'
-                        },
-                        {
-                          value: 'yes',
-                          label: 'Yes'
-                        },
-                        {
-                          value: 'no',
-                          label: 'No'
-                        }
-                      ]}
-                    />
-*/
-
-
-
-
-/*
-
-                      <TextField
-                        name='state'
-                        label='State'
-                        error={!!(errors.state)}
-                        placeholder=''
-                        value={values.state}
-                        onChange={handleChange}
-                        InputLabelProps={{ shrink: true }}
-                        select
-                        required
-                      >
-                      {states.map((option, index) => (
-                        <option key={option.code} value={option.code}>
-                          {option.code}
-                        </option>
-                      ))}
-                      </TextField>
-
-                      */
+const MUISelect = ({name, label, value, values, onChange, required}) => (
+  <FormControl >
+    <InputLabel id={`label-id-${name}`} required={!!required}>{label}</InputLabel>
+    <Select
+      labelId={`label-id-${name}`}
+      value={value}
+      onChange={onChange}
+      inputProps={{name: name}}
+    >
+    {values.map((v, i) => (
+      ('ariaLabel' in v) 
+      ? 
+      <MenuItem value={v.value} aria-label={v.ariaLabel} />
+      :
+      <MenuItem value={v.value}>{v.label}</MenuItem>
+    ))}
+    </Select>
+  </FormControl> 
+)

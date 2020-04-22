@@ -27,11 +27,11 @@ export default (theme) => ({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
 
-    '& fieldset': {
+    '& .MuiFormControl-root:first-child': {
       width: '40%',
       paddingRight: '4%',
     },
-    '& fieldset + div': {
+    '& .MuiFormControl-root.MuiTextField-root': {
       width: 'auto !important',
       marginTop: '0 !important'
     },
