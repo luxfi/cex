@@ -13,3 +13,15 @@ select.MuiSelect-root > option {
   width: 0.8rem;
   height: 0.8rem;
 }
+
+.MuiTextField-root.row-text-field-global-scss {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+
+  label {
+    margin-right: $SPACING_BASE;
+  }
+}
+

@@ -229,7 +229,7 @@ export default inject('store')(observer((props) => {
                   onChange={handleChange} 
                   values={maritalStatusGroup.values} 
                 />
-                <TextField
+                <RowTextField
                   name='dependants'
                   label='Dependants'
                   error={!!(errors.dependants)}
@@ -422,3 +422,8 @@ const MUISelect = ({name, label, value, values, onChange, required}) => (
     </Select>
   </FormControl> 
 )
+
+const RowTextField = (props) => (
+  <TextField className='row-text-field-global-scss' {...props} />  
+)
+
