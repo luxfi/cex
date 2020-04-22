@@ -75,7 +75,48 @@ export default createMuiTheme({
     useNextVariants: true
   },
 
+  props: {
+    MuiButtonBase: {
+      disableRipple: true
+    },
+    MuiInputLabel: {
+        // display labels above the control by default
+        // (no animation behavior)
+      shrink: true
+    }
+  },
+
   overrides: {
+
+    MuiInputLabel: {
+      formControl: {
+        position: 'static'
+      }
+    },
+
+    MuiInput: {
+      formControl: {
+        marginTop: '0 !important',
+      },
+      input: {
+        padding: '4px 6px'
+      }
+    },
+
+    MuiSelect: {
+      select: {
+        padding: '4px 6px'
+      }
+    },
+
+
+
+    MuiFormControl: {
+      root: {
+        display: 'flex' // not 'inline-flex'
+      }
+    },
+
     MuiPaper: {
       root: {
         padding: spacingPx(4)

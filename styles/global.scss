@@ -1,0 +1,10 @@
+$SPACING_BASE: 8px; // to match theme
+
+
+.MuiFormControl-root + .MuiFormControl-root {
+  margin-top: 8px; 
+}
+
+select.MuiSelect-root > option {
+  min-height: 0;
+}

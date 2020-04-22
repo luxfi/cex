@@ -1,38 +1,39 @@
 export default (theme) => ({
+
   root: {
 
+      // each card
+    '& .MuiPaper-root': {
+      paddingTop: theme.spacing(1.5),
+      '& h6': {
+        fontSize: '1rem',
+        marginBottom: theme.spacing(1.5),
+      }
+    },
     '& MuiFormControl-root': {
-
       display: 'block',
       width: '100%',
-      marginBottom: theme.spacing(2),
-
-      '& .MuiTextField-root': {
-        width: '100%',
-      },
-      '& .MuiInput-root': {
-        padding: `0 ${theme.spacing(2)}`,
-        marginRight: theme.spacing(2),
-      },
-      '& .MuiFormLabel-root': {
-        margin: `0 ${theme.spacing(2)}`,
-        color: theme.palette.text.secondary,
-      },
-      '& .MuiSvgIcon-root': {
-        width: '0.8rem',
-        height: '0.8rem',
-      },
-      '& .MuiIconButton-root': {
-        padding: theme.spacing(1),
-      },
-      '& .MuiFormControlLabel-label': {
-        fontSize: '1rem',
-      },
-          
     },
 
-    '& MuiFormGroup-root': {
-      marginTop: theme.spacing(2),
+    '& .MuiTextField-root': {
+      width: '100%',
+    },
+  },
+
+  stateAndZip: {
+    margin: `${theme.spacing(1)} 0`,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+
+    '& fieldset': {
+      width: '40%',
+      paddingRight: '4%',
+    },
+    '& fieldset + div': {
+      width: 'auto !important',
+      marginTop: '0 !important'
     },
   },
 

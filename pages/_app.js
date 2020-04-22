@@ -34,6 +34,9 @@ import {
 } from '../components/app'
 
 import initializeStores from '../stores/stores'
+
+import '../styles/global.scss'
+
 import styles from '../styles/app.style.js'
 import theme from '../styles/esxTheme'
 
