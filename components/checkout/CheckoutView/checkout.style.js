@@ -51,6 +51,7 @@ export default (theme) => ({
     padding: '20px',
     backgroundColor: '#222',
     marginRight: 1,
+    textAlign: 'left',
   },
   ticketBtn: {
     padding: theme.spacing(0),
