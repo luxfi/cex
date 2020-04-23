@@ -158,143 +158,136 @@ class PickSeatsView extends React.Component {
     const formatedDate = selectedDate && selectedDate.formated
 
     return (
-      <Box className={classes.outerContainer}>
+      <>
         <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
-        <Grid container alignItems='flex-start' justify='space-evenly'>
-          <Box className={classes.seatsSection}>
-            <Grid className={classes.seatsTimerContainer} container justify='space-between' alignItems='center'>
-              <span>
-                {`${formatedDate} ${moment(localShowtimeStart).format('hh:mm A')}`}</span>
-              <button type='button' className={classes.seatLegendbtn} onClick={this.openDialog}>Seat Legend</button>
-              <CustomDialog
-                open={uiStore.dialog.open}
-                title='Seat Legend'
-                handleClose={this.closeDialog}
-              >
-                <Grid container justify='center' alignItems='center' className={classes.seatLegendList}>
-                  <Grid container wrap='nowrap' className={classes.seatLegendListRow}>
-                    <Grid container>
-                      <img src='/images/seats/selectedSeat.png' alt='' className={classes.seatLegendIcon}/>
-                      <span>My Seat</span>
-                    </Grid>
-                    <Grid container>
-                      <img src='/images/seats/standard.png' alt='' className={classes.seatLegendIcon}/>
-                      <span>Standard</span>
-                    </Grid>
-                  </Grid>
-                  <Grid container wrap='nowrap' className={classes.seatLegendListRow}>
-                    <Grid container>
-                      <img src='/images/seats/wheelchair.png' alt='' className={classes.seatLegendIcon}/>
-                      <span>Wheelchair</span>
-                    </Grid>
-                    <Grid container>
-                      <img src='/images/seats/companion.png' alt='' className={classes.seatLegendIcon}/>
-                      <span>Companion</span>
-                    </Grid>
-                  </Grid>
-                  <Grid container wrap='nowrap' className={classes.seatLegendListRow}>
-                    <Grid container>
-                      <img src='/images/seats/pickedSeat.png' alt='' className={classes.seatLegendIcon}/>
-                      <span>Unavailable Seat</span>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </CustomDialog>
+        <CustomDialog
+          open={uiStore.dialog.open}
+          title='Seat Legend'
+          handleClose={this.closeDialog}
+        >
+          <div>
+            <div className={classes.seatLegend}>
+              <img src='/images/seats/selectedSeat.png' alt='' className={classes.seatLegendIcon}/>
+              <span>My Seat</span>
+            </div>
+            <div className={classes.seatLegend}>
+              <img src='/images/seats/standard.png' alt='' className={classes.seatLegendIcon}/>
+              <span>Standard</span>
+            </div>
+            <div className={classes.seatLegend}>
+              <img src='/images/seats/wheelchair.png' alt='' className={classes.seatLegendIcon}/>
+              <span>Wheelchair</span>
+            </div>
+            <div className={classes.seatLegend}>
+              <img src='/images/seats/companion.png' alt='' className={classes.seatLegendIcon}/>
+              <span>Companion</span>
+            </div>
+            <div item xs={12} sm={4}>
+              <img src='/images/seats/pickedSeat.png' alt='' className={classes.seatLegendIcon}/>
+              <span>Unavailable Seat</span>
+            </div>
+          </div>
+        </CustomDialog>
+        <CustomDialog
+          open={modalOpened}
+          handleClose={this.closeModal}
+        >
+          <div>
+            <Typography>{modalMessage}</Typography>
+            <Button className={classes.okButton} onClick={this.closeModal}>OK</Button>
+          </div>
+        </CustomDialog>
+        <div className={classes.outerContainer}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={9} md={10} className={classes.seatsSection}>
+              <Grid className={classes.seatsTimerContainer} container justify='space-between' alignItems='center'>
+                <span>
+                  {`${formatedDate} ${moment(localShowtimeStart).format('hh:mm A')}`}
+                </span>
+                <button type='button' className={classes.seatLegendbtn} onClick={this.openDialog}>Seat Legend</button>
+              </Grid>
+              <div className={classes.seatsContainer}>
+                <Typography className={classes.screenHeader} align='center' variant='h12'>SCREEN</Typography>
+                <Divider light />
+                <div className={classes.screenSection}>
+                  {
+                    seats.map((seatRow, index) => (<div key={uuid.v4()} className={classes.seatColumn}>
+                        { seatRow.map((seatCoulumn) => (
+                          <li key={uuid.v4()} className={classes.seats}>
+                              <button
+                                disabled={seatCoulumn.picked}
+                                type='button'
+                                style={{ border: 'none', background: 'none' }}
+                                onClick={this.selectSeat(seatCoulumn.name, seatCoulumn.selected, seatCoulumn.type, index)}
+                              >
+                                <Tooltip title={seatCoulumn.name} aria-label={seatCoulumn.name}>
+                                  {
+                                    seatCoulumn.type === 'empty' ? <span />
+                                      : (<img
+                                        className={classes.seatImage}
+                                        src={`/images/seats/${seatCoulumn.picked ? 'pickedSeat' : seatCoulumn.selected ? 'selectedSeat' : seatCoulumn.type}.png`}
+                                        alt='Seats'
+                                      />)
+                                  }
+                                </Tooltip>
+                            </button>
+                          </li>
+                        )) }
+                      </div>))
+                  }
+                </div>
+              </div>
             </Grid>
-            <Box className={classes.seatsContainer}>
-              <Typography className={classes.screenHeader} align='center' variant='h6'>SCREEN</Typography>
-              <Divider light />
-              <Box className={classes.screenSection}>
+            <Grid item xs={12} sm={3} md={2} className={classes.formatSection}>
+              <div>
+                <Typography className={classes.formatHeader} align='center' variant='h12'>STANDARD FORMAT</Typography>
+              </div>
+              <div className={classes.btnList}>
                 {
-                  seats.map((seatRow, index) => (<Grid key={uuid.v4()} container justify='space-evenly' alignItems='center'>
-                      { seatRow.map((seatCoulumn) => (
-                        <li key={uuid.v4()} className={classes.seats}>
-                            <button
-                              disabled={seatCoulumn.picked}
-                              type='button'
-                              style={{ border: 'none', background: 'none' }}
-                              onClick={this.selectSeat(seatCoulumn.name, seatCoulumn.selected, seatCoulumn.type, index)}
-                            >
-                              <Tooltip title={seatCoulumn.name} aria-label={seatCoulumn.name}>
-                                {
-                                  seatCoulumn.type === 'empty' ? <span />
-                                    : (<img
-                                      className={classes.seatImage}
-                                      src={`/images/seats/${seatCoulumn.picked ? 'pickedSeat' : seatCoulumn.selected ? 'selectedSeat' : seatCoulumn.type}.png`}
-                                      alt='Seats'
-                                    />)
-                                }
-                              </Tooltip>
-                          </button>
-                        </li>
-                      )) }
-                    </Grid>))
+                  venueShowtimes.length
+                    ? venueShowtimes.map((showtime) => (
+                        <Link key={showtime.showtimeId} href='/pickSeats' as={`/pickSeats/${movieSlug}?venueId=${venueId}&showtimeId=${showtime.showtimeId}${refString}`}>
+                        <Button
+                          className={`${classes.movieTimeBtn} 
+                            ${showtime.showtimeId === showtimeId && classes.selectedBtn}`}
+                          variant='outlined'
+                          onClick={this.changeShowtime(showtime.showtimeId)}
+                        >
+                          {moment(showtime.localShowtimeStart).format('hh:mm A')}
+                        </Button>
+                      </Link>
+                    ))
+                    : 'Loading...'
                 }
-                <CustomDialog
-                  open={modalOpened}
-                  handleClose={this.closeModal}
-                >
-                  <Grid container direction='column' alignItems='center' justify='center'>
-                    <Typography>{modalMessage}</Typography>
-                    <Button className={classes.okButton} onClick={this.closeModal}>OK</Button>
-                  </Grid>
-                </CustomDialog>
-              </Box>
-            </Box>
-          </Box>
-          <Box className={classes.formatSection}>
-            <Grid container justify='center'>
-              <Typography className={classes.formatHeader} align='center' variant='h6'>STANDARD FORMAT</Typography>
+              </div>
             </Grid>
-            <Grid container direction='column' wrap='nowrap' className={classes.btnList}>
-              {
-                venueShowtimes.length
-                  ? venueShowtimes.map((showtime) => (
-                      <Link key={showtime.showtimeId} href='/pickSeats' as={`/pickSeats/${movieSlug}?venueId=${venueId}&showtimeId=${showtime.showtimeId}${refString}`}>
-                      <Button
-                        className={`${classes.movieTimeBtn} 
-                          ${showtime.showtimeId === showtimeId && classes.selectedBtn}`}
-                        variant='outlined'
-                        onClick={this.changeShowtime(showtime.showtimeId)}
-                      >
-                        {moment(showtime.localShowtimeStart).format('hh:mm A')}
-                      </Button>
-                    </Link>
+            <Grid item xs={6}>
+              <Typography variant='h12' className={classes.subHeader} noWrap>YOUR SEATS</Typography>
+              <Typography variant='h5' className={classes.selectedSeats} noWrap>
+                {totalSeatsCount < ticketsCount
+                  ? (<span>{totalSeatsCount} of {ticketsCount} selected</span>)
+                  : selectedSeats.map((selectedSeat) => (
+                  <span key={selectedSeat.name}>{selectedSeat.name} </span>
                   ))
-                  : 'Loading...'
-              }
+                }
+              </Typography>
             </Grid>
-          </Box>
-        </Grid>
-        <Grid container justify='space-between' alignItems='flex-start' wrap='nowrap' className={classes.subTotalContainer}>
-          <Grid>
-            <Typography variant='h6' className={classes.subHeader} noWrap>YOUR SEATS</Typography>
-            <Typography variant='h5' className={classes.selectedSeats} noWrap>
-              {totalSeatsCount < ticketsCount
-                ? (<span>{totalSeatsCount} of {ticketsCount} selected</span>)
-                : selectedSeats.map((selectedSeat) => (
-                <span key={selectedSeat.name}>{selectedSeat.name} </span>
-                ))
-              }
-            </Typography>
-          </Grid>
-          <Grid container justify='flex-end'>
-            <Box>
-              <Typography variant='h6' className={classes.subHeader}>SUBTOTAL</Typography>
-              <Typography variant='h5' className={classes.subTotal}>{formatCurrency(subTotal)}</Typography>
-            </Box>
-            <Grid>
-              <Button
-                className={classes.nextButton}
-                disabled={totalSeatsCount < ticketsCount || ticketsCount <= 0}
-                onClick={this.gotoNextPage}
-              >
-                NEXT
-              </Button>
+            <Grid item xs={6}>
+              <div className={classes.nextButtonContainer}>
+                <Typography variant='h12' className={classes.subHeader}>SUBTOTAL</Typography>
+                <Typography variant='h5' className={classes.subTotal}>{formatCurrency(subTotal)}</Typography>
+                <Button
+                  className={classes.nextButton}
+                  disabled={totalSeatsCount < ticketsCount || ticketsCount <= 0}
+                  onClick={this.gotoNextPage}
+                >
+                  NEXT
+                </Button>
+              </div>
             </Grid>
           </Grid>
-        </Grid>
-      </Box>
+        </div>
+      </>
     )
   }
 }
