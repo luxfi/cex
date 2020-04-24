@@ -104,11 +104,7 @@ export default (theme) => ({
   subTotalContainer: {
     padding: theme.spacing(8, 2),
     display: 'flex',
-    justifyContent: 'flex-start',
-
-    [theme.breakpoints.up('md')]: {
-      justifyContent: 'flex-end',
-    },
+    justifyContent: 'flex-end',
   },
   subTotalText: {
     fontSize: '16px',
