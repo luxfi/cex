@@ -96,7 +96,6 @@ class Index extends React.Component {
           classes.leftAndRight,
           classes.breadcrumbRow,
         )}
-        style={{ marginTop: '20px' }}
       >
         <CustomBreadcrumbs>{movie.name}</CustomBreadcrumbs>
         <PageTabs

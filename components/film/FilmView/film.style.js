@@ -25,6 +25,15 @@ export default (theme) => ({
 
   breadcrumbRow: {
     marginBottom: '30px',
+    marginTop: '20px',
+    [theme.breakpoints.down('sm')]: {
+      marginTop: 0,
+    },
+    '& > .MuiBreadcrumbs-root': {
+      [theme.breakpoints.down('sm')]: {
+        display: 'none',
+      },
+    },
   },
 
   pageTabsOuter: {
@@ -36,7 +45,7 @@ export default (theme) => ({
     [theme.breakpoints.down('sm')]: {
       width: '100%',
       justifyContent: 'space-between',
-      paddingTop: 20,
+      paddingTop: 0,
     },
   },
   pageTab: {
