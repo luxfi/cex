@@ -98,6 +98,10 @@ export default (theme) => ({
   },
   selectedSeats: {
     fontSize: 20,
+
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 16,
+    }
   },
   subTotal: {
     fontSize: 20,
