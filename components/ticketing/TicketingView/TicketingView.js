@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Divider,
   FormControl,
@@ -88,22 +87,22 @@ class TicketingView extends React.Component {
     const movie = movieStore.getMovieBySlug(slug)
 
     return (
-      <Box className={classes.outerContainer}>
-        <Box>
+      <div className={classes.outerContainer}>
+        <div>
           <Grid container alignContent="center" justify="center" className={classes.movieSummaryHero}>
             <Grid item xs={12} md={3} lg={2} className={classes.movieSummaryHeroPoster}>
               <img className={classes.heroImage} src={movie.posterImg} alt='' role='presentation' />
             </Grid>
             <Grid item xs={12} md={9} lg={10} className={classes.movieSummaryHeroInfo}>
               <Typography variant='h1' className={classes.movieSummaryHeroTitle}>{movie.name}</Typography>
-              <Box display="flex" alignItems='center' className={classes.movieSummaryHeroMetadata}>
+              <div display="flex" alignItems='center' className={classes.movieSummaryHeroMetadata}>
                 {movie.rated ? (<Typography variant="subtitle2" className={classes.rRatedContainer}>{movie.rated}</Typography>) : ''}
                 {movie.releaseDate ? (<Typography variant="subtitle2" className={classes.movieTimer}>Release Date: <b>{movie.releaseDate}</b></Typography>) : ''}
-              </Box>
-              <Box className={classes.movieSummaryHeroSynopsis}>
+              </div>
+              <div className={classes.movieSummaryHeroSynopsis}>
                 <Typography variant="subtitle2">{movie.shortDescription}</Typography>
-              </Box>
-              <Box display="flex" alignItems="center" className={classes.buttonContainer}>
+              </div>
+              <div  className={classes.buttonContainer}>
                 <Button
                   href={movie.trailer}
                   className={classes.watchTrailerButton}
@@ -117,11 +116,11 @@ class TicketingView extends React.Component {
                 >
                   Add To Watchlist
                 </Button>
-              </Box>
+              </div>
             </Grid>
           </Grid>
-        </Box>
-        <Box>
+        </div>
+        <div>
           <CustomDialog
             open={uiStore.dialog.open && uiStore.dialog.name === 'date'}
             title='Select Date'
@@ -192,12 +191,12 @@ class TicketingView extends React.Component {
               </ListItem>
             </List>
           </CustomDialog>
-          <Grid container alignItems="center" className={classes.dateLocationStripe}>
-            <Grid item xs={12} md={4} lg={3} className={classes.findMovieHeaderSection}>
+          <div className={classes.dateLocationStripe}>
+            <div className={classes.findMovieHeaderSection}>
               <Typography variant='h2' className={classes.dateLocationStripeHeading}>Find Movie Theaters & Showtimes</Typography>
-            </Grid>
-            <Grid item xs={12} md={8} lg={9} className={classes.buttonSection}>
-              <Box display="flex">
+            </div>
+            <div className={classes.buttonSection}>
+              <div className={classes.findMovieHeaderButton}>
                 <span className={classes.dateLocationStripeText}>for</span>
                 <Button
                   startIcon={<DateRangeIcon className={classes.svgIcon} />}
@@ -207,8 +206,8 @@ class TicketingView extends React.Component {
                 >
                   {selectedDate.formated ? selectedDate.formated : '...' }
                 </Button>
-              </Box>
-              <Box display="flex">
+              </div>
+              <div className={classes.findMovieHeaderButton}>
                 <span className={classes.dateLocationStripeText}>near</span>
                 <Button
                   startIcon={<PinDropIcon className={classes.svgIcon} />}
@@ -221,8 +220,8 @@ class TicketingView extends React.Component {
                     : '...'
                   }
                 </Button>
-              </Box>
-              <Box display="flex">
+              </div>
+              <div className={classes.findMovieHeaderButton}>
                 <span className={classes.dateLocationStripeText}>in</span>
                 <Button
                   endIcon={<KeyboardArrowDownIcon className={classes.svgIcon} />}
@@ -231,14 +230,14 @@ class TicketingView extends React.Component {
                 >
                   All Formats
                 </Button>
-              </Box>
-            </Grid>
-          </Grid>
-          <Box>
+              </div>
+            </div>
+          </div>
+          <div>
             <MovieVenues movieVenues={movieVenues} />
-          </Box>
-        </Box>
-      </Box>
+          </div>
+        </div>
+      </div>
     )
   }
 }
