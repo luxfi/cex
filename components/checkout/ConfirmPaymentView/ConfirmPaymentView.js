@@ -175,143 +175,145 @@ class ConfirmPaymentView extends React.Component {
     const movie = movieStore.getMovieBySlug(movieSlug)
 
     return (
-      <Grid container className={classes.outerContainer} justify='space-evenly' alignItems='flex-start'>
-        <Box className={classes.ticketContainer}>
-          <Box>
-            <Typography className={classes.header} variant='h6'>Promo Codes</Typography>
-            <Grid container justify='flex-start' wrap='nowrap' className={classes.promoCodeContainer}>
-              <TextField
-                label='Promo Code'
-                variant='outlined'
-                size='small'
-                className={classes.promoCodeInput}
-              />
-              <Button className={classes.applyPromoBtn}>APPLY</Button>
-            </Grid>
-          </Box>
-          <Box className={classes.ticketOrderContainer}>
-            <Typography className={classes.header} variant='h6'>Your Order</Typography>
-            <Table className={classes.table}>
-              <TableBody>
-                {tickets.map(((ticket) => {
-                  if (!ticket.quantity) return null
-                  return (
-                  <TableRow key={ticket.category}>
+      <Grid container className={classes.outerContainer}>
+        <Grid item xs={12} md={3}>
+          <img className={classes.movieImg} src={movie.posterImg} alt='' />
+          <Typography variant='h5'>{movie.name}</Typography>
+          <div>{selectedVenue.venue && selectedVenue.venue.address.line}</div>
+          <div>{`${selectedDate.formated && selectedDate.formated} ${moment(selectedShowtime && selectedShowtime.localShowtimeStart).format('hh:mm A')}`}</div>
+        </Grid>
+        <Grid item xs={12} md={9}>
+          <div className={classes.ticketContainer}>
+            <div>
+              <Typography className={classes.header} variant='h6'>Promo Codes</Typography>
+              <div className={classes.promoCodeContainer}>
+                <TextField
+                  label='Promo Code'
+                  variant='outlined'
+                  size='small'
+                  className={classes.promoCodeInput}
+                />
+                <Button className={classes.applyPromoBtn}>APPLY</Button>
+              </div>
+            </div>
+            <div className={classes.ticketOrderContainer}>
+              <Typography className={classes.header} variant='h6'>Your Order</Typography>
+              <Table className={classes.table}>
+                <TableBody>
+                  {tickets.map(((ticket) => {
+                    if (!ticket.quantity) return null
+                    return (
+                    <TableRow key={ticket.category}>
+                      <TableCell>
+                        {ticket.category} ticket
+                      </TableCell>
+                      <TableCell>
+                        {formatCurrency(ticket.price * ticket.quantity)}
+                      </TableCell>
+                    </TableRow>
+                    )}))}
+                  <TableRow key='Subtotal'>
                     <TableCell>
-                      {ticket.category} ticket
+                      Subtotal
                     </TableCell>
                     <TableCell>
-                      {formatCurrency(ticket.price * ticket.quantity)}
+                      {formatCurrency(subTotal)}
                     </TableCell>
                   </TableRow>
-                  )}))}
-                <TableRow key='Subtotal'>
-                  <TableCell>
-                    Subtotal
-                  </TableCell>
-                  <TableCell>
-                    {formatCurrency(subTotal)}
-                  </TableCell>
-                </TableRow>
-                <TableRow key='serviceFee'>
-                  <TableCell>
-                    Service fee
-                  </TableCell>
-                  <TableCell>
-                    {formatCurrency(serviceFee)}
-                  </TableCell>
-                </TableRow>
-                <TableRow key='total'>
-                  <TableCell>
-                    YOUR TOTAL
-                  </TableCell>
-                  <TableCell>
-                    {formatCurrency(total)}
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </Box>
-          <Box>
-            <Typography variant='h6' style={{ marginBottom: 12 }}>Payment Method</Typography>
-            {transactionStatus === 'failed'
-              && (<Typography color='error'>
-                {paymentError || 'Transaction failed, try again.'}
-              </Typography>)
-            }
-            <Box className={classes.paymentMethodContainer}>
-              {formattedAccounts.map((formattedAccount, index) => (
-                <Grid
-                  key={uuid.v4()}
-                  onClick={this.choosePaymentMethod(index, 'bank')}
-                  className={`${classes.editCardSection} ${paymentMethodIndex === index ? 'selected' : null}`}
-                  container
-                  alignItems='center'
-                  justify='space-between'
-                  wrap='nowrap'
-                  component='button'
-                  disabled={(formattedAccount.name === 'ESX' && !accountBalance)}
-                >
-                  <Grid container alignItems='center'>
-                    <AccountBalanceIcon fontSize='small' />
-                    <Typography style={{ fontSize: 14, marginLeft: 5 }}>
-                      {formattedAccount.name === 'ESX' ? 'Available Deposit' : formattedAccount.name}
-                    </Typography>
+                  <TableRow key='serviceFee'>
+                    <TableCell>
+                      Service fee
+                    </TableCell>
+                    <TableCell>
+                      {formatCurrency(serviceFee)}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow key='total'>
+                    <TableCell>
+                      YOUR TOTAL
+                    </TableCell>
+                    <TableCell>
+                      {formatCurrency(total)}
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </div>
+            <div>
+              <Typography variant='h6' style={{ marginBottom: 12 }}>Payment Method</Typography>
+              {transactionStatus === 'failed'
+                && (<Typography color='error'>
+                  {paymentError || 'Transaction failed, try again.'}
+                </Typography>)
+              }
+              <div className={classes.paymentMethodContainer}>
+                {formattedAccounts.map((formattedAccount, index) => (
+                  <Grid
+                    key={uuid.v4()}
+                    onClick={this.choosePaymentMethod(index, 'bank')}
+                    className={`${classes.editCardSection} ${paymentMethodIndex === index ? 'selected' : null}`}
+                    container
+                    alignItems='center'
+                    justify='space-between'
+                    wrap='nowrap'
+                    component='button'
+                    disabled={(formattedAccount.name === 'ESX' && !accountBalance)}
+                  >
+                    <div className={classes.accountNameContainer}>
+                      <AccountBalanceIcon fontSize='small' />
+                      <Typography className={classes.accountName}>
+                        {formattedAccount.name === 'ESX' ? 'Available Deposit' : formattedAccount.name}
+                      </Typography>
+                    </div>
+                    <div className={classes.accountBalanceContainer}>
+                      <Typography className={classes.accountBalance}>{this.getFundStatus(formattedAccount)}</Typography>
+                    </div>
                   </Grid>
-                  <Grid container justify='flex-end'>
-                    <Typography style={{ fontSize: 14 }}>{this.getFundStatus(formattedAccount)}</Typography>
-                  </Grid>
-                </Grid>
-              ))}
-              <Divider />
-              {cardPaymentOptions.length ? cardPaymentOptions.map((paymentOption, cardIndex) => (
-                <Grid
-                  onClick={this.choosePaymentMethod(cardIndex + formattedAccounts.length, 'card', paymentOption)}
-                  className={`${classes.editCardSection} ${paymentMethodIndex === (cardIndex + formattedAccounts.length) ? 'selected' : null}`}
-                  container
-                  alignItems='center'
-                  justify='space-between'
-                  wrap='nowrap'
-                  key={uuid.v4()}
+                ))}
+                <Divider />
+                {cardPaymentOptions.length ? cardPaymentOptions.map((paymentOption, cardIndex) => (
+                  <Grid
+                    onClick={this.choosePaymentMethod(cardIndex + formattedAccounts.length, 'card', paymentOption)}
+                    className={`${classes.editCardSection} ${paymentMethodIndex === (cardIndex + formattedAccounts.length) ? 'selected' : null}`}
+                    container
+                    alignItems='center'
+                    justify='space-between'
+                    wrap='nowrap'
+                    key={uuid.v4()}
 
-                >
-                  <Grid container alignItems='center'>
-                    <CreditCardIconType cardType={paymentOption.type} className={classes.creditCardIcon} />
-                    <span>ending in {paymentOption.creditCard.substr(paymentOption.creditCard.length - 4)}</span>
+                  >
+                    <div className={classes.accountNameContainer}>
+                      <CreditCardIconType cardType={paymentOption.type} className={classes.creditCardIcon} />
+                      <span>ending in {paymentOption.creditCard.substr(paymentOption.creditCard.length - 4)}</span>
+                    </div>
+                    <button type='button' className={classes.link} onClick={this.openEditCardPaymentMethodModal(cardIndex)}>Edit</button>
                   </Grid>
-                  <button type='button' className={classes.link} onClick={this.openEditCardPaymentMethodModal(cardIndex)}>Edit</button>
-                </Grid>
-              )) : null}
-              <Divider />
-              <Box className={classes.addPaymentSection}>
-                <button onClick={this.openAddPaymentMethodModal} type='button' className={classes.link}>Add payment method</button>
-              </Box>
-              <AddPaymentMethodModal />
-            </Box>
-          </Box>
-        </Box>
-        <Box>
-          <Box><img className={classes.movieImg} src={movie.posterImg} alt='' /></Box>
-          <Box>
-            <Typography variant='h5'>{movie.name}</Typography>
-              <Box>{selectedVenue.venue && selectedVenue.venue.address.line}</Box>
-              <Box>{`${selectedDate.formated && selectedDate.formated} ${moment(selectedShowtime && selectedShowtime.localShowtimeStart).format('hh:mm A')}`}</Box>
-          </Box>
-        </Box>
-        <Grid container justify='flex-end' alignItems='center' className={classes.subTotalContainer}>
-          <Box>
-            <Typography variant='h6' className={classes.subTotalText}>TOTAL</Typography>
-            <Typography variant='h5' className={classes.subTotal}>{formatCurrency(total)}</Typography>
-          </Box>
-          <Grid>
-            <Button
-              disabled={processingPayment || !paymentOptionSelected || total === serviceFee}
-              className={classes.buyBtn}
-              onClick={this.purchaseTickets}
-            >
-              { processingPayment ? <CircularProgress color='inherit' /> : 'BUY' }
-            </Button>
-          </Grid>
+                )) : null}
+                <Divider />
+                <div className={classes.addPaymentSection}>
+                  <button onClick={this.openAddPaymentMethodModal} type='button' className={classes.link}>Add payment method</button>
+                </div>
+                <AddPaymentMethodModal />
+              </div>
+            </div>
+          </div>
+        </Grid>
+        <Grid item xs={12}>
+          <div className={classes.subTotalContainer}>
+            <div>
+              <Typography variant='h6' className={classes.subTotalText}>TOTAL</Typography>
+              <Typography variant='h5' className={classes.subTotal}>{formatCurrency(total)}</Typography>
+            </div>
+            <div>
+              <Button
+                disabled={processingPayment || !paymentOptionSelected || total === serviceFee}
+                className={classes.buyBtn}
+                onClick={this.purchaseTickets}
+              >
+                { processingPayment ? <CircularProgress color='inherit' /> : 'BUY' }
+              </Button>
+            </div>
+          </div>
         </Grid>
       </Grid>
     )
