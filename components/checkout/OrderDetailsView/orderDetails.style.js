@@ -1,9 +1,17 @@
 export default (theme) => ({
   container: {
-    margin: '52px auto 0',
-    padding: '20px 32px',
+    marginTop: theme.spacing(6),
+    padding: '20px',
     position: 'relative',
-    flexGrow: 1,
+    '& > *': {
+      padding: theme.spacing(2),
+      [theme.breakpoints.down('sm')]: {
+        padding: theme.spacing(1),
+      },
+    },
+    [theme.breakpoints.down('sm')]: {
+      marginTop: 0,
+    },
   },
 
   aTags: {
@@ -21,6 +29,9 @@ export default (theme) => ({
 
   padding20: {
     padding: 20,
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(2),
+    },
   },
 
   borderBottom: {
@@ -30,12 +41,16 @@ export default (theme) => ({
   },
 
   shareLabel: {
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
 
   topText: {
     textAlign: 'center',
     marginTop: '3em',
+    [theme.breakpoints.down('sm')]: {
+      marginTop: 0,
+      paddingTop: 0,
+    },
   },
 
   movieDetails: {
@@ -49,12 +64,28 @@ export default (theme) => ({
     },
   },
 
+  screenDetailsWrapper: {
+    width: '100%',
+    display: 'flex',
+    flexWrap: 'wrap',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    },
+  },
+
   ticketDetail: {
     padding: 20,
     textAlign: 'center',
     '&:not(:last-child)': {
       borderRight: '1px solid #535353',
+      [theme.breakpoints.down('sm')]: {
+        borderBottom: '1px solid #535353',
+        borderRight: 'none',
+      },
     },
+    flexGrow: 1,
+    maxWidth: '100%',
+    flexBasis: 0,
   },
 
   ticketDetailsLink: {
@@ -63,6 +94,15 @@ export default (theme) => ({
 
   sideBar: {
     textAlign: 'center',
+  },
+
+  marginBottom: {
+    '&:not(:last-child)': {
+      marginBottom: theme.spacing(3),
+      [theme.breakpoints.down('sm')]: {
+        marginBottom: theme.spacing(2),
+      },
+    },
   },
 
   sidebarButton: {

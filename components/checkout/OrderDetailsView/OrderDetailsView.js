@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   ButtonBase,
   CircularProgress,
@@ -138,47 +137,48 @@ class OrderDetailsView extends React.Component {
     const movieTime = moment(movieShowtimeDetails.localShowtimeStart).format('LT')
     const qrCodeData = encodeURI(ticketUrl) // ideally, this should be the ticket information
 
+    const movieDetailsClasses = classNames(classes.lighterBg, classes.padding20, classes.movieDetails, classes.marginBottom)
+
     return (
-      <Box className={classNames(classes.container, classes.padding20)}>
+      <div className={classNames(classes.container, classes.padding20)}>
         {
           loading ? (
-            <Box className={classes.loadingIcon}>
+            <div className={classes.loadingIcon}>
               <CircularProgress />
-            </Box>
+            </div>
           ) : (
             <>
-            <Box className={classes.topText}>
+            <div className={classes.topText}>
               <Typography variant='h4'>{ ticketExist ? 'You\'re all set' : 'Invalid Ticket' }</Typography>
               <Typography component='span'>
-                { ticketExist ? 'Find your ticket details below' : 'It seems you\'re using a broken link or trying to access a ticket that doesn\'t' }
+                { ticketExist ? 'Find your ticket details below' : 'It seems you\'re using a broken link or trying to access a ticket that doesn\'t exist' }
               </Typography>
-            </Box>
-            { ticketExist && <Grid container xs={12} spacing={3} className={classNames(classes.darkerBg, classes.container)} justify='space-evenly' alignItems='flex-start'>
-                <Grid container item direction='column' xs={9} spacing={3} className='print-area'>
-                  <Grid item>
-                    <Box className={classNames(classes.lighterBg, classes.padding20, classes.movieDetails)}>
-                      <img src={movie.posterImg} alt={`${movie.name} poster`} />
-                      <QRCode value={qrCodeData} size={250} level='M' includeMargin />
-                      <Typography variant='h4'>{movie.name}</Typography>
-                    </Box>
-                  </Grid>
-                  <Grid item>
-                    <Box className={classNames(classes.lighterBg, classes.borderBottom)}>
-                      <Grid container>
-                        <Grid item xs className={classes.ticketDetail}>
+            </div>
+            { ticketExist &&
+              <Grid container className={classNames(classes.darkerBg, classes.container)}>
+                <Grid item md={9} xs={12} className={classNames(classes.marginBottom, 'print-area')}>
+                  <div className={movieDetailsClasses}>
+                    <img src={movie.posterImg} alt={`${movie.name} poster`} />
+                    <QRCode value={qrCodeData} size={250} level='M' includeMargin />
+                    <Typography variant='h4'>{movie.name}</Typography>
+                  </div>
+                  <div className={classes.marginBottom}>
+                    <div className={classNames(classes.lighterBg, classes.borderBottom)}>
+                      <div className={classes.screenDetailsWrapper}>
+                        <div item xs className={classes.ticketDetail}>
                           <Typography variant='body1'>{movieDate}</Typography>
                           <Typography component='span'>{movieTime}</Typography>
-                        </Grid>
-                        <Grid item xs className={classes.ticketDetail}>
+                        </div>
+                        <div item xs className={classes.ticketDetail}>
                           <Typography variant='body1'>Screen</Typography>
                           <Typography component='span'>11</Typography>
-                        </Grid>
-                        <Grid item xs className={classes.ticketDetail}>
+                        </div>
+                        <div item xs className={classes.ticketDetail}>
                           <Typography variant='body1'>{ ticketDetails.numberOfSeats === 1 ? '1 Seat' : `${ticketDetails.numberOfSeats} seats`}</Typography>
                           <Typography component='span'>View</Typography>
-                        </Grid>
-                      </Grid>
-                      <Box className={classes.ticketDetailsLink}>
+                        </div>
+                      </div>
+                      <div className={classes.ticketDetailsLink}>
                         <Button
                           variant='text'
                           color='secondary'
@@ -187,8 +187,8 @@ class OrderDetailsView extends React.Component {
                         >
                           <Typography component='span'>{`${venueName}: ${line}, ${city}, ${state}`}</Typography>
                         </Button>
-                      </Box>
-                      <Box className={classes.ticketDetailsLink}>
+                      </div>
+                      <div className={classes.ticketDetailsLink}>
                         <Button
                           variant='text'
                           color='secondary'
@@ -197,11 +197,11 @@ class OrderDetailsView extends React.Component {
                         >
                           <Typography component='span'>What to do at the Cinema</Typography>
                         </Button>
-                      </Box>
-                    </Box>
-                  </Grid>
-                  <Grid item>
-                    <Box className={classNames(classes.lighterBg, classes.padding20, classes.borderBottom)}>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={classes.marginBottom}>
+                    <div className={classNames(classes.lighterBg, classes.padding20, classes.borderBottom)}>
                       <Typography className={classes.mapSectionTitle} variant='h4'>Venue details</Typography>
                       <Map
                         lat={lat}
@@ -215,20 +215,20 @@ class OrderDetailsView extends React.Component {
                         height='300px'
                         width='100%'
                       />
-                      <Box className={classes.venueAddress} >
+                      <div className={classes.venueAddress} >
                         <Typography className='name'>{venueName}</Typography>
                         <Typography>{`${line}, ${city}, ${state}`}</Typography>
-                      </Box>
-                    </Box>
-                  </Grid>
+                      </div>
+                    </div>
+                  </div>
                 </Grid>
-                <Grid container direction='column' item xs={3} spacing={3} className={classes.sideBar}>
-                  <Grid item>
-                    <Box className={classNames(classes.lighterBg, classes.borderBottom)}>
-                      <Box className={classes.padding20}>
+                <Grid item md={3} xs={12} className={classes.sideBar}>
+                  <div className={classes.marginBottom}>
+                    <div className={classNames(classes.lighterBg, classes.borderBottom)}>
+                      <div className={classes.padding20}>
                         <Typography>We sent your ticket to:</Typography>
                         <Typography>{userStore.email}</Typography>
-                      </Box>
+                      </div>
                       <ButtonBase className={classes.sidebarButton} onClick={() => this.handleEmailTicket(userStore.email, ticketUrl)}>
                         <EmailIcon fontSize='large' />
                         <Typography>Email my ticket</Typography>
@@ -237,10 +237,10 @@ class OrderDetailsView extends React.Component {
                         <PrintIcon fontSize='large' />
                         <Typography>Print my ticket</Typography>
                       </ButtonBase>
-                    </Box>
-                  </Grid>
-                  <Grid item>
-                    <Box className={classNames(classes.lighterBg, classes.borderBottom)}>
+                    </div>
+                  </div>
+                  <div className={classes.marginBottom}>
+                    <div className={classNames(classes.lighterBg, classes.borderBottom)}>
                       <Link href='/account/orders'>
                         <a className={classes.aTags}>
                           <ButtonBase className={classes.sidebarButton}>
@@ -253,10 +253,10 @@ class OrderDetailsView extends React.Component {
                         <CancelIcon fontSize='large' />
                         <Typography>Cancel</Typography>
                       </ButtonBase> */}
-                    </Box>
-                  </Grid>
-                  <Grid item>
-                    <Box className={classNames(classes.lighterBg, classes.borderBottom)}>
+                    </div>
+                  </div>
+                  <div className={classes.marginBottom}>
+                    <div className={classNames(classes.lighterBg, classes.borderBottom)}>
                       <Typography className={classes.shareLabel}>Share this film with others!</Typography>
                       <ShareButtons
                         show={['Facebook', 'Twitter', 'LinkedIn', 'CopyURL']}
@@ -267,8 +267,8 @@ class OrderDetailsView extends React.Component {
                         iconSize='large'
                         hideLabels
                       />
-                    </Box>
-                  </Grid>
+                    </div>
+                  </div>
                 </Grid>
               </Grid>
             }
@@ -288,7 +288,7 @@ class OrderDetailsView extends React.Component {
             </>
           )
         }
-      </Box>
+      </div>
     )
   }
 }
