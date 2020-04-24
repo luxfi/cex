@@ -16,7 +16,7 @@ import uuid from 'uuid'
 
 import { formatCurrency, slugFromPath } from '../../../util'
 
-import { AuthModal, CustomDialog } from '../../app'
+import { AuthModal, CustomDialog, Loading } from '../../app'
 
 import styles from './pickSeats.style'
 
@@ -243,22 +243,26 @@ class PickSeatsView extends React.Component {
                 <Typography className={classes.formatHeader} align='center' variant='h12'>STANDARD FORMAT</Typography>
               </div>
               <div className={classes.btnList}>
-                {
-                  venueShowtimes.length
-                    ? venueShowtimes.map((showtime) => (
-                        <Link key={showtime.showtimeId} href='/pickSeats' as={`/pickSeats/${movieSlug}?venueId=${venueId}&showtimeId=${showtime.showtimeId}${refString}`}>
-                        <Button
-                          className={`${classes.movieTimeBtn} 
-                            ${showtime.showtimeId === showtimeId && classes.selectedBtn}`}
-                          variant='outlined'
-                          onClick={this.changeShowtime(showtime.showtimeId)}
+                <Loading loading={!venueShowtimes.length}>
+                  {
+                    venueShowtimes.map((showtime) => (
+                        <Link
+                          key={showtime.showtimeId}
+                          href='/pickSeats'
+                          as={`/pickSeats/${movieSlug}?venueId=${venueId}&showtimeId=${showtime.showtimeId}${refString}`}
                         >
-                          {moment(showtime.localShowtimeStart).format('hh:mm A')}
-                        </Button>
+                          <Button
+                            className={`${classes.movieTimeBtn} 
+                              ${showtime.showtimeId === showtimeId && classes.selectedBtn}`}
+                            variant='outlined'
+                            onClick={this.changeShowtime(showtime.showtimeId)}
+                          >
+                            {moment(showtime.localShowtimeStart).format('hh:mm A')}
+                          </Button>
                       </Link>
                     ))
-                    : 'Loading...'
-                }
+                  }
+                </Loading>
               </div>
             </Grid>
             <Grid item xs={6}>
