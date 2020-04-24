@@ -207,7 +207,7 @@ class PickSeatsView extends React.Component {
                 <button type='button' className={classes.seatLegendbtn} onClick={this.openDialog}>Seat Legend</button>
               </Grid>
               <div className={classes.seatsContainer}>
-                <Typography className={classes.screenHeader} align='center' variant='h12'>SCREEN</Typography>
+                <Typography className={classes.screenHeader} align='center' variant='h2'>SCREEN</Typography>
                 <Divider light />
                 <div className={classes.screenSection}>
                   {
@@ -242,8 +242,8 @@ class PickSeatsView extends React.Component {
               <div>
                 <Typography className={classes.formatHeader} align='center' variant='h12'>STANDARD FORMAT</Typography>
               </div>
-              <div className={classes.btnList}>
-                <Loading loading={!venueShowtimes.length}>
+              <Loading loading={!venueShowtimes.length}>
+                <div className={classes.btnList}>
                   {
                     venueShowtimes.map((showtime) => (
                         <Link
@@ -262,8 +262,8 @@ class PickSeatsView extends React.Component {
                       </Link>
                     ))
                   }
-                </Loading>
-              </div>
+                </div>
+              </Loading>
             </Grid>
             <Grid item xs={6}>
               <Typography variant='h12' className={classes.subHeader} noWrap>YOUR SEATS</Typography>
