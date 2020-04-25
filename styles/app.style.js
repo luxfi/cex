@@ -6,6 +6,7 @@ export default (theme) => ({
     flexDirection: 'column',
     minHeight: '100vh',
     overflowX: 'hidden',
+    padding: 0,
     // Default Filled Input Changes
     '& .MuiInput-underline': {
       borderRadius: 4,
@@ -24,11 +25,8 @@ export default (theme) => ({
     maxWidth: theme.maxStagingWidth,
     marginTop: '64px',
 
-    padding: `0px ${theme.spacing(3)}`,
-  
-    [theme.breakpoints.up('lg')]: {
-      padding: `0px ${theme.spacing(8)}`,
-    },
+    padding: theme.spacing(0),
+
     [theme.breakpoints.down('xs')]: {
       padding: `0px ${theme.spacing(2)}`,
     },

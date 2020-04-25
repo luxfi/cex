@@ -1,20 +1,43 @@
-export default () => ({
+export default (theme) => ({
   outerContainer: {
-    margin: '52px auto 0',
-    padding: '20px 32px',
-    position: 'relative',
+    width: '100%',
     backgroundColor: 'rgba(15,21,26,0.8)',
-    flexGrow: 1,
+    padding: theme.spacing(2),
   },
   ticketContainer: {
-    width: '60%',
-    padding: '0 20px',
+    width: '100%',
+    paddingLeft: theme.spacing(0),
+    marginTop: theme.spacing(4),
+
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: theme.spacing(2),
+      marginTop: theme.spacing(0),
+    }
   },
   movieImg: {
-    width: '200px',
-    height: '300px',
+    width: '100%',
+    maxWidth: 317.5,
+    height: 317.5,
+  },
+  accountNameContainer: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  accountName: {
+    fontSize: 14,
+    marginLeft: 5,
+  },
+  accountBalanceContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  accountBalance: {
+    fontSize: 14,
   },
   promoCodeContainer: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    flexWrap: 'nowrap',
     backgroundColor: '#222',
     padding: 12,
   },
@@ -69,10 +92,10 @@ export default () => ({
     padding: '10px 0',
   },
   buyBtn: {
-    minWidth: '200px',
-    height: '50px',
-    marginLeft: '20px',
-    fontSize: '20px',
+    minWidth: 200,
+    height: 50,
+    marginLeft: 20,
+    fontSize: 20,
     fontWeight: 700,
     backgroundColor: '#FBC43E',
     color: '#090909',
@@ -82,7 +105,10 @@ export default () => ({
     },
   },
   subTotalContainer: {
-    padding: '60px 20px',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    padding: theme.spacing(8, 0),
   },
   subTotalText: {
     fontSize: '14px',

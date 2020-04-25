@@ -26,16 +26,18 @@ export default (theme) => ({
     padding: theme.spacing(2),
     borderRadius: '4px',
     backgroundColor: '#222',
-    ...flexCenteredRow,
-    alignItems: 'center',
     margin: '0 auto 0',
   },
   movieSummaryHeroTitle: {
-    fontSize: '28px',
+    fontSize: '24px',
     fontWeight: 600,
     lineHeight: 1,
     marginBottom: '8px',
     marginTop: 0,
+  
+    [theme.breakpoints.up('md')]: {
+      fontSize: '28px',
+    }
   },
   whiteSvgIcon: {
     ...svgIcon,
@@ -46,30 +48,65 @@ export default (theme) => ({
   },
   watchTrailerButton: {
     ...buttons,
+  
+    [theme.breakpoints.down(551)]: {
+      width: '100%',
+    }
   },
   bookmarkButton: {
     ...buttons,
-    marginLeft: '16px',
+    marginLeft: theme.spacing(2),
+  
+    [theme.breakpoints.down(551)]: {
+      marginLeft: theme.spacing(0),
+      marginTop: theme.spacing(2),
+      width: '100%',
+    }
   },
   outerContainer: {
-    padding: '0',
+    padding: theme.spacing(0),
+
+    [theme.breakpoints.down('lg')]: {
+      padding: theme.spacing(0, 3),
+    }
   },
   movieSummaryHeroMetadata: {
-    marginBottom: '16px',
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: '5px',
+    justifyContent: 'flex-start',
+
+    [theme.breakpoints.up('md')]: {
+      marginBottom: '16px',
+    }
+  },
+  buttonContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+
+    [theme.breakpoints.down(551)]: {
+      ...flexCenteredColumn,
+    }
   },
   movieSummaryHeroPoster: {
-    display: 'table-cell',
-    position: 'relative',
+    ...flexCenteredRow,
+
+    [theme.breakpoints.up('md')]: {
+      ...flexStartColumn,
+    }
   },
   heroImage: {
-    width: '107px',
+    width: '170px',
     height: '170px',
+    objectFit: 'cover',
   },
   movieSummaryHeroInfo: {
-    display: 'table-cell',
-    width: '100%',
-    verticalAlign: 'middle',
-    paddingLeft: '24px',
+    textAlign: 'left',
+
+    [theme.breakpoints.down('md')]: {
+      margin: theme.spacing(1, 0),
+    }
   },
   rRatedContainer: {
     fontSize: '12px',
@@ -84,7 +121,11 @@ export default (theme) => ({
   },
   movieSummaryHeroSynopsis: {
     marginBottom: '16px',
-    maxWidth: '700px',
+    maxWidth: '100%',
+  
+    [theme.breakpoints.up('md')]: {
+      maxWidth: '700px',
+    }
   },
   movieSummaryHeroInfoLink: {
     fontWeight: 600,
@@ -94,17 +135,48 @@ export default (theme) => ({
     backgroundColor: 'transparent',
   },
   dateLocationStripe: {
-    textAlign: 'left',
     margin: '16px 0',
     padding: '16px',
     backgroundColor: '#222',
     position: 'relative',
     borderRadius: '4px',
+    display: 'flex',
+    justifyContent: 'flex-start',
+
+    [theme.breakpoints.down(795)]: {
+      ...flexStartColumn,
+    }
+  },
+  findMovieHeaderSection: {
+    [theme.breakpoints.down(795)]: {
+      marginBottom: theme.spacing(2),
+    }
+  },
+  buttonSection: {
+    display: 'flex',
+    justifyContent: 'justify-start',
+
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'center',
+    },
+
+    [theme.breakpoints.down(551)]: {
+      ...flexCenteredColumn,
+      width: '100%',
+    }
+  },
+  findMovieHeaderButton: {
+    display: 'flex',
+
+    [theme.breakpoints.down(551)]: {
+      width: '100%',
+      marginBottom: theme.spacing(2),
+    }
   },
   dateLocationStripeHeading: {
     display: 'inline-block',
     verticalAlign: 'middle',
-    marginRight: '6px',
+    marginRight: theme.spacing(2),
     fontWeight: 600,
     fontSize: '14px',
   },
@@ -113,6 +185,9 @@ export default (theme) => ({
     verticalAlign: 'middle',
     marginRight: '8px',
     fontSize: '16px',
+    [theme.breakpoints.down('md')]: {
+      display: 'none'
+    }
   },
   dateLocationStripeDropdown: {
     backgroundColor: whiteColor,
@@ -123,8 +198,14 @@ export default (theme) => ({
     '&:hover': {
       backgroundColor: whiteColor,
     },
+    marginBottom: theme.spacing(0),
+
+    [theme.breakpoints.down(551)]: {
+      width: '100%',
+      marginBottom: theme.spacing(2),
+    }
   },
-  panelBody: {
+  notFoundSection: {
     padding: '16px',
     backgroundColor: '#222',
     textAlign: 'center',
@@ -135,7 +216,7 @@ export default (theme) => ({
   movieVenueIconContainer: {
     width: '64px',
     height: '64px',
-    paddingRight: '16px',
+    marginRight: '16px',
     verticalAlign: 'middle',
     ...flexCenteredColumn,
   },
@@ -151,18 +232,48 @@ export default (theme) => ({
   movieVenueTitleLink: {
     color: '#00aeef',
     textDecoration: 'none',
-    fontSize: '20px',
+    fontSize: '16px',
+
+    [theme.breakpoints.up('md')]: {
+      fontSize: '20px',
+    }
+  },
+  venueName: {
+    fontSize: '14px',
+
+    [theme.breakpoints.up('md')]: {
+      fontSize: '18px',
+    }
   },
   movieVenueContainer: {
     padding: '16px 0',
     ...flexStartColumn,
   },
+  panelBody: {
+    padding: '16px',
+    backgroundColor: '#222',
+  },
   showtimeSchedules: {
     padding: '16px',
     backgroundColor: '#fac54c',
+    display: 'flex',
+    alignItems: 'flex-start',
+
+    [theme.breakpoints.down(600)]: {
+      ...flexCenteredColumn,
+      justifyContent: 'center',
+    }
   },
   formatContainer: {
     width: '30%',
+    textAlign: 'left',
+    marginBottom: theme.spacing(0),
+
+    [theme.breakpoints.down(600)]: {
+       width: '100%',
+      textAlign: 'center',
+      marginBottom: theme.spacing(2),
+    }
   },
   btnShowtime: {
     position: 'relative',
@@ -180,16 +291,13 @@ export default (theme) => ({
   },
   datesList: {
     width: '100%',
-    minWidth: '360px',
     padding: '0 20px',
   },
   locationList: {
     width: '100%',
-    minWidth: '360px',
   },
   formatsList: {
     width: '100%',
-    minWidth: '360px',
     padding: '20px',
   },
 })
