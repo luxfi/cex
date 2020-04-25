@@ -44,6 +44,9 @@ const navStyles = ({ spacing, palette, breakpoints }) => ({
   container: {
     backgroundColor: palette.background.default,
   },
+  hideNavBar: {
+    display: 'none',
+  }
 })
 
 const tabsStylesHook = {

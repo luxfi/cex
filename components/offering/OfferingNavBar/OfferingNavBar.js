@@ -103,7 +103,13 @@ const OfferingNavBar = ({
 
   return (
     <div
-      className={classNames(navStyles.container, navStyles.sticky)}
+      className={classNames(
+        navStyles.container,
+        navStyles.sticky,
+        {
+          [navStyles.hideNavBar]: isMobileDevice,
+        }
+      )}
       ref={headerRef}
     >
       <div className={classNames(navStyles.root)}>
@@ -111,7 +117,7 @@ const OfferingNavBar = ({
           <Grid item container lg={12} justify="center">
             <Tabs
               classes={tabsStyles}
-              variant={isMobileDevice ? "scrollable" : "fullWidth"}
+              variant="fullWidth"
               value={tabIndex}
               onChange={(e, index) => {
                 setTabIndex(index)
