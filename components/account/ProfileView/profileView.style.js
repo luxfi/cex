@@ -1,9 +1,11 @@
 export default (theme) => ({
 
   root: {
+    padding: theme.spacing(2),
 
       // each card
     '& .MuiPaper-root': {
+      padding: theme.spacing(2),
       paddingTop: theme.spacing(1.5),
       '& h6': {
         fontSize: '1rem',

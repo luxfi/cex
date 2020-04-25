@@ -4,14 +4,13 @@ const miniReset = {
 }
 
 export default (theme) => ({
-
-  itemTitle: {
-    ...miniReset,
-    fontSize: "1.2rem",
-    fontWeight: 600,
-    margin: theme.spacing(0, 2)
+  newsCard: {
+    height: 'auto',
   },
-
+  image: {
+    height: 225,
+    width: '100%',
+  },
   sectionTitle: {
     ...miniReset,
     fontSize: "1.5rem",
@@ -28,12 +27,12 @@ export default (theme) => ({
     ...miniReset,
     fontSize: "1.1rem",
     fontWeight: 600,
-    margin: theme.spacing(0.5, 0)
+    margin: theme.spacing(0.5, 0),
+    minHeight: 75,
   },
 
   itemCopy: {
     overflow: 'hidden',
-    // whiteSpace: 'nowrap',
     display: '-webkit-box',
     textOverflow: 'ellipsis',
     WebkitLineClamp: 3,

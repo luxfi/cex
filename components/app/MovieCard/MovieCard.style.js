@@ -1,6 +1,3 @@
-import autoprefixer from "autoprefixer"
-import { relativeTimeRounding } from "moment"
-
 const lowerGradientRGBString = '0, 0, 0'
 //const hoverGradientRGBString = '176, 130, 19'
 // const hoverGradientRGBString = '176, 145, 100'
@@ -13,6 +10,7 @@ export default (theme) => ({
     position: 'relative',
     height: '100%',
     zIndex: 1,
+    overflow: 'hidden',
     transition: 'transform 200ms ease 100ms',
     '&:hover': {
       zIndex: 10,
@@ -42,7 +40,9 @@ export default (theme) => ({
   },
 
   cardMedia: {
+    display: 'block',
     objectFit: 'cover',
+    width: '100%',
     height: '100%',
   },
 

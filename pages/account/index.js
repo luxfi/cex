@@ -31,6 +31,7 @@ const BASE_ROUTE = '/account'
 
 const styles = (theme) => ({
   header: {
+    padding: theme.spacing(2),
     marginBottom: theme.spacing(2),
     borderLeft: `1px solid ${theme.palette.secondary.main}`,
       // To match left edge of selected tab      

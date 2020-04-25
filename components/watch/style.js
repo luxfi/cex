@@ -53,30 +53,33 @@ export default (theme) => ({
   },
 
   watchGrid: {
-    display: 'grid',
-    gridTemplate: 'auto auto auto 1fr/minmax(0,1280px) 410px',
-    justifyContent: 'center',
     paddingTop: 12,
-    columnGap: 24,
-    gridColumnGap: 20,
     '& .video': {
-      gridColumn: '1/2',
-      gridRow: '1/2',
+      width: '100%',
       '& .video-player': {
         minHeight: 480,
         width: '100%',
-        height: '100%',
+        height: 'auto',
+        [theme.breakpoints.down(960)]: {
+          minHeight: 400,
+        },
+        [theme.breakpoints.down(768)]: {
+          minHeight: 350,
+        },
+        [theme.breakpoints.down(480)]: {
+          minHeight: 300,
+        },
+        [theme.breakpoints.down(375)]: {
+          minHeight: 250,
+        },
       },
-    },
-    '& .videoInfoBox': {
-      gridColumn: '1/2',
-      gridRow: '3/4',
     },
   },
 
   videoContainer: {
     position: 'relative',
     width: '100%',
+    flex: 1,
     '& .video': {
       top: 0,
       left: 0,
@@ -85,17 +88,63 @@ export default (theme) => ({
     },
   },
 
-  videoInfoBox: {
-    display: 'grid',
-    grid: 'auto auto/60px auto max-content',
+  deskTopShowNextSection: {
+    [theme.breakpoints.down(960)]: {
+      display: 'none',
+    },
+  },
+
+  mobileShowNextSection: {
+    display: 'none',
+
+    [theme.breakpoints.down(960)]: {
+      display: 'block',
+    },
+  },
+
+  videoList: {
+    maxHeight: '100%',
+    overflowY: 'scroll',
+    overflowX: 'hidden',
+  
+    '& > a': {
+      lineHeight: 1,
+      textDecoration: 'none',
+      color: GREY,
+    },
+    [theme.breakpoints.down(960)]: {
+      maxHeight: 500,
+    },
+  },
+
+  imageWrapper: {
+    position: 'relative',
+    padding: 0,
+  },
+
+  movieInfoContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    [theme.breakpoints.down(480)]: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  },
+
+  movieInfo: {
+    display: 'flex',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    gridRowGap: 10,
-    gridColumn: '1/2',
-    gridRow: '3/4',
+  },
+
+  videoInfoBox: {
+    alignItems: 'center',
     '& .video-description': {
+      marginTop: 25,
       maxWidth: 615,
-      gridRow: '2/3',
-      gridColumn: '2/3',
       fontSize: 13,
       lineHeight: '16px',
       '& .collapsed': {
@@ -106,20 +155,6 @@ export default (theme) => ({
         maxHeight: 'none',
       },
     },
-  },
-
-  videoActions: {
-    '& > :not(:last-child)': {
-      marginRight: 8,
-    },
-  },
-
-  rating: {
-    display: 'inline-grid',
-    grid: 'auto auto/max-content max-content',
-    gridColumnGap: 16,
-    columnGap: 16,
-    gridRowGap: 4,
   },
 
   videoStats: {
@@ -143,8 +178,6 @@ export default (theme) => ({
   likeUnderline: {
     position: 'relative',
     display: 'block',
-    gridColumn: '1/span 2',
-    gridRow: '2/3',
   },
   iconButton: {
     padding: 5,
@@ -159,13 +192,7 @@ export default (theme) => ({
     height: 50,
     borderRadius: 50,
     overflow: 'hidden',
-    gridRow: '1/2',
-    gridColumn: '1/2',
-  },
-
-  videoInfo: {
-    gridRow: '1/2',
-    gridColumn: '2/3',
+    marginRight: 14,
   },
 
   videoPubDate: {
@@ -178,14 +205,17 @@ export default (theme) => ({
   },
 
   subShare: {
-    '& > :not(:last-child)': {
-      marginRight: 10,
-    },
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginTop: 20,
+    [theme.breakpoints.up(480)]: {
+      justifyContent: 'flex-end',
+      marginTop: 0,
+    }
   },
 
   subScribeButton: {
-    gridRow: '1/2',
-    gridColumn: '3/4',
     background: YELLOW,
     padding: '7px 15px',
   },
@@ -208,18 +238,24 @@ export default (theme) => ({
     color: '#000',
   },
 
-  linkBackLink: {
-    textDecoration: 'none',
+  buttonSection: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    [theme.breakpoints.up('lg')]: {
+      justifyContent: 'flex-end',
+    }
+  },
+  
+  buttonContainer: {
+    marginRight: 5,
   },
 
-  relatedVideos: {
-    gridColumn: '2/3',
-    gridRow: '1/span 4',
-    '& > a': {
-      lineHeight: 1,
-      textDecoration: 'none',
-      color: GREY,
-    },
+  linkBackLink: {
+    textDecoration: 'none',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   upNextTop: {
@@ -238,31 +274,14 @@ export default (theme) => ({
     alignItems: 'center',
   },
 
-  singleVideo: {
-    display: 'grid',
-    grid: 'auto/210px auto',
-    gridColumnGap: 10,
-    margin: '10px 0 0 0',
-  },
-
-  imageWrapper: {
-    position: 'relative',
-    gridRow: '1/2',
-    gridColumn: '1/2',
-    '& img': {
-      maxWidth: '100%',
-    },
-  },
-
-  sidebarVideoInfo: {
-    gridRow: '1/2',
-    gridColumn: '2/3',
+  movieImage: {
+    maxWidth: '100%',
   },
 
   playTime: {
     position: 'absolute',
-    bottom: 0,
-    right: 0,
+    bottom: 1,
+    right: 1,
     margin: 5,
     padding: '0px 5px',
     background: '#000',
@@ -277,7 +296,7 @@ export default (theme) => ({
   sidebarMovieTitle: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 13,
+    fontSize: 14,
     lineHeight: '18px',
     maxHeight: 36,
     margin: '0 0 5px 0',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import cx from 'classnames'
+import classNames from 'classnames'
 
 import IconArrowDown from '../Icons/IconArrowDown'
 
@@ -54,19 +54,19 @@ export default ({ children, activeSlide }) => {
   }
 
 
-  let classNames = [s.slider]
+  let sliderClasses = [s.slider]
   if (currentSlide != null) {
-    classNames.push(s.sliderOpen)
+    sliderClasses.push(s.sliderOpen)
   }
   if (noHover) {
-    classNames.push(noHover)
+    sliderClasses.push(noHover)
   }
 
   return (
     <SliderContext.Provider value={contextValue}>
       <div className={s.sliderWrapper}>
         <div
-          className={cx(classNames)}
+          className={classNames(sliderClasses)}
         >
           <div ref={containerRef} className={s.sliderContainer} {...slideProps}>{children}</div>
         </div>

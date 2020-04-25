@@ -1,51 +1,50 @@
-import React from 'react'
-import { inject, observer } from 'mobx-react'
-import router from 'next/router'
 import {
   Box,
   Grid,
-  Tabs,
   Tab,
+  Tabs,
   Toolbar,
-  withStyles,
   Typography,
+  withStyles,
 } from '@material-ui/core'
 
 import classNames from 'classnames'
-import { googlePageView } from '../util'
-
+import { inject, observer } from 'mobx-react'
+import router from 'next/router'
+import React from 'react'
 import { MovieCard } from '../components/app'
-import { Facets } from '../components/browse'
+import tradingStatus from '../settings/tradingStatus'
 import styles from '../styles/pages/browse.style.js'
 
-import tradingStatus from '../settings/tradingStatus'
-  // must use CommonJS style since that file is used in the build system
+import { Facets } from '../components/browse'
+import { googlePageView } from '../util'
 const facets = require('../settings/facets')
+
+// must use CommonJS style since that file is used in the build system
 
 @inject('store')
 @observer
 class Browse extends React.Component {
-
   constructor(props) {
     super(props)
     this.state = {
-      scrollTrigger: false
+      scrollTrigger: false,
     }
   }
 
   componentDidMount = () => {
     this.props.store.movieStore.loadMovies(router.query) // safe call
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('scroll', this.handleScroll)
     googlePageView()
   }
 
   componentWillUnmount = () => {
-    window.removeEventListener('scroll', this.handleScroll);
-  }  
+    window.removeEventListener('scroll', this.handleScroll)
+  }
 
   handleScroll = () => {
     this.setState({
-      scrollTrigger: (window.pageYOffset > 0)
+      scrollTrigger: (window.pageYOffset > 0),
     })
   }
 
@@ -56,12 +55,12 @@ class Browse extends React.Component {
   // cannot use fat-arrow for render as it breaks mobx observing :)
   render() {
     const { classes, store } = this.props
-    const movieStore = store.movieStore
+    const { movieStore } = store
 
     // https://material-ui.com/customization/components/
     const tabGroupClasses = {
       indicator: classes.tabIndicator,
-      flexContainer: classes.tabsContainer
+      flexContainer: classes.tabsContainer,
     }
     const tabClasses = {
       root: classes.tabRoot,
@@ -69,27 +68,27 @@ class Browse extends React.Component {
       selected: classes.selected, // see reference comment in style file
     }
 
+    const { scrollTrigger } = this.state
+
     return (
       <div className={classes.main}>
         <Toolbar className={classNames(
           classes.toolbar,
-          this.state.scrollTrigger ? classes.solid : classes.transparent
+          scrollTrigger ? classes.solid : classes.transparent,
         )}>
           <Tabs value={movieStore.tradingStatusFilter.index} onChange={(ignore, i) => { this.tabSelected(i) }} classes={tabGroupClasses}>
-          {tradingStatus.values.map((status, i) => 
-            <Tab label={status.title} disableRipple key={status.key} classes={tabClasses}/>
-          )}
+          {tradingStatus.values.map((status, i) => <Tab label={status.title} disableRipple key={status.key} classes={tabClasses}/>)}
           </Tabs>
           <Facets movieStore={movieStore} facets={facets} />
         </Toolbar>
         <Grid container spacing={3} className={classes.resultsOuter} alignItems='stretch'>
         {movieStore.filteredMovies.map((m, i) => (
           <Grid xs={12} sm={6} md={3} lg={2} item key={m.imdbid + i} >
-            <MovieCard 
-              movie={m} 
-              goToMovieDetail={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
-              goToMovieOffering={(movie) => {router.push(`/offering/${movie.movieSlug}`)}} 
-              goToMovieTrading={(movie) => {router.push(`/trade/${movie.movieSlug}`)}} 
+            <MovieCard
+              movie={m}
+              goToMovieDetail={(movie) => { router.push(`/film/${movie.movieSlug}`) }}
+              goToMovieOffering={(movie) => { router.push(`/offering/${movie.movieSlug}`) }}
+              goToMovieTrading={(movie) => { router.push(`/trade/${movie.movieSlug}`) }}
             />
           </Grid>
         ))}

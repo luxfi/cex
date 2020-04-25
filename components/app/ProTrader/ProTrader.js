@@ -43,6 +43,7 @@ import {
   OrderBook,
   TradeHistoryBook,
 } from '../../trade'
+import { Loading } from '../../app'
 
 import { ProChart } from '..'
 
@@ -107,8 +108,7 @@ const useStyles = makeStyles((theme) => ({
   proTrader: {
     height: `calc(100vh - ${headerHeight}px)`,
     background: 'linear-gradient(to bottom, rgba(26,26,26,1) 0%,rgba(9,9,9,1) 100%)',
-    marginTop: theme.spacing(-8),
-    paddingTop: theme.spacing(8),
+    marginTop: theme.spacing(8),
     // fonts
     '& *': {
       fontSize: '.7rem',
@@ -311,7 +311,7 @@ export default (props) => {
   } = props
 
   if (!orderBook.isReady) {
-    return <Typography>Loading chart...</Typography>
+    return <Loading loading={!orderBook.isReady} />
   }
 
   const moviesCleaned = useRef([])

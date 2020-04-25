@@ -8,6 +8,7 @@ export default (theme) => ({
     flexDirection: 'column',
     minHeight: '100vh',
     overflowX: 'hidden',
+    padding: 0,
     // Default Filled Input Changes
     '& .MuiInput-underline': {
       borderRadius: 4,
@@ -24,6 +25,12 @@ export default (theme) => ({
   main: {
     flexGrow: 1,
     marginTop: '64px',
+
+    padding: theme.spacing(0),
+
+    [theme.breakpoints.down('xs')]: {
+      padding: `0px ${theme.spacing(2)}`,
+    },
 
     minHeight: '50vh',
     '& .slide-button': {

@@ -5,8 +5,9 @@ import {
   Typography,
 } from '@material-ui/core'
 
+import { NativeSelect } from '../../app/forms'
 
-export default (props) => (
+export default ({values, onChange}) => (
   <>
   <Typography variant='h6'>Accounts</Typography>
   <TextField
@@ -15,7 +16,7 @@ export default (props) => (
     label='APEX'
     placeholder='5P75152'
     value={values.APEX}
-    onChange={handleChange}
+    onChange={onChange}
     disabled
   />
   <TextField
@@ -23,14 +24,14 @@ export default (props) => (
     label='RHS'
     placeholder='1000744308'
     value={values.RHS}
-    onChange={handleChange}
+    onChange={onChange}
     disabled
   />
   <NativeSelect
     label='Pattern Day Trade Protection'
-    name={dayTradeProtection}
+    name='dayTradeProtection'
     value={values.dayTradeProtection ? 'yes' : 'no'}
-    onChange={handleChange}
+    onChange={onChange}
     values={[
       { value: '', ariaLabel: 'None'},
       { value: 'yes', label: 'Yes' },

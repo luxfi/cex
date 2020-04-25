@@ -1,10 +1,8 @@
 import React from 'react'
+import { Typography } from '@material-ui/core'
+import { MUIRadioGroup, RowTextField } from '../../app/forms'
 
-import {
-  Typography,
-} from '@material-ui/core'
-
-export default ({ values, errors, onChange }) => (
+export default ({ values, errors, onChange, employmentGroup, maritalStatusGroup }) => (
   <>
   <Typography variant='h6'>Personal Details</Typography>
   <MUIRadioGroup 

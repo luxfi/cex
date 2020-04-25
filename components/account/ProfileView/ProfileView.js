@@ -4,17 +4,8 @@ import { inject, observer } from 'mobx-react'
 
 import {
   Button,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
   Grid,
-  InputLabel,
-  MenuItem,
   Paper,
-  Radio,
-  RadioGroup,
-  Select,
-  TextField,
   Typography,
   makeStyles
 } from '@material-ui/core'
@@ -22,8 +13,11 @@ import {
 import { Formik } from 'formik'
 import { number, object, string } from 'yup'
 
-import styles from './profileView.style.js'
-const myStyles = makeStyles(styles)
+import { MUIRadioGroup } from '../../app/forms'
+
+import AddressCard from './AddressCard.js'
+import PersonalDetailsCard from './PersonalDetailsCard.js'
+import AccountsCard from './AccountsCard.js'
 
 import {
   liquidGroup,
@@ -37,10 +31,9 @@ import {
   riskTolerenceGroup,
   liquidityGroup,
 } from './profileValues'
-import AddressCard from './AddressCard.js'
-import PersonalDetailsCard from './PersonalDetailsCard.js'
-import AccountsCard from './AccountsCard.js'
 
+import styles from './profileView.style.js'
+const myStyles = makeStyles(styles)
 
 export default inject('store')(observer((props) => {
 
@@ -153,12 +146,18 @@ export default inject('store')(observer((props) => {
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
               <Paper elevation={2}>
-                <PersonalDetailsCard values={values} errors={errors} onChange={handleChange} />
+                <PersonalDetailsCard 
+                  values={values} 
+                  errors={errors} 
+                  onChange={handleChange}
+                  employmentGroup={employmentGroup}
+                  maritalStatusGroup={maritalStatusGroup}
+                />
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
               <Paper elevation={2}>
-                <AccountsCard values={values} errors={errors} onChange={handleChange} />
+                <AccountsCard values={values} onChange={handleChange} />
               </Paper>
             </Grid> 
             <Grid item xs={12} sm={6} md={4}>
@@ -258,61 +257,4 @@ const formValidationSchema = object().shape({
   phone: number()
     .positive('Invalid phone number'),
 })
-
-  // As per MUI docs
-const MUIRadioGroup = ({label, name, value, onChange, values, required}) => (
-  <FormControl component="fieldset">
-    <FormLabel component="legend" required={!!required} >{label}</FormLabel>
-    <RadioGroup name={name} value={value} onChange={onChange} >
-    {values.map((v, i) => (
-      <FormControlLabel value={v.value} control={<Radio color='inherit'/>} label={v.label} />
-    ))}
-    </RadioGroup>
-  </FormControl>
-)
-
-const NativeSelect = ({name, label, value, values, onChange, required}) => (
-  <FormControl >
-    <InputLabel id={`label-id-${name}`} required={!!required}>{label}</InputLabel>
-    <Select
-      native
-      labelId={`label-id-${name}`}
-      value={value}
-      onChange={onChange}
-      inputProps={{name: name}}
-    >
-    {values.map((v, i) => (
-      ('ariaLabel' in v) 
-      ? 
-      <option value={v.value} aria-label={v.ariaLabel} />
-      :
-      <option value={v.value}>{v.label}</option>
-    ))}
-    </Select>
-  </FormControl> 
-)
-
-const MUISelect = ({name, label, value, values, onChange, required}) => (
-  <FormControl >
-    <InputLabel id={`label-id-${name}`} required={!!required}>{label}</InputLabel>
-    <Select
-      labelId={`label-id-${name}`}
-      value={value}
-      onChange={onChange}
-      inputProps={{name: name}}
-    >
-    {values.map((v, i) => (
-      ('ariaLabel' in v) 
-      ? 
-      <MenuItem value={v.value} aria-label={v.ariaLabel} />
-      :
-      <MenuItem value={v.value}>{v.label}</MenuItem>
-    ))}
-    </Select>
-  </FormControl> 
-)
-
-const RowTextField = (props) => (
-  <TextField className='row-text-field-esx-theme-touchups' {...props} />  
-)
 

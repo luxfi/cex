@@ -151,7 +151,7 @@ export default createMuiTheme({
 
     MuiPaper: {
       root: {
-        padding: spacingPx(4)
+        //padding: spacingPx(4)
       },
       elevation1: {
         backgroundColor:  PAPER_SHADES[1],
