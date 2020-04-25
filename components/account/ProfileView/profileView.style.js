@@ -20,25 +20,9 @@ export default (theme) => ({
     },
   },
 
-  stateAndZip: {
-    margin: `${theme.spacing(1)} 0`,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-
-    '& .MuiFormControl-root:first-child': {
-      width: '40%',
-      paddingRight: '4%',
-    },
-    '& .MuiFormControl-root.MuiTextField-root': {
-      width: 'auto !important',
-      marginTop: '0 !important'
-    },
-  },
-
   mainButton: {
     margin: '20px 0 0 0',
     padding: '10px 45px',
   },
+
 }) ////

@@ -144,7 +144,8 @@ export default createMuiTheme({
 
     MuiRadio: {
       root: {
-        padding: '2px'
+        padding: '2px',
+        paddingRight: '4px',
       }
     },
 

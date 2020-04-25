@@ -37,6 +37,9 @@ import {
   riskTolerenceGroup,
   liquidityGroup,
 } from './profileValues'
+import AddressCard from './AddressCard.js'
+import PersonalDetailsCard from './PersonalDetailsCard.js'
+import AccountsCard from './AccountsCard.js'
 
 
 export default inject('store')(observer((props) => {
@@ -139,137 +142,23 @@ export default inject('store')(observer((props) => {
           <Grid container spacing={4}>
             <Grid item xs={12} sm={6} md={4}>
               <Paper elevation={2}>
-                <Typography variant='h6'>Address</Typography>
-                <TextField
-                  required
-                  name='address1'
-                  label='Address 1'
-                  error={!!(errors.address1)}
-                  placeholder='123 Main St.'
-                  value={values.address1}
-                  onChange={handleChange}
-                />
-                <TextField
-                  required
-                  name='address2'
-                  label='Address 2'
-                  error={!!(errors.address2)}
-                  placeholder='Apt. 23'
-                  value={values.address2}
-                  onChange={handleChange}
-                />
-                <TextField
-                  required
-                  name='city'
-                  label='City'
-                  error={!!(errors.city)}
-                  placeholder='San Jose'
-                  value={values.city}
-                  onChange={handleChange}
-                />
-                <div className={s.stateAndZip}>
-                  <NativeSelect 
-                    name='state' 
-                    label='State'
-                    value={values.state}
-                    values={states.map((s, i) => ({value: s.code, label: s.code}))}
-                    onChange={handleChange}
-                    required
-                  />
-                  <TextField
-                    required
-                    name='postalCode'
-                    label='Postal Code'
-                    error={!!(errors.postalCode)}
-                    placeholder='12345'
-                    value={values.postalCode}
-                    onChange={handleChange}
-                  />
-                </div>
-                <TextField
-                  required
-                  name='country'
-                  label='Country'
-                  value={values.country}
-                  onChange={handleChange}
-                  error={!!(errors.country)}
-                  select
-                >
-                  {countries.map((option, index) => (
-                    <MenuItem key={option.code} value={option.code}>
-                      {option.name}
-                    </MenuItem>
-                  ))}
-                </TextField>
-                <TextField
-                  required
-                  name='phone'
-                  label='Phone'
-                  error={!!(errors.phone)}
-                  placeholder='9999999999'
-                  value={values.phone}
-                  onChange={handleChange}
+                <AddressCard 
+                  values={values} 
+                  errors={errors} 
+                  onChange={handleChange} 
+                  states={states} 
+                  countries={countries}
                 />
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
               <Paper elevation={2}>
-                <Typography variant='h6'>Personal Details</Typography>
-                <MUIRadioGroup 
-                  label={employmentGroup.groupLabel} 
-                  name={employmentGroup.groupName} 
-                  value={values.employment} 
-                  onChange={handleChange} 
-                  values={employmentGroup.values} 
-                />
-                <MUIRadioGroup 
-                  label={maritalStatusGroup.groupLabel} 
-                  name={maritalStatusGroup.groupName} 
-                  value={values.maritalStatus} 
-                  onChange={handleChange} 
-                  values={maritalStatusGroup.values} 
-                />
-                <RowTextField
-                  name='dependants'
-                  label='Dependants'
-                  error={!!(errors.dependants)}
-                  value={values.dependants}
-                  onChange={handleChange}
-                />
+                <PersonalDetailsCard values={values} errors={errors} onChange={handleChange} />
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
               <Paper elevation={2}>
-                <Typography variant='h6'>Accounts</Typography>
-                <TextField
-                  required
-                  name='APEX'
-                  label='APEX'
-                  placeholder='5P75152'
-                  value={values.APEX}
-                  onChange={handleChange}
-                  disabled
-                />
-                <TextField
-                  name='RHS'
-                  label='RHS'
-                  placeholder='1000744308'
-                  value={values.RHS}
-                  onChange={handleChange}
-                  disabled
-                />
-                <NativeSelect
-                  label='Pattern Day Trade Protection'
-                  name={dayTradeProtection}
-                  value={values.dayTradeProtection ? 'yes' : 'no'}
-                  onChange={handleChange}
-                  values={[
-                    { value: '', ariaLabel: 'None'},
-                    { value: 'yes', label: 'Yes' },
-                    { value: 'no', label: 'No' }
-                  ]}
-                  required
-                />
+                <AccountsCard values={values} errors={errors} onChange={handleChange} />
               </Paper>
             </Grid> 
             <Grid item xs={12} sm={6} md={4}>
@@ -424,6 +313,6 @@ const MUISelect = ({name, label, value, values, onChange, required}) => (
 )
 
 const RowTextField = (props) => (
-  <TextField className='row-text-field-global-scss' {...props} />  
+  <TextField className='row-text-field-esx-theme-touchups' {...props} />  
 )
 

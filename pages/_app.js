@@ -35,10 +35,10 @@ import {
 
 import initializeStores from '../stores/stores'
 
-import '../styles/global.scss'
 
 import styles from '../styles/app.style.js'
 import theme from '../styles/esxTheme'
+import '../styles/esxThemeTouchups.scss'
 
 import '../components/app/MovieSlider/modified-slick.css'
 
