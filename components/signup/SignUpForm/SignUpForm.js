@@ -16,6 +16,7 @@ const styles = (theme) => ({
     maxWidth: theme.spacing(60),
     marginLeft: 'auto',
     marginRight: 'auto',
+    padding: theme.spacing(2),
   },
   paper: {
     marginTop: theme.spacing(8),

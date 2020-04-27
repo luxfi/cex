@@ -5,11 +5,22 @@ import {
 } from '@material-ui/core'
 import { inject, observer } from 'mobx-react'
 import React from 'react'
+import { withStyles } from '@material-ui/core/styles'
 
 import { googlePageView } from '../../../util'
 
 import CustomLink from '../../app/CustomLink'
 import SignUpForm from '../SignUpForm'
+
+const styles = (theme) => ({
+  linksContainer: {
+    maxWidth: theme.spacing(60),
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    padding: theme.spacing(2)
+  },
+})
+
 
 @inject('store')
 @observer
@@ -27,7 +38,7 @@ class SignupView extends React.Component {
   }
 
   render() {
-    const { store: { userStore, uiStore }, isModal } = this.props
+    const { store: { userStore, uiStore }, isModal, classes } = this.props
     const {
       email,
       password,
@@ -51,7 +62,7 @@ class SignupView extends React.Component {
     const linkText = 'Sign in?'
 
     return (
-      <Box>
+      <div>
         <SignUpForm
           setValue={(key, val) => {
             userStore.setValue(key, val)
@@ -73,7 +84,7 @@ class SignupView extends React.Component {
           setErrorMessage={setErrorMessage}
           isModal={isModal}
         />
-        <Box component='div' maxWidth='xs'>
+        <div className={classes.linksContainer}>
           <Grid container justify='space-between' alignItems='center'>
             <Grid item>
                 Already have an account?
@@ -100,10 +111,10 @@ class SignupView extends React.Component {
               }
             </Grid>
           </Grid>
-        </Box>
-      </Box>
+        </div>
+      </div>
     )
   }
 }
 
-export default SignupView
+export default withStyles(styles)(SignupView)

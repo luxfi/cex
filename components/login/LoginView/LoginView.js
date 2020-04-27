@@ -1,13 +1,22 @@
-import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Link from '@material-ui/core/Link'
 import { inject, observer } from 'mobx-react'
 import React from 'react'
+import { withStyles } from '@material-ui/core/styles'
 
 import { googlePageView } from '../../../util'
 
 import CustomLink from '../../app/CustomLink'
 import LoginForm from '../LoginForm'
+
+const styles = (theme) => ({
+  linksContainer: {
+    maxWidth: theme.spacing(60),
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    padding: theme.spacing(2)
+  },
+})
 
 @inject('store')
 @observer
@@ -25,7 +34,7 @@ class LoginView extends React.Component {
   }
 
   render() {
-    const { store, isModal } = this.props
+    const { store, isModal, classes } = this.props
     const { userStore, uiStore } = store
     const {
       email,
@@ -63,7 +72,7 @@ class LoginView extends React.Component {
           setSuccessMessage={setSuccessMessage}
           isModal={isModal}
         />
-        <Box>
+        <div className={classes.linksContainer}>
           <Grid container justify='space-between' alignItems='center'>
             <Grid item>
               Forgot password? [NYI]
@@ -90,9 +99,9 @@ class LoginView extends React.Component {
             }
             </Grid>
           </Grid>
-        </Box>
+        </div>
       </>
     )
   }
 }
-export default LoginView
+export default withStyles(styles)(LoginView)
