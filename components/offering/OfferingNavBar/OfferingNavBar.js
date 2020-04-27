@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import { Tabs, Tab, Grid, useMediaQuery } from '@material-ui/core'
 import { tabsStylesHook, navStylesHook } from './offeringNavBar.style.js'
 import classNames from 'classnames'
-import { SpeakerNotesOff } from '@material-ui/icons'
 
 const scrollTo = element => {
   // account for navbar heights on scrollintoview
