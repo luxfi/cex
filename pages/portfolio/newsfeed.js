@@ -21,18 +21,18 @@ class Newsfeed extends React.Component {
   }
 
   render() {
-    const { store } = this.props
+    const { store, classes } = this.props
     const { userStore, newsStore: { getFeedItems, loading } } = store
 
     return (
-      <Box>
+      <div className={classes.outerContainer}>
         <PortfolioSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
           <TabbedNav tabs={portfolioTabs} tab='newsfeed' />
         </PortfolioSection>
         <Loading loading={loading}>
           <NewsFeedView feed={getFeedItems} />
         </Loading>
-      </Box>
+      </div>
     )
   }
 }

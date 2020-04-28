@@ -12,8 +12,6 @@ import styles from '../../styles/pages/portfolio.style.js'
 import portfolioTabs from '../../settings/portfolioTabs'
 import { withOnDemandAuth } from '../../util/HOC'
 
-const isServer = typeof window === "undefined"
-
 @inject("store")
 @observer
 class Portfolio extends React.Component {
@@ -48,7 +46,7 @@ class Portfolio extends React.Component {
     }
 
     return (
-      <Box>
+      <div className={classes.outerContainer}>
         <PortfolioSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
           <TabbedNav tabs={portfolioTabs} tab='' />
         </PortfolioSection>
@@ -69,7 +67,7 @@ class Portfolio extends React.Component {
           removeFromWatchlist={removeFromWatchlist}
           accountBalance={userStore.accountBalance}
         />
-      </Box>
+      </div>
     )
   }
 }

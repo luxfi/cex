@@ -1,6 +1,10 @@
 import { container, title } from "../esxStyles.js"
 
 const portfolioPageStyle = theme => ({
+  outerContainer: {
+    width: '100%',
+    padding: theme.spacing(2),
+  },
   container: {
     zIndex: 12,
     ...container,
