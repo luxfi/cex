@@ -137,10 +137,8 @@ class OrderDetailsView extends React.Component {
     const movieTime = moment(movieShowtimeDetails.localShowtimeStart).format('LT')
     const qrCodeData = encodeURI(ticketUrl) // ideally, this should be the ticket information
 
-    const movieDetailsClasses = classNames(classes.lighterBg, classes.padding20, classes.movieDetails, classes.marginBottom)
-
     return (
-      <div className={classNames(classes.container, classes.padding20)}>
+      <div className={classes.outerContainer}>
         {
           loading ? (
             <div className={classes.loadingIcon}>
@@ -155,15 +153,15 @@ class OrderDetailsView extends React.Component {
               </Typography>
             </div>
             { ticketExist &&
-              <Grid container className={classNames(classes.darkerBg, classes.container)}>
-                <Grid item md={9} xs={12} className={classNames(classes.marginBottom, 'print-area')}>
-                  <div className={movieDetailsClasses}>
+              <Grid container className={classes.innerContainer}>
+                <Grid item md={9} xs={12} className={classNames(classes.mainContentArea, 'print-area')}>
+                  <div className={classes.qrCodeSection}>
                     <img src={movie.posterImg} alt={`${movie.name} poster`} />
                     <QRCode value={qrCodeData} size={250} level='M' includeMargin />
                     <Typography variant='h4'>{movie.name}</Typography>
                   </div>
-                  <div className={classes.marginBottom}>
-                    <div className={classNames(classes.lighterBg, classes.borderBottom)}>
+                  <div className={classes.contentBox}>
+                    <div className={classes.detailBox}>
                       <div className={classes.screenDetailsWrapper}>
                         <div item xs className={classes.ticketDetail}>
                           <Typography variant='body1'>{movieDate}</Typography>
@@ -200,8 +198,8 @@ class OrderDetailsView extends React.Component {
                       </div>
                     </div>
                   </div>
-                  <div className={classes.marginBottom}>
-                    <div className={classNames(classes.lighterBg, classes.padding20, classes.borderBottom)}>
+                  <div className={classes.contentBox}>
+                    <div className={classes.locationSection}>
                       <Typography className={classes.mapSectionTitle} variant='h4'>Venue details</Typography>
                       <Map
                         lat={lat}
@@ -223,9 +221,9 @@ class OrderDetailsView extends React.Component {
                   </div>
                 </Grid>
                 <Grid item md={3} xs={12} className={classes.sideBar}>
-                  <div className={classes.marginBottom}>
-                    <div className={classNames(classes.lighterBg, classes.borderBottom)}>
-                      <div className={classes.padding20}>
+                  <div className={classes.contentBox}>
+                    <div className={classes.detailBox}>
+                      <div className={classes.emailInfo}>
                         <Typography>We sent your ticket to:</Typography>
                         <Typography>{userStore.email}</Typography>
                       </div>
@@ -239,8 +237,8 @@ class OrderDetailsView extends React.Component {
                       </ButtonBase>
                     </div>
                   </div>
-                  <div className={classes.marginBottom}>
-                    <div className={classNames(classes.lighterBg, classes.borderBottom)}>
+                  <div className={classes.contentBox}>
+                    <div className={classes.detailBox}>
                       <Link href='/account/orders'>
                         <a className={classes.aTags}>
                           <ButtonBase className={classes.sidebarButton}>
@@ -255,8 +253,8 @@ class OrderDetailsView extends React.Component {
                       </ButtonBase> */}
                     </div>
                   </div>
-                  <div className={classes.marginBottom}>
-                    <div className={classNames(classes.lighterBg, classes.borderBottom)}>
+                  <div className={classes.contentBox}>
+                    <div className={classes.detailBox}>
                       <Typography className={classes.shareLabel}>Share this film with others!</Typography>
                       <ShareButtons
                         show={['Facebook', 'Twitter', 'LinkedIn', 'CopyURL']}
