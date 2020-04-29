@@ -5,12 +5,17 @@ export default (theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 0,
+    },
+    [theme.breakpoints.down('xs')]: {
+      marginTop: theme.spacing(1),
+    },
   },
   facetsLabel: {
     display: 'block',
     marginRight: theme.spacing(3),
   },
-
 
   facetOuter: {
     display: 'flex',

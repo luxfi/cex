@@ -17,7 +17,7 @@ export default (theme) => ({
       padding: `0px ${theme.spacing(2)}`,
     },
     [theme.breakpoints.down('sm')]: {
-      marginTop: theme.spacing(7),
+      marginTop: theme.spacing(9),
     },
 
     marginTop: '136px', // 64px + 64px + 8px (margin)
@@ -40,7 +40,7 @@ export default (theme) => ({
     [theme.breakpoints.up('lg')]: {
       padding: `0px ${theme.spacing(8)}`,
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       padding: `0px ${theme.spacing(2)}`,
     },
 
@@ -49,10 +49,19 @@ export default (theme) => ({
 
   transparent: {
     background: 'transparent',
+    [theme.breakpoints.down('xs')]: {
+      background: '#000',
+      flexDirection: 'column',
+      paddingBottom: '7px',
+    },
   },
 
   solid: {
     background: 'rgba(10, 10, 10, 0.85)',
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: 'column',
+      paddingBottom: '7px',
+    },
   },
 
   search: {

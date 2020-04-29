@@ -15,7 +15,6 @@ import { googlePageView } from '../util'
 
 
 // must use CommonJS style since that file is used in the build system
-
 @inject('store')
 @observer
 class Browse extends React.Component {
