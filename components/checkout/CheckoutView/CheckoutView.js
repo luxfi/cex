@@ -84,10 +84,18 @@ class CheckoutView extends React.Component {
     const refString = refHash && refHash.length ? `&ref=${refHash}` : ''
 
     return (
-      <Grid className={classes.outerContainer}>
-        <Grid container alignItems='flex-start' justify='center' className={classes.innerContainer}>
-          <Box className={classes.ticketQuantityContainer}>
-            <Table className={classes.table} aria-label='customized table'>
+      <div className={classes.outerContainer}>
+        <div className={classes.innerContainer}>
+          <Grid item xs={12} md={3} className={classes.movieInfoContainer}>
+            <img className={classes.movieImg} src={movie.posterImg} alt='movie image' />
+            <div>
+              <Typography variant='h5'>{movie.name}</Typography>
+              <div>{selectedVenue.venue && selectedVenue.venue.address.line}</div>
+              <div>{`${selectedDate.formated && selectedDate.formated} ${moment(selectedShowtime && selectedShowtime.localShowtimeStart).format('hh:mm A')}`}</div>
+            </div>
+          </Grid>
+          <Grid item xs={12} md={9}>
+            <Table className={classes.table} aria-label='Movie ticket table'>
               <TableHead className={classes.tableHeader}>
                 <TableRow>
                   <TableCell className={classes.ticketColumnHeader}>Ticket</TableCell>
@@ -105,7 +113,7 @@ class CheckoutView extends React.Component {
                     <TableCell align='right'>
                       {
                         ticket.quantity
-                          ? (<Grid container justify='flex-end' alignItems='center' wrap='nowrap'>
+                          ? (<div className={classes.manageQuantitySection}>
                           <button onClick={this.removeTicket(ticket.category)} type='button' className={classes.ticketBtn}>
                             <RemoveCircleOutlineIcon className={classes.buttonIcon} />
                           </button>
@@ -113,41 +121,35 @@ class CheckoutView extends React.Component {
                           <button onClick={this.addTicket(ticket.category)} type='button' className={classes.ticketBtn}>
                             <AddCircleOutlineOutlinedIcon className={classes.buttonIcon} />
                           </button>
-                        </Grid>) : <Button className={classes.addBtn} onClick={this.addTicket(ticket.category)}>ADD</Button>
+                        </div>) : <Button className={classes.addBtn} onClick={this.addTicket(ticket.category)}>ADD</Button>
                       }
                     </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
-            <Box className={classes.tableFooter}>
+            <div className={classes.tableFooter}>
               <a href='https://www.atomtickets.com/help/entry/smg-age-policy' className={classes.agePolicyLink}>
                 <DateRangeIcon className={classes.agePolicyLinkIcon} />
                 Age Policy
               </a>
-            </Box>
-          </Box>
-          <Box>
-            <Box><img className={classes.movieImg} src={movie.posterImg} alt='' /></Box>
-            <Box>
-              <Typography variant='h5'>{movie.name}</Typography>
-              <Box>{selectedVenue.venue && selectedVenue.venue.address.line}</Box>
-              <Box>{`${selectedDate.formated && selectedDate.formated} ${moment(selectedShowtime && selectedShowtime.localShowtimeStart).format('hh:mm A')}`}</Box>
-            </Box>
-          </Box>
-        </Grid>
-        <Grid container justify='flex-end' alignItems='center' className={classes.subTotalContainer}>
-          <Box>
-            <Typography variant='h6' className={classes.subTotalText}>SUBTOTAL</Typography>
-            <Typography variant='h5' className={classes.subTotal}>{formatCurrency(subTotal)}</Typography>
-          </Box>
-          <Grid>
-            <Link href='/pickSeats' as={`/pickSeats/${slug}?venueId=${venueId}&showtimeId=${showtimeId}${refString}`}>
-              <Button disabled={ticketsCount <= 0} className={classes.nextButton}>PICK SEATS</Button>
-            </Link>
+            </div>
           </Grid>
-        </Grid>
-      </Grid>
+        </div>
+        <div className={classes.subTotalContainer}>
+          <div>
+            <div>
+              <Typography variant='h6' className={classes.subTotalText}>SUBTOTAL</Typography>
+              <Typography variant='h5' className={classes.subTotal}>{formatCurrency(subTotal)}</Typography>
+            </div>
+            <div>
+              <Link href='/pickSeats' as={`/pickSeats/${slug}?venueId=${venueId}&showtimeId=${showtimeId}${refString}`}>
+                <Button disabled={ticketsCount <= 0} className={classes.nextButton}>PICK SEATS</Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
     )
   }
 }
