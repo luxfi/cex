@@ -7,7 +7,7 @@ import {
 import { inject, observer } from 'mobx-react'
 import React from 'react'
 
-import SignUpForm from '../components/signup/SignUpForm'
+import { SignUpForm } from '../components/app'
 
 import styles from '../styles/pages/invite.style'
 import { googlePageView } from '../util'
