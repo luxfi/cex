@@ -120,10 +120,6 @@ export default (theme) => ({
     },
   },
 
-  videoSectionText: {
-    color: '#FBC43E',
-  },
-
   imageWrapper: {
     position: 'relative',
     padding: 0,

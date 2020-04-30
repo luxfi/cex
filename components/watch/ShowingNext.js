@@ -57,10 +57,6 @@ const ShowingNext = inject('store')(observer((props) => {
         </Box>
       </Box>
       <Box className={classes.videoList}>
-        <Box paddingY={3}>
-          <Typography variant="h6" className={classes.videoSectionText}>Related Movie Trailers</Typography>
-          <Divider />
-        </Box>
         {
           relatedMovieTrailers.length ? relatedMovieTrailers.map((movie) => (
             <Link
@@ -92,10 +88,6 @@ const ShowingNext = inject('store')(observer((props) => {
             </Link>
           )) : null
         }
-        <Box paddingY={3}>
-          <Typography variant="h6" className={classes.videoSectionText}>Recommended</Typography>
-          <Divider />
-        </Box>
         {
           relatedMovies.length ? relatedMovies.map((movie) => (nextVideo.id === movie.id ? null : (
             <Link
