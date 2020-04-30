@@ -3,10 +3,7 @@ export default (theme) => ({
   root: {
     padding: theme.spacing(2),
 
-      // each card
-    '& .MuiPaper-root': {
-      padding: theme.spacing(2),
-      paddingTop: theme.spacing(1.5),
+    '& .MuiCard-root': {
       '& h6': {
         fontSize: '1rem',
         marginBottom: theme.spacing(1.5),
@@ -22,9 +19,14 @@ export default (theme) => ({
     },
   },
 
-  mainButton: {
+  profileViewSaveButton: {
     margin: '20px 0 0 0',
     padding: '10px 45px',
   },
+
+  linkedAccountsCard: {
+    marginBottom: theme.spacing(2)
+  }
+
 
 }) ////

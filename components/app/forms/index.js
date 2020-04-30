@@ -20,7 +20,7 @@ const MUIRadioGroup = ({label, name, value, onChange, values, required}) => (
     <FormLabel component="legend" required={!!required} >{label}</FormLabel>
     <RadioGroup name={name} value={value} onChange={onChange} >
     {values.map((v, i) => (
-      <FormControlLabel value={v.value} control={<Radio color='inherit'/>} label={v.label} />
+      <FormControlLabel value={v.value} control={<Radio color='inherit'/>} label={v.label} key={`${v.label}-${i}`}/>
     ))}
     </RadioGroup>
   </FormControl>
@@ -39,9 +39,9 @@ const NativeSelect = ({name, label, value, values, onChange, required}) => (
     {values.map((v, i) => (
       ('ariaLabel' in v) 
       ? 
-      <option value={v.value} aria-label={v.ariaLabel} />
+      <option value={v.value} aria-label={v.ariaLabel} key={`${v.value}-${i}`}/>
       :
-      <option value={v.value}>{v.label}</option>
+      <option value={v.value} key={`${v.value}-${i}`}>{v.label}</option>
     ))}
     </Select>
   </FormControl> 
@@ -59,9 +59,9 @@ const MUISelect = ({name, label, value, values, onChange, required}) => (
     {values.map((v, i) => (
       ('ariaLabel' in v) 
       ? 
-      <MenuItem value={v.value} aria-label={v.ariaLabel} />
+      <MenuItem value={v.value} aria-label={v.ariaLabel} key={`${v.value}-${i}`}/>
       :
-      <MenuItem value={v.value}>{v.label}</MenuItem>
+      <MenuItem value={v.value} key={`${v.value}-${i}`}>{v.label}</MenuItem>
     ))}
     </Select>
   </FormControl> 

@@ -4,6 +4,8 @@ import { inject, observer } from 'mobx-react'
 
 import {
   Button,
+  Card,
+  CardContent,
   Grid,
   Paper,
   Typography,
@@ -15,9 +17,9 @@ import { number, object, string } from 'yup'
 
 import { MUIRadioGroup } from '../../app/forms'
 
-import AddressCard from './AddressCard.js'
-import PersonalDetailsCard from './PersonalDetailsCard.js'
-import AccountsCard from './AccountsCard.js'
+import AddressElements from './AddressElements.js'
+import PersonalDetailsElements from './PersonalDetailsElements.js'
+import AccountsElements from './AccountsElements.js'
 
 import {
   liquidGroup,
@@ -32,7 +34,7 @@ import {
   liquidityGroup,
 } from './profileValues'
 
-import styles from './profileView.style.js'
+import styles from '../account.style.js'
 const myStyles = makeStyles(styles)
 
 export default inject('store')(observer((props) => {
@@ -132,99 +134,109 @@ export default inject('store')(observer((props) => {
           isSubmitting,
         }) => (
           <>
-          <Grid container spacing={4}>
+          <Grid container spacing={4} alignItems='stretch'>
             <Grid item xs={12} sm={6} md={4}>
-              <Paper elevation={2}>
-                <AddressCard 
-                  values={values} 
-                  errors={errors} 
-                  onChange={handleChange} 
-                  states={states} 
-                  countries={countries}
-                />
-              </Paper>
+              <Card elevation={2}>
+                <CardContent>
+                  <AddressElements 
+                    values={values} 
+                    errors={errors} 
+                    onChange={handleChange} 
+                    states={states} 
+                    countries={countries}
+                  />
+                </CardContent>
+              </Card>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <Paper elevation={2}>
-                <PersonalDetailsCard 
-                  values={values} 
-                  errors={errors} 
-                  onChange={handleChange}
-                  employmentGroup={employmentGroup}
-                  maritalStatusGroup={maritalStatusGroup}
-                />
-              </Paper>
+              <Card elevation={2}>
+                <CardContent>
+                  <PersonalDetailsElements 
+                    values={values} 
+                    errors={errors} 
+                    onChange={handleChange}
+                    employmentGroup={employmentGroup}
+                    maritalStatusGroup={maritalStatusGroup}
+                  />
+                </CardContent>
+              </Card>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <Paper elevation={2}>
-                <AccountsCard values={values} onChange={handleChange} />
-              </Paper>
+              <Card elevation={2}>
+                <CardContent>
+                  <AccountsElements values={values} onChange={handleChange} />
+                </CardContent>
+              </Card>
             </Grid> 
             <Grid item xs={12} sm={6} md={4}>
-              <Paper elevation={2}>
-                <Typography variant='h6'>Assets</Typography>
-                <MUIRadioGroup 
-                  label={liquidGroup.groupLabel} 
-                  name={liquidGroup.groupName} 
-                  value={values.liquid} 
-                  onChange={handleChange} 
-                  values={liquidGroup.values} 
-                />
-                <MUIRadioGroup 
-                  label={netWorthGroup.groupLabel} 
-                  name={netWorthGroup.groupName} 
-                  value={values.netWorth} 
-                  onChange={handleChange} 
-                  values={netWorthGroup.values} 
-                />
-                <MUIRadioGroup 
-                  label={yearlyIncomeGroup.groupLabel} 
-                  name={yearlyIncomeGroup.groupName} 
-                  value={values.yearlyIncome} 
-                  onChange={handleChange} 
-                  values={yearlyIncomeGroup.values} 
-                />
-              </Paper>
+              <Card elevation={2}>
+                <CardContent>
+                  <Typography variant='h6'>Assets</Typography>
+                  <MUIRadioGroup 
+                    label={liquidGroup.groupLabel} 
+                    name={liquidGroup.groupName} 
+                    value={values.liquid} 
+                    onChange={handleChange} 
+                    values={liquidGroup.values} 
+                  />
+                  <MUIRadioGroup 
+                    label={netWorthGroup.groupLabel} 
+                    name={netWorthGroup.groupName} 
+                    value={values.netWorth} 
+                    onChange={handleChange} 
+                    values={netWorthGroup.values} 
+                  />
+                  <MUIRadioGroup 
+                    label={yearlyIncomeGroup.groupLabel} 
+                    name={yearlyIncomeGroup.groupName} 
+                    value={values.yearlyIncome} 
+                    onChange={handleChange} 
+                    values={yearlyIncomeGroup.values} 
+                  />
+                </CardContent>
+              </Card>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <Paper elevation={2}>
-                <Typography variant='h6'>Investment Profile</Typography>
-                <MUIRadioGroup 
-                  label={goalGroup.groupLabel} 
-                  name={goalGroup.groupName} 
-                  value={values.goal} 
-                  onChange={handleChange} 
-                  values={goalGroup.values} 
-                />
-                <MUIRadioGroup 
-                  label={timelineGroup.groupLabel} 
-                  name={timelineGroup.groupName} 
-                  value={values.timeLine} 
-                  onChange={handleChange} 
-                  values={timelineGroup.values} 
-                />
-                <MUIRadioGroup 
-                  label={experienceGroup.groupLabel} 
-                  name={experienceGroup.groupName} 
-                  value={values.experience} 
-                  onChange={handleChange} 
-                  values={experienceGroup.values} 
-                />
-                <MUIRadioGroup 
-                  label={riskTolerenceGroup.groupLabel} 
-                  name={riskTolerenceGroup.groupName} 
-                  value={values.riskTolerence} 
-                  onChange={handleChange} 
-                  values={riskTolerenceGroup.values} 
-                />
-                <MUIRadioGroup 
-                  label={liquidityGroup.groupLabel} 
-                  name={liquidityGroup.groupName} 
-                  value={values.liquidity} 
-                  onChange={handleChange} 
-                  values={liquidityGroup.values} 
-                />
-              </Paper>
+              <Card elevation={2}>
+                <CardContent>
+                  <Typography variant='h6'>Investment Profile</Typography>
+                  <MUIRadioGroup 
+                    label={goalGroup.groupLabel} 
+                    name={goalGroup.groupName} 
+                    value={values.goal} 
+                    onChange={handleChange} 
+                    values={goalGroup.values} 
+                  />
+                  <MUIRadioGroup 
+                    label={timelineGroup.groupLabel} 
+                    name={timelineGroup.groupName} 
+                    value={values.timeLine} 
+                    onChange={handleChange} 
+                    values={timelineGroup.values} 
+                  />
+                  <MUIRadioGroup 
+                    label={experienceGroup.groupLabel} 
+                    name={experienceGroup.groupName} 
+                    value={values.experience} 
+                    onChange={handleChange} 
+                    values={experienceGroup.values} 
+                  />
+                  <MUIRadioGroup 
+                    label={riskTolerenceGroup.groupLabel} 
+                    name={riskTolerenceGroup.groupName} 
+                    value={values.riskTolerence} 
+                    onChange={handleChange} 
+                    values={riskTolerenceGroup.values} 
+                  />
+                  <MUIRadioGroup 
+                    label={liquidityGroup.groupLabel} 
+                    name={liquidityGroup.groupName} 
+                    value={values.liquidity} 
+                    onChange={handleChange} 
+                    values={liquidityGroup.values} 
+                  />
+                </CardContent>
+              </Card>
             </Grid>
           </Grid>
 
@@ -232,7 +244,7 @@ export default inject('store')(observer((props) => {
             variant='contained'
             color='primary'
             onClick={handleSubmit}
-            className={s.mainButton}
+            className={s.profileViewSaveButton}
             disabled={isSubmitting}
             size='large'
           >
