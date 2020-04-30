@@ -43,6 +43,7 @@ import {
   OrderBook,
   TradeHistoryBook,
 } from '../../trade'
+import { Loading } from '../../app'
 
 import { ProChart } from '..'
 
@@ -310,13 +311,7 @@ export default (props) => {
   } = props
 
   if (!orderBook.isReady) {
-    return (
-      <Box mt={8} p={4}>
-        <Grid container justify="center">
-          <Typography>Loading chart...</Typography>
-        </Grid>
-      </Box>
-    )
+    return <Loading loading={!orderBook.isReady} />
   }
 
   const moviesCleaned = useRef([])
