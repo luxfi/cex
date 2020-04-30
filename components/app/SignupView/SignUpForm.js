@@ -115,7 +115,7 @@ class SignupForm extends React.Component {
     const { passwordsMatch } = store.userStore
     // TODO Remove form)
     return (
-      <Box className={classes.root}>
+      <div className={classes.root}>
         <CssBaseline />
         <div className={isModal ? classes.paperWithModal : classes.paper}>
           <Typography component='h1' variant='h5'>
@@ -233,7 +233,7 @@ class SignupForm extends React.Component {
             Sign Up
           </Button>
         </div>
-      </Box>
+      </div>
     )
   }
 }
