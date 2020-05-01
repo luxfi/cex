@@ -56,7 +56,6 @@ export default (theme) => ({
       paddingRight: theme.spacing(8),
     },
     maxWidth: '1000px',
-
   },
 
   formControl: {

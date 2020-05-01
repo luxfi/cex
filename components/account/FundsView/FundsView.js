@@ -11,18 +11,16 @@ import {
   withStyles
 } from '@material-ui/core'
 
-import {
-  CardCardItem,
-  BankAccountItem,
-  ManageFunds,
-  BalanceHistoryItem,
-} from '.'
+import RemoveCardElements from './RemoveCardElements'
+import BankAccountElements from './BankAccountElements'
+import ManageFundsElements from './ManageFundsElements'
+import BalanceHistoryElements from './BalanceHistoryElements'
 
-import { googlePageView } from '../../util'
+import { googlePageView } from '../../../util'
 
-import { MainContent, AddPaymentMethodModal } from '../app'
+import { AddPaymentMethodModal } from '../../app'
 
-import styles from './account.style.js'
+import styles from '../account.style.js'
 
 @inject('store')
 @observer
@@ -52,14 +50,14 @@ export default class extends React.Component {
     } = userStore
 
     return (
-      <Paper>
+      <Paper className={classes.root}>
         <Grid container spacing={4}>
-          <Grid item xs={8} >
+          <Grid item xs={12} md={8}>
             <Card elevation={2} classes={{root: classes.linkedAccountsCard}}>
               <CardContent>
                 <Typography variant="h6" gutterBottom>Linked Accounts</Typography>
                 {formattedAccounts.map((a, i) => ((a.name === 'ESX') ? null : (
-                  <BankAccountItem
+                  <BankAccountElements
                     key={`account_${i}`}
                     accountName={a.name}
                     accountNumber={a.account.mask}
@@ -73,7 +71,7 @@ export default class extends React.Component {
                   />
                 )))}
                 {cardPaymentOptions.map((cardPaymentOption) => (
-                  <CardCardItem
+                  <RemoveCardElements
                     key={cardPaymentOption.creditCard}
                     nameOnCard={cardPaymentOption.nameOnCard}
                     creditCardNumber={cardPaymentOption.creditCard}
@@ -101,7 +99,7 @@ export default class extends React.Component {
                 <Typography variant="h6">Complete Transfers</Typography>
                 {(balanceHistory && balanceHistory.length > 0) ? (
                   balanceHistory.map((r, i) => (
-                  <BalanceHistoryItem
+                  <BalanceHistoryElements
                     key={`history_${i}`}
                     name={r.accountName}
                     amount={r.amount}
@@ -117,10 +115,10 @@ export default class extends React.Component {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={4} >
+          <Grid item xs={12} sm={6} md={4}>
             <Card elevation={2}>
               <CardContent>
-                <ManageFunds
+                <ManageFundsElements
                   accountBalance={accountBalance}
                   accountList={formattedAccounts}
                   handleFunds={handleFunds.bind(userStore)}
@@ -133,4 +131,3 @@ export default class extends React.Component {
     )
   }
 }
-
