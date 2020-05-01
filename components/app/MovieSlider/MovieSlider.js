@@ -8,7 +8,7 @@ import {
 import { ChevronLeft, ChevronRight} from '@material-ui/icons'
 
 import Slider from 'react-slick'
-import './modified-slick.css'
+//import './modified-slick.css'
 
 import classNames from 'classnames'
 

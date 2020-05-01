@@ -4,6 +4,7 @@ import uuid from 'uuid'
 
 import tradingStatus from '../settings/tradingStatus'
 import moviesFromJson from '../assets/tempData/movies'
+import { isNullQuery } from '../util'
 
 export default class MovieStore {
   @observable movies = []
@@ -108,12 +109,8 @@ export default class MovieStore {
   }, {keepAlive : false})
 
 
-  nullQuery(query) {
-    return !query || Object.entries(query).length === 0
-  }
-
   loadMovies(query) {
-    if (this.nullQuery(query) && this.movies.length > 0) {
+    if (isNullQuery(query) && this.movies.length > 0) {
       return
     }
 
@@ -122,7 +119,7 @@ export default class MovieStore {
     moviesFromJson.forEach(m => {
       this.movies.push(this.moviefromJSON(m))
     })
-    if (!this.nullQuery(query)) {
+    if (!isNullQuery(query)) {
       this.clearFacets()
       this.setFacetValue(query.facet, query.value, true)
     }

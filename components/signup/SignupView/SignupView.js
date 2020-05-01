@@ -8,7 +8,7 @@ import React from 'react'
 
 import { googlePageView } from '../../../util'
 
-import CustomLink from '../../app/CustomLink'
+import NextMuiLink from '../../app/NextMuiLink'
 import SignUpForm from '../SignUpForm'
 
 @inject('store')
@@ -93,7 +93,7 @@ class SignupView extends React.Component {
                     {linkText}
                   </button>)
                   : (
-                    <Link component={CustomLink} href={`/login${ref}`} variant='body2'>
+                    <Link component={NextMuiLink} href={`/login${ref}`} variant='body2'>
                       {linkText}
                     </Link>
                   )

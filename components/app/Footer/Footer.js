@@ -1,6 +1,14 @@
 import React from 'react'
-import { inject, observer } from 'mobx-react'
 import classNames from 'classnames'
+
+import {
+  Container,
+  Grid,
+  IconButton,
+  Link,
+  makeStyles,
+  Typography,
+} from '@material-ui/core'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -12,16 +20,11 @@ import {
   faReddit
 } from '@fortawesome/free-brands-svg-icons'
 
-import {
-  Typography,
-  Link,
-  IconButton,
-  Grid,
-} from '@material-ui/core'
-
-import { CustomLink } from '..'
-
+import NextMuiLink  from '../NextMuiLink'
 import FinePrint from './FinePrint.js'
+import styles from './footer.style.js'
+const myStyles = makeStyles(styles)
+
 
 const EXTERNAL_LINKS = {
 
@@ -36,11 +39,9 @@ const EXTERNAL_LINKS = {
   android: 'https://play.google.com/', // TODO
 }
 
-const BYLINE = 'Own your entertainment'
+const SLOGAN = 'Own your entertainment'
 
-import { withStyles } from '@material-ui/core/styles'
-import styles from './footer.style.js'
-
+  // TODO move this to settings area
 const footerNav = [
   {
     title: 'Company',
@@ -89,7 +90,7 @@ const LogoAndByline = ({ classes }) => (
     />
   </Link>
   <Typography variant='body1' color='textPrimary' className={classes.byline}>
-    {BYLINE}
+    {SLOGAN}
   </Typography>
   </>
 )
@@ -137,7 +138,7 @@ const FooterNav = ({ classes, nav }) => (
           const title = (typeof item === 'object' && 'title' in item) ? item.title : item
           const href = (activeLink) ? item.link : { pathname: '/placeholder', query: { title } }
           // cannot use external links with NextLinks
-          const component = (activeLink && 'external' in item) ? 'a' : CustomLink
+          const component = (activeLink && 'external' in item) ? 'a' : NextMuiLink
 
           return (
             <li key={title}>
@@ -202,70 +203,60 @@ const Copyright = ({ classes }) => {
   )
 }
 
-@inject('store')
-@observer
-class Footer extends React.Component {
-  render() {
-    const {
-      classes,
-      rootClassName,
-      isLoggedIn,
-      handleLogout,
-    } = this.props
+export default ({ className, loggedIn, handleLogout }) => {
 
+  const classes = myStyles()
 
-    const nav = footerNav.slice(0)
+  const nav = footerNav.slice(0)
 
-    nav.push({
-      title: 'Account',
-      links: isLoggedIn ? ([
-        {
-          title: 'My Account',
-          link: '/account',
-        },
-        {
-          title: 'Portfolio',
-          link: '/portfolio',
-        },
-        {
-          title: 'Logout',
-          handler: handleLogout,
-        },
-      ]) : ([
-        {
-          title: 'Sign Up',
-          link: '/signup',
-        },
-        {
-          title: 'Login',
-          link: '/login',
-        },
-      ]),
-    })
+      // TODO move this to settings area
+  nav.push({
+    title: 'Account',
+    links: loggedIn ? ([
+      {
+        title: 'My Account',
+        link: '/account',
+      },
+      {
+        title: 'Portfolio',
+        link: '/portfolio',
+      },
+      {
+        title: 'Logout',
+        handler: handleLogout,
+      },
+    ]) : ([
+      {
+        title: 'Sign Up',
+        link: '/signup',
+      },
+      {
+        title: 'Login',
+        link: '/login',
+      },
+    ]),
+  })
 
-    return (
-      <footer className={classes.footer}>
-        <Grid container className={classes.gridContainer}>
-          <Grid item lg={3} className={classes.logoAreaGridItem}>
-            <LogoAndByline classes={classes} />
-            <SocialIcons classes={classes} />
-          </Grid>
-          <Grid item xs={12} lg={9} className={classes.navGridItem}>
-            <FooterNav nav={nav} classes={classes} />
-          </Grid>
-          <Grid item xs={12} className={classes.copyrightGridItem}>
-            <hr className={classes.appStoreSectionHR} />
-            <AppStore classes={classes} />
-            <Copyright classes={classes} />
-            <hr className={classes.appStoreSectionHR} />
-          </Grid>
+  return (
+    <Container component='footer' className={classNames(classes.footer, className)}>
+      <Grid container className={classes.gridContainer}>
+        <Grid item lg={3} className={classes.logoAreaGridItem}>
+          <LogoAndByline classes={classes} />
+          <SocialIcons classes={classes} />
         </Grid>
-        <Typography variant='body2' color='textSecondary' component='span'>
-          <FinePrint className={classes.finePrint} />
-        </Typography>
-      </footer>
-    )
-  }
+        <Grid item xs={12} lg={9} className={classes.navGridItem}>
+          <FooterNav nav={nav} classes={classes} />
+        </Grid>
+        <Grid item xs={12} className={classes.copyrightGridItem}>
+          <hr className={classes.appStoreSectionHR} />
+          <AppStore classes={classes} />
+          <Copyright classes={classes} />
+          <hr className={classes.appStoreSectionHR} />
+        </Grid>
+      </Grid>
+      <Typography variant='body2' color='textSecondary' component='span'>
+        <FinePrint className={classes.finePrint} />
+      </Typography>
+    </Container>
+  )
 }
-
-export default withStyles(styles)(Footer)

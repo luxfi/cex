@@ -1,99 +1,42 @@
-import React from "react"
-import { isObservableArray, toJS } from "mobx"
-import { inject, observer } from "mobx-react"
-import classNames from "classnames"
-import { AuthModal, Trailers } from '../../app'
-
-import Link from "next/link"
-import { withRouter, Router } from "next/router"
-
-import { 
-  Button, 
-  Grid, 
-  Typography, 
-  withStyles 
-} from "@material-ui/core"
-
-import { PlayArrow as PlayArrowIcon } from '@material-ui/icons';
+import React from 'react'
+import { isObservableArray, toJS } from 'mobx'
+import { inject, observer } from 'mobx-react'
+import classNames from 'classnames'
 
 import {
-  CustomBreadcrumbs,
+  Button,
+  Typography,
+  withStyles,
+} from '@material-ui/core'
+
+import { padDollarAmount, slugFromPath } from '../../../util'
+import { formatTakeResults } from '../../../util/formatOrderBookDataForChart'
+
+import {
+  AuthModal,
   BasicTrader,
+  CustomBreadcrumbs,
   InvestNow,
-  ProTrader,
+  NextMuiLink,
+  Trailers,
 } from "../../app"
 
-import CustomLink from "../../app/CustomLink"
-import { formatTakeResults } from "../../../util/formatOrderBookDataForChart"
+import AboutMain from './AboutMain'
+import PageTabs from './PageTabs'
+import AboutMore from './AboutMore'
 
-// section
-import { padDollarAmount, slugFromPath } from "../../../util"
+import styles from './film.style.js'
 
-import styles from "./film.style.js"
-
-const ExternalLink = React.forwardRef(
-  ({ className, href, hrefAs, children }, ref) => (
-    <a
-      className={className}
-      ref={ref}
-      href={href || ""}
-      as={hrefAs}
-      target="_blank"
-    >
-      {children}
-    </a>
-  )
-)
-
-const formatMonthlyStats = (price, valueDelta) => {
-  return (
-    (valueDelta > 0 ? "+ " : "- ") +
-    Math.abs(valueDelta) +
-    " (" +
-    ((valueDelta / price) * 100).toFixed(2) +
-    "%) "
-  )
-}
-
-const PageTabs = props => {
-  const {
-    classes,
-    onTabSelected,
-    selectedTab
-  } = props
-
-  return (
-    <div className={classes.pageTabsOuter}>
-      <a
-        className={classNames(
-          classes.pageTab,
-          selectedTab === "about" ? classes.selectedTab : ""
-        )}
-        onClick={() => onTabSelected("about")}
-      >
-        About
-            </a>
-      <a
-        className={classNames(
-          classes.pageTab,
-          selectedTab === "invest" ? classes.selectedTab : ""
-        )}
-        onClick={() => onTabSelected("invest")}
-      >
-        Invest
-            </a>
-    </div>
-  )
-}
-
-@inject("store")
+@withRouter
+@withStyles(styles)
+@inject('store')
 @observer
-class Index extends React.Component {
+export default class extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedTab: "about",
-      selectedTrader: "basic",
+      selectedTab: 'about',
+      selectedTrader: 'basic',
     }
     this.onTabSelected = this.onTabSelected.bind(this)
   }
@@ -102,52 +45,18 @@ class Index extends React.Component {
     if (this.state.selectedTab !== tab) {
       // if going to a new tab, collapse the view as well.
       this.setState({
-        selectedTab: tab
+        selectedTab: tab,
       })
     }
-  }
-
-  renderAddToPlaylistButton(movie) {
-    const {
-      store: { userPortfolio, userStore, uiStore },
-      classes,
-    } = this.props
-    const { watchlist } = userPortfolio
-    const obj = (watchlist.includes(movie.ticker)) ? {
-      func: () => userPortfolio.removeFromWatchlist(movie.ticker),
-      buttonText: 'Remove from watchlist',
-    } : {
-      func: () => userPortfolio.addToWatchlist(movie.ticker),
-      buttonText: 'Add to watchlist',
-    }
-    const handleClick = () => {
-      if (!userStore.loggedIn) {
-        uiStore.openAuthModal()
-        return false
-      }
-
-      obj.func()
-    }
-
-    return (
-      <Button
-        rel='noopener noreferrer'
-        variant='contained'
-        className={classes.movieButton}
-        onClick={handleClick}
-      >
-        {obj.buttonText}
-      </Button>
-    )
   }
 
   renderInvestButton(className, movie, text, onClick) {
     return (
       <Button
-        component={CustomLink}
+        component={NextMuiLink}
         style={{
-          color: "black",
-          height: "48px"
+          color: 'black',
+          height: '48px',
         }}
         className={className}
         onClick={onClick}
@@ -162,9 +71,8 @@ class Index extends React.Component {
       <div
         className={classNames(
           classes.leftAndRight,
-          classes.breadcrumbRow
+          classes.breadcrumbRow,
         )}
-        style={{ marginTop: "20px" }}
       >
         <CustomBreadcrumbs>{movie.name}</CustomBreadcrumbs>
         <PageTabs
@@ -300,20 +208,20 @@ class Index extends React.Component {
     orderBook,
     loggedIn,
     onExecute,
-    maxSell
+    maxSell,
   ) {
-    const price = padDollarAmount(chartPrice).split(".")
+    const price = padDollarAmount(chartPrice).split('.')
     const deltaString = formatMonthlyStats(
       chartPrice,
-      (chartPrice - movie.price).toFixed(2)
+      (chartPrice - movie.price).toFixed(2),
     )
     return (
       <div>
-        {!loggedIn &&
-          this.renderInvestButton(
+        {!loggedIn
+          && this.renderInvestButton(
             classNames(classes.movieButton, classes.statsButton),
             movie,
-            "Invest Now"
+            'Invest Now',
           )
         }
         {orderBook.connected ? (
@@ -338,7 +246,7 @@ class Index extends React.Component {
           />
         ) : (
             <Typography>Loading chart...</Typography>
-          )}
+        )}
       </div>
     )
   }
@@ -411,50 +319,52 @@ class Index extends React.Component {
       userStore,
       userPortfolio,
       uiStore: { authModalOpen, tabIndexValue },
-    } = this.props.store
+    } = store
     const movie = movieStore.getMovieBySlug(slug)
     // orderBook stuff
-    let takeResultsArray = orderBook.takeResults.slice(0)
+    const takeResultsArray = orderBook.takeResults.slice(0)
     const {
       printInterval,
       buyOrders,
       sellOrders,
       activeChart,
-      marketOrderType
+      marketOrderType,
     } = orderBook
     const funds = userStore.accountBalance
     const chartData = formatTakeResults(takeResultsArray, printInterval)
     const yDomain = [orderBook.low * 0.94, orderBook.high * 1.06]
-    const updatePrintInterval = time => {
+    const updatePrintInterval = (time) => {
       orderBook.updatePrintInterval(time)
     }
-    const setActiveChart = activeChart => {
+    const setActiveChart = (activeChart) => {
       orderBook.setActiveChart(activeChart)
     }
-    const setMarketOrderType = marketOrder => {
+    const setMarketOrderType = (marketOrder) => {
       orderBook.setMarketOrderType(marketOrder)
     }
 
     // Load necessary user data
     const maxSell = userPortfolio.getMaxSell(movie.ticker)
 
+    const { selectedTab, selectedTrader } = this.state
+
     return (
       <>
-        {this.state.selectedTab === "about" &&
-          <article
+        {selectedTab === 'about'
+          && <article
             className={classNames(classes.container, classes.outermost)}
           >
             {this.renderUpperRow(
               classes,
-              this.state.selectedTab,
-              movie
+              selectedTab,
+              movie,
             )}
-            {this.renderAboutMain(classes, movie)}
-            {this.renderAboutMore(classes, movie)}
+            <AboutMain classes={classes} movie={movie} />
+            <AboutMore classes={classes} movie={movie} />
           </article>
         }
-        {this.state.selectedTab === "invest" && this.state.selectedTrader === "basic" &&
-          <article>
+        {selectedTab === 'invest' && selectedTrader === 'basic'
+          && <article>
             {this.renderInvestMain(
               classes,
               movie,
@@ -472,18 +382,16 @@ class Index extends React.Component {
               sellOrders,
               orderBook,
               userStore.token !== null,
-              (order, orderType) => {
-                return userPortfolio.onOrderExecute(
-                  order,
-                  orderType
-                )
-              },
-              maxSell
+              (order, orderType) => userPortfolio.onOrderExecute(
+                order,
+                orderType,
+              ),
+              maxSell,
             )}
           </article>
         }
-        {this.state.selectedTab === "invest" && this.state.selectedTrader === "pro" &&
-          <article>
+        {selectedTab === 'invest' && selectedTrader === 'pro'
+          && <article>
             {this.renderInvestMain(
               classes,
               movie,
@@ -501,21 +409,19 @@ class Index extends React.Component {
               sellOrders,
               orderBook,
               userStore.token !== null,
-              (order, orderType) => {
-                return userPortfolio.onOrderExecute(
-                  order,
-                  orderType
-                )
-              },
-              maxSell
+              (order, orderType) => userPortfolio.onOrderExecute(
+                order,
+                orderType,
+              ),
+              maxSell,
             )}
           </article>
         }
         <div
           className={classNames(classes.container)}
-          style={{ paddingLeft: "0px", paddingRight: "0px" }}
+          style={{ paddingLeft: '0px', paddingRight: '0px' }}
         >
-          {!userStore.token ? <InvestNow /> : ""}
+          {!userStore.token ? <InvestNow /> : ''}
         </div>
         <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
       </>
@@ -523,4 +429,26 @@ class Index extends React.Component {
   }
 }
 
-export default withRouter(withStyles(styles)(Index))
+const ExternalLink = React.forwardRef(
+  ({
+    className, href, hrefAs, children,
+  }, ref) => (
+    <a
+      className={className}
+      ref={ref}
+      href={href || ''}
+      as={hrefAs}
+      target='_blank'
+    >
+      {children}
+    </a>
+  ),
+)
+
+const formatMonthlyStats = (price, valueDelta) => (
+  `${(valueDelta > 0 ? '+ ' : '- ')
+    + Math.abs(valueDelta)
+  } (${
+    ((valueDelta / price) * 100).toFixed(2)
+  }%) `
+)

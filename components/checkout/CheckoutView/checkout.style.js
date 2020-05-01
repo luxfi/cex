@@ -1,10 +1,19 @@
 export default (theme) => ({
   outerContainer: {
-    padding: theme.spacing(0),
+    backgroundColor: '#0f151acc',
   },
   innerContainer: {
-    backgroundColor: '#0f151acc',
-    padding: '20px',
+    padding: theme.spacing(2),
+    width: '100%',
+    display: 'flex',
+    flexWrap: 'wrap',
+    textAlign: 'center',
+    flexDirection: 'column',
+    
+    [theme.breakpoints.up('md')]: {
+      flexDirection: 'row',
+      textAlign: 'left',
+    },
   },
   ticketColumnHeader: {
     fontSize: '16px',
@@ -13,9 +22,14 @@ export default (theme) => ({
   ticketColumn: {
     fontSize: '16px',
   },
-  ticketQuantityContainer: {
-    width: '50%',
-    padding: '0 20px',
+  movieInfoContainer: {
+    paddingRight: theme.spacing(0),
+    marginBottom: theme.spacing(4),
+
+    [theme.breakpoints.up('md')]: {
+      paddingRight: theme.spacing(2),
+      marginBottom: theme.spacing(0),
+    },
   },
   tableHeader: {
     padding: '10px 20px',
@@ -27,10 +41,17 @@ export default (theme) => ({
     borderBottom: '1px solid rgba(255,255,255,0.1)',
     backgroundColor: '#222',
   },
+  manageQuantitySection: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    flexWrap: 'nowrap',
+    alignItems: 'center',
+  },
   tableFooter: {
     padding: '20px',
     backgroundColor: '#222',
     marginRight: 1,
+    textAlign: 'left',
   },
   ticketBtn: {
     padding: theme.spacing(0),
@@ -64,13 +85,13 @@ export default (theme) => ({
     marginRight: '5px',
   },
   movieImg: {
-    width: '200px',
-    height: '300px',
+    width: '100%',
+    maxWidth: 317.5,
+    height: 317.5,
   },
   nextButton: {
     minWidth: '200px',
     height: '50px',
-    marginLeft: '20px',
     fontSize: '20px',
     fontWeight: 700,
     backgroundColor: '#FBC43E',
@@ -81,7 +102,9 @@ export default (theme) => ({
     },
   },
   subTotalContainer: {
-    padding: '60px 20px',
+    padding: theme.spacing(8, 2),
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
   subTotalText: {
     fontSize: '16px',

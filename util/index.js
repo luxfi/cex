@@ -1,4 +1,6 @@
 import useEventListener from './useEventListener'
+import { withOnDemandAuth } from './HOC'
+import loginRequired from './loginRequired'
 
 import ReactGA from 'react-ga'
 import moment from 'moment/moment.js'
@@ -188,10 +190,15 @@ const calculateDateFrom = (date) => moment(date, 'YYYYMMDD').fromNow()
 
 const renderDate = (date, format) => moment(date).format(format)
 
+const isNullQuery = (query) => (
+  !query || Object.entries(query).length === 0
+)
+
 export {
   formatCurrency,
   googlePageView,
   isEmail,
+  isNullQuery,
   isNumber,
   isPassword,
   isPhone,
@@ -199,6 +206,7 @@ export {
   isServer,
   isStringInteger,
   isStringUSCurrency,
+  loginRequired,
   padDollarAmount,
   pluralize,
   slugFromPath,
@@ -212,4 +220,5 @@ export {
   formatDuration,
   calculateDateFrom,
   renderDate,
+  withOnDemandAuth  // deprecate in favor of @loginRequired decorator
 }

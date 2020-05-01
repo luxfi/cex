@@ -1,12 +1,13 @@
-import React from "react"
-import Breadcrumbs from "@material-ui/core/Breadcrumbs"
-import CustomLink from "../CustomLink/CustomLink"
-import NavigateNextIcon from "@material-ui/icons/NavigateNext"
-import Link from '@material-ui/core/Link'
+import React from 'react'
+
+import { Breadcrumbs, Link } from '@material-ui/core'
+import NavigateNextIcon from '@material-ui/icons/NavigateNext'
+
+import NextMuiLink from '../NextMuiLink'
 
 const TEMP_LAMENESS = "Filming The Lone Wolf Dies"; // TODO
 
-class Index extends React.Component {
+export default class extends React.Component {
 
   render() {
     const pageName = this.props.children ? this.props.children : TEMP_LAMENESS;
@@ -15,13 +16,8 @@ class Index extends React.Component {
       <Breadcrumbs
         separator={<NavigateNextIcon fontSize="small" />}
         aria-label="breadcrumb"
-        style={{
-          MuiBreadcrumbsRoot: {
-
-          }
-        }}
       >
-        <Link color="inherit" href="/" component={CustomLink}>
+        <Link color="inherit" href="/" component={NextMuiLink}>
           Home
         </Link>
         <span>{pageName}</span>
@@ -29,5 +25,3 @@ class Index extends React.Component {
     )
   }
 }
-
-export default Index

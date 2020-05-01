@@ -35,12 +35,21 @@ import {
 } from '../components/app'
 
 import initializeStores from '../stores/stores'
+
+
 import styles from '../styles/app.style.js'
 import theme from '../styles/esxTheme'
+import '../styles/esxThemeTouchups.scss'
+
+import '../components/app/MovieSlider/modified-slick.css'
+
 
 config.autoAddCss = false
+
+@withRouter
+@withStyles(styles)
 @observer
-class ESXApp extends NextApp {
+export default class extends NextApp {
   constructor(props) {
     super(props)
     this.stores = initializeStores()
@@ -67,52 +76,49 @@ class ESXApp extends NextApp {
       </NextHead>
       <Provider store={this.stores}>
         <MuiThemeProvider theme={theme}>
-          <NoSsr>
-            <Box className={classes.root}>
-              <CssBaseline />
-                <Header
-                  loggedIn={this.stores.userStore.loggedIn}
-                  movies={this.stores.movieStore.filteredMovies}
-                  openMobileMenu={() => {this.stores.uiStore.setRightDrawerOpen(true)}}
-                  handleLogout={() => {this.stores.userStore.logout()}}
-                  handleSearch={() => { router.push('/browse') }}
-                  showFullSearchWidget={showFullSearchWidget(router.route)}
-                />
-                <MobileNavMenuDrawer
-                  open={this.stores.uiStore.drawers.left}
-                  setOpen={this.stores.uiStore.setLeftDrawerOpen}
-                />
-                <Container component='main' className={classNames({ [classes.main]: true, [classes.fullScreenMain]: fullScreen })}>
-                  <Component {...pageProps} pathName={router.route} />
-                </Container>
-                <CustomModal
-                  open={this.stores.uiStore.modal.open}
-                  handleClose={() => this.stores.uiStore.closeModal()}
-                  body={this.stores.uiStore.modal.body}
-                  title={this.stores.uiStore.modal.title}
-                />
+          <div className={classes.root}>
+            <CssBaseline />
+            <NoSsr>
+              <Header
+                loggedIn={this.stores.userStore.loggedIn}
+                movies={this.stores.movieStore.filteredMovies}
+                openMobileMenu={() => {this.stores.uiStore.setRightDrawerOpen(true)}}
+                handleLogout={() => {this.stores.userStore.logout()}}
+                handleSearch={() => { router.push('/browse') }}
+                showFullSearchWidget={showFullSearchWidget(router.route)}
+              />
+              <MobileNavMenuDrawer
+                open={this.stores.uiStore.drawers.left}
+                setOpen={this.stores.uiStore.setLeftDrawerOpen}
+              />
+              <Container component='main' className={classNames({ [classes.main]: true,  [classes.container]: true, [classes.fullScreenContainer]: fullScreen })}>
+                <Component {...pageProps} pathName={router.route} />
+              </Container>
+              <CustomModal
+                open={this.stores.uiStore.modal.open}
+                handleClose={() => this.stores.uiStore.closeModal()}
+                body={this.stores.uiStore.modal.body}
+                title={this.stores.uiStore.modal.title}
+              />
 
-                <CustomSnackbar />
-                <MobileAccountMenuDrawer
-                  open={this.stores.uiStore.drawers.right}
-                  setOpen={this.stores.uiStore.setRightDrawerOpen}
-                  isLoggedIn={this.stores.userStore.loggedIn}
-                  handleLogout={() => {
-                    this.stores.userStore.logout()
-                  }}
+              <CustomSnackbar />
+              <MobileAccountMenuDrawer
+                open={this.stores.uiStore.drawers.right}
+                setOpen={this.stores.uiStore.setRightDrawerOpen}
+                isLoggedIn={this.stores.userStore.loggedIn}
+                handleLogout={() => {
+                  this.stores.userStore.logout()
+                }}
+              />
+              {hideFooter(router.route) ? null : (
+                <Footer 
+                  loggedIn={this.stores.userStore.loggedIn} 
+                  handleLogout={this.stores.userStore.logout} 
+                  className ={classNames({ [classes.footer]: true,  [classes.container]: true, [classes.fullScreenContainer]: fullScreen })}
                 />
-                {hideFooter(router.route) ? null : (
-                  <Container className={classNames({ [classes.footer]: true, [classes.fullScreenFooter]: fullScreen })}>
-                    <Footer
-                      isLoggedIn={this.stores.userStore.loggedIn}
-                      handleLogout={() => {
-                        this.stores.userStore.logout()
-                      }}
-                    />
-                  </Container>
-                )}
-            </Box>
-          </NoSsr>
+              )}
+            </NoSsr>
+          </div>
         </MuiThemeProvider>
       </Provider>
       </>
@@ -144,4 +150,4 @@ const showFullSearchWidget = (route) => {
   return route.startsWith('/browse')
 }
 
-export default withRouter(withStyles(styles)(ESXApp))
+//export default withRouter(withStyles(styles)(ESXApp))

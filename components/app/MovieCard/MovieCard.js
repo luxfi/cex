@@ -1,4 +1,7 @@
 import React from 'react'
+import NextLink from 'next/link'
+import classNames from 'classnames'
+
 import {
   Button,
   Box,
@@ -9,16 +12,14 @@ import {
   makeStyles,
 } from '@material-ui/core'
 
-import Link from 'next/link'
-import InfoIcon from "@material-ui/icons/Help"
-import PollIcon from "@material-ui/icons/Poll"
-import FavoriteIcon from "@material-ui/icons/FavoriteBorder"
+import {
+  Help as InfoIcon,
+  Poll as PollIcon,
+  FavoriteBorder as FavoriteIcon,
+} from '@material-ui/icons'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlayCircle } from '@fortawesome/free-solid-svg-icons'
-
-
-import classNames from 'classnames'
 
 import { TrailerSliderModal } from "../../landing"
 import { truncate, getYoutubeId } from "../../../util"
@@ -38,19 +39,19 @@ export default ({
   const style = (height) ? { height: height, width: 'auto' } : {}
 
   return (
-    <Card className={classNames(classes.card, className, movie.movieSlug)} >
-      <CardMedia src={movie.posterImg} className={classes.cardMedia} component='img' style={style}/>
-      <CardContent className={classes.cardContent}>
+    <div className={classNames(classes.card, className, movie.movieSlug)} >
+      <img src={movie.posterImg} className={classes.cardMedia} style={style}/>
+      <div className={classes.cardContent}>
         <TrailerImage movie={movie} className={classes.trailerImg}/>
         <Box className={classNames(classes.standardContent, classes.innerCardContent) }>
           <Typography className={classes.title} variant="body2">{movie.name}</Typography>
         </Box>
         <Box className={classNames(classes.hoverContent, classes.innerCardContent)}>
-          <Link href={`/film/${movie.movieSlug}`}>
+          <NextLink href={`/film/${movie.movieSlug}`}>
             <a className={classes.aTag}>
               <Typography className={classNames(classes.title, classes.aTag)} variant="body2">{movie.name}</Typography>
             </a>
-          </Link>
+          </NextLink>
           <Typography className={classes.shortDescription} variant="body1">{truncate(movie.shortDescription, 20)}</Typography>
           <div className={classes.buttonsOuter}>
             <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => { goToMovieDetail(movie) }} ><InfoIcon /></Button>
@@ -59,15 +60,15 @@ export default ({
             <Button className={classNames(classes.detailsButton, classes.hoverButton, classes.textButton)} onClick={() => { (movie.trading) ? goToMovieTrading(movie) : goToMovieOffering(movie) }} >{(movie.trading) ? 'TRADE' : 'INVEST'}</Button>
           </div>
         </Box>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }
 
 const TrailerImage = ({movie, className}) => {
   const childRef = React.useRef()
   return (
-    <Link href={`/watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`}>
+    <NextLink href={`/watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`}>
       <a style={{ color: '#fff'}}>
         <div className={className}>
           <FontAwesomeIcon icon={faPlayCircle} size='1x' />
@@ -75,6 +76,6 @@ const TrailerImage = ({movie, className}) => {
           <TrailerSliderModal movie={movie} ref={childRef} />
         </div>
       </a>
-    </Link>
+    </NextLink>
   )
 }

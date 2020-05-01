@@ -1,4 +1,4 @@
-.show-details-button {
+.showDetailsButton {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -11,7 +11,7 @@
   width: 100%;
 }
 
-.show-details-button span {
+.showDetailsButton span {
   display: block;
   width: 14px;
   margin: 0 auto;

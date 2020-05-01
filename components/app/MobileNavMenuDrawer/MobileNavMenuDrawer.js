@@ -12,7 +12,7 @@ import {
   makeStyles
 } from "@material-ui/core"
 
-import { SideDrawer, CustomLink } from ".."
+import { SideDrawer, NextMuiLink } from ".."
 
 import styles from './mobileNavMenuDrawer.style.js'
 const useStyles = makeStyles(styles)
@@ -61,9 +61,9 @@ const NavElements = (props) => {
     if (href) {
       result.push(
         <ListItem className={classes.listButton} button key={i} onClick={() => handleClose()}>
-          <CustomLink href={href} className={classes.listButtonLink}>
+          <NextMuiLink href={href} className={classes.listButtonLink}>
             {elementDef.title}
-          </CustomLink>
+          </NextMuiLink>
         </ListItem>
       )
     }
@@ -128,9 +128,9 @@ const SubNav = (props) => {
                   key={i}
                   onClick={() => handleClose()}
                 >
-                <CustomLink href={href} className={classes.listButtonLink}>
+                <NextMuiLink href={href} className={classes.listButtonLink}>
                     <ListItemText primary={item.title} />
-                  </CustomLink>
+                  </NextMuiLink>
                 </ListItem>
 
               )

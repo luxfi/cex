@@ -1,13 +1,11 @@
-import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
-import Link from '@material-ui/core/Link'
-import { inject, observer } from 'mobx-react'
 import React from 'react'
+import { inject, observer } from 'mobx-react'
 
-import { googlePageView } from '../../../util'
+import { Box, Grid, Link } from '@material-ui/core'
 
-import CustomLink from '../../app/CustomLink'
+import NextMuiLink from '../../app/NextMuiLink'
 import LoginForm from '../LoginForm'
+import { googlePageView } from '../../../util'
 
 @inject('store')
 @observer
@@ -83,7 +81,7 @@ class LoginView extends React.Component {
                   {linkText}
                 </button>)
                 : (
-                  <Link component={CustomLink} href={`/signup${ref}`} variant='body2'>
+                  <Link component={NextMuiLink} href={`/signup${ref}`} variant='body2'>
                     {linkText}
                   </Link>
                 )
