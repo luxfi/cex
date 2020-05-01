@@ -1,14 +1,26 @@
+<<<<<<< HEAD
 import React from 'react'
 import { isObservableArray, toJS } from 'mobx'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'next/router'
 import classNames from 'classnames'
 
+=======
+>>>>>>> 31e895defff5e577aa14c035b6692b09f2b5177f
 import {
   Button,
   Typography,
   withStyles,
 } from '@material-ui/core'
+<<<<<<< HEAD
+=======
+import classNames from 'classnames'
+import { toJS } from 'mobx'
+import { inject, observer } from 'mobx-react'
+import { withRouter } from 'next/router'
+import React from 'react'
+
+>>>>>>> 31e895defff5e577aa14c035b6692b09f2b5177f
 
 import { padDollarAmount, slugFromPath } from '../../../util'
 import { formatTakeResults } from '../../../util/formatOrderBookDataForChart'
@@ -82,112 +94,6 @@ export default class extends React.Component {
           onTabSelected={this.onTabSelected}
         />
       </div>
-    )
-  }
-
-  renderAboutMain(classes, movie) {
-    const { store: { userPortfolio } } = this.props
-    return (
-      <Grid container>
-        <Grid item xs={12} md={9}>
-          <div className={classes.titleAndDescription}>
-            <h1
-              className={classes.title}
-              style={{ textAlign: "left" }}
-            >
-              {movie.name}
-            </h1>
-            <p className={classes.description}>
-              {movie.shortDescription}
-            </p>
-          </div>
-          <div>
-            <Button
-              href={"/trade/" + movie.movieSlug}
-              rel="noopener noreferrer"
-              variant="contained"
-              className={classes.movieButton}
-            >
-              Invest
-            </Button>
-            {this.renderAddToPlaylistButton(movie)}
-            <Link href="/ticketing" as={`/ticketing/${movie.movieSlug}`}>
-              <Button
-                variant="contained"
-                className={classes.movieButton}
-              >
-                Buy Tickets
-              </Button>
-            </Link>
-          </div>
-          <br />
-          <br />
-          <Grid item xs={12} md={10}>
-            <Typography variant="h6">Watch Trailers</Typography>
-            <Trailers />
-          </Grid>
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <img src={movie.posterImg} height="444" />
-        </Grid>
-      </Grid>
-    )
-  }
-
-  renderTableRow(field, label, movie) {
-    // note that Array.isArray() will return false
-    const content = isObservableArray(movie[field])
-      ? movie[field].join(", ")
-      : movie[field]
-
-    return (
-      <tr style={{ marginBottom: "12px" }}>
-        <td valign="top">{label}</td>
-        <td valign="top">{content}</td>
-      </tr>
-    )
-  }
-
-  renderAboutMore(classes, movie) {
-    return (
-      <>
-        <div className={classes.aboutMoreTitleArea}>
-          <h1 className={classes.sectionTitle}>About</h1>
-          <h2 className={classes.sectionByline}>
-            More about the film
-                    </h2>
-        </div>
-        <div className={classes.aboutMoreCopyArea}>
-          <div className={classes.aboutMoreStats}>
-            <table className={classes.aboutMoreStatsTable}>
-              <tbody>
-                {this.renderTableRow(
-                  "director",
-                  "Director",
-                  movie
-                )}
-                {this.renderTableRow(
-                  "actors",
-                  "Starring",
-                  movie
-                )}
-                {this.renderTableRow(
-                  "writer",
-                  "Writers",
-                  movie
-                )}
-                {this.renderTableRow("genre", "Genres", movie)}
-                {this.renderTableRow("rated", "Rating", movie)}
-              </tbody>
-            </table>
-          </div>
-          <div className={classes.aboutMoreText}>
-            {
-              movie.longDescription
-            }
-          </div>
-        </div>
-      </>
     )
   }
 
