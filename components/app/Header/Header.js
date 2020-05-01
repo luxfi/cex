@@ -13,7 +13,7 @@ import {
 import { MenuRounded as MenuIcon, Search as SearchIcon } from '@material-ui/icons'
 import classNames from 'classnames'
 
-import { CascadingMenu, MovieSearchWidget, CustomLink } from '..'
+import { CascadingMenu, MovieSearchWidget, NextMuiLink } from '..'
 
 import HeaderLogo from './HeaderLogo'
 import DesktopUserMenu from './DesktopUserMenu'
@@ -51,7 +51,7 @@ export default withWidth()((props) => {
     <AppBar className={classNames(s.appBarCommon, appBarClass)}>
       <Toolbar disableGutters className={s.toolbar}>
         <div className={s.logoArea}>
-          <CustomLink href='/'><HeaderLogo className={s.logo} /></CustomLink>
+          <NextMuiLink href='/'><HeaderLogo className={s.logo} /></NextMuiLink>
           {(showFullSearchWidget) ? (<MovieSearchWidget className={s.searchWidget} movies={movies} />) : null}
         </div>
         {showDesktopNav ? (
