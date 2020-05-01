@@ -1,13 +1,14 @@
+import React, { useEffect } from 'react'
 import { inject, observer } from 'mobx-react'
 import Router, { withRouter } from 'next/router'
-import React from 'react'
 
 import { TradeView } from '../components/trade'
 import { googlePageView, slugFromPath } from '../util'
 
+@withRouter
 @inject('store')
 @observer
-class Trade extends React.Component {
+export default class extends React.Component {
   componentDidMount() {
     const { store, router } = this.props
     const slug = router.query.slug || slugFromPath()
@@ -15,7 +16,8 @@ class Trade extends React.Component {
 
     if (false && uiStore.trading === 'pro') {
       Router.replace(`/pro/${slug}`)
-    } else {
+    } 
+    else {
       googlePageView()
     }
   }
@@ -24,5 +26,3 @@ class Trade extends React.Component {
     return <TradeView socket={this.socket} />
   }
 }
-
-export default withRouter(Trade)

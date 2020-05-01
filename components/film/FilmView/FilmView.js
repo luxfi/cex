@@ -1,6 +1,7 @@
 import React from 'react'
 import { isObservableArray, toJS } from 'mobx'
 import { inject, observer } from 'mobx-react'
+import { withRouter } from 'next/router'
 import classNames from 'classnames'
 
 import {
