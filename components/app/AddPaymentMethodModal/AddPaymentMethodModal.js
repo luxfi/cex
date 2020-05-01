@@ -11,7 +11,7 @@ import CreditCardIcon from '@material-ui/icons/CreditCard'
 import { inject, observer } from 'mobx-react'
 import React from 'react'
 
-import { AddPaymentMethodForm } from '../../account'
+import AddPaymentMethodForm from './AddPaymentMethodForm'
 
 import CardPaymentForm from '../CardPaymentForm'
 import CustomDialog from '../CustomDialog'

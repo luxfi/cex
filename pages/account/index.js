@@ -14,7 +14,9 @@ import { SidebarLayout } from '../../components/app'
 
 import { 
   ProfileView,
-  FundsView
+  FundsView,
+  APIAccessView,
+  AccountActivityView,
 } from '../../components/account'
 
 import { 
@@ -23,9 +25,6 @@ import {
   loginRequired,
   isNullQuery 
 } from '../../util'
-
-
-//import AccountTabs from '../../settings/accountTabs'
 
 const BASE_ROUTE = '/account'
 
@@ -147,7 +146,8 @@ const Third = (props) => (
 const tabbedViews = [
   <ProfileView tabTitle='Profile'/>,
   <FundsView tabTitle='Funds' />, 
-  <Third tabTitle='third' />
+  <APIAccessView tabTitle='API Access' />,
+  <AccountActivityView tabTitle='Account Activity' />,
 ]
 
 
