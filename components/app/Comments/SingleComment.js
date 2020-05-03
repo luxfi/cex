@@ -1,33 +1,40 @@
-import React, { useState } from 'react'
-import { withRouter } from 'next/router'
+import React from 'react'
+import { useRouter } from 'next/router'
 import { inject, observer } from 'mobx-react'
 
-import { Box, Typography, Avatar, Button } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { 
+  Avatar, 
+  Button, 
+  Box, 
+  makeStyles, 
+  Typography 
+} from '@material-ui/core'
 
 import LikeAndUnlike from '../../LikeAndUnlike'
 import { isAuthenticated } from '../../../util/helpers' // refactor... only used once :aa
 
-import styles from './styles/comments.style'
+import styles from './styles/comments.style.js'
 
-const SingleComment = inject('store')(observer(({
-  comment,
-  handleReply,
-  showReplyButton,
-  keyValue,
-  isReply,
-  store: {
-    commentStore,
-    userStore: { loggedIn, currentUser, id },
-  },
-  router,
-}) => {
+export default inject('store')(observer(({
+    comment,
+    handleReply,
+    showReplyButton,
+    keyValue,
+    isReply,
+    store: {
+      commentStore,
+      userStore: { loggedIn, currentUser, id },
+    },
+  }
+) => {
+  const router = useRouter()
+  const { video: movieSlug, trailerId } = router
   const useMainStyles = makeStyles(styles)
   const classes = useMainStyles()
   const imageClassName = isReply ? classes.commentImageReply : classes.commentImage
 
   const handleClick = (comment, userId, type) => {
-    if (isAuthenticated(loggedIn, `/watch?video=${router.query.video}`, router)) {
+    if (isAuthenticated(loggedIn, `/watch?video=${movieSlug}&trailerId=${trailerId}`, router)) {
       commentStore.addCommentReaction(comment, userId, type)
     }
   }
@@ -55,5 +62,3 @@ const SingleComment = inject('store')(observer(({
     </Box>
   )
 }))
-
-export default withRouter(SingleComment)

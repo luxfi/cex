@@ -3,6 +3,7 @@ import { withOnDemandAuth } from './HOC'
 import loginRequired from './loginRequired'
 
 import ReactGA from 'react-ga'
+import moment from 'moment/moment.js'
 
 const isNumber = val => typeof val === 'number' && val === val
 const isPassword = (value) => value && typeof value === 'string' && value.length > 6
@@ -123,6 +124,11 @@ function slugFromPath() {
   }
 }
 
+function getYoutubeId(trailerUrl) {
+  const videoUrlArray = trailerUrl.split('/')
+  return videoUrlArray[videoUrlArray.length - 1]
+}
+
 function creditCardFormat(value = '') {
   const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
   const matches = v.match(/\d{4,16}/g)
@@ -161,6 +167,29 @@ function getCreditCardType(value) {
   return creditCardType
 }
 
+const formatNumber = (num, digits) => {
+  if (num >= 1E6) {
+    return `${(num / 1E6).toFixed(digits)}M`
+  }
+
+  if (num >= 1E3) {
+    return `${(num / 1E3).toFixed(digits)}K`
+  }
+
+  return num
+}
+
+const formatDuration = (time) => {
+  const playTime = parseInt(time, 10)
+  const minute = Math.floor(playTime / 60)
+  const seconds = Math.floor(playTime - (minute * 60))
+  return `${minute}:${seconds > 9 ? seconds : `0${seconds}`}`
+}
+
+const calculateDateFrom = (date) => moment(date, 'YYYYMMDD').fromNow()
+
+const renderDate = (date, format) => moment(date).format(format)
+
 const isNullQuery = (query) => (
   !query || Object.entries(query).length === 0
 )
@@ -186,5 +215,10 @@ export {
   useEventListener,
   creditCardFormat,
   getCreditCardType,
+  getYoutubeId,
+  formatNumber,
+  formatDuration,
+  calculateDateFrom,
+  renderDate,
   withOnDemandAuth  // deprecate in favor of @loginRequired decorator
 }

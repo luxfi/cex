@@ -1,5 +1,5 @@
 import React from 'react'
-import { toJS } from 'mobx'
+import { isObservableArray, toJS } from 'mobx'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'next/router'
 import classNames from 'classnames'
@@ -13,14 +13,13 @@ import {
 import { padDollarAmount, slugFromPath } from '../../../util'
 import { formatTakeResults } from '../../../util/formatOrderBookDataForChart'
 
-// section
 import {
   AuthModal,
   BasicTrader,
   CustomBreadcrumbs,
   InvestNow,
   NextMuiLink,
-  ProTrader,
+  Trailers,
 } from "../../app"
 
 import AboutMain from './AboutMain'
@@ -348,7 +347,3 @@ const formatMonthlyStats = (price, valueDelta) => (
     ((valueDelta / price) * 100).toFixed(2)
   }%) `
 )
-
-
-
-//export default withRouter(withStyles(styles)(Index))

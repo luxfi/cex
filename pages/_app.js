@@ -7,6 +7,7 @@ import { withRouter } from 'next/router'
 import NextHead from 'next/head'
 
 import {
+  Box,
   Container,
   CssBaseline,
   MuiThemeProvider,
@@ -44,8 +45,11 @@ import '../components/app/MovieSlider/modified-slick.css'
 
 
 config.autoAddCss = false
+
+@withRouter
+@withStyles(styles)
 @observer
-class ESXApp extends NextApp {
+export default class extends NextApp {
   constructor(props) {
     super(props)
     this.stores = initializeStores()
@@ -146,4 +150,4 @@ const showFullSearchWidget = (route) => {
   return route.startsWith('/browse')
 }
 
-export default withRouter(withStyles(styles)(ESXApp))
+//export default withRouter(withStyles(styles)(ESXApp))
