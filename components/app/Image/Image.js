@@ -15,10 +15,6 @@ const Image = ({
   disableError = false,
   disableSpinner = false,
   disableTransition = false,
-  // errorIcon = (
-  //   <BrokenImage style={{ width: 48, height: 48, color: grey[300] }} />
-  // ),
-  // loading = <CircularProgress size={48} />,
   ...props
 }) => {
   const errorIcon = (
@@ -49,8 +45,6 @@ const Image = ({
     const styles = {
       root: {
         backgroundColor: color,
-        // paddingTop: `calc(1 / ${aspectRatio} * 100%)`,
-        // position: 'relative',
         ...style,
       },
       image: {
@@ -58,7 +52,6 @@ const Image = ({
         height: '100%',
         top: 0,
         left: 0,
-        // position: 'absolute',
         ...imageTransition,
         ...imageStyle,
       },
@@ -82,14 +75,6 @@ const Image = ({
   const { imageStyle, onClick, ...image } = props
 
   return (
-    // <img
-    //   src={image.src}
-    //   style={styles.image}
-    // {...image}
-    // style={styles.image}
-    // onLoad={handleLoadImage}
-    // onError={handleImageError}
-    // />
     <div style={styles.root} onClick={onClick}>
       {image.src && (
         <img
