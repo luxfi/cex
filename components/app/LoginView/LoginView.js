@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react'
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 
-import CustomLink from '../CustomLink'
+import NextMuiLink from '../NextMuiLink'
 import LoginForm from './LoginForm'
 
 const styles = (theme) => ({
@@ -82,7 +82,7 @@ const LoginView = ({ store, isModal, classes }) => {
                 {linkText}
               </button>)
               : (
-                <Link component={CustomLink} href={`/signup${ref}`} variant='body2'>
+                <Link component={NextMuiLink} href={`/signup${ref}`} variant='body2'>
                   {linkText}
                 </Link>
               )
