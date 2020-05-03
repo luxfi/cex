@@ -362,7 +362,7 @@ export default class UserStore {
     // sets current step in KYC
     this.activeStep = step
   }
-
+    // TODO: :aa these validation methods should be calling util functions and shoudl not be defined here.
   @computed get validFirstName() {
     return stringPresentAndValid(this.firstName)
   }

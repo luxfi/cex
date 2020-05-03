@@ -1,0 +1,27 @@
+$SPACING_BASE: 8px; // to match theme
+
+
+.MuiFormControl-root + .MuiFormControl-root {
+  margin-top: 8px; 
+}
+
+select.MuiSelect-root > option {
+  min-height: 0;
+}
+
+.MuiIconButton-label svg.MuiSvgIcon-root {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.MuiTextField-root.row-text-field-esx-theme-touchups {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+
+  label {
+    margin-right: $SPACING_BASE;
+  }
+}
+

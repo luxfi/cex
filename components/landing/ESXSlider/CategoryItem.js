@@ -1,15 +1,10 @@
-import React from 'react';
-import cx from 'classnames';
+import React, { useRef } from 'react';
 import SliderContext from './context'
-import ShowDetailsButton from './ShowDetailsButton'
-import Mark from './Mark'
-import './Item.css'
+import s from './Item.module.css'
 import { Card, CardContent, Typography, Box, Grid } from "@material-ui/core"
 import IconArrowDown from '../Icons/IconArrowDown'
-import { TrailerSliderModal } from ".."
-const { useRef } = React
 
-const Item = ({ genre, onClick }) => {
+export default ({ genre, onClick }) => {
   const childRef = useRef()
 
   return (
@@ -19,7 +14,7 @@ const Item = ({ genre, onClick }) => {
         return (
           <div
             ref={elementRef}
-            className="item"
+            className={s.item}
             style={{
               flex: "0 0 15%",
               textAlign: "center",
@@ -59,6 +54,4 @@ const Item = ({ genre, onClick }) => {
       }}
     </SliderContext.Consumer>
   )
-};
-
-export default Item;
+}

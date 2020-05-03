@@ -9,7 +9,7 @@ import { makeStyles } from "@material-ui/core/styles"
 
 // core components
 import ContentLoader from "react-content-loader"
-import { CustomLink, CustomModal } from ".."
+import { NextMuiLink, CustomModal } from ".."
 
 // styles
 import useStyles from "./InvestNow.style.js"
@@ -64,7 +64,7 @@ export default props => {
               <Box>Invest more than screen time in your favorite films.</Box>
             </Typography>
             <Grid container justify="center">
-              <Button component={CustomLink} href={hrefLink}>
+              <Button component={NextMuiLink} href={hrefLink}>
                 Invest Now
               </Button>
               <Button

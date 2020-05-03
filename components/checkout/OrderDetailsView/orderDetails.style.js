@@ -1,9 +1,70 @@
+const darkerBg = {
+  background: '#222',
+}
+
+const lighterBg = {
+  background: '#333',
+}
+
+const borderBottom = {
+  '& > :not(:last-child)': {
+    borderBottom: '1px solid #535353',
+  },
+}
+
+const padding20 = (theme) => ({
+  padding: 20,
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(2),
+  },
+})
+
+const container = (theme) => ({
+  marginTop: theme.spacing(6),
+  position: 'relative',
+  '& > *': {
+    padding: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(1),
+    },
+  },
+  [theme.breakpoints.down('sm')]: {
+    marginTop: 0,
+  },
+})
+
+const marginBottom = (theme) => ({
+  '&:not(:last-child)': {
+    marginBottom: theme.spacing(3),
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: theme.spacing(2),
+    },
+  },
+})
+
 export default (theme) => ({
-  container: {
-    margin: '52px auto 0',
-    padding: '20px 32px',
-    position: 'relative',
-    flexGrow: 1,
+
+  outerContainer: {
+    ...container(theme),
+  },
+
+  innerContainer: {
+    ...container(theme),
+    ...darkerBg,
+  },
+
+  mainContentArea: {
+    padding: theme.spacing(2),
+    '&:not(:last-child)': {
+      marginBottom: theme.spacing(3),
+      [theme.breakpoints.down('sm')]: {
+        marginBottom: theme.spacing(2),
+      },
+    },
+  },
+
+  contentBox: {
+    ...marginBottom(theme),
   },
 
   aTags: {
@@ -11,35 +72,24 @@ export default (theme) => ({
     textDecoration: 'none',
   },
 
-  darkerBg: {
-    background: '#222',
-  },
-
-  lighterBg: {
-    background: '#333',
-  },
-
-  padding20: {
-    padding: 20,
-  },
-
-  borderBottom: {
-    '& > :not(:last-child)': {
-      borderBottom: '1px solid #535353',
-    },
-  },
-
   shareLabel: {
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
 
   topText: {
     textAlign: 'center',
     marginTop: '3em',
+    [theme.breakpoints.down('sm')]: {
+      marginTop: 0,
+      paddingTop: 0,
+    },
   },
 
-  movieDetails: {
+  qrCodeSection: {
     textAlign: 'center',
+    ...marginBottom(theme),
+    ...lighterBg,
+    ...padding20(theme),
     '& > *': {
       maxHeight: 250,
       marginBottom: '0.75em',
@@ -49,12 +99,39 @@ export default (theme) => ({
     },
   },
 
+  detailBox: {
+    ...lighterBg,
+    ...borderBottom,
+  },
+
+  locationSection: {
+    ...lighterBg,
+    ...borderBottom,
+    ...padding20(theme),
+  },
+
+  screenDetailsWrapper: {
+    width: '100%',
+    display: 'flex',
+    flexWrap: 'wrap',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    },
+  },
+
   ticketDetail: {
-    padding: 20,
     textAlign: 'center',
+    ...padding20(theme),
     '&:not(:last-child)': {
       borderRight: '1px solid #535353',
+      [theme.breakpoints.down('sm')]: {
+        borderBottom: '1px solid #535353',
+        borderRight: 'none',
+      },
     },
+    flexGrow: 1,
+    maxWidth: '100%',
+    flexBasis: 0,
   },
 
   ticketDetailsLink: {
@@ -62,7 +139,12 @@ export default (theme) => ({
   },
 
   sideBar: {
+    padding: theme.spacing(2),
     textAlign: 'center',
+  },
+
+  emailInfo: {
+    ...padding20(theme),
   },
 
   sidebarButton: {

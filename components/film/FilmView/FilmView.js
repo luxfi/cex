@@ -1,60 +1,38 @@
+import React from 'react'
+import { isObservableArray, toJS } from 'mobx'
+import { inject, observer } from 'mobx-react'
+import { withRouter } from 'next/router'
+import classNames from 'classnames'
+
 import {
   Button,
   Typography,
   withStyles,
 } from '@material-ui/core'
-import classNames from 'classnames'
-import { toJS } from 'mobx'
-import { inject, observer } from 'mobx-react'
-import { withRouter } from 'next/router'
-import React from 'react'
-
 
 import { padDollarAmount, slugFromPath } from '../../../util'
 import { formatTakeResults } from '../../../util/formatOrderBookDataForChart'
 
-// section
 import {
   AuthModal,
   BasicTrader,
   CustomBreadcrumbs,
   InvestNow,
-  ProTrader,
-} from '../../app'
-import CustomLink from '../../app/CustomLink'
-import AboutMain from './AboutMain'
+  NextMuiLink,
+  Trailers,
+} from "../../app"
 
-import styles from './film.style.js'
+import AboutMain from './AboutMain'
 import PageTabs from './PageTabs'
 import AboutMore from './AboutMore'
 
-const ExternalLink = React.forwardRef(
-  ({
-    className, href, hrefAs, children,
-  }, ref) => (
-    <a
-      className={className}
-      ref={ref}
-      href={href || ''}
-      as={hrefAs}
-      target='_blank'
-    >
-      {children}
-    </a>
-  ),
-)
+import styles from './film.style.js'
 
-const formatMonthlyStats = (price, valueDelta) => (
-  `${(valueDelta > 0 ? '+ ' : '- ')
-    + Math.abs(valueDelta)
-  } (${
-    ((valueDelta / price) * 100).toFixed(2)
-  }%) `
-)
-
+@withRouter
+@withStyles(styles)
 @inject('store')
 @observer
-class Index extends React.Component {
+export default class extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -76,7 +54,7 @@ class Index extends React.Component {
   renderInvestButton(className, movie, text, onClick) {
     return (
       <Button
-        component={CustomLink}
+        component={NextMuiLink}
         style={{
           color: 'black',
           height: '48px',
@@ -346,4 +324,26 @@ class Index extends React.Component {
   }
 }
 
-export default withRouter(withStyles(styles)(Index))
+const ExternalLink = React.forwardRef(
+  ({
+    className, href, hrefAs, children,
+  }, ref) => (
+    <a
+      className={className}
+      ref={ref}
+      href={href || ''}
+      as={hrefAs}
+      target='_blank'
+    >
+      {children}
+    </a>
+  ),
+)
+
+const formatMonthlyStats = (price, valueDelta) => (
+  `${(valueDelta > 0 ? '+ ' : '- ')
+    + Math.abs(valueDelta)
+  } (${
+    ((valueDelta / price) * 100).toFixed(2)
+  }%) `
+)

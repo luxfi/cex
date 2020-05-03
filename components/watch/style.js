@@ -53,6 +53,9 @@ export default (theme) => ({
   },
 
   watchGrid: {
+    [theme.breakpoints.down('lg')]: {
+      padding: theme.spacing(0, 2),
+    },
     paddingTop: 12,
     '& .video': {
       width: '100%',
@@ -256,6 +259,10 @@ export default (theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  recommendedTitle: {
+    margin: '16px 0',
   },
 
   upNextTop: {
