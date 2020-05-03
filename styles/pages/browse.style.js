@@ -16,10 +16,11 @@ export default (theme) => ({
     [theme.breakpoints.down('xs')]: {
       padding: `0px ${theme.spacing(2)}`,
     },
-    marginTop: '136px', // 64px + 64px + 8px (margin)
-    [theme.breakpoints.down('xs')]: {
-      marginTop: '165px', // 1336 + 29px:(8 + 7 + 9 + 5) margin and padding
+    [theme.breakpoints.down('sm')]: {
+      marginTop: theme.spacing(9),
     },
+
+    marginTop: '136px', // 64px + 64px + 8px (margin)
   },
 
 
@@ -69,6 +70,10 @@ export default (theme) => ({
 
   tabsContainer: {
     marginLeft: tabOffsetMargin,
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'space-between',
+      marginLeft: 0,
+    },
   },
 
   // https://codeburst.io/my-journey-to-make-styling-with-material-ui-right-6a44f7c68113
@@ -83,6 +88,11 @@ export default (theme) => ({
         cursor: 'default !important',
         backgroundColor: theme.palette.background.default,
       },
+    },
+    [theme.breakpoints.down('xs')]: {
+      flexShrink: 'unset',
+      width: 'auto',
+      minWidth: 100,
     },
   },
 
@@ -103,7 +113,15 @@ export default (theme) => ({
 
   tabIndicator: {
     width: '110px !important',
+    [theme.breakpoints.down('xs')]: {
+      width: '90px !important',
+    },
   },
 
   resultsOuter: {},
+
+  noFilmMessage: {
+    textAlign: 'center',
+    width: '100%',
+  },
 })

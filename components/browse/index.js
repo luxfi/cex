@@ -1,1 +1,1 @@
-export { default as Facets } from './Facets'
+export { default } from './FacetsToolbar'

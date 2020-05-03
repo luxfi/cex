@@ -16,7 +16,10 @@ _support['ui']['widget'] = {
     duration: 30,
     sound: true,
   },
-  position: 'bottom-right',
+  position: {
+    right: '22px',
+    bottom: '70px',
+  },
 }
 _support['apps'] = {
   faq: {enabled: true},

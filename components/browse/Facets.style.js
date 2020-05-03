@@ -51,6 +51,11 @@ export default (theme) => ({
     paddingLeft: '10px',
   },
 
+  facetList: {
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+  },
   facetValueIcon: {
     fontSize: '0.85rem',
     lineHeight: 'inherit',
@@ -67,13 +72,8 @@ export default (theme) => ({
     borderBottomThickness: '4px',
     borderBottomStyle: 'solid',
     minWidth: theme.spacing(11),
-  },
-
-  facetPillWrapper: {
-    display: 'flex',
-    [theme.breakpoints.down('xs')]: {
-      maxWidth: 70,
-      overflowX: 'scroll',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
     },
   },
 
