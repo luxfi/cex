@@ -1,26 +1,14 @@
-<<<<<<< HEAD
 import React from 'react'
 import { isObservableArray, toJS } from 'mobx'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'next/router'
 import classNames from 'classnames'
 
-=======
->>>>>>> 31e895defff5e577aa14c035b6692b09f2b5177f
 import {
   Button,
   Typography,
   withStyles,
 } from '@material-ui/core'
-<<<<<<< HEAD
-=======
-import classNames from 'classnames'
-import { toJS } from 'mobx'
-import { inject, observer } from 'mobx-react'
-import { withRouter } from 'next/router'
-import React from 'react'
-
->>>>>>> 31e895defff5e577aa14c035b6692b09f2b5177f
 
 import { padDollarAmount, slugFromPath } from '../../../util'
 import { formatTakeResults } from '../../../util/formatOrderBookDataForChart'
