@@ -85,4 +85,18 @@ export default (theme) => ({
     width: 36,
     height: 36,
   },
+
+  menu: {
+    '& li.MuiMenuItem-root': {
+      '& svg': {
+        color: 'inherit',
+        marginRight: '8px'
+      },
+      '& a': {
+        color: 'inherit',
+        textDecoration: 'none',
+      }
+    }
+  }
+
 })
