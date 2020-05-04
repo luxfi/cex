@@ -17,6 +17,7 @@ const styles = (theme) => ({
     maxWidth: theme.spacing(60),
     marginLeft: 'auto',
     marginRight: 'auto',
+    padding: theme.spacing(2)
   },
   paper: {
     marginTop: theme.spacing(12),
@@ -105,7 +106,7 @@ class LoginForm extends React.Component {
     const { displayErrors } = this.state
 
     return (
-      <Box className={classes.root}>
+      <div className={classes.root}>
         <CssBaseline />
         <div className={isModal ? classes.paperWithModal : classes.paper}>
           <Typography component='h1' variant='h5'>
@@ -171,7 +172,7 @@ class LoginForm extends React.Component {
             Sign In
           </Button>
         </div>
-      </Box>
+      </div>
     )
   }
 }
