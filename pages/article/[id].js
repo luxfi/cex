@@ -8,12 +8,10 @@ import ContentLoader from "react-content-loader"
 import { withStyles } from "@material-ui/core/styles"
 import { Button, Avatar, Grid } from "@material-ui/core"
 
-import { CustomBreadcrumbs } from "../components/app"
+import { CustomBreadcrumbs, InvestNow } from "../../components/app"
+import { googlePageView } from '../../util'
 
-import styles from "../styles/pages/article.style.js"
-
-import { InvestNow } from "../components/app"
-import { googlePageView } from '../util'
+import styles from "../../styles/pages/article.style.js"
 
 const MyLoader = () => (
   <ContentLoader
