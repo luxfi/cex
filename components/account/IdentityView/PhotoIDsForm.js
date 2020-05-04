@@ -3,7 +3,8 @@ import Typography from "@material-ui/core/Typography"
 import List from "@material-ui/core/List"
 import { CustomModal } from "../../app"
 import Camera, { FACING_MODES, IMAGE_TYPES } from "react-html5-camera-photo"
-import { PhotoIDRow } from "../"
+
+import PhotoIDRow from "./PhotoIDRow"
 
 const MyModal = ({ handleCloseCam, openCam, onTakePhoto }) => {
   const [isRemoveCamera, setIsRemoveCamera] = useState(false)
@@ -44,14 +45,6 @@ export default function PhotoIDs({
   documents2,
   setValue
 }) {
-  // Todo: Check for memory leaks....
-  // React.useEffect(
-  //   () => () => {
-  //     // Make sure to revoke the data uris to avoid memory leaks
-  //     files.forEach(file => URL.revokeObjectURL(file.preview))
-  //   },
-  //   [files]
-  // )
 
   const [openCam, setOpenCam] = React.useState(false)
   const [currentDocument, setCurrentDocument] = React.useState(false)

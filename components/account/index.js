@@ -1,9 +1,6 @@
-export { default as KYCForm } from './KYCForm'
-export { default as PersonalDetailsForm } from './PersonalDetailsForm'
-export { default as PhotoIDsForm } from './PhotoIDsForm'
-export { default as PhotoIDRow } from "./PhotoIDRow"
-export { default as PrimaryAddressForm } from './PrimaryAddressForm'
-export { default as TaxDocument } from './TaxDocument'
+export { default as DocumentsView } from './DocumentsView/DocumentsView'
+export { default as DepositView } from './DepositView/DepositView'
+export { default as IdentityView } from './IdentityView/IdentityView'
 export { default as OrdersView } from './OrdersView'
 export { default as ProfileView } from './ProfileView/ProfileView'
 export { default as FundsView } from './FundsView/FundsView'

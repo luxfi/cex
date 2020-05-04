@@ -17,6 +17,9 @@ import {
   FundsView,
   APIAccessView,
   AccountActivityView,
+  DocumentsView,
+  DepositView,
+  IdentityView,
 } from '../../components/account'
 
 import { 
@@ -148,6 +151,9 @@ const tabbedViews = [
   <FundsView tabTitle='Funds' />, 
   <APIAccessView tabTitle='API Access' />,
   <AccountActivityView tabTitle='Account Activity' />,
+  <DocumentsView tabTitle='Documents' />,
+  <DepositView tabTitle='Deposit' />,
+  <IdentityView tabTitle='Identity' />
 ]
 
 

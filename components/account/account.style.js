@@ -70,4 +70,23 @@ export default (theme) => ({
   warning: {
     color: theme.palette.error.dark,
   },
+  divider: {
+    marginBottom: 15,
+  },
+  stepper: {
+    padding: theme.spacing(3, 0, 5),
+    backgroundColor: '#333',
+  },
+  buttons: {
+    display: "flex",
+    justifyContent: "flex-end"
+  },
+  button: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1)
+  },
+  finalButton: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1)
+  }
 })
