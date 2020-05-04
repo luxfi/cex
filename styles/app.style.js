@@ -50,6 +50,7 @@ export default (theme) => ({
   fullScreenContainer: {
     maxWidth: 'none !important',
     marginTop: '0px',
+    padding: '0 !important',
   },
 
     // maxWidth is taken care of in definition
