@@ -4,8 +4,16 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
   bigAvatar: {
-    width: 185,
-    height: 185,
+    width: 120,
+    height: 120,
+    [theme.breakpoints.up('sm')]: {
+      width: 150,
+      height: 150,
+    },
+    [theme.breakpoints.up('md')]: {
+      width: 185,
+      height: 185,
+    },
   },
   maxWidth: {
     maxWidth: 185,
@@ -47,7 +55,7 @@ const ImageAvatars = ({ name, image, title, summary }) => {
   const classes = useStyles()
 
   return (
-    <Box display="flex" justifyContent="space-between" flexDirection="column">
+    <Box display="flex" justifyContent="space-between" alignItems="center" flexDirection="column">
       <Avatar
         alt="Actor"
         src={image}
@@ -98,13 +106,13 @@ const TeamSection = ({ teamRef }) => {
             Spiral will be directed by Darren Lynn Bousman, from a screenplay by Josh Stolberg and Pete Goldfinger, based on a story by Chris Rock.
           </Box>
         </Typography>
-        <Box display="flex" justifyContent="space-between">
+        <Grid container spacing={2}>
           {team.map((team, i) => (
-            <div key={i}>
+            <Grid item xs={6} sm={4} md={3} key={i}>
               <ImageAvatars {...team} />
-            </div>
+            </Grid>
           ))}
-        </Box>
+        </Grid>
       </Box>
     </RootRef>
   )

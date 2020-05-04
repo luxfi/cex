@@ -34,7 +34,7 @@ import ShowingNext from './ShowingNext'
 import VideoDescription from './VideoDescription'
 import YoutubePlayer from './YoutubePlayer'
 
-import { formatNumber, renderDate } from './utils'
+import { formatNumber, renderDate, getYoutubeId } from '../../util'
 
 @inject("store")
 @observer
@@ -45,21 +45,22 @@ class Index extends React.Component {
 
   componentDidMount() {
     const {
-      router: { query: { video: movieSlug } },
+      router: { query: { video: movieSlug, trailerId } },
       store: { trailerStore, movieStore },
     } = this.props
     const movie = movieStore.getMovieBySlug(movieSlug)
 
     this.getUpdatedRelatedMovies(movieSlug)
     trailerStore.setMovieTrailerDetails(movie)
+    trailerStore.loadRelatedMovieTrailers(movie, trailerId)
   }
 
   componentDidUpdate(prevProps) {
     const {
-      router: { query: { video } },
+      router: { query: { video: prevMovieSlug, trailerId: prevTrailerId } },
     } = prevProps
     const {
-      router: { query: { video: movieSlug } },
+      router: { query: { video: nextMovieSlug, trailerId: nextTrailerId } },
       store: { movieStore, trailerStore },
     } = this.props
 
@@ -68,15 +69,14 @@ class Index extends React.Component {
       this.getUpdatedRelatedMovies(movieSlug)
     }
 
-    if (video !== movieSlug) {
-      const movie = movieStore.getMovieBySlug(movieSlug)
+    const movie = movieStore.getMovieBySlug(nextMovieSlug)
+    if (prevMovieSlug !== nextMovieSlug) {
       trailerStore.setMovieTrailerDetails(movie)
     }
-  }
 
-  getMovieIdFromMovieSlug = (trailerUrl) => {
-    const videoUrlArray = trailerUrl.split('/')
-    return videoUrlArray[videoUrlArray.length - 1]
+    if (prevTrailerId !== nextTrailerId) {
+      trailerStore.loadRelatedMovieTrailers(movie, nextTrailerId)
+    }
   }
 
   getUpdatedRelatedMovies = (movieSlug, updateAutoplay = true) => {
@@ -87,15 +87,16 @@ class Index extends React.Component {
   handleVideoChange = (currentVideoIndex) => {
     const {
       store: { trailerStore },
+      router: { query: { trailerId } },
     } = this.props
 
-    if (currentVideoIndex <= trailerStore.autoplayMovies.length) {
-      const href = `/watch?video=${trailerStore.autoplayMovies[currentVideoIndex].movieSlug}`
+    if (currentVideoIndex <= trailerStore.relatedMovieTrailers.length) {
+      const href = `/watch?video=${trailerStore.relatedMovieTrailers[currentVideoIndex].movieSlug}&trailerId=${trailerId}`
       Router.push(href, href, { shallow: true })
-      this.getUpdatedRelatedMovies(trailerStore.autoplayMovies[currentVideoIndex].movieSlug, false)
+      this.getUpdatedRelatedMovies(trailerStore.relatedMovieTrailers[currentVideoIndex].movieSlug, false)
     }
 
-    if (trailerStore.autoplayMovies.length >= currentVideoIndex + 1) {
+    if (trailerStore.relatedMovieTrailers.length >= currentVideoIndex + 1) {
       this.setState({
         nextMovieIndex: currentVideoIndex + 1,
       })
@@ -111,7 +112,7 @@ class Index extends React.Component {
       store: {
         uiStore,
         trailerStore,
-        userStore: { loggedIn, currentUser, id },
+        userStore: { loggedIn },
       },
     } = this.props
 
@@ -124,48 +125,42 @@ class Index extends React.Component {
   }
 
   render() {
-    const { classes, store, router } = this.props
-    const { video: movieSlug } = router.query
     const {
-      movieStore,
-      userStore,
-      userPortfolio,
-      trailerStore,
-      uiStore: { authModalOpen, tabIndexValue },
-    } = store
-
+      classes,
+      store: {
+        movieStore,
+        userStore,
+        trailerStore: {
+          relatedMovies,
+          autoPlaySet,
+          subscribers,
+          reaction,
+          relatedMovieTrailers,
+        },
+        uiStore: { authModalOpen, tabIndexValue },
+      },
+      router,
+    } = this.props
+    const { video: movieSlug, trailerId } = router.query
+    
+    if (!movieSlug || !trailerId) {
+      return (
+        <Box>
+          <Typography variant="h4">Invalid movie or Trailer</Typography>
+        </Box>
+      )
+    }
+    
+    const movie = movieStore.getMovieBySlug(movieSlug)
     const { nextMovieIndex } = this.state
 
-    // :aa ??
-    if (!movieSlug) {
-      return
-    }
-
-    const {
-      relatedMovies,
-      autoplayMovies,
-      autoPlaySet,
-      subscribers,
-      reaction,
-    } = trailerStore
-
-    const movie = movieStore.getMovieBySlug(movieSlug)
     const autoPlay = autoPlaySet === 'true' || autoPlaySet === true
 
-    const videoId = this.getMovieIdFromMovieSlug(movie.trailer)
-    const relatedMoviesArray = [...relatedMovies]
-    const autoplayMoviesArray = [...autoplayMovies]
-    const relatedMoviesIds = relatedMoviesArray.map((relatedMovie) => this.getMovieIdFromMovieSlug(relatedMovie.trailer))
-    const autoplayMoviesIds = autoplayMoviesArray.map((autoPlayMovie) => this.getMovieIdFromMovieSlug(autoPlayMovie.trailer))
+    const relatedMovieTrailerIds = relatedMovieTrailers.map(relatedMovieTrailer => relatedMovieTrailer.trailerId)
 
     const shareURL = `${window.location.origin}/ticketing/${movie.movieSlug}`
     const sharePrompt = `I just bought tickets for ${movie.name}! Please watch it too!`
 
-    const addToWatchlist = t => {
-      userPortfolio.addToWatchlist(t)
-    }
-
-    // eslint-disable-next-line consistent-return
     return (
       <>
         <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
@@ -176,23 +171,17 @@ class Index extends React.Component {
             <Grid item xs={12}  md={8} >
               <Grid item className={classes.videoContainer}>
                 {
-                  (videoId && relatedMoviesIds.length) && <YoutubePlayer
+                  (trailerId && relatedMovieTrailerIds.length) ? <YoutubePlayer
                   elementId='trailerVideo'
-                  videoId={videoId}
+                  videoId={trailerId}
+                  movieSlug={movieSlug}
                   autoPlay={autoPlay}
-                  playlist={autoPlay ? relatedMoviesIds : []}
-                  autoplayMovies={autoplayMoviesIds}
+                  playlist={autoPlay ? relatedMovieTrailerIds : []}
+                  autoplayMovies={relatedMovieTrailerIds}
                   handleVideoChange={this.handleVideoChange}
-                  key={autoplayMovies}
                   pauseVideo={authModalOpen}
-                />
+                /> : null
                 }
-              </Grid>
-              <Grid item xs={12} className={classes.mobileShowNextSection}>
-                <ShowingNext
-                  onClick={this.getUpdatedRelatedMovies}
-                  nextMovieIndex={nextMovieIndex}
-                />
               </Grid>
               <Grid item xs={12}>
                 <Box>
@@ -251,7 +240,7 @@ class Index extends React.Component {
                 </Box>
                 <Box className={classes.videoInfoBox}>
                   <Grid container className={classes.movieInfoContainer}>
-                    <Grid item wrap="nowrap" className={classes.movieInfo}>
+                    <Grid container wrap="nowrap" className={classes.movieInfo}>
                       <img src={movie.distributorImg} className={classes.videoInfoImage} alt={movie.distributors[0]} />
                       <Box className={classes.videoInfo}>
                         <Typography className={classes.channelName}>
@@ -262,7 +251,7 @@ class Index extends React.Component {
                         <Typography className={classes.videoPubDate}>{renderDate(movie.trailerDetails.createdAt, 'dddd MMM Do YYYY')}</Typography>
                       </Box>
                     </Grid>
-                    <Grid item className={classes.subShare} alignItems="center">
+                    <Grid container className={classes.subShare} alignItems="center">
                       <IconButton onClick={() => {}} className={classes.iconButton}>
                         <AddCircleIcon />
                       </IconButton>
@@ -288,6 +277,15 @@ class Index extends React.Component {
                   <Divider />
                 </Box>
               </Grid>
+              <Grid item xs={12} className={classes.mobileShowNextSection}>
+                <ShowingNext
+                  onClick={this.getUpdatedRelatedMovies}
+                  nextMovieIndex={nextMovieIndex}
+                  relatedMovies={relatedMovies}
+                  autoPlaySet={autoPlaySet}
+                  relatedMovieTrailers={relatedMovieTrailers}
+                />
+              </Grid>
               <Grid className={classes.commentSection}>
                 <Comments identifierId={movie.id} />
               </Grid>
@@ -296,6 +294,9 @@ class Index extends React.Component {
               <ShowingNext
                 onClick={this.getUpdatedRelatedMovies}
                 nextMovieIndex={nextMovieIndex}
+                relatedMovies={relatedMovies}
+                autoPlaySet={autoPlaySet}
+                relatedMovieTrailers={relatedMovieTrailers}
               />
             </Grid>
           </Grid>

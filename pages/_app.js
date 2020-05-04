@@ -7,6 +7,7 @@ import { withRouter } from 'next/router'
 import NextHead from 'next/head'
 
 import {
+  Box,
   Container,
   CssBaseline,
   MuiThemeProvider,
@@ -34,12 +35,21 @@ import {
 } from '../components/app'
 
 import initializeStores from '../stores/stores'
+
+
 import styles from '../styles/app.style.js'
 import theme from '../styles/esxTheme'
+import '../styles/esxThemeTouchups.scss'
+
+import '../components/app/MovieSlider/modified-slick.css'
+
 
 config.autoAddCss = false
+
+@withRouter
+@withStyles(styles)
 @observer
-class ESXApp extends NextApp {
+export default class extends NextApp {
   constructor(props) {
     super(props)
     this.stores = initializeStores()
@@ -81,7 +91,7 @@ class ESXApp extends NextApp {
                 open={this.stores.uiStore.drawers.left}
                 setOpen={this.stores.uiStore.setLeftDrawerOpen}
               />
-              <Container component='main' className={classNames({ [classes.main]: true, [classes.fullScreenMain]: fullScreen })}>
+              <Container component='main' className={classNames({ [classes.main]: true,  [classes.container]: true, [classes.fullScreenContainer]: fullScreen })}>
                 <Component {...pageProps} pathName={router.route} />
               </Container>
               <CustomModal
@@ -101,14 +111,11 @@ class ESXApp extends NextApp {
                 }}
               />
               {hideFooter(router.route) ? null : (
-                <Container className={classNames({ [classes.footer]: true, [classes.fullScreenFooter]: fullScreen })}>
-                  <Footer
-                    isLoggedIn={this.stores.userStore.loggedIn}
-                    handleLogout={() => {
-                      this.stores.userStore.logout()
-                    }}
-                  />
-                </Container>
+                <Footer 
+                  loggedIn={this.stores.userStore.loggedIn} 
+                  handleLogout={this.stores.userStore.logout} 
+                  className ={classNames({ [classes.footer]: true,  [classes.container]: true, [classes.fullScreenContainer]: fullScreen })}
+                />
               )}
             </NoSsr>
           </div>
@@ -143,4 +150,4 @@ const showFullSearchWidget = (route) => {
   return route.startsWith('/browse')
 }
 
-export default withRouter(withStyles(styles)(ESXApp))
+//export default withRouter(withStyles(styles)(ESXApp))

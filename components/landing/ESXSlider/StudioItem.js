@@ -1,14 +1,10 @@
-import React from 'react';
-import cx from 'classnames';
-import SliderContext from './context'
-import ShowDetailsButton from './ShowDetailsButton'
-import Mark from './Mark'
-import './Item.css'
-import { Card, CardContent } from "@material-ui/core"
-import { TrailerSliderModal } from "../"
-const { forwardRef, useRef, useImperativeHandle } = React
+import React, { useRef } from 'react'
 
-const Item = ({ studio, onClick }) => {
+import SliderContext from './context'
+import s from './Item.module.css'
+import { Card, CardContent } from "@material-ui/core"
+
+export default ({ studio, onClick }) => {
   const childRef = useRef()
 
   const split = studio.img.split('/')
@@ -22,7 +18,7 @@ const Item = ({ studio, onClick }) => {
         return (
           <div
             ref={elementRef}
-            className="item"
+            className={s.item}
             style={{
               flex: "0 0 15%",
               textAlign: "center",
@@ -54,6 +50,4 @@ const Item = ({ studio, onClick }) => {
       }}
     </SliderContext.Consumer>
   )
-};
-
-export default Item;
+}

@@ -1,6 +1,6 @@
 import React from 'react'
-import './Mark.css'
 
-const Mark = () => (<div className="mark" />)
+import s from './Mark.module.css'
 
-export default Mark;
+export default () => (<div className={s.mark} />)
+

@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import { Tabs, Tab, Grid, Box, Typography } from '@material-ui/core'
+import { Tabs, Tab, Grid, useMediaQuery } from '@material-ui/core'
 import { tabsStylesHook, navStylesHook } from './offeringNavBar.style.js'
 import classNames from 'classnames'
-import { SpeakerNotesOff } from '@material-ui/icons'
 
 const scrollTo = element => {
   // account for navbar heights on scrollintoview
@@ -23,6 +22,7 @@ const OfferingNavBar = ({
   risksDisclosuresRef,
   updatesDiscussionsRef,
 }) => {
+  const isMobileDevice = useMediaQuery(theme => theme.breakpoints.down('sm'));
   const sectionRefs = [
     { section: 'Summary', ref: summaryRef, index: 0 },
     { section: 'DealTerms', ref: dealTermsRef, index: 1 },
@@ -102,7 +102,13 @@ const OfferingNavBar = ({
 
   return (
     <div
-      className={classNames(navStyles.container, navStyles.sticky)}
+      className={classNames(
+        navStyles.container,
+        navStyles.sticky,
+        {
+          [navStyles.hideNavBar]: isMobileDevice,
+        }
+      )}
       ref={headerRef}
     >
       <div className={classNames(navStyles.root)}>

@@ -1,16 +1,21 @@
-export default theme => ({
+export default (theme) => ({
 
   facetsOuter: {
     marginLeft: 'auto',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 0,
+    },
+    [theme.breakpoints.down('xs')]: {
+      marginTop: theme.spacing(1),
+    },
   },
   facetsLabel: {
     display: 'block',
     marginRight: theme.spacing(3),
   },
-  
 
   facetOuter: {
     display: 'flex',
@@ -20,48 +25,56 @@ export default theme => ({
     borderRadius: '9px',
     marginRight: theme.spacing(1),
     '&:last-child': {
-      marginRight: 0
-    }
+      marginRight: 0,
+    },
   },
 
   facetDropdownButton: {
     backgroundColor: '#222',
     borderRadius: '9px',
     '&:last-child': {
-      marginRight: 0
+      marginRight: 0,
     },
-    textTransform: 'capitalize', 
-  },
-  
-  facetButtonText: {
-    textTransform: 'capitalize', 
-  },
-  
-  facetValuesMenu: {
-    zIndex: 20,
-    //pointerEvents: 'none'
-  },
-  
-  facetValueMenuItemOuter:{
-    paddingLeft: '10px'
+    textTransform: 'capitalize',
   },
 
+  facetButtonText: {
+    textTransform: 'capitalize',
+  },
+
+  facetValuesMenu: {
+    zIndex: 20,
+    // pointerEvents: 'none'
+  },
+
+  facetValueMenuItemOuter: {
+    paddingLeft: '10px',
+  },
+
+  facetList: {
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+  },
   facetValueIcon: {
     fontSize: '0.85rem',
     lineHeight: 'inherit',
     marginRight: '6px',
   },
   facetValueIconInactive: {
-      // using visibility: hidden rather than display: none so layout is preserved
-    visibility: 'hidden'
+    // using visibility: hidden rather than display: none so layout is preserved
+    visibility: 'hidden',
   },
   facetValueTitle: {
     fontSize: '0.9rem',
     lineHeight: 'inherit',
-      // border color is set when rendered
+    // border color is set when rendered
     borderBottomThickness: '4px',
     borderBottomStyle: 'solid',
-    minWidth: theme.spacing(11)
+    minWidth: theme.spacing(11),
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
   },
 
   activeFacetPill: {
@@ -74,14 +87,14 @@ export default theme => ({
     borderRadius: '9px',
     marginRight: theme.spacing(0.6),
     '&:last-child': {
-      marginRight: 0
-    }
+      marginRight: 0,
+    },
   },
   activeFacetPillInner: {
   },
   activeFacetTitle: {
     fontSize: '0.75rem',
-      // border color is set when rendered
+    // border color is set when rendered
     borderBottomThickness: '3px',
     borderBottomStyle: 'solid',
     borderRadius: '2px',
@@ -94,12 +107,10 @@ export default theme => ({
     '&:hover': {
       opacity: 1,
       backgroundColor: '#3f3f3f',
-    }
+    },
   },
   activeFacetCloseButtonIcon: {
     verticalAlign: 'middle',
     fontSize: 'inherit',
-  }
+  },
 })
-
-
