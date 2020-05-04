@@ -7,10 +7,10 @@ import {
 import { inject, observer } from 'mobx-react'
 import React from 'react'
 
-import { SignUpForm } from '../components/app'
+import { SignUpForm } from '../../components/app'
+import { googlePageView } from '../../util'
 
-import styles from '../styles/pages/invite.style'
-import { googlePageView } from '../util'
+import styles from '../../styles/pages/invite.style'
 
 @inject('store')
 @observer

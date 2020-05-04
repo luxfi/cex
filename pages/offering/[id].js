@@ -1,13 +1,14 @@
 import React, { Component, useRef } from 'react'
 import { inject, observer } from 'mobx-react'
 import { Box } from '@material-ui/core'
+import { withRouter } from 'next/router'
+
 import {
   OfferingHeader,
   OfferingNavBar,
   OfferingContent,
-} from '../components/offering'
-import { googlePageView, slugFromPath } from '../util'
-import { withRouter } from 'next/router'
+} from '../../components/offering'
+import { googlePageView, slugFromPath } from '../../util'
 
 const OfferingBody = ({
   funds,

@@ -1,7 +1,7 @@
 import { Box } from '@material-ui/core'
 import React from 'react'
 
-import { ConfirmPaymentView } from '../components/checkout'
+import { ConfirmPaymentView } from '../../components/checkout'
 
 class ConfirmPayment extends React.Component {
   render() {

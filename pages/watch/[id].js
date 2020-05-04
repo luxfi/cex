@@ -1,7 +1,7 @@
 import React from 'react'
 
-import WatchView from '../components/watch'
-import { googlePageView } from '../util'
+import WatchView from '../../components/watch'
+import { googlePageView } from '../../util'
 
 class Watch extends React.Component {
   componentDidMount() {
