@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { PickSeatsView } from '../components/checkout'
+import { PickSeatsView } from '../../components/checkout'
 
 class PickSeats extends React.Component {
   render() {

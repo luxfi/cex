@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box } from "@material-ui/core"
 
-import { TicketingView } from '../components/ticketing/TicketingView'
+import { TicketingView } from '../../components/ticketing/TicketingView'
 
 class Ticketing extends React.Component {
   render() {
