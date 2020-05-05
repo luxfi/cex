@@ -5,7 +5,7 @@ import {
   Typography,
 } from '@material-ui/core'
   
-const FillableSection = (props) => {
+export default (props) => {
   const {
     classes,
     noneYetTitle,
@@ -25,4 +25,3 @@ const FillableSection = (props) => {
   )
 }
 
-export default FillableSection

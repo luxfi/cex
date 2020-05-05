@@ -15,7 +15,7 @@ import styles from '../account.style'
 
 const useStyles = makeStyles(styles)
 
-export default props => {
+export default (props) => {
   const classes = useStyles()
   const { 
     documents,

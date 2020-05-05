@@ -33,9 +33,7 @@ const styles = (theme) => ({
   },
 })
 
-const SingleTicketOrder = ({
-  movie, ticket, classes, showDivider,
-}) => (
+const SingleTicketOrder = ({ movie, ticket, classes, showDivider }) => (
   <Grid container direction='column'>
     <Grid container item>
       <Grid item xs={10}>
@@ -61,7 +59,8 @@ const SingleTicketOrder = ({
   </Grid>
 )
 
-const OrdersView = inject('store')(observer((props) => {
+export default withStyles(styles)(inject('store')(observer((props) => {
+  
   const {
     tabTitle,
     classes,
@@ -96,6 +95,5 @@ const OrdersView = inject('store')(observer((props) => {
       { (!ticketTransactions.length) && <Typography variant='body2'>You don't seem to have bought any movie tickets yet</Typography> }
     </Box>
   )
-}))
+})))
 
-export default withStyles(styles)(OrdersView)

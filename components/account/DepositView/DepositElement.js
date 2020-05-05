@@ -27,7 +27,7 @@ function getStepContent(step) {
   }
 }
 
-const DepositElement = () => {
+export default (props) => {
   const classes = useStyles()
   const [activeStep, setActiveStep] = useState(0)
 
@@ -85,5 +85,3 @@ const DepositElement = () => {
     </div>
   )
 }
-
-export default DepositElement

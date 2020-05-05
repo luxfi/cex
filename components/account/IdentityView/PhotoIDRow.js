@@ -82,7 +82,7 @@ const PhotoUpload = ({ photo, setValue, handleOpenCam, classes }) => {
   )
 }
 
-const PhotoIDRow = props => {
+const PhotoIDRow = (props) => {
   const { photo, setValue } = props
   const classes = useStyles()
   const rootProps = { classes, ...props }

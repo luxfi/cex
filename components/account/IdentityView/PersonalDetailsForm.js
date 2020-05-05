@@ -23,19 +23,19 @@ const styles = theme => ({
   }
 })
 
+@withStyles(styles)
 @observer
-class PersonalDetails extends React.Component {
+export default class extends React.Component {
+
   constructor(props) {
     super(props)
-    this.updateProperty = this.updateProperty.bind(this)
-    this.onChange = this.onChange.bind(this)
   }
 
-  updateProperty(key, value) {
+  updateProperty = (key, value) => {
     this.props.person[key] = value
   }
 
-  onChange(event) {
+  onChange = (event) => {
     this.updateProperty(event.target.name, event.target.value)
   }
 
@@ -54,6 +54,7 @@ class PersonalDetails extends React.Component {
       validPhone,
       validTaxId
     } = this.props
+
     return (
       <>
       <Typography variant="h6" gutterBottom>
@@ -144,5 +145,3 @@ class PersonalDetails extends React.Component {
     )
   }
 }
-
-export default withStyles(styles)(PersonalDetails)

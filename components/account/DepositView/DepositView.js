@@ -7,7 +7,7 @@ import styles from '../account.style'
 
 const useStyles = makeStyles(styles)
 
-const DepositView = () => {
+export default (props) => {
   const classes = useStyles()
 
   return (
@@ -21,4 +21,3 @@ const DepositView = () => {
   )
 }
 
-export default DepositView

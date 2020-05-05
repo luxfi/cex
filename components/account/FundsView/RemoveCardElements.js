@@ -1,10 +1,10 @@
+import React from 'react'
 import {
   Button,
   Divider,
   Grid,
   Typography,
 } from '@material-ui/core'
-import React from 'react'
 
 import CreditCardIconType from '../../app/CreditCardIconType'
 

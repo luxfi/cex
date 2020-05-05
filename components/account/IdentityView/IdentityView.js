@@ -9,7 +9,7 @@ import styles from '../account.style'
 @withStyles(styles)
 @inject("store")
 @observer
-class IdentityView extends React.Component {
+export default class extends React.Component {
 
   render() {
     const { store, classes } = this.props
@@ -128,4 +128,3 @@ class IdentityView extends React.Component {
   }
 }
 
-export default inject('store')(observer(IdentityView))

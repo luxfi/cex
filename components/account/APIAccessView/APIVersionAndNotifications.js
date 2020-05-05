@@ -10,7 +10,7 @@ import {
   makeStyles,
 } from '@material-ui/core'
 
-const APIVersionAndNotifications = (props) => {
+export default (props) => {
   const { classes } = props
   return (
     <Card elevation={2} className={classes.cardContainer}>
@@ -30,5 +30,3 @@ const APIVersionAndNotifications = (props) => {
     </Card>
   )
 }
-
-export default APIVersionAndNotifications

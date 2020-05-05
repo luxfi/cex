@@ -10,7 +10,7 @@ import styles from '../account.style'
 @withStyles(styles)
 @inject("store")
 @observer
-class DocumentsView extends React.Component {
+export default class extends React.Component {
   componentDidMount() {
     this.props.store.userStore.generateFakeDocs()
   }
@@ -36,5 +36,3 @@ class DocumentsView extends React.Component {
     )
   }
 }
-
-export default DocumentsView

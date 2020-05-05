@@ -39,12 +39,12 @@ const MyModal = ({ handleCloseCam, openCam, onTakePhoto }) => {
   )
 }
 
-export default function PhotoIDs({
+export default ({
   documents0,
   documents1,
   documents2,
   setValue
-}) {
+}) => {
 
   const [openCam, setOpenCam] = React.useState(false)
   const [currentDocument, setCurrentDocument] = React.useState(false)

@@ -22,9 +22,9 @@ import { AddPaymentMethodModal } from '../../app'
 
 import styles from '../account.style.js'
 
+@withStyles(styles)
 @inject('store')
 @observer
-@withStyles(styles)
 export default class extends React.Component {
   
   componentDidMount() {

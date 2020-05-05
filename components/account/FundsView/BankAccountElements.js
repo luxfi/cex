@@ -7,7 +7,7 @@ import {
  } from '@material-ui/core'
 //  import {AddIcon} from "@material-ui/icons/Backup"
 
-export default props => {
+export default (props) => {
   const {
     accountName,
     accountNumber,
