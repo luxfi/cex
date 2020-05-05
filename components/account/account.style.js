@@ -88,5 +88,22 @@ export default (theme) => ({
   finalButton: {
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1)
-  }
+  },
+  iconInfoAreaOuter: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  iconInfoAreaIcon: {
+    display: 'block',
+    fontSize: '2.5rem',
+    flexGrow: 0,
+    alignSelf: 'center',
+    marginRight: theme.spacing(2),
+  },
+  iconInfoAreaMain: {
+    flexGrow: 1,
+  },
+  iconInfoAreaButtonOuter: {
+    flexGrow: 0,
+  },
 })
