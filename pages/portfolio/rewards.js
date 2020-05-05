@@ -19,16 +19,16 @@ class Rewards extends React.Component {
   }
 
   render() {
-    const { store } = this.props
+    const { store, classes } = this.props
     const { userStore } = store
 
     return (
-      <Box>
+      <div className={classes.outerContainer}>
         <PortfolioSection title={userStore.getFullName} style={{ marginBottom: '3em' }}>
           <TabbedNav tabs={portfolioTabs} tab='rewards' />
         </PortfolioSection>
         <RewardsView />
-      </Box>
+      </div>
     )
   }
 }

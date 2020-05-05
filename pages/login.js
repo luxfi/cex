@@ -1,7 +1,7 @@
 import { inject, observer } from 'mobx-react'
 import React from 'react'
 
-import LoginView from '../components/login/LoginView'
+import { LoginView } from '../components/app'
 import { googlePageView } from '../util'
 
 @inject('store')

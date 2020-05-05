@@ -2,14 +2,16 @@ import { action, observable, computed } from 'mobx'
 import stores from './stores'
 
 import { manageReaction } from '../util/helpers'
+import { getYoutubeId } from '../util'
 
 export default class TrailerStore {
   @observable relatedMovies = []
-  @observable autoplayMovies = []
   @observable autoPlaySet = true
   @observable reaction = {}
   @observable views = 0
   @observable subscribers = 0
+  @observable relatedMovieTrailers = []
+  @observable selectedMovieTrailer = null;
 
   constructor(initialData = {}, hanzoApi) {
     // Pass down the Hanzo API through a central point
@@ -54,10 +56,30 @@ export default class TrailerStore {
       .sort((a, b) => b.score - a.score)
       .slice(0, 10)
 
-    if (updateAutoplayMovies) {
-      this.autoplayMovies = [requestedMovie, ...relatedMovies]
-    }
     this.relatedMovies = relatedMovies
+  }
+
+  @action loadRelatedMovieTrailers(movie, trailerId) {
+    const relatedMovieTrailers = movie.trailers
+      .filter((trailerDetail) => getYoutubeId(trailerDetail.trailer) !== trailerId)
+      .map((trailerDetail) => {
+        const trailerId = getYoutubeId(trailerDetail.trailer)
+        return { ...movie, thumbnail: trailerDetail.thumbnail, trailerId }
+      })
+  
+    this.relatedMovieTrailers = relatedMovieTrailers
+  }
+
+  @action selectMovieTrailer(movie, trailerId) {
+    const selectedMovieTrailer = movie.trailers
+      .find((trailerDetail) => getYoutubeId(trailerDetail.trailer) === trailerId)
+    
+    if (selectedMovieTrailer) {
+      this.setAutoplay(false)
+      this.selectedMovieTrailer = { ...selectedMovieTrailer, youtubeId: getYoutubeId(selectedMovieTrailer.trailer) }
+    } else {
+      this.selectedMovieTrailer = null
+    }
   }
 
   @action setAutoplay(value) {

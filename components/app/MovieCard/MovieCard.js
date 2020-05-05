@@ -22,7 +22,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlayCircle } from '@fortawesome/free-solid-svg-icons'
 
 import { TrailerSliderModal } from "../../landing"
-import { truncate } from "../../../util"
+import { truncate, getYoutubeId } from "../../../util"
 
 import styles from './MovieCard.style.js'
 const useStyles = makeStyles(styles)
@@ -68,7 +68,7 @@ export default ({
 const TrailerImage = ({movie, className}) => {
   const childRef = React.useRef()
   return (
-    <NextLink href={`/watch?video=${movie.movieSlug}`}>
+    <NextLink href={`/watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`}>
       <a style={{ color: '#fff'}}>
         <div className={className}>
           <FontAwesomeIcon icon={faPlayCircle} size='1x' />
