@@ -2,12 +2,7 @@ import {
   Button,
   Card,
   CardContent,
-  Grid,
-  Paper,
-  Icon,
-  IconButton,
   Typography,
-  makeStyles,
 } from '@material-ui/core'
 
 export default (props) => {
