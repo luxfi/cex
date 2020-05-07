@@ -28,7 +28,8 @@ import {
   googlePageView, 
   toDashString, 
   loginRequired,
-  isNullQuery 
+  isNullQuery,
+  slugFromPath,
 } from '../../util'
 
 const BASE_ROUTE = '/account'
@@ -83,26 +84,31 @@ export default class extends React.Component {
 
   componentDidMount() {
     googlePageView()
-    const { query } = this.props.router
-    if (!isNullQuery(query) && 'tab' in query) {
-      this.setState({tabIndex: parseInt(query.tab)})
-    }
-      // from back or refresh action
-    else if (
-      window &&
-      window.location.search &&
-      window.location.search.contains('tab')
-    ) {
-      const params = new URLSearchParams(window.location.search)
-      this.setState({tabIndex: parseInt(params('tab'))})
+    const slug = slugFromPath()
+
+    const isValidComponent = (child) => child.props.slugName === slug;
+    const tabIndex = tabbedViews.findIndex(isValidComponent)
+  
+    if (slug && tabIndex !== -1) {
+      this.setState({tabIndex})
+    } else {
+      // redirect to activity tab if slug is invalid
+      this.setState({tabIndex: 0})
+      const href = `${BASE_ROUTE}/[slug]`
+      const asRref = `${BASE_ROUTE}/activity`
+      this.props.router.push(href, asRref, {shallow: true})
     }
 }
 
 
   onTabSelected = (i) => {
     this.setState({tabIndex: i})
-    const href = `${BASE_ROUTE}?tab=${i}`
-    this.props.router.push(href, href, {shallow: true})
+
+    const slug = tabbedViews[i].props.slugName
+
+    const href = `${BASE_ROUTE}/[slug]`
+    const asRref = `${BASE_ROUTE}/${slug}`
+    this.props.router.push(href, asRref, {shallow: true})
   } 
 
   Tabs = () => (
@@ -142,13 +148,13 @@ export default class extends React.Component {
 // {tabbedViews.map((child, i) => ((i === this.state.tabIndex) ? child : null))}
 
 const tabbedViews = [
-  <AccountActivityView tabTitle='Account Activity' />,
-  <ProfileView tabTitle='Profile'/>,
-  <FundsView tabTitle='Funds' />, 
-  <APIAccessView tabTitle='API Access' />,
-  <DocumentsView tabTitle='Documents' />,
-  <DepositView tabTitle='Deposit' />,
-  <IdentityView tabTitle='Identity' />,
-  <OrdersView tabTitle='Orders' />,
-  <SecurityView tabTitle='Security' />,
+  <AccountActivityView tabTitle='Account Activity' slugName='activity' />,
+  <ProfileView tabTitle='Profile' slugName='profile'/>,
+  <FundsView tabTitle='Funds' slugName='funds'/>, 
+  <APIAccessView tabTitle='API Access' slugName='access'/>,
+  <DocumentsView tabTitle='Documents' slugName='documents'/>,
+  <DepositView tabTitle='Deposit' slugName='deposit'/>,
+  <IdentityView tabTitle='Identity' slugName='identity'/>,
+  <OrdersView tabTitle='Orders' slugName='orders'/>,
+  <SecurityView tabTitle='Security' slugName='security'/>,
 ]
