@@ -49,7 +49,7 @@ export default ({ loggedIn, handleLogout, classes }) => (
                   className={classes.menuItem}
                   onClick={popupState.close}
                 >
-                  <NextMuiLink href='/account'>
+                  <NextMuiLink href='/account/[slug]' hrefAs='/account/activity'>
                     <FontAwesomeIcon icon={faAddressCard} size='1x' />
                     <span className={classes.menuItemText}>My Account</span>
                   </NextMuiLink>
