@@ -149,5 +149,3 @@ const isFullScreen = (route) => {
 const showFullSearchWidget = (route) => {
   return route.startsWith('/browse')
 }
-
-//export default withRouter(withStyles(styles)(ESXApp))
