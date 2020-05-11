@@ -20,7 +20,7 @@ import styles from './Facets.style'
 
 const useStyles = makeStyles(styles)
 
-const Facets = ({ facets, movieStore, getActiveValues }) => {
+const Facets = observer(({ facets, movieStore, getActiveValues }) => {
   const classes = useStyles()
   return (
     <div className={classes.facetsOuter}>
@@ -38,7 +38,7 @@ const Facets = ({ facets, movieStore, getActiveValues }) => {
       )}
     </div>
   )
-}
+})
 
 const Facet = observer(({
   facetDesc,

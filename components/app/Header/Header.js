@@ -52,7 +52,6 @@ export default withWidth()((props) => {
       <Toolbar disableGutters className={s.toolbar}>
         <div className={s.logoArea}>
           <NextMuiLink href='/'><HeaderLogo className={s.logo} /></NextMuiLink>
-          {(showFullSearchWidget) ? (<MovieSearchWidget className={s.searchWidget} movies={movies} />) : null}
         </div>
         {showDesktopNav ? (
           <div className={s.desktopElementsOuter}>

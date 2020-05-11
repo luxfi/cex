@@ -1,45 +1,30 @@
+import React from 'react'
+import { inject, observer } from 'mobx-react'
+import { withRouter } from 'next/router'
+
 import {
   Grid,
   Typography,
   withStyles,
 } from '@material-ui/core'
-import { inject, observer } from 'mobx-react'
-import router from 'next/router'
-import React from 'react'
-import { MovieCard } from '../components/app'
-import FacetsToolbar from '../components/browse'
 
-import tradingStatus from '../settings/tradingStatus'
-import styles from '../styles/pages/browse.style'
-import { googlePageView } from '../util'
+import { MovieCard, Loading } from '../app'
+import FacetsToolbar from './FacetsToolbar'
 
+import tradingStatus from '../../settings/tradingStatus'
+import { googlePageView } from '../../util'
 
-// must use CommonJS style since that file is used in the build system
+import styles from './browseMovies.style'
+  
+@withRouter
+@withStyles(styles)
 @inject('store')
 @observer
-class Browse extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      scrollTrigger: false,
-    }
-  }
-
-  componentDidMount = () => {
+class BrowseMovies extends React.Component {
+  componentDidMount() {
     const { store: { movieStore } } = this.props
-    movieStore.loadMovies(router.query) // safe call
-    window.addEventListener('scroll', this.handleScroll)
+    movieStore.loadMovies()
     googlePageView()
-  }
-
-  componentWillUnmount = () => {
-    window.removeEventListener('scroll', this.handleScroll)
-  }
-
-  handleScroll = () => {
-    this.setState({
-      scrollTrigger: (window.pageYOffset > 0),
-    })
   }
 
   tabSelected = (i) => {
@@ -47,13 +32,10 @@ class Browse extends React.Component {
     movieStore.setTradingStatusFilter(tradingStatus.byIndex(i))
   }
 
-  // cannot use fat-arrow for render as it breaks mobx observing :)
   render() {
-    const { classes, store } = this.props
-    const { scrollTrigger } = this.state
+    const { classes, store, router } = this.props
     const { movieStore } = store
 
-    // https://material-ui.com/customization/components/
     const tabGroupClasses = {
       indicator: classes.tabIndicator,
       flexContainer: classes.tabsContainer,
@@ -67,7 +49,6 @@ class Browse extends React.Component {
     return (
       <div className={classes.main}>
         <FacetsToolbar
-          scrollTrigger={scrollTrigger}
           classes={{
             ...classes,
             tabClasses,
@@ -99,4 +80,4 @@ class Browse extends React.Component {
   }
 }
 
-export default withStyles(styles)(Browse)
+export default BrowseMovies

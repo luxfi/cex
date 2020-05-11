@@ -1,1 +1,1 @@
-export { default } from './FacetsToolbar'
+export { default } from './BrowseMoviesModal'

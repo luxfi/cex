@@ -9,7 +9,6 @@ const FacetsToolbar = (props) => {
   const {
     store,
     store: { movieStore },
-    scrollTrigger,
     classes,
   } = props
   const theme = useTheme()
@@ -39,7 +38,6 @@ const FacetsToolbar = (props) => {
   ) : (
     <LargeScreenToolbar
       store={store}
-      scrollTrigger={scrollTrigger}
       classes={classes}
       tabSelected={tabSelected}
       getActiveValues={getActiveValues}

@@ -21,7 +21,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlayCircle } from '@fortawesome/free-solid-svg-icons'
 
-import { TrailerSliderModal } from "../../landing"
 import { truncate, getYoutubeId } from "../../../util"
 
 import styles from './MovieCard.style.js'
@@ -73,7 +72,6 @@ const TrailerImage = ({movie, className}) => {
         <div className={className}>
           <FontAwesomeIcon icon={faPlayCircle} size='1x' />
           <img src={movie.heroImg} />
-          <TrailerSliderModal movie={movie} ref={childRef} />
         </div>
       </a>
     </NextLink>

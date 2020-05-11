@@ -7,7 +7,6 @@ import { withRouter } from 'next/router'
 import NextHead from 'next/head'
 
 import {
-  Box,
   Container,
   CssBaseline,
   MuiThemeProvider,
@@ -33,6 +32,9 @@ import {
   MobileAccountMenuDrawer,
   MobileNavMenuDrawer,
 } from '../components/app'
+import BrowseMoviesModal from '../components/browse'
+
+import { isNullQuery } from '../util'
 
 import initializeStores from '../stores/stores'
 
@@ -57,6 +59,23 @@ export default class extends NextApp {
 
   componentDidMount() {
     ReactGA.initialize('UA-151184093-1')
+
+    const { query } = this.props.router
+    const params = new URLSearchParams(location.search)	
+    const modalQuery = params.get('modal')
+    
+    if (modalQuery === 'browse') {
+      this.stores.uiStore.openBrowseMovieModal()
+    }
+  }
+
+  handleSearch = () => {
+    const { router } = this.props
+    this.stores.uiStore.openBrowseMovieModal()
+
+    const href = '/?modal=browse'
+
+    router.push(href, href, { shallow: true })
   }
 
   render() {
@@ -67,6 +86,8 @@ export default class extends NextApp {
       router,
     } = this.props
 
+    const { uiStore } = this.stores
+
     const fullScreen = isFullScreen(router.route)
 
     return (
@@ -76,15 +97,15 @@ export default class extends NextApp {
       </NextHead>
       <Provider store={this.stores}>
         <MuiThemeProvider theme={theme}>
-          <div className={classes.root}>
-            <CssBaseline />
-            <NoSsr>
+          <CssBaseline />
+          <NoSsr>
+            <div className={classes.root}>
               <Header
                 loggedIn={this.stores.userStore.loggedIn}
                 movies={this.stores.movieStore.filteredMovies}
                 openMobileMenu={() => {this.stores.uiStore.setRightDrawerOpen(true)}}
                 handleLogout={() => {this.stores.userStore.logout()}}
-                handleSearch={() => { router.push('/browse') }}
+                handleSearch={this.handleSearch}
                 showFullSearchWidget={showFullSearchWidget(router.route)}
               />
               <MobileNavMenuDrawer
@@ -102,6 +123,7 @@ export default class extends NextApp {
               />
 
               <CustomSnackbar />
+              <BrowseMoviesModal open={uiStore.browseMovieModalOpen} />
               <MobileAccountMenuDrawer
                 open={this.stores.uiStore.drawers.right}
                 setOpen={this.stores.uiStore.setRightDrawerOpen}
@@ -117,8 +139,8 @@ export default class extends NextApp {
                   className ={classNames({ [classes.footer]: true,  [classes.container]: true, [classes.fullScreenContainer]: fullScreen })}
                 />
               )}
-            </NoSsr>
-          </div>
+            </div>
+          </NoSsr>
         </MuiThemeProvider>
       </Provider>
       </>
@@ -149,5 +171,3 @@ const isFullScreen = (route) => {
 const showFullSearchWidget = (route) => {
   return route.startsWith('/browse')
 }
-
-//export default withRouter(withStyles(styles)(ESXApp))

@@ -5,7 +5,7 @@ import {
 
 export default ({ loading, children }) => {
   return (
-    <Box>
+    <div>
       {
         loading
           ? <Box
@@ -21,6 +21,6 @@ export default ({ loading, children }) => {
             ? children
             : null
       }
-    </Box>
+    </div>
   )
 }

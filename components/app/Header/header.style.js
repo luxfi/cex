@@ -48,15 +48,10 @@ export default (theme) => ({
     marginTop: '2px'
   },
 
-  searchWidget: {
-    marginTop: '14px',
-    marginLeft: '40px',
-    alignSelf: 'flex-end'
-  },
-
   desktopElementsOuter : {
     display: 'flex',
     flexDirection: 'row',
+    alignItems: 'center',
   },
 
   navMenu: {
@@ -97,6 +92,9 @@ export default (theme) => ({
         textDecoration: 'none',
       }
     }
+  },
+  searchButton: {
+    width: 48,
+    height: 48,
   }
-
 })

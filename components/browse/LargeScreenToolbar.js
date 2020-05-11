@@ -11,9 +11,9 @@ import tradingStatus from '../../settings/tradingStatus'
 import Facets from './Facets'
 
 const LargeScreenToolbar = (props) => {
+
   const {
     store: { movieStore },
-    scrollTrigger,
     classes,
     tabSelected,
     getActiveValues,
@@ -22,7 +22,6 @@ const LargeScreenToolbar = (props) => {
   return (
     <Toolbar className={classNames(
       classes.toolbar,
-      scrollTrigger ? classes.solid : classes.transparent,
     )}>
       <Tabs value={movieStore.tradingStatusFilter.index} onChange={(ignore, i) => { tabSelected(tradingStatus.byIndex(i)) }} classes={classes.tabGroupClasses}>
       {tradingStatus.values.map((status) => <Tab label={status.title} disableRipple key={status.key} classes={classes.tabClasses}/>)}

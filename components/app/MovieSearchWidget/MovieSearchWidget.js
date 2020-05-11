@@ -1,5 +1,4 @@
 import React from "react"
-import Router from "next/router"
 import { inject } from 'mobx-react'
 
 import _ from 'lodash'
@@ -115,6 +114,7 @@ class MovieSearchWidget extends React.Component {
             onChange: this.handleChange('single'),
           }}
           renderSuggestionsContainer={this.noop}
+          renderSuggestion={this.noop}
         />
       </div>
     )
