@@ -1,23 +1,23 @@
+import React from 'react'
+import { inject, observer } from 'mobx-react'
+import router from 'next/router'
+
 import {
   Grid,
   Typography,
   withStyles,
 } from '@material-ui/core'
-import { inject, observer } from 'mobx-react'
-import router from 'next/router'
-import React from 'react'
+
 import { MovieCard } from '../components/app'
 import FacetsToolbar from '../components/browse'
 
 import tradingStatus from '../settings/tradingStatus'
-import styles from '../styles/pages/browse.style'
-import { googlePageView } from '../util'
+import styles from '../styles/pages/browse.style.js'
 
-
-// must use CommonJS style since that file is used in the build system
+@withStyles(styles)
 @inject('store')
 @observer
-class Browse extends React.Component {
+export default class extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -29,7 +29,6 @@ class Browse extends React.Component {
     const { store: { movieStore } } = this.props
     movieStore.loadMovies(router.query) // safe call
     window.addEventListener('scroll', this.handleScroll)
-    googlePageView()
   }
 
   componentWillUnmount = () => {
@@ -99,4 +98,3 @@ class Browse extends React.Component {
   }
 }
 
-export default withStyles(styles)(Browse)

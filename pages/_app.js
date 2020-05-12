@@ -1,13 +1,11 @@
 import React from 'react'
-import ReactGA from 'react-ga'
 import { Provider, observer } from 'mobx-react'
 
 import NextApp from 'next/app'
-import { withRouter } from 'next/router'
+import Router, { withRouter } from 'next/router'
 import NextHead from 'next/head'
 
 import {
-  Box,
   Container,
   CssBaseline,
   MuiThemeProvider,
@@ -42,9 +40,11 @@ import theme from '../styles/esxTheme'
 import '../styles/esxThemeTouchups.scss'
 
 import '../components/app/MovieSlider/modified-slick.css'
-
+import * as GA from '../util/GA' 
 
 config.autoAddCss = false
+
+Router.events.on('routeChangeComplete', url => GA.logPageView(url))
 
 @withRouter
 @withStyles(styles)
@@ -53,10 +53,6 @@ export default class extends NextApp {
   constructor(props) {
     super(props)
     this.stores = initializeStores()
-  }
-
-  componentDidMount() {
-    ReactGA.initialize('UA-151184093-1')
   }
 
   render() {

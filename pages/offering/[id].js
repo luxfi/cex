@@ -1,6 +1,5 @@
 import React, { Component, useRef } from 'react'
 import { inject, observer } from 'mobx-react'
-import { Box } from '@material-ui/core'
 import { withRouter } from 'next/router'
 
 import {
@@ -8,7 +7,8 @@ import {
   OfferingNavBar,
   OfferingContent,
 } from '../../components/offering'
-import { googlePageView, slugFromPath } from '../../util'
+
+import { slugFromPath } from '../../util'
 
 const OfferingBody = ({
   funds,
@@ -47,12 +47,12 @@ const OfferingBody = ({
     </>
   )
 }
-
+@withRouter
 @inject('store')
 @observer
-class Offering extends Component {
+export default class extends Component {
+
   componentDidMount() {
-    googlePageView()
     this.props.store.userStore.loadAccountBalance()
   }
 
@@ -74,7 +74,7 @@ class Offering extends Component {
     }
 
     return (
-      <Box>
+      <>
         <OfferingHeader
           funds={accountBalance}
           movie={movie}
@@ -89,9 +89,7 @@ class Offering extends Component {
           setSuccessMessage={setSuccessMessage}
           addOfferingInvestment={addOfferingInvestment}
         />
-      </Box>
+      </>
     )
   }
 }
-
-export default withRouter(Offering)

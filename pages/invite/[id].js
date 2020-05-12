@@ -1,23 +1,21 @@
+import React from 'react'
+import { inject, observer } from 'mobx-react'
+
 import {
   Box,
   Grid,
   Typography,
   withStyles,
 } from '@material-ui/core'
-import { inject, observer } from 'mobx-react'
-import React from 'react'
 
 import { SignUpForm } from '../../components/app'
-import { googlePageView } from '../../util'
 
-import styles from '../../styles/pages/invite.style'
+import styles from '../../styles/pages/invite.style.js'
 
+@withStyles(styles)
 @inject('store')
 @observer
-class Invite extends React.Component {
-  componentDidMount() {
-    googlePageView()
-  }
+export default class extends React.Component {
 
   changeTab = () => {
     const {
@@ -86,5 +84,3 @@ class Invite extends React.Component {
     )
   }
 }
-
-export default withStyles(styles)(Invite)

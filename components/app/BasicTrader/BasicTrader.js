@@ -1,10 +1,12 @@
-import { StockChart } from '../'
+import React from 'react' 
 import { toJS } from 'mobx'
-import { Grid, Typography, Button, Box, Divider } from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab'
-import { makeStyles } from '@material-ui/styles'
 import Router from 'next/router'
 import Link from 'next/link'
+
+import { Grid, Typography, Button, Box, Divider, makeStyles } from '@material-ui/core'
+import { Skeleton } from '@material-ui/lab'
+
+import { StockChart } from '../'
 
 import {
   AboutSection,
@@ -16,6 +18,8 @@ import {
   AnalystSection,
 } from '../../trade'
 
+  // not that /components/trade/TradeView.style.js is unused!... 
+  
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,

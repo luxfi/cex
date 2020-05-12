@@ -1,1 +1,1 @@
-export { default as FilmView } from './FilmView'
+export { default as FilmView } from './FilmView/FilmView'
