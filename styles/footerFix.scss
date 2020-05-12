@@ -1,0 +1,10 @@
+$spacing: 8px;
+
+.root-route footer,
+.on-route-pro footer {
+  padding: 0px $spacing * 3 !important;
+  
+  @media (min-width: 1280px) {
+    padding: 0px $spacing * 8 !important;
+  }
+}
