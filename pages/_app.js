@@ -40,6 +40,7 @@ import initializeStores from '../stores/stores'
 import styles from '../styles/app.style.js'
 import theme from '../styles/esxTheme'
 import '../styles/esxThemeTouchups.scss'
+import '../components/app/ProTrader/proTrader.global.scss'
 
 import '../components/app/MovieSlider/modified-slick.css'
 
@@ -76,7 +77,7 @@ export default class extends NextApp {
       </NextHead>
       <Provider store={this.stores}>
         <MuiThemeProvider theme={theme}>
-          <div className={classes.root}>
+          <div className={classNames(classes.root, mainRouteClass(router.route))}>
             <CssBaseline />
             <NoSsr>
               <Header
@@ -125,6 +126,13 @@ export default class extends NextApp {
     )
   }
 }
+
+  // tag main with a classname from the first part of the route
+const mainRouteClass = (path) => {
+  const pathArray = path.split('/') 
+  return (pathArray.length > 1) ? `on-route-${pathArray[1]}` : 'root-route'
+} 
+  
 
 const hideFooter = (page) => {
   const noFooterPages = ['/pro']
