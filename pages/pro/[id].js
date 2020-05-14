@@ -5,9 +5,10 @@ import React from 'react'
 import { ProTradeView } from '../../components/trade'
 import { googlePageView, slugFromPath } from '../../util'
 
+@withRouter
 @inject('store')
 @observer
-class ProTrade extends React.Component {
+export default class extends React.Component {
   componentDidMount() {
     const { store, router } = this.props
     const slug = router.query.slug || slugFromPath()
@@ -24,5 +25,3 @@ class ProTrade extends React.Component {
     return <ProTradeView socket={this.socket} />
   }
 }
-
-export default withRouter(ProTrade)
