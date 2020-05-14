@@ -106,7 +106,6 @@ function mergeData(legacy, parsed) {
       parsed[slug].raisedAmount = legacy[slug].raisedAmount
       parsed[slug].fundingGoal = legacy[slug].fundingGoal
       parsed[slug].daysLeft = legacy[slug].daysLeft
-      parsed[slug].posterImg = legacy[slug].posterImg
     } catch (err) {
       console.error(`Failed to update ${slug}: ${err.toString()}`)
     }
