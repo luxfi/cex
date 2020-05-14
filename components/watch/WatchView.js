@@ -1,9 +1,3 @@
-import React from 'react'
-import { inject, observer } from 'mobx-react'
-import Link from 'next/link'
-import Router, { withRouter } from 'next/router'
-
-import styles from './style.js'
 
 // @material-ui/core components
 import {
@@ -21,22 +15,28 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
 import classNames from 'classnames'
+import { inject, observer } from 'mobx-react'
+import Link from 'next/link'
+import Router, { withRouter } from 'next/router'
+import React from 'react'
 
 // core components
+
+
+import { formatNumber, getYoutubeId, renderDate } from '../../util'
 import {
-  AuthModal,
+  Comments,
   InvestNow,
+  ShareWidget,
 } from '../app'
 
-import { Comments, ShareWidget } from '../app'
 import LikeAndUnlike from '../LikeAndUnlike'
 import ShowingNext from './ShowingNext'
+import styles from './style.js'
 import VideoDescription from './VideoDescription'
 import YoutubePlayer from './YoutubePlayer'
 
-import { formatNumber, renderDate, getYoutubeId } from '../../util'
-
-@inject("store")
+@inject('store')
 @observer
 class Index extends React.Component {
   state = {
@@ -48,6 +48,11 @@ class Index extends React.Component {
       router: { query: { video: movieSlug, trailerId } },
       store: { trailerStore, movieStore },
     } = this.props
+
+    if (!movieSlug || !trailerId) {
+      return this.renderInvalidMovieMessage(movieSlug, trailerId)
+    }
+
     const movie = movieStore.getMovieBySlug(movieSlug)
 
     this.getUpdatedRelatedMovies(movieSlug)
@@ -112,7 +117,7 @@ class Index extends React.Component {
       store: {
         uiStore,
         trailerStore,
-        userStore: { loggedIn },
+        userStore: { loggedIn, id },
       },
     } = this.props
 
@@ -123,6 +128,12 @@ class Index extends React.Component {
 
     trailerStore.setMovieReaction(movie, id, type)
   }
+
+  renderInvalidMovieMessage = () => (
+    <Box>
+      <Typography variant='h4'>Invalid movie or Trailer</Typography>
+    </Box>
+  )
 
   render() {
     const {
@@ -142,33 +153,28 @@ class Index extends React.Component {
       router,
     } = this.props
     const { video: movieSlug, trailerId } = router.query
-    
+
     if (!movieSlug || !trailerId) {
-      return (
-        <Box>
-          <Typography variant="h4">Invalid movie or Trailer</Typography>
-        </Box>
-      )
+      return this.renderInvalidMovieMessage(movieSlug, trailerId)
     }
-    
+
     const movie = movieStore.getMovieBySlug(movieSlug)
     const { nextMovieIndex } = this.state
 
     const autoPlay = autoPlaySet === 'true' || autoPlaySet === true
 
-    const relatedMovieTrailerIds = relatedMovieTrailers.map(relatedMovieTrailer => relatedMovieTrailer.trailerId)
+    const relatedMovieTrailerIds = relatedMovieTrailers.map((relatedMovieTrailer) => relatedMovieTrailer.trailerId)
 
     const shareURL = `${window.location.origin}/ticketing/${movie.movieSlug}`
     const sharePrompt = `I just bought tickets for ${movie.name}! Please watch it too!`
 
     return (
       <>
-        <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
         <Box
-          className="MuiContainer-maxWidthXl"
+          className='MuiContainer-maxWidthXl'
         >
-          <Grid className={classes.watchGrid} container spacing={2} justify="flex-start">
-            <Grid item xs={12}  md={8} >
+          <Grid className={classes.watchGrid} container spacing={2} justify='flex-start'>
+            <Grid item xs={12} md={8} >
               <Grid item className={classes.videoContainer}>
                 {
                   (trailerId && relatedMovieTrailerIds.length) ? <YoutubePlayer
@@ -184,7 +190,7 @@ class Index extends React.Component {
                 }
               </Grid>
               <Grid item xs={12}>
-                <Box>
+                <Box className='video-metadata'>
                   <Link href={`/film/${movie.movieSlug}`}>
                     <a className={classes.aTag}>
                       <h3>{movie.name}</h3>
@@ -240,7 +246,7 @@ class Index extends React.Component {
                 </Box>
                 <Box className={classes.videoInfoBox}>
                   <Grid container className={classes.movieInfoContainer}>
-                    <Grid container wrap="nowrap" className={classes.movieInfo}>
+                    <Grid container wrap='nowrap' className={classes.movieInfo}>
                       <img src={movie.distributorImg} className={classes.videoInfoImage} alt={movie.distributors[0]} />
                       <Box className={classes.videoInfo}>
                         <Typography className={classes.channelName}>
@@ -251,7 +257,7 @@ class Index extends React.Component {
                         <Typography className={classes.videoPubDate}>{renderDate(movie.trailerDetails.createdAt, 'dddd MMM Do YYYY')}</Typography>
                       </Box>
                     </Grid>
-                    <Grid container className={classes.subShare} alignItems="center">
+                    <Grid container className={classes.subShare} alignItems='center'>
                       <IconButton onClick={() => {}} className={classes.iconButton}>
                         <AddCircleIcon />
                       </IconButton>
@@ -290,7 +296,7 @@ class Index extends React.Component {
                 <Comments identifierId={movie.id} />
               </Grid>
             </Grid>
-            <Grid item xs={12}  md={4} className={classes.deskTopShowNextSection}>
+            <Grid item xs={12} md={4} className={classes.deskTopShowNextSection}>
               <ShowingNext
                 onClick={this.getUpdatedRelatedMovies}
                 nextMovieIndex={nextMovieIndex}

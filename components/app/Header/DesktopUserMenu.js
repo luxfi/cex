@@ -29,6 +29,7 @@ export default ({ loggedIn, handleLogout, classes }) => (
           {(popupState) => (
             <>
               <IconButton
+                id='accountMenu'
                 aria-controls='menu'
                 aria-haspopup='true'
                 {...bindTrigger(popupState)}

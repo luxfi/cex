@@ -34,6 +34,7 @@ const AddToWatchlist = (props) => {
 
   return (
     <Button
+      id='watchlistButton'
       rel='noopener noreferrer'
       variant='contained'
       className={className || defaultClasses.addToWatchlistButton}

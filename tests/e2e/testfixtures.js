@@ -35,7 +35,7 @@ export const validCreditCard = {
   nameOnCard: `${userProfile.firstName} ${userProfile.lastName}`,
   cardNumber: '4242424242424242',
   expiryMonth: '12',
-  expiryYear: '2090',
+  expiryYear: '2022',
   cvc: '123',
 }
 export const invalidCreditCard = {

@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
+import classNames from 'classnames'
 import faker from 'faker'
 import { inject, observer } from 'mobx-react'
 import moment from 'moment'
@@ -107,7 +108,7 @@ class ConfirmPaymentView extends React.Component {
         userStore.removeBalance(total)
 
         this.setState({ transactionStatus: 'successful' }, () => {
-          router.push('/orderDetails', `/orderDetails/${movieSlug}? ticketId=${ticketId}${refParamString}`)
+          router.push('/orderDetails', `/orderDetails/${movieSlug}?ticketId=${ticketId}${refParamString}`)
         })
       } else {
         this.setState({ transactionStatus: 'failed' })
@@ -274,7 +275,7 @@ class ConfirmPaymentView extends React.Component {
                 {cardPaymentOptions.length ? cardPaymentOptions.map((paymentOption, cardIndex) => (
                   <Grid
                     onClick={this.choosePaymentMethod(cardIndex + formattedAccounts.length, 'card', paymentOption)}
-                    className={`${classes.editCardSection} ${paymentMethodIndex === (cardIndex + formattedAccounts.length) ? 'selected' : null}`}
+                    className={`${classNames(classes.editCardSection, 'payment-method')} ${paymentMethodIndex === (cardIndex + formattedAccounts.length) ? 'selected' : null}`}
                     container
                     alignItems='center'
                     justify='space-between'
@@ -286,12 +287,12 @@ class ConfirmPaymentView extends React.Component {
                       <CreditCardIconType cardType={paymentOption.type} className={classes.creditCardIcon} />
                       <span>ending in {paymentOption.creditCard.substr(paymentOption.creditCard.length - 4)}</span>
                     </div>
-                    <button type='button' className={classes.link} onClick={this.openEditCardPaymentMethodModal(cardIndex)}>Edit</button>
+                    <button id='editPaymentButton' type='button' className={classes.link} onClick={this.openEditCardPaymentMethodModal(cardIndex)}>Edit</button>
                   </Grid>
                 )) : null}
                 <Divider />
                 <div className={classes.addPaymentSection}>
-                  <button onClick={this.openAddPaymentMethodModal} type='button' className={classes.link}>Add payment method</button>
+                  <button id='addPaymentButton' onClick={this.openAddPaymentMethodModal} type='button' className={classes.link}>Add payment method</button>
                 </div>
                 <AddPaymentMethodModal />
               </div>
@@ -309,6 +310,7 @@ class ConfirmPaymentView extends React.Component {
                 disabled={processingPayment || !paymentOptionSelected || total === serviceFee}
                 className={classes.buyBtn}
                 onClick={this.purchaseTickets}
+                id='buyButton'
               >
                 { processingPayment ? <CircularProgress color='inherit' /> : 'BUY' }
               </Button>

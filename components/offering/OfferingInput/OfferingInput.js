@@ -8,7 +8,6 @@ import {
   Typography,
   Box,
 } from '@material-ui/core'
-import { AuthModal } from '../../app'
 
 import { isStringUSCurrency } from '../../../util'
 
@@ -59,7 +58,6 @@ export default inject('store')(observer(function CustomizedInputBase({
   const minimumInvestment = 50
   const [investmentAmount, setInvestmentAmount] = useState('')
 
-  const { authModalOpen, tabIndexValue } = uiStore
   const { loggedIn } = userStore
 
   const handleSubmit = async () => {
@@ -72,7 +70,7 @@ export default inject('store')(observer(function CustomizedInputBase({
       await addOfferingInvestment(
         investmentAmount,
         () => {
-          setSuccessMessage('Your investment was successul')
+          setSuccessMessage('Your investment was successful')
         },
         ex => {
           setErrorMessage(ex)
@@ -99,7 +97,6 @@ export default inject('store')(observer(function CustomizedInputBase({
 
   return (
     <>
-    <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
       <div className={classes.container}>
         <Paper className={classes.root}>
           <Typography
@@ -120,6 +117,7 @@ export default inject('store')(observer(function CustomizedInputBase({
                 }}
                 onChange={evt => handleInputChange(evt)}
                 value={investmentAmount}
+                id='investInput'
               />
             </Box>
           </Typography>
@@ -129,6 +127,7 @@ export default inject('store')(observer(function CustomizedInputBase({
           variant="contained"
           className={classes.button}
           onClick={() => handleSubmit()}
+          id='investmentSubmit'
         >
           <Typography variant="h6">Invest</Typography>
         </Button>

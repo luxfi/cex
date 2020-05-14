@@ -6,6 +6,7 @@ import {
 import { PlayArrow as PlayArrowIcon } from '@material-ui/icons'
 import Link from 'next/link'
 import React from 'react'
+import { getYoutubeId } from '../../../util'
 import { AddToWatchlistButton } from '../../app'
 
 const AboutMain = (props) => {
@@ -28,7 +29,7 @@ const AboutMain = (props) => {
           </p>
         </div>
         <div>
-          <Link href={`/watch?video=${movie.movieSlug}`}>
+          <Link href={`/watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`}>
             <a className={classes.watchButton}>
               <Button
                 className='watch-trailer-button button'
@@ -44,6 +45,7 @@ const AboutMain = (props) => {
           </Link>
           <Link href={`/trade/${movie.movieSlug}`} as={`/trade/${movie.movieSlug}`}>
             <Button
+              id='tradeButton'
               variant='contained'
               className={classes.movieButton}
             >
@@ -53,6 +55,7 @@ const AboutMain = (props) => {
           <AddToWatchlistButton movie={movie} className={classes.movieButton} />
           <Link href='/ticketing' as={`/ticketing/${movie.movieSlug}`}>
             <Button
+              id='buyTicketsButton'
               variant='contained'
               className={classes.movieButton}
             >

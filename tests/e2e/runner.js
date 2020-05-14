@@ -2,9 +2,12 @@ const { exec } = require('child_process')
 const http = require('http')
 const path = require('path')
 const { Spinner } = require('cli-spinner')
+const express = require('express')
 const jest = require('jest')
+const next = require('next')
 const handler = require('serve-handler')
 const yargs = require('yargs')
+
 
 // require('regenerator-runtime')
 const jestE2EConfig = require('../../jest.config.integration')
@@ -12,7 +15,6 @@ const { ENVIRONMENTS } = require('./utils/constants')
 
 const testDir = __dirname
 let filePathObj
-let server
 let testHost
 
 const {
@@ -54,22 +56,32 @@ const runTest = async () => {
   jest
     .runCLI({ _: jestE2EConfig.testEnvironmentOptions._, runInBand: serial, ...jestE2EConfig }, [testDir])
     .then((success) => {
-      server.close()
+      process.exit(0)
     })
     .catch((failure) => {
-      server.close()
       console.error(failure)
+      process.exit(1)
     })
 }
 
 const runServer = () => {
-  server = http.createServer((request, response) => handler(request, response, {
-    public: path.resolve(__dirname, '../../out'),
-  }))
+  const app = next({ dev: false })
+  const handle = app.getRequestHandler()
+  const port = process.env.PORT || 8080
 
-  server.listen(8080, () => {
-    console.log('Serving static files at http://localhost:8080')
-    runTest()
+  app.prepare().then(() => {
+    const server = express()
+    server.all('*', (req, res) => handle(req, res))
+    server.listen(port, (err) => {
+      if (err) {
+        throw err
+      }
+      console.log(`> App running on localhost:${port}`)
+      runTest()
+    })
+  }).catch(e => {
+    console.error(e)
+    process.exit(1)
   })
 }
 

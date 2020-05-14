@@ -40,13 +40,13 @@ describe('Main navigation', () => {
     await page.waitFor('.watch-trailer-button')
   })
 
-  xit('should go to offerings page when the invest menu item is clicked', async () => {
+  it('should go to offerings page when the invest menu item is clicked', async () => {
     const investButton = await getElementForSelector(page, '.menu-button:nth-of-type(3)')
     await investButton.click()
-    await page.waitFor('.html5-video-player')
+    await page.waitFor('.video')
   })
 
-  xit('should go to pro trade page when the trade menu item is clicked', async () => {
+  it('should go to pro trade page when the trade menu item is clicked', async () => {
     const tradeButton = await getElementForSelector(page, '.menu-button:nth-of-type(4)')
     await tradeButton.click()
     await page.waitFor('#orderBookScroll')

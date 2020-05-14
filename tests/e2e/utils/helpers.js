@@ -36,10 +36,10 @@ export const login = async (page) => {
   const emailInput = 'input[name ="email"]'
   const passwordInput = 'input[name ="password"]'
   const signinButtonElement = await page.waitFor('#login-submit-button', defaultWaitUntil)
-
   await deleteOldContentAndType(page, emailInput, testUser.email)
   await deleteOldContentAndType(page, passwordInput, testUser.password)
   await signinButtonElement.click()
+  await waitForProperty(page, '#accountMenu > span', 'className', 'MuiIconButton-label')
 }
 
 export const selectFromDropDown = async (page, selectElement, selector, value) => {
@@ -53,7 +53,7 @@ export const selectFromDropDown = async (page, selectElement, selector, value) =
     .evaluateHandle((selEl, val) => {
       const listItem = document.querySelectorAll(selEl)
       for (let i = 0; i < listItem.length; i++) {
-        if (listItem[i].dataset.value === val) {
+        if (listItem[i].dataset.value === val || listItem[i].innerText === val) {
           return listItem[i]
         }
       }

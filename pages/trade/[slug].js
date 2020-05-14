@@ -14,6 +14,9 @@ export default class extends React.Component {
     const slug = router.query.slug || slugFromPath()
     const { uiStore } = store
 
+    console.log(router.query,  '=----')
+
+
     if (false && uiStore.trading === 'pro') {
       Router.replace(`/pro/${slug}`)
     }

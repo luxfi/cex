@@ -113,6 +113,7 @@ class TicketingView extends React.Component {
                 <Button
                   className={classes.bookmarkButton}
                   endIcon={<BookmarkBorderIcon className={classes.whiteSvgIcon} />}
+                  id='watchlist-button'
                 >
                   Add To Watchlist
                 </Button>
@@ -133,6 +134,7 @@ class TicketingView extends React.Component {
                     onClick={this.selectDate(date)}
                     button
                     selected={selectedDate.formated === date.formated}
+                    className='selectDate'
                   >
                     <ListItemText inset primary={date.formated} />
                   </ListItem>
@@ -174,7 +176,7 @@ class TicketingView extends React.Component {
                   <ListItemIcon>
                     <PinDropIcon />
                   </ListItemIcon>
-                  <ListItemText primary='Current location' />
+                  <ListItemText id='currentLocation' primary='Current location' />
                 </ListItem>
                 <Divider light />
               </List>
@@ -187,7 +189,7 @@ class TicketingView extends React.Component {
           >
             <List aria-label='movie formats' className={classes.formatsList}>
               <ListItem button selected onClick={this.closeDialog}>
-                <ListItemText inset primary='All Formats' />
+                <ListItemText id='allFormats' inset primary='All Formats' />
               </ListItem>
             </List>
           </CustomDialog>
@@ -203,6 +205,7 @@ class TicketingView extends React.Component {
                   endIcon={<KeyboardArrowDownIcon className={classes.svgIcon} />}
                   className={classes.dateLocationStripeDropdown}
                   onClick={this.openModal('date')}
+                  id='dateSelect'
                 >
                   {selectedDate.formated ? selectedDate.formated : '...' }
                 </Button>
@@ -214,6 +217,7 @@ class TicketingView extends React.Component {
                   endIcon={<KeyboardArrowDownIcon className={classes.svgIcon} />}
                   className={classes.dateLocationStripeDropdown}
                   onClick={this.openModal('location')}
+                  id='openLocationButton'
                 >
                   {selectedLocation.city
                     ? `${selectedLocation.city}, ${selectedLocation.state}`
@@ -227,6 +231,7 @@ class TicketingView extends React.Component {
                   endIcon={<KeyboardArrowDownIcon className={classes.svgIcon} />}
                   className={classes.dateLocationStripeDropdown}
                   onClick={this.openModal('formats')}
+                  id='formatsButton'
                 >
                   All Formats
                 </Button>

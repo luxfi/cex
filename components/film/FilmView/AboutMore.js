@@ -19,8 +19,8 @@ const AboutMore = ({ classes, movie }) => {
   return (
     <>
       <div className={classes.aboutMoreTitleArea}>
-        <h1 className={classes.sectionTitle}>About</h1>
-        <h2 className={classes.sectionByline}>More about the film</h2>
+        <h2 className={classes.sectionTitle}>About</h2>
+        <h3 className={classes.sectionByline}>More about the film</h3>
       </div>
       <div className={classes.aboutMoreCopyArea}>
         <div className={classes.aboutMoreStats}>

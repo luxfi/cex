@@ -4,8 +4,6 @@ import {
 import { inject, observer } from 'mobx-react'
 import React, { useEffect } from 'react'
 
-import { AuthModal } from '../components/app'
-
 const LogInText = ({ onClick }) => (
   <Box
     className='MuiContainer-maxWidthXl'
@@ -29,7 +27,7 @@ export const withOnDemandAuth = (Component) => inject('store')(observer((props) 
     store: {
       userStore,
       uiStore,
-      uiStore: { authModalOpen, tabIndexValue },
+      uiStore: { authModalOpen },
     },
   } = props
 
@@ -41,7 +39,6 @@ export const withOnDemandAuth = (Component) => inject('store')(observer((props) 
 
   return (
     <>
-      <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
       {userStore.loggedIn && <Component />}
       {(!userStore.loggedIn && !authModalOpen) && <LogInText onClick={() => uiStore.openAuthModal()} />}
     </>

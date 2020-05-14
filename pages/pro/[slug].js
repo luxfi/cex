@@ -2,8 +2,8 @@ import { inject, observer } from 'mobx-react'
 import Router, { withRouter } from 'next/router'
 import React from 'react'
 
-import { ProTradeView } from '../components/trade'
-import { googlePageView, slugFromPath } from '../util'
+import { ProTradeView } from '../../components/trade'
+import { googlePageView, slugFromPath } from '../../util'
 
 @inject('store')
 @observer

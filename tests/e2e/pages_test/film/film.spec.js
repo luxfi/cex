@@ -10,12 +10,13 @@ import {
 } from '../../utils/helpers'
 
 let page
-const url = `${global.host}/film/terminator-dark-fate`
+const url = `${global.host}/film/shazam-2019`
 const movieTitle = 'h1'
 const watchTrailerButton = '.watch-trailer-button'
 const investButton = '#tradeButton'
 const watchlistButton = '#watchlistButton'
 const buyTicketsButton = '#buyTicketsButton'
+const ondemandLoginCloseBtn = '.MuiDialogTitle-root > button'
 
 describe('Films', () => {
   beforeAll(async () => {
@@ -23,18 +24,29 @@ describe('Films', () => {
     page.setDefaultNavigationTimeout(defaultNavigationTimeout)
     await page.setViewport(defaultViewport.desktop)
     await page.goto(url, defaultNavigationTimeout)
-    // await login(page)
   })
 
   afterAll(async () => {
     await page.close()
   })
 
-  it('should add and remove movie to and from watchlist', async () => {
+  it('should contain trailer, trade, add to watchlist and buy movie ticket', async () => {
+    await page.waitForSelector(watchTrailerButton)
+    await page.waitForSelector(buyTicketsButton)
+    await page.waitForSelector(investButton)
+    await page.waitForSelector(watchlistButton)
+  })
+
+  it('should open the onDemand login modal when unauthenticated user tries to add to watchlist', async () => {
     await page.waitForSelector(watchlistButton)
     await page.click(watchlistButton)
-    await waitForProperty(page, `${watchlistButton} > span.MuiButton-label`, 'innerText', 'Remove from watchlist')
-    await page.click(watchlistButton)
-    await waitForProperty(page, `${watchlistButton} > span.MuiButton-label`, 'innerText', 'Add to watchlist')
+    await page.waitForSelector(ondemandLoginCloseBtn)
+  })
+
+  xit('should add and remove movie to and from watchlist', async () => {
+    await login(page)
+    await waitForProperty(page, `${watchlistButton} > span.MuiButton-label`, 'innerText', 'ADD TO WATCHLIST')
+    await page.click(investButton)
+    await waitForProperty(page, `${watchlistButton} > span.MuiButton-label`, 'innerText', 'REMOVE FROM WATCHLIST')
   })
 })

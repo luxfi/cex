@@ -19,8 +19,6 @@ import {
   Divider,
 } from '@material-ui/core'
 
-import { AuthModal } from '../../app'
-
 import { isStringInteger, formatCurrency } from '../../../util'
 
 const RewardsCard = ({
@@ -41,7 +39,6 @@ const RewardsCard = ({
     disabled,
   } = reward
 
-  const { authModalOpen, tabIndexValue } = uiStore
   const { loggedIn } = userStore
   
   const handleSubmit = async () => {
@@ -82,7 +79,6 @@ const RewardsCard = ({
   const id = open ? 'disabled' : undefined
   return (
     <Paper className={classes.paper} style={paperStyle}>
-      <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
       <Grid
         container
         direction="column"

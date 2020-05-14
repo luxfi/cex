@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { inject, observer } from 'mobx-react'
-import { AuthModal } from '../'
 
 import { Avatar, Box, Button, TextField } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -27,7 +26,6 @@ const AddComment = inject('store')(observer(({
   const {
     commentStore,
     userStore: { loggedIn, currentUser, id },
-    uiStore: { authModalOpen, tabIndexValue },
     uiStore,
   } = store
 
@@ -66,7 +64,6 @@ const AddComment = inject('store')(observer(({
 
   return (
     <>
-      <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
       <Box className={classNames('add-comment', classes.comment)}>
         <Avatar src='http://placehold.it/32x32' className={classes.commentImage} />
         <Box className={classes.commentInputArea}>
