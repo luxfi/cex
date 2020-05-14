@@ -4,9 +4,8 @@ import Link from 'next/link'
 import {
   Button,
   IconButton,
-  makeStyles,
+  Menu,
   MenuItem,
-  Popover,
 } from '@material-ui/core'
 
 import { AccountCircle } from '@material-ui/icons'
@@ -19,7 +18,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
   // This one is recommended in the MUI docs themselves :)
-import PopupState, { bindPopover, bindTrigger } from 'material-ui-popup-state'
+import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state'
+
+import { NextMuiLink } from '..'
 
 export default ({ loggedIn, handleLogout, classes }) => (
   <div className={classes.accountOuter}>
@@ -36,37 +37,41 @@ export default ({ loggedIn, handleLogout, classes }) => (
               >
                 <AccountCircle className={classes.accountIcon} />
               </IconButton>
-              <Popover
-                {...bindPopover(popupState)}
+              <Menu
+                {...bindMenu(popupState)}
+                className={classes.menu}
+                variant='menu'
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                getContentAnchorEl={null}
+                disableAutoFocusItem
               >
-                <Link href='/account'>
-                  <MenuItem
-                    className={classes.menuItem}
-                    onClick={popupState.close}
-                  >
+                <MenuItem
+                  className={classes.menuItem}
+                  onClick={popupState.close}
+                >
+                  <NextMuiLink href='/account'>
+                    <FontAwesomeIcon icon={faAddressCard} size='1x' />
                     <span className={classes.menuItemText}>My Account</span>
-                    <FontAwesomeIcon icon={faAddressCard} size='1x' className={classes.menuItem} />
-                  </MenuItem>
-                </Link>
-                <Link href='/portfolio'>
-                  <MenuItem
-                    className={classes.menuItem}
-                    onClick={popupState.close}
-                  >
+                  </NextMuiLink>
+                </MenuItem>
+                <MenuItem
+                  className={classes.menuItem}
+                  onClick={popupState.close}
+                >
+                  <NextMuiLink href='/portfolio'>
+                    <FontAwesomeIcon icon={faChartArea} size='1x' />
                     <span className={classes.menuItemText}>Portfolio</span>
-                    <FontAwesomeIcon icon={faChartArea} size='1x' className={classes.menuItem} />
-                  </MenuItem>
-                </Link>
+                  </NextMuiLink>
+                </MenuItem>
                 <MenuItem
                   onClick={handleLogout}
                   className={classes.menuItem}
                 >
-                  <span className={classes.menuItemText}>Logout</span>
                   <FontAwesomeIcon icon={faSignOutAlt} size='1x' />
+                  <span className={classes.menuItemText}>Logout</span>
                 </MenuItem>
-              </Popover>
+              </Menu>
             </>
           )}
         </PopupState>

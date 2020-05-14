@@ -12,12 +12,12 @@ const rupture = require('rupture')
 module.exports = withBundleAnalyzer(
   /*
   withSass({
-    
+
     cssModules: true,
     cssLoaderOptions: {
       importLoaders: 2,
     }
-  
+
   },
   */
   //withCSS(
@@ -40,13 +40,17 @@ module.exports = withBundleAnalyzer(
     //   }
     // },
 
+    devIndicators: {
+      autoPrerender: false,
+    },
+
     webpack: config => {
       // Disable for performance boost during dev, but breaks source maps
       config.devtool = 'eval-source-map'
 
       //config.node = {fs: 'empty'}
 
-      //config.target = 'node' 
+      //config.target = 'node'
 
       config.module.rules.push({
         test: /\.mjs$/,

@@ -14,7 +14,14 @@ import { SidebarLayout } from '../../components/app'
 
 import { 
   ProfileView,
-  FundsView
+  FundsView,
+  APIAccessView,
+  AccountActivityView,
+  DocumentsView,
+  DepositView,
+  IdentityView,
+  OrdersView,
+  SecurityView,
 } from '../../components/account'
 
 import { 
@@ -23,9 +30,6 @@ import {
   loginRequired,
   isNullQuery 
 } from '../../util'
-
-
-//import AccountTabs from '../../settings/accountTabs'
 
 const BASE_ROUTE = '/account'
 
@@ -135,30 +139,16 @@ export default class extends React.Component {
   }
 }
 
-//         {tabbedViews.map((child, i) => ((i === this.state.tabIndex) ? child : null))}
-
-
-const Third = (props) => (
-  <Paper >
-  <h1> Third FUNDS</h1>
-  </Paper>
-)
+// {tabbedViews.map((child, i) => ((i === this.state.tabIndex) ? child : null))}
 
 const tabbedViews = [
+  <AccountActivityView tabTitle='Account Activity' />,
   <ProfileView tabTitle='Profile'/>,
   <FundsView tabTitle='Funds' />, 
-  <Third tabTitle='third' />
+  <APIAccessView tabTitle='API Access' />,
+  <DocumentsView tabTitle='Documents' />,
+  <DepositView tabTitle='Deposit' />,
+  <IdentityView tabTitle='Identity' />,
+  <OrdersView tabTitle='Orders' />,
+  <SecurityView tabTitle='Security' />,
 ]
-
-
-
-/* Keep so we can remove these utility classes later
-<PageSections>
-<SideMenuSection title={userStore.getFullName}>
-  <TabbedNav tabs={AccountTabs} tab='' orientation='vertical' />
-</SideMenuSection>
-<MainContentSection>
-  <InvestorInfoView tabTitle='Profile'/>
-</MainContentSection>
-</PageSections>
-*/
