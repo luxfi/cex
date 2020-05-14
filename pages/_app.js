@@ -73,9 +73,9 @@ export default class extends NextApp {
     const { router } = this.props
     this.stores.uiStore.openBrowseMovieModal()
 
-    const href = '/?modal=browse'
+    const href = `${router.asPath}?modal=browse`
 
-    router.push(href, href, { shallow: true })
+    router.push(router.route, href, { shallow: true })
   }
 
   render() {

@@ -8,7 +8,7 @@ import {
   withStyles,
 } from '@material-ui/core'
 
-import { MovieCard, Loading } from '../app'
+import BrowseMovieCard from './BrowseMovieCard'
 import FacetsToolbar from './FacetsToolbar'
 
 import tradingStatus from '../../settings/tradingStatus'
@@ -61,7 +61,7 @@ class BrowseMovies extends React.Component {
           movieStore.filteredMovies.length ? (
             movieStore.filteredMovies.map((m, i) => (
               <Grid xs={12} sm={6} md={3} lg={2} item key={m.imdbid + i} >
-                <MovieCard
+                <BrowseMovieCard
                   movie={m}
                   goToMovieDetail={(movie) => { router.push(`/film/${movie.movieSlug}`) }}
                   goToMovieOffering={(movie) => { router.push(`/offering/${movie.movieSlug}`) }}

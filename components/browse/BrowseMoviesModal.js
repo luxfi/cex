@@ -49,7 +49,6 @@ const BrowseMoviesModal = ({ store, open }) => {
       <div className={classes.main}>
         <BrowseMovies />
       </div>
-      <Footer />
     </Dialog>
   )
 }

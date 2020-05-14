@@ -7,8 +7,9 @@ const tabOffsetMargin = '-15px'
 export default (theme) => ({
 
   main: {
-    padding: theme.spacing(0, 2),
+    padding: theme.spacing(0, 8),
     marginTop: theme.spacing(4),
+    backgroundColor: theme.palette.common.black,
   },
   toolbar: {
     position: 'fixed',
