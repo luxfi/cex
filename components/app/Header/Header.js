@@ -7,7 +7,8 @@ import {
   makeStyles,
   Toolbar,
   useScrollTrigger,
-  withWidth
+  withWidth,
+  Tooltip,
 } from '@material-ui/core'
 
 import { MenuRounded as MenuIcon, Search as SearchIcon } from '@material-ui/icons'
@@ -74,7 +75,9 @@ const BurgerMenuButton = ({ onClick, classes }) => (
 )
 
 const SearchButton = ({ onClick, classes }) => (
-  <IconButton onClick={onClick} className={classes.searchButton}>
-    <SearchIcon className={classes.searchButtonIcon} />
-  </IconButton>
+  <Tooltip title='Browse Movies'>
+    <IconButton onClick={onClick} className={classes.searchButton}>
+      <SearchIcon className={classes.searchButtonIcon} />
+    </IconButton>
+  </Tooltip>
 )
