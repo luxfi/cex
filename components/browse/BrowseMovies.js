@@ -60,7 +60,7 @@ class BrowseMovies extends React.Component {
         {
           movieStore.filteredMovies.length ? (
             movieStore.filteredMovies.map((m, i) => (
-              <Grid xs={12} sm={6} md={3} lg={2} item key={m.imdbid + i} >
+              <Grid xs={12} sm={6} md={4} lg={2} item key={m.imdbid + i} >
                 <BrowseMovieCard
                   movie={m}
                   goToMovieDetail={(movie) => { router.push(`/film/${movie.movieSlug}`) }}
