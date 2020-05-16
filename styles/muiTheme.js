@@ -1,4 +1,4 @@
-import { createMuiTheme } from "@material-ui/core/styles"
+const { createMuiTheme } = require('@material-ui/core/styles') // must require not import, since this file is invoked by node directly
 
 const SPACING_BASE = 8
 const spacingPx = (factor) => (`${SPACING_BASE * factor}px`)
@@ -18,7 +18,7 @@ const COLORS = {
 }
 
 const PAPER_SHADES = [
-  COLORS.common.black,  // zeroth el, so paper elevations match
+  COLORS.common.black,  // zero'th element, so paper elevations match indices
   '#222',
   '#333',
   '#3f3f3f',
@@ -30,7 +30,7 @@ const PAPER_SHADES = [
   '#6f6f6f',
 ]
 
-export default createMuiTheme({
+module.exports = createMuiTheme({
 
   breakpoints: {
     xs: 0,
@@ -45,19 +45,6 @@ export default createMuiTheme({
   palette: {
     type: "dark",
     ...COLORS,
-    /*
-    common: {
-      black: "#090909",
-      white: "#F0f0f0"
-    },
-    primary: {
-      main: '#0099ff',
-      light: '#5fb8ff', // desaturaed logo blue per Material recommendations for dark mode
-    },
-    secondary: {
-      main: "#fac54c",  // logo yellow
-    },
-    */
     text: {
       primary: "rgba(255, 255, 255, 0.95)",   // "white" (from Jeff's spec)
       secondary: "rgba(255, 255, 255, 0.65)",
@@ -71,7 +58,7 @@ export default createMuiTheme({
     },
   },
   typography: {
-    fontFamily: "‘BWHaasGroteskTF-55Roman-Web, sans-serif’, sans-serif",
+    fontFamily: "BWHaasGroteskTF-55Roman-Web, sans-serif",
     useNextVariants: true
   },
 
@@ -202,8 +189,6 @@ export default createMuiTheme({
         }
       }
     }
-  },
-
-  defaultSVGColor: "#F0f0f0",
+  }
 })
 
