@@ -1,5 +1,5 @@
 import React from 'react'
-import { isObservableArray, toJS } from 'mobx'
+import { toJS } from 'mobx'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'next/router'
 import classNames from 'classnames'
@@ -19,7 +19,6 @@ import {
   CustomBreadcrumbs,
   InvestNow,
   NextMuiLink,
-  Trailers,
 } from "../../app"
 
 import AboutMain from './AboutMain'
@@ -33,16 +32,16 @@ import styles from './film.style.js'
 @inject('store')
 @observer
 export default class extends React.Component {
+
   constructor(props) {
     super(props)
     this.state = {
       selectedTab: 'about',
       selectedTrader: 'basic',
     }
-    this.onTabSelected = this.onTabSelected.bind(this)
   }
 
-  onTabSelected(tab) {
+  onTabSelected = (tab) => {
     if (this.state.selectedTab !== tab) {
       // if going to a new tab, collapse the view as well.
       this.setState({
@@ -246,9 +245,7 @@ export default class extends React.Component {
     return (
       <>
         {selectedTab === 'about'
-          && <article
-            className={classNames(classes.container, classes.outermost)}
-          >
+          && <article>
             {this.renderUpperRow(
               classes,
               selectedTab,
@@ -312,33 +309,12 @@ export default class extends React.Component {
             )}
           </article>
         }
-        <div
-          className={classNames(classes.container)}
-          style={{ paddingLeft: '0px', paddingRight: '0px' }}
-        >
-          {!userStore.token ? <InvestNow /> : ''}
-        </div>
+        {!userStore.token ? <InvestNow /> : ''}
         <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
       </>
     )
   }
 }
-
-const ExternalLink = React.forwardRef(
-  ({
-    className, href, hrefAs, children,
-  }, ref) => (
-    <a
-      className={className}
-      ref={ref}
-      href={href || ''}
-      as={hrefAs}
-      target='_blank'
-    >
-      {children}
-    </a>
-  ),
-)
 
 const formatMonthlyStats = (price, valueDelta) => (
   `${(valueDelta > 0 ? '+ ' : '- ')

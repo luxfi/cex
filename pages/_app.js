@@ -127,9 +127,11 @@ export default class extends NextApp {
   // tag main with a classname from the first part of the route
 const mainRouteClass = (path) => {
   const pathArray = path.split('/') 
-  return (pathArray.length > 2) ? `on-route-${pathArray[1]}` : 'root-route'
+  if (pathArray.length >= 2) {
+    return (pathArray[1].length > 0) ? `on-route-${pathArray[1]}` : 'root-route'
+  }
+  return '' // couldn't make sense of the path
 } 
-  
 
 const hideFooter = (page) => {
   const noFooterPages = ['/pro']

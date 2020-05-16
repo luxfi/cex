@@ -1,4 +1,3 @@
-import { container, title } from "../esxStyles.js"
 
 const portfolioPageStyle = theme => ({
   outerContainer: {
@@ -7,13 +6,11 @@ const portfolioPageStyle = theme => ({
   },
   container: {
     zIndex: 12,
-    ...container,
     fontSize: "16px",
     paddingBottom: "70px",
     marginTop: "24px"
   },
   title: {
-    ...title,
     display: "inline-block",
     position: "relative",
     marginTop: "30px",

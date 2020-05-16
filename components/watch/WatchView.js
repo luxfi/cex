@@ -1,11 +1,8 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import Link from 'next/link'
 import Router, { withRouter } from 'next/router'
+import Link from 'next/link'
 
-import styles from './style.js'
-
-// @material-ui/core components
 import {
   Box,
   Button,
@@ -13,32 +10,36 @@ import {
   Grid,
   IconButton,
   Typography,
+  withStyles
 } from '@material-ui/core'
 
+import { 
+  AddCircle as AddCircleIcon, 
+  MoreHoriz as MoreHorizIcon
+} from '@material-ui/icons'
 
-import { withStyles } from '@material-ui/core/styles'
-import AddCircleIcon from '@material-ui/icons/AddCircle'
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
-
-import classNames from 'classnames'
-
-// core components
-import {
-  AuthModal,
-  InvestNow,
+import { 
+  AuthModal, 
+  Comments, 
+  InvestNow, 
+  ShareWidget 
 } from '../app'
 
-import { Comments, ShareWidget } from '../app'
 import LikeAndUnlike from '../LikeAndUnlike'
 import ShowingNext from './ShowingNext'
 import VideoDescription from './VideoDescription'
 import YoutubePlayer from './YoutubePlayer'
 
-import { formatNumber, renderDate, getYoutubeId } from '../../util'
+import { formatNumber, renderDate } from '../../util'
 
+import styles from './style.js'
+
+@withRouter
+@withStyles(styles)
 @inject("store")
 @observer
-class Index extends React.Component {
+export default class extends React.Component {
+
   state = {
     nextMovieIndex: 1,
   }
@@ -301,10 +302,7 @@ class Index extends React.Component {
             </Grid>
           </Grid>
         </Box>
-        <Box
-          className={classNames(classes.container)}
-          style={{ paddingLeft: '0px', paddingRight: '0px' }}
-        >
+        <Box >
           {!userStore.token ? <InvestNow /> : ''}
         </Box>
       </>
@@ -312,4 +310,3 @@ class Index extends React.Component {
   }
 }
 
-export default withRouter(withStyles(styles)(Index))

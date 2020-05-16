@@ -1,9 +1,3 @@
-import {
-  container,
-  flexCenteredColumn,
-  flexCenteredRow,
-} from '../../styles/esxStyles'
-
 const YELLOW = '#FBC43E'
 const GREY = '#808080'
 const maxLines = {
@@ -16,13 +10,6 @@ const maxLines = {
 }
 
 export default (theme) => ({
-  flexCenteredRow: {
-    ...flexCenteredRow,
-  },
-
-  flexCenteredColumn: {
-    ...flexCenteredColumn,
-  },
 
   aTag: {
     textDecoration: 'none',
@@ -30,15 +17,6 @@ export default (theme) => ({
     '&:hover': {
       color: YELLOW,
     },
-  },
-
-  container: {
-    ...container,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    background: theme.palette.background.default,
-    color: theme.palette.text.primary,
   },
 
   outermost: {
