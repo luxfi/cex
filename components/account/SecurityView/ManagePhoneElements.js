@@ -1,8 +1,10 @@
+import React from 'react'
+
 import { Typography } from '@material-ui/core'
 
 import IconInfoArea from './IconInfoArea'
 
-const ManagePhoneElement = (props) => {
+export default (props) => {
   const { classes, phoneNumber } = props
 
   return (
@@ -28,5 +30,3 @@ const ManagePhoneElement = (props) => {
     </div>
   )
 }
-
-export default ManagePhoneElement

@@ -1,14 +1,16 @@
 import React from 'react'
+import Link from 'next/link'
+
 import {
   Button,
   Divider,
   Grid,
   Typography,
 } from '@material-ui/core'
-import moment from 'moment/moment'
-import Link from 'next/link'
 
-const TicketOrderElement = ({ movie, ticket, classes, showDivider }) => (
+import moment from 'moment/moment'
+
+export default ({ movie, ticket, classes, showDivider }) => (
   <Grid container direction='column'>
     <Grid container item>
       <Grid item xs={10}>
@@ -33,5 +35,3 @@ const TicketOrderElement = ({ movie, ticket, classes, showDivider }) => (
     }
   </Grid>
 )
-
-export default TicketOrderElement

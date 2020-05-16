@@ -1,11 +1,12 @@
 import React from "react"
+import { inject, observer } from 'mobx-react'
+
 import {
   makeStyles,
   Typography,
 } from '@material-ui/core'
-import { inject, observer } from 'mobx-react'
 
-import TicketOrderElement from './TicketOrderElement'
+import TicketOrderElements from './TicketOrderElements'
 
 const noUnderline = {
   textDecoration: 'none',
@@ -31,12 +32,11 @@ const styles = (theme) => ({
 
 const useStyles = makeStyles(styles)
 
-const OrdersElement = (props) => {
+export default inject('store')(observer((props) => {
 
   const classes = useStyles()
   
   const {
-    tabTitle,
     store: {
       movieStore,
       ticketCheckoutStore: {
@@ -68,6 +68,5 @@ const OrdersElement = (props) => {
       { (!ticketTransactions.length) && <Typography variant='body2'>You don't seem to have bought any movie tickets yet</Typography> }
     </div>
   )
-}
+}))
 
-export default inject('store')(observer(OrdersElement))

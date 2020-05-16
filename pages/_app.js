@@ -1,9 +1,8 @@
 import React from 'react'
-import ReactGA from 'react-ga'
 import { Provider, observer } from 'mobx-react'
 
 import NextApp from 'next/app'
-import { withRouter } from 'next/router'
+import Router, { withRouter } from 'next/router'
 import NextHead from 'next/head'
 
 import {
@@ -40,15 +39,17 @@ import initializeStores from '../stores/stores'
 
 
 import styles from '../styles/app.style.js'
-import theme from '../styles/esxTheme'
+import theme from '../styles/muiTheme'
 
-import '../styles/esxThemeTouchups.scss'
+import '../styles/globalTouchups.scss'
 import '../styles/footerFix.scss'
 
 import '../components/app/MovieSlider/modified-slick.css'
-
+import * as GA from '../util/GA' 
 
 config.autoAddCss = false
+
+Router.events.on('routeChangeComplete', url => GA.logPageView(url))
 
 @withRouter
 @withStyles(styles)

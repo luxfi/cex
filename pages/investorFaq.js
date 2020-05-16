@@ -1,12 +1,11 @@
-import React from "react"
-import { inject, observer } from "mobx-react"
-import { withStyles } from '@material-ui/core/styles'
+import React from 'react'
+import { inject, observer } from 'mobx-react'
 
-import { ContentfulItems } from "../components/app"
+import { withStyles } from '@material-ui/core'
 
-import { container } from "../styles/esxStyles.js"
+import { ContentfulItems } from '../components/app'
 
-import { googlePageView } from "../util"
+import { container } from '../styles/esxStyles.js'
 
 const styles = theme => ({
   container: {
@@ -16,15 +15,14 @@ const styles = theme => ({
     justifyContent: "center"
   },
 })
-
+@withStyles(styles)
 @inject("store")
 @observer
-class InvestorFAQ extends React.Component {
+export default class extends React.Component {
 
   componentDidMount() {
     const { store } = this.props
     store.contentfulStore.getContent(false)
-    googlePageView()
   }
 
   render() {
@@ -39,5 +37,3 @@ class InvestorFAQ extends React.Component {
     )
   }
 }
-
-export default withStyles(styles)(InvestorFAQ)
