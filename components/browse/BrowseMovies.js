@@ -12,7 +12,6 @@ import BrowseMovieCard from './BrowseMovieCard'
 import FacetsToolbar from './FacetsToolbar'
 
 import tradingStatus from '../../settings/tradingStatus'
-import { googlePageView } from '../../util'
 
 import styles from './browseMovies.style'
   
@@ -24,7 +23,6 @@ class BrowseMovies extends React.Component {
   componentDidMount() {
     const { store: { movieStore } } = this.props
     movieStore.loadMovies()
-    googlePageView()
   }
 
   tabSelected = (i) => {
