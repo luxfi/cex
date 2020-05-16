@@ -71,7 +71,7 @@ export default class extends NextApp {
     }
   }
 
-  handleSearch = () => {
+  openBrowseModal = () => {
     const { router } = this.props
     this.stores.uiStore.openBrowseMovieModal()
 
@@ -107,8 +107,7 @@ export default class extends NextApp {
                 movies={this.stores.movieStore.filteredMovies}
                 openMobileMenu={() => {this.stores.uiStore.setRightDrawerOpen(true)}}
                 handleLogout={() => {this.stores.userStore.logout()}}
-                handleSearch={this.handleSearch}
-                showFullSearchWidget={showFullSearchWidget(router.route)}
+                openBrowseModal={this.openBrowseModal}
               />
               <MobileNavMenuDrawer
                 open={this.stores.uiStore.drawers.left}
@@ -175,8 +174,4 @@ const isFullScreen = (route) => {
     ||
     route.startsWith('/browse')
   )
-}
-
-const showFullSearchWidget = (route) => {
-  return route.startsWith('/browse')
 }

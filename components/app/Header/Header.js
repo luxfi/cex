@@ -10,6 +10,7 @@ import {
   withWidth,
   Tooltip,
 } from '@material-ui/core'
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
 
 import { MenuRounded as MenuIcon, Search as SearchIcon } from '@material-ui/icons'
 import classNames from 'classnames'
@@ -28,11 +29,11 @@ export default withWidth()((props) => {
   const {
     openMobileMenu,
     handleLogout,
-    handleSearch,
+    handleClose,
+    openBrowseModal,
     loggedIn,
     width,
     movies,
-    showFullSearchWidget,
   } = props
 
   const showDesktopNav = isWidthUp('md', width)
@@ -49,14 +50,21 @@ export default withWidth()((props) => {
   }
 
   return (
-    <AppBar className={classNames(s.appBarCommon, appBarClass)}>
+    <AppBar className={classNames(s.appBarCommon, appBarClass, { [s.modalHeader]: !openBrowseModal })}>
       <Toolbar disableGutters className={s.toolbar}>
         <div className={s.logoArea}>
+          {
+            (!openBrowseModal) ? (
+            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+              <KeyboardBackspaceIcon />
+            </IconButton>) : null
+          }
           <NextMuiLink href='/'><HeaderLogo className={s.logo} /></NextMuiLink>
+          {(!openBrowseModal) ? (<MovieSearchWidget className={s.searchWidget} movies={movies} />) : null}
         </div>
         {showDesktopNav ? (
           <div className={s.desktopElementsOuter}>
-            {(!showFullSearchWidget) ? (<SearchButton onClick={handleSearch} classes={s} />) : null}
+            {(openBrowseModal) ? (<SearchButton onClick={openBrowseModal} classes={s} />) : null}
             <CascadingMenu structure={structure} className={s.navMenu}/>
             <DesktopUserMenu loggedIn={loggedIn} handleLogout={handleLogout} classes={s}/>
           </div>

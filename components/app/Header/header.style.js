@@ -29,6 +29,10 @@ export default (theme) => ({
     background: 'rgba(17, 17, 17, 0.7)',
   },
 
+  modalHeader: {
+    backgroundColor: theme.palette.common.black,
+  },
+
   toolbar: {
     flexGrow: 1,
     alignItems: 'center',
@@ -39,8 +43,6 @@ export default (theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'flex-start',
-
   },
 
   logo: {

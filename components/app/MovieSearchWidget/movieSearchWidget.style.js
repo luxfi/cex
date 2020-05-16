@@ -30,17 +30,7 @@ export default (theme) => ({
     },
     borderRadius: '8px', 
     transition: theme.transitions.create("width"),
-    /*
-    [theme.breakpoints.up("sm")]: {
-      position: "relative",
-      width: 160,
-      "&:focus-within": {
-        backgroundColor: fade(theme.palette.common.white, 0.15),
-        width: 175
-      },
-      display: "inline-block",
-    },
-    */
+    marginLeft: 16,
     [theme.breakpoints.up("md")]: {
       height: 40,
       width: 200,
@@ -53,7 +43,6 @@ export default (theme) => ({
         width: 220,
       },
     },
-    //display: "none"
   },
 
   searchIcon: {
