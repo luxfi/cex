@@ -9,8 +9,7 @@ import {
   makeStyles,
 } from "@material-ui/core"
 
-import styles from '../account.style'
-
+import styles from '../account.style.js'
 const useStyles = makeStyles(styles)
 
 const steps = ["Linked Accounts", "Deposit Amount"]

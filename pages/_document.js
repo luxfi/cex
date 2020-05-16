@@ -8,6 +8,9 @@ import Document, {
 import * as Sentry from '@sentry/browser'
 Sentry.init({dsn: "https://6199b466b9424e1d90ce51afb81d9158@sentry.io/5178018"})
 
+import { GA_TRACKING_ID } from '../util/GA'
+
+
 export default class MyDocument extends Document {
   render() {
     return (
@@ -22,6 +25,18 @@ export default class MyDocument extends Document {
             href='https://fonts.googleapis.com/icon?family=Material+Icons'
           />
           <link rel='icon' type='image/png' href='/static/favicon.ico' />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_TRACKING_ID}', {
+              page_path: window.location.pathname,
+            });
+          `,
+            }}
+          />
         </Head>
         <body>
           <Main />

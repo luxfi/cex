@@ -1,7 +1,7 @@
 import React from "react"
 import { Paper, makeStyles, Card, CardContent } from "@material-ui/core"
 
-import DepositElement from './DepositElement'
+import DepositElements from './DepositElements'
 
 import styles from '../account.style'
 
@@ -14,7 +14,7 @@ export default (props) => {
     <Paper className={classes.root}>
       <Card elevation={2} className={classes.cardContainer}>
         <CardContent>
-          <DepositElement />
+          <DepositElements />
         </CardContent>
       </Card>
     </Paper>

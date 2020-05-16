@@ -1,30 +1,34 @@
 import React from "react"
-import { Paper, makeStyles, Card, CardContent } from "@material-ui/core"
 
-import ManagePhoneElement from './ManagePhoneElement'
-import TwoStepVerificationElement from './TwoStepVerificationElement'
+import { 
+  Card, 
+  CardContent,
+  makeStyles,
+  Paper
+} from "@material-ui/core"
 
-import styles from '../account.style'
+import ManagePhoneElements from './ManagePhoneElements'
+import TwoStepVerificationElements from './TwoStepVerificationElements'
+
+import styles from '../account.style.js'
 
 const useStyles = makeStyles(styles)
 
-const SecurityView = (props) => {
+export default (props) => {
   const classes = useStyles()
 
   return (
     <Paper className={classes.root}>
       <Card elevation={2} className={classes.cardContainer}>
         <CardContent>
-          <ManagePhoneElement phoneNumber='2154551234' classes={classes} />
+          <ManagePhoneElements phoneNumber='2154551234' classes={classes} />
         </CardContent>
       </Card>
       <Card elevation={2} className={classes.cardContainer}>
         <CardContent>
-          <TwoStepVerificationElement classes={classes} />
+          <TwoStepVerificationElements classes={classes} />
         </CardContent>
       </Card>
     </Paper>
   )
 }
-
-export default SecurityView

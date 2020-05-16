@@ -1,3 +1,1 @@
-import WatchView from './WatchView';
-
-export default WatchView;
+export { default as WatchView } from './WatchView'

@@ -1,24 +1,28 @@
-import React from "react"
-import { Paper, makeStyles, Card, CardContent } from "@material-ui/core"
+import React from 'react'
 
-import OrdersElement from './OrdersElement'
+import { 
+  Card, 
+  CardContent, 
+  Paper, 
+  makeStyles 
+} from '@material-ui/core'
 
-import styles from '../account.style'
+import OrdersElements from './OrdersElements'
+
+import styles from '../account.style.js'
 
 const useStyles = makeStyles(styles)
 
-const OrdersView = (props) => {
+export default (props) => {
   const classes = useStyles()
 
   return (
     <Paper className={classes.root}>
       <Card elevation={2} className={classes.cardContainer}>
         <CardContent>
-          <OrdersElement />
+          <OrdersElements />
         </CardContent>
       </Card>
     </Paper>
   )
 }
-
-export default OrdersView

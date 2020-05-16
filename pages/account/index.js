@@ -25,7 +25,6 @@ import {
 } from '../../components/account'
 
 import { 
-  googlePageView, 
   toDashString, 
   loginRequired,
   isNullQuery 
@@ -82,7 +81,6 @@ export default class extends React.Component {
   }
 
   componentDidMount() {
-    googlePageView()
     const { query } = this.props.router
     if (!isNullQuery(query) && 'tab' in query) {
       this.setState({tabIndex: parseInt(query.tab)})
