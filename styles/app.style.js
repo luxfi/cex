@@ -44,7 +44,7 @@ export default (theme) => ({
   },
   
   footer: {
-    marginTop: theme.spacing(3),
+    marginTop: `${theme.spacing(3)}px !important`
   }, 
 
   fullScreenContainer: {

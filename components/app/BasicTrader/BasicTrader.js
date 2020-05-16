@@ -192,8 +192,6 @@ export default (props) => {
       </Grid>
       <Grid justify="center" container spacing={4} className={classes.card}>
         <Grid item xs={12}  md={8} lg={9} spacing={4}>
-          <AboutSection />
-          <Divider />
           <FinancialsSection />
           <Divider />
           <AnalystSection />
