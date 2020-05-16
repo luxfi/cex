@@ -6,9 +6,12 @@ import classNames from 'classnames'
 import uuid from 'uuid';
 
 import {
-  Box, Divider, Grid, Switch, Typography,
+  Box, 
+  Grid, 
+  Switch, 
+  Typography,
+  withStyles,
 } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
 
 import {
   formatDuration,
@@ -19,16 +22,15 @@ import {
 
 import styles from './style.js'
 
-const ShowingNext = inject('store')(observer((props) => {
-  const {
-    classes,
-    onClick,
-    store: { trailerStore },
-    relatedMovies,
-    autoPlaySet,
-    relatedMovieTrailers,
-    nextMovieIndex,
-  } = props
+export default withRouter(withStyles(styles)(inject('store')(observer(({
+  classes,
+  onClick,
+  store: { trailerStore },
+  relatedMovies,
+  autoPlaySet,
+  relatedMovieTrailers,
+  nextMovieIndex,
+}) => {
 
   const [state, setState] = useState({
     autoPlay: autoPlaySet,
@@ -122,6 +124,4 @@ const ShowingNext = inject('store')(observer((props) => {
       </Box>
     </Box>
   )
-}))
-
-export default withRouter(withStyles(styles)(ShowingNext))
+}))))

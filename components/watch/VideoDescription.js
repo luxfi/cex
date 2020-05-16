@@ -2,7 +2,7 @@ import React, { useState } from "react"
 
 import { Button, Typography, Box } from "@material-ui/core"
 
-const VideoDescription = ({ description }) => {
+export default ({ description }) => {
   const [collapse, setCollapseState] = useState(true)
 
   const handleClick = () => {
@@ -32,7 +32,5 @@ const VideoDescription = ({ description }) => {
         </Typography>
       </Button>
     </Box>
-  );
+  )
 }
-
-export default VideoDescription

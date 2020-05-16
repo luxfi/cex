@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Box } from '@material-ui/core'
 
-class YoutubePlayer extends Component {
+export default class extends Component {
   player = null
   state = {}
 
@@ -114,5 +114,3 @@ class YoutubePlayer extends Component {
     )
   }
 }
-
-export default YoutubePlayer

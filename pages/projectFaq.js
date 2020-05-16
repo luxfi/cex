@@ -4,11 +4,8 @@ import { withStyles } from '@material-ui/core/styles'
 
 import { ContentfulItems } from "../components/app"
 
-import { container } from "../styles/esxStyles.js"
-
 const styles = theme => ({
   container: {
-    ...container,
     display: "flex",
     flexDirection: "column",
     justifyContent: "center"

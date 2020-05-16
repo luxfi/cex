@@ -1,3 +1,10 @@
+import React, { useEffect, useRef, useState } from 'react'
+import { toJS } from 'mobx'
+import Router from 'next/router'
+
+import { Element } from 'react-scroll'
+
+import Hanzo from 'hanzo.js'
 import { isRequired } from '@hanzo/middleware'
 import { MUIText } from '@hanzo/react'
 
@@ -7,34 +14,18 @@ import {
   Grid,
   InputAdornment,
   MenuItem,
+  makeStyles,
   Paper,
   Select,
   Tab,
   Tabs,
   Typography,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
 } from '@material-ui/core'
 
-import {
-  green,
-  red,
-} from '@material-ui/core/colors'
+import { red, green } from '@material-ui/core/colors'
 
-import { makeStyles } from '@material-ui/core/styles'
-import Hanzo from 'hanzo.js'
-
-import midstream from 'midstream'
-import { toJS } from 'mobx'
-import Router from 'next/router'
 import OrderBookClass from '../../../stores/OrderBook'
-import { useEffect, useRef, useState } from 'react'
-import NumberFormat from 'react-number-format'
-import { Element } from 'react-scroll'
 import { HANZO_KEY, HANZO_ENDPOINT } from '../../../settings'
-
 import { formatCurrency } from '../../../util'
 
 import {
@@ -43,269 +34,26 @@ import {
   TradeHistoryBook,
 } from '../../trade'
 
-import { Loading } from '../../app'
+import {
+  headerHeight,
+  topBarHeight,
+  tradingAreaWidth,
+  tradingAreaHeight
+} from './const.js'
 
+import { Loading } from '../../app'
 import { ProChart } from '..'
 
-const DollarFormatCustom = (props) => {
-  const { inputRef, onBlur, ...other } = props
+import {
+  DollarFormatCustom,
+  NumberFormatCustom,
+  greaterThan0,
+  useMidstream,
+  longDash
+} from './util'
 
-  return (
-    <NumberFormat
-      {...other}
-      getInputRef={inputRef}
-      onValueChange={(values) => {
-        const n = parseFloat(values.value)
-        onBlur({
-          target: {
-            value: Number.isNaN(n) ? 0 : n,
-          },
-        })
-      }}
-      isNumericString
-      prefix='$'
-    />
-  )
-}
-
-const NumberFormatCustom = (props) => {
-  const { inputRef, onBlur, ...other } = props
-
-  return (
-    <NumberFormat
-      {...other}
-      getInputRef={inputRef}
-      onValueChange={(values) => {
-        const n = parseFloat(values.value)
-        onBlur({
-          target: {
-            value: Number.isNaN(n) ? 0 : n,
-          },
-        })
-      }}
-      isNumericString
-    />
-  )
-}
-
-// long dash symbols
-const longDash = '—'
-
-// manually measured
-const headerHeight = 64
-const topBarHeight = 53
-const tradingAreaWidth = 240
-const tradingAreaHeight = 360
-
-const useStyles = makeStyles((theme) => ({
-  coloredLink: {
-    color: theme.palette.primary.main,
-    textDecoration: 'none',
-    '&:hover': {
-      textDecoration: 'underline',
-    },
-  },
-  proTrader: {
-    height: `calc(100vh - ${headerHeight}px)`,
-
-    padding: `0px ${theme.spacing(3)}`,
-  
-    [theme.breakpoints.up('lg')]: {
-      padding: `0px ${theme.spacing(8)}`,
-    },
-
-
-
-    marginTop: theme.spacing(8),
-    // fonts
-    '& *': {
-      fontSize: '.7rem',
-    },
-    // labels
-    '& .MuiInputLabel-root': {
-      fontSize: 'calc(.7rem / .75)',
-      fontWeight: 600,
-      textTransform: 'uppercase',
-      color: theme.palette.common.white,
-    },
-    // inputs
-    '& .MuiInput-root': {
-      padding: '3px 12px',
-    },
-    '& .MuiSelect-icon': {
-      top: 'calc(50% - 6px)',
-      right: 8,
-    },
-    '& > div': {
-      background: 'linear-gradient(to bottom, rgba(26,26,26,1) 0%,rgba(9,9,9,1) 100%)',
-
-    }
-  },
-  tickerLabel: {
-    color: 'rgba(255,255,255,.5)',
-  },
-  tickerNumber: {
-    textTransform: 'uppercase',
-    fontWeight: 600,
-  },
-  proTraderLabel: {
-    textTransform: 'uppercase',
-    fontWeight: 600,
-  },
-  orderBookArea: {
-    width: 280,
-    height: '100%',
-    overflow: 'auto',
-    [theme.breakpoints.down('sm')]: {
-      width: '100%',
-      height: 'auto',
-    },
-  },
-  orderBookPaper: {
-    border: '1px solid',
-    borderColor: theme.palette.background.paper,
-    backgroundColor: theme.palette.background.default,
-    height: '100%',
-    overflow: 'hidden',
-    '& span': {
-      fontWeight: 600,
-    },
-  },
-  tradeHistoryArea: {
-    width: 480,
-    height: '100%',
-    overflow: 'auto',
-    [theme.breakpoints.down('sm')]: {
-      width: '100% !important',
-      height: 'auto',
-    },
-  },
-  tradeHistoryBookPaper: {
-    // extend: 'orderBookPaper',
-    borderLeft: 0,
-    border: '1px solid',
-    height: '100%',
-    overflow: 'hidden',
-    borderColor: theme.palette.background.paper,
-    backgroundColor: theme.palette.background.default,
-    '& span': {
-      fontWeight: 600,
-    },
-  },
-  exchangeHistoryArea: {
-    height: '100%',
-    overflow: 'auto',
-    [theme.breakpoints.down('sm')]: {
-      height: '50vh',
-      overflow: 'unset',
-    },
-  },
-  exchangeHistoryBookPaper: {
-    // extend: 'orderBookPaper',
-    borderLeft: 0,
-    border: '1px solid',
-    height: '100%',
-    overflow: 'hidden',
-    borderColor: theme.palette.background.paper,
-    backgroundColor: theme.palette.background.default,
-    '& span': {
-      fontWeight: 600,
-    },
-  },
-  proChart: {
-    '& tspan': {
-      fill: '#FFFFFF',
-    },
-  },
-  tradePaper: {
-    height: '100%',
-  },
-  tabsPaper: {
-    height: '100%',
-  },
-  tabs: {
-    height: '100%',
-    '& > *': {
-      height: '100%',
-      '& > :first-child': {
-        height: '100%',
-      },
-      '& > :last-child': {
-        top: 0,
-      },
-    },
-  },
-  tab: {
-    height: '100%',
-    fontSize: '1.25rem',
-    border: '1px solid',
-    borderColor: theme.palette.background.paper,
-    backgroundColor: theme.palette.background.default,
-    width: '50%',
-    minWidth: 0,
-    textTransform: 'uppercase',
-    fontWeight: 600,
-    '&.Mui-selected': {
-      backgroundColor: theme.palette.background.paper,
-    },
-  },
-  bordered: {
-    border: '1px solid',
-    borderColor: theme.palette.background.paper,
-    borderLeft: '0',
-  },
-  buyButton: {
-    backgroundColor: green[500],
-    color: theme.palette.common.white,
-  },
-  sellButton: {
-    backgroundColor: red[500],
-    color: theme.palette.common.white,
-  },
-  noMaxWidth: {
-    [theme.breakpoints.down('sm')]: {
-      maxWidth: '100% !important',
-    },
-  },
-  autoHeight: {
-    [theme.breakpoints.down('sm')]: {
-      height: '100% !important',
-    },
-  },
-}))
-
-const greaterThan0 = (v) => {
-  if (v > 0) {
-    return v
-  }
-
-  throw new Error('Enter a value greater than 0.')
-}
-
-// Simple hook for Midstream
-const useMidstream = (config) => {
-  const dst = {}
-  const err = {}
-
-  // standard force rerender hack
-  const [tick, setTick] = useState(0)
-
-  const [ms] = useState(() => (
-    midstream(config, {
-      dst: (name, value) => {
-        dst[name] = value
-        setTick(tick + 1)
-      },
-      // err behaves just like dst
-      err: (name, value) => {
-        err[name] = value
-        setTick(tick + 1)
-      },
-    })
-  ))
-
-  return ms
-}
+import styles from './proTrader.style.js'
+const useStyles = makeStyles(styles)
 
 export default (props) => {
   const {
