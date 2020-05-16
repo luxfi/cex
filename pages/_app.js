@@ -38,9 +38,9 @@ import initializeStores from '../stores/stores'
 
 
 import styles from '../styles/app.style.js'
-import theme from '../styles/esxTheme'
+import theme from '../styles/muiTheme'
 
-import '../styles/esxThemeTouchups.scss'
+import '../styles/globalTouchups.scss'
 import '../styles/footerFix.scss'
 
 import '../components/app/MovieSlider/modified-slick.css'

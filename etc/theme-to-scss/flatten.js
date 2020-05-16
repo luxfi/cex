@@ -1,0 +1,105 @@
+const SEP = '-'
+let result = {}
+
+const traverse = (key, val) => {
+  if (isException(key, val)) {
+    traverseException(key, val)
+  }
+  else if (isArray(val)) {
+    traverseArray(key, val)
+  } 
+  else if (isObject(val)) {
+    traverseObject(key, val)
+  } 
+  else if (typeof val !== 'function') {
+    if (key.endsWith('fontFamily')) {
+      val = processFontFamilyString(val)
+    }
+    else if (key.includes('shadows')) {
+      val = encloseInQuotes(val)
+    }
+    result[key] = val
+  }
+}
+
+const isObject = (val) => ((typeof val === 'object') && (val !== null))
+
+const traverseException = (rootKey, val) => {
+  if (rootKey === 'mixins-toolbar') {
+    handleToolbar(rootKey, val)
+  }
+}
+
+const handleToolbar = (rootKey, val) => {
+//  console.log("TOOLBAR SPECIAL CASE: " + rootKey + "... ")
+  if (isObject(val)) {
+    const pre = (rootKey.length) ? rootKey + SEP : ''
+    for (let key in val) {
+      if (val.hasOwnProperty(key)) {
+        if (key === 'minHeight') {
+          result[pre + "xsUp"] = val[key]
+        }
+        else if (key.includes('landscape')) {
+          result[pre + "landscape"] = val[key].minHeight
+        }
+        else if (key.includes('min-width:600px')) {
+          result[pre + "mdUp"] = val[key].minHeight
+        }
+      }
+    }
+  }
+}
+
+const processFontFamilyString = (raw) => {
+  let arr = raw.split(',')
+  arr = arr.map((raw) => {
+    const noQuotes = raw.trim().replace(/['"]+/g, '')
+    return (noQuotes.includes(' ') ? `'${noQuotes}'` : noQuotes)
+  })
+  return encloseInQuotes(arr.join(', '))
+}
+
+const encloseInQuotes = (raw) => (`"${raw}"`)
+
+const traverseArray = (key, arr) => {
+  arr.forEach( (x, i) => {
+    traverse(key + `${SEP}${i}`, x)
+  })
+}
+
+const traverseObject = (rootKey, obj) => {
+  const pre = (rootKey.length) ? rootKey + SEP : ''
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      traverse(pre + key, obj[key])
+    }
+  }
+}
+
+
+const isArray = (o) => (Object.prototype.toString.call(o) === '[object Array]')
+
+const isException = (key, val) => {
+  if (!key || key==='') return false
+  return EXCEPT.reduce((acc, current) => (acc || key === (current)), false)
+  
+}
+
+const EXCEPT = [
+  'breakpoints-keys',
+  'breakpoints-values',
+  'mixins-toolbar',
+  //'shadows',
+  'ext',
+  'props',
+  'overrides'
+]
+
+const flatten = (file) => {
+  const theme = require(file)
+  traverse('', theme)
+  return result
+}
+
+
+module.exports = flatten
