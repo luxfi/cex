@@ -24,49 +24,12 @@ import {
   SecurityView,
 } from '../../components/account'
 
-import { 
-  googlePageView, 
-  toDashString, 
-  loginRequired,
-  isNullQuery,
-  slugFromPath,
-} from '../../util'
+import { loginRequired,  slugFromPath } from '../../util'
+
+import styles from './account.style.js'
 
 const BASE_ROUTE = '/account'
-
-const styles = (theme) => ({
-  header: {
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-    borderLeft: `1px solid ${theme.palette.secondary.main}`,
-      // To match left edge of selected tab      
-    borderTopLeftRadius: 0,
-    borderBottomLeftRadius: 0,
-  },
-  tabs: {
-
-  },
-  tabsIndicator: {
-    display: 'none'
-  },
-  tab: {
-    '&:hover': {
-      textDecoration: 'underline'
-    }
-  },
-  tabText: {
-    textAlign: 'left',
-  },
-  tabSelected: {
-    backgroundColor: theme.palette.background.paper,
-    borderLeft: `1px solid ${theme.palette.secondary.main}`,
-
-    '&:hover': {
-      textDecoration: 'none',
-      cursor: 'default'
-    }
-  }
-}) 
+const DEFAULT_TAB = 'profile'
 
 @loginRequired
 @withRouter
@@ -78,53 +41,47 @@ export default class extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      tabIndex: (props.tabIndex || 0)
+      tab: (props.tab || DEFAULT_TAB)
     }
   }
 
   componentDidMount() {
-    googlePageView()
     const slug = slugFromPath()
 
-    const isValidComponent = (child) => child.props.slugName === slug;
-    const tabIndex = tabbedViews.findIndex(isValidComponent)
-  
-    if (slug && tabIndex !== -1) {
-      this.setState({tabIndex})
-    } else {
-      // redirect to activity tab if slug is invalid
-      this.setState({tabIndex: 0})
+    if (slug) {
+      this.setState({tab: slug})
+    } 
+    else {
+      this.setState({tab: DEFAULT_TAB})
       const href = `${BASE_ROUTE}/[slug]`
-      const asRref = `${BASE_ROUTE}/activity`
+      const asRref = `${BASE_ROUTE}/${DEFAULT_TAB}`
       this.props.router.push(href, asRref, {shallow: true})
     }
-}
+  }
 
-
-  onTabSelected = (i) => {
-    this.setState({tabIndex: i})
-
-    const slug = tabbedViews[i].props.slugName
+  onTabSelected = (tab) => {
+    this.setState({tab})
 
     const href = `${BASE_ROUTE}/[slug]`
-    const asRref = `${BASE_ROUTE}/${slug}`
+    const asRref = `${BASE_ROUTE}/${tab}`
     this.props.router.push(href, asRref, {shallow: true})
   } 
 
   Tabs = () => (
     <Tabs 
-      value={this.state.tabIndex} 
-      onChange={(ignore, i) => {this.onTabSelected(i)}} 
+      value={this.state.tab} 
+      onChange={(ignore, tab) => {this.onTabSelected(tab)}} 
       orientation='vertical'
       classes={{root: this.props.classes.tabs, indicator: this.props.classes.tabsIndicator}} 
     >
-    {tabbedViews.map((child, i) => (
+    {TAB_VIEWS.map((child, i) => (
       <Tab
         label={child.props.tabTitle}
+        value={child.props.tabValue}
+        key={`${child.props.tabValue}-tab-key-${i}`}
+        classes={{root: this.props.classes.tab, wrapper: this.props.classes.tabText, selected: this.props.classes.tabSelected}}
         disableFocusRipple
         disableRipple
-        key={`${toDashString(child.props.tabTitle)}-tab-key-${i}`}
-        classes={{root: this.props.classes.tab, wrapper: this.props.classes.tabText, selected: this.props.classes.tabSelected}}
       />
     ))}
     </Tabs>
@@ -132,29 +89,27 @@ export default class extends React.Component {
 
   Header = () => (
     <Paper classes={{root: this.props.classes.header}}>
-      <Typography variant='h4'>{`${this.props.store.userStore.getFullName}: ${tabbedViews[this.state.tabIndex].props.tabTitle}`}</Typography>
+      <Typography variant='h4'>{`${this.props.store.userStore.getFullName}: ${TAB_VIEWS.find((el) => (el.props.tabValue === this.state.tab)).props.tabTitle}`}</Typography>
     </Paper>
   ) 
   
   render() {
     return (
       <SidebarLayout top={this.Header()} left={this.Tabs()} minHeight='60vh'>
-        {tabbedViews[this.state.tabIndex]}
+        {TAB_VIEWS.find((el) => (el.props.tabValue === this.state.tab))}
       </SidebarLayout>
     )
   }
 }
 
-// {tabbedViews.map((child, i) => ((i === this.state.tabIndex) ? child : null))}
-
-const tabbedViews = [
-  <AccountActivityView tabTitle='Account Activity' slugName='activity' />,
-  <ProfileView tabTitle='Profile' slugName='profile'/>,
-  <FundsView tabTitle='Funds' slugName='funds'/>, 
-  <APIAccessView tabTitle='API Access' slugName='access'/>,
-  <DocumentsView tabTitle='Documents' slugName='documents'/>,
-  <DepositView tabTitle='Deposit' slugName='deposit'/>,
-  <IdentityView tabTitle='Identity' slugName='identity'/>,
-  <OrdersView tabTitle='Orders' slugName='orders'/>,
-  <SecurityView tabTitle='Security' slugName='security'/>,
+const TAB_VIEWS = [
+  <ProfileView tabTitle='Profile' tabValue='profile'/>,
+  <FundsView tabTitle='Funds' tabValue='funds'/>, 
+  <DepositView tabTitle='Deposit' tabValue='deposit'/>,
+  <OrdersView tabTitle='Orders' tabValue='orders'/>,
+  <APIAccessView tabTitle='API Access' tabValue='access'/>,
+  <IdentityView tabTitle='Identity' tabValue='identity'/>,
+  <AccountActivityView tabTitle='Activity' tabValue='activity' />,
+  <DocumentsView tabTitle='Documents' tabValue='documents'/>,
+  <SecurityView tabTitle='Security' tabValue='security'/>,
 ]
