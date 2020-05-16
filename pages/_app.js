@@ -61,9 +61,6 @@ export default class extends NextApp {
   }
 
   componentDidMount() {
-    ReactGA.initialize('UA-151184093-1')
-
-    const { query } = this.props.router
     const params = new URLSearchParams(location.search)	
     const modalQuery = params.get('modal')
     
