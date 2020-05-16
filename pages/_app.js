@@ -1,13 +1,11 @@
 import React from 'react'
-import ReactGA from 'react-ga'
 import { Provider, observer } from 'mobx-react'
 
 import NextApp from 'next/app'
-import { withRouter } from 'next/router'
+import Router, { withRouter } from 'next/router'
 import NextHead from 'next/head'
 
 import {
-  Box,
   Container,
   CssBaseline,
   MuiThemeProvider,
@@ -38,13 +36,17 @@ import initializeStores from '../stores/stores'
 
 
 import styles from '../styles/app.style.js'
-import theme from '../styles/esxTheme'
-import '../styles/esxThemeTouchups.scss'
+import theme from '../styles/muiTheme'
+
+import '../styles/globalTouchups.scss'
+import '../styles/footerFix.scss'
 
 import '../components/app/MovieSlider/modified-slick.css'
-
+import * as GA from '../util/GA' 
 
 config.autoAddCss = false
+
+Router.events.on('routeChangeComplete', url => GA.logPageView(url))
 
 @withRouter
 @withStyles(styles)
@@ -53,10 +55,6 @@ export default class extends NextApp {
   constructor(props) {
     super(props)
     this.stores = initializeStores()
-  }
-
-  componentDidMount() {
-    ReactGA.initialize('UA-151184093-1')
   }
 
   render() {
@@ -76,7 +74,7 @@ export default class extends NextApp {
       </NextHead>
       <Provider store={this.stores}>
         <MuiThemeProvider theme={theme}>
-          <div className={classes.root}>
+          <div className={classNames(classes.root, mainRouteClass(router.route))}>
             <CssBaseline />
             <NoSsr>
               <Header
@@ -126,6 +124,13 @@ export default class extends NextApp {
   }
 }
 
+  // tag main with a classname from the first part of the route
+const mainRouteClass = (path) => {
+  const pathArray = path.split('/') 
+  return (pathArray.length > 2) ? `on-route-${pathArray[1]}` : 'root-route'
+} 
+  
+
 const hideFooter = (page) => {
   const noFooterPages = ['/pro']
   let hide = false
@@ -140,7 +145,7 @@ const isFullScreen = (route) => {
   return (
     route === '/' 
     || 
-    route === '/pro'
+    route.startsWith('/pro/')
     ||
     route.startsWith('/browse')
   )
@@ -149,5 +154,3 @@ const isFullScreen = (route) => {
 const showFullSearchWidget = (route) => {
   return route.startsWith('/browse')
 }
-
-//export default withRouter(withStyles(styles)(ESXApp))

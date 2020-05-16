@@ -38,10 +38,6 @@ function isStringUSCurrency(stringInput) {
   return re.test(stringInput)
 }
 
-function googlePageView() {
-  ReactGA.pageview(window.location.pathname + window.location.search)
-}
-
 function formatCurrency(num, currency = 'USD', decimal = true) {
   let formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(num)
 
@@ -196,7 +192,6 @@ const isNullQuery = (query) => (
 
 export {
   formatCurrency,
-  googlePageView,
   isEmail,
   isNullQuery,
   isNumber,

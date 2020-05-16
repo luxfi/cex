@@ -28,7 +28,6 @@ import Hanzo from 'hanzo.js'
 
 import midstream from 'midstream'
 import { toJS } from 'mobx'
-import Link from 'next/link'
 import Router from 'next/router'
 import OrderBookClass from '../../../stores/OrderBook'
 import { useEffect, useRef, useState } from 'react'
@@ -43,6 +42,7 @@ import {
   OrderBook,
   TradeHistoryBook,
 } from '../../trade'
+
 import { Loading } from '../../app'
 
 import { ProChart } from '..'
@@ -107,7 +107,15 @@ const useStyles = makeStyles((theme) => ({
   },
   proTrader: {
     height: `calc(100vh - ${headerHeight}px)`,
-    background: 'linear-gradient(to bottom, rgba(26,26,26,1) 0%,rgba(9,9,9,1) 100%)',
+
+    padding: `0px ${theme.spacing(3)}`,
+  
+    [theme.breakpoints.up('lg')]: {
+      padding: `0px ${theme.spacing(8)}`,
+    },
+
+
+
     marginTop: theme.spacing(8),
     // fonts
     '& *': {
@@ -128,6 +136,10 @@ const useStyles = makeStyles((theme) => ({
       top: 'calc(50% - 6px)',
       right: 8,
     },
+    '& > div': {
+      background: 'linear-gradient(to bottom, rgba(26,26,26,1) 0%,rgba(9,9,9,1) 100%)',
+
+    }
   },
   tickerLabel: {
     color: 'rgba(255,255,255,.5)',

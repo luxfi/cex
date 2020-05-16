@@ -1,28 +1,17 @@
-import { inject, observer } from 'mobx-react'
-import Router, { withRouter } from 'next/router'
 import React from 'react'
 
 import { ProTradeView } from '../../components/trade'
-import { googlePageView, slugFromPath } from '../../util'
 
-@inject('store')
-@observer
-class ProTrade extends React.Component {
-  componentDidMount() {
-    const { store, router } = this.props
-    const slug = router.query.slug || slugFromPath()
-    const { uiStore } = store
+export default (props) => {
 
-    if (false && uiStore.trading === 'basic') {
-      Router.replace(`/trade/${slug}`)
-    } else {
-      googlePageView()
-    }
-  }
+  //const slug = router.query.slug || slugFromPath()
+  //const { uiStore } = store
 
-  render() {
-    return <ProTradeView socket={this.socket} />
-  }
+    // TODO
+    /*
+  if (false && uiStore.trading === 'basic') {
+    Router.replace(`/trade/${slug}`)
+  } 
+    */
+  return ( <ProTradeView/> )
 }
-
-export default withRouter(ProTrade)
