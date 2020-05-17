@@ -99,40 +99,40 @@ export default inject('store')(observer(function CustomizedInputBase({
 
   return (
     <>
-    <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
-      <div className={classes.container}>
-        <Paper className={classes.root}>
-          <Typography
-            variant="h6"
-            color="textSecondary"
-            className={classes.currency}
-            aria-label="$"
-          >
-            <Box fontWeight="fontWeightBold">$</Box>
-          </Typography>
-          <Typography variant="h5">
-            <Box fontWeight="fontWeightBold">
-              <InputBase
-                placeholder={minimumInvestment.toString()}
-                classes={{
-                  root: classes.inputText,
-                  input: classes.inputText,
-                }}
-                onChange={evt => handleInputChange(evt)}
-                value={investmentAmount}
-              />
-            </Box>
-          </Typography>
-        </Paper>
-        <Button
-          color="secondary"
-          variant="contained"
-          className={classes.button}
-          onClick={() => handleSubmit()}
+    <div className={classes.container}>
+      <Paper className={classes.root}>
+        <Typography
+          variant="h6"
+          color="textSecondary"
+          className={classes.currency}
+          aria-label="$"
         >
-          <Typography variant="h6">Invest</Typography>
-        </Button>
-      </div>
+          <Box fontWeight="fontWeightBold">$</Box>
+        </Typography>
+        <Typography variant="h5">
+          <Box fontWeight="fontWeightBold">
+            <InputBase
+              placeholder={minimumInvestment.toString()}
+              classes={{
+                root: classes.inputText,
+                input: classes.inputText,
+              }}
+              onChange={evt => handleInputChange(evt)}
+              value={investmentAmount}
+            />
+          </Box>
+        </Typography>
+      </Paper>
+      <Button
+        color="secondary"
+        variant="contained"
+        className={classes.button}
+        onClick={() => handleSubmit()}
+      >
+        <Typography variant="h6">Invest</Typography>
+      </Button>
+    </div>
+    <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
     </>
   )
 }))

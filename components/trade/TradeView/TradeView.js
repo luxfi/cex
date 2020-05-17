@@ -4,17 +4,12 @@ import { inject, observer } from 'mobx-react'
 
 import { withRouter } from 'next/router'
 
-import { withStyles } from '@material-ui/core'
-
 import { BasicTrader } from '../../app'
 import { slugFromPath } from '../../../util'
 
 import { formatTakeResults } from '../../../util/formatOrderBookDataForChart'
 
-import styles from './trade.style.js'
-
 @withRouter
-//@withStyles(styles)  Not used as far as I can tell :aa
 @inject('store')
 @observer
 export default class extends React.Component {

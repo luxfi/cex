@@ -5,7 +5,6 @@ import s from './Item.module.css'
 import { Card, CardContent } from "@material-ui/core"
 
 export default ({ studio, onClick }) => {
-  const childRef = useRef()
 
   const split = studio.img.split('/')
   const lastElement = split[split.length - 1]
@@ -41,9 +40,7 @@ export default ({ studio, onClick }) => {
                   backgroundSize: 'cover',
                   backgroundPosition: 'center'
                 }}
-              >
-                {/* <TrailerSliderModal movie={movie} ref={childRef} /> */}
-              </CardContent>
+              />
             </Card>
           </div>
         );

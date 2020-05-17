@@ -94,7 +94,7 @@ export default class extends React.Component {
       router.query || "edward-furlong-edward-furlong-terminator-dark-fate" // remove this when safe
     const article = store.articleStore.getArticle(slug)
 
-    console.log('hit article page with', router)
+    //console.log('hit article page with', router)
 
     return (
       <>

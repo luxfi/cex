@@ -1,11 +1,18 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
-import { Fab } from '@material-ui/core'
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import { useState, useRef, useEffect } from 'react'
+import { Fab, makeStyles } from '@material-ui/core'
+import {
+  ChevronLeft as ChevronLeftIcon,
+  ChevronRight as ChevronRightIcon
+} from '@material-ui/icons'
+
+import { ResizeObserver } from '@juggle/resize-observer';
+
 import { CarouselItem } from '../'
 import { useEventListener } from '../../../util'
-import useStyles from './Carousel.style'
-import { ResizeObserver } from '@juggle/resize-observer';
+
+
+import styles from './Carousel.style.js'
+const myStyles = makeStyles(styles)
 
 export const Carousel = ({ animationSpeed = 500, ...props }) => {
   const carouselRef = useRef()
@@ -135,7 +142,7 @@ export const Carousel = ({ animationSpeed = 500, ...props }) => {
   const leftButtonStyle = { display: noSlidesLeft ? 'none' : '' }
   const rightButtonStyle = { display: noSlidesRight ? 'none' : '' }
 
-  const classes = useStyles()
+  const classes = myStyles()
   return (
     <div className={classes.container} ref={carouselRef}>
       <div

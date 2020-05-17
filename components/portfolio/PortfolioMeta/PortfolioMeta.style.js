@@ -1,10 +1,7 @@
-import { cardTitle, title } from "../../../styles/esxStyles.js"
 
 const grayText = 'rgb(102, 112, 121)' // 'rgba(0, 0, 0, .8)'
 
 export default (theme) => ({
-  cardTitle,
-  title,
   card: {
     padding: '.5em 1em'
   },

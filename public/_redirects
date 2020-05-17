@@ -1,4 +1,5 @@
 # dynamic routes
+/account/*              /account/[slug].html         404
 /article/*              /article/[id].html           404
 /checkout/*             /checkout/[id].html          404
 /confirmPayment/*       /confirmPayment/[id].html    404

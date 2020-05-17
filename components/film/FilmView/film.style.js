@@ -1,27 +1,4 @@
-import {
-  container,
-  flexCenteredColumn,
-  flexCenteredRow,
-  title,
-} from '../../../styles/esxStyles.js'
-
 export default (theme) => ({
-  flexCenteredRow: {
-    ...flexCenteredRow,
-  },
-
-  flexCenteredColumn: {
-    ...flexCenteredColumn,
-  },
-
-  container: {
-    ...container,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    background: theme.palette.background.default,
-    color: theme.palette.text.primary,
-  },
 
   breadcrumbRow: {
     marginBottom: '30px',
@@ -66,17 +43,19 @@ export default (theme) => ({
   titleAndDescription: {},
 
   title: {
-    ...title,
     display: 'inline-block',
+    margin: "1.75rem 0 0.875rem",
     position: 'relative',
     minHeight: '32px',
     textDecoration: 'none',
     fontSize: '3rem',
+    fontWeight: "700",
     fontFamily: 'sans-serif',
     textTransform: 'uppercase',
     marginTop: '0px',
     color: 'inherit',
   },
+
   description: {
     fontSize: '1.313rem',
     maxWidth: '70%',
@@ -162,7 +141,10 @@ export default (theme) => ({
     borderBottom: '1px solid #555',
   },
   seeMoreButton: {
-    ...flexCenteredColumn,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+
     paddingBottom: '2px',
   },
   seeMoreCopy: {

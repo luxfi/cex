@@ -1,26 +1,18 @@
-// @material-ui/core components
-import { withStyles } from '@material-ui/core/styles'
-
+import React from 'react'
 import { toJS } from 'mobx'
 import { inject, observer } from 'mobx-react'
 
 import { withRouter } from 'next/router'
 
-import React from 'react'
-
-// orderbook
 import { formatTakeResults } from '../../../util/formatOrderBookDataForChart'
 import { slugFromPath } from '../../../util'
 
-// section
-// core components
 import { ProTrader } from '../../app'
 
-import styles from './proTrade.style'
-
+@withRouter
 @inject('store')
 @observer
-class Index extends React.Component {
+export default class extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -78,8 +70,6 @@ class Index extends React.Component {
       userStore,
       userPortfolio,
     } = store
-    const { loggedIn } = userStore
-    const redirectLogin = () => (!loggedIn ? router.push('/login') : undefined)
     const movie = movieStore.getMovieBySlug(slug)
     // orderBook stuff
     const takeResultsArray = orderBook.takeResults.slice(0)
@@ -107,7 +97,8 @@ class Index extends React.Component {
         const updateBalance = (side, val) => {
           if (side === 'bid') {
             userStore.removeBalance(val)
-          } else {
+          } 
+          else {
             userStore.addBalance(val)
           }
         }
@@ -118,55 +109,41 @@ class Index extends React.Component {
     // Load necessary user data
     const maxSell = userPortfolio.getMaxSell(movie.ticker)
 
-    const addToWatchlist = (t) => {
-      redirectLogin()
-      userPortfolio.addToWatchlist(t)
-    }
-
-    const removeFromWatchlist = (t) => {
-      redirectLogin()
-      userPortfolio.removeFromWatchlist(t)
-    }
-
     return (
-      <>
-        <ProTrader
-          chartData={chartData}
-          yDomain={yDomain}
-          updatePrintInterval={updatePrintInterval}
-          setActiveChart={setActiveChart}
-          setMarketOrderType={setMarketOrderType}
-          marketOrderType={marketOrderType}
-          printInterval={printInterval}
-          activeChart={activeChart}
-          buyOrders={buyOrders}
-          sellOrders={sellOrders}
-          orderBook={orderBook}
-          book={orderBook.book}
-          ticker={movie.ticker}
-          createOrder={createOrder}
-          onExecute={(order, orderType) => (
-            userPortfolio.onOrderExecute(order, orderType)
-          )}
-          setTrading={(mode) => {
-            uiStore.setTrading(mode)
-          }}
-          slug={slug}
-          movies={movieStore.movies}
-          orders={userPortfolio
-            .orders
-            .filter((o) => o.ticker === movie.ticker)
-            .slice(0)
-            .reverse(() => {})
-          }
-          movieCategories={toJS(movie.genre)}
-          maxSell={maxSell}
-          stockName={movie.name}
-          accountBalance={userStore.accountBalance}
-        />
-      </>
+      <ProTrader
+        chartData={chartData}
+        yDomain={yDomain}
+        updatePrintInterval={updatePrintInterval}
+        setActiveChart={setActiveChart}
+        setMarketOrderType={setMarketOrderType}
+        marketOrderType={marketOrderType}
+        printInterval={printInterval}
+        activeChart={activeChart}
+        buyOrders={buyOrders}
+        sellOrders={sellOrders}
+        orderBook={orderBook}
+        book={orderBook.book}
+        ticker={movie.ticker}
+        createOrder={createOrder}
+        onExecute={(order, orderType) => (
+          userPortfolio.onOrderExecute(order, orderType)
+        )}
+        setTrading={(mode) => {
+          uiStore.setTrading(mode)
+        }}
+        slug={slug}
+        movies={movieStore.movies}
+        orders={userPortfolio
+          .orders
+          .filter((o) => o.ticker === movie.ticker)
+          .slice(0)
+          .reverse(() => {})
+        }
+        movieCategories={toJS(movie.genre)}
+        maxSell={maxSell}
+        stockName={movie.name}
+        accountBalance={userStore.accountBalance}
+      />
     )
   }
 }
-
-export default withRouter(withStyles(styles)(Index))

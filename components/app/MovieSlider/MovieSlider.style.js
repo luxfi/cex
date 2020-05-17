@@ -1,5 +1,3 @@
-import { relativeTimeRounding } from "moment"
-
 const arrowDiameter = 46
 const arrowOffset = `-${arrowDiameter/2}px` // relative to the track, NOT "outer"
 

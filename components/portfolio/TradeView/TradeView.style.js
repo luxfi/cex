@@ -1,10 +1,7 @@
-import { cardTitle, title } from "../../../styles/esxStyles.js"
 
 const grayText = 'rgb(102, 112, 121)'
 
 export default (theme) => ({
-  cardTitle,
-  title,
   cardContent: {
     minHeight: 190,
   },

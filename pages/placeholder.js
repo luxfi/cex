@@ -4,11 +4,8 @@ import { useRouter } from 'next/router'
 import { makeStyles } from '@material-ui/core/styles'
 import { Typography } from "@material-ui/core"
 
-import { container } from "../styles/esxStyles.js"
-
 const useStyles = makeStyles({
 	container: {
-		...container,
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "flex-start"
