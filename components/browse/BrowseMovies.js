@@ -68,7 +68,7 @@ class BrowseMovies extends React.Component {
               </Grid>
             ))
           ) : (
-            <Typography className={classes.noFilmMessage}>No film found</Typography>
+            <Typography variant="h6" className={classes.noFilmMessage}>No film found</Typography>
           )
         }
         {!movieStore.movies.length && <Typography style={{ textAlign: 'center', width: '100%' }}>No movie found</Typography>}

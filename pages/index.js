@@ -111,9 +111,9 @@ export default withRouter(withWidth()(inject('store')(observer((props) => {
         <MovieSlider 
           movies={store.movieStore.tradingMovies} 
           title='Now Trading' 
-          goToMovieDetail={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
-          goToMovieOffering={(movie) => {router.push(`/offering/${movie.movieSlug}`)}} 
-          goToMovieTrading={(movie) => {router.push(`/trade/${movie.movieSlug}`)}} 
+          goToMovieDetail={(movie) => {router.push(`/film/${heroMovie.movieSlug}`)}} 
+          goToMovieOffering={(movie) => {router.push(`/offering/${heroMovie.movieSlug}`)}} 
+          goToMovieTrading={(movie) => {router.push(`/trade/${heroMovie.movieSlug}`)}} 
           className={classes.tradingSlider}
           height='480px'
         />

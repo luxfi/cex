@@ -54,15 +54,9 @@ class MovieSearchWidget extends React.Component {
 
     if (!event.target.value) {
       const { store: { movieStore } } = this.props
-      this.addMovieToStore([], () => movieStore.loadMovies({}))
+      movieStore.resetMovieSearchResult()
     }
   }
-
-    /*
-  handleInputClick = () => [
-    Router.push('/browse')
-  ]
-    */
 
   renderInputComponent = (inputProps) => {
     const { classes, inputRef = this.noop, ref, ...other } = inputProps
@@ -70,7 +64,6 @@ class MovieSearchWidget extends React.Component {
     return (
       <InputBase
         placeholder="Search…"
-        //onClick={this.handleInputClick}
         classes={{
           root: classes.inputRoot,
           input: classes.inputInput
@@ -80,9 +73,10 @@ class MovieSearchWidget extends React.Component {
     )
   }
 
-  addMovieToStore = (movie, callback = null) => {
+  addMovieToStore = (movies, callback = null) => {
     const { store: { movieStore } } = this.props
-    movieStore.setMovieSearchResult(movie)
+
+    movieStore.setMovieSearchResult(movies)
     if (callback) {
       callback()
     }

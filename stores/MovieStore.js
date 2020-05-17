@@ -8,6 +8,7 @@ import { isNullQuery } from '../util'
 
 export default class MovieStore {
   @observable movies = []
+  @observable browseMovies = []
   @observable isLoading = true
   @observable currentMovie = undefined
 
@@ -28,7 +29,7 @@ export default class MovieStore {
   }
 
   @computed get filteredMovies() {
-    return (this.movies.filter(m => this.filtersAllow(m) && this.facetsAllow(m)))
+    return (this.browseMovies.filter(m => this.filtersAllow(m) && this.facetsAllow(m)))
   }
 
   @computed get tradingMovies() {
@@ -116,8 +117,10 @@ export default class MovieStore {
 
     this.isLoading = true
     this.movies.clear()
+
     moviesFromJson.forEach(m => {
       this.movies.push(this.moviefromJSON(m))
+      this.browseMovies.push(this.moviefromJSON(m))
     })
     if (!isNullQuery(query)) {
       this.clearFacets()
@@ -172,8 +175,14 @@ export default class MovieStore {
     return []
   }
 
-  @action setMovieSearchResult(movie) {
-    this.movies = [...movie]
+  @action setMovieSearchResult(movies) {
+    this.browseMovies = [...movies]
+  }
+
+  @action resetMovieSearchResult() {
+    moviesFromJson.forEach(m => {
+      this.browseMovies.push(this.moviefromJSON(m))
+    })
   }
 }
 

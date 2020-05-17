@@ -93,5 +93,6 @@ export default (theme) => ({
   noFilmMessage: {
     textAlign: 'center',
     width: '100%',
+    marginTop: 64,
   },
 })

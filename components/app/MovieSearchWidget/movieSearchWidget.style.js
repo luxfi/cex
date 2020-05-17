@@ -30,7 +30,8 @@ export default (theme) => ({
     },
     borderRadius: '8px', 
     transition: theme.transitions.create("width"),
-    marginLeft: 16,
+    marginLeft: 30,
+    marginTop: 4,
     [theme.breakpoints.up("md")]: {
       height: 40,
       width: 200,

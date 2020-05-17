@@ -47,7 +47,6 @@ export default (theme) => ({
 
   logo: {
     cursor: 'pointer',
-    marginTop: '2px'
   },
 
   desktopElementsOuter : {
