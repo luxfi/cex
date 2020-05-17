@@ -8,7 +8,7 @@ export default (theme) => ({
 
   main: {
     padding: theme.spacing(0, 2),
-    marginTop: theme.spacing(4),
+    marginTop: theme.spacing(8),
     backgroundColor: theme.palette.common.black,
     [theme.breakpoints.up('lg')]: {
       padding: theme.spacing(0, 8),
