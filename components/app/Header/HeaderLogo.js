@@ -13,10 +13,10 @@ const myStyles = makeStyles({
   }    
 })
 
-export default ({className}) => {
+export default ({className, handleClose}) => {
 
   const s = myStyles()
   return (
-    <div className={classNames(s.root, className)} />
+    <div onClick={handleClose} className={classNames(s.root, className)} />
   )
 }

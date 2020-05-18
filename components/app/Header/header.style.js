@@ -43,6 +43,7 @@ export default (theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    flex: 1,
   },
 
   logo: {

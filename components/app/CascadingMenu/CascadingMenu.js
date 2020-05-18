@@ -15,7 +15,7 @@ import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state'
 import styles from './cascadingMenu.style.js'
 const myStyles = makeStyles(styles)
 
-export default ({ structure, className }) => {
+export default ({ structure, className, handleClose }) => {
 
   const s = myStyles()
 
@@ -44,7 +44,7 @@ export default ({ structure, className }) => {
     )
   })
   return (
-    <div className={classNames(s.menuOuter, className)}>
+    <div onClick={handleClose} className={classNames(s.menuOuter, className)}>
       {elements}
     </div>
   )

@@ -4,11 +4,7 @@ import { useRouter } from 'next/router'
 
 import { makeStyles } from '@material-ui/core/styles'
 import Dialog from '@material-ui/core/Dialog'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import IconButton from '@material-ui/core/IconButton'
 import Slide from '@material-ui/core/Slide'
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
 
 import { MovieSearchWidget, Header } from '../app'
 
@@ -20,7 +16,7 @@ import styles from './browseMoviesModal.style'
 const useStyles = makeStyles(styles)
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="left" ref={ref} {...props} />
+  return <Slide direction="down" ref={ref} {...props} />
 });
 
 const BrowseMoviesModal = ({ store, open }) => {
@@ -29,8 +25,7 @@ const BrowseMoviesModal = ({ store, open }) => {
   const { uiStore, movieStore, userStore } = store
 
   const handleClose = () => {
-    router.back();
-    uiStore.closeBrowseMovieModal();
+    uiStore.closeBrowseMovieModal()
   }
 
   return (

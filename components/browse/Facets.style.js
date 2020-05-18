@@ -43,8 +43,7 @@ export default (theme) => ({
   },
 
   facetValuesMenu: {
-    zIndex: 20,
-    // pointerEvents: 'none'
+    zIndex: 10000,
   },
 
   facetValueMenuItemOuter: {

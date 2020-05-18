@@ -23,7 +23,8 @@ export default (theme) => ({
     backgroundColor: fade(theme.palette.common.white, 0.10),
     position: "relative",
     display: "inline-block",
-    width: 160,
+    width: '100%',
+    flex: 1,
     "&:hover": {
       backgroundColor: fade(theme.palette.common.white, 0.15),
       width: 175
@@ -57,11 +58,12 @@ export default (theme) => ({
   },
 
   inputRoot: {
-    color: "inherit"
+    color: "inherit",
+    width: '100%',
   },
-
+  
   inputInput: {
-    display: 'block',
+    display: 'display',
     padding: theme.spacing(1, 1, 1, 5),
     width: '100%',
     '&::placeholder': {
