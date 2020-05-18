@@ -1,11 +1,11 @@
 export default (theme) => ({
   root: {
-    backgroundColor: theme.palette.common.black,
+    background: theme.palette.common.black,
   },
   main: {
     flexGrow: 1,
     marginTop: 64,
-    backgroundColor: theme.palette.common.black,
+    background: theme.palette.common.black,
     padding: theme.spacing(0),
     minHeight: '50vh',
     '& .slide-button': {

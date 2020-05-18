@@ -43,7 +43,9 @@ export default (theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-start',
     flex: 1,
+    height: 60,
   },
 
   logo: {
@@ -54,6 +56,8 @@ export default (theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-end',
+    flex: 1,
   },
 
   navMenu: {

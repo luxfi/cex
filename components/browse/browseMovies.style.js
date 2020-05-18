@@ -11,7 +11,7 @@ export default (theme) => ({
     marginTop: theme.spacing(8),
     backgroundColor: theme.palette.common.black,
     [theme.breakpoints.up('lg')]: {
-      padding: theme.spacing(0, 8),
+      padding: theme.spacing(2, 8),
     },
   },
   toolbar: {

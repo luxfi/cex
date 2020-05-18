@@ -31,13 +31,12 @@ export default (theme) => ({
     },
     borderRadius: '8px', 
     transition: theme.transitions.create("width"),
-    marginLeft: 30,
-    marginTop: 4,
+    marginLeft: theme.spacing(2),
     [theme.breakpoints.up("md")]: {
       height: 40,
       width: 200,
       borderRadius: '8px', 
-
+      marginLeft: theme.spacing(16),
       "&:hover": {
         width: 220,
       },
@@ -60,16 +59,17 @@ export default (theme) => ({
   inputRoot: {
     color: "inherit",
     width: '100%',
+
   },
   
   inputInput: {
-    display: 'display',
-    padding: theme.spacing(1, 1, 1, 5),
+    display: 'block',
+    padding: theme.spacing(0, 1, 0, 5),
     width: '100%',
+    height: 42,
     '&::placeholder': {
       display: 'block',
       position: 'relative',
-      top: '3px'
     }
   },
 
