@@ -1,58 +1,19 @@
 import React from 'react'
-import Link from 'next/link'
 import { toJS } from 'mobx'
 import { inject, observer } from 'mobx-react'
-import { withRouter, Router } from 'next/router'
-import { MUISwitch } from '@hanzo/react'
 
-import classNames from 'classnames'
+import { withRouter } from 'next/router'
 
-// orderbook
+import { BasicTrader } from '../../app'
+import { slugFromPath } from '../../../util'
+
 import { formatTakeResults } from '../../../util/formatOrderBookDataForChart'
 
-// @material-ui/core components
-import { Box, Button, Grid, Typography } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
-
-// core components
-import { CustomBreadcrumbs, BasicTrader, InvestNow, ProTrader } from '../../app'
-
-// section
-import { padDollarAmount, slugFromPath } from '../../../util'
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// the nice looking double chevrons are part of the "pro" package that costs money
-import { faPlay } from '@fortawesome/free-solid-svg-icons'
-
-import styles from './trade.style.js'
-
-import { isObservableArray } from 'mobx'
-
-const ButtonLink = React.forwardRef(
-  ({ className, href, hrefAs, children }, ref) => (
-    <Link ref={ref} href={href || ''} as={hrefAs}>
-      <a className={className}>{children}</a>
-    </Link>
-  ),
-)
-
-const ExternalLink = React.forwardRef(
-  ({ className, href, hrefAs, children }, ref) => (
-    <a
-      className={className}
-      ref={ref}
-      href={href || ''}
-      as={hrefAs}
-      target="_blank"
-    >
-      {children}
-    </a>
-  ),
-)
-
+@withRouter
 @inject('store')
 @observer
-class Index extends React.Component {
+export default class extends React.Component {
+
   constructor(props) {
     super(props)
     this.state = {
@@ -62,15 +23,15 @@ class Index extends React.Component {
 
   componentDidMount() {
     // Need to pass the order book the data to render
-    const { router } = this.props
+    const { router, store } = this.props
     const slug = router.query.slug || slugFromPath()
-    const { userStore, movieStore, orderBook, userPortfolio } = this.props.store
+    const { userStore, movieStore, orderBook, userPortfolio } = store
     const movie = movieStore.getMovieBySlug(slug)
     // orderBook.initiateDataGenerator(movie.ticker, movie.price)
     userStore.loadAccountBalance()
     userPortfolio.getInvestments()
     orderBook.connect(movie.ticker)
-    this.props.store.orderBook.fetchStockData(movie.ticker)
+    orderBook.fetchStockData(movie.ticker)
   }
 
   componentWillUnmount() {
@@ -89,13 +50,14 @@ class Index extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
 
-    // get router slug and find article
-    const { router } = this.props
+    const { router, store } = this.props
+
     const slug = router.query.slug || slugFromPath()
-    const { movieStore, orderBook, userStore, userPortfolio, uiStore } = this.props.store
+    const { movieStore, orderBook, userStore, userPortfolio, uiStore } = store
     const { loggedIn } = userStore
+
+    // TODO, use the decorator
     const redirectLogin = () => {
       if (!loggedIn) {
         return router.push('/login')
@@ -128,7 +90,8 @@ class Index extends React.Component {
         const updateBalance = (side, val) => {
           if (side === 'bid') {
             userStore.removeBalance(val)
-          } else {
+          } 
+          else {
             userStore.addBalance(val)
           }
         }
@@ -151,49 +114,37 @@ class Index extends React.Component {
     }
 
     return (
-      <>
-        <article>
-          <Box pt={8}>
-            <BasicTrader
-              chartData={chartData}
-              yDomain={yDomain}
-              updatePrintInterval={updatePrintInterval}
-              setActiveChart={setActiveChart}
-              setMarketOrderType={setMarketOrderType}
-              marketOrderType={marketOrderType}
-              printInterval={printInterval}
-              activeChart={activeChart}
-              buyOrders={buyOrders}
-              sellOrders={sellOrders}
-              orderBook={orderBook}
-              book={orderBook.book}
-              ticker={movie.ticker}
-              movieSlug={movie.movieSlug}
-              createOrder={createOrder}
-              onExecute={(order, orderType) => {
-                return userPortfolio.onOrderExecute(order, orderType)
-              }}
-              setTrading={(mode) => {
-                uiStore.setTrading(mode)
-              }}
-              slug={slug}
-              movieCategories={toJS(movie.genre)}
-              maxSell={maxSell}
-              investmentHistory={investmentHistory}
-              stockName={movie.name}
-              accountBalance={userStore.accountBalance}
-              userStore={userStore}
-              watchlist={userPortfolio.watchlist}
-              removeFromWatchlist={removeFromWatchlist}
-              addToWatchlist={addToWatchlist}
-              movies={movieStore.movies}
-              redirectLogin={redirectLogin}
-            />
-          </Box>
-        </article>
-      </>
+      <BasicTrader
+        chartData={chartData}
+        yDomain={yDomain}
+        updatePrintInterval={updatePrintInterval}
+        setActiveChart={setActiveChart}
+        setMarketOrderType={setMarketOrderType}
+        marketOrderType={marketOrderType}
+        printInterval={printInterval}
+        activeChart={activeChart}
+        buyOrders={buyOrders}
+        sellOrders={sellOrders}
+        orderBook={orderBook}
+        book={orderBook.book}
+        ticker={movie.ticker}
+        movieSlug={movie.movieSlug}
+        createOrder={createOrder}
+        onExecute={(order, orderType) => (userPortfolio.onOrderExecute(order, orderType))}
+        setTrading={(mode) => { uiStore.setTrading(mode) }}
+        slug={slug}
+        movieCategories={toJS(movie.genre)}
+        maxSell={maxSell}
+        investmentHistory={investmentHistory}
+        stockName={movie.name}
+        accountBalance={userStore.accountBalance}
+        userStore={userStore}
+        watchlist={userPortfolio.watchlist}
+        removeFromWatchlist={removeFromWatchlist}
+        addToWatchlist={addToWatchlist}
+        movies={movieStore.movies}
+        redirectLogin={redirectLogin}
+      />
     )
   }
 }
-
-export default withRouter(withStyles(styles)(Index))

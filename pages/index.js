@@ -18,8 +18,6 @@ import {
   HeroElements
 } from '../components/landing'
 
-import { googlePageView } from '../util'
-
 // Test moving terminator-dark-fate.js to here
 const heroInfo = {
   slug: 'terminator-dark-fate',
@@ -82,7 +80,6 @@ export default withRouter(withWidth()(inject('store')(observer((props) => {
 
   useEffect(() => {
     props.store.userPortfolio.getWatchlist()
-    googlePageView()
   }, [])
 
   const { store, width, router, pathName } = props

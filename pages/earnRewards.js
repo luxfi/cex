@@ -4,11 +4,8 @@ import hashSum from 'hash-sum'
 
 import { Typography, makeStyles } from '@material-ui/core'
 
-import { container } from "../styles/esxStyles.js"
-
 const useStyles = makeStyles({
 	container: {
-		...container,
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "flex-start"

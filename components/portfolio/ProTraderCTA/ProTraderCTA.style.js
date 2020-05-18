@@ -1,4 +1,3 @@
-import { cardTitle, title } from "../../../styles/esxStyles.js"
 
 const portfolioPageStyle = {
   section: {
@@ -9,7 +8,6 @@ const portfolioPageStyle = {
     borderRadius: "32px"
   },
   title: {
-    ...title,
     // marginBottom: "1rem",
     // minHeight: "32px",
     marginTop: "0.875rem",
@@ -21,7 +19,6 @@ const portfolioPageStyle = {
     marginLeft: "auto",
     marginRight: "auto"
   },
-  cardTitle,
   smallTitle: {
     color: "#6c757d"
   },

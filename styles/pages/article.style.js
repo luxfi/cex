@@ -1,14 +1,10 @@
-import { container, title } from "../esxStyles.js"
-
-const articlePageStyle = theme => ({
+export default (theme) => ({
   container: {
     zIndex: "12",
-    ...container,
     fontSize: "16px",
     paddingBottom: "70px"
   },
   title: {
-    ...title,
     display: "inline-block",
     position: "relative",
     marginTop: "30px",
@@ -112,5 +108,3 @@ const articlePageStyle = theme => ({
     display: "none"
   }
 })
-
-export default articlePageStyle

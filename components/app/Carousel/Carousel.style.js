@@ -1,5 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
-const useStyles = makeStyles(theme => ({
+export default (theme) => ({
   container: {
     display: 'flex',
     marginTop: theme.spacing(3),
@@ -35,6 +34,5 @@ const useStyles = makeStyles(theme => ({
   fab: {
     backgroundColor: '#fff',
   },
-}))
+})
 
-export default useStyles

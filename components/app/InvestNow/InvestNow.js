@@ -1,39 +1,30 @@
-import React from "react"
+import React, { useState } from 'react'
 
-// nodejs library that concatenates classes
-import classNames from "classnames"
+import { 
+  Button,
+  Box,
+  Grid, 
+  makeStyles, 
+  Paper, 
+  Typography
+} from '@material-ui/core'
 
-// @material-ui/core components
-import { Button, Grid, Typography, Box, Paper } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
+import { NextMuiLink, CustomModal } from '..'
 
-// core components
-import ContentLoader from "react-content-loader"
-import { NextMuiLink, CustomModal } from ".."
+const myStyles = makeStyles((theme) => ({
+  section: {
+    height: '400px',
+    borderRadius: '16px'
+  }
+}))
 
-// styles
-import useStyles from "./InvestNow.style.js"
+export default (props) => {
 
-const MyLoader = () => (
-  <ContentLoader
-    height={217}
-    width={400}
-    speed={2}
-    primaryColor="#f3f3f3"
-    secondaryColor="#ecebeb"
-  >
-    {/* Only SVG shapes */}
-    <rect x="0" y="0" rx="5" ry="5" width="388" height="217" />
-  </ContentLoader>
-)
-
-export default props => {
-  const classes = useStyles()
+  const classes = myStyles()
   const { loggedIn, noPadding, ...rest } = props
-  const imageClasses = classNames(classes.imgCardTop)
   const hrefLink = loggedIn ? "/portfolio" : "/signup"
 
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
 
   const handleOpen = () => {
     setOpen(true)
@@ -97,12 +88,6 @@ export default props => {
           </Grid>
         </Paper>
       </Box>
-      <style jsx>{`
-        .hero-container {
-          position: relative;
-          overflow: hidden;
-        }
-      `}</style>
     </div>
   )
 }

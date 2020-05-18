@@ -8,7 +8,7 @@ import {
 const financialMetrics = [
   {
     name: 'Market Cap',
-    value: '1.17T',
+    value: '117.5M',
   },
   {
     name: 'Price-Earnings Ratio ',
@@ -50,7 +50,7 @@ const financialMetrics = [
 
 const FinancialsSection = ({}) => {
   return (
-    <Box mb={6.5} mt={3}>
+    <Box mb={6.5} mt={3} style={{ marginTop: '-60px' }} >
       <Grid justify="flex-start" container spacing={4}>
         {financialMetrics.map((metric, i) => (
           <Grid key={i} item xs={6} lg={3} md={3} sm={4}>

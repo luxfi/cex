@@ -1,4 +1,3 @@
-import { cardTitle, title } from "../../../styles/esxStyles.js"
 
 const investorTopPicksStyle = {
   section: {
@@ -6,7 +5,6 @@ const investorTopPicksStyle = {
     textAlign: "center"
   },
   title: {
-    ...title,
     marginBottom: "1rem",
     marginTop: "30px",
     minHeight: "32px",
@@ -22,7 +20,6 @@ const investorTopPicksStyle = {
     height: '210px'
   },
   cardTitle: {
-    ...cardTitle,
     color: "#FFF",
   },
   smallTitle: {

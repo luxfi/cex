@@ -1,19 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
-import { Tabs, Tab, Grid, useMediaQuery } from '@material-ui/core'
-import { tabsStylesHook, navStylesHook } from './offeringNavBar.style.js'
 import classNames from 'classnames'
 
-const scrollTo = element => {
-  // account for navbar heights on scrollintoview
-  const padding = 24
-  const navBarHeights = 64 + 56 + padding
-  window.scrollTo({
-    behavior: 'smooth',
-    top: element.offsetTop - navBarHeights,
-  })
-}
+import { 
+  Grid, 
+  useMediaQuery, 
+  Tabs, 
+  Tab
+} from '@material-ui/core'
 
-const OfferingNavBar = ({
+import { tabsStylesHook, navStylesHook } from './offeringNavBar.style.js'
+
+export default ({
   summaryRef,
   dealTermsRef,
   documentsRef,
@@ -178,5 +175,3 @@ const OfferingNavBar = ({
     </div>
   )
 }
-
-export default OfferingNavBar

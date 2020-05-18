@@ -9,7 +9,6 @@ import { withStyles } from "@material-ui/core/styles"
 import { Button, Avatar, Grid } from "@material-ui/core"
 
 import { CustomBreadcrumbs, InvestNow } from "../../components/app"
-import { googlePageView } from '../../util'
 
 import styles from "../../styles/pages/article.style.js"
 
@@ -77,13 +76,11 @@ const ButtonLink = React.forwardRef(
 //   () => import('../components/hello2'),
 //   { loading: () => <p>...</p> }
 // )
-
+@withRouter
+@withStyles(styles)
 @inject("store")
 @observer
-class Article extends React.Component {
-  componentDidMount() {
-    googlePageView()
-  }
+export default class extends React.Component {
 
   render() {
     // const { movieStore } = this.props.store
@@ -97,7 +94,7 @@ class Article extends React.Component {
       router.query || "edward-furlong-edward-furlong-terminator-dark-fate" // remove this when safe
     const article = store.articleStore.getArticle(slug)
 
-    console.log('hit article page with', router)
+    //console.log('hit article page with', router)
 
     return (
       <>
@@ -381,5 +378,3 @@ const ArticleSections = ({ classes, article }) => {
     </>
   )
 }
-
-export default withRouter(withStyles(styles)(Article))

@@ -36,6 +36,7 @@ const AboutMore = ({ classes, movie }) => {
         </div>
         <div className={classes.aboutMoreText}>{movie.longDescription}</div>
       </div>
+      <div className={classes.aboutMoreText}>{movie.longDescription}</div>
     </>
   )
 }

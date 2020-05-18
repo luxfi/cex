@@ -2,12 +2,17 @@ import React from 'react'
 import { Box, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import RootRef from '@material-ui/core/RootRef'
+
 const useStyles = makeStyles(theme => ({
   bullet: {
     display: 'inline-block',
     marginRight: theme.spacing(1),
     transform: 'scale(1.5)',
   },
+  outer: {
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2)
+  }
 }))
 
 const SummarySection = ({ summaryRef }) => {
@@ -16,52 +21,34 @@ const SummarySection = ({ summaryRef }) => {
 
   return (
     <RootRef rootRef={summaryRef}>
-      <Box mb={4}>
-        <Typography variant="h5">
-          <Box mb={3} mt={5} fontWeight="fontWeightBold">
+      <div className={classes.outer}>
+        <Typography gutterBottom variant="h5">
             Summary
-          </Box>
         </Typography>
-        <Typography variant="h5">
-          <Box mb={2} mt={2} fontWeight="fontWeightBold">
-            For the first time ever, invest in the legendary horror franchise.
-          </Box>
+        <Typography gutterBottom variant="h5">
+          For the first time ever, invest in the legendary horror franchise.
         </Typography>
-        <Typography gutterBottom variant="subtitle1" color="textSecondary">
-          <Box mb={3}>
-            Spiral is an upcoming American horror film. The film will
-            serve as the ninth installment in the Saw franchise. The film is directed
-            by Darren Lynn Bousman, from a screenplay by Josh Stolberg and Pete
-            Goldfinger, based on a story by Chris Rock.
-          </Box>
+        <Typography gutterBottom variant="body1" color="textSecondary">
+          Spiral is an upcoming American horror film. The film will
+          serve as the ninth installment in the Saw franchise. The film is directed
+          by Darren Lynn Bousman, from a screenplay by Josh Stolberg and Pete
+          Goldfinger, based on a story by Chris Rock.
         </Typography>
-
-        <Typography gutterBottom variant="subtitle1" color="textSecondary">
-          <Box mb={3}>
-            Saw was first screened on January 19, 2004, before released in
-            North America on October 29, 2004 by Lionsgate Films. Compared to its low
-            budget, Saw performed very well at the box office, grossing more than $100
-            million worldwide and becoming, one of the most profitable
-            horror films since Scream.
-          </Box>
-        </Typography>
-
-        <Typography variant="subtitle1" color="textPrimary">
-          <Box mb={2} fontWeight="fontWeightBold">
-            {bull} "Spiral will keep you laughing on the edge of your seat" - Chris Rock
-          </Box>
+        <Typography gutterBottom variant="body1" color="textSecondary">
+          Saw was first screened on January 19, 2004, before released in
+          North America on October 29, 2004 by Lionsgate Films. Compared to its low
+          budget, Saw performed very well at the box office, grossing more than $100
+          million worldwide and becoming, one of the most profitable
+          horror films since Scream.
         </Typography>
         <Typography variant="subtitle1" color="textPrimary">
-          <Box mb={2} fontWeight="fontWeightBold">
-            {bull} "Utterly disgusting" - Gordon Ramsey
-          </Box>
+          <ul>
+            <li>{bull} "Spiral will keep you laughing on the edge of your seat" - Chris Rock</li>
+            <li>{bull} "Utterly disgusting" - Gordon Ramsey</li>
+            <li>{bull} If you like movies that keep you at the edge of your seat, go see this movie!</li>
+          </ul>
         </Typography>
-        <Typography variant="subtitle1" color="textPrimary">
-          <Box mb={2} fontWeight="fontWeightBold">
-            {bull} If you like movies that keep you at the edge of your seat, go see this movie!
-          </Box>
-        </Typography>
-      </Box>
+      </div>
     </RootRef>
   )
 }

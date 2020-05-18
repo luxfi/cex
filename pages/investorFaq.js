@@ -1,30 +1,25 @@
-import React from "react"
-import { inject, observer } from "mobx-react"
-import { withStyles } from '@material-ui/core/styles'
+import React from 'react'
+import { inject, observer } from 'mobx-react'
 
-import { ContentfulItems } from "../components/app"
+import { withStyles } from '@material-ui/core'
 
-import { container } from "../styles/esxStyles.js"
-
-import { googlePageView } from "../util"
+import { ContentfulItems } from '../components/app'
 
 const styles = theme => ({
   container: {
-    ...container,
     display: "flex",
     flexDirection: "column",
     justifyContent: "center"
   },
 })
-
+@withStyles(styles)
 @inject("store")
 @observer
-class InvestorFAQ extends React.Component {
+export default class extends React.Component {
 
   componentDidMount() {
     const { store } = this.props
     store.contentfulStore.getContent(false)
-    googlePageView()
   }
 
   render() {
@@ -39,5 +34,3 @@ class InvestorFAQ extends React.Component {
     )
   }
 }
-
-export default withStyles(styles)(InvestorFAQ)

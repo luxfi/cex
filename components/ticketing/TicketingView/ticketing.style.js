@@ -1,9 +1,3 @@
-import {
-  flexCenteredColumn,
-  flexCenteredRow,
-  flexStartColumn,
-} from '../../../styles/esxStyles'
-
 const whiteColor = '#ffffff'
 const buttons = {
   padding: '10px 20px',
@@ -83,17 +77,21 @@ export default (theme) => ({
   buttonContainer: {
     display: 'flex',
     alignItems: 'center',
+    flexDirection: "row",
     justifyContent: 'flex-start',
 
     [theme.breakpoints.down(551)]: {
-      ...flexCenteredColumn,
+      flexDirection: "column",
     }
   },
   movieSummaryHeroPoster: {
-    ...flexCenteredRow,
-
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+  
     [theme.breakpoints.up('md')]: {
-      ...flexStartColumn,
+      flexDirection: "column",
+      alignItems: "flex-start"
     }
   },
   heroImage: {
@@ -144,7 +142,7 @@ export default (theme) => ({
     justifyContent: 'flex-start',
 
     [theme.breakpoints.down(795)]: {
-      ...flexStartColumn,
+      alignItems: "flex-start"
     }
   },
   findMovieHeaderSection: {
@@ -161,7 +159,8 @@ export default (theme) => ({
     },
 
     [theme.breakpoints.down(551)]: {
-      ...flexCenteredColumn,
+      flexDirection: "column",
+      alignItems: "center",
       width: '100%',
     }
   },
@@ -218,7 +217,10 @@ export default (theme) => ({
     height: '64px',
     marginRight: '16px',
     verticalAlign: 'middle',
-    ...flexCenteredColumn,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+
   },
   movieVenueIcon: {
     width: '64px',
@@ -247,7 +249,9 @@ export default (theme) => ({
   },
   movieVenueContainer: {
     padding: '16px 0',
-    ...flexStartColumn,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start"
   },
   panelBody: {
     padding: '16px',
@@ -260,7 +264,7 @@ export default (theme) => ({
     alignItems: 'flex-start',
 
     [theme.breakpoints.down(600)]: {
-      ...flexCenteredColumn,
+      alignItems: "center",
       justifyContent: 'center',
     }
   },

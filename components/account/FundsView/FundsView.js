@@ -16,8 +16,6 @@ import BankAccountElements from './BankAccountElements'
 import ManageFundsElements from './ManageFundsElements'
 import BalanceHistoryElements from './BalanceHistoryElements'
 
-import { googlePageView } from '../../../util'
-
 import { AddPaymentMethodModal } from '../../app'
 
 import styles from '../account.style.js'
@@ -28,7 +26,6 @@ import styles from '../account.style.js'
 export default class extends React.Component {
   
   componentDidMount() {
-    googlePageView()
     this.props.store.userStore.loadAccountBalance()
     this.props.store.userStore.loadBalanceHistory()
   }
