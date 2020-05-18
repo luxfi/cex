@@ -34,7 +34,6 @@ export default (Component) => inject('store')(observer((props) => {
 
   return (
     <>
-      <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
       {userStore.loggedIn && <Component />}
       {(!userStore.loggedIn && !authModalOpen) && <LogInText onClick={() => uiStore.openAuthModal()} />}
     </>

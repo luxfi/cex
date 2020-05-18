@@ -8,9 +8,8 @@
     "export": "next build && next export",
     "prepare": "git config core.hooksPath .githooks",
     "test": " NODE_ENV=test jest",
-    "e2eWithBuild": "next build && node tests/e2e/runner.js",
     "e2eWithoutBuild": "node tests/e2e/runner.js",
-    "e2e": "node tests/e2e/runner.js",
+    "e2e": "next build && node tests/e2e/runner.js",
     "integration": "jest -c ./jest.config.integration.js",
     "jest": "NODE_ENV=test jest",
     "start": "npm run prepare && next"

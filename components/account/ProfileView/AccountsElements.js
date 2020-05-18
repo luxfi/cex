@@ -28,6 +28,7 @@ export default ({values, onChange}) => (
     disabled
   />
   <NativeSelect
+    id='dayTradeProtection'
     label='Pattern Day Trade Protection'
     name='dayTradeProtection'
     value={values.dayTradeProtection ? 'yes' : 'no'}

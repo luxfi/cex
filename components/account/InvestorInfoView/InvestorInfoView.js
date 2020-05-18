@@ -241,7 +241,7 @@ const InvestorInfoView = (props) => {
                               placeholder='18796'
                               value={values.postalCode}
                               onChange={handleChange}
-                              InputLabelProps={{ shrink: true }}
+                              InputLabelProps={{ shrink: true, className: 'postalCode-label' }}
                             />
                           </FormControl>
                         </Grid>
@@ -279,7 +279,7 @@ const InvestorInfoView = (props) => {
                               placeholder='4846389012'
                               value={values.phone}
                               onChange={handleChange}
-                              InputLabelProps={{ shrink: true }}
+                              InputLabelProps={{ shrink: true, className: 'phone-label' }}
                             />
                           </FormControl>
                         </Grid>

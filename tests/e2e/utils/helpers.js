@@ -46,7 +46,7 @@ export const selectFromDropDown = async (page, selectElement, selector, value) =
   const dropdownInput = await page.waitForSelector(selectElement)
   await dropdownInput.click()
 
-  const sel = selector ? `li${selector}` : 'li'
+  const sel = selector ? `li${selector}, option` : 'li, option'
   await page.waitForSelector(sel)
 
   const dropdownItem = await page
@@ -63,9 +63,14 @@ export const selectFromDropDown = async (page, selectElement, selector, value) =
 }
 
 export const selectRadioGroupOption = async (page, selector) => {
-  await page.evaluate(async (sel) => {
+  await page.evaluate((sel) => {
+    const radioGroupArray = []
     const radioGroupInputs = document.querySelectorAll(sel)
-    const unCheckedRadioButton = [...radioGroupInputs].find((item) => !item.checked)
+    for (let i = 0; i < radioGroupInputs.length; i++) {
+      radioGroupArray.push(radioGroupInputs[i])
+    }
+
+    const unCheckedRadioButton = radioGroupArray.find((item) => !item.checked)
     unCheckedRadioButton.click()
   }, selector)
 }

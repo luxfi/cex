@@ -247,6 +247,7 @@ export default inject('store')(observer((props) => {
             className={s.profileViewSaveButton}
             disabled={isSubmitting}
             size='large'
+            id='submitProfileButton'
           >
             Save
           </Button>

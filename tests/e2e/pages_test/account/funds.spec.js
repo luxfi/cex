@@ -15,7 +15,7 @@ import {
 } from '../../utils/helpers'
 
 let page
-const url = `${global.host}/account/funds`
+const url = `${global.host}/account?tab=2`
 const removeAccountButton = '#removeLinkedAccountButton'
 const removeLinkedCardButton = '#removeLinkedCardButton'
 const addPaymentMethodButton = '#addPaymentMethodButton'
@@ -52,10 +52,6 @@ describe('User Account', () => {
 
   afterAll(async () => {
     await page.close()
-  })
-
-  it('should load properly and have the same url with the selected nav item', async () => {
-    await waitForProperty(page, '.Mui-selected', 'href', url)
   })
 
   it('should not allow user add an invalid card', async () => {
@@ -102,16 +98,15 @@ describe('User Account', () => {
   })
 
   it('should allow user make a deposit ', async () => {
-    await selectFromDropDown(page, sendFrom, '.sendFrom', '0XxFJPXQ1fAg9O2')
-    await selectFromDropDown(page, sendTo, '.sendTo', 'esx')
+    await page.waitFor(2000)
     await deleteOldContentAndType(page, amountInput, '1000')
     await page.waitForSelector(manageFundSubmit)
     await page.click(manageFundSubmit)
   })
 
   it('should allow user make a withdrawal ', async () => {
-    await selectFromDropDown(page, sendFrom, '.sendFrom', 'esx')
-    await selectFromDropDown(page, sendTo, '.sendTo', '0XxFJPXQ1fAg9O2')
+    await selectFromDropDown(page, sendFrom, '.sendFromItem', 'esx')
+    await selectFromDropDown(page, sendTo, '.sendToItem', '0XxFJPXQ1fAg9O2')
     await deleteOldContentAndType(page, amountInput, '1000')
     await page.waitForSelector(manageFundSubmit)
     await page.click(manageFundSubmit)

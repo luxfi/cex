@@ -14,7 +14,7 @@ import {
 } from '../../utils/helpers'
 
 let page
-const url = `${global.host}/account/identity`
+const url = `${global.host}/account?tab=6`
 const firstName = 'input[name ="firstName"]'
 const lastName = 'input[name ="lastName"]'
 const phone = 'input[name ="phone"]'
@@ -45,10 +45,6 @@ describe('User Identity Page', () => {
     await page.close()
   })
 
-  it('should load properly and have the same url with the selected nav item', async () => {
-    await waitForProperty(page, '.Mui-selected', 'href', url)
-  })
-
   it('should successfully update Personal Details', async () => {
     await deleteOldContentAndType(page, firstName, userProfile.firstName)
     await deleteOldContentAndType(page, lastName, userProfile.lastName)
@@ -57,7 +53,7 @@ describe('User Identity Page', () => {
     await selectDateFromCalender(page, datePickerButton)
     await selectFromDropDown(page, gender, '.genderItem', userProfile.gender)
 
-    await page.waitFor(kycSubmitButton, defaultSelectorTimeout)
+    await page.waitForSelector(kycSubmitButton)
     await page.click(kycSubmitButton)
     await page.waitForSelector(address1)
   })

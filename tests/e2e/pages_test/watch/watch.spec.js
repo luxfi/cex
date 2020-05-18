@@ -49,6 +49,7 @@ describe('Watch page', () => {
     await page.waitForSelector(movieTitle)
     await page.click(movieTitle)
     await waitForProperty(page, '.watch-trailer-button > span > p', 'innerText', 'PLAY TRAILER')
+    await page.click(watchTrailerButton)
   })
 
   it('should open the onDemand login modal when an unauthenticated user tries to comment', async () => {
