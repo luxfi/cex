@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { inject, observer } from 'mobx-react'
 
 import {
@@ -35,15 +35,20 @@ const useStyles = makeStyles(styles)
 export default inject('store')(observer((props) => {
 
   const classes = useStyles()
-  
+
   const {
     store: {
       movieStore,
+      ticketCheckoutStore,
       ticketCheckoutStore: {
         ticketTransactions,
       },
     },
   } = props
+
+  useEffect(() => {
+    ticketCheckoutStore.getTicketOrders()
+  }, [])
 
   return (
     <div className={classes.root}>
@@ -56,7 +61,7 @@ export default inject('store')(observer((props) => {
             }
 
             const movie = movieStore.getMovieBySlug(order.metadata.movieSlug)
-            return <TicketOrderElement
+            return <TicketOrderElements
               classes={classes}
               movie={movie}
               ticket={order.metadata}

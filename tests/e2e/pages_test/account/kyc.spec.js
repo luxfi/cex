@@ -14,7 +14,7 @@ import {
 } from '../../utils/helpers'
 
 let page
-const url = `${global.host}/account?tab=6`
+const url = `${global.host}/account/identity`
 const firstName = 'input[name ="firstName"]'
 const lastName = 'input[name ="lastName"]'
 const phone = 'input[name ="phone"]'
