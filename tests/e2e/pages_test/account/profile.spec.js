@@ -14,7 +14,7 @@ import {
 } from '../../utils/helpers'
 
 let page
-const url = `${global.host}/account?tab=1`
+const url = `${global.host}/account/profile`
 const address1 = 'input[name ="address1"]'
 const address2 = 'input[name ="address2"]'
 const city = 'input[name ="city"]'

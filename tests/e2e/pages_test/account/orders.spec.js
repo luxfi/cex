@@ -5,14 +5,15 @@ import {
   defaultWaitUntil,
 } from '../../utils/constants'
 import {
+  getElementForSelector,
   login,
   waitForProperty,
 } from '../../utils/helpers'
 
 let page
-const url = `${global.host}/account?tab=7`
-const orderLink = 'order-link'
-const orderButton = 'orderButton'
+const url = `${global.host}/account/orders`
+const orderLink = '.order-link'
+const orderButton = '.orderButton'
 
 describe('User Orders', () => {
   beforeAll(async () => {
@@ -27,19 +28,16 @@ describe('User Orders', () => {
     await page.close()
   })
 
-  xit('should load properly and have the same url with the selected nav item', async () => {
-    await waitForProperty(page, '.Mui-selected', 'href', url)
-  })
-
-  xit('should go to order details page when the order link is clicked', async () => {
-    await page.waitFor(orderLink, defaultSelectorTimeout)
-    await page.click(orderLink)
+  it('should go to order details page when the order link is clicked', async () => {
+    const order = await getElementForSelector(page, orderLink)
+    await order.click()
     await waitForProperty(page, 'h4', 'innerText', "You're all set")
   })
 
-  xit('should go to order details page when the see details button is clicked', async () => {
+  it('should go to order details page when the see details button is clicked', async () => {
     await page.goto(url, defaultWaitUntil)
-    await page.waitFor(orderButton, defaultSelectorTimeout)
-    await page.click(orderButton)
+    const order = await getElementForSelector(page, orderButton)
+    await order.click()
+    await waitForProperty(page, 'h4', 'innerText', "You're all set")
   })
 })

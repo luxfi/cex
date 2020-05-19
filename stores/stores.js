@@ -68,7 +68,7 @@ export default (initialData = _initialData) => {
 
   if (!isServer) {
     // Should any of these be called here?
-    stores.ticketCheckoutStore.getTicketOrders()
+    // stores.ticketCheckoutStore.getTicketOrders()
     stores.trailerStore.getAutoPlay()
     stores.uiStore.loadState()
     stores.userPortfolio.getWatchlist()

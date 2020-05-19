@@ -91,6 +91,8 @@ class ConfirmPaymentView extends React.Component {
       transactionStatus: null,
     })
 
+    const metadata = { venueId, showtimeId, ticketId, numberOfSeats, movieSlug, paymentType: 'movieTicket' }
+
     if (paymentType === 'bank') {
       if (accountBalance >= total) {
         ticketCheckoutStore.addTransaction({
@@ -105,6 +107,8 @@ class ConfirmPaymentView extends React.Component {
           referrerId: refHash,
           date: new Date(),
         })
+
+        await ticketCheckoutStore.checkoutOrder(total, userStore.account, cardInfo, refHash, metadata, 'deposit') // deposit should be removed. Just a hack to make deposits work
         userStore.removeBalance(total)
 
         this.setState({ transactionStatus: 'successful' }, () => {
@@ -114,7 +118,6 @@ class ConfirmPaymentView extends React.Component {
         this.setState({ transactionStatus: 'failed' })
       }
     } else if (paymentType === 'card') {
-      const metadata = { venueId, showtimeId, ticketId, numberOfSeats, movieSlug, paymentType: 'movieTicket' }
       const transaction = await ticketCheckoutStore.checkoutOrder(total, userStore.account, cardInfo, refHash, metadata)
 
       if (transaction && transaction.id) {

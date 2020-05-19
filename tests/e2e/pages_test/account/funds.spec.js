@@ -15,7 +15,7 @@ import {
 } from '../../utils/helpers'
 
 let page
-const url = `${global.host}/account?tab=2`
+const url = `${global.host}/account/funds`
 const removeAccountButton = '#removeLinkedAccountButton'
 const removeLinkedCardButton = '#removeLinkedCardButton'
 const addPaymentMethodButton = '#addPaymentMethodButton'
