@@ -2,6 +2,7 @@ import React, { useReducer } from "react"
 
 import { Box, Typography, Avatar, Button } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
+import classNames from 'classnames'
 
 import AddComment from './AddComment'
 import SingleComment from './SingleComment'
@@ -51,7 +52,7 @@ const DisplayComments = ({ comments }) => {
                 (comment.replies.length) ? (
                   <Typography
                     onClick={() => handleShowReplies(comment.commentId)}
-                    className={classes.shoHideComments}
+                    className={classNames(classes.shoHideComments, 'showHideComents')}
                   >
                     { state.showReply[comment.commentId] ? 'Hide replies' : `Show ${comment.replies.length} replies` }
                   </Typography>

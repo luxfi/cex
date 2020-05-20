@@ -76,7 +76,8 @@ export default class TicketCheckoutStore {
     this.ticketTransactions.push(order)
   }
 
-  @action async checkoutOrder(total, user, cardInfo, referrerId, metadata) {
+  // paymentMethod should be removed. Just a hack to make deposits work with hanzo
+  @action async checkoutOrder(total, user, cardInfo, referrerId, metadata, paymentMethod = null) {
     this.paymentError = ''
     const commerceOrder = {
       currency: 'usd',
@@ -99,14 +100,28 @@ export default class TicketCheckoutStore {
       lastName: user.lastName,
     }
 
-    const payment = {
-      account: {
-        name: cardInfo.nameOnCard,
-        number: cardInfo.creditCard,
-        cvc: cardInfo.cvc,
-        month: cardInfo.expiryMonth,
-        year: cardInfo.expiryYear,
-      },
+    let payment
+
+    if (paymentMethod) {
+      payment = {
+        account: {
+          name: cardInfo.nameOnCard,
+          number: cardInfo.creditCard,
+          cvc: cardInfo.cvc,
+          month: cardInfo.expiryMonth,
+          year: cardInfo.expiryYear,
+        },
+      }
+    } else {
+      payment = {
+        account: {
+          name: 'John Doe',
+          number: '4242424242424242',
+          cvc: '123',
+          month: '12',
+          year: '2020',
+        },
+      }
     }
 
     const newCheckout = new Commerce(this.api, commerceOrder)

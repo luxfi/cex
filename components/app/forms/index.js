@@ -26,7 +26,8 @@ const MUIRadioGroup = ({label, name, value, onChange, values, required}) => (
   </FormControl>
 )
 
-const NativeSelect = ({name, label, value, values, onChange, required}) => (
+// id and item class were added strictly for e2e tests
+const NativeSelect = ({name, label, value, values, onChange, required, id, itemClass}) => (
   <FormControl >
     <InputLabel id={`label-id-${name}`} required={!!required}>{label}</InputLabel>
     <Select
@@ -35,13 +36,14 @@ const NativeSelect = ({name, label, value, values, onChange, required}) => (
       value={value}
       onChange={onChange}
       inputProps={{name: name}}
+      id={id}
     >
     {values.map((v, i) => (
       ('ariaLabel' in v) 
       ? 
-      <option value={v.value} aria-label={v.ariaLabel} key={`${v.value}-${i}`}/>
+      <option className={itemClass} value={v.value} aria-label={v.ariaLabel} key={`${v.value}-${i}`}/>
       :
-      <option value={v.value} key={`${v.value}-${i}`}>{v.label}</option>
+      <option className={itemClass} value={v.value} key={`${v.value}-${i}`}>{v.label}</option>
     ))}
     </Select>
   </FormControl> 

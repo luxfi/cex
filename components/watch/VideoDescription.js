@@ -13,6 +13,7 @@ export default ({ description }) => {
     <Box className="video-description">
       <Box className={collapse ? 'collapsed' : 'expanded'}>{ description }</Box>
       <Button
+        id='moreLessButton'
         style={{
           margin: '20px 0',
           padding: '7px 20px',

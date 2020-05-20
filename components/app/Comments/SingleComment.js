@@ -42,9 +42,9 @@ export default inject('store')(observer(({
   return (
     <Box className={classes.comment} key={keyValue}>
       <Avatar src={comment.author.authorProfileImageUrl} className={imageClassName} />
-      <Box>
+      <Box className='single-comment'>
         <Typography className={classes.commentUserName}>{comment.author.authorDisplayName}</Typography>
-        <Typography variant='body2'>{comment.text}</Typography>
+        <Typography className='single-comment-text' variant='body2'>{comment.text}</Typography>
         <Box className={classes.commentActions}>
         <Box className='rating'>
           <LikeAndUnlike
@@ -56,7 +56,7 @@ export default inject('store')(observer(({
             handleUnlikeClick={() => handleClick(comment, id, 'unlike')}
           />
         </Box>
-        {showReplyButton && <Button onClick={() => handleReply(comment.commentId)} size='small' variant='text'>Reply</Button>}
+        {showReplyButton && <Button onClick={() => handleReply(comment.commentId)} size='small' className='replyCommentButton' variant='text'>Reply</Button>}
         </Box>
       </Box>
     </Box>

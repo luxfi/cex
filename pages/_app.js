@@ -13,11 +13,13 @@ import {
   withStyles,
 } from '@material-ui/core'
 
+
 // This ensures that the icon CSS is loaded immediately before attempting
 // to render icons
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import classNames from 'classnames'
+import AuthModal from '../components/app/AuthModal'
 
 // Prevent fontawesome from dynamically adding its css since we did it
 // manually above
@@ -121,6 +123,7 @@ export default class extends NextApp {
                   this.stores.userStore.logout()
                 }}
               />
+              <AuthModal authModalOpen={this.stores.uiStore.authModalOpen} tabIndexValue={this.stores.uiStore.tabIndexValue} />
               {hideFooter(router.route) ? null : (
                 <Footer 
                   loggedIn={this.stores.userStore.loggedIn} 

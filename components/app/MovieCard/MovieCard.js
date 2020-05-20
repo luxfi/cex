@@ -38,7 +38,7 @@ export default ({
   const style = (height) ? { height: height, width: 'auto' } : {}
 
   return (
-    <div className={classNames(classes.card, className, movie.movieSlug)} >
+    <div className={classNames(classes.card, className, movie.movieSlug, 'movie-card')} >
       <img src={`/images/film/${movie.posterImg}`} className={classes.cardMedia} style={style}/>
       <div className={classes.cardContent}>
         <TrailerImage movie={movie} className={classes.trailerImg}/>

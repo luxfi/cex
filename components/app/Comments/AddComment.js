@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { inject, observer } from 'mobx-react'
-import { AuthModal } from '../'
 
 import { Avatar, Box, Button, TextField } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -27,7 +26,6 @@ const AddComment = inject('store')(observer(({
   const {
     commentStore,
     userStore: { loggedIn, currentUser, id },
-    uiStore: { authModalOpen, tabIndexValue },
     uiStore,
   } = store
 
@@ -66,7 +64,6 @@ const AddComment = inject('store')(observer(({
 
   return (
     <>
-      <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
       <Box className={classNames('add-comment', classes.comment)}>
         <Avatar src='http://placehold.it/32x32' className={classes.commentImage} />
         <Box className={classes.commentInputArea}>
@@ -74,7 +71,7 @@ const AddComment = inject('store')(observer(({
             value={state.comment}
             onClick={handleFocus}
             InputProps={{
-              className: classes.addCommentInput,
+              className: classNames(classes.addCommentInput, 'addCommentInput'),
             }}
             rows={numOfRows || 3}
             placeholder='add a commment'
@@ -86,6 +83,7 @@ const AddComment = inject('store')(observer(({
             (state.showButtons || comment) && (
             <Box className={classes.submitButtonContainer}>
               <Button
+                className='cancelCommentButton'
                 variant='outlined'
                 size='small'
                 onClick={handleCancel}
@@ -97,7 +95,7 @@ const AddComment = inject('store')(observer(({
                 variant='contained'
                 disabled={!(state.comment.trim())}
                 size='small'
-                className={classes.commentButton}
+                className={classNames(classes.commentButton, 'postCommentButton')}
                 onClick={handleClick}
               >
                 Post Comment

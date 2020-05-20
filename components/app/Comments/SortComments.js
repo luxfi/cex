@@ -82,6 +82,7 @@ const SortComments = inject('store')(observer(({ store }) => {
           size='small'
           className={classes.shareButton}
           startIcon={<SortIcon />}
+          id='sortCommentButton'
         >
           {`Sort (${state.sortBy})`}
         </Button>
@@ -96,8 +97,8 @@ const SortComments = inject('store')(observer(({ store }) => {
               <Paper>
                 <ClickAwayListener mouseEvent='onClick' onClickAway={handleClose}>
                   <MenuList autoFocusItem={state.open} id='menu-list-grow' onKeyDown={handleListKeyDown}>
-                    <MenuItem selected={state.sortBy === 'recent'} onClick={(event) => handleSort(event, 'recent')}>Most recent</MenuItem>
-                    <MenuItem selected={state.sortBy === 'top'} onClick={(event) => handleSort(event, 'top')}>Top comments</MenuItem>
+                    <MenuItem className='sortCommentItem' selected={state.sortBy === 'recent'} onClick={(event) => handleSort(event, 'recent')}>Most recent</MenuItem>
+                    <MenuItem className='sortCommentItem' selected={state.sortBy === 'top'} onClick={(event) => handleSort(event, 'top')}>Top comments</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

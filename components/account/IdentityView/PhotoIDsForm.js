@@ -68,21 +68,24 @@ export default ({
       desc: "Required",
       price: "photo here",
       dataUri: documents0,
-      currentDoc: "documents0"
+      currentDoc: "documents0",
+      className: 'faceUpload',
     },
     {
       name: "ID Front",
       desc: "Required",
       price: "photo here",
       dataUri: documents1,
-      currentDoc: "documents1"
+      currentDoc: "documents1",
+      className: 'idFrontUpload',
     },
     {
       name: "ID Back",
       desc: "Required",
       price: "photo here",
       dataUri: documents2,
-      currentDoc: "documents2"
+      currentDoc: "documents2",
+      className: 'idBackUpload',
     }
   ]
 
@@ -103,6 +106,7 @@ export default ({
             handleOpenCam={handleOpenCam}
             key={photo.currentDoc}
             setValue={setValue}
+            className={photo.className}
           />
         ))}
       </List>

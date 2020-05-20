@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useRef } from 'react'
+import classNames from 'classnames'
 import SliderContext from './context'
 import s from './Item.module.css'
 import { Card, CardContent, Typography, Box, Grid } from "@material-ui/core"
@@ -14,7 +15,7 @@ export default ({ genre, onClick }) => {
         return (
           <div
             ref={elementRef}
-            className={s.item}
+            className={classNames(s.item, 'category-item')}
             style={{
               flex: "0 0 15%",
               textAlign: "center",

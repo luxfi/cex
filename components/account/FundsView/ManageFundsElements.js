@@ -43,6 +43,7 @@ export default (props) => {
           </Grid>
           <Grid item xs={6}>
             <Select
+              id='sendFrom'
               value={fromAccountId}
               onChange={(evt) => {
                 console.log('onChange val', evt.target.value)
@@ -60,7 +61,7 @@ export default (props) => {
               {
                 accountList ? 
                 accountList.map((account, k) =>
-                  <MenuItem key={`account_${k}`} value={account.id}>{account.name}</MenuItem>
+                  <MenuItem className='sendFromItem' key={`account_${k}`} value={account.id}>{account.name}</MenuItem>
                 ) : null
               }
             </Select>
@@ -73,6 +74,7 @@ export default (props) => {
           <Grid item xs={6}>
             <Select
               value={toAccountId}
+              id='sendTo'
               onChange={(evt) => {
                 // console.log('onChange val', evt.target.value)
                 if (evt.target.value !== 'esx') {
@@ -89,7 +91,7 @@ export default (props) => {
               {
                 accountList ? 
                 accountList.map((account, k) =>
-                  <MenuItem key={`account_${k}`} value={account.id}>{account.name}</MenuItem>
+                  <MenuItem className='sendToItem' key={`account_${k}`} value={account.id}>{account.name}</MenuItem>
                 ) : null
               }
             </Select>
@@ -126,6 +128,7 @@ export default (props) => {
           <Button 
             variant="outlined" 
             disabled={!amount || !accountList || accountList.length < 2 || overdraw}
+            id='manageFundSubmit'
             onClick={
               () => {
                 let a = { id: 'DEFAULT', account: { mask: 'DEFAULT' } }

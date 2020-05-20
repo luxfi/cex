@@ -6,6 +6,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
+import classNames from 'classnames'
 import Link from 'next/link'
 import moment from 'moment'
 
@@ -23,7 +24,7 @@ const MovieVenues = ({ classes, movieVenues }) => {
       {
         movieVenues.length
           ? movieVenues.map((selectedVenue) => (
-            <Box key={selectedVenue.venue.id} className={classes.movieVenue}>
+            <Box key={selectedVenue.venue.id} className={classNames(classes.movieVenue, 'venue')}>
               <Box display='flex' className={classes.panelBody} alignContent='flex-start'>
                 <Box className={classes.movieVenueIconContainer}>
                   <img

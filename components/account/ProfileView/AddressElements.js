@@ -42,7 +42,9 @@ export default ({values, errors, onChange, states, countries}) => {
       onChange={onChange}
     />
     <div className={s.stateAndZip}>
-      <NativeSelect 
+      <NativeSelect
+        id='state'
+        itemClass='state'
         name='state' 
         label='State'
         value={values.state}
@@ -58,9 +60,11 @@ export default ({values, errors, onChange, states, countries}) => {
         placeholder='12345'
         value={values.postalCode}
         onChange={onChange}
+        InputLabelProps={{ id: 'postalCode-label' }}
       />
     </div>
     <TextField
+      id='country'
       required
       name='country'
       label='Country'
@@ -70,7 +74,7 @@ export default ({values, errors, onChange, states, countries}) => {
       select
     >
       {countries.map((option, index) => (
-        <MenuItem key={option.code} value={option.code}>
+        <MenuItem className='country' key={option.code} value={option.code}>
           {option.name}
         </MenuItem>
       ))}
@@ -83,6 +87,7 @@ export default ({values, errors, onChange, states, countries}) => {
       placeholder='9999999999'
       value={values.phone}
       onChange={onChange}
+      InputLabelProps={{ id: 'phone-label' }}
     />
     </>
   )

@@ -14,7 +14,6 @@ import { padDollarAmount, slugFromPath } from '../../../util'
 import { formatTakeResults } from '../../../util/formatOrderBookDataForChart'
 
 import {
-  AuthModal,
   BasicTrader,
   CustomBreadcrumbs,
   InvestNow,
@@ -212,7 +211,6 @@ export default class extends React.Component {
       orderBook,
       userStore,
       userPortfolio,
-      uiStore: { authModalOpen, tabIndexValue },
     } = store
     const movie = movieStore.getMovieBySlug(slug)
     // orderBook stuff
@@ -309,8 +307,12 @@ export default class extends React.Component {
             )}
           </article>
         }
-        {!userStore.token ? <InvestNow /> : ''}
-        <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
+\        <div
+          className={classNames(classes.container)}
+          style={{ paddingLeft: '0px', paddingRight: '0px' }}
+        >
+          {!userStore.token ? <InvestNow /> : ''}
+        </div>
       </>
     )
   }

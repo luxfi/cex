@@ -46,7 +46,7 @@ class AddPaymentMethodModal extends React.Component {
         <ListItemIcon>
           <AccountBalanceIcon color='primary' />
         </ListItemIcon>
-        <ListItemText primary='Bank Account' />
+        <ListItemText id='bankAccountButton' primary='Bank Account' />
         <ArrowForwardIosIcon color='disabled' fontSize='small' />
       </ListItem>
       <Divider light />
@@ -54,7 +54,7 @@ class AddPaymentMethodModal extends React.Component {
         <ListItemIcon>
           <CreditCardIcon color='primary' />
         </ListItemIcon>
-        <ListItemText primary='Debit Card' />
+        <ListItemText id='debitCardButton' primary='Debit Card' />
         <ArrowForwardIosIcon color='disabled' fontSize='small' />
       </ListItem>
     </List>

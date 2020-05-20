@@ -85,6 +85,7 @@ export default class extends React.Component {
                 type='button'
                 variant='outlined'
                 color='primary'
+                id='addPaymentMethodButton'
               >
                 Add payment method
               </Button>

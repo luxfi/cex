@@ -14,6 +14,7 @@ import { withStyles } from '@material-ui/core/styles'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined'
 import DateRangeIcon from '@material-ui/icons/DateRange'
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline'
+import classNames from 'classnames'
 import { inject, observer } from 'mobx-react'
 import moment from 'moment'
 import Link from 'next/link'
@@ -114,14 +115,14 @@ class CheckoutView extends React.Component {
                       {
                         ticket.quantity
                           ? (<div className={classes.manageQuantitySection}>
-                          <button onClick={this.removeTicket(ticket.category)} type='button' className={classes.ticketBtn}>
+                          <button onClick={this.removeTicket(ticket.category)} type='button' className={classNames(classes.ticketBtn, 'minus-button')}>
                             <RemoveCircleOutlineIcon className={classes.buttonIcon} />
                           </button>
                           <Typography variant='h5' className={classes.ticketQuantity}>{ticket.quantity}</Typography>
-                          <button onClick={this.addTicket(ticket.category)} type='button' className={classes.ticketBtn}>
+                          <button onClick={this.addTicket(ticket.category)} type='button' className={classNames(classes.ticketBtn, 'plus-button')}>
                             <AddCircleOutlineOutlinedIcon className={classes.buttonIcon} />
                           </button>
-                        </div>) : <Button className={classes.addBtn} onClick={this.addTicket(ticket.category)}>ADD</Button>
+                        </div>) : <Button className={classNames(classes.addBtn, 'add-button')} onClick={this.addTicket(ticket.category)}>ADD</Button>
                       }
                     </TableCell>
                   </TableRow>
@@ -143,8 +144,8 @@ class CheckoutView extends React.Component {
               <Typography variant='h5' className={classes.subTotal}>{formatCurrency(subTotal)}</Typography>
             </div>
             <div>
-              <Link href='/pickSeats' as={`/pickSeats/${slug}?venueId=${venueId}&showtimeId=${showtimeId}${refString}`}>
-                <Button disabled={ticketsCount <= 0} className={classes.nextButton}>PICK SEATS</Button>
+              <Link href='/pickSeats/[id]' as={`/pickSeats/${slug}?venueId=${venueId}&showtimeId=${showtimeId}${refString}`}>
+                <Button disabled={ticketsCount <= 0} className={classes.nextButton} id='pickSeatsButton'>PICK SEATS</Button>
               </Link>
             </div>
           </div>

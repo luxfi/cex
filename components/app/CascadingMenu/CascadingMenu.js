@@ -31,7 +31,7 @@ export default ({ structure, className, handleClose }) => {
     if (href) {
       return (
         <NextLink href={href} key={`link+${n.title}`}>
-          <Button className={s.menuButton}>{n.title}</Button>
+          <Button className={classNames(s.menuButton, 'menu-button')}>{n.title}</Button>
         </NextLink>
       )
     }

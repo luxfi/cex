@@ -8,6 +8,7 @@ import StepLabel from "@material-ui/core/StepLabel"
 import Button from "@material-ui/core/Button"
 import Link from "next/link"
 import Typography from "@material-ui/core/Typography"
+import classNames from 'classnames'
 
 import PersonalDetailsForm from './PersonalDetailsForm'
 import PrimaryAddressForm from './PrimaryAddressForm'
@@ -266,7 +267,7 @@ const KYCForm = (props) => {
                 variant="contained"
                 color="primary"
                 onClick={handleNext}
-                className={classes.button}
+                className={classNames(classes.button, 'kycSubmitButton')}
                 disabled={currentStepDisabled}
               >
                 {activeStep === steps.length - 1 ? "Continue" : "Next"}

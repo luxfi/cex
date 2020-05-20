@@ -5,7 +5,7 @@
 /confirmPayment/*       /confirmPayment/[id].html    404
 /film/*                 /film/[id].html              404
 /invite/*               /invite/[id].html            404
-/offering/*             /offering/[id].html          404
+/offering/*             /offering/[slug].html        404
 /orderDetails/*         /orderDetails/[id].html      404
 /pickSeats/*            /pickSeats/[id].html         404
 /pro/*                  /pro/[id].html               404

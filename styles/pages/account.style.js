@@ -72,6 +72,9 @@ export default (theme) => ({
     '& .MuiFormLabel-root': {
       margin: '0 10px',
       color: '#dcdcdc',
+      '&.Mui-error': {
+        color: '#f44336',
+      },
     },
     '& .MuiSvgIcon-root': {
       width: '0.8em',

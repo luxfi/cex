@@ -14,6 +14,7 @@ const useStyles = makeStyles(theme => ({
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 import MomentUtils from '@date-io/moment'
 import moment from 'moment/moment.js'
+import Icon from "@material-ui/core/Icon"
 
 const BirthdatePicker = ({ setValue, birthdate }) => {
   const classes = useStyles()
@@ -38,9 +39,9 @@ const BirthdatePicker = ({ setValue, birthdate }) => {
           initialFocusedDate={EighteenYearsAgo}
           minDate={AWhileAgo}
           minDateMessage="Please choose an appropriate date of birth"
+          keyboardIcon={<Icon className='dobButton'>event</Icon>}
           // onError="TODO"
         />
-     
     </MuiPickersUtilsProvider>
   )
 }

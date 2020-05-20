@@ -7,6 +7,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
+import classNames from 'classnames'
 import { inject, observer } from 'mobx-react'
 import moment from 'moment'
 import Link from 'next/link'
@@ -14,9 +15,10 @@ import { withRouter } from 'next/router'
 import React from 'react'
 import uuid from 'uuid'
 
+
 import { formatCurrency, slugFromPath } from '../../../util'
 
-import { AuthModal, CustomDialog, Loading } from '../../app'
+import { CustomDialog, Loading } from '../../app'
 
 import styles from './pickSeats.style.js'
 
@@ -119,7 +121,7 @@ class PickSeatsView extends React.Component {
     }
 
     const refString = (refHash && refHash.length) ? `&ref=${refHash}` : ''
-    return router.push('/confirmPayment', `/confirmPayment/${slug}?venueId=${venueId}&showtimeId=${showtimeId}${refString}`)
+    return router.push('/confirmPayment/[id]', `/confirmPayment/${slug}?venueId=${venueId}&showtimeId=${showtimeId}${refString}`)
   }
 
   render() {
@@ -128,7 +130,6 @@ class PickSeatsView extends React.Component {
       router,
       store: {
         uiStore,
-        uiStore: { authModalOpen, tabIndexValue },
         pickSeatStore: {
           seats,
           selectedSeats,
@@ -159,7 +160,6 @@ class PickSeatsView extends React.Component {
 
     return (
       <>
-        <AuthModal authModalOpen={authModalOpen} tabIndexValue={tabIndexValue} />
         <CustomDialog
           open={uiStore.dialog.open}
           title='Seat Legend'
@@ -213,7 +213,7 @@ class PickSeatsView extends React.Component {
                   {
                     seats.map((seatRow, index) => (<div key={uuid.v4()} className={classes.seatColumn}>
                         { seatRow.map((seatCoulumn) => (
-                          <li key={uuid.v4()} className={classes.seats}>
+                          <li key={uuid.v4()} className={classNames(classes.seats, 'seats')}>
                               <button
                                 disabled={seatCoulumn.picked}
                                 type='button'
@@ -284,6 +284,7 @@ class PickSeatsView extends React.Component {
                   className={classes.nextButton}
                   disabled={totalSeatsCount < ticketsCount || ticketsCount <= 0}
                   onClick={this.gotoNextPage}
+                  id='nextButton'
                 >
                   NEXT
                 </Button>

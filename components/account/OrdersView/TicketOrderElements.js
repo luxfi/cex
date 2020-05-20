@@ -1,5 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
+import classNames from 'classnames'
+
 
 import {
   Button,
@@ -15,14 +17,14 @@ export default ({ movie, ticket, classes, showDivider }) => (
     <Grid container item>
       <Grid item xs={10}>
       <Link href={`/orderDetails/${movie.movieSlug}/?ticketId=${ticket.ticketId}`}>
-          <a className={classes.link}>
+          <a className={classNames(classes.link, 'order-link')}>
             <Typography variant='body2'>{`${movie.name} (#${ticket.ticketId}) - ${moment(ticket.date).format('MMM Do, YYYY')}`}</Typography>
           </a>
         </Link>
       </Grid>
       <Grid item xs={2}>
         <Link href={`/orderDetails/${movie.movieSlug}/?ticketId=${ticket.ticketId}`}>
-          <a className={classes.noUnderline}>
+          <a className={classNames(classes.noUnderline, 'orderButton')}>
             <Button className={classes.link}>See Details</Button>
           </a>
         </Link>
