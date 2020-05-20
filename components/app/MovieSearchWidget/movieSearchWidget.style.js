@@ -1,86 +1,61 @@
 import { fade } from "@material-ui/core/styles"
 
 export default (theme) => ({
-  suggestionsContainer: {
-    position: "relative"
-  },
-  suggestionsContainerOpen: {
-    position: "absolute",
-    zIndex: 1,
-    left: 0,
-    right: 0
-  },
-  suggestionsList: {
-    margin: 0,
-    padding: 0,
-    listStyleType: "none"
-  },
-  suggestion: {
-    display: "block"
-  },
-
   searchOuter: {
-    backgroundColor: fade(theme.palette.common.white, 0.10),
-    position: "relative",
-    display: "inline-block",
-    width: '100%',
-    flex: 1,
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.15),
-      width: 175
+    width: 600,
+    height: 63,
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    background: 'transparent',
+
+    [theme.breakpoints.down('lg')]: {
+      width: 500,
     },
-    borderRadius: '8px', 
-    transition: theme.transitions.create("width"),
-    marginLeft: theme.spacing(2),
-    [theme.breakpoints.up("md")]: {
-      height: 40,
+
+    [theme.breakpoints.down('md')]: {
+      width: 300,
+    },
+
+    [theme.breakpoints.down('xs')]: {
       width: 200,
-      borderRadius: '8px', 
-      marginLeft: theme.spacing(16),
-      "&:hover": {
-        width: 220,
-      },
-      "&:focus-within": {
-        width: 220,
-      },
-    },
-  },
-
-  searchIcon: {
-    top: 1,
-    left: 5,
-    width: 28,
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    opacity: 0.6,
-  },
-
-  inputRoot: {
-    color: "inherit",
-    width: '100%',
-
-  },
-  
-  inputInput: {
-    display: 'block',
-    padding: theme.spacing(0, 1, 0, 5),
-    width: '100%',
-    height: 42,
-    '&::placeholder': {
-      display: 'block',
-      position: 'relative',
     }
   },
-
-  select: {
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(1),
-      width: "auto",
-        display: "inline"
-    },
-    marginRight: theme.spacing(2),
-    display: "none"
+  input: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    boxSizing: 'border-box',
+    width: 0,
+    height: 42,
+    padding: '0 20px',
+    outline: 'none',
+    fontSize: 18,
+    borderRadius: 63,
+    color: 'inherit',
+    border: 'none',
+    transition: 'all 0.8s ease',
+    background: 'initial',
+  },
+  opened: {
+    width: '100%',
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+    background: 'rgb(255,255,255,0.15)',
+  },
+  iconButton: {
+    position: 'absolute',
+    width: 42,
+    height: 42,
+    borderRadius: '50%',
+    right: 10,
+    textAlign: 'center',
+    lineHeight: 80,
+    fontSize: 20,
+    color: '#fff',
+    border: 'none',
+    background: 'initial',
   },
 })
 

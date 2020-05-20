@@ -1,18 +1,20 @@
 import React from "react"
-import { inject } from 'mobx-react'
+import { inject, observer } from 'mobx-react'
+import { withRouter } from 'next/router'
 
 import _ from 'lodash'
 import Autosuggest from "react-autosuggest"
 import classNames from 'classnames'
 
-import { InputBase, withStyles } from '@material-ui/core'
-
+import { withStyles, IconButton } from '@material-ui/core'
 import Search from '@material-ui/icons/Search'
 
 import styles from './movieSearchWidget.style.js'
 
-
+@withRouter
+@withStyles(styles)
 @inject('store')
+@observer
 class MovieSearchWidget extends React.Component {
 
   suggestionSet = []
@@ -26,6 +28,7 @@ class MovieSearchWidget extends React.Component {
       suggestions: [],
       popper: '',       // unused but needs to exist
       single: '',
+      searchOpened: false,
     }
   }
 
@@ -59,16 +62,19 @@ class MovieSearchWidget extends React.Component {
   }
 
   renderInputComponent = (inputProps) => {
-    const { classes, inputRef = this.noop, ref, ...other } = inputProps
+    const { classes, onChange, ref, value, } = inputProps
+    const { searchOpened } = this.state
+    const { isBrowseModal } = this.props
 
     return (
-      <InputBase
-        placeholder="Search…"
-        classes={{
-          root: classes.inputRoot,
-          input: classes.inputInput
-        }}
-        {...other}
+      <input
+        type="text"
+        placeholder="Search..."
+        className={classNames(classes.input, { [classes.opened]: searchOpened || isBrowseModal })}
+        onChange={onChange}
+        value={value}
+        ref={ref}
+        autoFocus
       />
     )
   }
@@ -82,10 +88,30 @@ class MovieSearchWidget extends React.Component {
     }
   }
 
+  openSearch = () => {
+    const { store: { uiStore }, router } = this.props
+
+    this.setState({
+      searchOpened: true,
+    }, () => {
+      setTimeout(()=> {
+        uiStore.openBrowseModal(() => {
+          const href = `${router.asPath}?modal=browse`
+      
+          router.push(router.route, href, { shallow: true })
+
+          this.setState({
+            searchOpened: false,
+          })
+        })
+      }, 1000)
+    })
+  }
+
   noop = () => {}
 
   render = () => {
-    const { classes, className } = this.props
+    const { classes, isBrowseModal } = this.props
     const { suggestions, single } = this.state
 
     const autoSuggestProps = {
@@ -97,8 +123,7 @@ class MovieSearchWidget extends React.Component {
     }
 
     return (
-      <div className={classNames(classes.searchOuter, className)}>
-        <Search className={classes.searchIcon}/>
+      <div className={classes.searchOuter}>
         <Autosuggest
           {...autoSuggestProps}
           inputProps={{
@@ -110,6 +135,9 @@ class MovieSearchWidget extends React.Component {
           renderSuggestionsContainer={this.noop}
           renderSuggestion={this.noop}
         />
+        <IconButton disabled={isBrowseModal} onClick={this.openSearch} className={classes.iconButton}>
+          <Search />
+        </IconButton>
       </div>
     )
   }
@@ -127,4 +155,4 @@ const fuzzyMatch = (str, pattern) => {
 const getSuggestionValue = (suggestion) => (suggestion.name)
 
 
-export default withStyles(styles)(MovieSearchWidget)
+export default MovieSearchWidget

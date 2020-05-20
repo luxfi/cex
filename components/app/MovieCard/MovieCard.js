@@ -39,7 +39,7 @@ export default ({
 
   return (
     <div className={classNames(classes.card, className, movie.movieSlug)} >
-      <img src={movie.posterImg} className={classes.cardMedia} style={style}/>
+      <img src={`/images/film/${movie.posterImg}`} className={classes.cardMedia} style={style}/>
       <div className={classes.cardContent}>
         <TrailerImage movie={movie} className={classes.trailerImg}/>
         <Box className={classNames(classes.standardContent, classes.innerCardContent) }>

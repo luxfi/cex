@@ -8,7 +8,7 @@ import {
   withStyles,
 } from '@material-ui/core'
 
-import { MovieCard } from '../app'
+import { MovieCard, Loading } from '../app'
 import FacetsToolbar from './FacetsToolbar'
 
 import tradingStatus from '../../settings/tradingStatus'
@@ -53,26 +53,27 @@ class BrowseMovies extends React.Component {
             tabGroupClasses,
           }}
         />
-
-        <Grid container spacing={3} className={classes.resultsOuter} alignItems='stretch'>
-        {
-          movieStore.filteredMovies.length ? (
-            movieStore.filteredMovies.map((m, i) => (
-              <Grid xs={12} sm={6} md={4} lg={2} item key={m.imdbid + i} >
-                <MovieCard
-                  movie={m}
-                  goToMovieDetail={(movie) => { router.push(`/film/${movie.movieSlug}`) }}
-                  goToMovieOffering={(movie) => { router.push(`/offering/${movie.movieSlug}`) }}
-                  goToMovieTrading={(movie) => { router.push(`/trade/${movie.movieSlug}`) }}
-                />
-              </Grid>
-            ))
-          ) : (
-            <Typography variant="h6" className={classes.noFilmMessage}>No film found</Typography>
-          )
-        }
-        {!movieStore.movies.length && <Typography style={{ textAlign: 'center', width: '100%' }}>No movie found</Typography>}
-        </Grid>
+        <Loading loading={movieStore.isLoading}>
+          <Grid container spacing={3} className={classes.resultsOuter} alignItems='stretch'>
+          {
+            movieStore.filteredMovies.length ? (
+              movieStore.filteredMovies.map((m, i) => (
+                <Grid xs={12} sm={6} md={4} lg={2} item key={m.imdbid + i} >
+                  <MovieCard
+                    movie={m}
+                    goToMovieDetail={(movie) => { router.push(`/film/${movie.movieSlug}`) }}
+                    goToMovieOffering={(movie) => { router.push(`/offering/${movie.movieSlug}`) }}
+                    goToMovieTrading={(movie) => { router.push(`/trade/${movie.movieSlug}`) }}
+                  />
+                </Grid>
+              ))
+            ) : (
+              <Typography variant="h6" className={classes.noFilmMessage}>No film found</Typography>
+            )
+          }
+          {!movieStore.movies.length && <Typography style={{ textAlign: 'center', width: '100%' }}>No movie found</Typography>}
+          </Grid>
+        </Loading>
       </div>
     )
   }

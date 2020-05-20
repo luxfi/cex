@@ -3,7 +3,7 @@ import { action, observable, computed } from 'mobx'
 export default class UIStore {
   @observable snackBarOpen = false
   @observable authModalOpen = false
-  @observable browseMovieModalOpen = false
+  @observable browseModalOpened = false
   @observable tabIndexValue = 0
   @observable snackBarVariant = 'error'
   @observable snackBarMessage = ''
@@ -84,12 +84,16 @@ export default class UIStore {
     this.authModalOpen = false
   }
 
-  @action openBrowseMovieModal() {
-    this.browseMovieModalOpen = true
+  @action openBrowseModal(cb) {
+    this.browseModalOpened = true
+
+    if (cb) {
+      cb()
+    }
   }
 
-  @action closeBrowseMovieModal() {
-    this.browseMovieModalOpen = false
+  @action closeBrowseModal(success) {
+    this.browseModalOpened = false
   }
 
   @action openDialog(name) {

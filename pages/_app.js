@@ -65,17 +65,8 @@ export default class extends NextApp {
     const modalQuery = params.get('modal')
     
     if (modalQuery === 'browse') {
-      this.stores.uiStore.openBrowseMovieModal()
+      this.stores.uiStore.openBrowseModal()
     }
-  }
-
-  openBrowseModal = () => {
-    const { router } = this.props
-    this.stores.uiStore.openBrowseMovieModal()
-
-    const href = `${router.asPath}?modal=browse`
-
-    router.push(router.route, href, { shallow: true })
   }
 
   render() {
@@ -105,7 +96,6 @@ export default class extends NextApp {
                 movies={this.stores.movieStore.filteredMovies}
                 openMobileMenu={() => {this.stores.uiStore.setRightDrawerOpen(true)}}
                 handleLogout={() => {this.stores.userStore.logout()}}
-                openBrowseModal={this.openBrowseModal}
               />
               <MobileNavMenuDrawer
                 open={this.stores.uiStore.drawers.left}
@@ -122,7 +112,7 @@ export default class extends NextApp {
               />
 
               <CustomSnackbar />
-              <BrowseMoviesModal open={uiStore.browseMovieModalOpen} />
+              <BrowseMoviesModal open={uiStore.browseModalOpened} />
               <MobileAccountMenuDrawer
                 open={this.stores.uiStore.drawers.right}
                 setOpen={this.stores.uiStore.setRightDrawerOpen}

@@ -1,4 +1,5 @@
 import React from 'react'
+import { inject, observer } from 'mobx-react'
 
 import {
   AppBar,
@@ -8,9 +9,7 @@ import {
   Toolbar,
   useScrollTrigger,
   withWidth,
-  Tooltip,
 } from '@material-ui/core'
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
 
 import { MenuRounded as MenuIcon, Search as SearchIcon } from '@material-ui/icons'
 import classNames from 'classnames'
@@ -24,17 +23,19 @@ import structure from '../../../settings/navStructure'
 import styles from './header.style.js'
 const myStyles = makeStyles(styles)
 
-export default withWidth()((props) => {
+export default withWidth()(inject('store')(observer((props) => {
 
   const {
     openMobileMenu,
     handleLogout,
     handleClose,
-    openBrowseModal,
     loggedIn,
     width,
     movies,
+    store,
+    isBrowseModal,
   } = props
+  const { uiStore } = store
 
   const showDesktopNav = isWidthUp('md', width)
 
@@ -50,15 +51,14 @@ export default withWidth()((props) => {
   }
 
   return (
-    <AppBar className={classNames(s.appBarCommon, appBarClass, { [s.modalHeader]: !openBrowseModal })}>
+    <AppBar className={classNames(s.appBarCommon, appBarClass, { [s.modalHeader]: isBrowseModal })}>
       <Toolbar disableGutters className={s.toolbar}>
         <div className={s.logoArea}>
           <NextMuiLink href='/'><HeaderLogo handleClose={handleClose} className={s.logo} /></NextMuiLink>
-          {(!openBrowseModal) ? (<MovieSearchWidget className={s.searchWidget} movies={movies} />) : null}
+          <MovieSearchWidget className={s.searchWidget} movies={movies} isBrowseModal={isBrowseModal} />
         </div>
         {showDesktopNav ? (
           <div className={s.desktopElementsOuter}>
-            {(openBrowseModal) ? (<SearchButton onClick={openBrowseModal} classes={s} />) : null}
             <CascadingMenu handleClose={handleClose} structure={structure} className={s.navMenu}/>
             <DesktopUserMenu loggedIn={loggedIn} handleLogout={handleLogout} classes={s}/>
           </div>
@@ -68,18 +68,10 @@ export default withWidth()((props) => {
       </Toolbar>
     </AppBar>
   )
-})
+})))
 
 const BurgerMenuButton = ({ onClick, classes }) => (
   <IconButton onClick={onClick} className={classes.hamburgerMenuButton}>
     <MenuIcon className={classes.mobileHamburgerIcon} />
   </IconButton>
-)
-
-const SearchButton = ({ onClick, classes }) => (
-  <Tooltip title='Browse Movies'>
-    <IconButton onClick={onClick} className={classes.searchButton}>
-      <SearchIcon className={classes.searchButtonIcon} />
-    </IconButton>
-  </Tooltip>
 )

@@ -43,9 +43,13 @@ export default (theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    flex: 1,
+    justifyContent: 'space-between',
+    flex: 2,
     height: 60,
+
+    [theme.breakpoints.down('md')]: {
+      flex: 1,
+    },
   },
 
   logo: {
@@ -102,5 +106,57 @@ export default (theme) => ({
   searchButton: {
     width: 48,
     height: 48,
+    display: 'none',
+    transition: 'all 300ms linear',
+  },
+  showSearchBotton: {
+    // position: 'absolute',
+    // top: '50%',
+    // left: '50%',
+    // transform: 'translate(-50%, -50%)',
+  },
+  search: {
+    width: '450px',
+    height: 63,
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  input: {
+    position: 'absolute',
+    right: 63,
+    boxSizing: 'border-box',
+    width: 0,
+    height: 42,
+    padding: '0 20px',
+    outline: 'none',
+    fontSize: 18,
+    borderRadius: 63,
+    color: '#29313a',
+    border: '3px solid #62d474',
+    transition: 'all 0.8s ease',
+  },
+  active: {
+    width: 350,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+    right: 100,
+  },
+  btn: {
+    position: 'absolute',
+    width: 42,
+    height: 42,
+    background: '#62d474',
+    borderRadius: '50%',
+    right: 63,
+    cursor: 'pointer',
+    textAlign: 'center',
+    lineHeight: 80,
+    fontSize: 20,
+    color: '#fff',
+    transition: 'all 0.8s ease',
+  },
+  btnInner: {
+    position: 'relative',
   }
 })
