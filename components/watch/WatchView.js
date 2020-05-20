@@ -33,8 +33,8 @@ import { formatNumber, renderDate } from '../../util'
 
 import styles from './style.js'
 
-@withRouter
 @withStyles(styles)
+@withRouter
 @inject("store")
 @observer
 export default class extends React.Component {

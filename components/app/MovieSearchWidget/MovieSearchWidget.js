@@ -96,7 +96,11 @@ class MovieSearchWidget extends React.Component {
     }, () => {
       setTimeout(()=> {
         uiStore.openBrowseModal(() => {
-          const href = `${router.asPath}?modal=browse`
+          let href = `${router.asPath}?modal=browse`
+
+          if (router.route === '/watch') {
+            href = `${router.asPath}&modal=browse`
+          }
       
           router.push(router.route, href, { shallow: true })
 
