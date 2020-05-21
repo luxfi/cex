@@ -226,9 +226,7 @@ export default class extends React.Component {
                               href='/trade/[id]'
                               as={`/trade/${movie.movieSlug}`}
                             >
-                              <Button className={classes.linkBackButton}>
-                                <Typography className={classes.linkBackButtonText} noWrap>Trade</Typography>
-                              </Button>
+                              <Button className={classes.linkBackButton}>Trade</Button>
                             </Link>
                           ) : (
                             <Link
@@ -237,7 +235,7 @@ export default class extends React.Component {
                               href='/offering/[slug]'
                               as={`/offering/${movie.movieSlug}`}
                             >
-                              <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText} noWrap>Invest</Typography></Button>
+                              <Button className={classes.linkBackButton}>Invest</Button>
                             </Link>
                           )
                         }
@@ -249,7 +247,7 @@ export default class extends React.Component {
                           href='/ticketing/[id]'
                           as={`/ticketing/${movie.movieSlug}`}
                         >
-                          <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText} noWrap>Buy Tickets</Typography></Button>
+                          <Button className={classes.linkBackButton}>Buy Tickets</Button>
                         </Link>
                       </Box>
                     </Grid>
@@ -286,12 +284,7 @@ export default class extends React.Component {
                         className={classes.subScribeButton}
                         size='small'
                       >
-                        <Typography
-                          noWrap
-                          className={classes.subScribeButtonText}
-                        >
-                          {`SUBSCRIBE ${formatNumber(subscribers, 1)}`}
-                        </Typography>
+                        {`SUBSCRIBE ${formatNumber(subscribers, 1)}`}
                       </Button>
                     </Grid>
                   </Grid>

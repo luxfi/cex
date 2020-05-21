@@ -199,11 +199,8 @@ export default (theme) => ({
   subScribeButton: {
     background: YELLOW,
     padding: '7px 15px',
-  },
-
-  subScribeButtonText: {
     color: '#000',
-    fontSize: 12,
+    fontSize: '0.8125em',
   },
 
   topNav: {
@@ -212,10 +209,7 @@ export default (theme) => ({
 
   linkBackButton: {
     background: YELLOW,
-  },
-
-  linkBackButtonText: {
-    fontSize: 12,
+    fontSize: '0.8125em',
     color: '#000',
   },
 

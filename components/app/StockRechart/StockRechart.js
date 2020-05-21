@@ -5,6 +5,7 @@ import LocalOfferIcon from '@material-ui/icons/LocalOffer'
 import PeopleIcon from '@material-ui/icons/People'
 import React from 'react'
 import { ScaleLoader } from 'react-spinners'
+import classNames from 'classnames'
 import {
   Line,
   LineChart,
@@ -37,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.secondary.main,
     },
   },
+  stockName: {
+    fontWeight: 'bold',
+  },
 }))
 
 const CustomHeading = ({ ticker, stockName, movieSlug }) => {
@@ -44,11 +48,9 @@ const CustomHeading = ({ ticker, stockName, movieSlug }) => {
   return (
     <div className={classes.root}>
       <Typography variant='h5'>
-        <Box fontWeight='fontWeightBold'>
-          <Link href='/film/[id]' as={`/film/${movieSlug}`} className={classes.aTag}>
-            {stockName}
-          </Link>
-        </Box>
+        <Link href='/film/[id]' as={`/film/${movieSlug}`} className={classNames(classes.aTag, classes.stockName)}>
+          {stockName}
+        </Link>
       </Typography>
       <Typography variant='h5' component='div'>
         <Box fontWeight='fontWeightBold'>

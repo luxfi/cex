@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import grey from '@material-ui/core/colors/grey'
 import Icon from '@material-ui/core/Icon'
 import { BookmarkBorder } from '@material-ui/icons'
+import classNames from 'classnames'
 
 import Link from '../../app/Link'
 import { OfferingInput } from '../'
@@ -37,6 +38,9 @@ const useTitleStyles = makeStyles(theme => ({
       color: theme.palette.secondary.main,
     },
   },
+  movieName: {
+    fontWeight: 'bold',
+  },
 }))
 
 const Title = ({ movie, highlightedTags }) => {
@@ -45,11 +49,9 @@ const Title = ({ movie, highlightedTags }) => {
     <Grid container direction="column" spacing={0}>
       <Grid item xs={12}>
         <Typography variant="h4" gutterBottom>
-          <Box fontWeight="fontWeightBold">
-            <Link href='/film/[id]' as={`/film/${movie.movieSlug}`} className={classes.aTag}>
-              {movie.name}
-            </Link>
-          </Box>
+          <Link href='/film/[id]' as={`/film/${movie.movieSlug}`} className={classNames(classes.aTag, classes.movieName)}>
+            {movie.name}
+          </Link>
         </Typography>
       </Grid>
       <Grid item container xs={12} direction="row">

@@ -52,6 +52,7 @@ const myStyles = makeStyles((theme) => ({
     },
   },
   investButton: {
+    fontSize: '0.9375rem',
     color: theme.palette.common.black,
     backgroundColor: '#FBC43E',
     padding: '12px 24px',
@@ -63,6 +64,7 @@ const myStyles = makeStyles((theme) => ({
     color: theme.palette.common.white,
     border: `1px solid ${theme.palette.common.white}`,
     padding: '11px 24px',
+    fontSize: '0.9375rem',
   },
   watchTrailerButtonText: {
     color: 'inherit !important',
@@ -107,36 +109,27 @@ export default (props) => {
             <Button
               className={`watch-trailer-button button ${s.watchTrailerButton}`}
               variant="outlined"
-              size="large"
               startIcon={<PlayArrowIcon />}
             >
-              <Typography variant="body2">
-                Play Trailer
-              </Typography>
+              Play Trailer
             </Button>
           </Link>
         </Grid>
         <Grid item >
-          <Button
-            className={s.investButton}
-            size='large'
-            startIcon={<MonetizationOnIcon />}
+          <Link
+            href={hrefLink}
+            as={hrefLink}
+            style={{ textDecoration: 'inherit', color: '#000' }}
           >
-            <Link
-              href={hrefLink}
-              as={hrefLink}
-              style={{ textDecoration: 'inherit', color: '#000' }}
+            <Button
+              className={s.investButton}
+              startIcon={<MonetizationOnIcon />}
             >
-              <Typography variant='body2' className={s.watchTrailerButtonText}>
-                INVEST IN {movie.name}
-              </Typography>
-            </Link>
-          </Button>
+              INVEST IN {movie.name}
+            </Button>
+          </Link>
         </Grid>
       </Grid>
     </Grid>
   )
-
 }
-
-

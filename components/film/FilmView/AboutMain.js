@@ -36,9 +36,7 @@ export default ({ classes, movie }) => (
             size='large'
             startIcon={<PlayArrowIcon />}
           >
-            <Typography variant='body2'>
-              Play Trailer
-            </Typography>
+            Play Trailer
           </Button>
         </Link>
         <Link href={`/trade/${movie.movieSlug}`} as={`/trade/${movie.movieSlug}`}>
@@ -50,7 +48,7 @@ export default ({ classes, movie }) => (
           </Button>
         </Link>
         <AddToWatchlistButton movie={movie} className={classes.movieButton} />
-        <Link href={`/ticketing/${movie.movieSlug}`} as={`/ticketing/${movie.movieSlug}`}>
+        <Link href='/ticketing/[id]' as={`/ticketing/${movie.movieSlug}`}>
           <Button
             id='buyTicketsButton'
             variant='contained'

@@ -1,5 +1,6 @@
-import Link from 'next/link'
 import React from 'react'
+import Link from 'next/link'
+import classNames from 'classnames'
 
 export default ({
   className,
@@ -10,7 +11,7 @@ export default ({
 }) => (
   <Link href={href} as={as}>
     <a
-      className={className}
+      className={classNames(className, 'wrapped-link')}
       style={style}
     >
       {children}
