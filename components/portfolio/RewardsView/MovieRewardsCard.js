@@ -22,7 +22,7 @@ export default (props) => {
   const pointsString = (referrals * 5) + " Credits earned"
   return (
     <Paper className={classNames(classes.movieRewardsCard, classes.paper)}>
-      <img src={movie.posterImg} width='auto' height='100%'/>
+      <img src={`/images/film/${movie.posterImg}`} width='auto' height='100%'/>
       <div className={classes.movieCardContentArea}>
         <Typography className={classes.movieCardTitle}>{movie.name}</Typography>
         <div className={classes.rewardIconsRow}>

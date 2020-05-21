@@ -12,7 +12,7 @@ export default class MovieStore {
   @observable browseMovies = []
   @observable isLoading = true
   @observable currentMovie = undefined
-  @observable loadingBrowseMovies = false
+  @observable loadingBrowseMovies = true
 
   facets = {
     genres: observable.map(),

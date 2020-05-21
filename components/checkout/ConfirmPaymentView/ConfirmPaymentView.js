@@ -181,7 +181,7 @@ class ConfirmPaymentView extends React.Component {
     return (
       <Grid container className={classes.outerContainer}>
         <Grid item xs={12} md={3}>
-          <img className={classes.movieImg} src={movie.posterImg} alt='' />
+          <img className={classes.movieImg} src={`/images/film/${movie.posterImg}`} alt='' />
           <Typography variant='h5'>{movie.name}</Typography>
           <div>{selectedVenue.venue && selectedVenue.venue.address.line}</div>
           <div>{`${selectedDate.formated && selectedDate.formated} ${moment(selectedShowtime && selectedShowtime.localShowtimeStart).format('hh:mm A')}`}</div>

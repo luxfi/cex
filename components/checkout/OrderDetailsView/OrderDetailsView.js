@@ -156,7 +156,7 @@ class OrderDetailsView extends React.Component {
               <Grid container className={classes.innerContainer}>
                 <Grid item md={9} xs={12} className={classNames(classes.mainContentArea, 'print-area')}>
                   <div className={classes.qrCodeSection}>
-                    <img src={movie.posterImg} alt={`${movie.name} poster`} />
+                    <img src={`/images/film/${movie.posterImg}`} alt={`${movie.name} poster`} />
                     <QRCode value={qrCodeData} size={250} level='M' includeMargin />
                     <Typography variant='h4'>{movie.name}</Typography>
                   </div>

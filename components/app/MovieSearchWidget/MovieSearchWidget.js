@@ -99,7 +99,7 @@ class MovieSearchWidget extends React.Component {
         uiStore.openBrowseModal(() => {
           let href = `${router.asPath}?modal=browse`
 
-          if (router.route === '/watch') {
+          if (router.asPath.includes('?')) {
             href = `${router.asPath}&modal=browse`
           }
       

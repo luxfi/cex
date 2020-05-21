@@ -91,7 +91,7 @@ class TicketingView extends React.Component {
         <div>
           <Grid container alignContent="center" justify="center" className={classes.movieSummaryHero}>
             <Grid item xs={12} md={3} lg={2} className={classes.movieSummaryHeroPoster}>
-              <img className={classes.heroImage} src={movie.posterImg} alt='' role='presentation' />
+              <img className={classes.heroImage} src={`/images/film/${movie.posterImg}`} alt='' role='presentation' />
             </Grid>
             <Grid item xs={12} md={9} lg={10} className={classes.movieSummaryHeroInfo}>
               <Typography variant='h1' className={classes.movieSummaryHeroTitle}>{movie.name}</Typography>
