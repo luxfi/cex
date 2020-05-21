@@ -2,6 +2,7 @@ import React from "react"
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'next/router'
 
+
 import _ from 'lodash'
 import Autosuggest from "react-autosuggest"
 import classNames from 'classnames'
@@ -41,8 +42,8 @@ class MovieSearchWidget extends React.Component {
   handleSuggestionsFetch = ({ value }) => {
     this.setSuggestions(
       this.suggestionSet
-        .filter(str => fuzzyMatch(str.name, value))
-        .map(movie => movie.movie)
+      .filter(str => fuzzyMatch(str.name, value))
+      .map(movie => movie.movie)
     )
   }
 
@@ -140,7 +141,7 @@ class MovieSearchWidget extends React.Component {
           renderSuggestion={this.noop}
         />
         <IconButton disabled={isBrowseModal} onClick={this.openSearch} className={classes.iconButton}>
-          <Search />
+          <Search className={classes.searchIcon} />
         </IconButton>
       </div>
     )

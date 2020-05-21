@@ -53,7 +53,7 @@ class BrowseMovies extends React.Component {
             tabGroupClasses,
           }}
         />
-        <Loading loading={movieStore.isLoading}>
+        <Loading loading={movieStore.loadingBrowseMovies}>
           <Grid container spacing={3} className={classes.resultsOuter} alignItems='stretch'>
           {
             movieStore.filteredMovies.length ? (

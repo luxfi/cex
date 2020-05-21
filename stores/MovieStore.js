@@ -1,6 +1,7 @@
 import { action, observable, computed, autorun } from 'mobx'
 import { computedFn } from 'mobx-utils'
 import uuid from 'uuid'
+import _ from 'lodash'
 
 import tradingStatus from '../settings/tradingStatus'
 import moviesFromJson from '../assets/tempData/movies'
@@ -11,6 +12,7 @@ export default class MovieStore {
   @observable browseMovies = []
   @observable isLoading = true
   @observable currentMovie = undefined
+  @observable loadingBrowseMovies = false
 
   facets = {
     genres: observable.map(),
@@ -116,6 +118,7 @@ export default class MovieStore {
     }
 
     this.isLoading = true
+    this.loadingBrowseMovies = true
     this.movies.clear()
 
     moviesFromJson.forEach(m => {
@@ -128,6 +131,7 @@ export default class MovieStore {
     }
     this.currentMovie = this.movies[0] // TEMP
     this.isLoading = false
+    this.loadingBrowseMovies = false
   }
 
   moviefromJSON(json) {
@@ -136,11 +140,6 @@ export default class MovieStore {
     return movie
   }
 
-  // @computed get topMovies() {
-  //   return this.movies.length > 0
-  //     ? _.sortBy(this.movies, r => -r.percentChange).slice(0, 15)
-  //     : this.movies
-  // }
   @computed get investorTopPicks() {
     return this.movies.length > 0 ? this.movies.slice(0, 3) : this.movies
   }
@@ -158,12 +157,6 @@ export default class MovieStore {
       throw new Error('getMovieBySlug() requires slug to be defined')
     }
 
-    // if (slug) {
-    //   return this.movies.find(movie => movie.movieSlug === slug)
-    // }
-  
-    // return null
-
     return this.movies.find(m => m.movieSlug === slug)
   }
 
@@ -176,13 +169,24 @@ export default class MovieStore {
   }
 
   @action setMovieSearchResult(movies) {
-    this.browseMovies = [...movies]
+    this.loadingBrowseMovies = true
+    setTimeout(() => {
+      this.browseMovies = [...movies]
+      this.loadingBrowseMovies = false
+    }, 1000)
   }
 
   @action resetMovieSearchResult() {
-    moviesFromJson.forEach(m => {
-      this.browseMovies.push(this.moviefromJSON(m))
-    })
+    this.browseMovies.clear()
+    this.loadingBrowseMovies = true
+
+    setTimeout(() => {
+      
+      moviesFromJson.forEach(m => {
+        this.browseMovies.push(this.moviefromJSON(m))
+      })
+      this.loadingBrowseMovies = false
+    }, 1000)
   }
 }
 

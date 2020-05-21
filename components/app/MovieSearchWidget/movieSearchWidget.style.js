@@ -24,12 +24,12 @@ export default (theme) => ({
   },
   input: {
     position: 'absolute',
-    top: 10,
+    top: 15,
     right: 10,
     boxSizing: 'border-box',
     width: 0,
     height: 42,
-    padding: '0 20px',
+    padding: '0 42px 0 30px',
     outline: 'none',
     fontSize: 18,
     borderRadius: 63,
@@ -40,12 +40,11 @@ export default (theme) => ({
   },
   opened: {
     width: '100%',
-    borderTopLeftRadius: 5,
-    borderBottomLeftRadius: 5,
     background: 'rgb(255,255,255,0.15)',
   },
   iconButton: {
     position: 'absolute',
+    top: 15,
     width: 42,
     height: 42,
     borderRadius: '50%',
