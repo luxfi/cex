@@ -15,6 +15,9 @@ export default (theme) => ({
       textAlign: 'left',
     },
   },
+  aTag: {
+    textDecoration: 'none',
+  },
   ticketColumnHeader: {
     fontSize: '16px',
     fontWeight: 'bold',

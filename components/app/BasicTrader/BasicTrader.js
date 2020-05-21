@@ -1,7 +1,7 @@
 import React from 'react' 
 import { toJS } from 'mobx'
 import Router from 'next/router'
-import Link from 'next/link'
+import Link from '../Link'
 
 import { Grid, Typography, Button, Box, Divider, makeStyles } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
@@ -113,7 +113,11 @@ export default (props) => {
             </Grid>
             <Grid item xs={12}>
               <Box mt={3} pl={4} pr={4}>
-                <Link href="/ticketing" as={`/ticketing/${movieSlug}`}>
+                <Link
+                  href="/ticketing/[id]"
+                  as={`/ticketing/${movieSlug}`}
+                  style={{ textDecoration: 'none' }}
+                >
                   <Button
                     title="Tweet"
                     variant="outlined"

@@ -18,13 +18,14 @@ import {
 import classNames from 'classnames'
 import { inject, observer } from 'mobx-react'
 import moment from 'moment'
-import Link from 'next/link'
 import { withRouter } from 'next/router'
 
 import QRCode from 'qrcode.react'
 
 
 import React from 'react'
+
+import Link from '../../app/Link'
 
 import { slugFromPath } from '../../../util'
 import { Map, ShareButtons } from '../../app'
@@ -239,13 +240,11 @@ class OrderDetailsView extends React.Component {
                   </div>
                   <div className={classes.contentBox}>
                     <div className={classes.detailBox}>
-                      <Link href='/account/orders'>
-                        <a className={classes.aTags}>
-                          <ButtonBase className={classes.sidebarButton}>
-                            <ViewListIcon fontSize='large' />
-                            <Typography>View orders</Typography>
-                          </ButtonBase>
-                        </a>
+                      <Link href='/account/orders' className={classes.aTags}>
+                        <ButtonBase className={classes.sidebarButton}>
+                          <ViewListIcon fontSize='large' />
+                          <Typography>View orders</Typography>
+                        </ButtonBase>
                       </Link>
                       {/* <ButtonBase className={classes.sidebarButton}>
                         <CancelIcon fontSize='large' />

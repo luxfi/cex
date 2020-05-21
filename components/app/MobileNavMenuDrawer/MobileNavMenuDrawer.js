@@ -1,5 +1,5 @@
 import React from 'react'
-import NextLink from 'next/link'
+import Link from '../../app/Link'
 
 import { ExpandLess, ExpandMore } from "@material-ui/icons"
 
@@ -147,9 +147,9 @@ const Logo = (props) => {
   const {classes} = props
   return (
     <div className={classes.logoLink}>
-      <NextLink href="/">
+      <Link href="/">
         <img src="/static/images/esx/esx-white-logo.png" alt="ESX" className={classes.logoImg}/>
-      </NextLink>
+      </Link>
     </div>
   )
 }

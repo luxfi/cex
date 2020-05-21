@@ -1,5 +1,4 @@
 import React from 'react'
-import Link from 'next/link'
 
 import {
   Button,
@@ -7,6 +6,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import { PlayArrow as PlayArrowIcon } from '@material-ui/icons'
+import Link from '../../app/Link'
 import { getYoutubeId } from '../../../util'
 
 import { AddToWatchlistButton } from '../../app'
@@ -26,19 +26,20 @@ export default ({ classes, movie }) => (
         </p>
       </div>
       <div>
-        <Link href={`/watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`}>
-          <a className={classes.watchButton}>
-            <Button
-              className='watch-trailer-button button'
-              variant='outlined'
-              size='large'
-              startIcon={<PlayArrowIcon />}
-            >
-              <Typography variant='body2'>
-                Play Trailer
-              </Typography>
-            </Button>
-          </a>
+        <Link
+          href={`/watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`}
+          className={classes.watchButton}
+        >
+          <Button
+            className='watch-trailer-button button'
+            variant='outlined'
+            size='large'
+            startIcon={<PlayArrowIcon />}
+          >
+            <Typography variant='body2'>
+              Play Trailer
+            </Typography>
+          </Button>
         </Link>
         <Link href={`/trade/${movie.movieSlug}`} as={`/trade/${movie.movieSlug}`}>
           <Button
@@ -49,7 +50,7 @@ export default ({ classes, movie }) => (
           </Button>
         </Link>
         <AddToWatchlistButton movie={movie} className={classes.movieButton} />
-        <Link href='/ticketing' as={`/ticketing/${movie.movieSlug}`}>
+        <Link href={`/ticketing/${movie.movieSlug}`} as={`/ticketing/${movie.movieSlug}`}>
           <Button
             id='buyTicketsButton'
             variant='contained'

@@ -8,11 +8,11 @@ import {
 
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 
-import NextLink from 'next/link'
-
 import { makeStyles } from '@material-ui/core/styles'
 
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+
+import Link from '../../app/Link'
 
 import { getYoutubeId } from '../../../util'
 
@@ -99,20 +99,22 @@ export default (props) => {
       </Grid>
       <Grid container item spacing={2} justify='flex-start' className={s.buttonGridContainer}>
         <Grid item >
-          <NextLink href={`/watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`}>
-            <a style={{ textDecoration: 'none'}}>
-              <Button
-                className={`watch-trailer-button button ${s.watchTrailerButton}`}
-                variant="outlined"
-                size="large"
-                startIcon={<PlayArrowIcon />}
-              >
-                <Typography variant="body2">
-                  Play Trailer
-                </Typography>
-              </Button>
-            </a>
-          </NextLink>
+          <Link
+            href={`/watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`}
+            as={`/watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`}
+            style={{ textDecoration: 'none'}}
+          >
+            <Button
+              className={`watch-trailer-button button ${s.watchTrailerButton}`}
+              variant="outlined"
+              size="large"
+              startIcon={<PlayArrowIcon />}
+            >
+              <Typography variant="body2">
+                Play Trailer
+              </Typography>
+            </Button>
+          </Link>
         </Grid>
         <Grid item >
           <Button
@@ -120,11 +122,15 @@ export default (props) => {
             size='large'
             startIcon={<MonetizationOnIcon />}
           >
-            <NextLink href={hrefLink}>
+            <Link
+              href={hrefLink}
+              as={hrefLink}
+              style={{ textDecoration: 'inherit', color: '#000' }}
+            >
               <Typography variant='body2' className={s.watchTrailerButtonText}>
                 INVEST IN {movie.name}
               </Typography>
-            </NextLink>
+            </Link>
           </Button>
         </Grid>
       </Grid>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Link from 'next/link'
 import { withRouter } from 'next/router'
 import { inject, observer } from 'mobx-react'
 
@@ -9,6 +8,7 @@ import grey from '@material-ui/core/colors/grey'
 import Icon from '@material-ui/core/Icon'
 import { BookmarkBorder } from '@material-ui/icons'
 
+import Link from '../../app/Link'
 import { OfferingInput } from '../'
 import { ESXLinearProgressBar, ShareWidget, MediaSlider } from '../../app'
 import { formatCurrency, slugFromPath } from '../../../util'
@@ -46,10 +46,8 @@ const Title = ({ movie, highlightedTags }) => {
       <Grid item xs={12}>
         <Typography variant="h4" gutterBottom>
           <Box fontWeight="fontWeightBold">
-            <Link href={`/film/${movie.movieSlug}`}>
-              <a className={classes.aTag}>
-                {movie.name}
-              </a>
+            <Link href='/film/[id]' as={`/film/${movie.movieSlug}`} className={classes.aTag}>
+              {movie.name}
             </Link>
           </Box>
         </Typography>
@@ -67,8 +65,8 @@ const Title = ({ movie, highlightedTags }) => {
           </Typography>
         ))}
         {movie.tags.map((tag, i) => {
-          const link = <Link href={`/browse?facet=distributors&value=${tag}`}>
-            <a className={classes.aTag}>{tag}</a>
+          const link = <Link href={`/browse?facet=distributors&value=${tag}`} className={classes.aTag}>
+            {tag}
           </Link>
 
           return (

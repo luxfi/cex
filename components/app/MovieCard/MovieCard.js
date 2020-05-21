@@ -1,6 +1,6 @@
 import React from 'react'
-import NextLink from 'next/link'
 import classNames from 'classnames'
+import Link from '../../app/Link'
 
 import {
   Button,
@@ -47,11 +47,9 @@ export default ({
           <Typography className={classes.title} variant="body2">{movie.name}</Typography>
         </Box>
         <Box className={classNames(classes.hoverContent, classes.innerCardContent)}>
-          <NextLink href={`/film/${movie.movieSlug}`}>
-            <a className={classes.aTag}>
-              <Typography className={classNames(classes.title, classes.aTag)} variant="body2">{movie.name}</Typography>
-            </a>
-          </NextLink>
+          <Link href='/film/[id]' as={`/film/${movie.movieSlug}`} className={classes.aTag}>
+            <Typography className={classNames(classes.title, classes.aTag)} variant="body2">{movie.name}</Typography>
+          </Link>
           <Typography className={classes.shortDescription} variant="body1">{truncate(movie.shortDescription, 20)}</Typography>
           <div className={classes.buttonsOuter}>
             <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => { goToMovieDetail(movie) }} ><InfoIcon /></Button>
@@ -67,15 +65,14 @@ export default ({
 
 const TrailerImage = ({movie, className}) => {
   const childRef = React.useRef()
+  const href = `/watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`
   return (
-    <NextLink href={`/watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`}>
-      <a style={{ color: '#fff'}}>
-        <div className={className}>
-          <FontAwesomeIcon icon={faPlayCircle} size='1x' />
-          <img src={movie.heroImg} />
-          <TrailerSliderModal movie={movie} ref={childRef} />
-        </div>
-      </a>
-    </NextLink>
+    <Link href={href} style={{ color: '#fff', textDecoration: 'none'}}>
+      <div className={className}>
+        <FontAwesomeIcon icon={faPlayCircle} size='1x' />
+        <img src={movie.heroImg} />
+        <TrailerSliderModal movie={movie} ref={childRef} />
+      </div>
+    </Link>
   )
 }

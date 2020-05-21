@@ -4,7 +4,8 @@ import useSliderHook from '../MediaSlider/useSliderHook'
 import { observer, inject } from 'mobx-react';
 import { useRouter } from 'next/router'
 import { withStyles } from '@material-ui/core/styles'
-import Link from 'next/link'
+
+import Link from '../../app/Link'
 
 import { getYoutubeId, slugFromPath } from '../../../util'
 
@@ -30,13 +31,11 @@ function Trailers({ store, classes }) {
         trailers.length
           ? trailers.map((trailerInfo, i) => (
             <Link key={i} href={`/watch?video=${movieSlug}&trailerId=${getYoutubeId(trailerInfo.trailer)}`}>
-              <a>
-                <Image
-                  src={trailerInfo.thumbnail}
-                  disableSpinner
-                  className={classes.image}
-                />
-              </a>
+              <Image
+                src={trailerInfo.thumbnail}
+                disableSpinner
+                className={classes.image}
+              />
             </Link>
           ))
           : null

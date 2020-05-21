@@ -1,6 +1,7 @@
 import React from 'react'
 import NextLink from 'next/link'
 import classNames from 'classnames'
+import Link from '../../app/Link'
 
 import {
     Button,
@@ -30,9 +31,9 @@ export default ({ structure, className }) => {
 
     if (href) {
       return (
-        <NextLink href={href} key={`link+${n.title}`}>
+        <Link href={href} as={href} key={`link+${n.title}`} className={s.aTag}>
           <Button className={classNames(s.menuButton, 'menu-button')}>{n.title}</Button>
-        </NextLink>
+        </Link>
       )
     }
     return (
@@ -74,13 +75,13 @@ const MenuDropdown = ({ def, classes, key }) => (
               query: { title: item.placeholder },
             }
           return (
-            <NextLink href={href} key={item.title}>
+            <Link href={href} as={href} key={item.title}>
               <MenuItem onClick={popupState.close}>
                 <span className={classes.subMenuItemText}>
                   {item.title}
                 </span>
               </MenuItem>
-            </NextLink>
+            </Link>
           )
         },
       )}

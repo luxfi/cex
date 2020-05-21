@@ -1,7 +1,6 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
 import Router, { withRouter } from 'next/router'
-import Link from 'next/link'
 
 import {
   Box,
@@ -17,6 +16,8 @@ import {
   AddCircle as AddCircleIcon, 
   MoreHoriz as MoreHorizIcon
 } from '@material-ui/icons'
+
+import Link from '../app/Link'
 
 import { 
   Comments, 
@@ -191,10 +192,12 @@ export default class extends React.Component {
               </Grid>
               <Grid item xs={12}>
                 <Box className='video-metadata'>
-                  <Link href={`/film/${movie.movieSlug}`}>
-                    <a className={classes.aTag}>
-                      <h3>{movie.name}</h3>
-                    </a>
+                  <Link
+                    href='/film/[id]'
+                    as={`/film/${movie.movieSlug}`}
+                    className={classes.aTag}
+                  >
+                    <h3>{movie.name}</h3>
                   </Link>
                   <Grid container spacing={2} className={classes.videoStats}>
                     <Grid item xs={6} sm={3} lg={5}>
@@ -217,25 +220,36 @@ export default class extends React.Component {
                       <Box className={classes.buttonContainer}>
                         {
                           movie.trading ? (
-                            <Link href={`/trade/${movie.movieSlug}`}>
-                              <a id='tradeButton' className={classes.linkBackLink}>
-                                <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText} noWrap>Trade</Typography></Button>
-                              </a>
+                            <Link
+                              id='tradeButton'
+                              className={classes.linkBackLink}
+                              href='/trade/[id]'
+                              as={`/trade/${movie.movieSlug}`}
+                            >
+                              <Button className={classes.linkBackButton}>
+                                <Typography className={classes.linkBackButtonText} noWrap>Trade</Typography>
+                              </Button>
                             </Link>
                           ) : (
-                            <Link href={`/offering/${movie.movieSlug}`}>
-                              <a id='offeringButton' className={classes.linkBackLink}>
-                                <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText} noWrap>Invest</Typography></Button>
-                              </a>
+                            <Link
+                              id='offeringButton'
+                              className={classes.linkBackLink}
+                              href='/offering/[slug]'
+                              as={`/offering/${movie.movieSlug}`}
+                            >
+                              <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText} noWrap>Invest</Typography></Button>
                             </Link>
                           )
                         }
                       </Box>
                       <Box>
-                        <Link href={`/ticketing/${movie.movieSlug}`}>
-                          <a id='buyTicketButton' className={classes.linkBackLink}>
-                            <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText} noWrap>Buy Tickets</Typography></Button>
-                          </a>
+                        <Link
+                          id='buyTicketButton'
+                          className={classes.linkBackLink}
+                          href='/ticketing/[id]'
+                          as={`/ticketing/${movie.movieSlug}`}
+                        >
+                          <Button className={classes.linkBackButton}><Typography className={classes.linkBackButtonText} noWrap>Buy Tickets</Typography></Button>
                         </Link>
                       </Box>
                     </Grid>
@@ -250,8 +264,12 @@ export default class extends React.Component {
                       <img src={movie.distributorImg} className={classes.videoInfoImage} alt={movie.distributors[0]} />
                       <Box className={classes.videoInfo}>
                         <Typography className={classes.channelName}>
-                          <Link href={`/browse?facet=distributors&value=${movie.distributors[0]}`}>
-                            <a id='distributorName' className={classes.aTag}>{movie.distributors[0]}</a>
+                          <Link
+                            id='distributorName'
+                            className={classes.aTag}
+                            href={`/browse?facet=distributors&value=${movie.distributors[0]}`}
+                          >
+                            {movie.distributors[0]}
                           </Link>
                         </Typography>
                         <Typography className={classes.videoPubDate}>{renderDate(movie.trailerDetails.createdAt, 'dddd MMM Do YYYY')}</Typography>

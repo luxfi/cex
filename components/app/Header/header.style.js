@@ -97,6 +97,11 @@ export default (theme) => ({
         textDecoration: 'none',
       }
     }
-  }
+  },
+
+  atag: {
+    color: 'inherit',
+    textDecoration: 'none',
+  },
 
 })
