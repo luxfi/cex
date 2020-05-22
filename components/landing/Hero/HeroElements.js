@@ -75,7 +75,8 @@ export default (props) => {
 
   const s = myStyles()
   const { movie, logo } = props
-  const hrefLink = `/film/${movie.movieSlug}`
+  const hrefLink = '/film/[id]'
+  const asHref = `/film/${movie.movieSlug}`
 
   return (
     <Grid
@@ -118,7 +119,7 @@ export default (props) => {
         <Grid item >
           <Link
             href={hrefLink}
-            as={hrefLink}
+            as={asHref}
             style={{ textDecoration: 'inherit', color: '#000' }}
           >
             <Button

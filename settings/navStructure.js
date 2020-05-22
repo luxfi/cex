@@ -2,17 +2,21 @@ export default [
   {
     title: 'discover',
     link: '/',
+    asHref: '/',
   },
   {
     title: 'earn',
-    link: '/portfolio/rewards',
+    link: '/portfolio',
+    asHref: '/portfolio/rewards',
   },
   {
     title: 'invest',
-    link: '/offering/saw-9',
+    link: '/offering/[slug]',
+    asHref: '/offering/saw-9',
   },
   {
     title: 'trade',
-    link: '/pro/terminator-dark-fate',
+    link: '/pro/[id]',
+    asHref: '/pro/terminator-dark-fate',
   },
 ]

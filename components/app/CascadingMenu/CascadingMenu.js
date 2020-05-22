@@ -31,7 +31,7 @@ export default ({ structure, className }) => {
 
     if (href) {
       return (
-        <Link href={href} as={href} key={`link+${n.title}`} className={s.aTag}>
+        <Link href={href} as={n.asHref} key={`link+${n.title}`} className={s.aTag}>
           <Button className={classNames(s.menuButton, 'menu-button')}>{n.title}</Button>
         </Link>
       )
