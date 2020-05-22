@@ -1,6 +1,4 @@
-const YELLOW = '#FBC43E';
-
-export default theme => ({
+export default (theme) => ({
   commentHeader: {
     display: 'flex',
     alignItems: 'center',
@@ -17,7 +15,7 @@ export default theme => ({
     flexDirection: 'column',
     alignItems: 'center',
     '& svg': {
-      color: YELLOW,
+      color: theme.palette.secondary.main,
     },
   },
 
@@ -70,7 +68,7 @@ export default theme => ({
   commentButton: {
     background: '#fff',
     '&:hover': {
-      background: YELLOW,
+      background: theme.palette.primary.main,
     },
   },
 

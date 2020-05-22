@@ -2,7 +2,7 @@ import React from "react"
 import Router from 'next/router'
 
 // @material-ui/core components
-import { Typography, Link } from "@material-ui/core"
+import { Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
 // @material-ui/icons
@@ -12,6 +12,7 @@ import { Grid, Card, CardContent } from '@material-ui/core'
 
 import ContentLoader from "react-content-loader"
 
+import Link from '../../app/Link'
 import styles from "../../landing/InvestorTopPicks/InvestorTopPicks.style.js"
 
 const useStyles = makeStyles(styles)
@@ -95,7 +96,7 @@ export default props => {
                 </Card>
               </Grid>
             )
-            : <Typography>You aren't watching any movies yet! Try adding some from the <Link href="/">home page</Link>.</Typography>
+            : <Typography>You aren't watching any movies yet! Try adding some from the <Link href="/" style={{ color: 'inherit' }}>home page</Link>.</Typography>
           }
         </Grid>
       </div>

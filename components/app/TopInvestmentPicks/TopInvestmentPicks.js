@@ -10,9 +10,9 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
-import Link from 'next/link'
 import Router from 'next/router'
 import React from 'react'
+import Link from '../../app/Link'
 
 // nodejs library that concatenates classes
 
@@ -108,10 +108,10 @@ export default (props) => {
                   action={
                     <Chip label={d.genre[0]} className={classes.categoryChip} />
                   }
-                  title={<Link href={`/film/${d.movieSlug}`}><a style={aTag}>{d.name}</a></Link>}
                   subheader={d.releaseDate}
                   className={classes.cardHeader}
-                />
+                  title={<Link href='/film/[id]' as={`/film/${d.movieSlug}`} style={aTag}>{d.name}</Link>}
+                  />
                 <CardContent className={classes.cardContent}>
                   <Typography variant='body1' paragraph className={classes.paragraph}>
                     {truncate(d.shortDescription)}

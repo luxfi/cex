@@ -8,11 +8,11 @@ import {
 
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 
-import NextLink from 'next/link'
-
 import { makeStyles } from '@material-ui/core/styles'
 
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+
+import Link from '../../app/Link'
 
 import { getYoutubeId } from '../../../util'
 
@@ -52,6 +52,7 @@ const myStyles = makeStyles((theme) => ({
     },
   },
   investButton: {
+    fontSize: '0.9375rem',
     color: theme.palette.common.black,
     backgroundColor: '#FBC43E',
     padding: '12px 24px',
@@ -63,6 +64,7 @@ const myStyles = makeStyles((theme) => ({
     color: theme.palette.common.white,
     border: `1px solid ${theme.palette.common.white}`,
     padding: '11px 24px',
+    fontSize: '0.9375rem',
   },
   watchTrailerButtonText: {
     color: 'inherit !important',
@@ -73,7 +75,8 @@ export default (props) => {
 
   const s = myStyles()
   const { movie, logo } = props
-  const hrefLink = `/film/${movie.movieSlug}`
+  const hrefLink = '/film/[id]'
+  const asHref = `/film/${movie.movieSlug}`
 
   return (
     <Grid
@@ -99,38 +102,35 @@ export default (props) => {
       </Grid>
       <Grid container item spacing={2} justify='flex-start' className={s.buttonGridContainer}>
         <Grid item >
-          <NextLink href={`/watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`}>
-            <a style={{ textDecoration: 'none'}}>
-              <Button
-                className={`watch-trailer-button button ${s.watchTrailerButton}`}
-                variant="outlined"
-                size="large"
-                startIcon={<PlayArrowIcon />}
-              >
-                <Typography variant="body2">
-                  Play Trailer
-                </Typography>
-              </Button>
-            </a>
-          </NextLink>
+          <Link
+            href={`/watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`}
+            as={`/watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`}
+            style={{ textDecoration: 'none'}}
+          >
+            <Button
+              className={`watch-trailer-button button ${s.watchTrailerButton}`}
+              variant="outlined"
+              startIcon={<PlayArrowIcon />}
+            >
+              Play Trailer
+            </Button>
+          </Link>
         </Grid>
         <Grid item >
-          <Button
-            className={s.investButton}
-            size='large'
-            startIcon={<MonetizationOnIcon />}
+          <Link
+            href={hrefLink}
+            as={asHref}
+            style={{ textDecoration: 'inherit', color: '#000' }}
           >
-            <NextLink href={hrefLink}>
-              <Typography variant='body2' className={s.watchTrailerButtonText}>
-                INVEST IN {movie.name}
-              </Typography>
-            </NextLink>
-          </Button>
+            <Button
+              className={s.investButton}
+              startIcon={<MonetizationOnIcon />}
+            >
+              INVEST IN {movie.name}
+            </Button>
+          </Link>
         </Grid>
       </Grid>
     </Grid>
   )
-
 }
-
-

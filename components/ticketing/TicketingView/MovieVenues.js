@@ -7,9 +7,9 @@ import {
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
-import Link from 'next/link'
 import moment from 'moment'
 
+import Link from '../../app/Link'
 import { slugFromPath } from '../../../util'
 
 import styles from './ticketing.style'
@@ -53,7 +53,11 @@ const MovieVenues = ({ classes, movieVenues }) => {
                         const refString = (refHash && refHash.length) ? `&ref=${refHash}` : ''
                         return (
                           <li key={showtimeDetail.showtimeId}>
-                            <Link href='/checkout' as={`/checkout/${slug}?venueId=${selectedVenue.venue.id}&showtimeId=${showtimeDetail.showtimeId}${refString}`}>
+                            <Link
+                              className={classes.aTag}
+                              href='/checkout/[id]'
+                              as={`/checkout/${slug}?venueId=${selectedVenue.venue.id}&showtimeId=${showtimeDetail.showtimeId}${refString}`}
+                            >
                               <Button className={classes.btnShowtime}>{moment(showtimeDetail.localShowtimeStart).format('hh:mm A')}</Button>
                             </Link>
                           </li>

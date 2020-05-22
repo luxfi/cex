@@ -10,11 +10,11 @@ import { withStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
 import { inject, observer } from 'mobx-react'
 import moment from 'moment'
-import Link from 'next/link'
 import { withRouter } from 'next/router'
 import React from 'react'
 import uuid from 'uuid'
 
+import Link from '../../app/Link'
 
 import { formatCurrency, slugFromPath } from '../../../util'
 
@@ -248,8 +248,9 @@ class PickSeatsView extends React.Component {
                     venueShowtimes.map((showtime) => (
                         <Link
                           key={showtime.showtimeId}
-                          href='/pickSeats'
+                          href='/pickSeats/[id]'
                           as={`/pickSeats/${movieSlug}?venueId=${venueId}&showtimeId=${showtime.showtimeId}${refString}`}
+                          className={classes.aTag}
                         >
                           <Button
                             className={`${classes.movieTimeBtn} 

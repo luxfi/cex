@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Link from 'next/link'
 import { withRouter } from 'next/router'
 import { inject, observer } from 'mobx-react'
 
@@ -8,7 +7,9 @@ import { makeStyles } from '@material-ui/core/styles'
 import grey from '@material-ui/core/colors/grey'
 import Icon from '@material-ui/core/Icon'
 import { BookmarkBorder } from '@material-ui/icons'
+import classNames from 'classnames'
 
+import Link from '../../app/Link'
 import { OfferingInput } from '../'
 import { ESXLinearProgressBar, ShareWidget, MediaSlider } from '../../app'
 import { formatCurrency, slugFromPath } from '../../../util'
@@ -37,6 +38,9 @@ const useTitleStyles = makeStyles(theme => ({
       color: theme.palette.secondary.main,
     },
   },
+  movieName: {
+    fontWeight: 'bold',
+  },
 }))
 
 const Title = ({ movie, highlightedTags }) => {
@@ -45,13 +49,9 @@ const Title = ({ movie, highlightedTags }) => {
     <Grid container direction="column" spacing={0}>
       <Grid item xs={12}>
         <Typography variant="h4" gutterBottom>
-          <Box fontWeight="fontWeightBold">
-            <Link href={`/film/${movie.movieSlug}`}>
-              <a className={classes.aTag}>
-                {movie.name}
-              </a>
-            </Link>
-          </Box>
+          <Link href='/film/[id]' as={`/film/${movie.movieSlug}`} className={classNames(classes.aTag, classes.movieName)}>
+            {movie.name}
+          </Link>
         </Typography>
       </Grid>
       <Grid item container xs={12} direction="row">
@@ -67,8 +67,8 @@ const Title = ({ movie, highlightedTags }) => {
           </Typography>
         ))}
         {movie.tags.map((tag, i) => {
-          const link = <Link href={`/browse?facet=distributors&value=${tag}`}>
-            <a className={classes.aTag}>{tag}</a>
+          const link = <Link href={`/browse?facet=distributors&value=${tag}`} className={classes.aTag}>
+            {tag}
           </Link>
 
           return (

@@ -1,6 +1,5 @@
 import {
   Button,
-  ButtonBase,
   CircularProgress,
   Fade,
   Grid,
@@ -18,13 +17,14 @@ import {
 import classNames from 'classnames'
 import { inject, observer } from 'mobx-react'
 import moment from 'moment'
-import Link from 'next/link'
 import { withRouter } from 'next/router'
 
 import QRCode from 'qrcode.react'
 
 
 import React from 'react'
+
+import Link from '../../app/Link'
 
 import { slugFromPath } from '../../../util'
 import { Map, ShareButtons } from '../../app'
@@ -227,30 +227,36 @@ class OrderDetailsView extends React.Component {
                         <Typography>We sent your ticket to:</Typography>
                         <Typography>{userStore.email}</Typography>
                       </div>
-                      <ButtonBase className={classes.sidebarButton} onClick={() => this.handleEmailTicket(userStore.email, ticketUrl)}>
-                        <EmailIcon fontSize='large' />
-                        <Typography>Email my ticket</Typography>
-                      </ButtonBase>
-                      <ButtonBase className={classes.sidebarButton} onClick={this.handlePrintPage}>
-                        <PrintIcon fontSize='large' />
-                        <Typography>Print my ticket</Typography>
-                      </ButtonBase>
-                    </div>
-                  </div>
-                  <div className={classes.contentBox}>
-                    <div className={classes.detailBox}>
-                      <Link href='/account/orders'>
-                        <a className={classes.aTags}>
-                          <ButtonBase className={classes.sidebarButton}>
-                            <ViewListIcon fontSize='large' />
-                            <Typography>View orders</Typography>
-                          </ButtonBase>
-                        </a>
-                      </Link>
-                      {/* <ButtonBase className={classes.sidebarButton}>
-                        <CancelIcon fontSize='large' />
-                        <Typography>Cancel</Typography>
-                      </ButtonBase> */}
+                      <div className={classes.buttonWrapper}>
+                        <Button
+                          className={classes.sidebarButton}
+                          onClick={() => this.handleEmailTicket(userStore.email, ticketUrl)}
+                          startIcon={<EmailIcon />}
+                          size='large'
+                          fullWidth
+                        >
+                          Email my ticket
+                        </Button>
+                        <Button
+                          className={classes.sidebarButton}
+                          onClick={this.handlePrintPage}
+                          startIcon={<PrintIcon />}
+                          size='large'
+                          fullWidth
+                        >
+                          Print my ticket
+                        </Button>
+                        <Link href='/account/orders' className={classes.aTags}>
+                          <Button
+                            className={classes.sidebarButton}
+                            startIcon={<ViewListIcon />}
+                            size='large'
+                            fullWidth
+                          >
+                            View orders
+                          </Button>
+                        </Link>
+                      </div>
                     </div>
                   </div>
                   <div className={classes.contentBox}>

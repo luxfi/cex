@@ -4,6 +4,9 @@ export default (theme) => ({
     padding: theme.spacing(2),
     backgroundColor: '#0f151acc',
   },
+  aTag: {
+    textDecoration: 'none',
+  },
   seatsSection: {
     width: '80%',
   },

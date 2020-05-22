@@ -11,6 +11,7 @@ const COLORS = {
   primary: {
     main: '#0099ff',
     light: '#5fb8ff', // desaturaed logo blue per Material recommendations for dark mode
+    dark: '#0077ff',
   },
   secondary: {
     main: "#fac54c",  // logo yellow
@@ -74,6 +75,18 @@ module.exports = createMuiTheme({
   },
 
   overrides: {
+    MuiButton: {
+      // root: {
+      //   lineHeight: 1.2,
+      //   whiteSpace: 'nowrap',
+      // },
+      // '& *': {
+      //   whiteSpace: 'nowrap',
+      // },
+      fullWidth: {
+        width: '100%',
+      },
+    },
 
     MuiInputLabel: {
       formControl: {
