@@ -67,12 +67,13 @@ const TrailerImage = ({movie, className}) => {
   const childRef = React.useRef()
   const href = `/watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`
   return (
-    <Link href={href} style={{ color: '#fff', textDecoration: 'none'}}>
-      <div className={className}>
-        <FontAwesomeIcon icon={faPlayCircle} size='1x' />
-        <img src={movie.heroImg} />
-        <TrailerSliderModal movie={movie} ref={childRef} />
-      </div>
-    </Link>
+    <>
+      <Link href={href} style={{ color: '#fff', textDecoration: 'none'}}>
+        <div className={className}>
+          <FontAwesomeIcon icon={faPlayCircle} size='1x' />
+          <img src={movie.heroImg} />
+        </div>
+      </Link>
+    </>
   )
 }

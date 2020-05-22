@@ -226,7 +226,7 @@ export default class extends React.Component {
                               href='/trade/[id]'
                               as={`/trade/${movie.movieSlug}`}
                             >
-                              <Button className={classes.linkBackButton}>Trade</Button>
+                              <Button className={classes.linkBackButton} >Trade</Button>
                             </Link>
                           ) : (
                             <Link
@@ -261,15 +261,15 @@ export default class extends React.Component {
                     <Grid container wrap='nowrap' className={classes.movieInfo}>
                       <img src={movie.distributorImg} className={classes.videoInfoImage} alt={movie.distributors[0]} />
                       <Box className={classes.videoInfo}>
-                        <Typography className={classes.channelName}>
-                          <Link
-                            id='distributorName'
-                            className={classes.aTag}
-                            href={`/browse?facet=distributors&value=${movie.distributors[0]}`}
-                          >
+                        <Link
+                          id='distributorName'
+                          className={classes.aTag}
+                          href={`/browse?facet=distributors&value=${movie.distributors[0]}`}
+                        >
+                          <Typography className={classes.channelName}>
                             {movie.distributors[0]}
-                          </Link>
-                        </Typography>
+                          </Typography>
+                        </Link>
                         <Typography className={classes.videoPubDate}>{renderDate(movie.trailerDetails.createdAt, 'dddd MMM Do YYYY')}</Typography>
                       </Box>
                     </Grid>

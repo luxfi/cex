@@ -1,4 +1,3 @@
-const YELLOW = '#FBC43E'
 const GREY = '#808080'
 const maxLines = {
   overflow: 'hidden',
@@ -15,7 +14,7 @@ export default (theme) => ({
     textDecoration: 'none',
     color: '#fff',
     '&:hover': {
-      color: YELLOW,
+      color: theme.palette.secondary.main,
     },
   },
 
@@ -126,7 +125,7 @@ export default (theme) => ({
     '& .video-description': {
       marginTop: 25,
       maxWidth: 615,
-      fontSize: 13,
+      fontSize: '0.8125rem',
       lineHeight: '16px',
       '& .collapsed': {
         maxHeight: 32,
@@ -152,7 +151,7 @@ export default (theme) => ({
     color: '#fff',
     '&:hover': {
       background: 'none',
-      color: YELLOW,
+      color: theme.palette.secondary.main,
     },
   },
 
@@ -164,7 +163,7 @@ export default (theme) => ({
     padding: 5,
     borderRadius: 8,
     '&:hover': {
-      color: YELLOW,
+      color: theme.palette.secondary.main,
     },
   },
 
@@ -177,12 +176,12 @@ export default (theme) => ({
   },
 
   videoPubDate: {
-    fontSize: 12,
+    fontSize: '0.75rem',
     color: GREY,
   },
 
   channelName: {
-    fontSize: 14,
+    fontSize: '0.875rem',
   },
 
   subShare: {
@@ -197,7 +196,7 @@ export default (theme) => ({
   },
 
   subScribeButton: {
-    background: YELLOW,
+    background: theme.palette.secondary.main,
     padding: '7px 15px',
     color: '#000',
     fontSize: '0.8125em',
@@ -208,7 +207,7 @@ export default (theme) => ({
   },
 
   linkBackButton: {
-    background: YELLOW,
+    background: theme.palette.secondary.main,
     fontSize: '0.8125em',
     color: '#000',
   },
@@ -267,7 +266,7 @@ export default (theme) => ({
     opacity: '0.85',
     color: '#fff',
     '& span': {
-      fontSize: 12,
+      fontSize: '0.75rem',
       fontWeight: 'normal',
     },
   },
@@ -275,7 +274,7 @@ export default (theme) => ({
   sidebarMovieTitle: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: '0.875rem',
     lineHeight: '18px',
     maxHeight: 36,
     margin: '0 0 5px 0',
@@ -293,11 +292,11 @@ export default (theme) => ({
 
   sidebarVideoMeta: {
     '& > p': {
-      fontSize: 14,
+      fontSize: '0.875rem',
       lineHeight: '20px',
     },
     '& > p.views-and-time': {
-      fontSize: 12,
+      fontSize: '0.75rem',
     },
   },
 })

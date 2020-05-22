@@ -1,10 +1,4 @@
-const YELLOW = '#FBC43E'
-
-const colorYellow = {
-  color: YELLOW,
-}
-
-export default theme => ({
+export default (theme) => ({
   likeButton: {
     background: 'none',
     color: '#fff',
@@ -17,11 +11,11 @@ export default theme => ({
     padding: 5,
     borderRadius: 8,
     '&:hover': {
-      ...colorYellow,
+      color: theme.palette.secondary.main,
     },
   },
 
   reacted: {
-    ...colorYellow,
+    color: theme.palette.secondary.main,
   },
 })

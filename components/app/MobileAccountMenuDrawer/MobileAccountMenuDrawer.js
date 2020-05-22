@@ -126,21 +126,21 @@ const NavElements = (props) => {
 
         if (href) {
           return (
-            <ListItem
-              className={classes.listButton}
-              onClick={() => handleClose()}
-              button
-              key={elementDef.link}
+            <Link
+              href={href}
+              as={href}
+              key={elementDef.title}
+              className={classes.atag}
             >
-              <Link
-                href={href}
-                as={href}
-                key={elementDef.title}
-                className={classes.atag}
+              <ListItem
+                className={classes.listButton}
+                onClick={() => handleClose()}
+                button
+                key={elementDef.link}
               >
                 {elementDef.title}
-              </Link>
-            </ListItem>
+              </ListItem>
+            </Link>
           )
         }
 
