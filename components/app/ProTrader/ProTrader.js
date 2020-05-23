@@ -262,7 +262,7 @@ export default (props) => {
                     size='medium'
                     onClick={() => {
                       setTrading('basic')
-                      Router.push(`/trade/${slug}`)
+                      Router.push('/trade/[id]', `/trade/${slug}`)
                     }}
                   >
                     <Typography
