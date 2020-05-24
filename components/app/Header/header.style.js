@@ -158,7 +158,7 @@ export default (theme) => ({
   },
   btnInner: {
     position: 'relative',
-  }
+  },
   atag: {
     color: 'inherit',
     textDecoration: 'none',
