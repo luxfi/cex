@@ -1,5 +1,6 @@
 import React from 'react'
 import { Provider, observer } from 'mobx-react'
+import NProgress from 'nprogress'
 
 import NextApp from 'next/app'
 import Router, { withRouter } from 'next/router'
@@ -45,13 +46,19 @@ import theme from '../styles/muiTheme'
 
 import '../styles/globalTouchups.scss'
 import '../styles/footerFix.scss'
+import '../styles/nprogress.scss'
 
 import '../components/app/MovieSlider/modified-slick.css'
 import * as GA from '../util/GA' 
 
 config.autoAddCss = false
 
-Router.events.on('routeChangeComplete', url => GA.logPageView(url))
+Router.events.on('routeChangeStart', () => NProgress.start());
+Router.events.on('routeChangeComplete', url => {
+  GA.logPageView(url)
+  NProgress.done()
+})
+Router.events.on('routeChangeError', () => NProgress.done());
 
 @withRouter
 @withStyles(styles)
