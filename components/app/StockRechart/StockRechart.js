@@ -3,9 +3,9 @@ import grey from '@material-ui/core/colors/grey'
 import { makeStyles } from '@material-ui/core/styles'
 import LocalOfferIcon from '@material-ui/icons/LocalOffer'
 import PeopleIcon from '@material-ui/icons/People'
-import Link from 'next/link'
 import React from 'react'
 import { ScaleLoader } from 'react-spinners'
+import classNames from 'classnames'
 import {
   Line,
   LineChart,
@@ -15,6 +15,7 @@ import {
   YAxis,
 } from 'recharts'
 import CustomStockTooltip from '../CustomStockTooltip'
+import Link from '../../app/Link'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.secondary.main,
     },
   },
+  stockName: {
+    fontWeight: 'bold',
+  },
 }))
 
 const CustomHeading = ({ ticker, stockName, movieSlug }) => {
@@ -44,13 +48,9 @@ const CustomHeading = ({ ticker, stockName, movieSlug }) => {
   return (
     <div className={classes.root}>
       <Typography variant='h5'>
-        <Box fontWeight='fontWeightBold'>
-          <Link href={`/film/${movieSlug}`}>
-            <a className={classes.aTag}>
-              {stockName}
-            </a>
-          </Link>
-        </Box>
+        <Link href='/film/[id]' as={`/film/${movieSlug}`} className={classNames(classes.aTag, classes.stockName)}>
+          {stockName}
+        </Link>
       </Typography>
       <Typography variant='h5' component='div'>
         <Box fontWeight='fontWeightBold'>

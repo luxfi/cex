@@ -4,7 +4,7 @@ export default (theme) => ({
     boxShadow: 'none',
 
     padding: `0px ${theme.spacing(3)}`,
-  
+
     [theme.breakpoints.up('lg')]: {
       padding: `0px ${theme.spacing(8)}`,
     },
@@ -159,4 +159,8 @@ export default (theme) => ({
   btnInner: {
     position: 'relative',
   }
+  atag: {
+    color: 'inherit',
+    textDecoration: 'none',
+  },
 })

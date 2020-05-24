@@ -33,6 +33,9 @@ export default (theme) => ({
       fontSize: '28px',
     }
   },
+  aTag: {
+    textDecoration: 'none',
+  },
   whiteSvgIcon: {
     ...svgIcon,
     fill: whiteColor,

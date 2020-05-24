@@ -17,9 +17,10 @@ import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline'
 import classNames from 'classnames'
 import { inject, observer } from 'mobx-react'
 import moment from 'moment'
-import Link from 'next/link'
 import { withRouter } from 'next/router'
 import React from 'react'
+
+import Link from '../../app/Link'
 
 import { formatCurrency, slugFromPath } from '../../../util'
 
@@ -144,7 +145,11 @@ class CheckoutView extends React.Component {
               <Typography variant='h5' className={classes.subTotal}>{formatCurrency(subTotal)}</Typography>
             </div>
             <div>
-              <Link href='/pickSeats/[id]' as={`/pickSeats/${slug}?venueId=${venueId}&showtimeId=${showtimeId}${refString}`}>
+              <Link
+                href='/pickSeats/[id]'
+                as={`/pickSeats/${slug}?venueId=${venueId}&showtimeId=${showtimeId}${refString}`}
+                className={classes.aTag}
+              >
                 <Button disabled={ticketsCount <= 0} className={classes.nextButton} id='pickSeatsButton'>PICK SEATS</Button>
               </Link>
             </div>

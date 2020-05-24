@@ -1,7 +1,7 @@
 import React from 'react'
-import NextLink from 'next/link'
 import classNames from 'classnames'
 import { inject, observer } from 'mobx-react'
+import Link from '../../app/Link'
 
 import {
   Button,
@@ -53,11 +53,9 @@ export default inject('store')(observer(({
         </Box>
         <Box className={classNames(classes.hoverContent, classes.innerCardContent)}>
           <div onClick={closeBrowseModal}>
-            <NextLink href={`/film/${movie.movieSlug}`}>
-              <a className={classes.aTag}>
-                <Typography className={classNames(classes.title, classes.aTag)} variant="body2">{movie.name}</Typography>
-              </a>
-            </NextLink>
+            <Link href='/film/[id]' as={`/film/${movie.movieSlug}`} className={classes.aTag}>
+              <Typography className={classNames(classes.title, classes.aTag)} variant="body2">{movie.name}</Typography>
+            </Link>
           </div>
           <Typography className={classes.shortDescription} variant="body1">{truncate(movie.shortDescription, 20)}</Typography>
           <div className={classes.buttonsOuter}>
@@ -74,14 +72,15 @@ export default inject('store')(observer(({
 
 const TrailerImage = ({movie, className}) => {
   const childRef = React.useRef()
+  const href = `/watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`
   return (
-    <NextLink href={`/watch?video=${movie.movieSlug}&trailerId=${getYoutubeId(movie.trailer)}`}>
-      <a style={{ color: '#fff'}}>
+    <>
+      <Link href={href} style={{ color: '#fff', textDecoration: 'none'}}>
         <div className={className}>
           <FontAwesomeIcon icon={faPlayCircle} size='1x' />
           <img src={movie.heroImg} />
         </div>
-      </a>
-    </NextLink>
+      </Link>
+    </>
   )
 }

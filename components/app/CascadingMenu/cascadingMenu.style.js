@@ -23,6 +23,7 @@ export default (theme) => ({
 
   menuButton: {
     marginRight: theme.spacing(2),
+    height: '100%',
     [theme.breakpoints.down('sm')]: {
       marginRight: theme.spacing(1),
     },
@@ -32,6 +33,11 @@ export default (theme) => ({
     '&:last-child': {
       marginRight: 0,
     },
+  },
+
+  aTag: {
+    height: '100%',
+    textDecoration: 'none',
   },
 
 })

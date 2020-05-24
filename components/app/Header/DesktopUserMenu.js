@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from 'next/link'
+import Link from '../../app/Link'
 
 import {
   Button,
@@ -77,12 +77,12 @@ export default ({ loggedIn, handleLogout, classes }) => (
         </PopupState>
       ) : (
         <>
-          <Link href='/login' >
+          <Link href='/login' className={classes.atag} >
             <Button className={classes.navButton}>
               Login
             </Button>
           </Link>
-          <Link href='/signup' >
+          <Link href='/signup' className={classes.atag} >
             <Button variant='outlined' className={classes.navButton}>
               Sign Up
             </Button>

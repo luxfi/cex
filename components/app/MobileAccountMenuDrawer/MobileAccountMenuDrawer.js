@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import NextLink from 'next/link'
+import Link from '../../app/Link'
 
 import {
   Collapse,
@@ -28,6 +28,10 @@ import SideDrawer from '../SideDrawer'
 const useStyles = makeStyles((theme) => ({
   accountOuter: {
       display: "block",
+  },
+  atag: {
+    color: '#fff',
+    textDecoration: 'none',
   },
 }))
 
@@ -122,9 +126,11 @@ const NavElements = (props) => {
 
         if (href) {
           return (
-            <NextLink
+            <Link
               href={href}
+              as={href}
               key={elementDef.title}
+              className={classes.atag}
             >
               <ListItem
                 className={classes.listButton}
@@ -134,7 +140,7 @@ const NavElements = (props) => {
               >
                 {elementDef.title}
               </ListItem>
-            </NextLink>
+            </Link>
           )
         }
 
@@ -188,7 +194,7 @@ const SubNav = (props) => {
       href = { pathname: '/placeholder', query: { title: item.title } }
     }
     return (
-      <NextLink href={href} >
+      <Link href={href} as={href} className={classes.atag} >
         <ListItem
           className={classes.listButtonSublist}
           button
@@ -196,7 +202,7 @@ const SubNav = (props) => {
         >
           <ListItemText primary={item.title} />
         </ListItem>
-      </NextLink>
+      </Link>
     )
   }
 

@@ -1,5 +1,4 @@
 import React from "react"
-import Link from "next/link"
 import { inject, observer } from "mobx-react"
 import { withRouter } from "next/router"
 import dynamic from "next/dynamic"
@@ -8,6 +7,7 @@ import ContentLoader from "react-content-loader"
 import { withStyles } from "@material-ui/core/styles"
 import { Button, Avatar, Grid } from "@material-ui/core"
 
+import Link from "../../components/app/Link"
 import { CustomBreadcrumbs, InvestNow } from "../../components/app"
 
 import styles from "../../styles/pages/article.style.js"
@@ -65,8 +65,13 @@ const AvatarLoader = () => (
 
 const ButtonLink = React.forwardRef(
   ({ className, href, hrefAs, children }, ref) => (
-    <Link ref={ref} href={href} as={hrefAs}>
-      <a className={className}>{children}</a>
+    <Link
+      ref={ref}
+      href={href}
+      as={hrefAs}
+      className={className}
+    >
+      {children}
     </Link>
   )
 )

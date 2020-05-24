@@ -140,7 +140,6 @@ export default (theme) => ({
 
   sideBar: {
     padding: theme.spacing(2),
-    textAlign: 'center',
   },
 
   emailInfo: {
@@ -148,13 +147,19 @@ export default (theme) => ({
   },
 
   sidebarButton: {
-    display: 'block',
-    width: '100%',
-    padding: '20px',
+    background: '#fac54c',
+    color: '#222',
     '&:hover': {
-      background: '#fac54c',
-      color: '#222',
+      color: '#fff',
+      opacity: '0.4',
     },
+  },
+
+  buttonWrapper: {
+    ...padding20(theme),
+    '& > :not(:last-child)': {
+      marginBottom: theme.spacing(2),
+    }
   },
 
   mapSectionTitle: {
