@@ -33,7 +33,6 @@ export default ({ classes, movie }) => (
           <Button
             className='watch-trailer-button button'
             variant='outlined'
-            size='large'
             startIcon={<PlayArrowIcon />}
           >
             Play Trailer

@@ -1,7 +1,6 @@
 import { action, observable, computed, autorun } from 'mobx'
 import { computedFn } from 'mobx-utils'
 import uuid from 'uuid'
-import _ from 'lodash'
 
 import tradingStatus from '../settings/tradingStatus'
 import moviesFromJson from '../assets/tempData/movies'

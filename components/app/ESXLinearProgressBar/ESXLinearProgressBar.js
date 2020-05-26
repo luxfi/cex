@@ -9,7 +9,7 @@ const ESXLinearProgressBar = withStyles(theme => ({
   },
   bar: {
     borderRadius: 20,
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
   },
 }))(LinearProgress)
 

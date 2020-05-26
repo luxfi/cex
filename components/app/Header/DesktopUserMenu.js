@@ -83,7 +83,7 @@ export default ({ loggedIn, handleLogout, classes }) => (
             </Button>
           </Link>
           <Link href='/signup' className={classes.atag} >
-            <Button variant='outlined' className={classes.navButton}>
+            <Button variant='outlined' color='default' className={classes.navButton}>
               Sign Up
             </Button>
           </Link>

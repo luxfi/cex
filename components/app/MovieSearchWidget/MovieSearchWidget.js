@@ -2,8 +2,8 @@ import React from "react"
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'next/router'
 
+import memoize from 'lodash.memoize'
 
-import _ from 'lodash'
 import Autosuggest from "react-autosuggest"
 import classNames from 'classnames'
 
@@ -42,8 +42,8 @@ class MovieSearchWidget extends React.Component {
   handleSuggestionsFetch = ({ value }) => {
     this.setSuggestions(
       this.suggestionSet
-      .filter(str => fuzzyMatch(str.name, value))
-      .map(movie => movie.movie)
+        .filter(str => fuzzyMatch(str.name, value))
+        .map(movie => movie.movie)
     )
   }
 
@@ -58,7 +58,7 @@ class MovieSearchWidget extends React.Component {
 
     if (!event.target.value) {
       const { store: { movieStore } } = this.props
-      movieStore.resetMovieSearchResult()
+      //movieStore.resetMovieSearchResult()
     }
   }
 
@@ -83,7 +83,7 @@ class MovieSearchWidget extends React.Component {
   addMovieToStore = (movies, callback = null) => {
     const { store: { movieStore } } = this.props
 
-    movieStore.setMovieSearchResult(movies)
+    //movieStore.setMovieSearchResult(movies)
     if (callback) {
       callback()
     }
@@ -95,6 +95,7 @@ class MovieSearchWidget extends React.Component {
     this.setState({
       searchOpened: true,
     }, () => {
+      /*
       setTimeout(()=> {
         uiStore.openBrowseModal(() => {
           let href = `${router.asPath}?modal=browse`
@@ -110,6 +111,7 @@ class MovieSearchWidget extends React.Component {
           })
         })
       }, 1000)
+      */
     })
   }
 
@@ -149,7 +151,7 @@ class MovieSearchWidget extends React.Component {
 }
 
 const fuzzyMatch = (str, pattern) => {
-  const cache = _.memoize(function (str) {
+  const cache = memoize(function (str) {
     return new RegExp("^" + str.replace(/./g, function (x) {
       return /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/.test(x) ? "\\" + x + "?" : x + "?"
     }) + "$")

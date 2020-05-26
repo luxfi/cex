@@ -123,7 +123,7 @@ export default inject('store')(observer(({
         </Typography>
       </Paper>
       <Button
-        color='secondary'
+        color='primary'
         variant='contained'
         className={classes.button}
         onClick={() => handleSubmit()}

@@ -28,14 +28,14 @@ const useTitleStyles = makeStyles(theme => ({
     background: grey[800],
   },
   highlightedChip: {
-    background: theme.palette.secondary.main,
+    background: theme.palette.primary.main,
     color: grey[900],
   },
   aTag: {
     color: theme.palette.common.white,
     textDecoration: 'none',
     '&:hover': {
-      color: theme.palette.secondary.main,
+      color: theme.palette.primary.main,
     },
   },
   movieName: {
@@ -121,12 +121,14 @@ const useRaisingStyles = makeStyles(theme => ({
   spacer: {
     flexGrow: 1,
   },
+  /*
   followButton: {
     background: '#fff',
     '&:hover': {
       background: '#FBC43E',
     },
   },
+  */
 }))
 
 const RaisingInformation = withRouter(inject('store')(observer(({
@@ -164,7 +166,7 @@ const RaisingInformation = withRouter(inject('store')(observer(({
         </Typography>
         <Box mt={1} mb={1}>
           <Typography variant="subtitle1">
-            <Typography component="span" color="secondary">
+            <Typography component="span" color="primary">
               ({percentFunded}%)
             </Typography>{' '}
             of ${fundingGoal.toLocaleString()} funded
@@ -209,20 +211,9 @@ const RaisingInformation = withRouter(inject('store')(observer(({
       <Box mb={2} mt={3}>
         <Divider light />
       </Box>
-      <Grid item container xs={12} spacing={3} justify="flex-end">
-        <Grid item>
-          <ShareWidget shareUrl={shareURL} message={sharePrompt} emailToCredit={userStore.email} />
-        </Grid>
-        <Grid item>
-          <Button
-            variant='contained'
-            size='small'
-            className={classes.followButton}
-            startIcon={<BookmarkBorder/>}
-          >
-            Follow
-          </Button>
-        </Grid>
+      <Grid item xs={12} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+        <ShareWidget shareUrl={shareURL} message={sharePrompt} />
+        <Button size='small' startIcon={<BookmarkBorder/>} style={{ marginLeft: '8px' }}>Follow</Button>
       </Grid>
     </Grid>
   )

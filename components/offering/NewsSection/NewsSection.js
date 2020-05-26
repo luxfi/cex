@@ -6,7 +6,7 @@ import Image from '../../app/Image'
 
 const useStyles = makeStyles(theme => ({
   hover: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
   },
   pointer: {
     cursor: 'pointer',

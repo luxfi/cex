@@ -69,6 +69,12 @@ export default (theme) => ({
     color: '#fff', // theme.palette.common.white,  (true white, not palette white)
     '& *': {
       color: 'inherit'
+    },
+  },
+
+  navButton: {
+    '&:first-child': {
+      marginRight: theme.spacing(2)
     }
   },
 
@@ -80,10 +86,12 @@ export default (theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    color: '#fff', // theme.palette.common.white,  (true white, not palette white)
+    //color: '#fff', // theme.palette.common.white,  (true white, not palette white)
+    /*
     '& *': {
       color: 'inherit'
     }
+    */
   },
 
   accountIcon: {

@@ -1,10 +1,6 @@
 import { Component, useState } from "react"
 import moment from 'moment-timezone'
 
-// nodejs library that concatenates classes
-import classNames from "classnames"
-import ContentLoader from "react-content-loader"
-
 // @material-ui/core components
 import {
   Typography,
@@ -16,21 +12,6 @@ import { withStyles } from "@material-ui/core/styles"
 import { Table } from "../../app"
 
 import styles from "../../landing/InvestorTopPicks/InvestorTopPicks.style.js"
-
-const MyLoader = (props) => {
-  return (
-    <ContentLoader
-      height={props.h}
-      width={props.w}
-      speed={2}
-      primaryColor="#f3f3f3"
-      secondaryColor="#ecebeb"
-    >
-      {/* Only SVG shapes */}
-      <rect x="0" y="0" rx="3" ry="3" width={props.w} height={props.h} />
-    </ContentLoader>
-  )
-}
 
 const renderCurrency = (v) => '$' + parseFloat(v).toFixed(2)
 

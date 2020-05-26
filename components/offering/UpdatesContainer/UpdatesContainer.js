@@ -6,7 +6,7 @@ import EventNoteIcon from '@material-ui/icons/EventNote'
 
 const useStyles = makeStyles(theme => ({
   hover: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
   },
   pointer: {
     cursor: 'pointer',
@@ -29,7 +29,7 @@ const UpdatesContainer = ({ updates }) => {
           <div key={i}>
             <Box display="flex" mb={1} mt={5}>
               <Box flexShrink={1} mr={2.5}>
-                <Fab size="medium" color="secondary" aria-label="add">
+                <Fab size="medium" color="primary" aria-label="add">
                   <EventNoteIcon />
                 </Fab>
               </Box>

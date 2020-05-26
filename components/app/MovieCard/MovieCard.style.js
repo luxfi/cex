@@ -35,7 +35,7 @@ export default (theme) => ({
     color: theme.palette.common.white,
     textDecoration: 'none',
     '&:hover': {
-      color: theme.palette.secondary.main,
+      color: theme.palette.primary.main,
     },
   },
 
@@ -94,7 +94,7 @@ export default (theme) => ({
   status: {
     fontWeight: 'bold',
     fontSize: '1.0rem',
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
     marginBottom: theme.spacing(1),
   },
 
@@ -118,7 +118,7 @@ export default (theme) => ({
     height: '40px',
     borderRadius: '50%',
     border: '1px solid ' + theme.palette.background.default,
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
     color: theme.palette.common.black,
   },
 

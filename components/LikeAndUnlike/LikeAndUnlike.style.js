@@ -11,11 +11,11 @@ export default (theme) => ({
     padding: 5,
     borderRadius: 8,
     '&:hover': {
-      color: theme.palette.secondary.main,
+      color: theme.palette.primary.main,
     },
   },
 
   reacted: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
   },
 })

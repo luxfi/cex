@@ -1,6 +1,7 @@
 const { createMuiTheme } = require('@material-ui/core/styles') // must require not import, since this file is invoked by node directly
 
 const SPACING_BASE = 8
+const MAX_CONTAINER_WIDTH = 1200
 const spacingPx = (factor) => (`${SPACING_BASE * factor}px`)
 
 const COLORS = {
@@ -9,12 +10,14 @@ const COLORS = {
     white: "#F0f0f0"
   },
   primary: {
+    main: '#fac54c',  // logo yellow,
+    light: '#f6cc6c',
+    dark: '#d5a435',
+  },
+  secondary: {
     main: '#0099ff',
     light: '#5fb8ff', // desaturaed logo blue per Material recommendations for dark mode
     dark: '#0077ff',
-  },
-  secondary: {
-    main: "#fac54c",  // logo yellow
   },
 }
 
@@ -31,16 +34,36 @@ const PAPER_SHADES = [
   '#6f6f6f',
 ]
 
+const createPaperElevations = () => {
+  const result = {}
+    // start at index: 1, because of how Paper elevations work
+  for(let i = 1; i < PAPER_SHADES.length; i++) {
+    result[`elevation${i}`] = {
+      backgroundColor:  PAPER_SHADES[i],
+      '& MuiInput': {
+        root: {
+          backgroundColor: PAPER_SHADES[ i + 1 ]
+        }
+      }
+    }
+  }
+  return result
+}
+
+
 module.exports = createMuiTheme({
 
+    // https://uxplanet.org/responsive-design-best-practices-c6d3f5fd163b
   breakpoints: {
-    xs: 0,
-    sm: 600,
-    md: 960,
-    lg: 1280,
-    xl: 1920
+    values: {
+      xs: 0,
+      sm: 420,
+      md: 780,
+      lg: 1080,
+      xl: 1366
+    }
   },
-
+  
   spacing: spacingPx,
 
   palette: {
@@ -67,6 +90,10 @@ module.exports = createMuiTheme({
     MuiButtonBase: {
       disableRipple: true
     },
+    MuiButton: {
+      variant: 'contained',
+      color: 'primary',
+    },
     MuiInputLabel: {
         // display labels above the control by default
         // (no animation behavior)
@@ -74,17 +101,54 @@ module.exports = createMuiTheme({
     }
   },
 
+  ext: {
+    spacing: SPACING_BASE,
+    maxContainerWidth: MAX_CONTAINER_WIDTH,
+  },
+
   overrides: {
+
     MuiButton: {
-      // root: {
-      //   lineHeight: 1.2,
-      //   whiteSpace: 'nowrap',
-      // },
-      // '& *': {
-      //   whiteSpace: 'nowrap',
-      // },
-      fullWidth: {
-        width: '100%',
+      root: {
+        lineHeight: 1.2,
+        whiteSpace: 'nowrap' 
+      },
+      containedPrimary: {
+        '&:hover': {
+          color: '#fff', // true white, so it pops more
+          backgroundColor: COLORS.primary.dark,
+        },
+      },
+      containedSizeLarge: {
+        padding: '12px 24px',
+      },
+      outlinedSizeLarge: {
+        padding: '11px 24px', // account for border
+      },
+      containedSizeSmall: {
+        padding: '8px 18px',
+      },
+      outlinedSizeSmall: {
+        padding: '7px 18px', // account for border
+      },
+      
+      outlined: {
+        boxSizing: 'border-box',
+        borderColor: COLORS.common.white,
+        color: COLORS.common.white,
+        opacity: 0.8,
+        '&:hover': {
+          opacity: 1,
+        }
+      },
+
+      outlinedPrimary: {
+        borderColor: COLORS.primary.dark,
+        color: `${COLORS.primary.dark} !important`,
+        '&:hover': {
+          borderColor: COLORS.primary.dark,
+          color: `${COLORS.primary.main} !important`,
+        },
       },
     },
 
@@ -142,6 +206,12 @@ module.exports = createMuiTheme({
       }
     },
 
+    MuiContainer: {
+      root: {
+        // impl in styles/responsivePadding.scss due to bug in MUI
+      },
+    },
+
     MuiRadio: {
       root: {
         padding: '2px',
@@ -150,57 +220,7 @@ module.exports = createMuiTheme({
     },
 
     MuiPaper: {
-      root: {
-        //padding: spacingPx(4)
-      },
-      elevation1: {
-        backgroundColor:  PAPER_SHADES[1],
-        '& MuiInput': {
-          root: {
-            backgroundColor: PAPER_SHADES[2]            
-          }
-        }
-      },
-      elevation2: {
-        backgroundColor:  PAPER_SHADES[2],
-        '& MuiInput': {
-          root: {
-            backgroundColor: PAPER_SHADES[3]            
-          }
-        }
-      },
-      elevation3: {
-        backgroundColor:  PAPER_SHADES[3],
-        '& MuiInput': {
-          root: {
-            backgroundColor: PAPER_SHADES[4]            
-          }
-        }
-      },
-      elevation4: {
-        backgroundColor:  PAPER_SHADES[4],
-        '& MuiInput': {
-          root: {
-            backgroundColor: PAPER_SHADES[5]            
-          }
-        }
-      },
-      elevation5: {
-        backgroundColor:  PAPER_SHADES[5],
-        '& MuiInput': {
-          root: {
-            backgroundColor: PAPER_SHADES[6]            
-          }
-        }
-      },
-      elevation6: {
-        backgroundColor:  PAPER_SHADES[6],
-        '& MuiInput': {
-          root: {
-            backgroundColor: PAPER_SHADES[7]            
-          }
-        }
-      }
+      ...createPaperElevations()
     }
   }
 })

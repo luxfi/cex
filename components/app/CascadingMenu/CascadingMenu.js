@@ -1,5 +1,4 @@
 import React from 'react'
-import NextLink from 'next/link'
 import classNames from 'classnames'
 import Link from '../../app/Link'
 
@@ -32,7 +31,7 @@ export default ({ structure, className, handleClose }) => {
     if (href) {
       return (
         <Link href={href} as={n.asHref} key={`link+${n.title}`} className={s.aTag}>
-          <Button className={classNames(s.menuButton, 'menu-button')}>{n.title}</Button>
+          <Button className={classNames(s.menuButton, 'menu-button')} variant='text' color='inherit'>{n.title}</Button>
         </Link>
       )
     }
@@ -57,6 +56,8 @@ const MenuDropdown = ({ def, classes, key }) => (
       <>
       <Button
         {...bindTrigger(popupState)}
+        variant='text'
+        color='inherit'
         className={classes.menuButton}
       >
         {def.title}

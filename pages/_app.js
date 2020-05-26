@@ -70,12 +70,15 @@ export default class extends NextApp {
   }
 
   componentDidMount() {
+      // :aa-browse
+      /*
     const params = new URLSearchParams(location.search)	
     const modalQuery = params.get('modal')
-    
+
     if (modalQuery === 'browse') {
       this.stores.uiStore.openBrowseModal()
     }
+      */
   }
 
   render() {

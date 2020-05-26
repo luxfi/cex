@@ -122,7 +122,7 @@ export default (props) => {
                     title="Tweet"
                     variant="outlined"
                     fullWidth
-                    color="secondary"
+                    color="primary"
                     size="large"
                     className={classes.buyTicketsButton}
                     classes={{
@@ -149,7 +149,7 @@ export default (props) => {
                   }}
                   variant="outlined"
                   fullWidth
-                  color="secondary"
+                  color="primary"
                   size="large"
                   className={classes.buyTicketsButton}
                   classes={{
@@ -171,7 +171,7 @@ export default (props) => {
                   title="Switch to Pro"
                   variant="outlined"
                   fullWidth
-                  color="secondary"
+                  color="primary"
                   size="large"
                   className={classes.buyTicketsButton}
                   classes={{

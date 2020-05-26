@@ -148,7 +148,7 @@ const DealTermsSection = ({ dealTermsRef }) => {
                               {!open && restOfBody && (
                                 <span>
                                   {ending}{' '}
-                                  <Link color="secondary" onClick={handleClick}>
+                                  <Link color="primary" onClick={handleClick}>
                                     Learn More
                                   </Link>
                                 </span>
@@ -165,7 +165,7 @@ const DealTermsSection = ({ dealTermsRef }) => {
                               >
                                 {restOfBody}
                                 {open && last && (
-                                  <Link color="secondary" onClick={handleClick}>
+                                  <Link color="primary" onClick={handleClick}>
                                     <ExpandLessIcon />
                                   </Link>
                                 )}
@@ -193,7 +193,7 @@ const DealTermsSection = ({ dealTermsRef }) => {
                               <Box mb={2} mt={2}>
                                 {str}{' '}
                                 {open && last && (
-                                  <Link color="secondary" onClick={handleClick}>
+                                  <Link color="primary" onClick={handleClick}>
                                     <ExpandLessIcon />
                                   </Link>
                                 )}
