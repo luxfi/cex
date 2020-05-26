@@ -36,16 +36,17 @@ export default (theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    flex: 2,
-    height: 60,
+    //flex: 2,
 
     [theme.breakpoints.down('md')]: {
-      flex: 1,
+      //flex: 1,
     },
   },
 
-  logo: {
-    cursor: 'pointer',
+  logoOuter: {
+    display: 'block',
+    position: 'relative',
+    top: '-8px'
   },
 
   desktopElementsOuter : {

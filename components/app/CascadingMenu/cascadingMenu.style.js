@@ -22,22 +22,19 @@ export default (theme) => ({
   },
 
   menuButton: {
-    marginRight: theme.spacing(2),
     height: '100%',
+    minWidth: 0,
+    fontWeight: 600,
+  },
+
+  menuButtonOuter: {
+    marginRight: theme.spacing(2),
     [theme.breakpoints.down('sm')]: {
       marginRight: theme.spacing(1),
     },
-    minWidth: 0,
-    fontWeight: 600,
-    whiteSpace: 'nowrap',
     '&:last-child': {
       marginRight: 0,
     },
-  },
 
-  aTag: {
-    height: '100%',
-    textDecoration: 'none',
-  },
-
+  }
 })

@@ -54,7 +54,7 @@ export default withWidth()(inject('store')(observer((props) => {
     <AppBar className={classNames(s.appBarCommon, appBarClass, { [s.modalHeader]: isBrowseModal })}>
       <Toolbar disableGutters className={s.toolbar}>
         <div className={s.logoArea}>
-          <NextMuiLink href='/'><HeaderLogo handleClose={handleClose} className={s.logo} /></NextMuiLink>
+          <NextMuiLink href='/' className={s.logoOuter}><HeaderLogo handleClose={handleClose} className={s.logo} /></NextMuiLink>
         </div>
         <MovieSearchWidget className={s.searchWidget} movies={movies} isBrowseModal={isBrowseModal} />
         {showDesktopNav ? (

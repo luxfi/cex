@@ -28,9 +28,10 @@ export default ({ structure, className, handleClose }) => {
       href = n.link
     }
 
+      // 'menu-button' used by test code
     if (href) {
       return (
-        <Link href={href} as={n.asHref} key={`link+${n.title}`} className={s.aTag}>
+        <Link href={href} as={n.asHref} key={`link+${n.title}`} className={s.menuButtonOuter}>
           <Button className={classNames(s.menuButton, 'menu-button')} variant='text' color='inherit'>{n.title}</Button>
         </Link>
       )
