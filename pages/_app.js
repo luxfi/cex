@@ -46,6 +46,7 @@ import theme from '../styles/muiTheme'
 
 import '../styles/globalTouchups.scss'
 import '../styles/footerFix.scss'
+import '../styles/responsivePadding.scss'
 import '../styles/nprogress.scss'
 
 import '../components/app/MovieSlider/modified-slick.css'
@@ -102,7 +103,7 @@ export default class extends NextApp {
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
           <NoSsr>
-            <div className={classes.root}>
+            <div className={classNames(classes.root, mainRouteClass(router.route), 'sass-root')}>
               <Header
                 loggedIn={this.stores.userStore.loggedIn}
                 movies={this.stores.movieStore.filteredMovies}
@@ -113,7 +114,7 @@ export default class extends NextApp {
                 open={this.stores.uiStore.drawers.left}
                 setOpen={this.stores.uiStore.setLeftDrawerOpen}
               />
-              <Container component='main' className={classNames({ [classes.main]: true,  [classes.container]: true, [classes.fullScreenContainer]: fullScreen })}>
+              <Container component='main' className={classNames({ [classes.main]: true, 'fullScreenContainer': fullScreen })}>
                 <Component {...pageProps} pathName={router.route} />
               </Container>
               <CustomModal
@@ -138,7 +139,7 @@ export default class extends NextApp {
                 <Footer 
                   loggedIn={this.stores.userStore.loggedIn} 
                   handleLogout={this.stores.userStore.logout} 
-                  className ={classNames({ [classes.footer]: true,  [classes.container]: true, [classes.fullScreenContainer]: fullScreen })}
+                  className ={classNames({ [classes.footer]: true, 'fullScreenContainer': fullScreen })}
                 />
               )}
             </div>

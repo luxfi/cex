@@ -28,6 +28,12 @@ const traverseException = (rootKey, val) => {
   if (rootKey === 'mixins-toolbar') {
     handleToolbar(rootKey, val)
   }
+  else if (rootKey === 'typography') {
+    handleTypography(rootKey, val)
+  }
+  else if (rootKey === 'breakpoints') {
+    handleBreakpoints(rootKey, val)
+  }
 }
 
 const handleToolbar = (rootKey, val) => {
@@ -49,6 +55,17 @@ const handleToolbar = (rootKey, val) => {
     }
   }
 }
+
+  // basically strip off the 'values' part of the key
+const handleBreakpoints = (rootKey, val) => {
+  for (let key in val.values) {
+    result[`${rootKey}-${key}`] = val.values[key]
+  }
+}
+
+const handleTypography = (rootKey, val) => {
+  //console.log(`${rootKey}: ${JSON.stringify(val, null, 2)}`)
+} 
 
 const processFontFamilyString = (raw) => {
   let arr = raw.split(',')
@@ -86,11 +103,14 @@ const isException = (key, val) => {
 }
 
 const EXCEPT = [
-  'breakpoints-keys',
-  'breakpoints-values',
+  'breakpoints',
   'mixins-toolbar',
   //'shadows',
-  'ext',
+  'typography',
+  'shadows',
+  'transitions',
+  'zIndex',
+  //'ext',
   'props',
   'overrides'
 ]

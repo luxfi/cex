@@ -20,57 +20,26 @@ export default (theme) => ({
     },
   },
 
+  footer: {
+        /* padding and responsivity impl is in 'styles/responsivePadding.scss' */ 
+    marginTop: theme.spacing(3)
+  },
+
   main: {
-    flexGrow: 1,
-    marginTop: '64px',
+        /* padding and responsivity impl is in 'styles/responsivePadding.scss' */ 
 
-    padding: theme.spacing(0),
-
-    [theme.breakpoints.down('xs')]: {
-      padding: `0px ${theme.spacing(2)}`,
-    },
-
-    minHeight: '50vh',
     '& .slide-button': {
       margin: 0,
       background: 'transparent !important',
     },
-    // TODO: Temp fix, needs to be done for all sliders
+      // TODO: Temp fix, needs to be done for all sliders
     '& .slider-wrapper': {
       width: '100%',
     },
 
-    //backgroundColor: '#ccc', // TEMP
-  },
-  
-  footer: {
-    marginTop: `${theme.spacing(3)}px !important`
-  }, 
-
-  fullScreenContainer: {
-    maxWidth: 'none !important',
-    marginTop: '0px',
-    padding: '0 !important',
-  },
-
-    // maxWidth is taken care of in definition
-  container: {
-
-    padding: `0px ${theme.spacing(3)}px`,
-
-      // the "bump" edgecase :)
-    ['@media (min-width:1280px) and (max-width:1400px) ']: {
-      paddingLeft: 'calc(64px - (50% - 640px)) !important',
-      paddingRight: 'calc(64px - (50% - 640px)) !important'
-    },
-
-    [theme.breakpoints.up('lg')]: {
-      padding: 0, // float in space, so no need for
-    },
-       
-    [theme.breakpoints.down('xs')]: {
-      padding: `0px ${theme.spacing(2)}px`
-    },
+    flexGrow: 1,
+    marginTop: '64px',
+    minHeight: '50vh',
   },
 
 })

@@ -55,8 +55,8 @@ export default withWidth()(inject('store')(observer((props) => {
       <Toolbar disableGutters className={s.toolbar}>
         <div className={s.logoArea}>
           <NextMuiLink href='/'><HeaderLogo handleClose={handleClose} className={s.logo} /></NextMuiLink>
-          <MovieSearchWidget className={s.searchWidget} movies={movies} isBrowseModal={isBrowseModal} />
         </div>
+        <MovieSearchWidget className={s.searchWidget} movies={movies} isBrowseModal={isBrowseModal} />
         {showDesktopNav ? (
           <div className={s.desktopElementsOuter}>
             <CascadingMenu handleClose={handleClose} structure={structure} className={s.navMenu}/>

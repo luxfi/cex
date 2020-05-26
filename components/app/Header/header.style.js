@@ -2,17 +2,9 @@ export default (theme) => ({
   appBarCommon: {
     color: 'inherit',
     boxShadow: 'none',
-
-    padding: `0px ${theme.spacing(3)}`,
-
-    [theme.breakpoints.up('lg')]: {
-      padding: `0px ${theme.spacing(8)}`,
-    },
-    [theme.breakpoints.down('xs')]: {
-      padding: `0px ${theme.spacing(2)}`,
-    },
-
     transition: 'background 0.5s ease-in-out',
+
+    /* NOTE: padding is impl in 'styles/responsivePadding.scss */
   },
 
   appBarDesktopTop: {
@@ -64,14 +56,14 @@ export default (theme) => ({
     flex: 1,
   },
 
+    
   navMenu: {
-    marginRight: theme.spacing(8),
     color: '#fff', // theme.palette.common.white,  (true white, not palette white)
     '& *': {
       color: 'inherit'
     },
   },
-
+    
   navButton: {
     '&:first-child': {
       marginRight: theme.spacing(2)
@@ -85,13 +77,9 @@ export default (theme) => ({
   accountOuter: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
-    //color: '#fff', // theme.palette.common.white,  (true white, not palette white)
-    /*
-    '& *': {
-      color: 'inherit'
-    }
-    */
+    justifyContent: 'flex-end',
+    width: '260px',
+    //border: '1px white solid'
   },
 
   accountIcon: {
@@ -110,65 +98,5 @@ export default (theme) => ({
         textDecoration: 'none',
       }
     }
-  },
-  searchButton: {
-    width: 48,
-    height: 48,
-    display: 'none',
-    transition: 'all 300ms linear',
-  },
-  showSearchBotton: {
-    // position: 'absolute',
-    // top: '50%',
-    // left: '50%',
-    // transform: 'translate(-50%, -50%)',
-  },
-  search: {
-    width: '450px',
-    height: 63,
-    position: 'relative',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  input: {
-    position: 'absolute',
-    right: 63,
-    boxSizing: 'border-box',
-    width: 0,
-    height: 42,
-    padding: '0 20px',
-    outline: 'none',
-    fontSize: 18,
-    borderRadius: 63,
-    color: '#29313a',
-    border: '3px solid #62d474',
-    transition: 'all 0.8s ease',
-  },
-  active: {
-    width: 350,
-    borderTopLeftRadius: 5,
-    borderBottomLeftRadius: 5,
-    right: 100,
-  },
-  btn: {
-    position: 'absolute',
-    width: 42,
-    height: 42,
-    background: '#62d474',
-    borderRadius: '50%',
-    right: 63,
-    cursor: 'pointer',
-    textAlign: 'center',
-    lineHeight: 80,
-    fontSize: 20,
-    color: '#fff',
-    transition: 'all 0.8s ease',
-  },
-  btnInner: {
-    position: 'relative',
-  },
-  atag: {
-    color: 'inherit',
-    textDecoration: 'none',
   },
 })

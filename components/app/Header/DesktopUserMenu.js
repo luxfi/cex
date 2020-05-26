@@ -77,13 +77,13 @@ export default ({ loggedIn, handleLogout, classes }) => (
         </PopupState>
       ) : (
         <>
-          <Link href='/login' className={classes.atag} >
-            <Button className={classes.navButton}>
+          <Link href='/login' className={classes.navButton} >
+            <Button >
               Login
             </Button>
           </Link>
-          <Link href='/signup' className={classes.atag} >
-            <Button variant='outlined' color='default' className={classes.navButton}>
+          <Link href='/signup' className={classes.navButton}>
+            <Button variant='outlined' color='default' >
               Sign Up
             </Button>
           </Link>
