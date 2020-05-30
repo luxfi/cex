@@ -5,6 +5,21 @@ export default (theme) => ({
     flexWrap: 'noWrap',
     justifyContent: 'space-between',
     flexDirection: 'row',
+    fontSize: '0.9rem',
+    lineHeight: 1.1,
+    fontWeight: 600,
+
+    [theme.breakpoints.up('lg')]: {
+      fontSize: '1.0rem',
+      lineHeight: 1.2,
+      fontWeight: 600,
+    },
+
+    '& *': {
+      fontSize: 'inherit',
+      lineHeight: 'inherit',
+      fontWeight: 'inherit',
+    }
   },
 
   menuItem: {
@@ -24,7 +39,6 @@ export default (theme) => ({
   menuButton: {
     height: '100%',
     minWidth: 0,
-    fontWeight: 600,
   },
 
   menuButtonOuter: {

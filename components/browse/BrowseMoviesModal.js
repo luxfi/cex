@@ -36,7 +36,6 @@ const BrowseMoviesModal = ({ store, open }) => {
         openMobileMenu={() => {uiStore.setRightDrawerOpen(true)}}
         handleLogout={() => {userStore.logout()}}
         handleClose={handleClose}
-        isBrowseModal
       />
       <div className={classes.main}>
         <BrowseMovies />

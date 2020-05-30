@@ -4,11 +4,15 @@ import { withRouter } from 'next/router'
 
 import memoize from 'lodash.memoize'
 
-import Autosuggest from "react-autosuggest"
+import Autosuggest from 'react-autosuggest'
 import classNames from 'classnames'
 
 import { withStyles, IconButton } from '@material-ui/core'
-import { Search as SearchIcon } from '@material-ui/icons'
+import { 
+  Search as SearchIcon, 
+//  HighlightOff as CloseIcon 
+  Close as CloseIcon
+} from '@material-ui/icons'
 
 import styles from './movieSearchWidget.style.js'
 
@@ -18,30 +22,28 @@ import styles from './movieSearchWidget.style.js'
 @observer
 class MovieSearchWidget extends React.Component {
 
-  suggestionSet = []
-
   constructor(props) {
     super(props)
  
-    this.suggestionSet = props.movies.map(movie => ({ name: `${movie.name} - ${movie.ticker}`, movie }))
+    this.totalSet = props.movies.map(movie => ({ name: `${movie.name} - ${movie.ticker}`, movie }))
 
     this.state = {
       suggestions: [],
       popper: '',       // unused but needs to exist
       single: '',
-      searchOpened: false,
+      searchWidgetOpened: false,
     }
   }
 
   setSuggestions = (s) => {
     this.setState({
       suggestions: s
-    }, () => this.addMovieToStore(s))
+    }, () => {this.setAsResultSet(s)})
   }
 
   handleSuggestionsFetch = ({ value }) => {
     this.setSuggestions(
-      this.suggestionSet
+      this.totalSet
         .filter(str => fuzzyMatch(str.name, value))
         .map(movie => movie.movie)
     )
@@ -51,49 +53,66 @@ class MovieSearchWidget extends React.Component {
     this.setSuggestions([])
   }
 
-  handleChange = name => (event, { newValue }) => {
+  handleChange = (event, { newValue }) => {
     this.setState({
-      [name]: newValue,
+      single: newValue,
     })
 
+  // TEMP
+console.log('CHANGE: ' + newValue)
+    
     if (!event.target.value) {
       const { store: { movieStore } } = this.props
-      //movieStore.resetMovieSearchResult()
+      movieStore.resetMovieSearchResult()
     }
   }
 
-  renderInputComponent = (inputProps) => {
-    const { classes, onChange, ref, value, } = inputProps
-    const { searchOpened } = this.state
-    const { isBrowseModal } = this.props
+  renderSuggestionsContainer = ({ containerProps, children, query }) => (
+    <div 
+      className={classNames(
+        this.props.classes.searchOuter, 
+        (this.state.searchWidgetOpened) ? this.props.classes.searchWidgetOpened : this.props.classes.searchWidgetClosed
+      )} 
+      {...containerProps}
+    >
+      {children}
+    </div>
+  )
 
-    return (
-      <input
-        type="text"
-        placeholder="Search..."
-        className={classNames(classes.input, { [classes.opened]: searchOpened || isBrowseModal })}
-        onChange={onChange}
-        value={value}
-        ref={ref}
-        autoFocus
-      />
-    )
-  }
+  renderInputComponent = ({ classes, onChange, ref, value, }) => (
+    <>
+    <input
+      type="text"
+      placeholder="Search..."
+      className={classNames(classes.input)}
+      onChange={onChange}
+      value={value}
+      ref={ref}
+      autoFocus
+    />
+    <IconButton onClick={() => {this.openSearchWidget(!this.state.searchWidgetOpened)}} className={classNames(classes.iconButton)}>
+      {this.state.searchWidgetOpened ? <CloseIcon /> : <SearchIcon /> }
+    </IconButton>
+    </>
+  )
 
-  addMovieToStore = (movies, callback = null) => {
+  setAsResultSet = (movies) => {
     const { store: { movieStore } } = this.props
+  
+  // TEMP
+  console.log('RESULT SET: ' + JSON.stringify(movies.map((m) =>(m.name)), null, 2))
+  
 
     //movieStore.setMovieSearchResult(movies)
-    if (callback) {
-      callback()
-    }
   }
 
-  openSearch = () => {
+  openSearchWidget = (open) => {
     const { store: { uiStore }, router } = this.props
 
     this.setState({
-      searchOpened: true,
+      searchWidgetOpened: open,
+      single: '',
+      suggestions: []
     }, () => {
       /*
       setTimeout(()=> {
@@ -118,48 +137,48 @@ class MovieSearchWidget extends React.Component {
   noop = () => {}
 
   render = () => {
-    const { classes, isBrowseModal } = this.props
+    const { classes } = this.props
     const { suggestions, single } = this.state
 
     const autoSuggestProps = {
       renderInputComponent: this.renderInputComponent,
       suggestions,
       onSuggestionsFetchRequested: this.handleSuggestionsFetch,
-      onSuggestionsClearRequested: this.noop,
-      getSuggestionValue,
+      onSuggestionsClearRequested: this.handleSuggestionsClear,
+      getSuggestionValue: (suggestion) => (suggestion.name),
+      shouldRenderSuggestions: (value) => (value.trim().length > 2),
+      inputProps: {
+        classes,  // must have this w classes.input defined! .. thanks for documenting, asshats! ;)
+        id: 'react-autosuggest-simple',
+        value: single,
+        onChange: this.handleChange,
+      },
+      renderSuggestion: (suggestion) => (<span>'FOOO'{suggestion.text}</span>)
     }
 
     return (
-      <div className={classes.searchOuter}>
-        <Autosuggest
-          {...autoSuggestProps}
-          inputProps={{
-            classes,
-            id: 'react-autosuggest-simple',
-            value: single,
-            onChange: this.handleChange('single'),
-          }}
-          renderSuggestionsContainer={this.noop}
-          renderSuggestion={this.noop}
-        />
-        <IconButton disabled={isBrowseModal} onClick={this.openSearch} className={classes.iconButton}>
-          <SearchIcon />
-        </IconButton>
+      <div 
+        className={classNames(
+          this.props.classes.searchOuter, 
+          (this.state.searchWidgetOpened) ? this.props.classes.searchWidgetOpened : this.props.classes.searchWidgetClosed
+        )} 
+      >
+        <Autosuggest {...autoSuggestProps} />
       </div>
     )
   }
 }
 
 const fuzzyMatch = (str, pattern) => {
-  const cache = memoize(function (str) {
-    return new RegExp("^" + str.replace(/./g, function (x) {
-      return /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/.test(x) ? "\\" + x + "?" : x + "?"
-    }) + "$")
-  })
+  const cache = memoize((str) => (
+    new RegExp("^" + str.replace(
+      /./g, 
+      (x) => (
+        /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/.test(x) ? "\\" + x + "?" : x + "?"
+      )
+    ) + "$")
+  ))
   return cache(str.toLowerCase()).test(pattern.toLowerCase())
 }
-
-const getSuggestionValue = (suggestion) => (suggestion.name)
-
 
 export default MovieSearchWidget

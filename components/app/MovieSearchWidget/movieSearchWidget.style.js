@@ -1,66 +1,82 @@
-import { fade } from "@material-ui/core/styles"
-
 export default (theme) => ({
 
   searchOuter: {
-  //  width: 600,
-    //height: 63,
-    //position: 'relative',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    backgroundColor: 'grey',
+    marginRight: theme.spacing(4),
 
-      /*
-    [theme.breakpoints.down('lg')]: {
-      width: 500,
-    },
+      // This could be in theme eventually 
+    '& .MuiSvgIcon-root': {
+      width: '1.3rem',
+      height: '1.3rem',
+    },  
 
-    [theme.breakpoints.down('md')]: {
-      width: 300,
-    },
-
-    [theme.breakpoints.down('xs')]: {
-      width: 200,
-    } 
-    */
+    '& > .react-autosuggest__container': {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+      alignItems: 'center',
+    }
   },
+
+  searchWidgetClosed: {
+    '& $input': {
+      width: 0,
+    },
+    '& $iconButton': { 
+        transition: 'border-radius 0.3s ease 0.8s',
+    },
+
+      // Search Icon is centered on spyglass
+      // circle, not on arbitrary center of icon
+    '& .MuiIconButton-label': {
+      display: 'block',
+      position: 'relative',
+      top: '5px',
+      left: '2px'
+    }
+  },
+
+  searchWidgetOpened: {
+    '& $input': {
+      padding: '5px',
+      paddingLeft: '16px',
+      width: '100%',
+    },
+    '& $iconButton': { 
+      borderTopLeftRadius: 0,
+      borderBottomLeftRadius: 0,
+    }
+  },
+
 
   input: {
-    //position: 'absolute',
-    //top: 15,
-    //right: 10,
     boxSizing: 'border-box',
+    display: 'inline-block',
     width: 0,
     height: 42,
-    padding: '0 42px 0 30px',
+    padding: 0,
+
     outline: 'none',
-    fontSize: 18,
-    borderRadius: 63,
+    fontSize: '18px', // TODO
+    borderTopLeftRadius: 42 * 0.5,
+    borderBottomLeftRadius: 42 * 0.5,
     color: 'inherit',
     border: 'none',
-    transition: 'all 0.8s ease',
-    background: 'initial',
+    background: 'rgba(255,255,255,0.15)',
+    color: 'rgba(255,255,255,0.90)',
+    '&::placeholder': {
+      color: 'rgba(255,255,255,0.60)'
+    },
+
+    transition: 'width 0.8s ease, padding 0.8s ease', 
   },
   
-  opened: {
-    width: '100%',
-    background: 'rgb(255,255,255,0.15)',
-  },
-
   iconButton: {
-  //  position: 'absolute',
-  //  top: 15,
     display: 'block',
+    padding: 0, // better icon centering!
     width: 42,
     height: 42,
     borderRadius: '50%',
-  //  right: 10,
     textAlign: 'center',
-  //  lineHeight: 80,
-  //  fontSize: 20,
-  //  color: '#fff',
     border: 'none',
     background: 'transparent',
   },

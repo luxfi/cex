@@ -33,7 +33,6 @@ export default withWidth()(inject('store')(observer((props) => {
     width,
     movies,
     store,
-    isBrowseModal,
   } = props
   const { uiStore } = store
 
@@ -51,19 +50,22 @@ export default withWidth()(inject('store')(observer((props) => {
   }
 
   return (
-    <AppBar className={classNames(s.appBarCommon, appBarClass, { [s.modalHeader]: isBrowseModal })}>
+    <AppBar className={classNames(s.appBarCommon, appBarClass)}>
       <Toolbar disableGutters className={s.toolbar}>
         <div className={s.logoArea}>
           <NextMuiLink href='/' className={s.logoOuter}><HeaderLogo handleClose={handleClose} className={s.logo} /></NextMuiLink>
         </div>
-        <MovieSearchWidget className={s.searchWidget} movies={movies} isBrowseModal={isBrowseModal} />
         {showDesktopNav ? (
           <div className={s.desktopElementsOuter}>
+            <MovieSearchWidget className={s.searchWidget} movies={movies} />
             <CascadingMenu handleClose={handleClose} structure={structure} className={s.navMenu}/>
             <DesktopUserMenu loggedIn={loggedIn} handleLogout={handleLogout} classes={s}/>
           </div>
         ) : (
+          <>
+          <MovieSearchWidget className={s.searchWidget} movies={movies}  />
           <BurgerMenuButton classes={s} onClick={openMobileMenu}/>
+          </>
         )}
       </Toolbar>
     </AppBar>
