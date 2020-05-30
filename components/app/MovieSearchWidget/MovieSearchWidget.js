@@ -8,7 +8,7 @@ import Autosuggest from "react-autosuggest"
 import classNames from 'classnames'
 
 import { withStyles, IconButton } from '@material-ui/core'
-import Search from '@material-ui/icons/Search'
+import { Search as SearchIcon } from '@material-ui/icons'
 
 import styles from './movieSearchWidget.style.js'
 
@@ -143,7 +143,7 @@ class MovieSearchWidget extends React.Component {
           renderSuggestion={this.noop}
         />
         <IconButton disabled={isBrowseModal} onClick={this.openSearch} className={classes.iconButton}>
-          <Search className={classes.searchIcon} />
+          <SearchIcon />
         </IconButton>
       </div>
     )

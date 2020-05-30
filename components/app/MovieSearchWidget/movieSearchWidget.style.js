@@ -1,15 +1,18 @@
 import { fade } from "@material-ui/core/styles"
 
 export default (theme) => ({
-  searchOuter: {
-    width: 600,
-    height: 63,
-    position: 'relative',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    background: 'transparent',
 
+  searchOuter: {
+  //  width: 600,
+    //height: 63,
+    //position: 'relative',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: 'grey',
+
+      /*
     [theme.breakpoints.down('lg')]: {
       width: 500,
     },
@@ -20,12 +23,14 @@ export default (theme) => ({
 
     [theme.breakpoints.down('xs')]: {
       width: 200,
-    }
+    } 
+    */
   },
+
   input: {
-    position: 'absolute',
-    top: 15,
-    right: 10,
+    //position: 'absolute',
+    //top: 15,
+    //right: 10,
     boxSizing: 'border-box',
     width: 0,
     height: 42,
@@ -38,23 +43,26 @@ export default (theme) => ({
     transition: 'all 0.8s ease',
     background: 'initial',
   },
+  
   opened: {
     width: '100%',
     background: 'rgb(255,255,255,0.15)',
   },
+
   iconButton: {
-    position: 'absolute',
-    top: 15,
+  //  position: 'absolute',
+  //  top: 15,
+    display: 'block',
     width: 42,
     height: 42,
     borderRadius: '50%',
-    right: 10,
+  //  right: 10,
     textAlign: 'center',
-    lineHeight: 80,
-    fontSize: 20,
-    color: '#fff',
+  //  lineHeight: 80,
+  //  fontSize: 20,
+  //  color: '#fff',
     border: 'none',
-    background: 'initial',
+    background: 'transparent',
   },
 })
 
