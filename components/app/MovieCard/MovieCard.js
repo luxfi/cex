@@ -37,22 +37,23 @@ export default inject('store')(observer(({
   const style = (height) ? { height: height, width: 'auto' } : {}
   const { uiStore } = store
 
-  const closeBrowseModal = () => {
-    uiStore.closeBrowseModal()
+  const handleItemSelected = () => {
+      // toDo
   }
 
+    // TODO '/images/film' should not be assumed in the data... remote URL's should also work!
   return (
     <div className={classNames(classes.card, className, movie.movieSlug, 'movie-card')} >
       <img src={`/images/film/${movie.posterImg}`} className={classes.cardMedia} style={style}/>
       <div className={classes.cardContent}>
-        <div onClick={closeBrowseModal}>
+        <div onClick={handleItemSelected}>
           <TrailerImage movie={movie} className={classes.trailerImg} />
         </div>
         <Box className={classNames(classes.standardContent, classes.innerCardContent) }>
           <Typography className={classes.title} variant="body2">{movie.name}</Typography>
         </Box>
         <Box className={classNames(classes.hoverContent, classes.innerCardContent)}>
-          <div onClick={closeBrowseModal}>
+          <div onClick={handleItemSelected}>
             <Link href='/film/[id]' as={`/film/${movie.movieSlug}`} className={classes.aTag}>
               <Typography className={classNames(classes.title, classes.aTag)} variant="body2">{movie.name}</Typography>
             </Link>

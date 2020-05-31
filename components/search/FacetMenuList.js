@@ -1,9 +1,10 @@
+import React from 'react'
+import classNames from 'classnames'
+
 import { MenuItem, MenuList } from '@material-ui/core'
 import { Check } from '@material-ui/icons'
-import classNames from 'classnames'
-import React from 'react'
 
-const FacetMenuList = ({
+export default ({
   facets,
   classes,
   onClick,
@@ -28,5 +29,3 @@ const FacetMenuList = ({
     })}
   </MenuList>
 )
-
-export default FacetMenuList

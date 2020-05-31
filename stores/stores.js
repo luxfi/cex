@@ -66,6 +66,8 @@ export default (initialData = _initialData) => {
     userStore: new UserStore(initialData.userStore, api),
   }
 
+  stores.stockStore = stores.movieStore // for migration
+
   if (!isServer) {
     // Should any of these be called here?
     // stores.ticketCheckoutStore.getTicketOrders()

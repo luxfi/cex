@@ -1,9 +1,10 @@
-import { action, observable, computed } from 'mobx'
+import { action, observable } from 'mobx'
 
-export default class UIStore {
+export default class {
+
   @observable snackBarOpen = false
   @observable authModalOpen = false
-  @observable browseModalOpened = false
+    // :aa TODO, doesn't belong at this level!
   @observable tabIndexValue = 0
   @observable snackBarVariant = 'error'
   @observable snackBarMessage = ''
@@ -84,18 +85,6 @@ export default class UIStore {
     this.authModalOpen = false
   }
 
-  @action openBrowseModal(cb) {
-    this.browseModalOpened = true
-
-    if (cb) {
-      cb()
-    }
-  }
-
-  @action closeBrowseModal(success) {
-    this.browseModalOpened = false
-  }
-
   @action openDialog(name) {
     this.dialog.open = true
     if (name) {
@@ -108,6 +97,7 @@ export default class UIStore {
     this.dialog.name = null
   }
 
+    // :aa TODO, doesn't belong at this level!
   @action setTabIndexValue(currentValue) {
     this.tabIndexValue = currentValue
   }

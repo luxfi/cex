@@ -1,5 +1,6 @@
 import React from 'react'
-import { Provider, observer } from 'mobx-react'
+import { Provider, observer, batchingForReactDom } from 'mobx-react'
+
 import NProgress from 'nprogress'
 
 import NextApp from 'next/app'
@@ -34,12 +35,8 @@ import {
   MobileAccountMenuDrawer,
   MobileNavMenuDrawer,
 } from '../components/app'
-import BrowseMoviesModal from '../components/browse'
-
-import { isNullQuery } from '../util'
 
 import initializeStores from '../stores/stores'
-
 
 import styles from '../styles/app.style.js'
 import theme from '../styles/muiTheme'
@@ -71,15 +68,6 @@ export default class extends NextApp {
   }
 
   componentDidMount() {
-      // :aa-browse
-      /*
-    const params = new URLSearchParams(location.search)	
-    const modalQuery = params.get('modal')
-
-    if (modalQuery === 'browse') {
-      this.stores.uiStore.openBrowseModal()
-    }
-      */
   }
 
   render() {
@@ -99,7 +87,7 @@ export default class extends NextApp {
       <NextHead>
         <title>ESX | Entertainment Stock X</title>
       </NextHead>
-      <Provider store={this.stores}>
+      <Provider store={this.stores} value={this.stores} >
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
           <NoSsr>
@@ -124,7 +112,6 @@ export default class extends NextApp {
               />
 
               <CustomSnackbar />
-              <BrowseMoviesModal open={uiStore.browseModalOpened} />
               <MobileAccountMenuDrawer
                 open={this.stores.uiStore.drawers.right}
                 setOpen={this.stores.uiStore.setRightDrawerOpen}

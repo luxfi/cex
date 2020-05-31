@@ -1,8 +1,6 @@
-import { fade } from '@material-ui/core/styles'
-
 // this visually accomodates the trading/funding tabs
 // and the fact that the text is centered
-const tabOffsetMargin = '-15px'
+const TAB_OFFSET_MARGIN = '-15px'
 
 export default (theme) => ({
 
@@ -39,7 +37,7 @@ export default (theme) => ({
     marginLeft: theme.spacing(4),
   },
   tabsContainer: {
-    marginLeft: tabOffsetMargin,
+    marginLeft: TAB_OFFSET_MARGIN,
     [theme.breakpoints.down('sm')]: {
       justifyContent: 'space-between',
       marginLeft: 0,
