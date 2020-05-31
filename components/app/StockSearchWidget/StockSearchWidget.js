@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import { useObserver } from 'mobx-react'
 //import { useRouter } from 'next/router'
 
 import classNames from 'classnames'
@@ -20,20 +19,18 @@ export default ({ stockStore, minChars, className }) => {
 
   const s  = useStyles()
 
-  const handleChange = (event, { newValue }) => {
-    // TEMP
-    console.log('CHANGE: ' + newValue)
-
-    setSearchString(newValue)
-    if (newValue.length < minChars) {
-      stockStore.fuzzyMatch(newValue)
-    } 
-    else if (!event.target.value || !event.target.value.length) {
+  const handleChange = (event) => {
+    const str =  event.target.value
+    setSearchString(str)
+    if (!str || !str.length) {
       stockStore.clearResultSet()
     }
+    else if (str && str.length >= minChars) {
+      stockStore.fuzzyMatch(str)
+    } 
   }
 
-  return useObserver(() => (
+  return (
     <div 
       className={classNames(
         className,
@@ -53,6 +50,5 @@ export default ({ stockStore, minChars, className }) => {
         {searchWidgetOpen ? <CloseIcon /> : <SearchIcon /> }
       </IconButton>
     </div>
-  ))
+  )
 }
-

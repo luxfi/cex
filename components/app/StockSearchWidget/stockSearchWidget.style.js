@@ -1,20 +1,20 @@
+const MAIN_TRANSITION = 0.6
+const FAST_TRANSITION = 0.2
+
 export default (theme) => ({
 
   searchOuter: {
     marginRight: theme.spacing(4),
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
 
       // This could be in theme eventually 
     '& .MuiSvgIcon-root': {
       width: '1.3rem',
       height: '1.3rem',
     },  
-
-    '& > .react-autosuggest__container': {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'flex-end',
-      alignItems: 'center',
-    }
   },
 
   searchWidgetClosed: {
@@ -22,7 +22,7 @@ export default (theme) => ({
       width: 0,
     },
     '& $iconButton': { 
-        transition: 'border-radius 0.3s ease 0.8s',
+        transition: `border-radius ${FAST_TRANSITION}s ease ${MAIN_TRANSITION}s`,
     },
 
       // Search Icon is centered on spyglass
@@ -67,7 +67,7 @@ export default (theme) => ({
       color: 'rgba(255,255,255,0.60)'
     },
 
-    transition: 'width 0.8s ease, padding 0.8s ease', 
+    transition: `width ${MAIN_TRANSITION}s ease, padding ${MAIN_TRANSITION}s ease`, 
   },
   
   iconButton: {

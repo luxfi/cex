@@ -133,8 +133,10 @@ export default class {
     return this.stocks.find(m => m.movieSlug === slug)
   }
 
-  @action fuzzyMatchValue(value) {
-    this.resultSet = this.stocks.filter((s) => (fuzzyMatch(s.name, value)))
+  @action fuzzyMatch(str) {
+      // some names are numbers, like films named after years
+    this.resultSet = this.stocks.filter((s) => (fuzzyMatch(s.name.toString(), str)))
+    //console.log('RESULT SET: \n' + JSON.stringify(this.resultSet.map((s) => (s.name)), null, 2))
   }
 
   @action setResultSet(stocks) {
@@ -189,7 +191,8 @@ const stockFromJSON = (json) => {
   return movie
 }
 
-const fuzzyMatch = (str, pattern) => {
+const fuzzyMatch = (s, pattern) => {
+
   const cache = memoize((str) => (
     new RegExp("^" + str.replace(
       /./g, 
@@ -198,6 +201,6 @@ const fuzzyMatch = (str, pattern) => {
       )
     ) + "$")
   ))
-  return cache(str.toLowerCase()).test(pattern.toLowerCase())
+  return cache(s.toLowerCase()).test(pattern.toLowerCase())
 }
 
