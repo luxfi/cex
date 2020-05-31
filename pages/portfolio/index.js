@@ -27,7 +27,7 @@ export default class extends React.Component {
     const { movieStore, userPortfolio, newsStore, userStore } = store
 
     // What functions do we need from the movie and user store?
-    const findMovieByTicker = t => movieStore.getMovieByTicker(t)
+    const findMovieByTicker = t => movieStore.getStockByTicker(t)
     const addToWatchlist = t => { userPortfolio.addToWatchlist(t, findMovieByTicker) }
     const removeFromWatchlist = t => { userPortfolio.removeFromWatchlist(t) }
 

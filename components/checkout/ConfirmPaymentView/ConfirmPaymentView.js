@@ -176,7 +176,7 @@ class ConfirmPaymentView extends React.Component {
     const { processingPayment, transactionStatus } = this.state
 
     const movieSlug = router.query.slug || slugFromPath()
-    const movie = movieStore.getMovieBySlug(movieSlug)
+    const movie = movieStore.getStockBySlug(movieSlug)
 
     return (
       <Grid container className={classes.outerContainer}>

@@ -67,7 +67,7 @@ export default inject('store')(observer((props) => {
         )
       })}
       {Object.keys(referrals.byFilm).map((slug, i) => {
-        const movie = movieStore.getMovieBySlug(slug)
+        const movie = movieStore.getStockBySlug(slug)
         if (!movie) return null
         return (
           <Grid key={slug} item xs={12}>

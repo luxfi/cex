@@ -54,7 +54,7 @@ export default class extends React.Component {
       return this.renderInvalidMovieMessage(movieSlug, trailerId)
     }
 
-    const movie = movieStore.getMovieBySlug(movieSlug)
+    const movie = movieStore.getStockBySlug(movieSlug)
 
     this.getUpdatedRelatedMovies(movieSlug)
     trailerStore.setMovieTrailerDetails(movie)
@@ -75,7 +75,7 @@ export default class extends React.Component {
       this.getUpdatedRelatedMovies(movieSlug)
     }
 
-    const movie = movieStore.getMovieBySlug(nextMovieSlug)
+    const movie = movieStore.getStockBySlug(nextMovieSlug)
     if (prevMovieSlug !== nextMovieSlug) {
       trailerStore.setMovieTrailerDetails(movie)
     }
@@ -159,7 +159,7 @@ export default class extends React.Component {
       return this.renderInvalidMovieMessage(movieSlug, trailerId)
     }
 
-    const movie = movieStore.getMovieBySlug(movieSlug)
+    const movie = movieStore.getStockBySlug(movieSlug)
     const { nextMovieIndex } = this.state
 
     const autoPlay = autoPlaySet === 'true' || autoPlaySet === true

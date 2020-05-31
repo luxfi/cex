@@ -22,7 +22,6 @@ import styles from './browseMovies.style'
 class BrowseMovies extends React.Component {
   componentDidMount() {
     const { store: { movieStore } } = this.props
-    movieStore.loadMovies()
   }
 
   tabSelected = (i) => {
@@ -56,8 +55,8 @@ class BrowseMovies extends React.Component {
         <Loading loading={movieStore.loadingBrowseMovies}>
           <Grid container spacing={3} className={classes.resultsOuter} alignItems='stretch'>
           {
-            movieStore.filteredMovies.length ? (
-              movieStore.filteredMovies.map((m, i) => (
+            movieStore.filteredResultSet.length ? (
+              movieStore.filteredResultSet.map((m, i) => (
                 <Grid xs={12} sm={6} md={4} lg={2} item key={m.imdbid + i} >
                   <MovieCard
                     movie={m}

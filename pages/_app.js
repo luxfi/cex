@@ -106,7 +106,6 @@ export default class extends NextApp {
             <div className={classNames(classes.root, mainRouteClass(router.route), 'sass-root')}>
               <Header
                 loggedIn={this.stores.userStore.loggedIn}
-                movies={this.stores.movieStore.filteredMovies}
                 openMobileMenu={() => {this.stores.uiStore.setRightDrawerOpen(true)}}
                 handleLogout={() => {this.stores.userStore.logout()}}
               />

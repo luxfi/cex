@@ -81,7 +81,7 @@ class CheckoutView extends React.Component {
     const venueId = urlParams.get('venueId')
     const refHash = urlParams.get('ref')
 
-    const movie = movieStore.getMovieBySlug(slug)
+    const movie = movieStore.getStockBySlug(slug)
 
     const refString = refHash && refHash.length ? `&ref=${refHash}` : ''
 

@@ -6,7 +6,7 @@ import Hanzo from 'hanzo.js'
 import { HANZO_KEY, HANZO_ENDPOINT } from "../settings"
 
 // Stores
-import MovieStore from "./MovieStore"
+import StockStore from "./StockStore"
 import ArticleStore from "./ArticleStore"
 import OrderBook from "./OrderBook"
 import UserStore from "./UserStore"
@@ -54,7 +54,7 @@ export default (initialData = _initialData) => {
     careerStore: new CareerStore(initialData.uiStore, api),
     commentStore: new CommentStore(initialData.commentStore, api),
     contentfulStore: new ContentfulStore(initialData.contentfulStore, api),
-    movieStore: new MovieStore(initialData.movieStore, api),
+    movieStore: new StockStore(initialData.movieStore, api),
     newsStore: new NewsStore(initialData.newsStore, api),
     orderBook: new OrderBook(initialData.orderBook, api),
     pickSeatStore: new PickSeatStore(initialData.pickSeatStore, api),

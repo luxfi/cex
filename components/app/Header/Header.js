@@ -14,7 +14,7 @@ import {
 import { MenuRounded as MenuIcon, Search as SearchIcon } from '@material-ui/icons'
 import classNames from 'classnames'
 
-import { CascadingMenu, MovieSearchWidget, NextMuiLink } from '..'
+import { CascadingMenu, StockSearchWidget, NextMuiLink } from '..'
 
 import HeaderLogo from './HeaderLogo'
 import DesktopUserMenu from './DesktopUserMenu'
@@ -31,7 +31,6 @@ export default withWidth()(inject('store')(observer((props) => {
     handleClose,
     loggedIn,
     width,
-    movies,
     store,
   } = props
   const { uiStore } = store
@@ -57,13 +56,13 @@ export default withWidth()(inject('store')(observer((props) => {
         </div>
         {showDesktopNav ? (
           <div className={s.desktopElementsOuter}>
-            <MovieSearchWidget className={s.searchWidget} movies={movies} />
+            <StockSearchWidget className={s.searchWidget} stockStore={store.movieStore} minChars={3} />
             <CascadingMenu handleClose={handleClose} structure={structure} className={s.navMenu}/>
             <DesktopUserMenu loggedIn={loggedIn} handleLogout={handleLogout} classes={s}/>
           </div>
         ) : (
           <>
-          <MovieSearchWidget className={s.searchWidget} movies={movies}  />
+          <StockSearchWidget className={s.searchWidget}  stockStore={store.movieStore} minChars={3} />
           <BurgerMenuButton classes={s} onClick={openMobileMenu}/>
           </>
         )}

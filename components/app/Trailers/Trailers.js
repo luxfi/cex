@@ -18,7 +18,8 @@ function Trailers({ store, classes }) {
 
   const movieSlug = router.query.slug || slugFromPath()
 
-  const trailers = store.movieStore.getMovieTrailersBySlug(movieSlug)
+  const movie = store.movieStore.getStockBySlug(movieSlug)
+  const trailers = (movie) ? movie.trailers : []
 
   const getMovieIdFromMovieSlug = (trailerUrl) => {
     const videoUrlArray = trailerUrl.split('/')

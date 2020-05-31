@@ -1,4 +1,4 @@
-const values = [
+const statuses = [
   {
     index: 0,
     key: 'all',
@@ -16,11 +16,11 @@ const values = [
   },
 ]
 
-const byIndex = i => values[i]
-const byKey = k => values.find(v => v.key === k)
+const byIndex = i => statuses[i]
+const byKey = k => statuses.find(v => v.key === k)
 
 export default {
-  values,
+  statuses,
   byIndex,
   byKey
 }

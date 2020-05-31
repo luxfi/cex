@@ -32,7 +32,6 @@ const BrowseMoviesModal = ({ store, open }) => {
     <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition} className={classes.root}>
       <Header
         loggedIn={userStore.loggedIn}
-        movies={movieStore.filteredMovies}
         openMobileMenu={() => {uiStore.setRightDrawerOpen(true)}}
         handleLogout={() => {userStore.logout()}}
         handleClose={handleClose}

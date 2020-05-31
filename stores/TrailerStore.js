@@ -30,8 +30,8 @@ export default class TrailerStore {
   // TODO: Refactor
   @action getRelatedMovies(slug, updateAutoplayMovies = true) {
     const movieStore = stores().movieStore
-    const allMovies = movieStore.movies
-    const requestedMovie = movieStore.getMovieBySlug(slug)
+    const allMovies = movieStore.stocks
+    const requestedMovie = movieStore.getStockBySlug(slug)
     const relatedMovies = allMovies.map(movie => {
       let score = 0
       movie.genres.some(genre => {

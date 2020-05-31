@@ -110,7 +110,7 @@ class OrderDetailsView extends React.Component {
 
     const slug = router.query.slug || slugFromPath()
     const ticketDetails = ticketCheckoutStore.currentPurchasedTicket || {}
-    const movie = movieStore.getMovieBySlug(slug)
+    const movie = movieStore.getStockBySlug(slug)
 
     const refHash = userStore.referrerId
     const shareUrl = `${window.location.origin}/ticketing/${slug}?ref=${refHash}`

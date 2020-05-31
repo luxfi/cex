@@ -34,7 +34,7 @@ class TicketingView extends React.Component {
   componentDidMount() {
     const { router, store: { movieStore, ticketingStore } } = this.props
     const slug = router.query.slug || slugFromPath()
-    const movie = movieStore.getMovieBySlug(slug)
+    const movie = movieStore.getStockBySlug(slug)
     ticketingStore.setSelectedMovie(movie)
   }
 
@@ -84,7 +84,7 @@ class TicketingView extends React.Component {
 
     const slug = slugFromPath()
 
-    const movie = movieStore.getMovieBySlug(slug)
+    const movie = movieStore.getStockBySlug(slug)
 
     return (
       <div className={classes.outerContainer}>
