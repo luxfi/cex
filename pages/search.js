@@ -3,7 +3,7 @@ import React from 'react'
 import { useStockStore } from '../stores/hooks'
 import { SearchView } from '../components/search'
 
-export default (props) => {
+export default ({ closeSearch }) => {
   const stockStore = useStockStore()
-  return (<SearchView stockStore={stockStore} closeSearch={() => {console.log("CLOSE SEARCH CLICKED")}}/>)
+  return (<SearchView stockStore={stockStore} closeSearch={closeSearch}/>)
 }

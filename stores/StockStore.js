@@ -10,8 +10,10 @@ import STOCKS_AS_JSON from '../assets/tempData/movies'
 export default class {
 
   @observable stocks = []
-  @observable resultSet = []
   @observable tradingStatusFilter = tradingStatuses.byIndex(0)
+
+  @observable resultSet = []
+  @observable searchString = ''
 
   constructor(initialData, hanzoApi) {
     this.facets = {}
@@ -135,6 +137,7 @@ export default class {
   }
 
   @action fuzzyMatch(str) {
+    this.searchString = str
       // some names are numbers, like films named after years
     this.resultSet = this.stocks.filter((s) => (fuzzyMatch(s.name.toString(), str)))
     //console.log('RESULT SET: \n' + JSON.stringify(this.resultSet.map((s) => (s.name)), null, 2))
@@ -145,6 +148,7 @@ export default class {
   }
 
   @action clearResultSet() {
+    this.searchString = ''
     this.resultSet.clear()
   }
 }

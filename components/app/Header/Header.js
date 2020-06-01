@@ -28,6 +28,7 @@ export default ({
   handleLogout,
   handleClose,
   loggedIn,
+  searchOpen,
   onSearchClosed
 }) => {
 
@@ -53,13 +54,13 @@ export default ({
         </div>
         {showDesktopNav ? (
           <div className={s.desktopElementsOuter}>
-            <StockSearchWidget className={s.searchWidget} minChars={3} onSearchClosed={onSearchClosed}/>
+            <StockSearchWidget className={s.searchWidget} minChars={3} isOpen={searchOpen} onSearchClosed={onSearchClosed}/>
             <CascadingMenu handleClose={handleClose} structure={structure} className={s.navMenu}/>
             <DesktopUserMenu loggedIn={loggedIn} handleLogout={handleLogout} classes={s}/>
           </div>
         ) : (
           <>
-          <StockSearchWidget className={s.searchWidget} minChars={3} onSearchClosed={onSearchClosed}/>
+          <StockSearchWidget className={s.searchWidget} minChars={3} isOpen={searchOpen} onSearchClosed={onSearchClosed}/>
           <BurgerMenuButton classes={s} onClick={openMobileMenu}/>
           </>
         )}

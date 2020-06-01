@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect, useRef } from "react"
 //import { useRouter } from 'next/router'
 
 import classNames from 'classnames'
@@ -14,13 +14,21 @@ import { useStockStore } from "../../../stores/hooks"
 import styles from './stockSearchWidget.style.js'
 const useStyles = makeStyles(styles)
 
-export default ({ minChars, className, onSearchClosed }) => {
+export default ({ minChars, className, onSearchClosed, isOpen }) => {
 
-  const [searchString, setSearchString] = useState('')
-  const [searchWidgetOpen, setSearchWidgetOpen] = useState(false)
   const stockStore = useStockStore()
-
+  const [searchString, setSearchString] = useState(stockStore.searchString)
+  const [searchWidgetOpen, setSearchWidgetOpen] = useState(isOpen)
+  const inputEl = useRef(null)
   const s  = useStyles()
+
+    // https://stackoverflow.com/questions/54865764/react-usestate-does-not-reload-state-from-props
+  useEffect(() => {
+    setTimeout(() => {
+      setSearchString(stockStore.searchString)
+      setSearchWidgetOpen(isOpen)
+    }, 100)
+  }, [stockStore.searchString, isOpen])
 
   const handleChange = (event) => {
     const str =  event.target.value
@@ -43,18 +51,24 @@ export default ({ minChars, className, onSearchClosed }) => {
     >
       <input
         type="text"
+        ref={inputEl}
         placeholder="Search..."
         className={s.input}
         onChange={handleChange}
         value={searchString}
         autoFocus
+        size={35}
       />
       <IconButton 
         onClick={() => {
           const closing = searchWidgetOpen
           setSearchWidgetOpen(!searchWidgetOpen)
-          setSearchString('')
-          stockStore.clearResultSet()
+          if (!closing) {
+            setTimeout(() => {
+              inputEl.current.focus()
+            },
+            500)
+          }
           if (closing && onSearchClosed) {
             onSearchClosed()
           }

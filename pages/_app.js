@@ -76,10 +76,13 @@ export default class extends NextApp {
   }
 
   leaveSearch = () => {
-    if (this.props.router.pathname === '/search') {
+    if (this.isSearch()) {
+      this.stores.stockStore.clearResultSet()
       this.props.router.back()
     }
   }
+
+  isSearch = () => ( this.props.router.pathname === '/search' )
 
   render() {
     const {
@@ -106,6 +109,7 @@ export default class extends NextApp {
                 loggedIn={userStore.loggedIn}
                 openMobileMenu={() => {uiStore.setRightDrawerOpen(true)}}
                 handleLogout={() => {userStore.logout()}}
+                searchOpen={this.isSearch()}
                 onSearchClosed={() => {this.leaveSearch()}}
               />
               <MobileNavMenuDrawer
@@ -113,7 +117,7 @@ export default class extends NextApp {
                 setOpen={uiStore.setLeftDrawerOpen}
               />
               <Container component='main' className={classNames({ [classes.main]: true, 'fullScreenContainer': fullScreen })}>
-                <Component {...pageProps} pathName={router.route} />
+                <Component {...pageProps} closeSearch={() => {this.leaveSearch()}} pathName={router.route} />
               </Container>
               <CustomModal
                 open={uiStore.modal.open}
