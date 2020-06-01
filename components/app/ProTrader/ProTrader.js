@@ -258,7 +258,7 @@ export default (props) => {
                     title='Switch to Basic'
                     variant='outlined'
                     fullWidth
-                    color='secondary'
+                    color='primary'
                     size='medium'
                     onClick={() => {
                       setTrading('basic')

@@ -13,7 +13,7 @@ import { UpdatesContainer, DiscussionsContainer } from '../'
 
 const useStyles = makeStyles(theme => ({
   hover: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
   },
   pointer: {
     cursor: 'pointer',

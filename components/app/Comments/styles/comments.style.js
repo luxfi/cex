@@ -15,7 +15,7 @@ export default (theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     '& svg': {
-      color: theme.palette.secondary.main,
+      color: theme.palette.primary.main,
     },
   },
 

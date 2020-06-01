@@ -152,7 +152,7 @@ const RisksDisclosuresSection = ({ risksDisclosuresRef }) => {
                               {!open && restOfBody && (
                                 <span>
                                   {ending}{' '}
-                                  <Link color="secondary" onClick={handleClick}>
+                                  <Link color="primary" onClick={handleClick}>
                                     Learn More
                                   </Link>
                                 </span>
@@ -169,7 +169,7 @@ const RisksDisclosuresSection = ({ risksDisclosuresRef }) => {
                               >
                                 {restOfBody}
                                 {open && last && (
-                                  <Link color="secondary" onClick={handleClick}>
+                                  <Link color="primary" onClick={handleClick}>
                                     <ExpandLessIcon />
                                   </Link>
                                 )}
@@ -197,7 +197,7 @@ const RisksDisclosuresSection = ({ risksDisclosuresRef }) => {
                               <Box mb={2} mt={2}>
                                 {str}{' '}
                                 {open && last && (
-                                  <Link color="secondary" onClick={handleClick}>
+                                  <Link color="primary" onClick={handleClick}>
                                     <ExpandLessIcon />
                                   </Link>
                                 )}

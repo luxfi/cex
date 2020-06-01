@@ -17,7 +17,7 @@ export default (props) => {
 
   let icons = []
   for (let i = 0; i< referrals; i++) {
-    icons.push(<SVGIcon icon='movieTicket' key={i} fill={theme.palette.secondary.main} width={30} height={37}/>)
+    icons.push(<SVGIcon icon='movieTicket' key={i} fill={theme.palette.primary.main} width={30} height={37}/>)
   }
   const pointsString = (referrals * 5) + " Credits earned"
   return (

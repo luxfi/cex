@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
   hover: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
   },
   pointer: {
     cursor: 'pointer',

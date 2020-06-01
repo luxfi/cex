@@ -68,7 +68,7 @@ export default (theme) => ({
   footerNavLink: {
     '&:hover': {
       textDecoration: 'none',
-      color: '#fac54c', // :aa TODO theme.palette.secondary.main isn't working for some reason
+      color: theme.palette.primary.main, 
     },
   },
   navSectionHR: {
@@ -106,7 +106,7 @@ export default (theme) => ({
     flexDirection: 'row',
     justifyContent: 'center',
     flexWrap: 'wrap',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
     '& p': {
       marginRight: theme.spacing(1),
     },

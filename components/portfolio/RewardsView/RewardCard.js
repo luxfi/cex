@@ -35,7 +35,7 @@ export default (props) => {
   return (
     <Paper className={classNames((!completed) ? classes.disabledPaper : '', classes.paper)}>
       <Typography className={classes.title}>{title}</Typography>
-      <Icon className={typeIconClasses} color='secondary'>{iconName}</Icon>
+      <Icon className={typeIconClasses} color='primary'>{iconName}</Icon>
       {(pointsPerString.length == 0) ? (
         <>
         <Typography className={classes.pointsString}><Icon className={creditsIconClasses} >stars_rounded</Icon>&nbsp;{pointsString}</Typography>
