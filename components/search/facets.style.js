@@ -14,7 +14,7 @@ export default (theme) => ({
   },
   facetsLabel: {
     display: 'block',
-    marginRight: theme.spacing(3),
+    marginRight: theme.spacing(2),
   },
 
   facetOuter: {
@@ -30,12 +30,12 @@ export default (theme) => ({
   },
 
   facetDropdownButton: {
-    backgroundColor: '#222',
-    borderRadius: '9px',
-    '&:last-child': {
-      marginRight: 0,
-    },
+    borderRadius: '6px',
+    paddingLeft: '6px',
+    paddingRight: '6px',
+    marginRight: theme.spacing(1),
     textTransform: 'capitalize',
+    minWidth: '90px'
   },
 
   facetButtonText: {

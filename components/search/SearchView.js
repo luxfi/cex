@@ -3,13 +3,14 @@ import { useObserver } from 'mobx-react'
 import { useRouter } from 'next/router'
 
 import {
+  Divider,
   Grid,
   Typography,
   makeStyles,
 } from '@material-ui/core'
 
 import { MovieCard } from '../app'
-import FacetsToolbar from './FacetsToolbar'
+import Toolbar from './Toolbar'
 
 import styles from './searchView.style.js'
 const useStyles = makeStyles(styles)
@@ -31,7 +32,7 @@ export default ({ stockStore }) => {
 
   return useObserver(() => (
     <div className={s.main}>
-      <FacetsToolbar
+      <Toolbar
         stockStore={stockStore}
         classes={{
           ...s,
@@ -39,23 +40,23 @@ export default ({ stockStore }) => {
           tabGroupClasses,
         }}
       />
-      {(!stockStore.filteredResultSet.length || !stockStore.movies.length) &&
-        <Typography style={{ textAlign: 'center', width: '100%' }}>None found.</Typography>
+      {(!stockStore.filteredResultSet.length || !stockStore.stocks.length) &&
+        <Typography style={{ textAlign: 'center', width: '100%', marginTop: '50px', opacity: 0.4 }}>None </Typography>
       }
-      {stockStore.filteredResultSet.length && 
+      {(stockStore.filteredResultSet.length > 0 ) && (
         <Grid container spacing={3} className={s.resultsOuter} alignItems='stretch'>
         {stockStore.filteredResultSet.map((stock) => (
-          <Grid xs={12} sm={6} md={4} lg={2} item key={m.id} >
+          <Grid xs={12} sm={6} md={4} lg={2} item key={stock.id} >
             <MovieCard
               movie={stock}
-              goToMovieDetail={(stock) => { router.push(`/film/${stock.movieSlug}`) }}
-              goToMovieOffering={(stock) => { router.push(`/offering/${stock.movieSlug}`) }}
-              goToMovieTrading={(stock) => { router.push(`/trade/${stock.movieSlug}`) }}
+              goToMovieDetail={(stock) => { router.push(`/film/${stock.slug}`) }}
+              goToMovieOffering={(stock) => { router.push(`/offering/${stock.slug}`) }}
+              goToMovieTrading={(stock) => { router.push(`/trade/${stock.slug}`) }}
             />
           </Grid>
         ))}
         </Grid>
-      }
+      )}
     </div>
   ))
 }

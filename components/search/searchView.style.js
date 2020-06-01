@@ -1,41 +1,46 @@
-// this visually accomodates the trading/funding tabs
+// This visually accomodates the trading/funding tabs
 // and the fact that the text is centered
-const TAB_OFFSET_MARGIN = '-15px'
+const TAB_OFFSET_MARGIN = '-5px'
+const TOOLBAR_HEIGHT = 48
+const PILLS_HEIGHT = 40
 
 export default (theme) => ({
 
   main: {
-    padding: theme.spacing(0, 2),
-    marginTop: theme.spacing(8),
-    backgroundColor: theme.palette.common.black,
-    [theme.breakpoints.up('lg')]: {
-      padding: theme.spacing(2, 8),
-    },
+    backgroundColor: theme.ext.greys[1], 
+
+      // https://stackoverflow.com/questions/5209814/can-i-position-an-element-fixed-relative-to-parent
+    transform: 'translateZ(0)',
+
+    boxSizing: 'border-box',
+    paddingTop: `${TOOLBAR_HEIGHT + PILLS_HEIGHT}px`, // Start content below my toolbar
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    minHeight: '80vh', 
+    borderRadius: '3px'
   },
+
   toolbar: {
     position: 'fixed',
     left: 0,
     right: 0,
-    top: '64px',
+    top: 0, 
     zIndex: 20,
-    transition: 'background 0.75s ease-in-out',
-    padding: `0px ${theme.spacing(3)}`,
-    background: 'rgba(10, 10, 10, 0.85)',
-    [theme.breakpoints.up('lg')]: {
-      padding: `0px ${theme.spacing(8)}`,
-    },
-    [theme.breakpoints.down('sm')]: {
-      padding: `0px ${theme.spacing(2)}`,
-    },
-    [theme.breakpoints.down('xs')]: {
-      background: '#000',
-      flexDirection: 'column',
-      paddingBottom: '7px',
-    },
+    minHeight: 'initial',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch'
   },
-  search: {
-    marginLeft: theme.spacing(4),
+
+  toolbarInner: {
+    height: `${TOOLBAR_HEIGHT}px`, // Start content below my toolbar
+    
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
+
+
   tabsContainer: {
     marginLeft: TAB_OFFSET_MARGIN,
     [theme.breakpoints.down('sm')]: {
@@ -44,19 +49,23 @@ export default (theme) => ({
     },
   },
 
-  // https://codeburst.io/my-journey-to-make-styling-with-material-ui-right-6a44f7c68113
+    // https://codeburst.io/my-journey-to-make-styling-with-material-ui-right-6a44f7c68113
   tabRoot: {
     paddingLeft: 0,
-    minWidth: 130,
-    width: 130,
+    minWidth: 110,
+    width: 110,
     cursor: 'default !important',
 
     '&$selected': {
       '& $tabWrapper:hover': {
         cursor: 'default !important',
-        backgroundColor: theme.palette.background.default,
+        backgroundColor: 'inherit',
       },
     },
+    '& $tabWrapper:hover': {
+      backgroundColor: theme.palette.background.default,
+    },
+
     [theme.breakpoints.down('xs')]: {
       flexShrink: 'unset',
       width: 'auto',
@@ -80,13 +89,24 @@ export default (theme) => ({
   },
 
   tabIndicator: {
-    width: '110px !important',
+    width: '100px !important',
     [theme.breakpoints.down('xs')]: {
       width: '90px !important',
     },
   },
 
-  resultsOuter: {},
+  facetPillsOuter: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-start',
+    paddingTop: '3px',
+    height: PILLS_HEIGHT,
+    paddingRight: theme.spacing(2),
+  },
+
+  resultsOuter: {
+  },
 
   noFilmMessage: {
     textAlign: 'center',

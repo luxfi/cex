@@ -7,7 +7,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
-import FacetMenuList from '../FacetMenuList'
+import FacetValuesMenu from '../FacetValuesMenu'
 
 import FACETS from '../../../settings/facets'
 
@@ -31,13 +31,13 @@ export default ({ stockStore, getActiveValues }) => {
           <Typography className={s.heading}>{facet.name}</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <FacetMenuList
-            facets={facet}
+          <FacetValuesMenu
             classes={s}
-            onClick={(key, value) => {
-              stockStore.setFacetValue(facetDesc.name, key, value)
+            onFacetClicked={(facetName, value, shouldSet) => {
+              stockStore.setFacet(facetName, value, shouldSet)
+              popupState.close()
             }}
-            activeValues={getActiveValues(facet, stockStore)} 
+            stockStore={stockStore}
           />
         </ExpansionPanelDetails>
       </ExpansionPanel>

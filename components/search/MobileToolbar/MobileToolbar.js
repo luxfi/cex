@@ -59,14 +59,12 @@ export default ({ tabClasses, stockStore, getActiveValues }) => {
           </div>
           <div className={combinedClasses.modalFooter}>
           {FACETS.map((facet) => (
-            <div className={combinedClasses.selectedFacetContainer}>
+            <div className={combinedClasses.selectedFacetContainer} key={facet.name}>
               <Typography className={combinedClasses.facetName}>{facet.name}</Typography>
               <div className={combinedClasses.selectedFacets}>
                 <FacetPills
                   facet={facet}
-                  activeValues={getActiveValues(facet, stockStore)}
                   stockStore={stockStore}
-                  key={facet.name}
                 />
               </div>
             </div>

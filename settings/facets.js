@@ -1,7 +1,7 @@
-const genre = {
+const genres = {
   name: 'genres',
-  titleAll: 'All Genres',
-  titleSome: 'Genre',
+  titleAll: 'Genres',
+  titleSome: 'Genres',
   values: [
     {
       key: 'Action',
@@ -48,10 +48,10 @@ const genre = {
   ]
 }
 
-const distributor = {
+const distributors = {
   name: 'distributors',
-  titleAll: 'All Studios',
-  titleSome: 'Studio',
+  titleAll: 'Studios',
+  titleSome: 'Studios',
   values: [
     {
       key: 'Disney',
@@ -123,4 +123,4 @@ const distributor = {
 }
 
   // must use CommonJS style since this is require() 'd by the build system
-module.exports = [genre, distributor]
+module.exports = [genres, distributors]

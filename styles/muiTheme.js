@@ -21,7 +21,7 @@ const COLORS = {
   },
 }
 
-const PAPER_SHADES = [
+const GREY_SHADES = [
   COLORS.common.black,  // zero'th element, so paper elevations match indices
   '#222',
   '#333',
@@ -37,12 +37,12 @@ const PAPER_SHADES = [
 const createPaperElevations = () => {
   const result = {}
     // start at index: 1, because of how Paper elevations work
-  for(let i = 1; i < PAPER_SHADES.length; i++) {
+  for(let i = 1; i < GREY_SHADES.length; i++) {
     result[`elevation${i}`] = {
-      backgroundColor:  PAPER_SHADES[i],
+      backgroundColor:  GREY_SHADES[i],
       '& MuiInput': {
         root: {
-          backgroundColor: PAPER_SHADES[ i + 1 ]
+          backgroundColor: GREY_SHADES[ i + 1 ]
         }
       }
     }
@@ -77,8 +77,8 @@ module.exports = createMuiTheme({
     },
     divider: "rgba(255, 255, 255, 0.20)",
     background: {
-      default: PAPER_SHADES[0], 
-      paper: PAPER_SHADES[1]
+      default: GREY_SHADES[0], 
+      paper: GREY_SHADES[1]
     },
   },
   typography: {
@@ -104,6 +104,7 @@ module.exports = createMuiTheme({
   ext: {
     spacing: SPACING_BASE,
     maxContainerWidth: MAX_CONTAINER_WIDTH,
+    greys: GREY_SHADES,
   },
 
   overrides: {

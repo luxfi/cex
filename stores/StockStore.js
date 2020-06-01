@@ -74,21 +74,15 @@ export default class {
     return !facetResults.includes(false)
   }
 
-  @action setFacetValue = (name, key, set) => {
-    if (set) {
-      //console.log(`FACET: ${key} selected for ${name}`)
-    }
-    else {
-      //console.log(`FACET: ${key} cleared for ${name}`)
-    }
+  @action setFacet = (name, value, shouldSet) => {
     if (!name in this.facets ) {
-      throw new Error('setFacetValue() expects an existing facet name')
+      throw new Error('setFacet() expects an existing facet name')
     }
-    if (set) {
-      this.facets[name].set(key, true)
+    if (shouldSet) {
+      this.facets[name].set(value, true)
     }
     else {
-      this.facets[name].delete(key)
+      this.facets[name].delete(value)
     }
   }
 
@@ -98,14 +92,20 @@ export default class {
     }
   }
 
-
-  getFacetValue = computedFn((name, key) => {
+  isFacetValueSelected = computedFn((name, key) => {
     if (!name in this.facets ) {
-      throw new Error('MovieStore: getFacetValue() expects an existing facet name')
+      throw new Error('MovieStore: isFacetValueSelected() expects an existing facet name')
     }
     return (this.facets[name].has(key))
   }, {keepAlive : false})
 
+  getSelectedFacetValues = computedFn((name) => {
+    return [...this.facets[name].values()]
+  }, {keepAlive : false})
+
+  getSelectedFacetValuesCount = computedFn((name) => {
+    return this.facets[name].size
+  }, {keepAlive : false})
 
   loadStocks() {
     this.stocks.clear()
@@ -181,14 +181,15 @@ class Stock {
     Object.keys(json).forEach(k => {
       this[k] = json[k]
     })
+    this.slug = observable.box(this.movieSlug) // migration
   }
 
 }
 
 const stockFromJSON = (json) => {
-  const movie = new Stock(json.imbdid)
-  movie.fieldsFromJson(json)
-  return movie
+  const s = new Stock(json.imbdid)
+  s.fieldsFromJson(json)
+  return s
 }
 
 const fuzzyMatch = (s, pattern) => {

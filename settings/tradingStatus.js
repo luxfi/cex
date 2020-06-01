@@ -7,12 +7,12 @@ const STATUSES = [
   {
     index: 1,
     key: 'funding',
-    title: 'Now Funding'
+    title: 'Funding'
   },
   {
     index: 2,
     key: 'trading',
-    title: 'Now Trading'
+    title: 'Trading'
   },
 ]
 

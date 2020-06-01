@@ -19,15 +19,6 @@ export default ({ stockStore, classes: s }) => {
       tabSelected={(tradingStatus) => {
         stockStore.setTradingStatusFilter(tradingStatus)
       }}
-      getActiveValues={(facet, stockStore) => {
-        const activeValues = []
-        facet.values.forEach((value, i) => {
-          if (stockStore.getFacetValue(facet.name, value.key)) {
-            activeValues.push(value)
-          }
-        })
-        return activeValues
-      }}
     />
   )) 
 }
