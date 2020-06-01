@@ -9,13 +9,16 @@ import {
   Close as CloseIcon
 } from '@material-ui/icons'
 
+import { useStockStore } from "../../../stores/hooks"
+
 import styles from './stockSearchWidget.style.js'
 const useStyles = makeStyles(styles)
 
-export default ({ stockStore, minChars, className }) => {
+export default ({ minChars, className, onSearchClosed }) => {
 
   const [searchString, setSearchString] = useState('')
   const [searchWidgetOpen, setSearchWidgetOpen] = useState(false)
+  const stockStore = useStockStore()
 
   const s  = useStyles()
 
@@ -46,7 +49,18 @@ export default ({ stockStore, minChars, className }) => {
         value={searchString}
         autoFocus
       />
-      <IconButton onClick={() => {setSearchWidgetOpen(!searchWidgetOpen)}} className={s.iconButton}>
+      <IconButton 
+        onClick={() => {
+          const closing = searchWidgetOpen
+          setSearchWidgetOpen(!searchWidgetOpen)
+          setSearchString('')
+          stockStore.clearResultSet()
+          if (closing && onSearchClosed) {
+            onSearchClosed()
+          }
+        }} 
+        className={s.iconButton}
+      >
         {searchWidgetOpen ? <CloseIcon /> : <SearchIcon /> }
       </IconButton>
     </div>

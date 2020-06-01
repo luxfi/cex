@@ -3,7 +3,6 @@ import { useObserver } from 'mobx-react'
 import { useRouter } from 'next/router'
 
 import {
-  Divider,
   Grid,
   Typography,
   makeStyles,

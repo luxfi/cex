@@ -44,6 +44,10 @@ export default (theme) => ({
     '& $iconButton': { 
       borderTopLeftRadius: 0,
       borderBottomLeftRadius: 0,
+      backgroundColor: 'rgba(255,255,255,0.15)',
+      '&:hover': {
+        backgroundColor: 'rgba(255,255,255,0.25)',
+      }
     }
   },
 
@@ -61,7 +65,7 @@ export default (theme) => ({
     borderBottomLeftRadius: 42 * 0.5,
     color: 'inherit',
     border: 'none',
-    background: 'rgba(255,255,255,0.15)',
+    backgroundColor: 'rgba(255,255,255,0.15)',
     color: 'rgba(255,255,255,0.90)',
     '&::placeholder': {
       color: 'rgba(255,255,255,0.60)'

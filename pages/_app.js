@@ -1,4 +1,5 @@
 import React from 'react'
+import { autorun } from 'mobx'
 import { Provider, observer, batchingForReactDom } from 'mobx-react'
 
 import NProgress from 'nprogress'
@@ -65,10 +66,21 @@ export default class extends NextApp {
   constructor(props) {
     super(props)
     this.stores = initializeStores()
+    autorun(() => {
+      if (this.stores.stockStore.resultSet.length > 0 && props.router.pathname !== '/search') {
+        props.router.push('/search')
+      } 
+    })
+    
   }
 
-  componentDidMount() {
+  leaveSearch = () => {
+    //console.log("PATH: " + this.props.router.pathname)
+    if (this.props.router.pathname === '/search') {
+      this.props.router.back()
+    }
   }
+  
 
   render() {
     const {
@@ -96,6 +108,7 @@ export default class extends NextApp {
                 loggedIn={this.stores.userStore.loggedIn}
                 openMobileMenu={() => {this.stores.uiStore.setRightDrawerOpen(true)}}
                 handleLogout={() => {this.stores.userStore.logout()}}
+                onSearchClosed={() => {this.leaveSearch()}}
               />
               <MobileNavMenuDrawer
                 open={this.stores.uiStore.drawers.left}
@@ -136,6 +149,10 @@ export default class extends NextApp {
     )
   }
 }
+
+
+
+
 
   // tag main with a classname from the first part of the route
 const mainRouteClass = (path) => {

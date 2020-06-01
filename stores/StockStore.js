@@ -99,6 +99,7 @@ export default class {
     return (this.facets[name].has(key))
   }, {keepAlive : false})
 
+    // currently unused, but useful
   getSelectedFacetValues = computedFn((name) => {
     return [...this.facets[name].values()]
   }, {keepAlive : false})
@@ -114,7 +115,7 @@ export default class {
     })
   }
 
-    // TEMP
+    // TEMP :aa
   @computed get investorTopPicks() {
     return this.stocks.length > 0 ? this.stocks.slice(0, 3) : this.stocks
   }

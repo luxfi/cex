@@ -1,18 +1,18 @@
 import React from 'react'
-import { inject, observer } from 'mobx-react'
+import { useObserver } from 'mobx-react'
+import classNames from 'classnames'
 
 import {
   AppBar,
   IconButton,
-  isWidthUp,
   makeStyles,
   Toolbar,
   useScrollTrigger,
-  withWidth,
+  useMediaQuery,
+  useTheme,
 } from '@material-ui/core'
 
-import { MenuRounded as MenuIcon, Search as SearchIcon } from '@material-ui/icons'
-import classNames from 'classnames'
+import { MenuRounded as MenuIcon } from '@material-ui/icons'
 
 import { CascadingMenu, StockSearchWidget, NextMuiLink } from '..'
 
@@ -21,24 +21,21 @@ import DesktopUserMenu from './DesktopUserMenu'
 import structure from '../../../settings/navStructure'
 
 import styles from './header.style.js'
-const myStyles = makeStyles(styles)
+const useStyles = makeStyles(styles)
 
-export default withWidth()(inject('store')(observer((props) => {
+export default ({
+  openMobileMenu,
+  handleLogout,
+  handleClose,
+  loggedIn,
+  onSearchClosed
+}) => {
 
-  const {
-    openMobileMenu,
-    handleLogout,
-    handleClose,
-    loggedIn,
-    width,
-    store,
-  } = props
-  const { uiStore } = store
-
-  const showDesktopNav = isWidthUp('md', width)
+  const theme = useTheme()
+  const showDesktopNav = useMediaQuery(theme.breakpoints.up('md'))
 
   const trigger = useScrollTrigger({ threshold: 0, disableHysteresis: true })
-  const s = myStyles()
+  const s = useStyles()
 
   let appBarClass = ''
   if (showDesktopNav) {
@@ -48,7 +45,7 @@ export default withWidth()(inject('store')(observer((props) => {
     appBarClass = s.appBarMobile
   }
 
-  return (
+  return useObserver(() => (
     <AppBar className={classNames(s.appBarCommon, appBarClass)}>
       <Toolbar disableGutters className={s.toolbar}>
         <div className={s.logoArea}>
@@ -56,20 +53,20 @@ export default withWidth()(inject('store')(observer((props) => {
         </div>
         {showDesktopNav ? (
           <div className={s.desktopElementsOuter}>
-            <StockSearchWidget className={s.searchWidget} stockStore={store.movieStore} minChars={3} />
+            <StockSearchWidget className={s.searchWidget} minChars={3} onSearchClosed={onSearchClosed}/>
             <CascadingMenu handleClose={handleClose} structure={structure} className={s.navMenu}/>
             <DesktopUserMenu loggedIn={loggedIn} handleLogout={handleLogout} classes={s}/>
           </div>
         ) : (
           <>
-          <StockSearchWidget className={s.searchWidget}  stockStore={store.movieStore} minChars={3} />
+          <StockSearchWidget className={s.searchWidget} minChars={3} onSearchClosed={onSearchClosed}/>
           <BurgerMenuButton classes={s} onClick={openMobileMenu}/>
           </>
         )}
       </Toolbar>
     </AppBar>
-  )
-})))
+  ))
+}
 
 const BurgerMenuButton = ({ onClick, classes }) => (
   <IconButton onClick={onClick} className={classes.hamburgerMenuButton}>
