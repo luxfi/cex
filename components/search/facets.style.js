@@ -5,6 +5,7 @@ export default (theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    marginRight: theme.spacing(1),
     [theme.breakpoints.down('sm')]: {
       marginLeft: 0,
     },
@@ -12,9 +13,10 @@ export default (theme) => ({
       marginTop: theme.spacing(1),
     },
   },
+  
   facetsLabel: {
     display: 'block',
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(1),
   },
 
   facetOuter: {
@@ -25,7 +27,7 @@ export default (theme) => ({
     borderRadius: '9px',
     marginRight: theme.spacing(1),
     '&:last-child': {
-      marginRight: 0,
+      //marginRight: 0,
     },
   },
 

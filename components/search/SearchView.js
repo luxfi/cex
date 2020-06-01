@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useObserver } from 'mobx-react'
 import { useRouter } from 'next/router'
 
@@ -24,11 +24,12 @@ const useStyles = makeStyles(styles)
   
 const ALIGN = 'left'
 
-export default ({ stockStore }) => {
+export default ({ stockStore, closeSearch }) => {
 
   const s = useStyles()
   const router = useRouter()
-
+  const [currentView, setCurrentView] = useState('list')
+  
   const tabGroupClasses = {
     indicator: s.tabIndicator,
     flexContainer: s.tabsContainer,
@@ -55,7 +56,11 @@ export default ({ stockStore }) => {
   ) 
 
   const renderListView = () => (
-    <Table className={s.tableView} padding='checkbox' aria-label="simple table">
+    <Table 
+      className={s.table} 
+      padding='checkbox' 
+      aria-label="simple table" 
+    >
       <TableHead>
         <TableRow>
           <TableCell>&nbsp;</TableCell>
@@ -67,14 +72,17 @@ export default ({ stockStore }) => {
       </TableHead>
       <TableBody>
       {stockStore.filteredResultSet.map((stock) => (
-        <TableRow key={stock.name}>
-          <TableCell align={ALIGN} >
+        <TableRow key={stock.name}
+          onClick={() => {router.push(`/film/${stock.slug}`) }}
+          className={s.tr} 
+        >
+          <TableCell align={ALIGN} className={s.td}  >
             <img src={stock.heroImg} height='30' width='auto'/>
           </TableCell>
-          <TableCell align={ALIGN}>{stock.name}</TableCell>
-          <TableCell align={ALIGN}>{stock.director.join(', ')}</TableCell>
-          <TableCell align={ALIGN}>{stock.actors.join(', ')}</TableCell>
-          <TableCell align={ALIGN}>{truncate(stock.shortDescription, 6)}</TableCell>
+          <TableCell align={ALIGN} className={s.td} >{stock.name}</TableCell>
+          <TableCell align={ALIGN} className={s.td} >{stock.director.join(', ')}</TableCell>
+          <TableCell align={ALIGN} className={s.td} >{stock.actors.join(', ')}</TableCell>
+          <TableCell align={ALIGN} className={s.td} >{truncate(stock.shortDescription, 6)}</TableCell>
         </TableRow>
       ))}
       </TableBody>
@@ -85,16 +93,15 @@ export default ({ stockStore }) => {
     <div className={s.main}>
       <Toolbar
         stockStore={stockStore}
-        classes={{
-          ...s,
-          tabClasses,
-          tabGroupClasses,
-        }}
+        classes={{...s, tabClasses, tabGroupClasses }}
+        currentView={currentView} 
+        setCurrentView={(view) => {setCurrentView(view)}}
+        closeSearch={closeSearch}
       />
       {(!stockStore.filteredResultSet.length || !stockStore.stocks.length) &&
-        <Typography style={{ textAlign: 'center', width: '100%', marginTop: '50px', opacity: 0.4 }}>None </Typography>
+        <Typography style={{ textAlign: 'left', width: '100%', opacity: 0.4 }}>none found</Typography>
       }
-      {(stockStore.filteredResultSet.length > 0 ) && renderListView()}
+      {(stockStore.filteredResultSet.length > 0 ) && (currentView === 'list') ? renderListView() : renderGridView() }
     </div>
   ))
 }

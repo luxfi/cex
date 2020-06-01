@@ -5,5 +5,5 @@ import { SearchView } from '../components/search'
 
 export default (props) => {
   const stockStore = useStockStore()
-  return (<SearchView stockStore={stockStore} />)
+  return (<SearchView stockStore={stockStore} closeSearch={() => {console.log("CLOSE SEARCH CLICKED")}}/>)
 }

@@ -73,6 +73,12 @@ export default (theme) => ({
     },
   },
 
+  facetsAreaOuter: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
   // must include this!
   // https://codeburst.io/my-journey-to-make-styling-with-material-ui-right-6a44f7c68113
   selected: {},
@@ -105,6 +111,23 @@ export default (theme) => ({
     paddingRight: theme.spacing(2),
   },
 
+  viewButton: {
+    padding: '3px',
+    borderRadius: 'initial'
+  },
+
+  selectedView: {
+    cursor: 'default',
+    backgroundColor: theme.ext.greys[2],
+    '&:hover': {
+      backgroundColor: theme.ext.greys[2],
+    },
+  },
+
+  closeButton: {
+    margin: '0px 5px'
+  },
+
   resultsOuter: {
   },
 
@@ -113,4 +136,20 @@ export default (theme) => ({
     width: '100%',
     marginTop: 64,
   },
+
+  table: {
+  },
+
+  tr: {
+    paddingTop: '5px',
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: theme.ext.greys[2]
+    }
+  },
+
+  td: {
+    paddingTop: '8px'
+  },
+
 })
