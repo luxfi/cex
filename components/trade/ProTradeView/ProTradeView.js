@@ -132,7 +132,7 @@ export default class extends React.Component {
           uiStore.setTrading(mode)
         }}
         slug={slug}
-        movies={movieStore.movies}
+        movies={movieStore.stocks}
         orders={userPortfolio
           .orders
           .filter((o) => o.ticker === movie.ticker)

@@ -1,5 +1,4 @@
 import React from 'react'
-import { useObserver } from 'mobx-react'
 import classNames from 'classnames'
 
 import {
@@ -46,11 +45,11 @@ export default ({
     appBarClass = s.appBarMobile
   }
 
-  return useObserver(() => (
+  return (
     <AppBar className={classNames(s.appBarCommon, appBarClass)}>
       <Toolbar disableGutters className={s.toolbar}>
         <div className={s.logoArea}>
-          <NextMuiLink href='/' className={s.logoOuter}><HeaderLogo handleClose={handleClose} className={s.logo} /></NextMuiLink>
+          <NextMuiLink href='/' className={s.logoOuter}><HeaderLogo className={s.logo} /></NextMuiLink>
         </div>
         {showDesktopNav ? (
           <div className={s.desktopElementsOuter}>
@@ -66,7 +65,7 @@ export default ({
         )}
       </Toolbar>
     </AppBar>
-  ))
+  )
 }
 
 const BurgerMenuButton = ({ onClick, classes }) => (

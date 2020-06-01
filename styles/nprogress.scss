@@ -1,10 +1,12 @@
+@import   '/muiThemeMap'; 
+
 /* Make clicks pass-through */
 #nprogress {
   pointer-events: none;
 }
 
 #nprogress .bar {
-  background: #FBC43E;
+  background: map-get($mui-theme, 'palette-primary-main');
   position: fixed;
   z-index: 99999999999999999999;
   bottom: -1px;
@@ -25,6 +27,7 @@
           transform: rotate(3deg) translate(0px, -4px);
 }
 
+
 #nprogress .spinner {
   display: none;
   position: fixed;
@@ -38,8 +41,8 @@
   height: 18px;
   box-sizing: border-box;
   border: solid 2px transparent;
-  border-top-color: #FBC43E;
-  border-left-color: #FBC43E;
+  border-top-color: map-get($mui-theme, 'palette-primary-main');
+  border-left-color: map-get($mui-theme, 'palette-primary-main');
   border-radius: 50%;
   -webkit-animation: nprogress-spinner 400ms linear infinite;
           animation: nprogress-spinner 400ms linear infinite;

@@ -2,7 +2,6 @@ import useEventListener from './useEventListener'
 import { withOnDemandAuth } from './HOC'
 import loginRequired from './loginRequired'
 
-import ReactGA from 'react-ga'
 import moment from 'moment/moment.js'
 
 const isNumber = val => typeof val === 'number' && val === val

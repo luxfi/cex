@@ -67,7 +67,8 @@ const Title = ({ movie, highlightedTags }) => {
           </Typography>
         ))}
         {movie.tags.map((tag, i) => {
-          const link = <Link href={`/browse?facet=distributors&value=${tag}`} className={classes.aTag}>
+           // TODO:  may need to be tested :aa
+          const link = <Link href={`/search?facet=distributors&value=${tag}`} className={classes.aTag}>
             {tag}
           </Link>
 

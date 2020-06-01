@@ -1,4 +1,4 @@
-const { createMuiTheme } = require('@material-ui/core/styles') // must require not import, since this file is invoked by node directly
+const { createMuiTheme, responsiveFontSizes } = require('@material-ui/core/styles') // must require not import, since this file is invoked by node directly
 
 const SPACING_BASE = 8
 const MAX_CONTAINER_WIDTH = 1200
@@ -51,7 +51,7 @@ const createPaperElevations = () => {
 }
 
 
-module.exports = createMuiTheme({
+module.exports = responsiveFontSizes(createMuiTheme({
 
     // https://uxplanet.org/responsive-design-best-practices-c6d3f5fd163b
   breakpoints: {
@@ -244,5 +244,5 @@ module.exports = createMuiTheme({
       ...createPaperElevations()
     }
   }
-})
+}))
 

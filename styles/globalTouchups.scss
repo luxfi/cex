@@ -1,8 +1,9 @@
-$SPACING_BASE: 8px; // to match theme
+@import   '/muiThemeMap'; 
 
+$spacing: map-get($mui-theme, 'ext-spacing');
 
 .MuiFormControl-root + .MuiFormControl-root {
-  margin-top: 8px; 
+  margin-top: $spacing; 
 }
 
 select.MuiSelect-root > option {
@@ -21,7 +22,7 @@ select.MuiSelect-root > option {
   align-items: center;
 
   label {
-    margin-right: $SPACING_BASE;
+    margin-right: $spacing;
   }
 }
 

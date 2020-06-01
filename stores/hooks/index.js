@@ -12,5 +12,11 @@ export const useUserStore = () => {
   return store.userStore
 }
 
+export const useUserPortfolio = () => {
+  const {store} = useContext(MobXProviderContext)
+  return store.userPortfolio
+}
+
+
 
 // etc as needed
