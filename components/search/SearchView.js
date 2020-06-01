@@ -58,7 +58,6 @@ export default ({ stockStore, closeSearch }) => {
   const renderListView = () => (
     <Table 
       className={s.table} 
-      padding='checkbox' 
       aria-label="simple table" 
     >
       <TableHead>
@@ -77,7 +76,7 @@ export default ({ stockStore, closeSearch }) => {
           className={s.tr} 
         >
           <TableCell align={ALIGN} className={s.td}  >
-            <img src={stock.heroImg} height='30' width='auto'/>
+            < NarrowHero imgSrc={stock.heroImg} style={{width: 160, height: 70, }} />
           </TableCell>
           <TableCell align={ALIGN} className={s.td} >{stock.name}</TableCell>
           <TableCell align={ALIGN} className={s.td} >{stock.director.join(', ')}</TableCell>
@@ -105,3 +104,13 @@ export default ({ stockStore, closeSearch }) => {
     </div>
   ))
 }
+
+const NarrowHero = ( { imgSrc, style }) => (
+  <div style={{
+    backgroundSize: 'cover',
+    backgroundPosition: 'top left',
+    backgroundRepeat: 'no-repeat',
+    backgroundImage: `url(${imgSrc})`,
+    ...style
+  }} />
+)

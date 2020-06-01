@@ -138,6 +138,7 @@ export default (theme) => ({
   },
 
   table: {
+    marginTop: '-20px'
   },
 
   tr: {
@@ -149,7 +150,8 @@ export default (theme) => ({
   },
 
   td: {
-    paddingTop: '8px'
+    paddingTop: '8px',
+    boxSizing: 'border-box'
   },
 
 })
