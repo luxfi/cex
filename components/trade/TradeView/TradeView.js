@@ -26,7 +26,7 @@ export default class extends React.Component {
     const { router, store } = this.props
     const slug = router.query.slug || slugFromPath()
     const { userStore, movieStore, orderBook, userPortfolio } = store
-    const movie = movieStore.getMovieBySlug(slug)
+    const movie = movieStore.getStockBySlug(slug)
     // orderBook.initiateDataGenerator(movie.ticker, movie.price)
     userStore.loadAccountBalance()
     userPortfolio.getInvestments()
@@ -63,7 +63,7 @@ export default class extends React.Component {
         return router.push('/login')
       }
     }
-    const movie = movieStore.getMovieBySlug(slug)
+    const movie = movieStore.getStockBySlug(slug)
     // orderBook stuff
     let takeResultsArray = orderBook.takeResults.slice(0)
     const {

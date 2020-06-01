@@ -20,8 +20,6 @@ import React, {
 
 import ShareButtons from '../ShareButtons'
 
-import useStyles from './ShareWidget.style'
-
 const ShareWidget = (props) => {
   const [state, setState] = useReducer((initialState, newState) => ({ ...state, ...newState }), {
     open: false,
@@ -30,8 +28,6 @@ const ShareWidget = (props) => {
   const {
     store: { userStore }, className = '', shareUrl, message,
   } = props
-
-  const classes = useStyles()
 
   const anchorRef = useRef(null)
 
@@ -64,12 +60,12 @@ const ShareWidget = (props) => {
   const referralURL = `${shareUrl}?ref=${userStore.referrerId}`
 
   return (
-    <div className={classes.root}>
+    <div style={{display: 'inline-block'}}>
       <Button
         ref={anchorRef}
         variant='contained'
         size='small'
-        className={`${classes.shareButton} ${className}`}
+        className={className}
         startIcon={<ShareIcon/>}
         onClick={handleToggle}
       >

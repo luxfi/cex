@@ -156,8 +156,7 @@ class LoginForm extends React.Component {
             id='login-submit-button'
             type='submit'
             fullWidth
-            variant='contained'
-            color='primary'
+            size='large'
             className={classes.submit}
             // disabled={}
             onClick={() => (

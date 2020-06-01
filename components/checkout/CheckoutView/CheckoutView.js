@@ -81,7 +81,7 @@ class CheckoutView extends React.Component {
     const venueId = urlParams.get('venueId')
     const refHash = urlParams.get('ref')
 
-    const movie = movieStore.getMovieBySlug(slug)
+    const movie = movieStore.getStockBySlug(slug)
 
     const refString = refHash && refHash.length ? `&ref=${refHash}` : ''
 
@@ -89,7 +89,7 @@ class CheckoutView extends React.Component {
       <div className={classes.outerContainer}>
         <div className={classes.innerContainer}>
           <Grid item xs={12} md={3} className={classes.movieInfoContainer}>
-            <img className={classes.movieImg} src={movie.posterImg} alt='movie image' />
+            <img className={classes.movieImg} src={`/images/film/${movie.posterImg}`} alt='movie image' />
             <div>
               <Typography variant='h5'>{movie.name}</Typography>
               <div>{selectedVenue.venue && selectedVenue.venue.address.line}</div>

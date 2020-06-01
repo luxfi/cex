@@ -51,24 +51,6 @@ const myStyles = makeStyles((theme) => ({
       },
     },
   },
-  investButton: {
-    fontSize: '0.9375rem',
-    color: theme.palette.common.black,
-    backgroundColor: '#FBC43E',
-    padding: '12px 24px',
-    '&:hover': {
-      backgroundColor: 'rgba(255, 255, 255, 0.1)'
-    }
-  },
-  watchTrailerButton: {
-    color: theme.palette.common.white,
-    border: `1px solid ${theme.palette.common.white}`,
-    padding: '11px 24px',
-    fontSize: '0.9375rem',
-  },
-  watchTrailerButtonText: {
-    color: 'inherit !important',
-  },
 }))
 
 export default (props) => {
@@ -108,8 +90,9 @@ export default (props) => {
             style={{ textDecoration: 'none'}}
           >
             <Button
-              className={`watch-trailer-button button ${s.watchTrailerButton}`}
-              variant="outlined"
+              variant='outlined'
+              color='default'
+              size='large'
               startIcon={<PlayArrowIcon />}
             >
               Play Trailer
@@ -123,7 +106,7 @@ export default (props) => {
             style={{ textDecoration: 'inherit', color: '#000' }}
           >
             <Button
-              className={s.investButton}
+              size='large'
               startIcon={<MonetizationOnIcon />}
             >
               INVEST IN {movie.name}

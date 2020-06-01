@@ -33,7 +33,7 @@ const Item = ({ movie }) => {
                     position: 'relative',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    backgroundImage: `url(${movie.posterImg})`,
+                    backgroundImage: `url(${`/images/film/${movie.posterImg}`})`,
                     maxHeight: '1200px',
                     minHeight: '487px',
                     minWidth: '287px',

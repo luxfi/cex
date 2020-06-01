@@ -1,6 +1,7 @@
 export default (theme) => ({
 
   footer: {
+    /* NOTE: padding is impl in 'styles/responsivePadding.scss */
   },
 
   logoAreaGridItem: {

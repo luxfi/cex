@@ -33,7 +33,6 @@ export default ({ classes, movie }) => (
           <Button
             className='watch-trailer-button button'
             variant='outlined'
-            size='large'
             startIcon={<PlayArrowIcon />}
           >
             Play Trailer
@@ -62,7 +61,7 @@ export default ({ classes, movie }) => (
       <br />
     </Grid>
     <Grid item xs={12} md={3}>
-      <img className={classes.aboutImage} src={movie.posterImg} />
+      <img className={classes.aboutImage} src={`/images/film/${movie.posterImg}`} />
     </Grid>
   </Grid>
 )

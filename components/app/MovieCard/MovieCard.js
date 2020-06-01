@@ -1,13 +1,11 @@
 import React from 'react'
 import classNames from 'classnames'
+import { inject, observer } from 'mobx-react'
 import Link from '../../app/Link'
 
 import {
   Button,
   Box,
-  Card,
-  CardMedia,
-  CardContent,
   Typography,
   makeStyles,
 } from '@material-ui/core'
@@ -21,35 +19,45 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlayCircle } from '@fortawesome/free-solid-svg-icons'
 
-import { TrailerSliderModal } from "../../landing"
 import { truncate, getYoutubeId } from "../../../util"
 
 import styles from './MovieCard.style.js'
 const useStyles = makeStyles(styles)
 
-export default ({
+export default inject('store')(observer(({
   movie,
   goToMovieDetail,
   goToMovieTrading,
   goToMovieOffering,
   height,
-  className
+  className,
+  store,
 }) => {
   const classes = useStyles()
   const style = (height) ? { height: height, width: 'auto' } : {}
+  const { uiStore } = store
 
+  const handleItemSelected = () => {
+      // toDo
+  }
+
+    // TODO '/images/film' should not be assumed in the data... remote URL's should also work!
   return (
     <div className={classNames(classes.card, className, movie.movieSlug, 'movie-card')} >
-      <img src={movie.posterImg} className={classes.cardMedia} style={style}/>
+      <img src={`/images/film/${movie.posterImg}`} className={classes.cardMedia} style={style}/>
       <div className={classes.cardContent}>
-        <TrailerImage movie={movie} className={classes.trailerImg}/>
+        <div onClick={handleItemSelected}>
+          <TrailerImage movie={movie} className={classes.trailerImg} />
+        </div>
         <Box className={classNames(classes.standardContent, classes.innerCardContent) }>
           <Typography className={classes.title} variant="body2">{movie.name}</Typography>
         </Box>
         <Box className={classNames(classes.hoverContent, classes.innerCardContent)}>
-          <Link href='/film/[id]' as={`/film/${movie.movieSlug}`} className={classes.aTag}>
-            <Typography className={classNames(classes.title, classes.aTag)} variant="body2">{movie.name}</Typography>
-          </Link>
+          <div onClick={handleItemSelected}>
+            <Link href='/film/[id]' as={`/film/${movie.movieSlug}`} className={classes.aTag}>
+              <Typography className={classNames(classes.title, classes.aTag)} variant="body2">{movie.name}</Typography>
+            </Link>
+          </div>
           <Typography className={classes.shortDescription} variant="body1">{truncate(movie.shortDescription, 20)}</Typography>
           <div className={classes.buttonsOuter}>
             <Button className={classNames(classes.detailsButton, classes.hoverButton)} onClick={() => { goToMovieDetail(movie) }} ><InfoIcon /></Button>
@@ -61,7 +69,7 @@ export default ({
       </div>
     </div>
   )
-}
+}))
 
 const TrailerImage = ({movie, className}) => {
   const childRef = React.useRef()

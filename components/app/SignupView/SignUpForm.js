@@ -224,8 +224,7 @@ class SignupForm extends React.Component {
             id='signup-submit-button'
             type='submit'
             fullWidth
-            variant='contained'
-            color='primary'
+            size='large'
             className={classes.submit}
             disabled={!checkedOver18 || !isValidSignUp}
             onClick={() => (this.handleSubmit(signUp))}

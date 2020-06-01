@@ -307,7 +307,7 @@ class CardPaymentForm extends React.Component {
                             type='submit'
                             variant='contained'
                             className={classes.proceedButton}
-                            color='secondary'
+                            color='primary'
                             size='small'
                             disabled={
                               isSubmitting

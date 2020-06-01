@@ -83,7 +83,7 @@ export default withRouter(withWidth()(inject('store')(observer((props) => {
   }, [])
 
   const { store, width, router, pathName } = props
-  const heroMovie = store.movieStore.movies.find(m => (m.movieSlug === heroInfo.slug))
+  const heroMovie = store.movieStore.getStockBySlug(heroInfo.slug)
   const heroStyles = heroInfo.styles
   if (isWidthDown('sm', width)) {
     Object.assign(heroStyles, {
@@ -100,7 +100,7 @@ export default withRouter(withWidth()(inject('store')(observer((props) => {
       </Hero>
       <div className={classes.main}>
         <MovieSlider 
-          movies={store.movieStore.fundingMovies} 
+          movies={store.movieStore.allFundingStocks} 
           title='Now Funding' 
           goToMovieDetail={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
           goToMovieOffering={(movie) => {router.push(`/offering/${movie.movieSlug}`)}} 
@@ -109,11 +109,11 @@ export default withRouter(withWidth()(inject('store')(observer((props) => {
           height='480px'
         />
         <MovieSlider 
-          movies={store.movieStore.tradingMovies} 
+          movies={store.movieStore.allTradingStocks} 
           title='Now Trading' 
-          goToMovieDetail={(movie) => {router.push(`/film/${movie.movieSlug}`)}} 
-          goToMovieOffering={(movie) => {router.push(`/offering/${movie.movieSlug}`)}} 
-          goToMovieTrading={(movie) => {router.push(`/trade/${movie.movieSlug}`)}} 
+          goToMovieDetail={(movie) => {router.push(`/film/${heroMovie.movieSlug}`)}} 
+          goToMovieOffering={(movie) => {router.push(`/offering/${heroMovie.movieSlug}`)}} 
+          goToMovieTrading={(movie) => {router.push(`/trade/${heroMovie.movieSlug}`)}} 
           className={classes.tradingSlider}
           height='480px'
         />

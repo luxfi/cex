@@ -5,7 +5,7 @@ import {
   observable,
   toJS,
 } from 'mobx'
-import _ from 'lodash'
+import sortBy  from 'lodash.sortby'
 import moment from 'moment-timezone'
 import uuid from 'uuid'
 
@@ -210,7 +210,7 @@ export default class UserPortfolio {
       this.orders = JSON.parse(_orders)
     }
 
-    let holdingIndex = _.findIndex(this.investments, { ticker })
+    let holdingIndex = this.investments.findIndex((el) => (el.ticker === ticker))
 
     console.log(
       'onOrderExecute',
@@ -323,20 +323,20 @@ export default class UserPortfolio {
       })
     }
 
-    return _.sortBy(toSort, 'count')
+    return sortBy(toSort, 'count')
       .reverse()
       .slice(0, 3)
   }
 
   @computed get topInvestments() {
-    return _.sortBy(
+    return sortBy(
       this.investments,
       i => i.quantity * parseFloat(i.price),
     ).reverse()
   }
 
   @computed get topChips() {
-    const sorted = _.sortBy(
+    const sorted = sortBy(
       this.investments,
       i => i.quantity * parseFloat(i.price),
     )
@@ -350,7 +350,7 @@ export default class UserPortfolio {
   }
 
   @action getMaxSell(ticker) {
-    const investment = _.find(this.investments, i => i.ticker === ticker)
+    const investment = this.investments.find(i => i.ticker === ticker)
     return investment ? investment.quantity : 0
   }
 

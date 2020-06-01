@@ -189,7 +189,7 @@ const RewardsCard = ({
             </Grid>
             <Grid item xs>
               <Typography
-                color="secondary"
+                color="primary"
                 component="span"
                 aria-describedby={id}
                 onClick={handleClick}

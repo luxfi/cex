@@ -61,7 +61,7 @@ export default class extends Component {
     const { userStore, movieStore, uiStore } = store
     const { accountBalance } = userStore
     const slug  = router.query.slug || slugFromPath()
-    const movie = movieStore.getMovieBySlug(slug)
+    const movie = movieStore.getStockBySlug(slug)
 
     const setErrorMessage = message => {
       uiStore.setErrorMessage(message)

@@ -2,17 +2,9 @@ export default (theme) => ({
   appBarCommon: {
     color: 'inherit',
     boxShadow: 'none',
-
-    padding: `0px ${theme.spacing(3)}`,
-  
-    [theme.breakpoints.up('lg')]: {
-      padding: `0px ${theme.spacing(8)}`,
-    },
-    [theme.breakpoints.down('xs')]: {
-      padding: `0px ${theme.spacing(2)}`,
-    },
-
     transition: 'background 0.5s ease-in-out',
+
+    /* NOTE: padding is impl in 'styles/responsivePadding.scss */
   },
 
   appBarDesktopTop: {
@@ -29,6 +21,10 @@ export default (theme) => ({
     background: 'rgba(17, 17, 17, 0.7)',
   },
 
+  modalHeader: {
+    backgroundColor: theme.palette.common.black,
+  },
+
   toolbar: {
     flexGrow: 1,
     alignItems: 'center',
@@ -39,31 +35,39 @@ export default (theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'flex-start',
+    justifyContent: 'space-between',
+    //flex: 2,
 
+    [theme.breakpoints.down('md')]: {
+      //flex: 1,
+    },
   },
 
-  logo: {
-    cursor: 'pointer',
-    marginTop: '2px'
-  },
-
-  searchWidget: {
-    marginTop: '14px',
-    marginLeft: '40px',
-    alignSelf: 'flex-end'
+  logoOuter: {
+    display: 'block',
+    position: 'relative',
+    top: '-8px'
   },
 
   desktopElementsOuter : {
     display: 'flex',
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    flex: 1,
   },
 
+    
   navMenu: {
-    marginRight: theme.spacing(8),
     color: '#fff', // theme.palette.common.white,  (true white, not palette white)
     '& *': {
       color: 'inherit'
+    },
+  },
+    
+  navButton: {
+    '&:first-child': {
+      marginRight: theme.spacing(2)
     }
   },
 
@@ -74,11 +78,9 @@ export default (theme) => ({
   accountOuter: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
-    color: '#fff', // theme.palette.common.white,  (true white, not palette white)
-    '& *': {
-      color: 'inherit'
-    }
+    justifyContent: 'flex-end',
+    width: '260px',
+    //border: '1px white solid'
   },
 
   accountIcon: {
@@ -98,10 +100,4 @@ export default (theme) => ({
       }
     }
   },
-
-  atag: {
-    color: 'inherit',
-    textDecoration: 'none',
-  },
-
 })

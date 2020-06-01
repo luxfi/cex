@@ -1,5 +1,4 @@
-import { action, observable, computed, autorun } from "mobx"
-import _ from "lodash"
+import { observable, computed } from "mobx"
 import uuid from "uuid"
 
 import articlesFromJson from "../assets/tempData/articles"

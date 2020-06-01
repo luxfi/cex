@@ -103,7 +103,7 @@ export default (props) => {
               <Card>
                 <CardHeader
                   avatar={
-                    <Avatar src={d.posterImg} aria-label='avatar-image' />
+                    <Avatar src={`/images/film/${movie.posterImg}`} aria-label='avatar-image' />
                   }
                   action={
                     <Chip label={d.genre[0]} className={classes.categoryChip} />

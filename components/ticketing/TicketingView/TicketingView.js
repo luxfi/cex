@@ -34,7 +34,7 @@ class TicketingView extends React.Component {
   componentDidMount() {
     const { router, store: { movieStore, ticketingStore } } = this.props
     const slug = router.query.slug || slugFromPath()
-    const movie = movieStore.getMovieBySlug(slug)
+    const movie = movieStore.getStockBySlug(slug)
     ticketingStore.setSelectedMovie(movie)
   }
 
@@ -84,14 +84,14 @@ class TicketingView extends React.Component {
 
     const slug = slugFromPath()
 
-    const movie = movieStore.getMovieBySlug(slug)
+    const movie = movieStore.getStockBySlug(slug)
 
     return (
       <div className={classes.outerContainer}>
         <div>
           <Grid container alignContent="center" justify="center" className={classes.movieSummaryHero}>
             <Grid item xs={12} md={3} lg={2} className={classes.movieSummaryHeroPoster}>
-              <img className={classes.heroImage} src={movie.posterImg} alt='' role='presentation' />
+              <img className={classes.heroImage} src={`/images/film/${movie.posterImg}`} alt='' role='presentation' />
             </Grid>
             <Grid item xs={12} md={9} lg={10} className={classes.movieSummaryHeroInfo}>
               <Typography variant='h1' className={classes.movieSummaryHeroTitle}>{movie.name}</Typography>

@@ -1,5 +1,4 @@
 import React from 'react'
-import NextLink from 'next/link'
 import classNames from 'classnames'
 import Link from '../../app/Link'
 
@@ -16,7 +15,7 @@ import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state'
 import styles from './cascadingMenu.style.js'
 const myStyles = makeStyles(styles)
 
-export default ({ structure, className }) => {
+export default ({ structure, className, handleClose }) => {
 
   const s = myStyles()
 
@@ -29,10 +28,11 @@ export default ({ structure, className }) => {
       href = n.link
     }
 
+      // 'menu-button' used by test code
     if (href) {
       return (
-        <Link href={href} as={n.asHref} key={`link+${n.title}`} className={s.aTag}>
-          <Button className={classNames(s.menuButton, 'menu-button')}>{n.title}</Button>
+        <Link href={href} as={n.asHref} key={`link+${n.title}`} className={s.menuButtonOuter}>
+          <Button className={classNames(s.menuButton, 'menu-button')} variant='text' color='inherit'>{n.title}</Button>
         </Link>
       )
     }
@@ -45,7 +45,7 @@ export default ({ structure, className }) => {
     )
   })
   return (
-    <div className={classNames(s.menuOuter, className)}>
+    <div onClick={handleClose} className={classNames(s.menuOuter, className)}>
       {elements}
     </div>
   )
@@ -57,6 +57,8 @@ const MenuDropdown = ({ def, classes, key }) => (
       <>
       <Button
         {...bindTrigger(popupState)}
+        variant='text'
+        color='inherit'
         className={classes.menuButton}
       >
         {def.title}

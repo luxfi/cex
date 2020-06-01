@@ -22,7 +22,7 @@ const OtherFilmsTrading = ({ movies }) => {
                     Router.push(`/trade/${movie.movieSlug}`)
                   }}
                 >
-                  <img src={movie.posterImg} width="100%" />
+                  <img src={`/images/film/${movie.posterImg}`} width="100%" />
                 </Box>
               </Typography>
             </Grid>

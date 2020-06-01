@@ -30,7 +30,7 @@ export default class extends React.Component {
       userPortfolio,
       userStore,
     } = store
-    const movie = movieStore.getMovieBySlug(slug)
+    const movie = movieStore.getStockBySlug(slug)
     // orderBook.initiateDataGenerator(movie.ticker, movie.price)
     userStore.loadAccountBalance()
     userPortfolio.getInvestments()
@@ -70,7 +70,7 @@ export default class extends React.Component {
       userStore,
       userPortfolio,
     } = store
-    const movie = movieStore.getMovieBySlug(slug)
+    const movie = movieStore.getStockBySlug(slug)
     // orderBook stuff
     const takeResultsArray = orderBook.takeResults.slice(0)
     const {

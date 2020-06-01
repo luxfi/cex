@@ -1,5 +1,4 @@
 import { action, observable, computed, extendObservable } from "mobx"
-import _ from "lodash"
 import uuid from "uuid"
 import io from "socket.io-client"
 import moment from "moment-timezone"

@@ -30,26 +30,28 @@ const useStyles = makeStyles(theme => ({
   },
   root: {
     ...theme.typography.subtitle1,
-    border: `2px solid ${theme.palette.secondary.main}`,
+    border: `2px solid ${theme.palette.primary.main}`,
     fontWeight: 'bold',
     height: 40,
     padding: `${theme.spacing(0)} ${theme.spacing(3)}`,
     fontSize: theme.typography.pxToRem(11),
     '&$selected': {
-      color: theme.palette.secondary.contrastText,
-      backgroundColor: theme.palette.secondary.main,
+      color: theme.palette.primary.contrastText,
+      backgroundColor: theme.palette.primary.main,
       '&:hover': {
-        backgroundColor: theme.palette.secondary.dark,
-        // Reset on touch devices, it doesn't add specificity
+        backgroundColor: theme.palette.primary.light,
+        borderColor: theme.palette.primary.light,
+          // Reset on touch devices, it doesn't add specificity
         '@media (hover: none)': {
-          backgroundColor: theme.palette.secondary.main,
+          backgroundColor: theme.palette.primary.main,
+          borderColor: theme.palette.primary.main,
         },
       },
     },
     '&:hover': {
       textDecoration: 'none',
       // Reset on mouse devices
-      backgroundColor: fade(theme.palette.secondary.main, 0.05),
+      backgroundColor: fade(theme.palette.primary.main, 0.05),
       '@media (hover: none)': {
         backgroundColor: 'transparent',
       },

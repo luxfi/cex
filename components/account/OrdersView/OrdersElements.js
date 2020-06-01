@@ -60,7 +60,7 @@ export default inject('store')(observer((props) => {
               return
             }
 
-            const movie = movieStore.getMovieBySlug(order.metadata.movieSlug)
+            const movie = movieStore.getStockBySlug(order.metadata.movieSlug)
             return <TicketOrderElements
               classes={classes}
               movie={movie}
