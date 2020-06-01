@@ -81,7 +81,6 @@ export default (props) => {
   const filterMovies = () => {
     const api = new Hanzo.Api({ key: HANZO_KEY, endpoint: HANZO_ENDPOINT })
 
-    // eslint-disable-next-line no-restricted-syntax
     for (const movie of movies) {
       if (!moviesFilter[movie.ticker]) {
         const movieCopy = { ...movie }

@@ -142,7 +142,7 @@ export default class extends React.Component {
         watchlist={userPortfolio.watchlist}
         removeFromWatchlist={removeFromWatchlist}
         addToWatchlist={addToWatchlist}
-        movies={movieStore.movies}
+        movies={movieStore.stocks}
         redirectLogin={redirectLogin}
       />
     )
