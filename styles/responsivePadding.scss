@@ -61,7 +61,9 @@ $temp: $spacing * 2 * 8;
       padding-left: $spacing * 8;
       padding-right: $spacing * 8;
         // https://sass-lang.com/documentation/syntax/special-functions#calc-element-progid-and-expression
-      max-width: calc(100% - $temp);
+      max-width: calc(100% - 128px);
+        // $temp: $spacing * 2 * 8;
+
     }
   }
     
