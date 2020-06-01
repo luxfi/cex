@@ -1,11 +1,11 @@
 import { Box, Chip, Typography } from '@material-ui/core'
 import grey from '@material-ui/core/colors/grey'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, withTheme } from '@material-ui/core/styles'
 import LocalOfferIcon from '@material-ui/icons/LocalOffer'
 import PeopleIcon from '@material-ui/icons/People'
+import Link from 'next/link'
 import React from 'react'
 import { ScaleLoader } from 'react-spinners'
-import classNames from 'classnames'
 import {
   Line,
   LineChart,
@@ -15,7 +15,6 @@ import {
   YAxis,
 } from 'recharts'
 import CustomStockTooltip from '../CustomStockTooltip'
-import Link from '../../app/Link'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,9 +37,6 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.secondary.main,
     },
   },
-  stockName: {
-    fontWeight: 'bold',
-  },
 }))
 
 const CustomHeading = ({ ticker, stockName, movieSlug }) => {
@@ -48,9 +44,13 @@ const CustomHeading = ({ ticker, stockName, movieSlug }) => {
   return (
     <div className={classes.root}>
       <Typography variant='h5'>
-        <Link href='/film/[id]' as={`/film/${movieSlug}`} className={classNames(classes.aTag, classes.stockName)}>
-          {stockName}
-        </Link>
+        <Box fontWeight='fontWeightBold'>
+          <Link href={`/offering/${movieSlug}`}>
+            <a className={classes.aTag}>
+              {stockName}
+            </a>
+          </Link>
+        </Box>
       </Typography>
       <Typography variant='h5' component='div'>
         <Box fontWeight='fontWeightBold'>
@@ -105,7 +105,9 @@ const MONTHS = {
   12: 'DEC',
 }
 
-class StockRechart extends React.Component {
+@withTheme
+export default class extends React.Component {
+
   constructor(props) {
     super(props)
     this.state = {
@@ -249,7 +251,7 @@ class StockRechart extends React.Component {
       max,
       neg,
     } = this.state.currData
-    const color = '#FAC34D'
+    const color = this.props.theme.palette.primary.main
     if (neg === '-') {
       document.getElementsByTagName('body')[0].className = 'negative'
     } else {
@@ -410,11 +412,11 @@ class StockRechart extends React.Component {
             padding-bottom: 15px;
           }
           .chart-choice.active {
-            color: #fac34d;
-            border-bottom: 2px solid #fac34d;
+            color: ${color};
+            border-bottom: 2px solid ${color};
           }
           .chart-choice:hover {
-            color: #fac34d;
+            color: ${color};
           }
           .chart {
             padding: 0;
@@ -461,5 +463,3 @@ class StockRechart extends React.Component {
     )
   }
 }
-
-export default StockRechart

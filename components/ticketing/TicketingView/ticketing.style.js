@@ -262,7 +262,6 @@ export default (theme) => ({
   },
   showtimeSchedules: {
     padding: '16px',
-    backgroundColor: '#fac54c',
     display: 'flex',
     alignItems: 'flex-start',
 

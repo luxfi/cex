@@ -1,9 +1,10 @@
-import { Box } from '@material-ui/core'
-import Tooltip from '@material-ui/core/Tooltip'
+import React from 'react'
+
+import { Box, Tooltip, useTheme } from '@material-ui/core'
+
 import TheatersIcon from '@material-ui/icons/Theaters'
 
 import GoogleMapReact from 'google-map-react'
-import React from 'react'
 
 import { GOOGLE_API_KEY } from './config'
 
@@ -17,13 +18,16 @@ const markerStyle = {
   justifyContent: 'center',
 }
 
-const Marker = ({ text }) => (
-  <Box style={markerStyle}>
-    <Tooltip title={text} style={{ fontSize: 10 }}>
-      <TheatersIcon style={{ color: '#fac54c' }} />
-    </Tooltip>
-  </Box>
-)
+const Marker = ({ text }) => {
+  const theme = useTheme()
+  return (
+    <Box style={markerStyle}>
+      <Tooltip title={text} style={{ fontSize: 10 }}>
+        <TheatersIcon style={{ color: theme.palette.primary.main }} />
+      </Tooltip>
+    </Box>
+  )
+}
 
 const Map = ({
   center,

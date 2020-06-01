@@ -147,12 +147,9 @@ export default (theme) => ({
   },
 
   sidebarButton: {
-    background: '#fac54c',
-    color: '#222',
-    '&:hover': {
-      color: '#fff',
-      opacity: '0.4',
-    },
+    display: 'block',
+    width: '100%',
+    padding: '20px',
   },
 
   buttonWrapper: {

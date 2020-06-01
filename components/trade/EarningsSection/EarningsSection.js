@@ -1,3 +1,5 @@
+import React from 'react'
+
 import {
   ScatterChart,
   Scatter,
@@ -8,38 +10,36 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts'
-import React, { PureComponent } from 'react'
+
+
+import { Typography, Box, Grid, useTheme } from '@material-ui/core'
+
 import SvgIcon from '@material-ui/core/SvgIcon'
 
-function LightCircle(props) {
-  return (
-    <SvgIcon {...props}>
-      <path
-        fill="rgba(250, 195, 77, 0.5)"
-        width="19.544100476116796"
-        height="19.544100476116796"
-        transform="translate(9.772, 9.772)"
-        d="M9.772050238058398,0A9.772050238058398,9.772050238058398,0,1,1,-9.772050238058398,0A9.772050238058398,9.772050238058398,0,1,1,9.772050238058398,0"
-      ></path>
-    </SvgIcon>
-  )
-}
+const LightCircle = ({ fillColor, ...props }) => (
+  <SvgIcon {...props}>
+    <path
+      fill={fillColor}
+      width="19.544100476116796"
+      height="19.544100476116796"
+      transform="translate(9.772, 9.772)"
+      d="M9.772050238058398,0A9.772050238058398,9.772050238058398,0,1,1,-9.772050238058398,0A9.772050238058398,9.772050238058398,0,1,1,9.772050238058398,0"
+    />
+  </SvgIcon>
+)
 
-function Circle(props) {
-  return (
-    <SvgIcon {...props}>
-      <path
-        fill="#FAC34D"
-        width="19.544100476116796"
-        height="19.544100476116796"
-        transform="translate(9.772, 9.772)"
-        d="M9.772050238058398,0A9.772050238058398,9.772050238058398,0,1,1,-9.772050238058398,0A9.772050238058398,9.772050238058398,0,1,1,9.772050238058398,0"
-      ></path>
-    </SvgIcon>
-  )
-}
+const Circle = ({ fillColor, ...props }) => (
+  <SvgIcon {...props}>
+    <path
+      fill={fillColor}
+      width="19.544100476116796"
+      height="19.544100476116796"
+      transform="translate(9.772, 9.772)"
+      d="M9.772050238058398,0A9.772050238058398,9.772050238058398,0,1,1,-9.772050238058398,0A9.772050238058398,9.772050238058398,0,1,1,9.772050238058398,0"
+    />
+  </SvgIcon>
+)
 
-import { Typography, Box, Grid, Icon } from '@material-ui/core'
 
 const data = [
   { x: 100, y: 200, z: 200 },
@@ -142,42 +142,32 @@ const formatCurrency = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2,
 })
 
-class CustomizedAxisTick extends PureComponent {
-  render() {
-    const { x, y, stroke, payload } = this.props
+const CustomizedAxisTick = ({ x, y }) => (
+  <g transform={`translate(${x},${y})`}>
+    <text x={0} y={0} dy={16} textAnchor="end" fill="#666">
+      {}
+    </text>
+  </g>
+)
 
-    return (
-      <g transform={`translate(${x},${y})`}>
-        <text x={0} y={0} dy={16} textAnchor="end" fill="#666">
-          {}
-        </text>
-      </g>
-    )
-  }
-}
+const CustomizedXAxisTick = ({ x, y, payload }) =>  (
+  <g transform={`translate(${x},${y})`}>
+    <text
+      x={0}
+      y={0}
+      dy={16}
+      textAnchor="end"
+      fill="#fff"
+      transform="translate(-25)"
+    >
+      {formatCurrency.format(payload.value)}
+    </text>
+  </g>
+)
 
-class CustomizedXAxisTick extends PureComponent {
-  render() {
-    const { x, y, stroke, payload } = this.props
-
-    return (
-      <g transform={`translate(${x},${y})`}>
-        <text
-          x={0}
-          y={0}
-          dy={16}
-          textAnchor="end"
-          fill="#fff"
-          transform="translate(-25)"
-        >
-          {formatCurrency.format(payload.value)}
-        </text>
-      </g>
-    )
-  }
-}
-
-const EarningsSection = () => {
+export default (props) => {
+  
+  const theme = useTheme()
   return (
     <Box mt={6} mb={6.5}>
       <Typography component="div" variant="subtitle2" gutterBottom>
@@ -213,7 +203,7 @@ const EarningsSection = () => {
           <Scatter
             name="Estimated Earnings"
             data={estimatedData}
-            fill="#FAC34D"
+            fill={theme.palette.primary.main}
           />
           <Scatter
             name="Actual Earnings"
@@ -253,7 +243,7 @@ const EarningsSection = () => {
             <Grid container direction="row" alignItems="flex-start" spacing={1}>
               <Grid item>
                 <Box mt={0.5}>
-                  <LightCircle />
+                  <LightCircle fillColor={theme.palette.primary.main}/>
                 </Box>
               </Grid>
               <Grid item>
@@ -270,7 +260,7 @@ const EarningsSection = () => {
             <Grid container direction="row" alignItems="flex-start" spacing={1}>
               <Grid item>
                 <Box mt={0.5}>
-                  <Circle />
+                  <Circle fillColor={theme.palette.primary.main}/>
                 </Box>
               </Grid>
               <Grid item>
@@ -288,5 +278,3 @@ const EarningsSection = () => {
     </Box>
   )
 }
-
-export default EarningsSection
