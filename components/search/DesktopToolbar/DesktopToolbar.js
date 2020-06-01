@@ -37,17 +37,15 @@ export default ( { stockStore, classes: s }) => useObserver(() => (
   </Toolbar>
 ))
 
-const SelectedFacetPills = ({ stockStore, className }) => {
+const SelectedFacetPills = ({ stockStore, className }) => (
+  <div className={className} >
+  {FACETS.map((facet) => (
+    <FacetPills
+      facet={facet}
+      stockStore={stockStore}
+      key={facet.name}
+    />
+  ))}
+  </div>
+)
 
-  return (
-    <div className={className} >
-    {FACETS.map((facet) => (
-      <FacetPills
-        facet={facet}
-        stockStore={stockStore}
-        key={facet.name}
-      />
-    ))}
-    </div>
-  )
-}
