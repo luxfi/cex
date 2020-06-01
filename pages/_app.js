@@ -63,24 +63,23 @@ Router.events.on('routeChangeError', () => NProgress.done());
 @withStyles(styles)
 @observer
 export default class extends NextApp {
+
   constructor(props) {
     super(props)
     this.stores = initializeStores()
+      // listen for a change to the result set
     autorun(() => {
       if (this.stores.stockStore.resultSet.length > 0 && props.router.pathname !== '/search') {
         props.router.push('/search')
       } 
     })
-    
   }
 
   leaveSearch = () => {
-    //console.log("PATH: " + this.props.router.pathname)
     if (this.props.router.pathname === '/search') {
       this.props.router.back()
     }
   }
-  
 
   render() {
     const {
@@ -90,8 +89,7 @@ export default class extends NextApp {
       router,
     } = this.props
 
-    const { uiStore } = this.stores
-
+    const { uiStore, userStore } = this.stores
     const fullScreen = isFullScreen(router.route)
 
     return (
@@ -99,45 +97,43 @@ export default class extends NextApp {
       <NextHead>
         <title>ESX | Entertainment Stock X</title>
       </NextHead>
-      <Provider store={this.stores} value={this.stores} >
+      <Provider store={this.stores} value={this.stores /* migration: use both keys! */} >
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
           <NoSsr>
             <div className={classNames(classes.root, mainRouteClass(router.route), 'sass-root')}>
               <Header
-                loggedIn={this.stores.userStore.loggedIn}
-                openMobileMenu={() => {this.stores.uiStore.setRightDrawerOpen(true)}}
-                handleLogout={() => {this.stores.userStore.logout()}}
+                loggedIn={userStore.loggedIn}
+                openMobileMenu={() => {uiStore.setRightDrawerOpen(true)}}
+                handleLogout={() => {userStore.logout()}}
                 onSearchClosed={() => {this.leaveSearch()}}
               />
               <MobileNavMenuDrawer
-                open={this.stores.uiStore.drawers.left}
-                setOpen={this.stores.uiStore.setLeftDrawerOpen}
+                open={uiStore.drawers.left}
+                setOpen={uiStore.setLeftDrawerOpen}
               />
               <Container component='main' className={classNames({ [classes.main]: true, 'fullScreenContainer': fullScreen })}>
                 <Component {...pageProps} pathName={router.route} />
               </Container>
               <CustomModal
-                open={this.stores.uiStore.modal.open}
-                handleClose={() => this.stores.uiStore.closeModal()}
-                body={this.stores.uiStore.modal.body}
-                title={this.stores.uiStore.modal.title}
+                open={uiStore.modal.open}
+                handleClose={() => uiStore.closeModal()}
+                body={uiStore.modal.body}
+                title={uiStore.modal.title}
               />
 
               <CustomSnackbar />
               <MobileAccountMenuDrawer
-                open={this.stores.uiStore.drawers.right}
-                setOpen={this.stores.uiStore.setRightDrawerOpen}
-                isLoggedIn={this.stores.userStore.loggedIn}
-                handleLogout={() => {
-                  this.stores.userStore.logout()
-                }}
+                open={uiStore.drawers.right}
+                setOpen={uiStore.setRightDrawerOpen}
+                isLoggedIn={userStore.loggedIn}
+                handleLogout={() => { userStore.logout()}}
               />
-              <AuthModal authModalOpen={this.stores.uiStore.authModalOpen} tabIndexValue={this.stores.uiStore.tabIndexValue} />
+              <AuthModal authModalOpen={uiStore.authModalOpen} tabIndexValue={uiStore.tabIndexValue} />
               {hideFooter(router.route) ? null : (
                 <Footer 
-                  loggedIn={this.stores.userStore.loggedIn} 
-                  handleLogout={this.stores.userStore.logout} 
+                  loggedIn={userStore.loggedIn} 
+                  handleLogout={userStore.logout} 
                   className ={classNames({ [classes.footer]: true, 'fullScreenContainer': fullScreen })}
                 />
               )}
@@ -149,10 +145,6 @@ export default class extends NextApp {
     )
   }
 }
-
-
-
-
 
   // tag main with a classname from the first part of the route
 const mainRouteClass = (path) => {
@@ -178,7 +170,5 @@ const isFullScreen = (route) => {
     route === '/' 
     || 
     route.startsWith('/pro/')
-    ||
-    route.startsWith('/browse')
   )
 }

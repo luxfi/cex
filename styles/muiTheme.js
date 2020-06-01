@@ -220,6 +220,26 @@ module.exports = createMuiTheme({
       }
     },
 
+    MuiTableRow: {
+      root: {
+        verticalAlign: 'top',
+      },
+      head: {
+        borderBottom: '1px solid #aaa',
+      }
+    },
+
+    MuiTableCell: {
+      root: {
+        borderBottom: 'none'
+      },
+      head: {
+        paddingBottom: '15px'
+      }
+
+    },
+
+    
     MuiPaper: {
       ...createPaperElevations()
     }
