@@ -18,6 +18,8 @@ import BalanceHistoryElements from './BalanceHistoryElements'
 
 import { AddPaymentMethodModal } from '../../app'
 
+import { APP_NAME } from '../../../service/common'
+
 import styles from '../account.style.js'
 
 @withStyles(styles)
@@ -53,7 +55,7 @@ export default class extends React.Component {
             <Card elevation={2} classes={{root: classes.linkedAccountsCard}}>
               <CardContent>
                 <Typography variant="h6" gutterBottom>Linked Accounts</Typography>
-                {formattedAccounts.map((a, i) => ((a.name === 'ESX') ? null : (
+                {formattedAccounts.map((a, i) => ((a.name === APP_NAME) ? null : (
                   <BankAccountElements
                     key={`account_${i}`}
                     accountName={a.name}

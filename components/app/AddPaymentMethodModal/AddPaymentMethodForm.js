@@ -10,6 +10,8 @@ import {
 } from '@material-ui/core'
 
 import { PLAID_PUBLIC_KEY } from "../../../settings"
+import { APP_NAME } from '../../../service/common'
+
 
 class AddPaymentMethodForm extends React.Component {
   constructor(props) {
@@ -105,7 +107,7 @@ class AddPaymentMethodForm extends React.Component {
             }
           </Button>
           <PlaidLink
-            clientName="ESX"
+            clientName={APP_NAME}
             env="sandbox"
             ref={this.plaidRef}
             style={{ display: 'none' }}

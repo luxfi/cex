@@ -1,17 +1,13 @@
 import React from "react"
+import ContentLoader from "react-content-loader"
 
-// nodejs library that concatenates classes
-import classNames from "classnames"
-
-// @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles"
 import { Button } from "@material-ui/core"
 
-// core components
-import ContentLoader from "react-content-loader"
 import { CustomModal } from "../../app"
 
-// style
+import { APP_NAME } from '../../../service/common'
+
 import styles from "./ProTraderCTA.style"
 const useStyles = makeStyles(styles)
 
@@ -85,7 +81,7 @@ const JoinNow = ({ classes }) => {
           Research and trade film stocks from our intuitive streaming platform.
         </p>{" "}
         <p>
-          ESX makes it simple to just buy and sell stocks or take advantage of
+          {APP_NAME} makes it simple to just buy and sell stocks or take advantage of
           our bloomberg terminal real-time data tracking and charting tools. We
           will cater to every class of investor and trading style with our cloud
           scalable 10,000x transactions per second capable platform.

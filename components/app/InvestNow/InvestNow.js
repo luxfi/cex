@@ -11,6 +11,8 @@ import {
 
 import { NextMuiLink, CustomModal } from '..'
 
+import commonStr, { APP_NAME } from '../../../service/common'
+
 const myStyles = makeStyles((theme) => ({
   section: {
     height: '400px',
@@ -65,23 +67,23 @@ export default (props) => {
                 }}
                 onClick={handleOpen}
               >
-                What is ESX?
+                What is {APP_NAME}?
               </Button>
 
               <CustomModal
                 handleClose={handleClose}
                 open={open}
-                title="What is ESX?"
+                title={`What is ${APP_NAME}?`}
               >
-                <p>ESX is a film investing platform for everyone.</p>{" "}
+                <p>{APP_NAME} is a film investing platform for everyone.</p>{" "}
                 <p>
-                  We allow regular people — not just wealthy film producers — to
-                  invest in promising films, with as little as $10 or as much as
+                  We allow regular people — not just wealthy {commonStr('product')} producers — to
+                  invest in promising {commonStr('productPlural')}, with as little as $10 or as much as
                   $100,000 per investment.
                 </p>{" "}
                 <p>
-                  ESX was created to democratize fundraising for film while
-                  giving anyone the chance to back the next greatest film.
+                  {APP_NAME} was created to democratize fundraising for {commonStr('product')} while
+                  giving anyone the chance to back the next greatest {commonStr('product')}.
                 </p>
               </CustomModal>
             </Grid>

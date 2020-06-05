@@ -13,8 +13,9 @@ import { makeStyles } from '@material-ui/core/styles'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
 import Link from '../../app/Link'
-
 import { getYoutubeId } from '../../../util'
+
+import { APP_NAME } from '../../../service/common'
 
 const myStyles = makeStyles((theme) => ({
 
@@ -71,7 +72,7 @@ export default (props) => {
       <Grid item xs>
         <Typography className={s.label} variant='h5'>
           <span className={s.labelESX} >
-            ESX
+            {APP_NAME}
           </span>
           <span className={s.labelOffering} >
             INITIAL OFFERING

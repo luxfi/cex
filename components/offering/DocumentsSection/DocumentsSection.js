@@ -7,9 +7,12 @@ import {
   ListItemIcon,
   ListItemText,
   RootRef,
+  makeStyles,
 } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined'
+import { DescriptionOutlined as DescriptionOutlinedIcon } from '@material-ui/icons'
+
+import { APP_NAME } from '../../../service/common'
+
 const useStyles = makeStyles(theme => ({
   listItemIcon: {
     color: 'inherit',
@@ -32,7 +35,7 @@ const documents = [
   'Subscription Agreement',
   'Investor Deck',
   'Financial Analysis & Comparables',
-  'ESX Diligence Report',
+  `${APP_NAME} Diligence Report`,
 ]
 
 const DocumentsSection = ({ documentsRef }) => {

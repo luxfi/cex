@@ -12,6 +12,8 @@ import {
   withStyles
 } from '@material-ui/core'
 
+const commonStr = '../service/common'
+
 const styles = (theme) => ({
   pageTitle: {
     marginBottom: theme.spacing(2),
@@ -28,17 +30,17 @@ const STEPS = [
   {
     title: 'Level 1',
     action: 'Verify phone number',
-    desc: 'Your account limit is $1,000. Buy shares in films up to this limit.',
+    desc: `Your account limit is $1,000. Buy shares in ${commonStr('productPlural')} up to this limit.`,
   },
   {
     title: 'Level 2',
     action: 'Verify personal information',
-    desc: 'Your account limit is $2,000. Buy shares in films up to this limit.',
+    desc: `Your account limit is $2,000. Buy shares in ${commonStr('productPlural')} up to this limit.`,
   },
   {
     title: 'Level 1',
     action: 'Verify photo id',
-    desc: 'Your account limit is $5,000. Buy shares in films up to this limit.',
+    desc: `Your account limit is $5,000. Buy shares in ${commonStr('productPlural')} up to this limit.`,
   },
 
 ]
