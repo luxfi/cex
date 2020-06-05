@@ -50,6 +50,8 @@ import '../styles/nprogress.scss'
 import '../components/app/MovieSlider/modified-slick.css'
 import * as GA from '../util/GA' 
 
+import commonStr, { APP_NAME } from '../service/common'
+
 config.autoAddCss = false
 
 Router.events.on('routeChangeStart', () => NProgress.start());
@@ -98,7 +100,7 @@ export default class extends NextApp {
     return (
       <>
       <NextHead>
-        <title>ESX | Entertainment Stock X</title>
+        <title>{APP_NAME} | {commonStr('appTitleFull')}</title>
       </NextHead>
       <Provider store={this.stores} value={this.stores /* migration: use both keys! */} >
         <MuiThemeProvider theme={theme}>

@@ -1,6 +1,8 @@
 import React from 'react'
 import classNames from 'classnames'
 
+import { APP_NAME } from '../../../service/common'
+
 import {
   Box,
   Button,
@@ -26,7 +28,7 @@ export default (props) => {
 
   return (
     <Paper className={classNames(classes.paper, classes.leftAlignedPaper)}>
-      <Typography className={classes.totalTitle}>Refer a friend to ESX</Typography>
+      <Typography className={classes.totalTitle}>Refer a friend to {APP_NAME}</Typography>
       <Box className={classes.urlCopyOuter}>
         <InputBase value={rewardsURL} className={classes.urlField} readOnly />
         <CopyToClipboard text={rewardsURL} onCopy={onCopy}>

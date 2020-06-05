@@ -4,6 +4,8 @@ import { inject, observer } from "mobx-react"
 
 import KYCForm from './KYCForm'
 
+import { APP_NAME } from '../../../service/common'
+
 import styles from '../account.style'
 
 @withStyles(styles)
@@ -76,9 +78,9 @@ export default class extends React.Component {
                 Please verify your identity
               </Typography>
               <p>
-                Because ESX interacts directly with your bank, regulators have asked
+                Because {APP_NAME} interacts directly with your bank, regulators have asked
                 that we collect identity information. Your data is cryptographically
-                secured and sent only to ESX's banking endpoint.
+                secured and sent only to {APP_NAME}'s banking endpoint.
               </p>
               <br />
           </CardContent>

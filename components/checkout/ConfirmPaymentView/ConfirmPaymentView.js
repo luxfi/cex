@@ -21,9 +21,9 @@ import { withRouter } from 'next/router'
 import React from 'react'
 import uuid from 'uuid'
 
-import { formatCurrency, slugFromPath } from '../../../util'
-
 import { AddPaymentMethodModal, CreditCardIconType } from '../../app'
+import { formatCurrency, slugFromPath } from '../../../util'
+import { APP_NAME } from '../../../service/common'
 
 import styles from './confirmPayment.style'
 
@@ -139,7 +139,7 @@ class ConfirmPaymentView extends React.Component {
 
   getFundStatus = (formattedAccount) => {
     const { store: { userStore: { accountBalance } } } = this.props
-    if (formattedAccount.name === 'ESX') {
+    if (formattedAccount.name === APP_NAME) {
       return formatCurrency(accountBalance)
     }
     return 'Funded'
@@ -261,12 +261,12 @@ class ConfirmPaymentView extends React.Component {
                     justify='space-between'
                     wrap='nowrap'
                     component='button'
-                    disabled={(formattedAccount.name === 'ESX' && !accountBalance)}
+                    disabled={(formattedAccount.name === APP_NAME && !accountBalance)}
                   >
                     <div className={classes.accountNameContainer}>
                       <AccountBalanceIcon fontSize='small' />
                       <Typography className={classes.accountName}>
-                        {formattedAccount.name === 'ESX' ? 'Available Deposit' : formattedAccount.name}
+                        {formattedAccount.name === APP_NAME ? 'Available Deposit' : formattedAccount.name}
                       </Typography>
                     </div>
                     <div className={classes.accountBalanceContainer}>

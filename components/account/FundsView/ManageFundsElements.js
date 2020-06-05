@@ -1,4 +1,7 @@
 import React from 'react'
+
+import moment from 'moment'
+
 import {
   Button,
   Divider,
@@ -8,9 +11,11 @@ import {
   TextField,
   Typography,
  } from '@material-ui/core'
-import moment from 'moment'
 
 import { formatCurrency } from '../../../util'
+import commonStr from '../../../service/common'
+
+const APP_NAME = commonStr('appTitleShortLower')
 
 export default (props) => {
   const {
@@ -22,7 +27,7 @@ export default (props) => {
   const [amount, setAmount] = React.useState('')
   const [deposit, setDeposit] = React.useState(true)
   const [fromAccountId, setfromAccountId] = React.useState('')
-  const [toAccountId, settoAccountId] =  React.useState('esx')
+  const [toAccountId, settoAccountId] =  React.useState(APP_NAME)
 
   React.useEffect(() => {
     if (!fromAccountId && accountList && accountList.length > 1) {
@@ -47,10 +52,10 @@ export default (props) => {
               value={fromAccountId}
               onChange={(evt) => {
                 console.log('onChange val', evt.target.value)
-                if (evt.target.value !== 'esx') {
-                  settoAccountId('esx')
+                if (evt.target.value !== APP_NAME) {
+                  settoAccountId(APP_NAME)
                   setDeposit(true)
-                } else if ((fromAccountId === 'esx' || evt.target.value === 'esx') && accountList.length > 1) {
+                } else if ((fromAccountId === APP_NAME || evt.target.value === APP_NAME) && accountList.length > 1) {
                   settoAccountId(accountList[1].id)
                   setDeposit(false)
                 }
@@ -77,10 +82,10 @@ export default (props) => {
               id='sendTo'
               onChange={(evt) => {
                 // console.log('onChange val', evt.target.value)
-                if (evt.target.value !== 'esx') {
-                  setfromAccountId('esx')
+                if (evt.target.value !== APP_NAME) {
+                  setfromAccountId(APP_NAME)
                   setDeposit(false)
-                } else if ((toAccountId === 'esx' || evt.target.value === 'esx') && accountList.length > 1) {
+                } else if ((toAccountId === APP_NAME || evt.target.value === APP_NAME) && accountList.length > 1) {
                   setfromAccountId(accountList[1].id)
                   setDeposit(true)
                 }

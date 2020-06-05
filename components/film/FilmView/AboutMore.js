@@ -1,6 +1,8 @@
 import React from 'react'
 import { isObservableArray } from 'mobx'
 
+import commonStr from '../../../service/common'
+
 const TableRow = ({ field, label, movie }) => {
   // note that Array.isArray() will return false
   const content = isObservableArray(movie[field])
@@ -20,7 +22,7 @@ const AboutMore = ({ classes, movie }) => {
     <>
       <div className={classes.aboutMoreTitleArea}>
         <h2 className={classes.sectionTitle}>About</h2>
-        <h3 className={classes.sectionByline}>More about the film</h3>
+        <h3 className={classes.sectionByline}>More about the {commonStr('product')}</h3>
       </div>
       <div className={classes.aboutMoreCopyArea}>
         <div className={classes.aboutMoreStats}>
