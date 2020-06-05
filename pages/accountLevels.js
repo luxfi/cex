@@ -12,7 +12,7 @@ import {
   withStyles
 } from '@material-ui/core'
 
-const commonStr = '../service/common'
+import commonStr from '../service/common'
 
 const styles = (theme) => ({
   pageTitle: {
