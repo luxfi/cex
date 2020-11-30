@@ -16,7 +16,7 @@
       At xs, gutters are spacing(2)
 
 */
-@import   '/muiThemeMap'; 
+@import   './muiThemeMap'; 
 
 $spacing: map-get($mui-theme, 'ext-spacing') * 1px;
 $stage-width: map-get($mui-theme, 'ext-maxContainerWidth') * 1px;
