@@ -64,7 +64,7 @@
     "mobx-react": "^6.1.4",
     "mobx-utils": "^5.5.2",
     "moment": "^2.24.0",
-    "moment-timezone": "0.5.27",
+    "moment-timezone": "0.5.35",
     "next": "^9.3.5",
     "next-contentful": "^0.3.5",
     "node-sass": "^4.13.1",
