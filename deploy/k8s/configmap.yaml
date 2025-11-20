@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cex-config
+  namespace: lux-cex
+data:
+  CEX_LISTEN: ":8091"
+  CEX_ATS_NAME: "Lux ATS"
+  CEX_CRD_ID: "000000"
+  ALPACA_BASE_URL: "https://broker-api.sandbox.alpaca.markets"
+  BITGO_BASE_URL: "https://app.bitgo-test.com"

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cex
+  namespace: lux-cex
+  labels:
+    app: cex
+spec:
+  type: ClusterIP
+  selector:
+    app: cex
+    component: cexd
+  ports:
+    - name: http
+      port: 8091
+      targetPort: 8091
+      protocol: TCP

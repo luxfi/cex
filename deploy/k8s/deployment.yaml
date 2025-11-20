@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cex
+  namespace: lux-cex
+  labels:
+    app: cex
+    component: cexd
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cex
+      component: cexd
+  template:
+    metadata:
+      labels:
+        app: cex
+        component: cexd
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: cexd
+          image: ghcr.io/luxfi/cex:latest
+          ports:
+            - containerPort: 8091
+              name: http
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: cex-config
+            - secretRef:
+                name: cex-secrets
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8091
+            initialDelaySeconds: 5
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8091
+            initialDelaySeconds: 3
+            periodSeconds: 10

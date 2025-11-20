@@ -1,48 +1,132 @@
-# esx-demo
-ESX customer facing investor demo.
+# Lux CEX
 
-## How to use
+Institutional-grade Alternative Trading System (ATS) with CLOB matching engine, multi-protocol gateway, pre/post-trade compliance, and regulatory reporting.
 
-Install it and run:
+## Features
+
+- **CLOB Matching Engine** — Central limit order book with price-time priority
+- **Multi-Protocol Gateway** — HTTP/REST, FIX 4.4, WebSocket, JSON-RPC, ZAP
+- **Pre-Trade Compliance** — 30+ jurisdictions, sanctions, PEP/EDD, offering-type gating
+- **Post-Trade Surveillance** — Wash trading, structuring, velocity, price spike detection
+- **Regulatory Reporting** — FINRA OATS, ATS-N, CAT, MiFID II
+- **Circuit Breakers** — Automated market halts on anomalous activity
+
+## Architecture
+
+```
+              Clients
+     +----+----+----+----+
+     |    |    |    |    |
+   HTTP  FIX  WS  RPC  ZAP
+     |    |    |    |    |
+     +----+----+----+----+
+              |
+         [Gateway :8080]
+              |
+      +-------+-------+
+      |               |
+ [Compliance]    [Engine]
+  Pre-trade       CLOB
+      |            |
+      +-----+------+
+            |
+    [Surveillance]
+     Post-trade
+            |
+    [Reporting]
+     FINRA/SEC
+```
+
+## Quick Start
 
 ```bash
-npm install
-npm run dev
-# or
-yarn
-yarn dev
+# Build
+go build -o cexd ./cmd/cexd/
+
+# Run
+CEX_JWT_SECRET=your-secret ./cexd
+
+# Dev mode (no auth)
+./cexd
 ```
 
-## Notes
+## API
 
-This example is a mobx port of the [with-redux](https://github.com/zeit/next.js/tree/master/examples/with-redux) example. Decorator support is activated by adding a `.babelrc` file at the root of the project:
+### Markets
+| Method | Path | Description |
+|--------|------|-------------|
+| `GET` | `/api/v1/markets` | List active markets |
+| `GET` | `/api/v1/markets/{symbol}` | Market details |
+| `GET` | `/api/v1/markets/{symbol}/book` | Order book (`?depth=20`) |
 
-```json
-{
-  "presets": ["next/babel"],
-  "plugins": [
-    ["@babel/plugin-proposal-decorators", { "legacy": true }],
-    ["@babel/plugin-proposal-class-properties", { "loose": true }]
-  ]
-}
+### Orders
+| Method | Path | Description |
+|--------|------|-------------|
+| `POST` | `/api/v1/accounts/{id}/orders` | Submit order (compliance-gated) |
+| `GET` | `/api/v1/accounts/{id}/orders` | List orders |
+| `GET` | `/api/v1/accounts/{id}/orders/{oid}` | Get order |
+| `DELETE` | `/api/v1/accounts/{id}/orders/{oid}` | Cancel order |
+
+### Accounts
+| Method | Path | Description |
+|--------|------|-------------|
+| `POST` | `/api/v1/accounts/{id}/register` | Register with compliance |
+| `GET` | `/api/v1/accounts/{id}/status` | Compliance status |
+
+### Admin
+| Method | Path | Description |
+|--------|------|-------------|
+| `GET` | `/api/v1/admin/reports/finra` | FINRA OATS reports |
+| `GET` | `/api/v1/admin/reports/ats` | ATS-N quarterly |
+| `GET` | `/api/v1/admin/surveillance/alerts` | Surveillance alerts |
+| `POST` | `/api/v1/admin/markets/{symbol}/halt` | Halt trading |
+| `POST` | `/api/v1/admin/markets/{symbol}/resume` | Resume trading |
+
+## Order Types
+
+| Type | TIF | Description |
+|------|-----|-------------|
+| `limit` | GTC, IOC, FOK, DAY | Limit at specified price |
+| `market` | IOC, FOK | Market at best available |
+
+## Pre-Trade Compliance
+
+Every order passes through before reaching the matcher:
+
+1. Sanctions screening (blocked accounts)
+2. PEP screening (EDD + source of funds)
+3. Adverse media checks
+4. FATF high-risk country (enhanced KYC level 3)
+5. Per-jurisdiction, per-asset-class KYC minimums
+6. Offering-type gating (Reg D, Reg S, Reg A+, Reg CF)
+7. Per-account order size + daily limits
+8. Market halt status
+
+## Surveillance
+
+| Detection | Method |
+|-----------|--------|
+| Wash trading | Circular trade pattern analysis |
+| Large trades | Threshold-based alerts |
+| Structuring | Just-below-threshold detection |
+| Velocity | Rate-of-order monitoring |
+| Price spikes | Second-derivative (parabolic crash) |
+
+## Configuration
+
+| Env Var | Default | Description |
+|---------|---------|-------------|
+| `CEX_ADDR` | `:8080` | Listen address |
+| `CEX_JWT_SECRET` | (none) | JWT secret; empty = dev mode |
+| `CEX_JWT_ISSUER` | `https://hanzo.id` | Expected JWT issuer |
+
+## Docker
+
+```bash
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o cexd ./cmd/cexd/
+docker build --platform linux/amd64 -t ghcr.io/luxfi/cex:latest .
 ```
 
-### Rehydrating with server data
+## License
 
-Be aware that data that was used on the server (and provided via `getInitialProps`) will be stringified in order to rehydrate the client with it. That means, if you create a store that is, say, an `ObservableMap` and give it as prop to a page, then the server will render appropriately. But stringifying it for the client will turn the `ObservableMap` to an ordinary JavaScript object (which does not have `Map`-style methods and is not an observable). So it is better to create the store as a normal object and turn it into a `Observable` in the `render()` method. This way both sides have an `Observable` to work with.
-
-## The idea behind the example
-
-Usually splitting your app state into `pages` feels natural but sometimes you'll want to have global state for your app. This is an example on how you can use mobx that also works with our universal rendering approach. This is just a way you can do it but it's not the only one.
-
-In this example we are going to display a digital clock that updates every second. The first render is happening in the server and then the browser will take over. To illustrate this, the server rendered clock will have a different background color than the client one.
-
-![](http://i.imgur.com/JCxtWSj.gif)
-
-Our page is located at `pages/index.js` so it will map the route `/`. To get the initial data for rendering we are implementing the static method `getInitialProps`, initializing the mobx store and returning the initial timestamp to be rendered. The root component for the render method is the `mobx-react Provider` that allows us to send the store down to children components so they can access to the state when required.
-
-To pass the initial timestamp from the server to the client we pass it as a prop called `lastUpdate` so then it's available when the client takes over.
-
-The trick here for supporting universal mobx is to separate the cases for the client and the server. When we are on the server we want to create a new store every time, otherwise different users data will be mixed up. If we are in the client we want to use always the same store. That's what we accomplish on `store.js`
-
-The clock, under `components/Clock.js`, has access to the state using the `inject` and `observer` functions from `mobx-react`. In this case Clock is a direct child from the page but it could be deep down the render tree.
+Copyright 2024-2026, Lux Partners Limited. All rights reserved.

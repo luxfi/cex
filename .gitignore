@@ -1,7 +1,26 @@
-node_modules/
-.next/
-out/
+# Binaries
+/cexd
+*.exe
+*.dll
+*.so
+*.dylib
 
-package-lock.json
-yarn.lock
+# Test
+*.test
+*.out
+coverage.html
 
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+!.env.example

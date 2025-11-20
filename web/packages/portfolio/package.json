@@ -1,0 +1,39 @@
+{
+  "name": "@luxats/portfolio",
+  "version": "1.0.0",
+  "description": "Shared portfolio data and utilities for Lux Exchange ecosystem",
+  "private": true,
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./data": {
+      "require": "./dist/data.js",
+      "import": "./dist/data.mjs",
+      "types": "./dist/data.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts src/data.ts --format cjs,esm --dts",
+    "dev": "tsup src/index.ts src/data.ts --format cjs,esm --dts --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@luxats/types": "workspace:*"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.9.3",
+    "vitest": "^2.1.8"
+  }
+}
