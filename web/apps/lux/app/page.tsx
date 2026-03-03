@@ -14,12 +14,12 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative overflow-hidden py-16 lg:py-24">
-        <div className="absolute inset-0 bg-gradient-to-br from-success/5 via-transparent to-info/5"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-zinc-800/30 via-transparent to-zinc-800/30"></div>
         <div className="container mx-auto px-4 relative">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-success/10 border border-success/20 mb-6">
-              <Zap className="text-success" size={16} />
-              <span className="text-sm font-semibold text-success">$0 Commission Trading</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-800 border border-zinc-700 mb-6">
+              <Zap className="text-zinc-300" size={16} />
+              <span className="text-sm font-semibold text-zinc-300">$0 Commission Trading</span>
             </div>
             <h1 className="text-5xl lg:text-7xl font-bold mb-6 leading-tight">
               {brand.tagline.split('.')[0]}.<br />
@@ -34,7 +34,7 @@ export default function Home() {
               <Link
                 href="/signup"
                 onClick={() => trackEvent({ category: 'CTA', action: 'Click', label: 'Hero Get Started' })}
-                className="px-8 py-4 bg-success text-white rounded-lg font-semibold hover:bg-success/90 transition-all inline-flex items-center gap-2 shadow-lg shadow-success/20"
+                className="px-8 py-4 bg-cta text-cta-text rounded-lg font-semibold hover:bg-white transition-all inline-flex items-center gap-2 shadow-lg shadow-zinc-500/10"
               >
                 Get Started
                 <ArrowRight size={20} />
@@ -48,15 +48,15 @@ export default function Home() {
             </div>
             <div className="flex items-center gap-6 mt-8 text-sm text-muted-1 justify-center flex-wrap">
               <div className="flex items-center gap-2">
-                <Shield size={16} className="text-success" />
+                <Shield size={16} className="text-zinc-300" />
                 <span>SEC Regulated</span>
               </div>
               <div className="flex items-center gap-2">
-                <Clock size={16} className="text-success" />
+                <Clock size={16} className="text-zinc-300" />
                 <span>24/5 Trading</span>
               </div>
               <div className="flex items-center gap-2">
-                <Zap size={16} className="text-success" />
+                <Zap size={16} className="text-zinc-300" />
                 <span>FINRA/SIPC Member</span>
               </div>
             </div>
@@ -81,7 +81,7 @@ export default function Home() {
         {/* Full View Trading Interface */}
         <div className="container mx-auto px-4 pb-12 flex-1 flex items-center">
           <div className="w-full max-w-[1600px] mx-auto">
-            <div className="glass-effect rounded-2xl overflow-hidden border-2 border-success/20">
+            <div className="glass-effect rounded-2xl overflow-hidden border-2 border-zinc-700">
               {/* Trading Toolbar */}
               <div className="bg-primary/80 backdrop-blur-xl p-4 border-b border-white/10">
                 <div className="flex items-center justify-between flex-wrap gap-4">
@@ -98,13 +98,13 @@ export default function Home() {
                     <div className="h-10 w-px bg-white/10"></div>
                     <div>
                       <div className="text-3xl font-bold">$245.12</div>
-                      <div className="text-success text-sm font-semibold">+$5.67 (+2.37%)</div>
+                      <div className="text-zinc-300 text-sm font-semibold">+$5.67 (+2.37%)</div>
                     </div>
                   </div>
                   <div className="flex gap-3">
                     <button 
                       disabled
-                      className="px-8 py-3 bg-success text-white rounded-lg font-bold hover:bg-success/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                      className="px-8 py-3 bg-cta text-cta-text rounded-lg font-bold hover:bg-white transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
                     >
                       Buy AAPL
                     </button>
@@ -125,10 +125,10 @@ export default function Home() {
                 {/* Overlay Message */}
                 <div className="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-transparent pointer-events-none"></div>
                 <div className="absolute bottom-0 left-0 right-0 p-8 text-center pointer-events-none">
-                  <div className="inline-block bg-primary/95 backdrop-blur-xl border border-success/30 rounded-2xl px-8 py-6 shadow-2xl">
+                  <div className="inline-block bg-primary/95 backdrop-blur-xl border border-zinc-700 rounded-2xl px-8 py-6 shadow-2xl">
                     <div className="flex items-center justify-center gap-3 mb-3">
                       <div className="w-2 h-2 rounded-full bg-success animate-pulse"></div>
-                      <span className="text-sm font-semibold text-success">LIVE DEMO MODE</span>
+                      <span className="text-sm font-semibold text-zinc-300">LIVE DEMO MODE</span>
                     </div>
                     <p className="text-lg text-muted-1 mb-4">
                       You're viewing real-time market data. Create an account to start trading.
@@ -136,7 +136,7 @@ export default function Home() {
                     <Link
                       href="/signup"
                       onClick={() => trackEvent({ category: 'CTA', action: 'Click', label: 'Demo Chart Sign Up' })}
-                      className="inline-flex items-center gap-2 px-10 py-4 bg-success text-white rounded-xl font-bold hover:bg-success/90 transition-all pointer-events-auto shadow-lg shadow-success/20"
+                      className="inline-flex items-center gap-2 px-10 py-4 bg-cta text-cta-text rounded-xl font-bold hover:bg-white transition-all pointer-events-auto shadow-lg shadow-zinc-500/10"
                     >
                       Create Free Account
                       <ArrowRight size={20} />
@@ -195,10 +195,10 @@ export default function Home() {
                 { name: 'Forex', icon: '💱', count: '50+', desc: 'Major Currency Pairs' },
                 { name: 'Commodities', icon: '🥇', count: '25+', desc: 'Gold, Oil, Agriculture' },
               ].map((market, i) => (
-                <div key={i} className="glass-effect rounded-xl p-8 text-center hover:border-success/50 transition-all cursor-pointer group">
+                <div key={i} className="glass-effect rounded-xl p-8 text-center hover:border-zinc-600 transition-all cursor-pointer group">
                   <div className="text-5xl mb-4">{market.icon}</div>
                   <h3 className="text-2xl font-bold mb-2">{market.name}</h3>
-                  <div className="text-success text-sm font-semibold mb-2">{market.count}</div>
+                  <div className="text-zinc-300 text-sm font-semibold mb-2">{market.count}</div>
                   <p className="text-muted-1 text-sm">{market.desc}</p>
                 </div>
               ))}
@@ -212,9 +212,9 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-success/10 border border-success/20 mb-6">
-                <BarChart3 className="text-success" size={16} />
-                <span className="text-sm font-semibold text-success">Professional Trading Platform</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-800 border border-zinc-700 mb-6">
+                <BarChart3 className="text-zinc-300" size={16} />
+                <span className="text-sm font-semibold text-zinc-300">Professional Trading Platform</span>
               </div>
               <h2 className="text-4xl lg:text-5xl font-bold mb-4">
                 Institutional-Grade Trading Tools
@@ -234,7 +234,7 @@ export default function Home() {
                   { name: 'RSI', icon: '⚡', desc: 'Relative Strength Index' },
                   { name: 'MACD', icon: '🎯', desc: 'Momentum indicators' },
                 ].map((study, i) => (
-                  <div key={i} className="glass-effect rounded-xl p-6 text-center hover:border-success/50 transition-all">
+                  <div key={i} className="glass-effect rounded-xl p-6 text-center hover:border-zinc-600 transition-all">
                     <div className="text-4xl mb-3">{study.icon}</div>
                     <h4 className="text-lg font-bold mb-2">{study.name}</h4>
                     <p className="text-sm text-muted-1">{study.desc}</p>
@@ -262,7 +262,7 @@ export default function Home() {
                 { icon: '🎯', title: 'Watchlists', desc: 'Create unlimited custom watchlists' },
                 { icon: '📱', title: 'Multi-Device', desc: 'Sync across all your devices' },
               ].map((feature, i) => (
-                <div key={i} className="glass-effect rounded-xl p-6 hover:border-success/50 transition-all">
+                <div key={i} className="glass-effect rounded-xl p-6 hover:border-zinc-600 transition-all">
                   <div className="flex items-start gap-4">
                     <div className="text-3xl flex-shrink-0">{feature.icon}</div>
                     <div>
@@ -278,7 +278,7 @@ export default function Home() {
             <div className="mt-12 text-center">
               <Link
                 href="/trade"
-                className="inline-flex items-center gap-2 px-10 py-4 bg-success text-white rounded-xl font-bold text-lg hover:bg-success/90 transition-all shadow-lg shadow-success/20"
+                className="inline-flex items-center gap-2 px-10 py-4 bg-cta text-cta-text rounded-xl font-bold text-lg hover:bg-white transition-all shadow-lg shadow-zinc-500/10"
               >
                 Experience the Platform
                 <ArrowRight size={20} />
@@ -304,7 +304,7 @@ export default function Home() {
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 {
-                  icon: <Zap className="text-success" size={32} />,
+                  icon: <Zap className="text-zinc-300" size={32} />,
                   title: '$0 Commission',
                   desc: 'Trade stocks, crypto, and ETFs without paying commission fees on any transaction'
                 },
@@ -314,12 +314,12 @@ export default function Home() {
                   desc: 'Access markets around the clock from Sunday 8PM to Friday 8PM ET'
                 },
                 {
-                  icon: <BarChart3 className="text-success" size={32} />,
+                  icon: <BarChart3 className="text-zinc-300" size={32} />,
                   title: 'Advanced Analytics',
                   desc: 'Professional charts, real-time data, and powerful screening tools'
                 },
                 {
-                  icon: <Shield className="text-success" size={32} />,
+                  icon: <Shield className="text-zinc-300" size={32} />,
                   title: 'SEC Regulated',
                   desc: 'Fully licensed and regulated. FINRA/SIPC member for your protection'
                 },
@@ -329,13 +329,13 @@ export default function Home() {
                   desc: 'Trade on the go with our award-winning mobile app for iOS and Android'
                 },
                 {
-                  icon: <TrendingUp className="text-success" size={32} />,
+                  icon: <TrendingUp className="text-zinc-300" size={32} />,
                   title: 'IPO Access',
                   desc: 'Get early access to IPOs and invest in companies before they go public'
                 }
               ].map((feature, i) => (
-                <div key={i} className="glass-effect rounded-xl p-8 hover:border-success/50 transition-all">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-success/10 mb-4">
+                <div key={i} className="glass-effect rounded-xl p-8 hover:border-zinc-600 transition-all">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-zinc-800 mb-4">
                     {feature.icon}
                   </div>
                   <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
@@ -348,7 +348,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-success/10 via-transparent to-info/10">
+      <section className="py-20 bg-gradient-to-br from-zinc-800/50 via-transparent to-zinc-800/50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-4xl lg:text-5xl font-bold mb-6">
@@ -361,7 +361,7 @@ export default function Home() {
               <Link
                 href="/signup"
                 onClick={() => trackEvent({ category: 'CTA', action: 'Click', label: 'Bottom Get Started' })}
-                className="px-10 py-4 bg-success text-white rounded-lg font-bold text-lg hover:bg-success/90 transition-all inline-flex items-center gap-2 shadow-lg shadow-success/20"
+                className="px-10 py-4 bg-cta text-cta-text rounded-lg font-bold text-lg hover:bg-white transition-all inline-flex items-center gap-2 shadow-lg shadow-zinc-500/10"
               >
                 Get Started
                 <ArrowRight size={20} />
@@ -375,15 +375,15 @@ export default function Home() {
             </div>
             <div className="flex items-center justify-center gap-8 text-sm text-muted-1 flex-wrap">
               <div className="flex items-center gap-2">
-                <Shield size={16} className="text-success" />
+                <Shield size={16} className="text-zinc-300" />
                 <span>FINRA/SIPC Member</span>
               </div>
               <div className="flex items-center gap-2">
-                <Zap size={16} className="text-success" />
+                <Zap size={16} className="text-zinc-300" />
                 <span>$0 Commission</span>
               </div>
               <div className="flex items-center gap-2">
-                <Clock size={16} className="text-success" />
+                <Clock size={16} className="text-zinc-300" />
                 <span>24/5 Access</span>
               </div>
             </div>

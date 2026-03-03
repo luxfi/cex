@@ -1,4 +1,4 @@
-import { PortfolioCompany } from '@beyondequity/types';
+import { PortfolioCompany } from '@luxats/types';
 
 /**
  * Portfolio Companies

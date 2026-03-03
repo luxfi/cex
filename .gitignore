@@ -24,3 +24,13 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+
+# Node
+node_modules/
+.next/
+.turbo/
+dist/
+
+# Go workspace (local dev)
+go.work
+go.work.sum

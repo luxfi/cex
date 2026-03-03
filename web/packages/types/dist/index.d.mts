@@ -1,6 +1,6 @@
 /**
  * Portfolio Types
- * Shared types for investment portfolio data across the Beyond Equity ecosystem
+ * Shared types for investment portfolio data across the Lux Exchange ecosystem
  */
 interface PortfolioCompany {
     id: string;
@@ -53,7 +53,7 @@ interface PortfolioSummary {
 
 /**
  * Trading Types
- * Shared types for trading platform (BEGM) and portfolio assets
+ * Shared types for trading platform (LUX) and portfolio assets
  */
 interface Asset {
     symbol: string;

@@ -18,7 +18,7 @@ export default function ProTraderPage() {
 
           {/* Hero Section */}
           <div className="mb-16">
-            <div className="inline-block px-4 py-2 rounded-full bg-success/10 text-success text-sm font-semibold mb-6">
+            <div className="inline-block px-4 py-2 rounded-full bg-zinc-800 text-success text-sm font-semibold mb-6">
               INSTITUTIONAL-GRADE TRADING
             </div>
             <h1 className="text-5xl lg:text-6xl font-bold mb-6">
@@ -31,13 +31,13 @@ export default function ProTraderPage() {
             <div className="flex flex-wrap gap-4">
               <Link
                 href="/signup"
-                className="px-8 py-4 bg-success text-primary rounded-lg font-semibold hover:bg-success/90 transition-all"
+                className="px-8 py-4 bg-success text-primary rounded-lg font-semibold hover:bg-white transition-all"
               >
                 Start Trading
               </Link>
               <Link
                 href="/demo"
-                className="px-8 py-4 border-2 border-success/20 rounded-lg font-semibold hover:bg-success/5 transition-all"
+                className="px-8 py-4 border-2 border-zinc-700 rounded-lg font-semibold hover:bg-success/5 transition-all"
               >
                 Try Demo
               </Link>
@@ -222,7 +222,7 @@ export default function ProTraderPage() {
               </p>
               <Link
                 href="/signup"
-                className="inline-block px-12 py-4 bg-success text-primary rounded-lg font-semibold text-lg hover:bg-success/90 transition-all"
+                className="inline-block px-12 py-4 bg-success text-primary rounded-lg font-semibold text-lg hover:bg-white transition-all"
               >
                 Open Free Account
               </Link>

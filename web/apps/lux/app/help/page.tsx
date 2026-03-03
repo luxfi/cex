@@ -22,7 +22,7 @@ export default function HelpPage() {
           </p>
 
           <div className="grid md:grid-cols-3 gap-6 mb-16">
-            <div className="glass-effect rounded-lg p-6 hover:border-success/50 transition-all cursor-pointer">
+            <div className="glass-effect rounded-lg p-6 hover:border-zinc-600 transition-all cursor-pointer">
               <Phone className="w-10 h-10 text-success mb-4" />
               <h3 className="text-xl font-bold mb-2">Call Us</h3>
               <p className="text-muted-1 mb-4">Speak with our support team</p>
@@ -30,7 +30,7 @@ export default function HelpPage() {
               <p className="text-muted-1 text-sm mt-2">Mon-Fri: 8am-8pm ET</p>
             </div>
 
-            <div className="glass-effect rounded-lg p-6 hover:border-success/50 transition-all cursor-pointer">
+            <div className="glass-effect rounded-lg p-6 hover:border-zinc-600 transition-all cursor-pointer">
               <Mail className="w-10 h-10 text-success mb-4" />
               <h3 className="text-xl font-bold mb-2">Email Support</h3>
               <p className="text-muted-1 mb-4">Get help via email</p>
@@ -40,11 +40,11 @@ export default function HelpPage() {
               <p className="text-muted-1 text-sm mt-2">Response within 24 hours</p>
             </div>
 
-            <div className="glass-effect rounded-lg p-6 hover:border-success/50 transition-all cursor-pointer">
+            <div className="glass-effect rounded-lg p-6 hover:border-zinc-600 transition-all cursor-pointer">
               <MessageCircle className="w-10 h-10 text-success mb-4" />
               <h3 className="text-xl font-bold mb-2">Live Chat</h3>
               <p className="text-muted-1 mb-4">Chat with us in real-time</p>
-              <button className="px-4 py-2 bg-success hover:bg-success/90 text-white rounded-lg transition-colors">
+              <button className="px-4 py-2 bg-success hover:bg-white text-white rounded-lg transition-colors">
                 Start Chat
               </button>
               <p className="text-muted-1 text-sm mt-2">Available 24/7</p>

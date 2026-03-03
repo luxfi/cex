@@ -26,7 +26,7 @@ export default function WindowsDownloadPage() {
 
           <div className="glass-effect rounded-lg p-8 mb-8 text-center">
             <p className="text-muted-1 mb-6">Version 2.5.1 • 145 MB • Windows 10 or later</p>
-            <button className="inline-flex items-center gap-2 px-8 py-4 bg-success hover:bg-success/90 text-white font-semibold rounded-lg transition-colors text-lg">
+            <button className="inline-flex items-center gap-2 px-8 py-4 bg-success hover:bg-white text-white font-semibold rounded-lg transition-colors text-lg">
               <Download size={20} />
               Download for Windows
             </button>
@@ -65,23 +65,23 @@ export default function WindowsDownloadPage() {
             <h2 className="text-2xl font-bold mb-6">Installation Instructions</h2>
             <ol className="space-y-4 text-muted-1">
               <li className="flex items-start gap-3">
-                <span className="bg-success text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+                <span className="bg-cta text-cta-text w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
                 <span>Download the Lux-Setup.exe file</span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="bg-success text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+                <span className="bg-cta text-cta-text w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
                 <span>Run the installer (you may need administrator privileges)</span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="bg-success text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+                <span className="bg-cta text-cta-text w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
                 <span>Follow the installation wizard prompts</span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="bg-success text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+                <span className="bg-cta text-cta-text w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
                 <span>Launch Lux from the Start menu or desktop shortcut</span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="bg-success text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+                <span className="bg-cta text-cta-text w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
                 <span>Log in with your Lux credentials</span>
               </li>
             </ol>

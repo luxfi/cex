@@ -152,7 +152,7 @@ export default function SymbolDetailClient({ symbol }: SymbolDetailClientProps) 
             <div className="flex gap-3">
               <Link
                 href="/trade"
-                className="px-6 py-2.5 bg-success text-white rounded-lg font-semibold hover:bg-success/90 transition-all shadow-lg"
+                className="px-6 py-2.5 bg-cta text-cta-text rounded-lg font-semibold hover:bg-white transition-all shadow-lg"
               >
                 Trade {ticker}
               </Link>
@@ -239,7 +239,7 @@ export default function SymbolDetailClient({ symbol }: SymbolDetailClientProps) 
         <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 pb-8">
           <Link
             href="/trade"
-            className="glass-effect rounded-lg p-6 text-center hover:border-success/50 transition-all group"
+            className="glass-effect rounded-lg p-6 text-center hover:border-zinc-600 transition-all group"
           >
             <div className="text-2xl mb-2">📊</div>
             <div className="font-semibold text-white group-hover:text-success transition-colors">Live Trading</div>
@@ -247,7 +247,7 @@ export default function SymbolDetailClient({ symbol }: SymbolDetailClientProps) 
           </Link>
           <Link
             href="/markets/stocks"
-            className="glass-effect rounded-lg p-6 text-center hover:border-success/50 transition-all group"
+            className="glass-effect rounded-lg p-6 text-center hover:border-zinc-600 transition-all group"
           >
             <div className="text-2xl mb-2">📈</div>
             <div className="font-semibold text-white group-hover:text-success transition-colors">Stock Markets</div>
@@ -255,7 +255,7 @@ export default function SymbolDetailClient({ symbol }: SymbolDetailClientProps) 
           </Link>
           <Link
             href="/news"
-            className="glass-effect rounded-lg p-6 text-center hover:border-success/50 transition-all group"
+            className="glass-effect rounded-lg p-6 text-center hover:border-zinc-600 transition-all group"
           >
             <div className="text-2xl mb-2">📰</div>
             <div className="font-semibold text-white group-hover:text-success transition-colors">Market News</div>
@@ -263,7 +263,7 @@ export default function SymbolDetailClient({ symbol }: SymbolDetailClientProps) 
           </Link>
           <Link
             href="/signup"
-            className="glass-effect rounded-lg p-6 text-center hover:border-success/50 transition-all group"
+            className="glass-effect rounded-lg p-6 text-center hover:border-zinc-600 transition-all group"
           >
             <div className="text-2xl mb-2">🚀</div>
             <div className="font-semibold text-white group-hover:text-success transition-colors">Start Trading</div>

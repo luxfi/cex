@@ -120,7 +120,7 @@ export default function InvestPage() {
           <div className="text-center">
             <Link
               href="/signup"
-              className="inline-block px-8 py-4 bg-success hover:bg-success/90 text-white font-semibold rounded-lg transition-colors text-lg"
+              className="inline-block px-8 py-4 bg-success hover:bg-white text-white font-semibold rounded-lg transition-colors text-lg"
             >
               Start Investing Today
             </Link>

@@ -32,7 +32,7 @@ export default function WebTradingPage() {
             </p>
             <button
               onClick={handleLaunchPlatform}
-              className="inline-block px-8 py-4 bg-success hover:bg-success/90 text-white font-semibold rounded-lg transition-colors text-lg"
+              className="inline-block px-8 py-4 bg-success hover:bg-white text-white font-semibold rounded-lg transition-colors text-lg"
             >
               Launch Web Platform
             </button>

@@ -167,7 +167,7 @@ export default function DownloadPage() {
             </div>
             <Link
               href="/web-trading"
-              className="inline-block px-8 py-3 bg-success hover:bg-success/90 text-white font-semibold rounded-lg transition-colors"
+              className="inline-block px-8 py-3 bg-success hover:bg-white text-white font-semibold rounded-lg transition-colors"
             >
               Launch Web Platform
             </Link>

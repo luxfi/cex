@@ -288,7 +288,7 @@ export default function TradePage() {
               onClick={() => setActiveTab('order')}
               className={`flex-1 py-3 text-sm font-medium transition-colors ${
                 activeTab === 'order'
-                  ? 'text-white border-b-2 border-success'
+                  ? 'text-white border-b-2 border-white'
                   : 'text-white/60 hover:text-white'
               }`}
             >
@@ -298,7 +298,7 @@ export default function TradePage() {
               onClick={() => setActiveTab('positions')}
               className={`flex-1 py-3 text-sm font-medium transition-colors ${
                 activeTab === 'positions'
-                  ? 'text-white border-b-2 border-success'
+                  ? 'text-white border-b-2 border-white'
                   : 'text-white/60 hover:text-white'
               }`}
             >
@@ -308,7 +308,7 @@ export default function TradePage() {
               onClick={() => setActiveTab('history')}
               className={`flex-1 py-3 text-sm font-medium transition-colors ${
                 activeTab === 'history'
-                  ? 'text-white border-b-2 border-success'
+                  ? 'text-white border-b-2 border-white'
                   : 'text-white/60 hover:text-white'
               }`}
             >
@@ -334,7 +334,7 @@ export default function TradePage() {
                     onClick={() => setOrderSide('buy')}
                     className={`py-2.5 rounded-lg font-semibold transition-all ${
                       orderSide === 'buy'
-                        ? 'bg-success text-white'
+                        ? 'bg-buy text-white'
                         : 'bg-white/5 text-white/60 hover:bg-white/10'
                     }`}
                   >
@@ -344,7 +344,7 @@ export default function TradePage() {
                     onClick={() => setOrderSide('sell')}
                     className={`py-2.5 rounded-lg font-semibold transition-all ${
                       orderSide === 'sell'
-                        ? 'bg-danger text-white'
+                        ? 'bg-sell text-white'
                         : 'bg-white/5 text-white/60 hover:bg-white/10'
                     }`}
                   >
@@ -386,7 +386,7 @@ export default function TradePage() {
                     type="number"
                     value={shares}
                     onChange={(e) => setShares(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-success"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-zinc-500"
                     placeholder="0"
                   />
                 </div>
@@ -399,7 +399,7 @@ export default function TradePage() {
                       type="number"
                       value={limitPrice}
                       onChange={(e) => setLimitPrice(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-success"
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-zinc-500"
                       placeholder="0.00"
                       step="0.01"
                     />
@@ -412,8 +412,8 @@ export default function TradePage() {
                   disabled={!shares || (orderType === 'limit' && !limitPrice)}
                   className={`w-full py-3 rounded-lg font-semibold transition-all ${
                     orderSide === 'buy'
-                      ? 'bg-success hover:bg-success/90 text-white'
-                      : 'bg-danger hover:bg-danger/90 text-white'
+                      ? 'bg-buy hover:bg-buy/90 text-white'
+                      : 'bg-sell hover:bg-sell/90 text-white'
                   } disabled:opacity-50 disabled:cursor-not-allowed`}
                 >
                   {orderSide === 'buy' ? 'Buy' : 'Sell'} {getTickerFromSymbol(currentSymbol)}
@@ -439,7 +439,7 @@ export default function TradePage() {
                             <div className="font-semibold text-white">
                               {getTickerFromSymbol(position.symbol)}
                             </div>
-                            <div className={`flex items-center gap-1 text-sm ${pl >= 0 ? 'text-success' : 'text-danger'}`}>
+                            <div className={`flex items-center gap-1 text-sm ${pl >= 0 ? 'text-buy' : 'text-sell'}`}>
                               {pl >= 0 ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
                               {pl >= 0 ? '+' : ''}{plPercent.toFixed(2)}%
                             </div>
@@ -483,7 +483,7 @@ export default function TradePage() {
                           </div>
                           <div className={`text-xs px-2 py-1 rounded ${
                             order.status === 'filled'
-                              ? 'bg-success/20 text-success'
+                              ? 'bg-zinc-800 text-buy'
                               : order.status === 'cancelled'
                               ? 'bg-white/10 text-white/60'
                               : 'bg-blue-500/20 text-blue-400'
@@ -494,7 +494,7 @@ export default function TradePage() {
                         <div className="grid grid-cols-3 gap-2 text-xs">
                           <div>
                             <div className="text-white/60">Side</div>
-                            <div className={`font-medium ${order.type === 'buy' ? 'text-success' : 'text-danger'}`}>
+                            <div className={`font-medium ${order.type === 'buy' ? 'text-buy' : 'text-sell'}`}>
                               {order.type.toUpperCase()}
                             </div>
                           </div>

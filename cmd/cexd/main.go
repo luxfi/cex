@@ -140,7 +140,10 @@ func main() {
 	}
 
 	if len(registry.List()) == 0 {
-		log.Fatal().Msg("No execution providers configured. Set provider env vars (ALPACA_API_KEY, etc.).")
+		if os.Getenv("CEX_DEMO_MODE") == "" {
+			log.Fatal().Msg("No execution providers configured. Set provider env vars (ALPACA_API_KEY, etc.) or CEX_DEMO_MODE=1.")
+		}
+		log.Warn().Msg("Demo mode: no execution providers, matching engine only")
 	}
 
 	// --- Broker Execution Layer (external venues) ---

@@ -22,21 +22,21 @@ export default function LearnPage() {
           </p>
 
           <div className="grid md:grid-cols-3 gap-6 mb-16">
-            <div className="glass-effect rounded-lg p-6 hover:border-success/50 transition-all">
+            <div className="glass-effect rounded-lg p-6 hover:border-zinc-600 transition-all">
               <BookOpen className="w-10 h-10 text-success mb-4" />
               <h3 className="text-xl font-bold mb-2">Trading Guides</h3>
               <p className="text-muted-1 mb-4">Step-by-step guides for every trading topic</p>
               <div className="text-success font-semibold">50+ Guides</div>
             </div>
 
-            <div className="glass-effect rounded-lg p-6 hover:border-success/50 transition-all">
+            <div className="glass-effect rounded-lg p-6 hover:border-zinc-600 transition-all">
               <Video className="w-10 h-10 text-success mb-4" />
               <h3 className="text-xl font-bold mb-2">Video Tutorials</h3>
               <p className="text-muted-1 mb-4">Learn by watching expert traders</p>
               <div className="text-success font-semibold">100+ Videos</div>
             </div>
 
-            <div className="glass-effect rounded-lg p-6 hover:border-success/50 transition-all">
+            <div className="glass-effect rounded-lg p-6 hover:border-zinc-600 transition-all">
               <FileText className="w-10 h-10 text-success mb-4" />
               <h3 className="text-xl font-bold mb-2">Market Analysis</h3>
               <p className="text-muted-1 mb-4">Daily market insights and research</p>
@@ -49,7 +49,7 @@ export default function LearnPage() {
             <div className="space-y-6">
               <div className="border-b border-white/10 pb-6">
                 <h3 className="text-xl font-semibold mb-3 text-white flex items-center gap-2">
-                  <span className="bg-success text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                  <span className="bg-cta text-cta-text w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">1</span>
                   What is Trading?
                 </h3>
                 <p className="text-muted-1 ml-10">
@@ -59,7 +59,7 @@ export default function LearnPage() {
 
               <div className="border-b border-white/10 pb-6">
                 <h3 className="text-xl font-semibold mb-3 text-white flex items-center gap-2">
-                  <span className="bg-success text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                  <span className="bg-cta text-cta-text w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">2</span>
                   Opening Your First Account
                 </h3>
                 <p className="text-muted-1 ml-10">
@@ -69,7 +69,7 @@ export default function LearnPage() {
 
               <div className="border-b border-white/10 pb-6">
                 <h3 className="text-xl font-semibold mb-3 text-white flex items-center gap-2">
-                  <span className="bg-success text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                  <span className="bg-cta text-cta-text w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">3</span>
                   Platform Navigation
                 </h3>
                 <p className="text-muted-1 ml-10">
@@ -79,7 +79,7 @@ export default function LearnPage() {
 
               <div className="pb-6">
                 <h3 className="text-xl font-semibold mb-3 text-white flex items-center gap-2">
-                  <span className="bg-success text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">4</span>
+                  <span className="bg-cta text-cta-text w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">4</span>
                   Your First Trade
                 </h3>
                 <p className="text-muted-1 ml-10">
@@ -212,7 +212,7 @@ export default function LearnPage() {
           <div className="text-center">
             <Link
               href="/signup"
-              className="inline-block px-8 py-4 bg-success hover:bg-success/90 text-white font-semibold rounded-lg transition-colors text-lg"
+              className="inline-block px-8 py-4 bg-success hover:bg-white text-white font-semibold rounded-lg transition-colors text-lg"
             >
               Start Your Trading Journey
             </Link>

@@ -1,6 +1,6 @@
 /**
- * @beyondequity/analytics
- * Unified analytics tracking for Beyond Equity ecosystem
+ * @luxats/analytics
+ * Unified analytics tracking for Lux Exchange ecosystem
  */
 interface AnalyticsConfig {
     googleAnalyticsId?: string;

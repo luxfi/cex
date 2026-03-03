@@ -92,7 +92,7 @@ function AccountPageContent() {
                       onClick={() => setActiveTab(tab.id)}
                       className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all ${
                         activeTab === tab.id
-                          ? 'bg-success/20 text-success border border-success/30'
+                          ? 'bg-zinc-800 text-success border border-zinc-700'
                           : 'text-white/70 hover:bg-white/5 hover:text-white'
                       }`}
                     >
@@ -124,11 +124,11 @@ function AccountPageContent() {
                             className="w-24 h-24 rounded-full object-cover"
                           />
                         ) : (
-                          <div className="w-24 h-24 rounded-full bg-success/20 flex items-center justify-center">
+                          <div className="w-24 h-24 rounded-full bg-zinc-800 flex items-center justify-center">
                             <User size={40} className="text-success" />
                           </div>
                         )}
-                        <label className="absolute bottom-0 right-0 w-8 h-8 bg-success rounded-full flex items-center justify-center cursor-pointer hover:bg-success/90 transition-all">
+                        <label className="absolute bottom-0 right-0 w-8 h-8 bg-success rounded-full flex items-center justify-center cursor-pointer hover:bg-white transition-all">
                           <Camera size={16} className="text-white" />
                           <input
                             type="file"
@@ -158,7 +158,7 @@ function AccountPageContent() {
                           value={formData.firstName}
                           onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                           disabled={!isEditing}
-                          className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-success disabled:opacity-50"
+                          className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-zinc-500 disabled:opacity-50"
                         />
                       </div>
                       <div>
@@ -168,7 +168,7 @@ function AccountPageContent() {
                           value={formData.lastName}
                           onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                           disabled={!isEditing}
-                          className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-success disabled:opacity-50"
+                          className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-zinc-500 disabled:opacity-50"
                         />
                       </div>
                     </div>
@@ -179,7 +179,7 @@ function AccountPageContent() {
                         type="email"
                         value={formData.email}
                         disabled
-                        className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-success disabled:opacity-50"
+                        className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-zinc-500 disabled:opacity-50"
                       />
                       <p className="text-xs text-white/50 mt-1">Email cannot be changed</p>
                     </div>
@@ -191,7 +191,7 @@ function AccountPageContent() {
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         disabled={!isEditing}
-                        className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-success disabled:opacity-50"
+                        className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-zinc-500 disabled:opacity-50"
                       />
                     </div>
 
@@ -200,7 +200,7 @@ function AccountPageContent() {
                         <>
                           <button
                             onClick={handleSaveProfile}
-                            className="px-6 py-2 bg-success text-white rounded-lg hover:bg-success/90 transition-all"
+                            className="px-6 py-2 bg-cta text-cta-text rounded-lg hover:bg-white transition-all"
                           >
                             Save Changes
                           </button>
@@ -214,7 +214,7 @@ function AccountPageContent() {
                       ) : (
                         <button
                           onClick={() => setIsEditing(true)}
-                          className="px-6 py-2 bg-success text-white rounded-lg hover:bg-success/90 transition-all"
+                          className="px-6 py-2 bg-cta text-cta-text rounded-lg hover:bg-white transition-all"
                         >
                           Edit Profile
                         </button>
@@ -354,7 +354,7 @@ function PortfolioView() {
             <p className="text-white/60 mb-4">No holdings yet. Start trading to build your portfolio!</p>
             <Link
               href="/trade"
-              className="inline-block px-6 py-2 bg-success text-white rounded-lg hover:bg-success/90 transition-all"
+              className="inline-block px-6 py-2 bg-cta text-cta-text rounded-lg hover:bg-white transition-all"
             >
               Start Trading
             </Link>
@@ -400,7 +400,7 @@ function OrderHistoryView() {
                   <td className="px-4 py-3 text-sm font-medium text-white">{order.symbol}</td>
                   <td className="px-4 py-3 text-sm">
                     <span className={`px-2 py-1 rounded text-xs font-medium ${
-                      order.type === 'buy' ? 'bg-success/20 text-success' : 'bg-danger/20 text-danger'
+                      order.type === 'buy' ? 'bg-zinc-800 text-success' : 'bg-danger/20 text-danger'
                     }`}>
                       {order.type.toUpperCase()}
                     </span>
@@ -409,7 +409,7 @@ function OrderHistoryView() {
                   <td className="px-4 py-3 text-sm text-white/80 text-right">${order.price.toFixed(2)}</td>
                   <td className="px-4 py-3 text-sm text-white text-right">${order.total.toFixed(2)}</td>
                   <td className="px-4 py-3 text-sm text-center">
-                    <span className="px-2 py-1 rounded text-xs font-medium bg-success/20 text-success">
+                    <span className="px-2 py-1 rounded text-xs font-medium bg-zinc-800 text-success">
                       {order.status}
                     </span>
                   </td>
@@ -424,7 +424,7 @@ function OrderHistoryView() {
           <p className="text-white/60 mb-4">No orders yet. Start trading to see your order history!</p>
           <Link
             href="/trade"
-            className="inline-block px-6 py-2 bg-success text-white rounded-lg hover:bg-success/90 transition-all"
+            className="inline-block px-6 py-2 bg-cta text-cta-text rounded-lg hover:bg-white transition-all"
           >
             Start Trading
           </Link>
@@ -447,7 +447,7 @@ function BillingView() {
           </div>
           <a
             href="mailto:support@luxats.com?subject=Upgrade to Real Trading Account"
-            className="px-6 py-2 bg-success text-white rounded-lg hover:bg-success/90 transition-all"
+            className="px-6 py-2 bg-cta text-cta-text rounded-lg hover:bg-white transition-all"
           >
             Upgrade to Real Account
           </a>
@@ -483,7 +483,7 @@ function BillingView() {
 
           <div className="bg-white/5 border-2 border-success rounded-lg p-6 relative">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-              <span className="px-3 py-1 bg-success text-white text-xs font-bold rounded-full">POPULAR</span>
+              <span className="px-3 py-1 bg-cta text-cta-text text-xs font-bold rounded-full">POPULAR</span>
             </div>
             <h4 className="text-lg font-bold text-white mb-2">Lux Elite Pro Trader</h4>
             <p className="text-3xl font-bold text-white mb-1">$199<span className="text-sm font-normal text-white/60">/mo</span></p>
@@ -504,7 +504,7 @@ function BillingView() {
             </ul>
             <a
               href="mailto:sales@luxats.com?subject=Interested in Elite Pro Trader Plan"
-              className="block w-full px-4 py-2 bg-success text-white rounded-lg hover:bg-success/90 transition-all text-center"
+              className="block w-full px-4 py-2 bg-cta text-cta-text rounded-lg hover:bg-white transition-all text-center"
             >
               Contact Sales
             </a>

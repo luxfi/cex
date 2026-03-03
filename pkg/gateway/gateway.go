@@ -44,7 +44,7 @@ func New(eng *engine.Engine, comp *compliance.Service, rep *reporting.Service, s
 	r.Use(chimw.Recoverer)
 	r.Use(chimw.Timeout(30 * time.Second))
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{"https://lux.financial", "https://app.lux.financial", "https://cex.lux.network", "http://localhost:3000"},
+		AllowedOrigins:   []string{"https://lux.financial", "https://app.lux.financial", "https://cex.lux.network", "http://localhost:3000", "http://localhost:3001"},
 		AllowedMethods:   []string{"GET", "POST", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"},
 		AllowCredentials: true,

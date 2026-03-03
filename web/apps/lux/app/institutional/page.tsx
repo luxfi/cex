@@ -133,7 +133,7 @@ export default function InstitutionalPage() {
                 <p className="text-muted-1">Phone: +1 (973) 224-7098</p>
                 <p className="text-muted-1">Email: <a href="mailto:institutional@luxats.com" className="text-success hover:underline">institutional@luxats.com</a></p>
               </div>
-              <button className="px-8 py-3 bg-success hover:bg-success/90 text-white font-semibold rounded-lg transition-colors">
+              <button className="px-8 py-3 bg-success hover:bg-white text-white font-semibold rounded-lg transition-colors">
                 Request a Demo
               </button>
             </div>

@@ -22,7 +22,7 @@ export default function PricingPage() {
           </p>
 
           <div className="grid md:grid-cols-3 gap-8 mb-16">
-            <div className="glass-effect rounded-lg p-8 border-2 border-success/20">
+            <div className="glass-effect rounded-lg p-8 border-2 border-zinc-700">
               <h2 className="text-2xl font-bold mb-4">Pro Trader™</h2>
               <div className="mb-6">
                 <span className="text-4xl font-bold text-success">$0</span>
@@ -59,7 +59,7 @@ export default function PricingPage() {
             </div>
 
             <div className="glass-effect rounded-lg p-8 border-2 border-success relative">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-success text-white text-sm font-semibold rounded-full">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-cta text-cta-text text-sm font-semibold rounded-full">
                 Most Popular
               </div>
               <h2 className="text-2xl font-bold mb-4">Elite Pro Trader™</h2>
@@ -95,13 +95,13 @@ export default function PricingPage() {
               </ul>
               <Link
                 href="/products/elite-pro-trader"
-                className="block w-full text-center px-6 py-3 bg-success hover:bg-success/90 text-white font-semibold rounded-lg transition-colors"
+                className="block w-full text-center px-6 py-3 bg-success hover:bg-white text-white font-semibold rounded-lg transition-colors"
               >
                 Get Started
               </Link>
             </div>
 
-            <div className="glass-effect rounded-lg p-8 border-2 border-success/20">
+            <div className="glass-effect rounded-lg p-8 border-2 border-zinc-700">
               <h2 className="text-2xl font-bold mb-4">Markets™</h2>
               <div className="mb-6">
                 <span className="text-4xl font-bold text-success">$99</span>
@@ -218,7 +218,7 @@ export default function PricingPage() {
           <div className="text-center">
             <Link
               href="/signup"
-              className="inline-block px-8 py-4 bg-success hover:bg-success/90 text-white font-semibold rounded-lg transition-colors text-lg"
+              className="inline-block px-8 py-4 bg-success hover:bg-white text-white font-semibold rounded-lg transition-colors text-lg"
             >
               Open Your Account
             </Link>

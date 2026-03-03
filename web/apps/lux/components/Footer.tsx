@@ -42,7 +42,7 @@ export function Footer() {
             <Link href="/download/windows" className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors border border-white/20">
               Windows
             </Link>
-            <Link href="/web-trading" className="px-6 py-2 bg-success hover:bg-success/90 text-white rounded-lg transition-colors border border-success font-semibold">
+            <Link href="/web-trading" className="px-6 py-2 bg-success hover:bg-white text-white rounded-lg transition-colors border border-success font-semibold">
               Web Trading
             </Link>
           </div>
