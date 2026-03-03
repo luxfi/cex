@@ -6,7 +6,7 @@
  */
 
 const IAM_BASE = process.env.NEXT_PUBLIC_IAM_URL || 'https://lux.id'
-const CLIENT_ID = process.env.NEXT_PUBLIC_IAM_CLIENT_ID || 'lux-exchange'
+const CLIENT_ID = process.env.NEXT_PUBLIC_IAM_CLIENT_ID || 'lux-ats'
 const REDIRECT_URI =
   typeof window !== 'undefined'
     ? `${window.location.origin}/auth/callback`

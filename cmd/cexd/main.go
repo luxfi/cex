@@ -391,37 +391,90 @@ func lotSizeForClass(class types.AssetClass) string {
 }
 
 func registerDefaultMarkets(eng *engine.Engine) {
-	// LUX and ZOO tokens — always available as native markets
-	for _, sym := range []string{"LUX-USD", "ZOO-USD"} {
-		if _, exists := eng.GetMarket(sym); exists {
-			continue
-		}
-		eng.RegisterMarket(&types.Market{
-			Symbol: sym, AssetClass: types.AssetClassCrypto,
-			BaseCurrency: sym[:3], QuoteCurrency: "USD",
-			Status: "active", TickSize: "0.01", LotSize: "0.00000001",
-			MakerFee: "0.001", TakerFee: "0.002",
-			Tradable: true, Fractionable: true, RequiresKYC: true,
-		})
+	type mkt struct {
+		sym, base, quote string
+		class            types.AssetClass
+		tick, lot        string
+		maker, taker     string
+		kyc, accred      bool
 	}
 
-	// Precious metals (spot)
-	preciousMetals := []struct{ sym, base string }{
-		{"XAU-USD", "XAU"}, // Gold
-		{"XAG-USD", "XAG"}, // Silver
-		{"XPT-USD", "XPT"}, // Platinum
-		{"XPD-USD", "XPD"}, // Palladium
+	markets := []mkt{
+		// ── Native crypto ──
+		{"LUX-USD", "LUX", "USD", types.AssetClassCrypto, "0.01", "0.00000001", "0.001", "0.002", true, false},
+		{"ZOO-USD", "ZOO", "USD", types.AssetClassCrypto, "0.01", "0.00000001", "0.001", "0.002", true, false},
+
+		// ── Major crypto ──
+		{"BTC-USD", "BTC", "USD", types.AssetClassCrypto, "0.01", "0.00000001", "0.001", "0.002", true, false},
+		{"ETH-USD", "ETH", "USD", types.AssetClassCrypto, "0.01", "0.00000001", "0.001", "0.002", true, false},
+		{"SOL-USD", "SOL", "USD", types.AssetClassCrypto, "0.01", "0.00000001", "0.001", "0.002", true, false},
+		{"AVAX-USD", "AVAX", "USD", types.AssetClassCrypto, "0.01", "0.00000001", "0.001", "0.002", true, false},
+		{"LINK-USD", "LINK", "USD", types.AssetClassCrypto, "0.01", "0.00000001", "0.001", "0.002", true, false},
+		{"DOGE-USD", "DOGE", "USD", types.AssetClassCrypto, "0.0001", "0.00000001", "0.001", "0.002", true, false},
+		{"ADA-USD", "ADA", "USD", types.AssetClassCrypto, "0.0001", "0.00000001", "0.001", "0.002", true, false},
+		{"DOT-USD", "DOT", "USD", types.AssetClassCrypto, "0.01", "0.00000001", "0.001", "0.002", true, false},
+		{"MATIC-USD", "MATIC", "USD", types.AssetClassCrypto, "0.0001", "0.00000001", "0.001", "0.002", true, false},
+		{"UNI-USD", "UNI", "USD", types.AssetClassCrypto, "0.01", "0.00000001", "0.001", "0.002", true, false},
+		{"XRP-USD", "XRP", "USD", types.AssetClassCrypto, "0.0001", "0.00000001", "0.001", "0.002", true, false},
+		{"ATOM-USD", "ATOM", "USD", types.AssetClassCrypto, "0.01", "0.00000001", "0.001", "0.002", true, false},
+		{"ARB-USD", "ARB", "USD", types.AssetClassCrypto, "0.0001", "0.00000001", "0.001", "0.002", true, false},
+		{"OP-USD", "OP", "USD", types.AssetClassCrypto, "0.001", "0.00000001", "0.001", "0.002", true, false},
+
+		// ── Stablecoins ──
+		{"USDC-USD", "USDC", "USD", types.AssetClassCrypto, "0.0001", "0.01", "0.0001", "0.0002", true, false},
+		{"USDT-USD", "USDT", "USD", types.AssetClassCrypto, "0.0001", "0.01", "0.0001", "0.0002", true, false},
+
+		// ── Precious metals (spot) ──
+		{"XAU-USD", "XAU", "USD", types.AssetClassPreciousMetals, "0.01", "0.001", "0.0005", "0.001", true, false},
+		{"XAG-USD", "XAG", "USD", types.AssetClassPreciousMetals, "0.01", "0.001", "0.0005", "0.001", true, false},
+		{"XPT-USD", "XPT", "USD", types.AssetClassPreciousMetals, "0.01", "0.001", "0.0005", "0.001", true, false},
+		{"XPD-USD", "XPD", "USD", types.AssetClassPreciousMetals, "0.01", "0.001", "0.0005", "0.001", true, false},
+
+		// ── Commodities ──
+		{"CL-USD", "CL", "USD", types.AssetClassCommodities, "0.01", "0.01", "0.0005", "0.001", true, false},   // Crude Oil
+		{"NG-USD", "NG", "USD", types.AssetClassCommodities, "0.001", "0.1", "0.0005", "0.001", true, false},    // Natural Gas
+		{"HG-USD", "HG", "USD", types.AssetClassCommodities, "0.0001", "0.01", "0.0005", "0.001", true, false},  // Copper
+
+		// ── US Equities ──
+		{"AAPL-USD", "AAPL", "USD", types.AssetClassUSEquity, "0.01", "0.001", "0.0002", "0.0005", true, false},
+		{"MSFT-USD", "MSFT", "USD", types.AssetClassUSEquity, "0.01", "0.001", "0.0002", "0.0005", true, false},
+		{"GOOG-USD", "GOOG", "USD", types.AssetClassUSEquity, "0.01", "0.001", "0.0002", "0.0005", true, false},
+		{"AMZN-USD", "AMZN", "USD", types.AssetClassUSEquity, "0.01", "0.001", "0.0002", "0.0005", true, false},
+		{"NVDA-USD", "NVDA", "USD", types.AssetClassUSEquity, "0.01", "0.001", "0.0002", "0.0005", true, false},
+		{"TSLA-USD", "TSLA", "USD", types.AssetClassUSEquity, "0.01", "0.001", "0.0002", "0.0005", true, false},
+		{"META-USD", "META", "USD", types.AssetClassUSEquity, "0.01", "0.001", "0.0002", "0.0005", true, false},
+		{"JPM-USD", "JPM", "USD", types.AssetClassUSEquity, "0.01", "0.001", "0.0002", "0.0005", true, false},
+		{"V-USD", "V", "USD", types.AssetClassUSEquity, "0.01", "0.001", "0.0002", "0.0005", true, false},
+		{"JNJ-USD", "JNJ", "USD", types.AssetClassUSEquity, "0.01", "0.001", "0.0002", "0.0005", true, false},
+		{"WMT-USD", "WMT", "USD", types.AssetClassUSEquity, "0.01", "0.001", "0.0002", "0.0005", true, false},
+		{"SPY-USD", "SPY", "USD", types.AssetClassUSEquity, "0.01", "0.001", "0.0002", "0.0005", true, false},
+		{"QQQ-USD", "QQQ", "USD", types.AssetClassUSEquity, "0.01", "0.001", "0.0002", "0.0005", true, false},
+		{"DIA-USD", "DIA", "USD", types.AssetClassUSEquity, "0.01", "0.001", "0.0002", "0.0005", true, false},
+		{"IWM-USD", "IWM", "USD", types.AssetClassUSEquity, "0.01", "0.001", "0.0002", "0.0005", true, false},
+		{"AMD-USD", "AMD", "USD", types.AssetClassUSEquity, "0.01", "0.001", "0.0002", "0.0005", true, false},
+		{"COIN-USD", "COIN", "USD", types.AssetClassUSEquity, "0.01", "0.001", "0.0002", "0.0005", true, false},
+		{"PLTR-USD", "PLTR", "USD", types.AssetClassUSEquity, "0.01", "0.001", "0.0002", "0.0005", true, false},
+
+		// ── Forex ──
+		{"EUR-USD", "EUR", "USD", types.AssetClassForex, "0.00001", "1000", "0.00005", "0.0001", true, false},
+		{"GBP-USD", "GBP", "USD", types.AssetClassForex, "0.00001", "1000", "0.00005", "0.0001", true, false},
+		{"JPY-USD", "JPY", "USD", types.AssetClassForex, "0.001", "1000", "0.00005", "0.0001", true, false},
+		{"CHF-USD", "CHF", "USD", types.AssetClassForex, "0.00001", "1000", "0.00005", "0.0001", true, false},
+		{"AUD-USD", "AUD", "USD", types.AssetClassForex, "0.00001", "1000", "0.00005", "0.0001", true, false},
+		{"CAD-USD", "CAD", "USD", types.AssetClassForex, "0.00001", "1000", "0.00005", "0.0001", true, false},
 	}
-	for _, m := range preciousMetals {
+
+	for _, m := range markets {
 		if _, exists := eng.GetMarket(m.sym); exists {
 			continue
 		}
 		eng.RegisterMarket(&types.Market{
-			Symbol: m.sym, AssetClass: types.AssetClassPreciousMetals,
-			BaseCurrency: m.base, QuoteCurrency: "USD",
-			Status: "active", TickSize: "0.01", LotSize: "0.001",
-			MakerFee: "0.0005", TakerFee: "0.001",
-			Tradable: true, Fractionable: true, RequiresKYC: true,
+			Symbol: m.sym, AssetClass: m.class,
+			BaseCurrency: m.base, QuoteCurrency: m.quote,
+			Status: "active", TickSize: m.tick, LotSize: m.lot,
+			MakerFee: m.maker, TakerFee: m.taker,
+			Tradable: true, Fractionable: true,
+			RequiresKYC: m.kyc, RequiresAccred: m.accred,
 		})
 	}
 }

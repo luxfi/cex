@@ -50,6 +50,13 @@ func New(eng *engine.Engine, comp *compliance.Service, rep *reporting.Service, s
 		AllowCredentials: true,
 	}))
 
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		writeJSON(w, 200, map[string]interface{}{
+			"service": "lux-cex",
+			"version": "1.0.0",
+			"status":  "ok",
+		})
+	})
 	r.Get("/healthz", func(w http.ResponseWriter, r *http.Request) {
 		writeJSON(w, 200, map[string]string{"status": "ok", "service": "lux-cex"})
 	})
@@ -173,7 +180,12 @@ func (g *Gateway) getOrderBook(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	writeError(w, 501, "order book not available")
+	// Return empty book instead of 501
+	writeJSON(w, 200, map[string]interface{}{
+		"symbol": symbol,
+		"bids":   []interface{}{},
+		"asks":   []interface{}{},
+	})
 }
 
 // --- Account handlers ---

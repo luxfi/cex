@@ -14,6 +14,8 @@ const config: Config = {
         accent: '#1E1E1E',
         gold: '#D4AF37',
         'gold-light': '#F4E4BC',
+        buy: '#21C95E',
+        sell: '#FF593C',
       },
     },
   },

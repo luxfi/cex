@@ -1,528 +1,427 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { TrendingUp, TrendingDown, X, AlertCircle } from 'lucide-react'
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
+import { Loader2, Search, X, ChevronDown } from 'lucide-react'
+import dynamic from 'next/dynamic'
+
+const NativeChart = dynamic(() => import('../../components/NativeChart'), { ssr: false })
+
+const CEX_API = process.env.NEXT_PUBLIC_CEX_API_URL || 'http://localhost:8091'
+
+function getSandboxAccountId(): string {
+  let id = localStorage.getItem('lux_ats_account_id')
+  if (!id) {
+    id = `sandbox-${crypto.randomUUID().slice(0, 8)}`
+    localStorage.setItem('lux_ats_account_id', id)
+  }
+  return id
+}
+
+interface Market {
+  symbol: string
+  base_currency: string
+  quote_currency: string
+  asset_class: string
+  status: string
+  tradable: boolean
+}
 
 interface Order {
   id: string
   symbol: string
-  type: 'buy' | 'sell'
-  shares: number
-  price: number
-  status: 'open' | 'filled' | 'cancelled'
-  timestamp: number
+  side: 'buy' | 'sell'
+  type: string
+  qty: string
+  limit_price?: string
+  status: string
+  filled_avg_price?: string
+  created_at: string
 }
 
-interface Position {
-  symbol: string
-  shares: number
-  avgPrice: number
-  currentPrice: number
+interface BookLevel { price: number; qty: number; order_count: number }
+interface OrderBook { symbol: string; bids: BookLevel[]; asks: BookLevel[] }
+
+const NATIVE_SYMBOLS = new Set(['LUX-USD', 'ZOO-USD'])
+
+function toTVSymbol(symbol: string, assetClass: string): string {
+  const base = symbol.replace('-USD', '')
+  const overrides: Record<string, string> = {
+    'XAU-USD': 'OANDA:XAUUSD', 'XAG-USD': 'OANDA:XAGUSD',
+    'XPT-USD': 'TVC:PLATINUM', 'XPD-USD': 'TVC:PALLADIUM',
+    'CL-USD': 'NYMEX:CL1!', 'NG-USD': 'NYMEX:NG1!', 'HG-USD': 'COMEX:HG1!',
+    'EUR-USD': 'FX:EURUSD', 'GBP-USD': 'FX:GBPUSD', 'JPY-USD': 'FX_IDC:USDJPY',
+    'CHF-USD': 'FX:USDCHF', 'AUD-USD': 'FX:AUDUSD', 'CAD-USD': 'FX:USDCAD',
+  }
+  if (overrides[symbol]) return overrides[symbol]
+  if (assetClass === 'us_equity') return `NASDAQ:${base}`
+  if (assetClass === 'crypto') return `COINBASE:${base}USD`
+  return `${base}USD`
+}
+
+const CATEGORIES = [
+  { key: 'all', label: 'All' },
+  { key: 'crypto', label: 'Crypto' },
+  { key: 'us_equity', label: 'Stocks' },
+  { key: 'precious_metals', label: 'Metals' },
+  { key: 'commodities', label: 'Commodities' },
+  { key: 'forex', label: 'Forex' },
+]
+
+async function apiCall<T>(path: string, opts?: RequestInit): Promise<T> {
+  const res = await fetch(`${CEX_API}${path}`, {
+    ...opts,
+    headers: { 'Content-Type': 'application/json', ...opts?.headers },
+  })
+  if (!res.ok) throw new Error(`${res.status}: ${await res.text()}`)
+  return res.json()
 }
 
 export default function TradePage() {
   const chartRef = useRef<HTMLDivElement>(null)
-  const symbolInfoRef = useRef<HTMLDivElement>(null)
-  const [currentSymbol, setCurrentSymbol] = useState('NASDAQ:AAPL')
-  const [orderType, setOrderType] = useState<'market' | 'limit'>('market')
+  const [markets, setMarkets] = useState<Market[]>([])
+  const [currentSymbol, setCurrentSymbol] = useState('LUX-USD')
+  const [category, setCategory] = useState('all')
+  const [search, setSearch] = useState('')
+  const [showMarketList, setShowMarketList] = useState(false)
+
+  const [orderType, setOrderType] = useState<'market' | 'limit'>('limit')
   const [orderSide, setOrderSide] = useState<'buy' | 'sell'>('buy')
-  const [shares, setShares] = useState('1')
+  const [qty, setQty] = useState('1')
   const [limitPrice, setLimitPrice] = useState('')
   const [orders, setOrders] = useState<Order[]>([])
-  const [positions, setPositions] = useState<Position[]>([])
-  const [accountBalance] = useState(100000)
-  const [activeTab, setActiveTab] = useState<'order' | 'positions' | 'history'>('order')
-  const [showDemoBanner, setShowDemoBanner] = useState(true)
+  const [orderBook, setOrderBook] = useState<OrderBook | null>(null)
+  const [showOrders, setShowOrders] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState('')
+  const accountId = useRef('')
 
-  // Listen for symbol changes from TradingView
+  const currentMarket = useMemo(
+    () => markets.find((m) => m.symbol === currentSymbol) || null,
+    [markets, currentSymbol]
+  )
+  const isNative = NATIVE_SYMBOLS.has(currentSymbol)
+
   useEffect(() => {
-    const handleMessage = (event: MessageEvent) => {
-      if (event.data?.name === 'tv-widget-symbol-changed') {
-        const newSymbol = event.data.data
-        setCurrentSymbol(newSymbol)
-      }
-    }
-    window.addEventListener('message', handleMessage)
-    return () => window.removeEventListener('message', handleMessage)
+    apiCall<Market[]>('/v1/markets').then((d) => setMarkets(d || [])).catch(() => {})
   }, [])
 
-  useEffect(() => {
-    // Load TradingView Advanced Chart
-    if (chartRef.current) {
-      const script = document.createElement('script')
-      script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js'
-      script.async = true
-      script.innerHTML = JSON.stringify({
-        autosize: true,
-        symbol: currentSymbol,
-        interval: 'D',
-        timezone: 'Etc/UTC',
-        theme: 'dark',
-        style: '1',
-        locale: 'en',
-        allow_symbol_change: true,
-        calendar: false,
-        hide_top_toolbar: false,
-        hide_legend: false,
-        save_image: true,
-        hide_volume: false,
-        support_host: 'https://www.tradingview.com',
-        studies: ['STD;SMA', 'STD;EMA', 'STD;MACD', 'STD;RSI', 'STD;Volume'],
-        show_popup_button: true,
-        popup_width: '1000',
-        popup_height: '650',
-        container_id: 'tradingview_chart'
-      })
-      chartRef.current.appendChild(script)
+  const filteredMarkets = useMemo(() => {
+    let list = markets.filter((m) => m.status === 'active')
+    if (category !== 'all') list = list.filter((m) => m.asset_class === category)
+    if (search) {
+      const q = search.toLowerCase()
+      list = list.filter((m) => m.symbol.toLowerCase().includes(q) || m.base_currency.toLowerCase().includes(q))
     }
+    return list
+  }, [markets, category, search])
+
+  const fetchOrders = useCallback(async () => {
+    if (!accountId.current) return
+    try { setOrders((await apiCall<Order[]>(`/v1/accounts/${accountId.current}/orders`)) || []) } catch {}
   }, [])
 
-  useEffect(() => {
-    // Load Symbol Info Widget for real-time price
-    if (symbolInfoRef.current) {
-      // Clear previous widget
-      symbolInfoRef.current.innerHTML = ''
-
-      const script = document.createElement('script')
-      script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js'
-      script.async = true
-      script.innerHTML = JSON.stringify({
-        symbol: currentSymbol,
-        width: '100%',
-        locale: 'en',
-        colorTheme: 'dark',
-        isTransparent: true,
-      })
-      symbolInfoRef.current.appendChild(script)
-    }
+  const fetchOrderBook = useCallback(async () => {
+    try { setOrderBook(await apiCall<OrderBook>(`/v1/markets/${currentSymbol}/book`)) } catch { setOrderBook(null) }
   }, [currentSymbol])
 
-  const handlePlaceOrder = () => {
-    // Get estimated price (in production, this would come from real-time data)
-    const estimatedPrice = orderType === 'limit' ? parseFloat(limitPrice) : 100 + Math.random() * 50
-    
-    const newOrder: Order = {
-      id: `ORD-${Date.now()}`,
-      symbol: currentSymbol,
-      type: orderSide,
-      shares: parseInt(shares) || 0,
-      price: estimatedPrice,
-      status: orderType === 'market' ? 'filled' : 'open',
-      timestamp: Date.now()
-    }
+  useEffect(() => {
+    accountId.current = getSandboxAccountId()
+    apiCall(`/v1/accounts/${accountId.current}/register`, {
+      method: 'POST',
+      body: JSON.stringify({ jurisdiction: 'US', country: 'US', client_type: 'individual', kyc_level: 2, aml_cleared: true }),
+    }).catch(() => {})
+    fetchOrders()
+  }, [fetchOrders])
 
-    setOrders([newOrder, ...orders])
+  useEffect(() => {
+    fetchOrderBook()
+    const iv = setInterval(fetchOrderBook, 2000)
+    return () => clearInterval(iv)
+  }, [fetchOrderBook])
 
-    // Save order to localStorage
-    const storedOrders = JSON.parse(localStorage.getItem('lux_orders') || '[]')
-    storedOrders.push({
-      id: newOrder.id,
-      symbol: currentSymbol,
-      type: orderSide,
-      quantity: newOrder.shares,
-      price: newOrder.price,
-      total: newOrder.shares * newOrder.price,
-      timestamp: new Date().toISOString(),
-      status: 'completed'
+  // TradingView widget
+  useEffect(() => {
+    if (isNative || !chartRef.current || !currentMarket) return
+    chartRef.current.innerHTML = ''
+    const script = document.createElement('script')
+    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js'
+    script.async = true
+    script.innerHTML = JSON.stringify({
+      autosize: true,
+      symbol: toTVSymbol(currentSymbol, currentMarket.asset_class),
+      interval: 'D', timezone: 'Etc/UTC', theme: 'dark', style: '1', locale: 'en',
+      allow_symbol_change: false, calendar: false,
+      hide_top_toolbar: false, hide_legend: false, save_image: true, hide_volume: false,
+      support_host: 'https://www.tradingview.com',
+      studies: ['STD;SMA', 'STD;EMA', 'STD;RSI', 'STD;Volume'],
+      container_id: 'tradingview_chart',
     })
-    localStorage.setItem('lux_orders', JSON.stringify(storedOrders))
+    chartRef.current.appendChild(script)
+  }, [currentSymbol, isNative, currentMarket])
 
-    // If market order, update positions and portfolio immediately
-    if (orderType === 'market') {
-      updatePositions(newOrder)
-      updatePortfolio(newOrder, estimatedPrice)
-    }
-
-    // Reset form
-    setShares('1')
-    setLimitPrice('')
-  }
-
-  const updatePortfolio = (order: Order, price: number) => {
-    const portfolio = JSON.parse(localStorage.getItem('lux_portfolio') || '{"cash": 100000, "holdings": []}')
-    const total = order.shares * price
-
-    if (order.type === 'buy') {
-      // Deduct cash
-      portfolio.cash -= total
-
-      // Update holdings
-      const existingHolding = portfolio.holdings.find((h: any) => h.symbol === order.symbol)
-      if (existingHolding) {
-        const newQuantity = existingHolding.quantity + order.shares
-        const newAveragePrice = ((existingHolding.averagePrice * existingHolding.quantity) + (price * order.shares)) / newQuantity
-        existingHolding.quantity = newQuantity
-        existingHolding.averagePrice = newAveragePrice
-        existingHolding.currentPrice = price
-      } else {
-        portfolio.holdings.push({
-          symbol: order.symbol,
-          quantity: order.shares,
-          averagePrice: price,
-          currentPrice: price
-        })
+  const handlePlaceOrder = async (side: 'buy' | 'sell') => {
+    setOrderSide(side)
+    setError('')
+    setSubmitting(true)
+    try {
+      const body: Record<string, string> = {
+        symbol: currentSymbol, side, type: orderType,
+        time_in_force: orderType === 'market' ? 'ioc' : 'gtc', qty,
       }
-    } else {
-      // Add cash
-      portfolio.cash += total
-
-      // Update holdings
-      const existingHolding = portfolio.holdings.find((h: any) => h.symbol === order.symbol)
-      if (existingHolding) {
-        existingHolding.quantity -= order.shares
-        existingHolding.currentPrice = price
-        
-        // Remove holding if quantity is 0
-        if (existingHolding.quantity === 0) {
-          portfolio.holdings = portfolio.holdings.filter((h: any) => h.symbol !== order.symbol)
-        }
-      }
-    }
-
-    localStorage.setItem('lux_portfolio', JSON.stringify(portfolio))
-  }
-
-  const updatePositions = (order: Order) => {
-    const existingPos = positions.find(p => p.symbol === order.symbol)
-
-    if (existingPos) {
-      const newShares = order.type === 'buy'
-        ? existingPos.shares + order.shares
-        : existingPos.shares - order.shares
-
-      if (newShares === 0) {
-        setPositions(positions.filter(p => p.symbol !== order.symbol))
-      } else {
-        setPositions(positions.map(p =>
-          p.symbol === order.symbol
-            ? { ...p, shares: newShares }
-            : p
-        ))
-      }
-    } else if (order.type === 'buy') {
-      setPositions([...positions, {
-        symbol: order.symbol,
-        shares: order.shares,
-        avgPrice: order.price,
-        currentPrice: order.price
-      }])
+      if (orderType === 'limit' && limitPrice) body.limit_price = limitPrice
+      await apiCall(`/v1/accounts/${accountId.current}/orders`, {
+        method: 'POST', body: JSON.stringify(body),
+      })
+      setQty('1')
+      setLimitPrice('')
+      fetchOrders()
+      fetchOrderBook()
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Order failed')
+    } finally {
+      setSubmitting(false)
     }
   }
 
-  const cancelOrder = (orderId: string) => {
-    setOrders(orders.map(o =>
-      o.id === orderId ? { ...o, status: 'cancelled' } : o
-    ))
+  const handleCancelOrder = async (orderId: string) => {
+    try {
+      await apiCall(`/v1/accounts/${accountId.current}/orders/${orderId}`, { method: 'DELETE' })
+      fetchOrders()
+    } catch {}
   }
 
-  const getTickerFromSymbol = (symbol: string) => {
-    return symbol.split(':')[1] || symbol
-  }
+  const selectMarket = (sym: string) => { setCurrentSymbol(sym); setShowMarketList(false); setSearch('') }
+  const fmtPrice = (p: number) => (p / 1e8).toFixed(2)
+  const fmtQty = (q: number) => (q / 1e8).toFixed(4)
+  const label = currentMarket ? `${currentMarket.base_currency}/${currentMarket.quote_currency}` : currentSymbol
+  const hasBook = orderBook && ((orderBook.bids?.length ?? 0) > 0 || (orderBook.asks?.length ?? 0) > 0)
+  const openOrders = orders.filter(o => o.status === 'open' || o.status === 'new')
 
   return (
-    <div className="bg-primary absolute inset-0 top-[7rem] flex flex-col">
-      {/* Demo Account Banner */}
-      {showDemoBanner && (
-        <div className="bg-gradient-to-r from-blue-600 to-blue-800 border-b border-blue-500 relative z-10">
-          <div className="flex items-center justify-between px-4 py-3">
-            <div className="flex items-center gap-3 flex-1">
-              <AlertCircle className="w-5 h-5 text-white flex-shrink-0" />
-              <div className="flex-1">
-                <p className="text-white text-sm font-medium">
-                  Demo Trading Account - No real money at risk
-                </p>
-                <p className="text-blue-100 text-xs">
-                  Contact us to enable real trading and access live markets
-                </p>
-              </div>
+    <div className="absolute inset-0 top-[7rem] flex flex-col" style={{ background: '#131722' }}>
+      {/* Market Selector Bar */}
+      <div className="flex items-center px-2 py-1 gap-1" style={{ background: '#1e222d', borderBottom: '1px solid #2a2e39' }}>
+        <button
+          onClick={() => setShowMarketList(!showMarketList)}
+          className="flex items-center gap-1.5 px-2.5 py-1 rounded hover:bg-white/5 transition-colors"
+        >
+          <span className="text-[#d1d4dc] font-semibold text-sm">{label}</span>
+          <span className="text-[#787b86] text-[10px]">{currentMarket?.asset_class?.replace(/_/g, ' ')}</span>
+          <ChevronDown size={12} className={`text-[#787b86] transition-transform ${showMarketList ? 'rotate-180' : ''}`} />
+        </button>
+
+        <div className="w-px h-4 mx-1" style={{ background: '#2a2e39' }} />
+
+        {CATEGORIES.map((c) => (
+          <button
+            key={c.key}
+            onClick={() => { setCategory(c.key); setShowMarketList(true) }}
+            className={`px-2 py-0.5 rounded text-xs transition-colors ${
+              category === c.key && showMarketList ? 'text-[#d1d4dc] bg-white/10' : 'text-[#787b86] hover:text-[#d1d4dc]'
+            }`}
+          >
+            {c.label}
+          </button>
+        ))}
+
+        <div className="ml-auto flex items-center gap-1.5 text-[10px] text-[#2962FF]">
+          <div className="w-1.5 h-1.5 rounded-full bg-[#2962FF]" />
+          Sandbox
+        </div>
+      </div>
+
+      {/* Market List Dropdown */}
+      {showMarketList && (
+        <div className="absolute top-[calc(7rem+2.25rem)] left-0 right-0 z-50 max-h-80 overflow-hidden flex flex-col" style={{ background: '#1e222d', borderBottom: '1px solid #2a2e39' }}>
+          <div className="px-3 py-2 flex items-center gap-2" style={{ borderBottom: '1px solid #2a2e39' }}>
+            <Search size={13} className="text-[#787b86]" />
+            <input
+              autoFocus type="text" value={search} onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search markets..." className="flex-1 bg-transparent text-[#d1d4dc] text-xs outline-none placeholder:text-[#787b86]/50"
+            />
+            <button onClick={() => setShowMarketList(false)} className="text-[#787b86] hover:text-[#d1d4dc]"><X size={13} /></button>
+          </div>
+          <div className="overflow-y-auto flex-1">
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+              {filteredMarkets.map((m) => (
+                <button
+                  key={m.symbol} onClick={() => selectMarket(m.symbol)}
+                  className={`px-3 py-2 text-left transition-colors border-b border-r ${
+                    m.symbol === currentSymbol ? 'bg-white/5' : 'hover:bg-white/[0.03]'
+                  }`}
+                  style={{ borderColor: '#2a2e39' }}
+                >
+                  <div className="text-[#d1d4dc] text-xs font-medium">{m.base_currency}/{m.quote_currency}</div>
+                  <div className="text-[#787b86] text-[9px]">{m.asset_class.replace(/_/g, ' ')}</div>
+                </button>
+              ))}
             </div>
-            <div className="flex items-center gap-3">
-              <a
-                href="mailto:support@lux.exchange?subject=Enable Real Trading Account&body=Hi, I'd like to enable real trading on my Lux Exchange account."
-                className="px-4 py-1.5 bg-white text-blue-700 hover:bg-blue-50 rounded-lg text-sm font-semibold transition-colors whitespace-nowrap"
-              >
-                Enable Real Trading
-              </a>
-              <button
-                onClick={() => setShowDemoBanner(false)}
-                className="text-white hover:text-blue-200 transition-colors"
-                aria-label="Close banner"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
+            {filteredMarkets.length === 0 && <div className="text-center py-6 text-[#787b86] text-xs">No markets found</div>}
           </div>
         </div>
       )}
 
-      {/* Trading Interface */}
+      {/* Main content: chart + right panel */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Chart - Left Side */}
+        {/* Chart area */}
         <div className="flex-1 relative">
-          <div
-            ref={chartRef}
-            className="tradingview-widget-container w-full h-full"
-          >
-            <div
-              id="tradingview_chart"
-              className="tradingview-widget-container__widget w-full h-full"
-            />
-          </div>
+          {isNative ? (
+            <NativeChart symbol={currentSymbol} cexApiUrl={CEX_API} />
+          ) : (
+            <div ref={chartRef} className="tradingview-widget-container w-full h-full">
+              <div id="tradingview_chart" className="tradingview-widget-container__widget w-full h-full" />
+            </div>
+          )}
         </div>
 
-        {/* Trading Panel - Right Side */}
-        <div className="w-96 bg-black/50 border-l border-white/10 flex flex-col overflow-hidden">
-          {/* Symbol Info */}
-          <div className="p-4 border-b border-white/10">
-            <div
-              ref={symbolInfoRef}
-              className="tradingview-widget-container"
-            >
-              <div className="tradingview-widget-container__widget"></div>
-            </div>
-          </div>
+        {/* Right Panel: Order Book + Trade Entry */}
+        <div className="w-[280px] flex flex-col overflow-hidden" style={{ background: '#1e222d', borderLeft: '1px solid #2a2e39' }}>
 
-          {/* Tabs */}
-          <div className="flex border-b border-white/10">
-            <button
-              onClick={() => setActiveTab('order')}
-              className={`flex-1 py-3 text-sm font-medium transition-colors ${
-                activeTab === 'order'
-                  ? 'text-white border-b-2 border-white'
-                  : 'text-white/60 hover:text-white'
-              }`}
-            >
-              Trade
-            </button>
-            <button
-              onClick={() => setActiveTab('positions')}
-              className={`flex-1 py-3 text-sm font-medium transition-colors ${
-                activeTab === 'positions'
-                  ? 'text-white border-b-2 border-white'
-                  : 'text-white/60 hover:text-white'
-              }`}
-            >
-              Positions
-            </button>
-            <button
-              onClick={() => setActiveTab('history')}
-              className={`flex-1 py-3 text-sm font-medium transition-colors ${
-                activeTab === 'history'
-                  ? 'text-white border-b-2 border-white'
-                  : 'text-white/60 hover:text-white'
-              }`}
-            >
-              Orders
-            </button>
-          </div>
-
-          {/* Content Area */}
-          <div className="flex-1 overflow-y-auto">
-            {activeTab === 'order' && (
-              <div className="p-4 space-y-4">
-                {/* Account Balance */}
-                <div className="bg-white/5 rounded-lg p-3">
-                  <div className="text-xs text-white/60 mb-1">Buying Power (Demo)</div>
-                  <div className="text-lg font-semibold text-white">
-                    ${accountBalance.toLocaleString()}
-                  </div>
-                </div>
-
-                {/* Buy/Sell Toggle */}
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    onClick={() => setOrderSide('buy')}
-                    className={`py-2.5 rounded-lg font-semibold transition-all ${
-                      orderSide === 'buy'
-                        ? 'bg-buy text-white'
-                        : 'bg-white/5 text-white/60 hover:bg-white/10'
-                    }`}
-                  >
-                    Buy
-                  </button>
-                  <button
-                    onClick={() => setOrderSide('sell')}
-                    className={`py-2.5 rounded-lg font-semibold transition-all ${
-                      orderSide === 'sell'
-                        ? 'bg-sell text-white'
-                        : 'bg-white/5 text-white/60 hover:bg-white/10'
-                    }`}
-                  >
-                    Sell
-                  </button>
-                </div>
-
-                {/* Order Type */}
-                <div>
-                  <label className="text-xs text-white/60 mb-2 block">Order Type</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    <button
-                      onClick={() => setOrderType('market')}
-                      className={`py-2 rounded-lg text-sm font-medium transition-all ${
-                        orderType === 'market'
-                          ? 'bg-white/10 text-white'
-                          : 'bg-white/5 text-white/60 hover:bg-white/10'
-                      }`}
-                    >
-                      Market
-                    </button>
-                    <button
-                      onClick={() => setOrderType('limit')}
-                      className={`py-2 rounded-lg text-sm font-medium transition-all ${
-                        orderType === 'limit'
-                          ? 'bg-white/10 text-white'
-                          : 'bg-white/5 text-white/60 hover:bg-white/10'
-                      }`}
-                    >
-                      Limit
-                    </button>
-                  </div>
-                </div>
-
-                {/* Shares */}
-                <div>
-                  <label className="text-xs text-white/60 mb-2 block">Shares</label>
-                  <input
-                    type="number"
-                    value={shares}
-                    onChange={(e) => setShares(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-zinc-500"
-                    placeholder="0"
-                  />
-                </div>
-
-                {/* Limit Price */}
-                {orderType === 'limit' && (
-                  <div>
-                    <label className="text-xs text-white/60 mb-2 block">Limit Price</label>
-                    <input
-                      type="number"
-                      value={limitPrice}
-                      onChange={(e) => setLimitPrice(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-zinc-500"
-                      placeholder="0.00"
-                      step="0.01"
-                    />
-                  </div>
-                )}
-
-                {/* Place Order Button */}
-                <button
-                  onClick={handlePlaceOrder}
-                  disabled={!shares || (orderType === 'limit' && !limitPrice)}
-                  className={`w-full py-3 rounded-lg font-semibold transition-all ${
-                    orderSide === 'buy'
-                      ? 'bg-buy hover:bg-buy/90 text-white'
-                      : 'bg-sell hover:bg-sell/90 text-white'
-                  } disabled:opacity-50 disabled:cursor-not-allowed`}
-                >
-                  {orderSide === 'buy' ? 'Buy' : 'Sell'} {getTickerFromSymbol(currentSymbol)}
+          {/* Order Book */}
+          <div className="flex-1 overflow-hidden flex flex-col">
+            <div className="flex items-center justify-between px-3 py-2" style={{ borderBottom: '1px solid #2a2e39' }}>
+              <span className="text-[#787b86] text-[11px] font-medium">Order Book</span>
+              {openOrders.length > 0 && (
+                <button onClick={() => setShowOrders(!showOrders)} className="text-[10px] text-[#2962FF] hover:underline">
+                  {openOrders.length} open
                 </button>
-              </div>
-            )}
+              )}
+            </div>
 
-            {activeTab === 'positions' && (
-              <div className="p-4">
-                {positions.length === 0 ? (
-                  <div className="text-center py-8 text-white/40">
-                    <p className="text-sm">No open positions</p>
-                  </div>
-                ) : (
-                  <div className="space-y-2">
-                    {positions.map((position) => {
-                      const pl = (position.currentPrice - position.avgPrice) * position.shares
-                      const plPercent = ((position.currentPrice - position.avgPrice) / position.avgPrice) * 100
+            {/* Column headers */}
+            <div className="grid grid-cols-3 px-3 py-1 text-[10px] text-[#787b86]" style={{ borderBottom: '1px solid #2a2e39' }}>
+              <div>Price(USD)</div>
+              <div className="text-right">Size</div>
+              <div className="text-right">Total</div>
+            </div>
 
+            <div className="flex-1 overflow-y-auto">
+              {!hasBook ? (
+                <div className="flex flex-col items-center justify-center h-full text-[#787b86] text-[11px] gap-1">
+                  <span>No orders</span>
+                  <span className="text-[10px] text-[#787b86]/60">Place limit orders to build depth</span>
+                </div>
+              ) : (
+                <div className="flex flex-col h-full">
+                  {/* Asks (reversed - lowest at bottom) */}
+                  <div className="flex-1 flex flex-col justify-end">
+                    {[...(orderBook?.asks || [])].reverse().slice(0, 12).map((l, i) => {
+                      const maxQty = Math.max(...(orderBook?.asks || []).map(a => a.qty), 1)
+                      const pct = (l.qty / maxQty) * 100
                       return (
-                        <div key={position.symbol} className="bg-white/5 rounded-lg p-3">
-                          <div className="flex items-center justify-between mb-2">
-                            <div className="font-semibold text-white">
-                              {getTickerFromSymbol(position.symbol)}
-                            </div>
-                            <div className={`flex items-center gap-1 text-sm ${pl >= 0 ? 'text-buy' : 'text-sell'}`}>
-                              {pl >= 0 ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
-                              {pl >= 0 ? '+' : ''}{plPercent.toFixed(2)}%
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-2 gap-2 text-xs">
-                            <div>
-                              <div className="text-white/60">Shares</div>
-                              <div className="text-white font-medium">{position.shares}</div>
-                            </div>
-                            <div>
-                              <div className="text-white/60">Avg Price</div>
-                              <div className="text-white font-medium">${position.avgPrice.toFixed(2)}</div>
-                            </div>
-                          </div>
+                        <div key={i} className="grid grid-cols-3 px-3 py-[2px] text-[11px] relative">
+                          <div className="absolute inset-0 right-0" style={{ background: `rgba(239, 83, 80, 0.08)`, width: `${pct}%`, marginLeft: 'auto' }} />
+                          <div className="text-[#ef5350] relative z-10 font-mono">{fmtPrice(l.price)}</div>
+                          <div className="text-right text-[#d1d4dc] relative z-10 font-mono">{fmtQty(l.qty)}</div>
+                          <div className="text-right text-[#787b86] relative z-10 font-mono">{l.order_count}</div>
                         </div>
                       )
                     })}
                   </div>
-                )}
+
+                  {/* Spread */}
+                  {(orderBook?.asks?.length ?? 0) > 0 && (orderBook?.bids?.length ?? 0) > 0 && (
+                    <div className="px-3 py-1.5 text-center" style={{ borderTop: '1px solid #2a2e39', borderBottom: '1px solid #2a2e39' }}>
+                      <span className="text-[#d1d4dc] text-[12px] font-mono font-semibold">${fmtPrice(orderBook!.asks![0].price)}</span>
+                      <span className="text-[#787b86] text-[10px] ml-2">Spread: ${fmtPrice(orderBook!.asks![0].price - orderBook!.bids![0].price)}</span>
+                    </div>
+                  )}
+
+                  {/* Bids */}
+                  <div className="flex-1">
+                    {(orderBook?.bids || []).slice(0, 12).map((l, i) => {
+                      const maxQty = Math.max(...(orderBook?.bids || []).map(b => b.qty), 1)
+                      const pct = (l.qty / maxQty) * 100
+                      return (
+                        <div key={i} className="grid grid-cols-3 px-3 py-[2px] text-[11px] relative">
+                          <div className="absolute inset-0 right-0" style={{ background: `rgba(38, 166, 154, 0.08)`, width: `${pct}%`, marginLeft: 'auto' }} />
+                          <div className="text-[#26a69a] relative z-10 font-mono">{fmtPrice(l.price)}</div>
+                          <div className="text-right text-[#d1d4dc] relative z-10 font-mono">{fmtQty(l.qty)}</div>
+                          <div className="text-right text-[#787b86] relative z-10 font-mono">{l.order_count}</div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Open Orders (collapsible) */}
+          {showOrders && openOrders.length > 0 && (
+            <div className="max-h-32 overflow-y-auto" style={{ borderTop: '1px solid #2a2e39' }}>
+              {openOrders.map((o) => (
+                <div key={o.id} className="flex items-center justify-between px-3 py-1.5 text-[10px]" style={{ borderBottom: '1px solid #2a2e39' }}>
+                  <div className="flex items-center gap-1.5">
+                    <span className={o.side === 'buy' ? 'text-[#26a69a]' : 'text-[#ef5350]'}>{o.side.toUpperCase()}</span>
+                    <span className="text-[#d1d4dc]">{o.qty}</span>
+                    <span className="text-[#787b86]">@</span>
+                    <span className="text-[#d1d4dc]">${o.limit_price || 'MKT'}</span>
+                  </div>
+                  <button onClick={() => handleCancelOrder(o.id)} className="text-[#787b86] hover:text-[#ef5350]">
+                    <X size={10} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Trade Entry — compact, always visible at bottom */}
+          <div className="px-3 py-2.5 space-y-2" style={{ borderTop: '1px solid #2a2e39' }}>
+            {/* Type toggle */}
+            <div className="flex rounded overflow-hidden" style={{ border: '1px solid #363a45' }}>
+              {(['limit', 'market'] as const).map((t) => (
+                <button key={t} onClick={() => setOrderType(t)}
+                  className={`flex-1 py-1 text-[11px] font-medium transition-colors ${
+                    orderType === t ? 'bg-white/10 text-[#d1d4dc]' : 'text-[#787b86] hover:text-[#d1d4dc]'
+                  }`}
+                >{t.charAt(0).toUpperCase() + t.slice(1)}</button>
+              ))}
+            </div>
+
+            {/* Price input (limit only) */}
+            {orderType === 'limit' && (
+              <div>
+                <label className="text-[10px] text-[#787b86] mb-1 block">Price</label>
+                <input type="number" value={limitPrice} onChange={(e) => setLimitPrice(e.target.value)}
+                  className="w-full px-2.5 py-1.5 rounded text-xs text-[#d1d4dc] font-mono outline-none"
+                  style={{ background: '#131722', border: '1px solid #363a45' }}
+                  placeholder="0.00" step="0.01" />
               </div>
             )}
 
-            {activeTab === 'history' && (
-              <div className="p-4">
-                {orders.length === 0 ? (
-                  <div className="text-center py-8 text-white/40">
-                    <p className="text-sm">No orders yet</p>
-                  </div>
-                ) : (
-                  <div className="space-y-2">
-                    {orders.map((order) => (
-                      <div key={order.id} className="bg-white/5 rounded-lg p-3">
-                        <div className="flex items-start justify-between mb-2">
-                          <div>
-                            <div className="font-semibold text-white">
-                              {getTickerFromSymbol(order.symbol)}
-                            </div>
-                            <div className="text-xs text-white/60">
-                              {new Date(order.timestamp).toLocaleString()}
-                            </div>
-                          </div>
-                          <div className={`text-xs px-2 py-1 rounded ${
-                            order.status === 'filled'
-                              ? 'bg-zinc-800 text-buy'
-                              : order.status === 'cancelled'
-                              ? 'bg-white/10 text-white/60'
-                              : 'bg-blue-500/20 text-blue-400'
-                          }`}>
-                            {order.status}
-                          </div>
-                        </div>
-                        <div className="grid grid-cols-3 gap-2 text-xs">
-                          <div>
-                            <div className="text-white/60">Side</div>
-                            <div className={`font-medium ${order.type === 'buy' ? 'text-buy' : 'text-sell'}`}>
-                              {order.type.toUpperCase()}
-                            </div>
-                          </div>
-                          <div>
-                            <div className="text-white/60">Shares</div>
-                            <div className="text-white font-medium">{order.shares}</div>
-                          </div>
-                          <div>
-                            <div className="text-white/60">Price</div>
-                            <div className="text-white font-medium">
-                              {order.price > 0 ? `$${order.price.toFixed(2)}` : 'Market'}
-                            </div>
-                          </div>
-                        </div>
-                        {order.status === 'open' && (
-                          <button
-                            onClick={() => cancelOrder(order.id)}
-                            className="w-full mt-2 py-1.5 text-xs bg-white/5 hover:bg-white/10 text-white/80 rounded transition-colors"
-                          >
-                            Cancel Order
-                          </button>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
+            {/* Quantity */}
+            <div>
+              <label className="text-[10px] text-[#787b86] mb-1 block">Amount</label>
+              <input type="number" value={qty} onChange={(e) => setQty(e.target.value)}
+                className="w-full px-2.5 py-1.5 rounded text-xs text-[#d1d4dc] font-mono outline-none"
+                style={{ background: '#131722', border: '1px solid #363a45' }}
+                placeholder="0" min="0" step="0.01" />
+            </div>
+
+            {error && <div className="text-[#ef5350] text-[10px] bg-[#ef5350]/10 rounded px-2 py-1">{error}</div>}
+
+            {/* Buy / Sell buttons */}
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                onClick={() => handlePlaceOrder('buy')}
+                disabled={submitting || !qty || (orderType === 'limit' && !limitPrice)}
+                className="py-2 rounded text-xs font-semibold text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-1"
+                style={{ background: '#26a69a' }}
+              >
+                {submitting && orderSide === 'buy' && <Loader2 size={12} className="animate-spin" />}
+                Buy
+              </button>
+              <button
+                onClick={() => handlePlaceOrder('sell')}
+                disabled={submitting || !qty || (orderType === 'limit' && !limitPrice)}
+                className="py-2 rounded text-xs font-semibold text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-1"
+                style={{ background: '#ef5350' }}
+              >
+                {submitting && orderSide === 'sell' && <Loader2 size={12} className="animate-spin" />}
+                Sell
+              </button>
+            </div>
           </div>
         </div>
       </div>
