@@ -47,18 +47,18 @@ export const cex = {
     stop_price?: string
     time_in_force?: string
   }) =>
-    request(CEX_API, '/api/v1/orders', {
+    request(CEX_API, '/v1/orders', {
       method: 'POST',
       body: JSON.stringify(order),
     }),
 
-  getOrders: () => request(CEX_API, '/api/v1/orders'),
+  getOrders: () => request(CEX_API, '/v1/orders'),
 
   cancelOrder: (id: string) =>
-    request(CEX_API, `/api/v1/orders/${id}`, { method: 'DELETE' }),
+    request(CEX_API, `/v1/orders/${id}`, { method: 'DELETE' }),
 
   getOrderbook: (symbol: string) =>
-    request(CEX_API, `/api/v1/orderbook/${symbol}`),
+    request(CEX_API, `/v1/orderbook/${symbol}`),
 }
 
 // ---- Broker (Alpaca/IBKR/etc. via SOR) ----
@@ -66,13 +66,13 @@ export const cex = {
 export const broker = {
   // Providers
   listProviders: () =>
-    request<{ providers: string[] }>(BROKER_API, '/api/v1/providers'),
+    request<{ providers: string[] }>(BROKER_API, '/v1/providers'),
 
   // Accounts
   listAccounts: (provider?: string) =>
     request(
       BROKER_API,
-      `/api/v1/accounts${provider ? `?provider=${provider}` : ''}`
+      `/v1/accounts${provider ? `?provider=${provider}` : ''}`
     ),
 
   createAccount: (data: {
@@ -92,16 +92,16 @@ export const broker = {
     country: string
     enabled_assets?: string[]
   }) =>
-    request(BROKER_API, '/api/v1/accounts', {
+    request(BROKER_API, '/v1/accounts', {
       method: 'POST',
       body: JSON.stringify(data),
     }),
 
   getAccount: (provider: string, accountId: string) =>
-    request(BROKER_API, `/api/v1/accounts/${provider}/${accountId}`),
+    request(BROKER_API, `/v1/accounts/${provider}/${accountId}`),
 
   getPortfolio: (provider: string, accountId: string) =>
-    request(BROKER_API, `/api/v1/accounts/${provider}/${accountId}/portfolio`),
+    request(BROKER_API, `/v1/accounts/${provider}/${accountId}/portfolio`),
 
   // Orders via broker
   createOrder: (
@@ -120,17 +120,17 @@ export const broker = {
   ) =>
     request(
       BROKER_API,
-      `/api/v1/accounts/${provider}/${accountId}/orders`,
+      `/v1/accounts/${provider}/${accountId}/orders`,
       { method: 'POST', body: JSON.stringify(order) }
     ),
 
   listOrders: (provider: string, accountId: string) =>
-    request(BROKER_API, `/api/v1/accounts/${provider}/${accountId}/orders`),
+    request(BROKER_API, `/v1/accounts/${provider}/${accountId}/orders`),
 
   cancelOrder: (provider: string, accountId: string, orderId: string) =>
     request(
       BROKER_API,
-      `/api/v1/accounts/${provider}/${accountId}/orders/${orderId}`,
+      `/v1/accounts/${provider}/${accountId}/orders/${orderId}`,
       { method: 'DELETE' }
     ),
 
@@ -142,12 +142,12 @@ export const broker = {
   ) =>
     request(
       BROKER_API,
-      `/api/v1/accounts/${provider}/${accountId}/transfers`,
+      `/v1/accounts/${provider}/${accountId}/transfers`,
       { method: 'POST', body: JSON.stringify(data) }
     ),
 
   listTransfers: (provider: string, accountId: string) =>
-    request(BROKER_API, `/api/v1/accounts/${provider}/${accountId}/transfers`),
+    request(BROKER_API, `/v1/accounts/${provider}/${accountId}/transfers`),
 
   // Bank relationships
   createBankRelationship: (
@@ -162,34 +162,34 @@ export const broker = {
   ) =>
     request(
       BROKER_API,
-      `/api/v1/accounts/${provider}/${accountId}/bank-relationships`,
+      `/v1/accounts/${provider}/${accountId}/bank-relationships`,
       { method: 'POST', body: JSON.stringify(data) }
     ),
 
   listBankRelationships: (provider: string, accountId: string) =>
     request(
       BROKER_API,
-      `/api/v1/accounts/${provider}/${accountId}/bank-relationships`
+      `/v1/accounts/${provider}/${accountId}/bank-relationships`
     ),
 
   // Assets
   listAssets: (provider: string, assetClass?: string) =>
     request(
       BROKER_API,
-      `/api/v1/assets/${provider}${assetClass ? `?class=${assetClass}` : ''}`
+      `/v1/assets/${provider}${assetClass ? `?class=${assetClass}` : ''}`
     ),
 
   getAsset: (provider: string, symbol: string) =>
-    request(BROKER_API, `/api/v1/assets/${provider}/${symbol}`),
+    request(BROKER_API, `/v1/assets/${provider}/${symbol}`),
 
   // Market data
   getSnapshot: (provider: string, symbol: string) =>
-    request(BROKER_API, `/api/v1/market/${provider}/snapshot/${symbol}`),
+    request(BROKER_API, `/v1/market/${provider}/snapshot/${symbol}`),
 
   getSnapshots: (provider: string, symbols: string[]) =>
     request(
       BROKER_API,
-      `/api/v1/market/${provider}/snapshots?symbols=${symbols.join(',')}`
+      `/v1/market/${provider}/snapshots?symbols=${symbols.join(',')}`
     ),
 
   getBars: (
@@ -204,24 +204,24 @@ export const broker = {
     if (opts?.limit) params.set('limit', String(opts.limit))
     return request(
       BROKER_API,
-      `/api/v1/market/${provider}/bars/${symbol}?${params.toString()}`
+      `/v1/market/${provider}/bars/${symbol}?${params.toString()}`
     )
   },
 
   getLatestTrades: (provider: string, symbols: string[]) =>
     request(
       BROKER_API,
-      `/api/v1/market/${provider}/trades/latest?symbols=${symbols.join(',')}`
+      `/v1/market/${provider}/trades/latest?symbols=${symbols.join(',')}`
     ),
 
   getLatestQuotes: (provider: string, symbols: string[]) =>
     request(
       BROKER_API,
-      `/api/v1/market/${provider}/quotes/latest?symbols=${symbols.join(',')}`
+      `/v1/market/${provider}/quotes/latest?symbols=${symbols.join(',')}`
     ),
 
   getClock: (provider: string) =>
-    request(BROKER_API, `/api/v1/market/${provider}/clock`),
+    request(BROKER_API, `/v1/market/${provider}/clock`),
 
   getCalendar: (provider: string, start?: string, end?: string) => {
     const params = new URLSearchParams()
@@ -229,7 +229,7 @@ export const broker = {
     if (end) params.set('end', end)
     return request(
       BROKER_API,
-      `/api/v1/market/${provider}/calendar?${params.toString()}`
+      `/v1/market/${provider}/calendar?${params.toString()}`
     )
   },
 
@@ -243,11 +243,46 @@ export const broker = {
     limit_price?: string
     accounts: Record<string, string>
   }) =>
-    request(BROKER_API, '/api/v1/smart-order', {
+    request(BROKER_API, '/v1/smart-order', {
       method: 'POST',
       body: JSON.stringify(data),
     }),
 
   // Consolidated BBO
-  getBBO: (symbol: string) => request(BROKER_API, `/api/v1/bbo/${symbol}`),
+  getBBO: (symbol: string) => request(BROKER_API, `/v1/bbo/${symbol}`),
+
+  // Funding (deposit/withdraw via payment processors)
+  deposit: (data: {
+    account_id: string
+    provider: string
+    amount: number
+    currency: string
+    payment_method: string
+    token?: string
+    tx_hash?: string
+    chain?: string
+    address?: string
+  }) =>
+    request(BROKER_API, '/v1/fund/deposit', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  withdraw: (data: {
+    account_id: string
+    provider: string
+    amount: number
+    currency: string
+    payment_method: string
+    relationship_id?: string
+    dest_address?: string
+    chain?: string
+  }) =>
+    request(BROKER_API, '/v1/fund/withdraw', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  listPaymentProcessors: () =>
+    request<{ processors: string[] }>(BROKER_API, '/v1/fund/processors'),
 }
