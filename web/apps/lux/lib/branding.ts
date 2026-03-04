@@ -16,7 +16,7 @@ export const BRAND_NAME        = env('NEXT_PUBLIC_BRAND_NAME', 'Lux ATS')
 export const BRAND_SHORT       = env('NEXT_PUBLIC_BRAND_SHORT_NAME', 'Lux')
 export const BRAND_TAGLINE     = env('NEXT_PUBLIC_BRAND_TAGLINE', 'Trade Everything. $0 Commission.')
 export const BRAND_DESCRIPTION = env('NEXT_PUBLIC_BRAND_DESCRIPTION', 'Trade stocks, crypto, precious metals, and more with $0 commission.')
-export const BRAND_LEGAL_ENTITY = env('NEXT_PUBLIC_BRAND_LEGAL_ENTITY', 'Lux Exchange LLC')
+export const BRAND_LEGAL_ENTITY = env('NEXT_PUBLIC_BRAND_LEGAL_ENTITY', 'Lux Assets Management LLC')
 
 // ---------------------------------------------------------------------------
 // Product names (appear in nav, pricing, product pages)
@@ -26,12 +26,13 @@ export const PRODUCT_ELITE     = env('NEXT_PUBLIC_PRODUCT_ELITE', `${BRAND_SHORT
 export const PRODUCT_MARKET    = env('NEXT_PUBLIC_PRODUCT_MARKET', `${BRAND_SHORT} Markets`)
 
 // ---------------------------------------------------------------------------
-// Contact
+// Domain & Contact
 // ---------------------------------------------------------------------------
-export const EMAIL_SUPPORT       = env('NEXT_PUBLIC_EMAIL_SUPPORT', `support@${BRAND_SHORT.toLowerCase()}ats.com`)
-export const EMAIL_SALES         = env('NEXT_PUBLIC_EMAIL_SALES', `sales@${BRAND_SHORT.toLowerCase()}ats.com`)
-export const EMAIL_PRIVACY       = env('NEXT_PUBLIC_EMAIL_PRIVACY', `privacy@${BRAND_SHORT.toLowerCase()}ats.com`)
-export const EMAIL_INSTITUTIONAL = env('NEXT_PUBLIC_EMAIL_INSTITUTIONAL', `institutional@${BRAND_SHORT.toLowerCase()}ats.com`)
+export const BRAND_DOMAIN         = env('NEXT_PUBLIC_BRAND_DOMAIN', 'lux.exchange')
+export const EMAIL_SUPPORT       = env('NEXT_PUBLIC_EMAIL_SUPPORT', `support@${BRAND_DOMAIN}`)
+export const EMAIL_SALES         = env('NEXT_PUBLIC_EMAIL_SALES', `sales@${BRAND_DOMAIN}`)
+export const EMAIL_PRIVACY       = env('NEXT_PUBLIC_EMAIL_PRIVACY', `privacy@${BRAND_DOMAIN}`)
+export const EMAIL_INSTITUTIONAL = env('NEXT_PUBLIC_EMAIL_INSTITUTIONAL', `institutional@${BRAND_DOMAIN}`)
 
 // ---------------------------------------------------------------------------
 // Auth / IAM

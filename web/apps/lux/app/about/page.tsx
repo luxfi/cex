@@ -41,7 +41,7 @@ export default function AboutPage() {
               <Shield className="w-12 h-12 text-success mb-4" />
               <h2 className="text-2xl font-bold mb-4">Regulated & Secure</h2>
               <p className="text-muted-1 leading-relaxed">
-                Lux Securities, Inc. is a member of FINRA, SIPC, and NYSE. We maintain the highest standards of regulatory compliance and employ bank-level security to protect your assets and personal information.
+                Lux Assets Management LLC is a member of FINRA, SIPC, and NYSE. We maintain the highest standards of regulatory compliance and employ bank-level security to protect your assets and personal information.
               </p>
             </div>
 
@@ -104,7 +104,7 @@ export default function AboutPage() {
             <h2 className="text-3xl font-bold mb-6">Regulatory Information</h2>
             <div className="space-y-4 text-muted-1 leading-relaxed">
               <p>
-                <strong className="text-white">Lux Securities, Inc.</strong> is a registered broker-dealer and member of the Financial Industry Regulatory Authority (FINRA), the Securities Investor Protection Corporation (SIPC), and the New York Stock Exchange (NYSE).
+                <strong className="text-white">Lux Assets Management LLC</strong> is a registered broker-dealer and member of the Financial Industry Regulatory Authority (FINRA), the Securities Investor Protection Corporation (SIPC), and the New York Stock Exchange (NYSE).
               </p>
               <p>
                 Our firm is subject to rigorous regulatory oversight and maintains all required licenses and registrations. We adhere to the highest standards of conduct and are committed to protecting the interests of our clients.
@@ -137,7 +137,7 @@ export default function AboutPage() {
               </div>
               <div>
                 <p><strong className="text-white">Phone:</strong> +1 (973) 224-7098</p>
-                <p><strong className="text-white">Email:</strong> <a href="mailto:support@luxats.com" className="text-success hover:underline">support@luxats.com</a></p>
+                <p><strong className="text-white">Email:</strong> <a href="mailto:support@lux.exchange" className="text-success hover:underline">support@lux.exchange</a></p>
               </div>
             </div>
           </div>

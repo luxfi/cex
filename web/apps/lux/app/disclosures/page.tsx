@@ -8,9 +8,9 @@ export default function DisclosuresPage() {
         
         <div className="space-y-8 text-muted-foreground">
           <section>
-            <h2 className="text-2xl font-semibold text-foreground mb-4">About Lux Exchange</h2>
+            <h2 className="text-2xl font-semibold text-foreground mb-4">About Lux ATS</h2>
             <p className="mb-4">
-              <strong>Lux Exchange LLC</strong> is a trading platform built on Alpaca's technology infrastructure.
+              <strong>Lux Assets Management LLC</strong> is a trading platform built on Alpaca's technology infrastructure.
             </p>
           </section>
 
@@ -114,9 +114,9 @@ export default function DisclosuresPage() {
           <section className="border-t pt-8 mt-8">
             <div className="space-y-3 text-sm text-muted-foreground">
               <p>
-                <strong>Lux Exchange LLC</strong> provides access to brokerage services through Alpaca Securities LLC (member FINRA/SIPC) and cryptocurrency services through Alpaca Crypto LLC (NMLS # 2160858).
+                <strong>Lux Assets Management LLC</strong> provides access to brokerage services through Alpaca Securities LLC (member FINRA/SIPC) and cryptocurrency services through Alpaca Crypto LLC (NMLS # 2160858).
               </p>
-              <p>© {new Date().getFullYear()} <strong>Lux Exchange LLC</strong>. All rights reserved.</p>
+              <p>© {new Date().getFullYear()} <strong>Lux Assets Management LLC</strong>. All rights reserved.</p>
             </div>
           </section>
 

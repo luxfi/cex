@@ -446,7 +446,7 @@ function BillingView() {
             <p className="text-sm text-white/60 mt-1">Free forever - No credit card required</p>
           </div>
           <a
-            href="mailto:support@luxats.com?subject=Upgrade to Real Trading Account"
+            href="mailto:support@lux.exchange?subject=Upgrade to Real Trading Account"
             className="px-6 py-2 bg-cta text-cta-text rounded-lg hover:bg-white transition-all"
           >
             Upgrade to Real Account
@@ -474,7 +474,7 @@ function BillingView() {
               </li>
             </ul>
             <a
-              href="mailto:sales@luxats.com?subject=Interested in Pro Trader Plan"
+              href="mailto:sales@lux.exchange?subject=Interested in Pro Trader Plan"
               className="block w-full px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-all text-center"
             >
               Contact Sales
@@ -503,7 +503,7 @@ function BillingView() {
               </li>
             </ul>
             <a
-              href="mailto:sales@luxats.com?subject=Interested in Elite Pro Trader Plan"
+              href="mailto:sales@lux.exchange?subject=Interested in Elite Pro Trader Plan"
               className="block w-full px-4 py-2 bg-cta text-cta-text rounded-lg hover:bg-white transition-all text-center"
             >
               Contact Sales
@@ -529,7 +529,7 @@ function BillingView() {
               </li>
             </ul>
             <a
-              href="mailto:sales@luxats.com?subject=Interested in Institutional Plan"
+              href="mailto:sales@lux.exchange?subject=Interested in Institutional Plan"
               className="block w-full px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-all text-center"
             >
               Contact Sales

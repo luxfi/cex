@@ -25,7 +25,7 @@ export default function TermsOfService() {
                 Alpaca Securities, LLC ("Alpaca Securities") and Alpaca Crypto, LLC ("Alpaca Crypto"), wholly-owned subsidiaries of AlpacaDB, Inc. (collectively "ALPACA"; "the Firm"). Alpaca Securities is a registered broker-dealer and member of FINRA and SIPC that provides online and mobile application-based discount stock brokerage services to self-directed investors. Alpaca Crypto provides digital asset trading services and is registered with FinCEN as a Money Service Business (registration # 31000188404516).
               </p>
               <p className="text-muted-1 leading-relaxed">
-                These Terms and Conditions are in addition to any other agreements between you, Alpaca Securities, Alpaca Crypto and AlpacaDB (collectively, "Alpaca"), including any customer or account agreements and any other agreements that govern your use of software, products, goods, services, content, tools, and information provided by Alpaca through <strong>Lux Exchange LLC</strong>.
+                These Terms and Conditions are in addition to any other agreements between you, Alpaca Securities, Alpaca Crypto and AlpacaDB (collectively, "Alpaca"), including any customer or account agreements and any other agreements that govern your use of software, products, goods, services, content, tools, and information provided by Alpaca through <strong>Lux Assets Management LLC</strong>.
               </p>
             </section>
 
@@ -174,23 +174,23 @@ export default function TermsOfService() {
             <section>
               <h2 className="text-2xl font-bold mb-4">Contact Information</h2>
               <div className="glass-effect rounded-lg p-6">
-                <p className="text-white mb-2"><strong>Lux Exchange LLC</strong></p>
+                <p className="text-white mb-2"><strong>Lux Assets Management LLC</strong></p>
                 <p className="text-muted-1">
                   The Trump Building<br />
                   40 Wall Street, Suite 2702<br />
                   New York, NY 10005
                 </p>
-                <p className="text-muted-1 mt-3">Email: support@luxprotrader.com</p>
+                <p className="text-muted-1 mt-3">Email: support@lux.exchange</p>
                 <p className="text-muted-1">Phone: +1 (973) 224-7098</p>
               </div>
             </section>
 
             <section className="border-t pt-8">
               <p className="text-sm text-muted-1">
-                <strong>Lux Exchange LLC</strong> provides access to brokerage services through Alpaca Securities LLC (member FINRA/SIPC) and cryptocurrency services through Alpaca Crypto LLC (NMLS # 2160858).
+                <strong>Lux Assets Management LLC</strong> provides access to brokerage services through Alpaca Securities LLC (member FINRA/SIPC) and cryptocurrency services through Alpaca Crypto LLC (NMLS # 2160858).
               </p>
               <p className="text-sm text-muted-1 mt-2">
-                © {new Date().getFullYear()} Lux Exchange LLC. All rights reserved.
+                © {new Date().getFullYear()} Lux Assets Management LLC. All rights reserved.
               </p>
             </section>
           </div>

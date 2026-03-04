@@ -186,7 +186,7 @@ export default function DownloadPage() {
                 Visit Help Center
               </Link>
               <a
-                href="mailto:support@luxats.com"
+                href="mailto:support@lux.exchange"
                 className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors border border-white/20"
               >
                 Contact Support

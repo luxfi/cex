@@ -161,23 +161,23 @@ export default function ExtendedHoursRiskPage() {
                 <p className="text-muted-1 mb-3">
                   If you have questions about extended hours trading, please contact:
                 </p>
-                <p className="text-white mb-2"><strong>Lux Exchange LLC</strong></p>
+                <p className="text-white mb-2"><strong>Lux Assets Management LLC</strong></p>
                 <p className="text-muted-1">
                   The Trump Building<br />
                   40 Wall Street, Suite 2702<br />
                   New York, NY 10005
                 </p>
-                <p className="text-muted-1 mt-3">Email: support@luxprotrader.com</p>
+                <p className="text-muted-1 mt-3">Email: support@lux.exchange</p>
                 <p className="text-muted-1">Phone: +1 (973) 224-7098</p>
               </div>
             </section>
 
             <section className="border-t pt-8">
               <p className="text-sm text-muted-1">
-                Services provided by <strong>Lux Exchange LLC</strong> through Alpaca Securities LLC (member FINRA/SIPC).
+                Services provided by <strong>Lux Assets Management LLC</strong> through Alpaca Securities LLC (member FINRA/SIPC).
               </p>
               <p className="text-sm text-muted-1 mt-2">
-                © {new Date().getFullYear()} Lux Exchange LLC. All rights reserved.
+                © {new Date().getFullYear()} Lux Assets Management LLC. All rights reserved.
               </p>
             </section>
           </div>

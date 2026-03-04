@@ -18,7 +18,7 @@ export default function InvestPage() {
 
           <h1 className="text-4xl lg:text-5xl font-bold mb-6">Invest with Confidence</h1>
           <p className="text-muted-1 text-lg mb-12">
-            Unlock your financial potential with Lux Exchange' comprehensive investment platform
+            Unlock your financial potential with Lux ATS's comprehensive investment platform
           </p>
 
           <div className="grid md:grid-cols-2 gap-8 mb-16">
@@ -134,7 +134,7 @@ export default function InvestPage() {
               <strong>Important Disclosures:</strong> All investments involve risk, including possible loss of principal. Past performance does not guarantee future results. Please read our <Link href="/terms" className="text-success hover:underline">Terms & Conditions</Link> and <Link href="/privacy" className="text-success hover:underline">Privacy Policy</Link>.
             </p>
             <p>
-              Securities products offered by Lux Securities, Inc., member FINRA/SIPC. Cryptocurrency services provided by Lux Crypto LLC (NMLS #pending).
+              Securities products offered by Lux Assets Management LLC, member FINRA/SIPC. Cryptocurrency services provided by Alpaca Crypto LLC (NMLS # 2160858).
             </p>
           </div>
         </div>

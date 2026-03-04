@@ -22,7 +22,7 @@ export default function CookiePolicy() {
           <div className="prose prose-invert max-w-none space-y-8">
             <section>
               <p className="text-muted-1 leading-relaxed">
-                Lux Exchange LLC and its service providers, including AlpacaDB, Inc. and its subsidiaries and affiliates (collectively, "Alpaca", "us" or "we") understand that your privacy is important and we are committed to being transparent about the technologies we use. This Cookie Policy explains how and why cookies, web beacons, pixels, and other similar technologies (collectively "cookies and other tracking technologies") may be stored on and accessed from your device when you use or visit any website or app that posts a link to this Cookie Policy (collectively, "Sites"). This Cookie Policy should be read together with our <Link href="/privacy" className="text-primary hover:underline">Privacy Policy</Link>.
+                Lux Assets Management LLC and its service providers, including AlpacaDB, Inc. and its subsidiaries and affiliates (collectively, "Alpaca", "us" or "we") understand that your privacy is important and we are committed to being transparent about the technologies we use. This Cookie Policy explains how and why cookies, web beacons, pixels, and other similar technologies (collectively "cookies and other tracking technologies") may be stored on and accessed from your device when you use or visit any website or app that posts a link to this Cookie Policy (collectively, "Sites"). This Cookie Policy should be read together with our <Link href="/privacy" className="text-primary hover:underline">Privacy Policy</Link>.
               </p>
             </section>
 
@@ -202,24 +202,24 @@ export default function CookiePolicy() {
                 If you have any other questions about our Cookie Policy, please contact us at:
               </p>
               <div className="glass-effect rounded-lg p-6">
-                <p className="text-white mb-2"><strong>Lux Exchange LLC</strong></p>
+                <p className="text-white mb-2"><strong>Lux Assets Management LLC</strong></p>
                 <p className="text-muted-1">
                   Privacy Department<br />
                   The Trump Building<br />
                   40 Wall Street, Suite 2702<br />
                   New York, NY 10005
                 </p>
-                <p className="text-muted-1 mt-3">Email: privacy@luxprotrader.com</p>
+                <p className="text-muted-1 mt-3">Email: privacy@lux.exchange</p>
                 <p className="text-muted-1">Phone: +1 (973) 224-7098</p>
               </div>
             </section>
 
             <section className="border-t pt-8">
               <p className="text-sm text-muted-1">
-                Services provided by <strong>Lux Exchange LLC</strong> through Alpaca Securities LLC (member FINRA/SIPC) and Alpaca Crypto LLC (NMLS # 2160858).
+                Services provided by <strong>Lux Assets Management LLC</strong> through Alpaca Securities LLC (member FINRA/SIPC) and Alpaca Crypto LLC (NMLS # 2160858).
               </p>
               <p className="text-sm text-muted-1 mt-2">
-                © {new Date().getFullYear()} Lux Exchange LLC. All rights reserved.
+                © {new Date().getFullYear()} Lux Assets Management LLC. All rights reserved.
               </p>
             </section>
           </div>

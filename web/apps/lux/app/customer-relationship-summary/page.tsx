@@ -26,7 +26,7 @@ export default function CustomerRelationshipSummaryPage() {
               <div className="glass-effect rounded-lg p-6 border border-blue-500/20 bg-blue-500/5 mb-8">
                 <h3 className="text-xl font-semibold mb-3 text-blue-400">About This Document</h3>
                 <p className="text-muted-1 leading-relaxed">
-                  This Customer Relationship Summary (Form CRS) provides information about Lux Exchange LLC and the brokerage services we offer through Alpaca Securities LLC. Form CRS is designed to help you understand the services we provide, the fees you will pay, and conflicts of interest that may exist.
+                  This Customer Relationship Summary (Form CRS) provides information about Lux Assets Management LLC and the brokerage services we offer through Alpaca Securities LLC. Form CRS is designed to help you understand the services we provide, the fees you will pay, and conflicts of interest that may exist.
                 </p>
               </div>
             </section>
@@ -34,7 +34,7 @@ export default function CustomerRelationshipSummaryPage() {
             <section>
               <h2 className="text-2xl font-bold mb-4">Introduction</h2>
               <p className="text-muted-1 leading-relaxed mb-4">
-                Lux Exchange LLC ("Lux Exchange," "we," "us") provides access to brokerage services through Alpaca Securities LLC, a registered broker-dealer and member of FINRA and SIPC. We are not an investment adviser and do not provide investment advice or recommendations.
+                Lux Assets Management LLC ("Lux ATS," "we," "us") provides access to brokerage services through Alpaca Securities LLC, a registered broker-dealer and member of FINRA and SIPC. We are not an investment adviser and do not provide investment advice or recommendations.
               </p>
               <p className="text-muted-1 leading-relaxed">
                 Free and simple tools are available to research firms and financial professionals at <a href="https://www.investor.gov/CRS" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Investor.gov/CRS</a>, which also provides educational materials about broker-dealers, investment advisers, and investing.
@@ -205,15 +205,15 @@ export default function CustomerRelationshipSummaryPage() {
                 <p className="text-muted-1 leading-relaxed mb-4">
                   For additional information about our services, please visit our website or contact us directly:
                 </p>
-                <p className="text-white mb-2"><strong>Lux Exchange LLC</strong></p>
+                <p className="text-white mb-2"><strong>Lux Assets Management LLC</strong></p>
                 <p className="text-muted-1">
                   The Trump Building<br />
                   40 Wall Street, Suite 2702<br />
                   New York, NY 10005
                 </p>
-                <p className="text-muted-1 mt-3">Email: support@luxprotrader.com</p>
+                <p className="text-muted-1 mt-3">Email: support@lux.exchange</p>
                 <p className="text-muted-1">Phone: +1 (973) 224-7098</p>
-                <p className="text-muted-1 mt-4">Website: <Link href="/" className="text-primary hover:underline">www.luxprotrader.com</Link></p>
+                <p className="text-muted-1 mt-4">Website: <Link href="/" className="text-primary hover:underline">lux.exchange</Link></p>
               </div>
 
               <div className="glass-effect rounded-lg p-6 border border-purple-500/20 bg-purple-500/5">
@@ -229,10 +229,10 @@ export default function CustomerRelationshipSummaryPage() {
 
             <section className="border-t pt-8">
               <p className="text-sm text-muted-1">
-                Services provided by <strong>Lux Exchange LLC</strong> through Alpaca Securities LLC (member FINRA/SIPC) and Alpaca Crypto LLC (NMLS # 2160858).
+                Services provided by <strong>Lux Assets Management LLC</strong> through Alpaca Securities LLC (member FINRA/SIPC) and Alpaca Crypto LLC (NMLS # 2160858).
               </p>
               <p className="text-sm text-muted-1 mt-2">
-                © {new Date().getFullYear()} Lux Exchange LLC. All rights reserved.
+                © {new Date().getFullYear()} Lux Assets Management LLC. All rights reserved.
               </p>
             </section>
           </div>

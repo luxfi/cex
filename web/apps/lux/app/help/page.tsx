@@ -34,8 +34,8 @@ export default function HelpPage() {
               <Mail className="w-10 h-10 text-success mb-4" />
               <h3 className="text-xl font-bold mb-2">Email Support</h3>
               <p className="text-muted-1 mb-4">Get help via email</p>
-              <a href="mailto:support@luxats.com" className="text-success hover:underline">
-                support@luxats.com
+              <a href="mailto:support@lux.exchange" className="text-success hover:underline">
+                support@lux.exchange
               </a>
               <p className="text-muted-1 text-sm mt-2">Response within 24 hours</p>
             </div>
@@ -109,7 +109,7 @@ export default function HelpPage() {
               <div className="border-b border-white/10 pb-6">
                 <h3 className="text-xl font-semibold mb-3 text-white">How is my account protected?</h3>
                 <p className="text-muted-1">
-                  Lux Securities is a member of SIPC, which protects securities customers of its members up to $500,000 (including $250,000 for claims for cash). Additionally, we carry excess SIPC coverage and use 256-bit SSL encryption for all data transmission.
+                  Lux Assets Management LLC is a member of SIPC, which protects securities customers of its members up to $500,000 (including $250,000 for claims for cash). Additionally, we carry excess SIPC coverage and use 256-bit SSL encryption for all data transmission.
                 </p>
               </div>
 
@@ -205,11 +205,11 @@ export default function HelpPage() {
               </div>
               <div>
                 <p><strong className="text-white">Phone:</strong> +1 (973) 224-7098</p>
-                <p><strong className="text-white">Email:</strong> <a href="mailto:support@luxats.com" className="text-success hover:underline">support@luxats.com</a></p>
+                <p><strong className="text-white">Email:</strong> <a href="mailto:support@lux.exchange" className="text-success hover:underline">support@lux.exchange</a></p>
               </div>
               <div>
                 <p className="text-sm">
-                  Lux Securities, Inc. is a member of FINRA, SIPC, and NYSE.
+                  Lux Assets Management LLC is a member of FINRA, SIPC, and NYSE.
                 </p>
               </div>
             </div>

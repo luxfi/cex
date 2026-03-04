@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { BRAND_LEGAL_ENTITY, FOOTER_SECTIONS } from '../lib/branding'
 
 export function Footer() {
   return (
@@ -191,7 +192,7 @@ export function Footer() {
               <span className="text-2xl">🏗️</span> Built on Alpaca
             </h3>
             <p className="text-white/80 leading-relaxed">
-              <strong className="text-white">Lux Exchange LLC</strong> is powered by Alpaca's technology infrastructure.
+              <strong className="text-white">{BRAND_LEGAL_ENTITY}</strong> is powered by Alpaca's technology infrastructure.
             </p>
             <p className="text-white/80 leading-relaxed">
               Securities Brokerage services are provided by <strong className="text-white">Alpaca Securities LLC</strong> ("Alpaca Securities"), member <a href="https://www.finra.org/" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline font-bold">FINRA</a>/<a href="https://www.sipc.org/" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline font-bold">SIPC</a>, a wholly-owned subsidiary of AlpacaDB, Inc. Technology and services are offered by AlpacaDB, Inc.
@@ -262,10 +263,10 @@ export function Footer() {
         <div className="border-t border-white/10 pt-8 mt-8">
           <div className="text-center space-y-3 text-white/60 text-xs">
             <p className="text-white/70">
-              <strong>Lux Exchange LLC</strong> provides access to brokerage services through Alpaca Securities LLC (member FINRA/SIPC) and cryptocurrency services through Alpaca Crypto LLC (NMLS # 2160858).
+              <strong>{BRAND_LEGAL_ENTITY}</strong> provides access to brokerage services through Alpaca Securities LLC (member FINRA/SIPC) and cryptocurrency services through Alpaca Crypto LLC (NMLS # 2160858).
             </p>
             <p>
-              © {new Date().getFullYear()} <strong className="text-white/80">Lux Exchange LLC</strong>. All rights reserved.
+              © {new Date().getFullYear()} <strong className="text-white/80">{BRAND_LEGAL_ENTITY}</strong>. All rights reserved.
             </p>
           </div>
         </div>

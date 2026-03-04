@@ -107,7 +107,7 @@ export default function SECRule606Page() {
             <section>
               <h2 className="text-2xl font-bold mb-4">Order Routing Practices</h2>
               <p className="text-muted-1 leading-relaxed mb-4">
-                Lux Exchange LLC, through Alpaca Securities LLC, routes customer orders to various execution venues with the goal of obtaining the best execution for customer orders. Factors considered include:
+                Lux Assets Management LLC, through Alpaca Securities LLC, routes customer orders to various execution venues with the goal of obtaining the best execution for customer orders. Factors considered include:
               </p>
               <ul className="list-disc list-inside space-y-2 text-muted-1 ml-4">
                 <li>Price improvement opportunities</li>
@@ -162,7 +162,7 @@ export default function SECRule606Page() {
                   <li>The terms of the order as specified by the customer</li>
                 </ul>
                 <p className="text-muted-1 leading-relaxed">
-                  To request this information, please contact customer support at support@luxprotrader.com or call +1 (973) 224-7098.
+                  To request this information, please contact customer support at support@lux.exchange or call +1 (973) 224-7098.
                 </p>
               </div>
             </section>
@@ -208,23 +208,23 @@ export default function SECRule606Page() {
                 <p className="text-muted-1 mb-3">
                   For questions about our order routing practices or to request specific order information:
                 </p>
-                <p className="text-white mb-2"><strong>Lux Exchange LLC</strong></p>
+                <p className="text-white mb-2"><strong>Lux Assets Management LLC</strong></p>
                 <p className="text-muted-1">
                   The Trump Building<br />
                   40 Wall Street, Suite 2702<br />
                   New York, NY 10005
                 </p>
-                <p className="text-muted-1 mt-3">Email: support@luxprotrader.com</p>
+                <p className="text-muted-1 mt-3">Email: support@lux.exchange</p>
                 <p className="text-muted-1">Phone: +1 (973) 224-7098</p>
               </div>
             </section>
 
             <section className="border-t pt-8">
               <p className="text-sm text-muted-1">
-                Services provided by <strong>Lux Exchange LLC</strong> through Alpaca Securities LLC (member FINRA/SIPC).
+                Services provided by <strong>Lux Assets Management LLC</strong> through Alpaca Securities LLC (member FINRA/SIPC).
               </p>
               <p className="text-sm text-muted-1 mt-2">
-                © {new Date().getFullYear()} Lux Exchange LLC. All rights reserved.
+                © {new Date().getFullYear()} Lux Assets Management LLC. All rights reserved.
               </p>
             </section>
           </div>

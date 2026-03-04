@@ -217,23 +217,23 @@ export default function MarginDisclosurePage() {
                 <p className="text-muted-1 mb-3">
                   For questions about margin trading or your specific margin requirements:
                 </p>
-                <p className="text-white mb-2"><strong>Lux Exchange LLC</strong></p>
+                <p className="text-white mb-2"><strong>Lux Assets Management LLC</strong></p>
                 <p className="text-muted-1">
                   The Trump Building<br />
                   40 Wall Street, Suite 2702<br />
                   New York, NY 10005
                 </p>
-                <p className="text-muted-1 mt-3">Email: support@luxprotrader.com</p>
+                <p className="text-muted-1 mt-3">Email: support@lux.exchange</p>
                 <p className="text-muted-1">Phone: +1 (973) 224-7098</p>
               </div>
             </section>
 
             <section className="border-t pt-8">
               <p className="text-sm text-muted-1 mb-3">
-                <strong>Lux Exchange LLC</strong> provides access to brokerage services through Alpaca Securities LLC, member FINRA/SIPC. Margin trading is subject to Alpaca Securities' margin agreement and requirements.
+                <strong>Lux Assets Management LLC</strong> provides access to brokerage services through Alpaca Securities LLC, member FINRA/SIPC. Margin trading is subject to Alpaca Securities' margin agreement and requirements.
               </p>
               <p className="text-sm text-muted-1">
-                © {new Date().getFullYear()} Lux Exchange LLC. All rights reserved.
+                © {new Date().getFullYear()} Lux Assets Management LLC. All rights reserved.
               </p>
             </section>
           </div>

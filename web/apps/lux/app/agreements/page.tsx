@@ -26,7 +26,7 @@ export default function AgreementsPage() {
                 <div className="glass-effect rounded-lg p-6">
                   <h3 className="text-xl font-semibold text-white mb-2">Brokerage Account Agreement</h3>
                   <p className="text-muted-1 mb-4">
-                    The customer agreement that governs your brokerage account with Alpaca Securities LLC, provided through Lux Exchange LLC.
+                    The customer agreement that governs your brokerage account with Alpaca Securities LLC, provided through Lux Assets Management LLC.
                   </p>
                   <Link href="#" className="text-primary hover:underline font-semibold">
                     View Document →
@@ -155,23 +155,23 @@ export default function AgreementsPage() {
             <section>
               <h2 className="text-2xl font-bold mb-4">Contact Information</h2>
               <div className="glass-effect rounded-lg p-6">
-                <p className="text-white mb-2"><strong>Lux Exchange LLC</strong></p>
+                <p className="text-white mb-2"><strong>Lux Assets Management LLC</strong></p>
                 <p className="text-muted-1">
                   The Trump Building<br />
                   40 Wall Street, Suite 2702<br />
                   New York, NY 10005
                 </p>
-                <p className="text-muted-1 mt-3">Email: support@luxprotrader.com</p>
+                <p className="text-muted-1 mt-3">Email: support@lux.exchange</p>
                 <p className="text-muted-1">Phone: +1 (973) 224-7098</p>
               </div>
             </section>
 
             <section className="border-t pt-8">
               <p className="text-sm text-muted-1">
-                Services provided by <strong>Lux Exchange LLC</strong> through Alpaca Securities LLC (member FINRA/SIPC) and Alpaca Crypto LLC (NMLS # 2160858).
+                Services provided by <strong>Lux Assets Management LLC</strong> through Alpaca Securities LLC (member FINRA/SIPC) and Alpaca Crypto LLC (NMLS # 2160858).
               </p>
               <p className="text-sm text-muted-1 mt-2">
-                © {new Date().getFullYear()} Lux Exchange LLC. All rights reserved.
+                © {new Date().getFullYear()} Lux Assets Management LLC. All rights reserved.
               </p>
             </section>
           </div>

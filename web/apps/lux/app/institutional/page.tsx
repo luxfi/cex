@@ -131,7 +131,7 @@ export default function InstitutionalPage() {
               <div>
                 <p className="text-white font-semibold">Institutional Sales</p>
                 <p className="text-muted-1">Phone: +1 (973) 224-7098</p>
-                <p className="text-muted-1">Email: <a href="mailto:institutional@luxats.com" className="text-success hover:underline">institutional@luxats.com</a></p>
+                <p className="text-muted-1">Email: <a href="mailto:institutional@lux.exchange" className="text-success hover:underline">institutional@lux.exchange</a></p>
               </div>
               <button className="px-8 py-3 bg-success hover:bg-white text-white font-semibold rounded-lg transition-colors">
                 Request a Demo

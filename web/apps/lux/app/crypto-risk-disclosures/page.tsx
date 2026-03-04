@@ -82,9 +82,9 @@ export default function CryptoRiskDisclosuresPage() {
           <section className="border-t pt-8 mt-12">
             <div className="space-y-3 text-sm text-muted-foreground">
               <p>
-                <strong>Lux Exchange LLC</strong> provides access to cryptocurrency services through Alpaca Crypto LLC (NMLS # 2160858).
+                <strong>Lux Assets Management LLC</strong> provides access to cryptocurrency services through Alpaca Crypto LLC (NMLS # 2160858).
               </p>
-              <p className="mt-2">© {new Date().getFullYear()} Lux Exchange LLC. All rights reserved.</p>
+              <p className="mt-2">© {new Date().getFullYear()} Lux Assets Management LLC. All rights reserved.</p>
             </div>
           </section>
 

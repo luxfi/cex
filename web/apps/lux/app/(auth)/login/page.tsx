@@ -4,6 +4,7 @@ import { useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { getLoginUrl, isAuthenticated } from '../../../lib/auth'
+import { BRAND_SHORT, IAM_LABEL } from '../../../lib/branding'
 
 function LoginRedirect() {
   const searchParams = useSearchParams()
@@ -23,9 +24,9 @@ function LoginRedirect() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-primary px-4">
       <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4 text-zinc-100">LUX</h1>
+        <h1 className="text-4xl font-bold mb-4 text-zinc-100">{BRAND_SHORT.toUpperCase()}</h1>
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-        <p className="text-muted-1 mb-6">Redirecting to Lux ID...</p>
+        <p className="text-muted-1 mb-6">Redirecting to {IAM_LABEL}...</p>
         <p className="text-sm text-muted-2">
           Not redirected?{' '}
           <a href={getLoginUrl()} className="text-zinc-300 hover:text-white font-semibold">

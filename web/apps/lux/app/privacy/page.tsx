@@ -23,7 +23,7 @@ export default function PrivacyPolicy() {
           <div className="prose prose-invert max-w-none space-y-8">
             <section>
               <p className="text-muted-1 leading-relaxed">
-                Lux Exchange LLC and its service providers, including AlpacaDB, Inc. and its subsidiaries and affiliates (collectively, "Alpaca", "us" or "we") understand that your privacy is important and we are committed to respecting your privacy and protecting your personal data, which is any information that is capable of identifying you as an individual person. This Privacy Policy describes how we handle and protect your personal data in connection with our business activities, like user accounts, brokerage accounts, digital asset accounts, and client services, and on websites, applications, and communications that post a link to this Privacy Policy (collectively, "the Sites"), in our capacity as data controllers.
+                Lux Assets Management LLC and its service providers, including AlpacaDB, Inc. and its subsidiaries and affiliates (collectively, "Alpaca", "us" or "we") understand that your privacy is important and we are committed to respecting your privacy and protecting your personal data, which is any information that is capable of identifying you as an individual person. This Privacy Policy describes how we handle and protect your personal data in connection with our business activities, like user accounts, brokerage accounts, digital asset accounts, and client services, and on websites, applications, and communications that post a link to this Privacy Policy (collectively, "the Sites"), in our capacity as data controllers.
               </p>
             </section>
 
@@ -141,7 +141,7 @@ export default function PrivacyPolicy() {
                 Where granted by applicable law, you may have the right to request access to the personal data that we have collected about you to review, modify, or requesting deletion of the data. You may also have the right to request a copy of the personal data that we have collected about you and to have any inaccuracies in that data corrected. In certain circumstances, you may also request that we cease processing your personal data. If this is requested, we may not be able to provide the services as described.
               </p>
               <p className="text-muted-1 leading-relaxed mb-4">
-                If you would like to make a request to access, review, or correct the personal data we have collected about you, or to discuss how we process your personal data, please contact us at privacy@luxprotrader.com. To help protect your privacy and security, we will take reasonable steps to verify your identity, such as requiring a password and user ID, before granting access to your personal data.
+                If you would like to make a request to access, review, or correct the personal data we have collected about you, or to discuss how we process your personal data, please contact us at privacy@lux.exchange. To help protect your privacy and security, we will take reasonable steps to verify your identity, such as requiring a password and user ID, before granting access to your personal data.
               </p>
               <p className="text-muted-1 leading-relaxed">
                 In addition, and where granted by local law, you have the legal right to lodge a complaint with a competent data protection authority in your respective region.
@@ -171,24 +171,24 @@ export default function PrivacyPolicy() {
                 If you have any questions about our Privacy Policy, please contact us at:
               </p>
               <div className="glass-effect rounded-lg p-6">
-                <p className="text-white mb-2"><strong>Lux Exchange LLC</strong></p>
+                <p className="text-white mb-2"><strong>Lux Assets Management LLC</strong></p>
                 <p className="text-muted-1">
                   Privacy Department<br />
                   The Trump Building<br />
                   40 Wall Street, Suite 2702<br />
                   New York, NY 10005
                 </p>
-                <p className="text-muted-1 mt-3">Email: privacy@luxprotrader.com</p>
+                <p className="text-muted-1 mt-3">Email: privacy@lux.exchange</p>
                 <p className="text-muted-1">Phone: +1 (973) 224-7098</p>
               </div>
             </section>
 
             <section className="border-t pt-8">
               <p className="text-sm text-muted-1">
-                Services provided by <strong>Lux Exchange LLC</strong> through Alpaca Securities LLC (member FINRA/SIPC) and Alpaca Crypto LLC (NMLS # 2160858).
+                Services provided by <strong>Lux Assets Management LLC</strong> through Alpaca Securities LLC (member FINRA/SIPC) and Alpaca Crypto LLC (NMLS # 2160858).
               </p>
               <p className="text-sm text-muted-1 mt-2">
-                © {new Date().getFullYear()} Lux Exchange LLC. All rights reserved.
+                © {new Date().getFullYear()} Lux Assets Management LLC. All rights reserved.
               </p>
             </section>
           </div>

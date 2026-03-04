@@ -2,7 +2,8 @@
 
 import { useEffect, useState, useRef } from 'react'
 
-const CEX_API = process.env.NEXT_PUBLIC_CEX_API_URL || 'http://localhost:8091'
+import { CEX_API_URL } from '../lib/branding'
+const CEX_API = CEX_API_URL
 
 interface Market {
   symbol: string

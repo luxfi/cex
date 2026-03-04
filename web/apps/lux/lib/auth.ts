@@ -5,8 +5,9 @@
  * Access token stored in sessionStorage (not localStorage).
  */
 
-const IAM_BASE = process.env.NEXT_PUBLIC_IAM_URL || 'https://lux.id'
-const CLIENT_ID = process.env.NEXT_PUBLIC_IAM_CLIENT_ID || 'lux-ats'
+import { IAM_URL, IAM_CLIENT_ID } from './branding'
+const IAM_BASE = IAM_URL
+const CLIENT_ID = IAM_CLIENT_ID
 const REDIRECT_URI =
   typeof window !== 'undefined'
     ? `${window.location.origin}/auth/callback`

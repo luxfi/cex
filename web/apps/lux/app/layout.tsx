@@ -7,7 +7,7 @@ import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const brandName = process.env.NEXT_PUBLIC_BRAND_NAME || 'Lux Exchange'
+const brandName = process.env.NEXT_PUBLIC_BRAND_NAME || 'Lux ATS'
 
 export const metadata: Metadata = {
   title: brandName,
