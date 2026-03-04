@@ -117,9 +117,9 @@ export function TickerTape() {
     const up = p.change >= 0
     return (
       <div key={m.symbol} className="flex items-center gap-2 px-4 whitespace-nowrap">
-        <span className="text-[#d1d4dc] text-xs font-medium">{m.base_currency}</span>
-        <span className="text-[#d1d4dc] text-xs font-mono">{formatPrice(p.price)}</span>
-        <span className={`text-[10px] font-mono ${up ? 'text-[#26a69a]' : 'text-[#ef5350]'}`}>
+        <span className="text-white/70 text-xs font-medium">{m.base_currency}</span>
+        <span className="text-white/50 text-xs font-mono">{formatPrice(p.price)}</span>
+        <span className={`text-[10px] font-mono ${up ? 'text-white/60' : 'text-white/30'}`}>
           {up ? '+' : ''}{p.change.toFixed(2)}%
         </span>
       </div>
@@ -127,9 +127,8 @@ export function TickerTape() {
   })
 
   return (
-    <div className="h-8 overflow-hidden" style={{ background: '#1e222d', borderBottom: '1px solid #2a2e39' }}>
+    <div className="h-8 overflow-hidden bg-black border-b border-white/[0.06]">
       <div ref={scrollRef} className="flex items-center h-full overflow-hidden" style={{ scrollbarWidth: 'none' }}>
-        {/* Duplicate for seamless scroll */}
         <div className="flex items-center shrink-0">{items}</div>
         <div className="flex items-center shrink-0">{items}</div>
       </div>

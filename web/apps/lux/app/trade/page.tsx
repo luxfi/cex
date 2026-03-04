@@ -6,7 +6,8 @@ import dynamic from 'next/dynamic'
 
 const NativeChart = dynamic(() => import('../../components/NativeChart'), { ssr: false })
 
-const CEX_API = process.env.NEXT_PUBLIC_CEX_API_URL || 'http://localhost:8091'
+import { CEX_API_URL } from '../../lib/branding'
+const CEX_API = CEX_API_URL
 
 function getSandboxAccountId(): string {
   let id = localStorage.getItem('lux_ats_account_id')
@@ -155,6 +156,7 @@ export default function TradePage() {
       support_host: 'https://www.tradingview.com',
       studies: ['STD;SMA', 'STD;EMA', 'STD;RSI', 'STD;Volume'],
       container_id: 'tradingview_chart',
+      backgroundColor: 'rgba(0, 0, 0, 1)',
     })
     chartRef.current.appendChild(script)
   }, [currentSymbol, isNative, currentMarket])
@@ -197,66 +199,68 @@ export default function TradePage() {
   const hasBook = orderBook && ((orderBook.bids?.length ?? 0) > 0 || (orderBook.asks?.length ?? 0) > 0)
   const openOrders = orders.filter(o => o.status === 'open' || o.status === 'new')
 
+  // border shorthand
+  const bdr = 'border-white/[0.06]'
+
   return (
-    <div className="absolute inset-0 top-[7rem] flex flex-col" style={{ background: '#131722' }}>
+    <div className="absolute inset-0 top-[6rem] flex flex-col bg-black">
       {/* Market Selector Bar */}
-      <div className="flex items-center px-2 py-1 gap-1" style={{ background: '#1e222d', borderBottom: '1px solid #2a2e39' }}>
+      <div className={`flex items-center px-2 py-1 gap-1 bg-black border-b ${bdr}`}>
         <button
           onClick={() => setShowMarketList(!showMarketList)}
           className="flex items-center gap-1.5 px-2.5 py-1 rounded hover:bg-white/5 transition-colors"
         >
-          <span className="text-[#d1d4dc] font-semibold text-sm">{label}</span>
-          <span className="text-[#787b86] text-[10px]">{currentMarket?.asset_class?.replace(/_/g, ' ')}</span>
-          <ChevronDown size={12} className={`text-[#787b86] transition-transform ${showMarketList ? 'rotate-180' : ''}`} />
+          <span className="text-white font-semibold text-sm">{label}</span>
+          <span className="text-white/30 text-[10px]">{currentMarket?.asset_class?.replace(/_/g, ' ')}</span>
+          <ChevronDown size={12} className={`text-white/30 transition-transform ${showMarketList ? 'rotate-180' : ''}`} />
         </button>
 
-        <div className="w-px h-4 mx-1" style={{ background: '#2a2e39' }} />
+        <div className="w-px h-4 mx-1 bg-white/[0.06]" />
 
         {CATEGORIES.map((c) => (
           <button
             key={c.key}
             onClick={() => { setCategory(c.key); setShowMarketList(true) }}
             className={`px-2 py-0.5 rounded text-xs transition-colors ${
-              category === c.key && showMarketList ? 'text-[#d1d4dc] bg-white/10' : 'text-[#787b86] hover:text-[#d1d4dc]'
+              category === c.key && showMarketList ? 'text-white bg-white/10' : 'text-white/30 hover:text-white/60'
             }`}
           >
             {c.label}
           </button>
         ))}
 
-        <div className="ml-auto flex items-center gap-1.5 text-[10px] text-[#2962FF]">
-          <div className="w-1.5 h-1.5 rounded-full bg-[#2962FF]" />
+        <div className="ml-auto flex items-center gap-1.5 text-[10px] text-white/30">
+          <div className="w-1.5 h-1.5 rounded-full bg-white/30" />
           Sandbox
         </div>
       </div>
 
       {/* Market List Dropdown */}
       {showMarketList && (
-        <div className="absolute top-[calc(7rem+2.25rem)] left-0 right-0 z-50 max-h-80 overflow-hidden flex flex-col" style={{ background: '#1e222d', borderBottom: '1px solid #2a2e39' }}>
-          <div className="px-3 py-2 flex items-center gap-2" style={{ borderBottom: '1px solid #2a2e39' }}>
-            <Search size={13} className="text-[#787b86]" />
+        <div className={`absolute top-[calc(6rem+2.25rem)] left-0 right-0 z-50 max-h-80 overflow-hidden flex flex-col bg-black border-b ${bdr}`}>
+          <div className={`px-3 py-2 flex items-center gap-2 border-b ${bdr}`}>
+            <Search size={13} className="text-white/30" />
             <input
               autoFocus type="text" value={search} onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search markets..." className="flex-1 bg-transparent text-[#d1d4dc] text-xs outline-none placeholder:text-[#787b86]/50"
+              placeholder="Search markets..." className="flex-1 bg-transparent text-white text-xs outline-none placeholder:text-white/20"
             />
-            <button onClick={() => setShowMarketList(false)} className="text-[#787b86] hover:text-[#d1d4dc]"><X size={13} /></button>
+            <button onClick={() => setShowMarketList(false)} className="text-white/30 hover:text-white/60"><X size={13} /></button>
           </div>
           <div className="overflow-y-auto flex-1">
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
               {filteredMarkets.map((m) => (
                 <button
                   key={m.symbol} onClick={() => selectMarket(m.symbol)}
-                  className={`px-3 py-2 text-left transition-colors border-b border-r ${
+                  className={`px-3 py-2 text-left transition-colors border-b border-r ${bdr} ${
                     m.symbol === currentSymbol ? 'bg-white/5' : 'hover:bg-white/[0.03]'
                   }`}
-                  style={{ borderColor: '#2a2e39' }}
                 >
-                  <div className="text-[#d1d4dc] text-xs font-medium">{m.base_currency}/{m.quote_currency}</div>
-                  <div className="text-[#787b86] text-[9px]">{m.asset_class.replace(/_/g, ' ')}</div>
+                  <div className="text-white text-xs font-medium">{m.base_currency}/{m.quote_currency}</div>
+                  <div className="text-white/20 text-[9px]">{m.asset_class.replace(/_/g, ' ')}</div>
                 </button>
               ))}
             </div>
-            {filteredMarkets.length === 0 && <div className="text-center py-6 text-[#787b86] text-xs">No markets found</div>}
+            {filteredMarkets.length === 0 && <div className="text-center py-6 text-white/30 text-xs">No markets found</div>}
           </div>
         </div>
       )}
@@ -264,7 +268,7 @@ export default function TradePage() {
       {/* Main content: chart + right panel */}
       <div className="flex flex-1 overflow-hidden">
         {/* Chart area */}
-        <div className="flex-1 relative">
+        <div className="flex-1 relative bg-black">
           {isNative ? (
             <NativeChart symbol={currentSymbol} cexApiUrl={CEX_API} />
           ) : (
@@ -275,21 +279,21 @@ export default function TradePage() {
         </div>
 
         {/* Right Panel: Order Book + Trade Entry */}
-        <div className="w-[280px] flex flex-col overflow-hidden" style={{ background: '#1e222d', borderLeft: '1px solid #2a2e39' }}>
+        <div className={`w-[280px] flex flex-col overflow-hidden bg-black border-l ${bdr}`}>
 
           {/* Order Book */}
           <div className="flex-1 overflow-hidden flex flex-col">
-            <div className="flex items-center justify-between px-3 py-2" style={{ borderBottom: '1px solid #2a2e39' }}>
-              <span className="text-[#787b86] text-[11px] font-medium">Order Book</span>
+            <div className={`flex items-center justify-between px-3 py-2 border-b ${bdr}`}>
+              <span className="text-white/40 text-[11px] font-medium">Order Book</span>
               {openOrders.length > 0 && (
-                <button onClick={() => setShowOrders(!showOrders)} className="text-[10px] text-[#2962FF] hover:underline">
+                <button onClick={() => setShowOrders(!showOrders)} className="text-[10px] text-white/50 hover:text-white/80 hover:underline">
                   {openOrders.length} open
                 </button>
               )}
             </div>
 
             {/* Column headers */}
-            <div className="grid grid-cols-3 px-3 py-1 text-[10px] text-[#787b86]" style={{ borderBottom: '1px solid #2a2e39' }}>
+            <div className={`grid grid-cols-3 px-3 py-1 text-[10px] text-white/30 border-b ${bdr}`}>
               <div>Price(USD)</div>
               <div className="text-right">Size</div>
               <div className="text-right">Total</div>
@@ -297,9 +301,9 @@ export default function TradePage() {
 
             <div className="flex-1 overflow-y-auto">
               {!hasBook ? (
-                <div className="flex flex-col items-center justify-center h-full text-[#787b86] text-[11px] gap-1">
+                <div className="flex flex-col items-center justify-center h-full text-white/30 text-[11px] gap-1">
                   <span>No orders</span>
-                  <span className="text-[10px] text-[#787b86]/60">Place limit orders to build depth</span>
+                  <span className="text-[10px] text-white/15">Place limit orders to build depth</span>
                 </div>
               ) : (
                 <div className="flex flex-col h-full">
@@ -310,10 +314,10 @@ export default function TradePage() {
                       const pct = (l.qty / maxQty) * 100
                       return (
                         <div key={i} className="grid grid-cols-3 px-3 py-[2px] text-[11px] relative">
-                          <div className="absolute inset-0 right-0" style={{ background: `rgba(239, 83, 80, 0.08)`, width: `${pct}%`, marginLeft: 'auto' }} />
-                          <div className="text-[#ef5350] relative z-10 font-mono">{fmtPrice(l.price)}</div>
-                          <div className="text-right text-[#d1d4dc] relative z-10 font-mono">{fmtQty(l.qty)}</div>
-                          <div className="text-right text-[#787b86] relative z-10 font-mono">{l.order_count}</div>
+                          <div className="absolute inset-0 right-0" style={{ background: 'rgba(255,255,255,0.03)', width: `${pct}%`, marginLeft: 'auto' }} />
+                          <div className="text-white/40 relative z-10 font-mono">{fmtPrice(l.price)}</div>
+                          <div className="text-right text-white/60 relative z-10 font-mono">{fmtQty(l.qty)}</div>
+                          <div className="text-right text-white/20 relative z-10 font-mono">{l.order_count}</div>
                         </div>
                       )
                     })}
@@ -321,9 +325,9 @@ export default function TradePage() {
 
                   {/* Spread */}
                   {(orderBook?.asks?.length ?? 0) > 0 && (orderBook?.bids?.length ?? 0) > 0 && (
-                    <div className="px-3 py-1.5 text-center" style={{ borderTop: '1px solid #2a2e39', borderBottom: '1px solid #2a2e39' }}>
-                      <span className="text-[#d1d4dc] text-[12px] font-mono font-semibold">${fmtPrice(orderBook!.asks![0].price)}</span>
-                      <span className="text-[#787b86] text-[10px] ml-2">Spread: ${fmtPrice(orderBook!.asks![0].price - orderBook!.bids![0].price)}</span>
+                    <div className={`px-3 py-1.5 text-center border-y ${bdr}`}>
+                      <span className="text-white text-[12px] font-mono font-semibold">${fmtPrice(orderBook!.asks![0].price)}</span>
+                      <span className="text-white/30 text-[10px] ml-2">Spread: ${fmtPrice(orderBook!.asks![0].price - orderBook!.bids![0].price)}</span>
                     </div>
                   )}
 
@@ -334,10 +338,10 @@ export default function TradePage() {
                       const pct = (l.qty / maxQty) * 100
                       return (
                         <div key={i} className="grid grid-cols-3 px-3 py-[2px] text-[11px] relative">
-                          <div className="absolute inset-0 right-0" style={{ background: `rgba(38, 166, 154, 0.08)`, width: `${pct}%`, marginLeft: 'auto' }} />
-                          <div className="text-[#26a69a] relative z-10 font-mono">{fmtPrice(l.price)}</div>
-                          <div className="text-right text-[#d1d4dc] relative z-10 font-mono">{fmtQty(l.qty)}</div>
-                          <div className="text-right text-[#787b86] relative z-10 font-mono">{l.order_count}</div>
+                          <div className="absolute inset-0 right-0" style={{ background: 'rgba(255,255,255,0.04)', width: `${pct}%`, marginLeft: 'auto' }} />
+                          <div className="text-white/60 relative z-10 font-mono">{fmtPrice(l.price)}</div>
+                          <div className="text-right text-white/60 relative z-10 font-mono">{fmtQty(l.qty)}</div>
+                          <div className="text-right text-white/20 relative z-10 font-mono">{l.order_count}</div>
                         </div>
                       )
                     })}
@@ -349,16 +353,16 @@ export default function TradePage() {
 
           {/* Open Orders (collapsible) */}
           {showOrders && openOrders.length > 0 && (
-            <div className="max-h-32 overflow-y-auto" style={{ borderTop: '1px solid #2a2e39' }}>
+            <div className={`max-h-32 overflow-y-auto border-t ${bdr}`}>
               {openOrders.map((o) => (
-                <div key={o.id} className="flex items-center justify-between px-3 py-1.5 text-[10px]" style={{ borderBottom: '1px solid #2a2e39' }}>
+                <div key={o.id} className={`flex items-center justify-between px-3 py-1.5 text-[10px] border-b ${bdr}`}>
                   <div className="flex items-center gap-1.5">
-                    <span className={o.side === 'buy' ? 'text-[#26a69a]' : 'text-[#ef5350]'}>{o.side.toUpperCase()}</span>
-                    <span className="text-[#d1d4dc]">{o.qty}</span>
-                    <span className="text-[#787b86]">@</span>
-                    <span className="text-[#d1d4dc]">${o.limit_price || 'MKT'}</span>
+                    <span className={o.side === 'buy' ? 'text-white/70' : 'text-white/40'}>{o.side.toUpperCase()}</span>
+                    <span className="text-white/60">{o.qty}</span>
+                    <span className="text-white/20">@</span>
+                    <span className="text-white/60">${o.limit_price || 'MKT'}</span>
                   </div>
-                  <button onClick={() => handleCancelOrder(o.id)} className="text-[#787b86] hover:text-[#ef5350]">
+                  <button onClick={() => handleCancelOrder(o.id)} className="text-white/20 hover:text-white/60">
                     <X size={10} />
                   </button>
                 </div>
@@ -367,13 +371,13 @@ export default function TradePage() {
           )}
 
           {/* Trade Entry — compact, always visible at bottom */}
-          <div className="px-3 py-2.5 space-y-2" style={{ borderTop: '1px solid #2a2e39' }}>
+          <div className={`px-3 py-2.5 space-y-2 border-t ${bdr}`}>
             {/* Type toggle */}
-            <div className="flex rounded overflow-hidden" style={{ border: '1px solid #363a45' }}>
+            <div className="flex rounded overflow-hidden border border-white/[0.08]">
               {(['limit', 'market'] as const).map((t) => (
                 <button key={t} onClick={() => setOrderType(t)}
                   className={`flex-1 py-1 text-[11px] font-medium transition-colors ${
-                    orderType === t ? 'bg-white/10 text-[#d1d4dc]' : 'text-[#787b86] hover:text-[#d1d4dc]'
+                    orderType === t ? 'bg-white/10 text-white' : 'text-white/30 hover:text-white/60'
                   }`}
                 >{t.charAt(0).toUpperCase() + t.slice(1)}</button>
               ))}
@@ -382,32 +386,29 @@ export default function TradePage() {
             {/* Price input (limit only) */}
             {orderType === 'limit' && (
               <div>
-                <label className="text-[10px] text-[#787b86] mb-1 block">Price</label>
+                <label className="text-[10px] text-white/30 mb-1 block">Price</label>
                 <input type="number" value={limitPrice} onChange={(e) => setLimitPrice(e.target.value)}
-                  className="w-full px-2.5 py-1.5 rounded text-xs text-[#d1d4dc] font-mono outline-none"
-                  style={{ background: '#131722', border: '1px solid #363a45' }}
+                  className="w-full px-2.5 py-1.5 rounded text-xs text-white font-mono outline-none bg-white/[0.03] border border-white/[0.08] focus:border-white/20"
                   placeholder="0.00" step="0.01" />
               </div>
             )}
 
             {/* Quantity */}
             <div>
-              <label className="text-[10px] text-[#787b86] mb-1 block">Amount</label>
+              <label className="text-[10px] text-white/30 mb-1 block">Amount</label>
               <input type="number" value={qty} onChange={(e) => setQty(e.target.value)}
-                className="w-full px-2.5 py-1.5 rounded text-xs text-[#d1d4dc] font-mono outline-none"
-                style={{ background: '#131722', border: '1px solid #363a45' }}
+                className="w-full px-2.5 py-1.5 rounded text-xs text-white font-mono outline-none bg-white/[0.03] border border-white/[0.08] focus:border-white/20"
                 placeholder="0" min="0" step="0.01" />
             </div>
 
-            {error && <div className="text-[#ef5350] text-[10px] bg-[#ef5350]/10 rounded px-2 py-1">{error}</div>}
+            {error && <div className="text-white/60 text-[10px] bg-white/5 rounded px-2 py-1">{error}</div>}
 
             {/* Buy / Sell buttons */}
             <div className="grid grid-cols-2 gap-2">
               <button
                 onClick={() => handlePlaceOrder('buy')}
                 disabled={submitting || !qty || (orderType === 'limit' && !limitPrice)}
-                className="py-2 rounded text-xs font-semibold text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-1"
-                style={{ background: '#26a69a' }}
+                className="py-2 rounded text-xs font-semibold text-black bg-white hover:bg-white/90 transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center gap-1"
               >
                 {submitting && orderSide === 'buy' && <Loader2 size={12} className="animate-spin" />}
                 Buy
@@ -415,8 +416,7 @@ export default function TradePage() {
               <button
                 onClick={() => handlePlaceOrder('sell')}
                 disabled={submitting || !qty || (orderType === 'limit' && !limitPrice)}
-                className="py-2 rounded text-xs font-semibold text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-1"
-                style={{ background: '#ef5350' }}
+                className="py-2 rounded text-xs font-semibold text-white bg-white/10 hover:bg-white/15 transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center gap-1 border border-white/[0.08]"
               >
                 {submitting && orderSide === 'sell' && <Loader2 size={12} className="animate-spin" />}
                 Sell

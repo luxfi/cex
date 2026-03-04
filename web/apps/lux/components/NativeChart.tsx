@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react'
+import { CHART_WATERMARK } from '../lib/branding'
 import {
   createChart,
   CandlestickSeries,
@@ -266,7 +267,7 @@ export default function NativeChart({ symbol, cexApiUrl }: NativeChartProps) {
             className={`px-2 py-0.5 rounded text-xs transition-colors ${
               interval === iv.key
                 ? 'text-white bg-white/10'
-                : 'text-[#787b86] hover:text-[#d1d4dc]'
+                : 'text-[rgba(255,255,255,0.3)] hover:text-[rgba(255,255,255,0.7)]'
             }`}
           >
             {iv.label}
@@ -276,7 +277,7 @@ export default function NativeChart({ symbol, cexApiUrl }: NativeChartProps) {
         <div className="w-px h-4 mx-1" style={{ background: colors.toolbarBorder }} />
 
         {/* Chart type icon (candle) */}
-        <button className="px-1.5 py-0.5 text-[#787b86] hover:text-[#d1d4dc]" title="Candlestick">
+        <button className="px-1.5 py-0.5 text-[rgba(255,255,255,0.3)] hover:text-[rgba(255,255,255,0.7)]" title="Candlestick">
           <svg width="16" height="16" viewBox="0 0 28 28" fill="currentColor"><rect x="12" y="2" width="4" height="24" rx="1"/><rect x="4" y="8" width="4" height="14" rx="1"/><rect x="20" y="6" width="4" height="16" rx="1"/></svg>
         </button>
 
@@ -286,7 +287,7 @@ export default function NativeChart({ symbol, cexApiUrl }: NativeChartProps) {
         <button
           onClick={() => setShowIndicators(!showIndicators)}
           className={`px-2 py-0.5 rounded text-xs flex items-center gap-1 transition-colors ${
-            showIndicators ? 'text-[#d1d4dc]' : 'text-[#787b86]'
+            showIndicators ? 'text-[rgba(255,255,255,0.7)]' : 'text-[rgba(255,255,255,0.3)]'
           }`}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
@@ -295,31 +296,31 @@ export default function NativeChart({ symbol, cexApiUrl }: NativeChartProps) {
 
         {/* OHLCV display */}
         <div className="ml-auto flex items-center gap-3 text-[11px] font-mono">
-          <span className="text-[#787b86]">O</span>
-          <span className="text-[#d1d4dc]">{ohlc.o.toFixed(2)}</span>
-          <span className="text-[#787b86]">H</span>
-          <span className="text-[#d1d4dc]">{ohlc.h.toFixed(2)}</span>
-          <span className="text-[#787b86]">L</span>
-          <span className="text-[#d1d4dc]">{ohlc.l.toFixed(2)}</span>
-          <span className="text-[#787b86]">C</span>
+          <span className="text-[rgba(255,255,255,0.3)]">O</span>
+          <span className="text-[rgba(255,255,255,0.7)]">{ohlc.o.toFixed(2)}</span>
+          <span className="text-[rgba(255,255,255,0.3)]">H</span>
+          <span className="text-[rgba(255,255,255,0.7)]">{ohlc.h.toFixed(2)}</span>
+          <span className="text-[rgba(255,255,255,0.3)]">L</span>
+          <span className="text-[rgba(255,255,255,0.7)]">{ohlc.l.toFixed(2)}</span>
+          <span className="text-[rgba(255,255,255,0.3)]">C</span>
           <span style={{ color: changeColor }}>{ohlc.c.toFixed(2)}</span>
-          <span className="text-[#787b86]">Vol</span>
-          <span className="text-[#d1d4dc]">{volume}</span>
+          <span className="text-[rgba(255,255,255,0.3)]">Vol</span>
+          <span className="text-[rgba(255,255,255,0.7)]">{volume}</span>
         </div>
       </div>
 
       {/* Overlay info: ticker + SMA/EMA legend */}
       <div className="absolute top-[2.25rem] left-2 z-10 flex flex-col gap-0.5 pointer-events-none">
         <div className="flex items-center gap-2">
-          <span className="text-[#d1d4dc] text-xs font-semibold">{ticker}/USD · Lux ATS</span>
+          <span className="text-[rgba(255,255,255,0.7)] text-xs font-semibold">{ticker}/USD · {CHART_WATERMARK}</span>
           <span className="text-xs font-mono" style={{ color: changeColor }}>
             {priceChange >= 0 ? '+' : ''}{priceChange.toFixed(2)}%
           </span>
         </div>
         {showIndicators && (
           <div className="flex items-center gap-3 text-[10px]">
-            <span><span style={{ color: colors.sma }}>●</span> <span className="text-[#787b86]">SMA 9</span></span>
-            <span><span style={{ color: colors.ema }}>●</span> <span className="text-[#787b86]">EMA 9</span></span>
+            <span><span style={{ color: colors.sma }}>●</span> <span className="text-[rgba(255,255,255,0.3)]">SMA 9</span></span>
+            <span><span style={{ color: colors.ema }}>●</span> <span className="text-[rgba(255,255,255,0.3)]">EMA 9</span></span>
           </div>
         )}
       </div>

@@ -16,7 +16,7 @@ export function ConditionalLayout({ children }: { children: React.ReactNode }) {
     <>
       <BetaDisclosure />
       <Header />
-      <div className="sticky top-16 z-40 bg-primary/95 backdrop-blur-xl border-b border-white/10 shadow-lg">
+      <div className="sticky top-16 z-40">
         <TickerTape />
       </div>
       <main className={isTradingPage ? '' : 'min-h-screen'}>
