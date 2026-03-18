@@ -133,6 +133,9 @@ func (g *Gateway) MountHandlerFunc(pattern string, handlerFunc http.HandlerFunc)
 	g.router.HandleFunc(pattern, handlerFunc)
 }
 
+// Handler returns the underlying HTTP handler for embedding in other servers.
+func (g *Gateway) Handler() http.Handler { return g.router }
+
 func (g *Gateway) Start() error  { return g.server.ListenAndServe() }
 func (g *Gateway) Shutdown() error { return g.server.Close() }
 
