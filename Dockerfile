@@ -1,12 +1,25 @@
-FROM golang:1.24-alpine AS builder
+# syntax=docker/dockerfile:1
+FROM --platform=$BUILDPLATFORM golang:1.26.1-alpine AS builder
+
+RUN apk add --no-cache git ca-certificates
+
+ARG GITHUB_TOKEN
+RUN git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
+ENV GOPRIVATE=github.com/luxfi/*,github.com/hanzoai/*
+
 WORKDIR /src
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-RUN CGO_ENABLED=0 go build -o /cexd ./cmd/cexd/
+
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o /cexd ./cmd/cexd/
 
 FROM alpine:3.21
 RUN apk add --no-cache ca-certificates
 COPY --from=builder /cexd /usr/local/bin/cexd
 EXPOSE 8091
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:8091/healthz || exit 1
+
 ENTRYPOINT ["cexd"]
