@@ -24,8 +24,8 @@ func TestRegisterDefaults_RegistersMarkets(t *testing.T) {
 	eng := engine.New(noopMatch)
 	defaults := []DefaultMarket{
 		{
-			Symbol:       "USDL-USD",
-			Base:         "USDL",
+			Symbol:       "LUSD-USD",
+			Base:         "LUSD",
 			Quote:        "USD",
 			Class:        types.AssetClassCrypto,
 			Tick:         "0.0001",
@@ -55,9 +55,9 @@ func TestRegisterDefaults_RegistersMarkets(t *testing.T) {
 	}
 
 	// Verify markets exist with correct fields.
-	m, ok := eng.GetMarket("USDL-USD")
+	m, ok := eng.GetMarket("LUSD-USD")
 	if !ok {
-		t.Fatal("USDL-USD not found")
+		t.Fatal("LUSD-USD not found")
 	}
 	if m.AssetClass != types.AssetClassCrypto {
 		t.Errorf("expected crypto, got %s", m.AssetClass)
