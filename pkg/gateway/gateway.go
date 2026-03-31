@@ -61,7 +61,7 @@ func New(eng *engine.Engine, comp *compliance.Service, rep *reporting.Service, s
 		writeJSON(w, 200, map[string]string{"status": "ok", "service": "lux-cex"})
 	})
 
-	r.Route("/api/v1", func(r chi.Router) {
+	r.Route("/v1", func(r chi.Router) {
 		// JWT auth — enabled when CEX_JWT_SECRET is set, otherwise dev mode (open)
 		if secret := os.Getenv("CEX_JWT_SECRET"); secret != "" {
 			issuer := os.Getenv("CEX_JWT_ISSUER")
