@@ -162,6 +162,13 @@ type Market struct {
 	RequiresKYC    bool       `json:"requires_kyc"`
 	RequiresAccred bool       `json:"requires_accreditation"` // per offering type
 
+	// Extended hours / overnight trading fields (from broker asset data)
+	OvernightTradable   bool   `json:"overnight_tradable,omitempty"`
+	OvernightHalted     bool   `json:"overnight_halted,omitempty"`
+	FractionalEHEnabled bool   `json:"fractional_eh_enabled,omitempty"`
+	PriceIncrement      string `json:"price_increment,omitempty"`
+	MinTradeIncrement   string `json:"min_trade_increment,omitempty"`
+
 	// Offering / Issuer metadata — populated for exempt securities
 	OfferingType string `json:"offering_type,omitempty"` // reg_cf, reg_d_506c, reg_a, reg_s, public
 	IssuerID     string `json:"issuer_id,omitempty"`
