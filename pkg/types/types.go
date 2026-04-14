@@ -188,6 +188,9 @@ type Market struct {
 	LockupPeriod      string  `json:"lockup_period,omitempty"`      // e.g. "180d", "1y"
 	AccreditedOnly    bool    `json:"accredited_only,omitempty"`    // requires accredited/professional investor
 	InstitutionalOnly bool    `json:"institutional_only,omitempty"` // institutions only (QIB, etc.)
+
+	// Admin listing control — set via admin endpoints, persisted in trading_controls
+	ListingStatus string `json:"listing_status,omitempty"` // listed (default), delisted, hidden
 }
 
 
