@@ -1,11 +1,40 @@
+# VCS / CI
 .git
-*.md
-LICENSE
+.github/
+
+# Editor / IDE
+.claude/
 .vscode/
 .idea/
-.env*
+
+# Build artifacts
+bin/
+cexd
+
+# Not needed for Go build
+deploy/
+docs/
+k8s/
+proto/
+web/
+
+# Test / coverage
 testdata/
 *_test.go
 coverage/
+
+# Vendored deps (go mod download in Dockerfile)
 vendor/
-docs/
+
+# Go workspace (multi-module dev only)
+go.work
+go.work.sum
+
+# Config / secrets
+.env*
+compose.yml
+Makefile
+
+# Docs
+*.md
+LICENSE
