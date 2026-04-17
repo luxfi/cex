@@ -175,19 +175,28 @@ type Market struct {
 	IssuerName   string `json:"issuer_name,omitempty"`
 
 	// Structured product metadata — credit, real estate, private offerings
-	ProductType       string  `json:"product_type,omitempty"`       // abs, mbs, cdo, clo, reit, cdp, pe_fund, vc_fund
-	CreditRating      string  `json:"credit_rating,omitempty"`      // AAA, AA, A, BBB, BB, B, CCC, NR
-	CollateralType    string  `json:"collateral_type,omitempty"`    // residential, commercial, auto, student, mixed
-	MaturityDate      string  `json:"maturity_date,omitempty"`      // ISO 8601 date
-	CouponRate        string  `json:"coupon_rate,omitempty"`        // annual rate as decimal
-	YieldToMaturity   string  `json:"yield_to_maturity,omitempty"`  // current YTM
-	Leverage          string  `json:"leverage,omitempty"`           // max leverage for the product
-	CollateralRatio   string  `json:"collateral_ratio,omitempty"`   // min collateral ratio (e.g. "1.50" = 150%)
-	LiquidationRatio  string  `json:"liquidation_ratio,omitempty"`  // ratio below which liquidation triggers
-	MinInvestment     string  `json:"min_investment,omitempty"`     // minimum investment amount
-	LockupPeriod      string  `json:"lockup_period,omitempty"`      // e.g. "180d", "1y"
-	AccreditedOnly    bool    `json:"accredited_only,omitempty"`    // requires accredited/professional investor
-	InstitutionalOnly bool    `json:"institutional_only,omitempty"` // institutions only (QIB, etc.)
+	ProductType       string `json:"product_type,omitempty"`       // abs, mbs, cdo, clo, reit, cdp, pe_fund, vc_fund
+	CreditRating      string `json:"credit_rating,omitempty"`      // AAA, AA, A, BBB, BB, B, CCC, NR
+	CollateralType    string `json:"collateral_type,omitempty"`    // residential, commercial, auto, student, mixed
+	MaturityDate      string `json:"maturity_date,omitempty"`      // ISO 8601 date
+	CouponRate        string `json:"coupon_rate,omitempty"`        // annual rate as decimal
+	YieldToMaturity   string `json:"yield_to_maturity,omitempty"`  // current YTM
+	Leverage          string `json:"leverage,omitempty"`           // max leverage for the product
+	CollateralRatio   string `json:"collateral_ratio,omitempty"`   // min collateral ratio (e.g. "1.50" = 150%)
+	LiquidationRatio  string `json:"liquidation_ratio,omitempty"`  // ratio below which liquidation triggers
+	MinInvestment     string `json:"min_investment,omitempty"`     // minimum investment amount
+	LockupPeriod      string `json:"lockup_period,omitempty"`      // e.g. "180d", "1y"
+	AccreditedOnly    bool   `json:"accredited_only,omitempty"`    // requires accredited/professional investor
+	InstitutionalOnly bool   `json:"institutional_only,omitempty"` // institutions only (QIB, etc.)
+
+	// Fixed income identifiers and metadata (from broker FI endpoints)
+	CUSIP           string `json:"cusip,omitempty"`
+	ISIN            string `json:"isin,omitempty"`
+	Ticker          string `json:"ticker,omitempty"`           // corporate bond ticker (e.g. "AFL")
+	Subtype         string `json:"subtype,omitempty"`          // bill, note, bond, senior, subordinated
+	CouponType      string `json:"coupon_type,omitempty"`      // fixed, floating, zero
+	CouponFrequency string `json:"coupon_frequency,omitempty"` // semi_annual, quarterly, zero
+	IssueDate       string `json:"issue_date,omitempty"`       // ISO 8601 date
 
 	// Admin listing control — set via admin endpoints, persisted in trading_controls
 	ListingStatus string `json:"listing_status,omitempty"` // listed (default), delisted, hidden
