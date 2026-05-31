@@ -224,11 +224,21 @@ func toBookOrder(o *types.Order) (*lx.Order, error) {
 }
 
 func fromBookTrade(bt lx.Trade, order *types.Order) *types.Trade {
-	return &types.Trade{
+	t := &types.Trade{
 		Symbol: order.Symbol,
 		Side:   order.Side,
 		Price:  strconv.FormatFloat(bt.Price, 'f', -1, 64),
 		Qty:    strconv.FormatFloat(bt.Size, 'f', -1, 64),
 		Venue:  "internal",
 	}
+	// Surface the matched counterparty's user id. `order` is the aggressor;
+	// the counterparty is the resting (maker) side. The lx order book only
+	// carries user ids (toBookOrder maps UserID), so this is the counterparty
+	// USER id — downstream resolves user→wallet for peer settlement.
+	if order.Side == types.Buy {
+		t.CounterUserID = bt.SellUserID
+	} else {
+		t.CounterUserID = bt.BuyUserID
+	}
+	return t
 }

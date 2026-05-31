@@ -142,6 +142,14 @@ type Trade struct {
 	// Regulatory
 	TradeReportID string `json:"trade_report_id,omitempty"` // FINRA TRF/ADF/ORF ID
 	ATSReportID   string `json:"ats_report_id,omitempty"`
+
+	// CounterUserID is the user id of the matched counterparty (the maker /
+	// resting side; AccountID above is the aggressor). Surfaced so on-chain
+	// settlement can move funds directly between the two real parties (peer
+	// settlement) rather than minting. The order book carries user ids (not
+	// account ids), so consumers resolve user→wallet themselves. Empty when
+	// the match had no identifiable counterparty (e.g. broker-fallback fills).
+	CounterUserID string `json:"counter_user_id,omitempty"`
 }
 
 // Market represents a tradable instrument on the CEX.
